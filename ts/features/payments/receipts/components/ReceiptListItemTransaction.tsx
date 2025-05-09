@@ -12,12 +12,19 @@ import ListItemSwipeAction, {
   SwipeControls
 } from "../../../../components/ListItemSwipeAction";
 import I18n from "../../../../i18n";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import { format } from "../../../../utils/dates";
 import { getTransactionLogo } from "../../common/utils";
 import { hidePaymentsReceiptAction } from "../store/actions";
 import { formatAmountText } from "../utils";
+import {
+  analyticsHideReceiptAction,
+  analyticsHideReceiptConfirmAction
+} from "../analytics/utils";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { paymentsGetPaymentDetailsAction } from "../../checkout/store/actions/networking";
+import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 
 type Props = {
   transaction: NoticeListItem;
@@ -67,6 +74,8 @@ const ReceiptListItemTransaction = memo(
 
     const dispatch = useIODispatch();
 
+    const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
+
     const swipeActionProps = {
       icon: "eyeHide" as IOIcons,
       accessibilityLabel: I18n.t(
@@ -76,6 +85,12 @@ const ReceiptListItemTransaction = memo(
         resetSwipePosition,
         triggerSwipeAction
       }: SwipeControls) => {
+        dispatch(
+          paymentsGetPaymentDetailsAction.request(transaction.eventId as RptId)
+        );
+
+        analyticsHideReceiptAction(paymentAnalyticsData, "swipe");
+
         Alert.alert(
           I18n.t("features.payments.transactions.receipt.hideBanner.title"),
           I18n.t("features.payments.transactions.receipt.hideBanner.content"),
@@ -95,10 +110,15 @@ const ReceiptListItemTransaction = memo(
               ),
               style: "destructive",
               onPress: () => {
+                analyticsHideReceiptConfirmAction(
+                  paymentAnalyticsData,
+                  "swipe"
+                );
                 triggerSwipeAction();
                 dispatch(
                   hidePaymentsReceiptAction.request({
-                    transactionId: transaction.eventId
+                    transactionId: transaction.eventId,
+                    trigger: "swipe"
                   })
                 );
               }
