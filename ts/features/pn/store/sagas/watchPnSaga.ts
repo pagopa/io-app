@@ -13,7 +13,7 @@ import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPre
 import { SessionToken } from "../../../../types/SessionToken";
 import { getError } from "../../../../utils/errors";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
-import { servicePreferencePotSelector } from "../../../services/details/store/reducers";
+import { servicePreferencePotByIdSelector } from "../../../services/details/store/reducers";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
 import {
   trackPNServiceStatusChangeError,
@@ -84,11 +84,13 @@ function* handlePnActivation(
 }
 
 function* reportPNServiceStatusOnFailure(predictedValue: boolean) {
-  const selectedServicePreferencePot = yield* select(
-    servicePreferencePotSelector
+  const pnServiceId = yield* select(pnMessagingServiceIdSelector);
+  const pnServicePreferencesPot = yield* select(
+    servicePreferencePotByIdSelector,
+    pnServiceId
   );
   const isServiceActive = pipe(
-    selectedServicePreferencePot,
+    pnServicePreferencesPot,
     pot.toOption,
     O.map(
       servicePreferenceResponse =>

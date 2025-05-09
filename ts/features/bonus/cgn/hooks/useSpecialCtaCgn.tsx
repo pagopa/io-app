@@ -4,7 +4,10 @@ import { Alert, Platform } from "react-native";
 import { IOToast } from "@pagopa/io-app-design-system";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
-import { fold, isLoading } from "../../../../common/model/RemoteValue";
+import {
+  fold,
+  isLoading as isRemoteLoading
+} from "../../../../common/model/RemoteValue";
 import I18n from "../../../../i18n";
 import * as analytics from "../../../services/common/analytics";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
@@ -26,7 +29,7 @@ const useCgnActivation = (serviceId: ServiceId) => {
 
   const unsubscriptionStatus = useIOSelector(cgnUnsubscribeSelector);
 
-  const isLoadingCgnActivation = isLoading(unsubscriptionStatus);
+  const isLoadingCgnActivation = isRemoteLoading(unsubscriptionStatus);
 
   useEffect(() => {
     if (!isFirstRender.current) {
@@ -101,7 +104,7 @@ export const useSpecialCtaCgn = (
     useCgnActivation(serviceId);
 
   const { isLoadingServicePreferenceByChannel, servicePreferenceByChannel } =
-    useServicePreferenceByChannel("inbox");
+    useServicePreferenceByChannel("inbox", serviceId);
 
   const isLoading =
     isLoadingServicePreferenceByChannel || isLoadingCgnActivation;
