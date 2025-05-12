@@ -12,6 +12,9 @@ import I18n from "../../../../i18n.ts";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader.tsx";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet.tsx";
 import { usePinBottomSheet } from "../hooks/usePinBottomSheet.tsx";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
+import { ITW_ROUTES } from "../../navigation/routes.ts";
+import { CieWarningType } from "../screens/ItwIdentificationCieWarningScreen.tsx";
 
 type L3IdentificationViewProps = {
   handleCiePinPress: () => void;
@@ -22,6 +25,17 @@ export const L3IdentificationView = ({
   handleCiePinPress,
   handleCieIdPress
 }: L3IdentificationViewProps) => {
+  const navigation = useIONavigation();
+
+  const navigateToCieWarning = (warning: CieWarningType) => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
+      params: {
+        warning
+      }
+    });
+  };
+
   const cieBottomSheet = useItwIdentificationBottomSheet({
     title: I18n.t(
       "features.itWallet.identification.l3.mode.bottomSheet.cie.title"
@@ -57,18 +71,20 @@ export const L3IdentificationView = ({
 
   const cieInfoBottomSheet = useCieInfoBottomSheet({
     onPrimaryAction: () => {
-      cieBottomSheet.dismiss();
+      cieInfoBottomSheet.dismiss();
     },
     onSecondaryAction: () => {
-      cieBottomSheet.dismiss();
+      navigateToCieWarning("noCie");
+      cieInfoBottomSheet.dismiss();
     }
   });
   const pinBottomSheet = usePinBottomSheet({
     onPrimaryAction: () => {
-      cieBottomSheet.dismiss();
+      pinBottomSheet.dismiss();
     },
     onSecondaryAction: () => {
-      cieBottomSheet.dismiss();
+      navigateToCieWarning("noPin");
+      pinBottomSheet.dismiss();
     }
   });
 

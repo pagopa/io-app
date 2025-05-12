@@ -334,7 +334,10 @@ export const itwEidIssuanceMachine = setup({
               {
                 target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
               }
-            ]
+            ],
+            close: {
+              actions: ["closeIssuance"]
+            }
           }
         },
         CieID: {
