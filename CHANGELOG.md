@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0-rc.3](https://github.com/pagopa/io-app/compare/3.5.0-rc.2...3.5.0-rc.3) (2025-05-09)
+
+
+### Chores
+
+* [[IOBP-1636](https://pagopa.atlassian.net/browse/IOBP-1636)] Copy and the privacy policy URL text update for payment summary page ([#6967](https://github.com/pagopa/io-app/issues/6967)) ([b25496e](https://github.com/pagopa/io-app/commit/b25496e4c0d43530bc5757a5dc8625f0b36ba76d))
+
 ## [3.5.0-rc.2](https://github.com/pagopa/io-app/compare/3.5.0-rc.1...3.5.0-rc.2) (2025-05-08)
 
 
