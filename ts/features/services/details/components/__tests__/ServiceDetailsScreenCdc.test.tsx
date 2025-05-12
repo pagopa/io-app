@@ -9,7 +9,7 @@ import { baseRawBackendStatus as backendStatus } from "../../../../../store/redu
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { ServiceDetailsScreenCdc } from "../ServiceDetailsScreenCdc";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 const dummy_serviceId = "serviceCdc" as ServiceId;
 const renderComponent = (state: GlobalState) => {

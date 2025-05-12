@@ -7,7 +7,7 @@ import { isCdcAppVersionSupportedSelector } from "../../../../store/reducers/bac
 import { useServicePreferenceByChannel } from "../../../services/details/hooks/useServicePreference";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import { CDC_ROUTES } from "../navigation/routes";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 /**
  * Hook to handle the CDC activation/deactivation
  */

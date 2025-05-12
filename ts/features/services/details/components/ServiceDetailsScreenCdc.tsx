@@ -5,7 +5,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useSpecialCtaCdc } from "../../../bonus/cdc/hooks/useSpecialCtaCdc";
 import { ServiceDetailsScreenBase } from "../types";
 import { getServiceActionsProps } from "../utils";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
 export type ServiceDetailsScreenCdcProps = ServiceDetailsScreenBase & {
   serviceId: ServiceId;
