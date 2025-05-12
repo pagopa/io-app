@@ -280,21 +280,22 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                   {
                     "alignItems": "center",
                     "borderCurve": "continuous",
-                    "borderRadius": 8,
                     "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
-                    "paddingHorizontal": 24,
+                    "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
                   {
-                    "height": 48,
+                    "paddingHorizontal": 24,
                   },
                   {
                     "backgroundColor": "#0B3EE3",
-                    "overflow": "hidden",
+                    "borderColor": "#FFFFFF",
+                    "borderRadius": 8,
+                    "borderWidth": 0,
+                    "height": 48,
                   },
-                  false,
                   {},
                   false,
                   {
@@ -330,16 +331,21 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                     [
                       {},
                       {
-                        "color": "#FFFFFF",
+                        "color": "#0E0F13",
                         "fontFamily": "Titillio",
                         "fontSize": 16,
                         "fontStyle": "normal",
                         "fontWeight": "600",
-                        "lineHeight": 20,
+                        "lineHeight": undefined,
                       },
-                      {
-                        "alignSelf": "center",
-                      },
+                      [
+                        {
+                          "textAlign": "auto",
+                        },
+                        {
+                          "color": undefined,
+                        },
+                      ],
                     ]
                   }
                 >
@@ -370,7 +376,7 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
             accessibilityRole="button"
             accessibilityState={
               {
-                "busy": undefined,
+                "busy": false,
                 "checked": undefined,
                 "disabled": false,
                 "expanded": undefined,
@@ -405,7 +411,6 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
             onResponderTerminate={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
-            onTouchEnd={[Function]}
             style={
               {
                 "alignSelf": "flex-start",
@@ -418,55 +423,77 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                 [
                   {
                     "alignItems": "center",
+                    "borderCurve": "continuous",
                     "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
+                    "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
-                  false,
                   {
-                    "columnGap": 8,
+                    "paddingHorizontal": 0,
+                  },
+                  {
+                    "backgroundColor": "transparent",
+                    "borderColor": "#0B3EE3",
+                    "borderRadius": 8,
+                    "borderWidth": 0,
+                    "height": undefined,
                   },
                   {},
-                  {
-                    "columnGap": 8,
-                  },
                   false,
+                  {},
                 ]
               }
             >
-              <Text
-                accessibilityElementsHidden={true}
-                accessible={false}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
-                importantForAccessibility="no-hide-descendants"
-                maxFontSizeMultiplier={1.5}
-                numberOfLines={1}
+              <View
                 style={
                   [
-                    {},
                     {
-                      "color": "#0E0F13",
-                      "fontFamily": "Titillio",
-                      "fontSize": 16,
-                      "fontStyle": "normal",
-                      "fontWeight": "600",
-                      "lineHeight": 20,
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
                     },
-                    [
-                      {
-                        "color": undefined,
-                      },
-                      {
-                        "textAlign": "auto",
-                      },
-                    ],
+                    {
+                      "columnGap": 8,
+                    },
+                    false,
                   ]
                 }
               >
-                Close
-              </Text>
+                <Text
+                  accessibilityElementsHidden={true}
+                  accessible={false}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  importantForAccessibility="no-hide-descendants"
+                  maxFontSizeMultiplier={1.5}
+                  numberOfLines={1}
+                  style={
+                    [
+                      {},
+                      {
+                        "color": "#0E0F13",
+                        "fontFamily": "Titillio",
+                        "fontSize": 16,
+                        "fontStyle": "normal",
+                        "fontWeight": "600",
+                        "lineHeight": 20,
+                      },
+                      [
+                        {
+                          "textAlign": "auto",
+                        },
+                        {
+                          "color": undefined,
+                        },
+                      ],
+                    ]
+                  }
+                >
+                  Close
+                </Text>
+              </View>
             </View>
           </View>
         </View>

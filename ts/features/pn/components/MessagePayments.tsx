@@ -1,5 +1,5 @@
 import {
-  ButtonLink,
+  IOButton,
   IOSkeleton,
   ListItemHeader,
   ModulePaymentNotice,
@@ -199,8 +199,8 @@ export const MessagePayments = ({
               )}
               {paymentsButtonStatus === "visibleEnabled" && (
                 <View style={styles.morePaymentsLinkContainer}>
-                  <ButtonLink
-                    accessibilityLabel={morePaymentsLabel}
+                  <IOButton
+                    variant="link"
                     label={morePaymentsLabel}
                     onPress={() => {
                       trackPNShowAllPayments();

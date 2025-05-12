@@ -1,7 +1,6 @@
 import {
-  ButtonOutline,
-  ButtonSolid,
   H6,
+  IOButton,
   IOColors,
   IOVisualCostants,
   VSpacer
@@ -73,13 +72,15 @@ const CgnLandingPlayground = () => {
         </View>
         <VSpacer size={16} />
         <View style={styles.row}>
-          <ButtonOutline
+          <IOButton
+            variant="outline"
             icon="reload"
             label="Reload"
             accessibilityLabel="Reload"
             onPress={() => setReloadKey(r => r + 1)}
           />
-          <ButtonSolid
+          <IOButton
+            variant="solid"
             label="Invia"
             onPress={() => {
               setLoadUri(navigationURI);

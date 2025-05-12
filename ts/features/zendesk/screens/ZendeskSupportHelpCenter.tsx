@@ -1,13 +1,13 @@
 import {
   AccordionItem,
   Body,
-  ButtonLink,
   ContentWrapper,
   FeatureInfo,
   FooterActions,
   H4,
   H6,
   HeaderSecondLevel,
+  IOButton,
   IOToast,
   VSpacer,
   useIOTheme
@@ -388,7 +388,8 @@ const ZendeskSupportHelpCenter = () => {
               {I18n.t("support.helpCenter.supportComponent.subtitle")}
             </Body>
             <VSpacer size={16} />
-            <ButtonLink
+            <IOButton
+              variant="link"
               accessibilityRole="link"
               label={I18n.t("support.askPermissions.privacyLink")}
               onPress={() => {

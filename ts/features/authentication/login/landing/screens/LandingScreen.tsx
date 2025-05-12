@@ -4,12 +4,11 @@
  */
 import {
   Banner,
-  ButtonSolid,
   ContentWrapper,
   ModuleNavigation,
   Tooltip,
   useIOToast,
-  ButtonLink,
+  IOButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
@@ -396,21 +395,20 @@ export const LandingScreen = () => {
             title={I18n.t("authentication.landing.tour_guide.title")}
             content={I18n.t("authentication.landing.tour_guide.content")}
           >
-            <ButtonSolid
-              testID="landing-button-login-cie"
-              accessibilityLabel={I18n.t("authentication.landing.loginCie")}
+            <IOButton
               fullWidth
+              variant="solid"
               color={isCieUatEnabled ? "danger" : "primary"}
               label={I18n.t("authentication.landing.loginCie")}
               icon="cieLetter"
               onPress={navigateToCiePinScreen}
+              testID="landing-button-login-cie"
             />
           </Tooltip>
           <VSpacer size={SPACE_BETWEEN_BUTTONS} />
-          <ButtonSolid
-            testID="landing-button-login-spid"
+          <IOButton
             fullWidth
-            accessibilityLabel={I18n.t("authentication.landing.loginSpid")}
+            variant="solid"
             color="primary"
             // if CIE is not supported, since the new DS has not a
             // "semi-enabled" state, we leave the button enabled
@@ -421,15 +419,14 @@ export const LandingScreen = () => {
               void trackSpidLoginSelected();
               navigateToIdpSelection();
             }}
+            testID="landing-button-login-spid"
           />
           <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
           {itwOfflineAccessAvailable && isSessionExpired && (
             <View style={{ alignSelf: "center" }}>
-              <ButtonLink
+              <IOButton
+                variant="link"
                 accessibilityRole="link"
-                accessibilityLabel={I18n.t(
-                  "authentication.landing.show_wallet"
-                )}
                 color="primary"
                 label={I18n.t("authentication.landing.show_wallet")}
                 onPress={navigateToWallet}

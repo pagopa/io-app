@@ -5,10 +5,9 @@
  */
 import {
   Body,
-  ButtonLink,
-  ButtonSolid,
   ContentWrapper,
   H3,
+  IOButton,
   IOColors,
   IOPictograms,
   VSpacer
@@ -537,7 +536,8 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       default: (
         <View style={{ alignItems: "center" }}>
           <View>
-            <ButtonLink
+            <IOButton
+              variant="link"
               label={I18n.t("global.buttons.close")}
               onPress={this.handleCancel}
             />
@@ -547,14 +547,16 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       ios: (
         <View style={{ alignItems: "center" }}>
           <View>
-            <ButtonSolid
+            <IOButton
+              variant="solid"
               label={I18n.t("authentication.cie.nfc.retry")}
               onPress={() => this.startCieiOS(this.props.isCieUatEnabled)}
             />
           </View>
           <VSpacer size={24} />
           <View>
-            <ButtonLink
+            <IOButton
+              variant="link"
               label={I18n.t("global.buttons.close")}
               onPress={this.handleCancel}
             />

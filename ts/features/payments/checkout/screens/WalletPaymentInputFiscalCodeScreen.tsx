@@ -1,4 +1,4 @@
-import { ButtonSolid, TextInputValidation } from "@pagopa/io-app-design-system";
+import { IOButton, TextInputValidation } from "@pagopa/io-app-design-system";
 import {
   PaymentNoticeNumberFromString,
   RptId
@@ -170,10 +170,10 @@ const WalletPaymentInputFiscalCodeScreen = () => {
       {Platform.OS === "ios" && (
         <InputAccessoryView nativeID="fiscalCodeInputAccessoryView">
           <View style={{ padding: 20 }}>
-            <ButtonSolid
+            <IOButton
               fullWidth
+              variant="solid"
               label={I18n.t("global.buttons.continue")}
-              accessibilityLabel={I18n.t("global.buttons.continue")}
               onPress={handleContinueClick}
             />
           </View>

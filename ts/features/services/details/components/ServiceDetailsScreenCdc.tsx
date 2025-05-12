@@ -5,15 +5,15 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useSpecialCtaCdc } from "../../../bonus/cdc/hooks/useSpecialCtaCdc";
 import { ServiceDetailsScreenBase } from "../types";
 import { getServiceActionsProps } from "../utils";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
-export type ServiceDetailsScreenCdcProps = ServiceDetailsScreenBase;
-// Will be useful when implementing the mixpanel tracking
-// & {
-// serviceId: ServiceId;
-// };
+export type ServiceDetailsScreenCdcProps = ServiceDetailsScreenBase & {
+  serviceId: ServiceId;
+};
 
 export const ServiceDetailsScreenCdc = ({
   children,
+  serviceId,
   ctas,
   onPressCta,
   title = ""
@@ -29,7 +29,7 @@ export const ServiceDetailsScreenCdc = ({
     title
   });
 
-  const specialActionProps = useSpecialCtaCdc();
+  const specialActionProps = useSpecialCtaCdc(serviceId);
 
   const actions = getServiceActionsProps(specialActionProps, ctas, onPressCta);
 
