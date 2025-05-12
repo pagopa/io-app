@@ -8,6 +8,7 @@ export enum RemoteFailureType {
   WALLET_INACTIVE = "WALLET_INACTIVE",
   MISSING_CREDENTIALS = "MISSING_CREDENTIALS",
   EID_EXPIRED = "EID_EXPIRED",
+  UNTRUSTED_RP = "UNTRUSTED_RP",
   UNEXPECTED = "UNEXPECTED"
 }
 
@@ -20,6 +21,7 @@ export type ReasonTypeByFailure = {
     missingCredentials: Array<string>;
   };
   [RemoteFailureType.EID_EXPIRED]: string;
+  [RemoteFailureType.UNTRUSTED_RP]: string;
   [RemoteFailureType.UNEXPECTED]: unknown;
 };
 

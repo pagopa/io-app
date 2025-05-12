@@ -18,7 +18,6 @@ import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx
 import { ItwRemotePresentationDetails } from "../components/ItwRemotePresentationDetails.tsx";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import {
-  selectIsClaimsDisclosure,
   selectIsLoading,
   selectRelyingPartyData
 } from "../machine/selectors.ts";
@@ -29,16 +28,13 @@ const ItwRemoteClaimsDisclosureScreen = () => {
   useAvoidHardwareBackButton();
 
   const isLoading = ItwRemoteMachineContext.useSelector(selectIsLoading);
-  const isClaimsDisclosure = ItwRemoteMachineContext.useSelector(
-    selectIsClaimsDisclosure
-  );
 
   /**
    * In addition to checking for the loading state,
    * we need to ensure that the current state is not `ClaimsDisclosure`
    * to prevent a visual glitch caused by a slight delay in navigation
    */
-  if (isLoading || !isClaimsDisclosure) {
+  if (isLoading) {
     return (
       <ItwRemoteLoadingScreen
         title={I18n.t(
