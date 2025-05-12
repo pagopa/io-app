@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -11,7 +10,7 @@ import { apiUrlPrefix } from "../../../../config";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
-import { getError } from "../../../../utils/errors";
+import { isTestEnv } from "../../../../utils/environment";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../services/details/store/reducers";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
@@ -47,36 +46,20 @@ function* handlePnActivation(
       isTest
     });
 
-    if (E.isLeft(result)) {
+    if (E.isRight(result) && result.right.status === 204) {
       yield* all([
-        put(pnActivationUpsert.failure(new Error(readableReport(result.left)))),
-        call(loadPreferenceIfValidId, pnServiceId)
-      ]);
-      action.payload.onFailure?.();
-    } else if (result.right.status === 204) {
-      trackPNServiceStatusChangeSuccess(activation_status);
-      yield* all([
-        put(pnActivationUpsert.success(activation_status)),
+        call(trackPNServiceStatusChangeSuccess, activation_status),
+        put(pnActivationUpsert.success()),
         call(loadPreferenceIfValidId, pnServiceId)
       ]);
       action.payload.onSuccess?.();
     } else {
-      yield* all([
-        call(reportPNServiceStatusOnFailure, !activation_status),
-        put(
-          pnActivationUpsert.failure(
-            new Error(`response status ${result.right.status}`)
-          )
-        ),
-        call(loadPreferenceIfValidId, pnServiceId)
-      ]);
-
-      action.payload.onFailure?.();
+      throw new Error();
     }
   } catch (e) {
     yield* all([
       call(reportPNServiceStatusOnFailure, !activation_status),
-      put(pnActivationUpsert.failure(getError(e))),
+      put(pnActivationUpsert.failure()),
       call(loadPreferenceIfValidId, pnServiceId)
     ]);
     action.payload.onFailure?.();
@@ -116,3 +99,11 @@ export function* watchPnSaga(bearerToken: SessionToken): SagaIterator {
     watchPaymentStatusForMixpanelTracking
   );
 }
+
+export const testable = isTestEnv
+  ? {
+      handlePnActivation,
+      reportPNServiceStatusOnFailure,
+      loadPreferenceIfValidId
+    }
+  : undefined;
