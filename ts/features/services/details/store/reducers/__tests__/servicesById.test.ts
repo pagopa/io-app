@@ -41,7 +41,7 @@ describe("serviceById reducer", () => {
   it("should have initial state", () => {
     const state = appReducer(undefined, applicationChangeState("active"));
 
-    expect(state.features.services.details.byId).toStrictEqual({});
+    expect(state.features.services.details.dataById).toStrictEqual({});
   });
 
   it("should handle loadServiceDetail action", () => {
@@ -50,12 +50,12 @@ describe("serviceById reducer", () => {
 
     store.dispatch(loadServiceDetail.request(serviceId));
 
-    expect(store.getState().features.services.details.byId).toStrictEqual({
+    expect(store.getState().features.services.details.dataById).toStrictEqual({
       serviceId: pot.noneLoading
     });
 
     store.dispatch(loadServiceDetail.success(service));
-    expect(store.getState().features.services.details.byId).toStrictEqual({
+    expect(store.getState().features.services.details.dataById).toStrictEqual({
       serviceId: pot.some(service)
     });
 
@@ -65,7 +65,7 @@ describe("serviceById reducer", () => {
     };
 
     store.dispatch(loadServiceDetail.failure(tError));
-    expect(store.getState().features.services.details.byId).toStrictEqual({
+    expect(store.getState().features.services.details.dataById).toStrictEqual({
       serviceId: pot.someError(service, new Error("load failed"))
     });
   });
@@ -82,7 +82,7 @@ describe("serviceById reducer", () => {
       appReducer,
       sequenceOfActions
     );
-    expect(state.features.services.details.byId).toEqual({});
+    expect(state.features.services.details.dataById).toEqual({});
   });
 
   it("should handle sessionExpired action", () => {
@@ -97,7 +97,7 @@ describe("serviceById reducer", () => {
       appReducer,
       sequenceOfActions
     );
-    expect(state.features.services.details.byId).toEqual({});
+    expect(state.features.services.details.dataById).toEqual({});
   });
 });
 

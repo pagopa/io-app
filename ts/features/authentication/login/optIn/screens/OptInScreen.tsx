@@ -156,17 +156,23 @@ const OptInScreen = () => {
         </View>
         <VSpacer size={24} />
         <FeatureInfo
-          pictogramName="identityCheck"
+          pictogramProps={{
+            name: "identityCheck"
+          }}
           body={I18n.t("authentication.opt_in.identity_check")}
         />
         <VSpacer size={24} />
         <FeatureInfo
-          pictogramName="passcode"
+          pictogramProps={{
+            name: "passcode"
+          }}
           body={I18n.t("authentication.opt_in.passcode")}
         />
         <VSpacer size={24} />
         <FeatureInfo
-          pictogramName="notification"
+          pictogramProps={{
+            name: "notification"
+          }}
           body={I18n.t("authentication.opt_in.notification")}
           action={{
             accessibilityRole: "button",

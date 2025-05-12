@@ -308,10 +308,8 @@ exports[`featuresPersistor should match snapshot 1`] = `
   "profileSettings": {},
   "services": {
     "details": {
-      "byId": {},
-      "servicePreference": {
-        "kind": "PotNone",
-      },
+      "dataById": {},
+      "preferencesById": {},
     },
     "home": {
       "featuredInstitutions": {
