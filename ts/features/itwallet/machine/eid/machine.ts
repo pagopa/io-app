@@ -495,6 +495,9 @@ export const itwEidIssuanceMachine = setup({
                 back: {
                   target:
                     "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                },
+                close: {
+                  actions: ["closeIssuance"]
                 }
               }
             },
@@ -512,6 +515,9 @@ export const itwEidIssuanceMachine = setup({
                 back: {
                   target:
                     "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie"
+                },
+                close: {
+                  actions: ["closeIssuance"]
                 }
               }
             },
