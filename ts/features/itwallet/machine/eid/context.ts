@@ -10,6 +10,8 @@ export type IdentificationContext =
   | { mode: "ciePin"; level: "L3"; pin: string }
   | { mode: "spid"; level: "L2"; idpId: string };
 
+type CiePreparationScreen = "PreparationCie" | "PreparationPin";
+
 /**
  * When authenticating with CIE + PIN the flow is interrupted
  * by the card reading phase, which is handled outside `io-react-native-wallet`.
@@ -29,7 +31,7 @@ export type AuthenticationContext = {
 export type CieContext = {
   isNFCEnabled: boolean;
   isCIEAuthenticationSupported: boolean;
-  previousCiePreparationScreen: string;
+  previousCiePreparationScreen: CiePreparationScreen;
 };
 
 export type Context = {

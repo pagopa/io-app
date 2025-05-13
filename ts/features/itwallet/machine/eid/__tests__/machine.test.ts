@@ -393,7 +393,8 @@ describe("itwEidIssuanceMachine", () => {
         walletInstanceAttestation: T_WIA,
         cieContext: {
           isNFCEnabled: true,
-          isCIEAuthenticationSupported: true
+          isCIEAuthenticationSupported: true,
+          previousCiePreparationScreen: "PreparationPin"
         }
       }
     } as MachineSnapshot);
@@ -422,7 +423,8 @@ describe("itwEidIssuanceMachine", () => {
       identification: undefined,
       cieContext: {
         isNFCEnabled: true,
-        isCIEAuthenticationSupported: true
+        isCIEAuthenticationSupported: true,
+        previousCiePreparationScreen: "PreparationPin"
       }
     });
     expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
@@ -454,7 +456,8 @@ describe("itwEidIssuanceMachine", () => {
       },
       cieContext: {
         isNFCEnabled: true,
-        isCIEAuthenticationSupported: true
+        isCIEAuthenticationSupported: true,
+        previousCiePreparationScreen: "PreparationPin"
       }
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -510,7 +513,8 @@ describe("itwEidIssuanceMachine", () => {
         walletInstanceAttestation: T_WIA,
         cieContext: {
           isNFCEnabled: false,
-          isCIEAuthenticationSupported: true
+          isCIEAuthenticationSupported: true,
+          previousCiePreparationScreen: "PreparationPin"
         }
       }
     } as MachineSnapshot);
@@ -546,7 +550,8 @@ describe("itwEidIssuanceMachine", () => {
       },
       cieContext: {
         isNFCEnabled: false,
-        isCIEAuthenticationSupported: true
+        isCIEAuthenticationSupported: true,
+        previousCiePreparationScreen: "PreparationPin"
       }
     });
     expect(navigateToNfcInstructionsScreen).toHaveBeenCalledTimes(1);
@@ -575,7 +580,8 @@ describe("itwEidIssuanceMachine", () => {
       },
       cieContext: {
         isNFCEnabled: true,
-        isCIEAuthenticationSupported: true
+        isCIEAuthenticationSupported: true,
+        previousCiePreparationScreen: "PreparationPin"
       }
     });
 
