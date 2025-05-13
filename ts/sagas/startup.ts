@@ -157,14 +157,24 @@ const warningWaitNavigatorTime = 2000 as Millisecond;
 /**
  * Handles the application startup and the main application logic loop
  */
+/**
+ * The startup saga is triggered in the following scenarios:
+ * - During the root saga initialization
+ * - On logout or expired session
+ * - On FL session refresh
+ * - When accessing the Wallet mini app in offline mode
+ */
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 export function* initializeApplicationSaga(
   startupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {
+  // ingress screen
   const isBlockingScreen = yield* select(isBlockingScreenSelector);
   if (isBlockingScreen) {
     return;
   }
+
+  // LV
   const handleSessionExpiration = !!(
     startupAction?.payload && startupAction.payload.handleSessionExpiration
   );
@@ -188,19 +198,18 @@ export function* initializeApplicationSaga(
   // remove all local notifications (see function comment)
   yield* call(cancellAllLocalNotifications);
   yield* call(previousInstallationDataDeleteSaga);
-  yield* put(previousInstallationDataDeleteSuccess());
+  yield* put(previousInstallationDataDeleteSuccess()); // Consider moving this inside previousInstallationDataDeleteSaga
 
   // listen for mixpanel enabling events
   yield* takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
   // clear cached downloads when the logged user changes
-  yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments);
-
+  yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments); // Consider using takeLatest here instead
   // Retrieve and listen for notification permissions status changes
   yield* fork(notificationPermissionsListener);
 
   // Get last logged in Profile from the state
-  const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
+  const lastLoggedInProfileState: ReturnType<typeof profileSelector> = // potrebbe essere creato un selettore che prenda l'email ed uno che prenda il CF (vedi altro caso d'uso sotto)
     yield* select(profileSelector);
 
   const lastEmailValidated = pot.isSome(lastLoggedInProfileState)
@@ -208,18 +217,24 @@ export function* initializeApplicationSaga(
     : O.none;
 
   // Watch for profile changes
-  yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
+  yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated); // Verify whether this is still needed or can be removed
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
+  // Might be removable: https://github.com/pagopa/io-app/pull/398/files#diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31
+  // It was likely used by the old ingress screen to track check progress
+
   if (!handleSessionExpiration) {
-    yield* put(resetProfileState());
+    yield* put(resetProfileState()); // Consider identifying all scenarios where the profile should be reset (e.g. Wallet offline).
+    // It might be worth consolidating them into a single function
   }
 
   // We need to generate a key in the application startup flow
   // to use this information on old app version already logged in users.
   // Here we are blocking the application startup, but we have the
   // the profile loading spinner active.
+
+  // Consider extracting this logic, for example into the root saga
 
   yield* call(generateLollipopKeySaga);
 
@@ -304,9 +319,14 @@ export function* initializeApplicationSaga(
     keyInfo
   );
 
+  // The following functions all rely on backendClient
+
   // Watch for requests to logout
   // Since this saga is spawned and not forked
   // it will handle its own cancelation logic.
+
+  // spawn is used to detach this saga from its parent (startupSaga),
+  // so it keeps running even if the parent is cancelled
   yield* spawn(watchLogoutSaga, backendClient.logout);
 
   if (zendeskEnabled) {
@@ -352,6 +372,9 @@ export function* initializeApplicationSaga(
     backendClient.deleteUserDataProcessingRequest
   );
 
+  // The logic below relies on the current active session
+  // and is maintained by separate teams
+
   // Start watching for Services actions
   yield* fork(watchServicesSaga, backendClient, sessionToken);
 
@@ -365,7 +388,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchFciSaga, sessionToken, keyInfo);
 
   // whether we asked the user to login again
-  const isSessionRefreshed = previousSessionToken !== sessionToken;
+  const isSessionRefreshed = previousSessionToken !== sessionToken; // da indagare
 
   // Let's see if have to load the session info, either because
   // we don't have one for the current session or because we
@@ -487,6 +510,7 @@ export function* initializeApplicationSaga(
 
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
+  // start onboarding
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
   if (!handleSessionExpiration) {
     yield* call(waitForMainNavigator);
@@ -567,6 +591,7 @@ export function* initializeApplicationSaga(
     yield* call(completeOnboardingSaga);
   }
 
+  // finish the onboarding
   // Stop the watchAbortOnboardingSaga
   yield* cancel(watchAbortOnboardingSagaTask);
 
@@ -703,6 +728,7 @@ export function* initializeApplicationSaga(
   );
 }
 
+// Consider moving this to a dedicated file
 /**
  * Wait until the {@link NavigationService} is initialized.
  * The NavigationService is initialized when is called {@link RootContainer} componentDidMount and the ref is set with setTopLevelNavigator
@@ -736,6 +762,8 @@ function* waitForNavigatorServiceInitialization() {
     elapsedTime: initTime
   });
 }
+
+// Consider moving this to a dedicated file
 
 function* waitForMainNavigator() {
   // eslint-disable-next-line functional/no-let
