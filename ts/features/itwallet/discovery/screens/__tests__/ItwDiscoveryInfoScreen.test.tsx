@@ -12,13 +12,8 @@ import {
 } from "../ItwDiscoveryInfoScreen";
 
 describe("ItwDiscoveryInfoScreen", () => {
-  it("should match the snapshot when isL3 is true", () => {
-    const component = renderComponent(false);
-    expect(component).toMatchSnapshot();
-  });
-
-  it("should match the snapshot when isL3 is false", () => {
-    const component = renderComponent(true);
+  it.each([true, false])("should match the snapshot when isL3 is %s", l3 => {
+    const component = renderComponent(l3);
     expect(component).toMatchSnapshot();
   });
 });
