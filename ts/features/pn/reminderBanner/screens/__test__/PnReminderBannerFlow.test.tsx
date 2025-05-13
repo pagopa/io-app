@@ -227,11 +227,11 @@ function* mockSaga(sagaSuccess: boolean) {
     ) {
       if (sagaSuccess) {
         action.payload.onSuccess?.();
-        yield* put(pnActivationUpsert.success(true));
+        yield* put(pnActivationUpsert.success());
       } else {
         action.payload.onFailure?.();
 
-        yield* put(pnActivationUpsert.failure(new Error()));
+        yield* put(pnActivationUpsert.failure());
       }
     }
   );
