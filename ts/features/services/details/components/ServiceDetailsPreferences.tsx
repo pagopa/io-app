@@ -20,7 +20,7 @@ import {
   isErrorServicePreferenceSelector,
   isLoadingServicePreferenceSelector,
   serviceMetadataInfoSelector,
-  servicePreferenceResponseSuccessSelector
+  servicePreferenceResponseSuccessByIdSelector
 } from "../store/reducers";
 
 type PreferenceSwitchListItem = {
@@ -38,16 +38,16 @@ export const ServiceDetailsPreferences = ({
 
   const dispatch = useIODispatch();
 
-  const servicePreferenceResponseSuccess = useIOSelector(
-    servicePreferenceResponseSuccessSelector
+  const servicePreferenceResponseSuccess = useIOSelector(state =>
+    servicePreferenceResponseSuccessByIdSelector(state, serviceId)
   );
 
-  const isLoadingServicePreference = useIOSelector(
-    isLoadingServicePreferenceSelector
+  const isLoadingServicePreference = useIOSelector(state =>
+    isLoadingServicePreferenceSelector(state, serviceId)
   );
 
-  const isErrorServicePreference = useIOSelector(
-    isErrorServicePreferenceSelector
+  const isErrorServicePreference = useIOSelector(state =>
+    isErrorServicePreferenceSelector(state, serviceId)
   );
 
   const isPremiumMessagesOptInOutEnabled = useIOSelector(
