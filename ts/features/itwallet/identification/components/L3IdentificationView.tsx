@@ -10,9 +10,8 @@ import {
 import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet.tsx";
 import I18n from "../../../../i18n.ts";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader.tsx";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
-import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { CieWarningType } from "../screens/ItwIdentificationCieWarningScreen.tsx";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
 
 type L3IdentificationViewProps = {
   handleCiePinPress: () => void;
@@ -23,15 +22,10 @@ export const L3IdentificationView = ({
   handleCiePinPress,
   handleCieIdPress
 }: L3IdentificationViewProps) => {
-  const navigation = useIONavigation();
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const navigateToCieWarning = (warning: CieWarningType) => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
-      params: {
-        warning
-      }
-    });
+    machineRef.send({ type: "go-to-cie-warning", warning });
   };
 
   const cieBottomSheet = useItwIdentificationBottomSheet({

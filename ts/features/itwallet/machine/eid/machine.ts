@@ -42,6 +42,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToCieReadCardScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
+    navigateToCieWarningScreen: notImplemented,
     storeIntegrityKeyTag: notImplemented,
     cleanupIntegrityKeyTag: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
@@ -323,6 +324,9 @@ export const itwEidIssuanceMachine = setup({
                 target: "CieID"
               }
             ],
+            "go-to-cie-warning": {
+              target: "CieWarning"
+            },
             back: [
               {
                 guard: "isReissuing",
@@ -331,7 +335,16 @@ export const itwEidIssuanceMachine = setup({
               {
                 target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
               }
-            ],
+            ]
+          }
+        },
+        CieWarning: {
+          description: "Navigates to and handles the CIE warning screen.",
+          entry: "navigateToCieWarningScreen",
+          on: {
+            back: {
+              target: "ModeSelection"
+            },
             close: {
               actions: ["closeIssuance"]
             }

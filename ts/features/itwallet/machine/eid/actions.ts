@@ -26,7 +26,7 @@ import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store
 import { itwSetAuthLevel } from "../../common/store/actions/preferences.ts";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
 import { Context } from "./context";
-import { EidIssuanceEvents } from "./events";
+import { EidIssuanceEvents, GoToCieWarning } from "./events";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -144,6 +144,17 @@ export const createEidIssuanceActionsImplementation = (
   navigateToWalletRevocationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
+    });
+  },
+
+  navigateToCieWarningScreen: ({
+    event
+  }: ActionArgs<Context, GoToCieWarning, EidIssuanceEvents>) => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
+      params: {
+        warning: event.warning
+      }
     });
   },
 
