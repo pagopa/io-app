@@ -209,7 +209,11 @@ export function* initializeApplicationSaga(
   yield* fork(notificationPermissionsListener);
 
   // Get last logged in Profile from the state
-  const lastLoggedInProfileState: ReturnType<typeof profileSelector> = // potrebbe essere creato un selettore che prenda l'email ed uno che prenda il CF (vedi altro caso d'uso sotto)
+  /**
+   * Consider creating separate selectors for email and fiscal code (refer to the related use case below)
+   * TODO: **add jira ticket**
+   */
+  const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
     yield* select(profileSelector);
 
   const lastEmailValidated = pot.isSome(lastLoggedInProfileState)
@@ -388,7 +392,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchFciSaga, sessionToken, keyInfo);
 
   // whether we asked the user to login again
-  const isSessionRefreshed = previousSessionToken !== sessionToken; // da indagare
+  const isSessionRefreshed = previousSessionToken !== sessionToken; // Needs further investigation
 
   // Let's see if have to load the session info, either because
   // we don't have one for the current session or because we
@@ -405,7 +409,7 @@ export function* initializeApplicationSaga(
   // Only in the scenario when we get here and session tokens are not available,
   // we have to load the session information from the backend.
   // In a future refactoring where the checkSession won't get the session tokens
-  // anymore, we will need to rethink about this check.
+  // anymore, we will need to rethink about this check.-> TODO: **add jira ticket**
   if (
     O.isNone(maybeSessionInformation) ||
     (O.isSome(maybeSessionInformation) &&
@@ -764,6 +768,7 @@ function* waitForNavigatorServiceInitialization() {
 }
 
 // Consider moving this to a dedicated file
+// TODO: **add jira ticket**
 
 function* waitForMainNavigator() {
   // eslint-disable-next-line functional/no-let
