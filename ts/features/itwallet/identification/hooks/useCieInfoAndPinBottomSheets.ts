@@ -9,7 +9,6 @@ import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
  * - `pinBottomSheet`: displays information about the CIE PIN
  */
 export const useCieInfoAndPinBottomSheets = () => {
-
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const navigateToCieWarning = (warning: CieWarningType) => {

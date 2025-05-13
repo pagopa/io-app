@@ -21,7 +21,6 @@ export const L3IdentificationView = ({
   handleCiePinPress,
   handleCieIdPress
 }: L3IdentificationViewProps) => {
-
   const cieBottomSheet = useItwIdentificationBottomSheet({
     title: I18n.t(
       "features.itWallet.identification.l3.mode.bottomSheet.cie.title"

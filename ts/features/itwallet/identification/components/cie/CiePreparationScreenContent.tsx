@@ -20,7 +20,7 @@ const getContent = ({
   infoType,
   presentCieBottomSheet,
   presentPinBottomSheet,
-  sendEvent,
+  sendEvent
 }: GetContentParams) => {
   const isCie = infoType === "cie";
 

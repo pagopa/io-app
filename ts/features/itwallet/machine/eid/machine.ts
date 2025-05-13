@@ -501,12 +501,14 @@ export const itwEidIssuanceMachine = setup({
                 back: [
                   {
                     guard: ({ context }) =>
-                      context.cieContext?.previousCiePreparationScreen === "PreparationPin",
+                      context.cieContext?.previousCiePreparationScreen ===
+                      "PreparationPin",
                     target: "PreparationPin"
                   },
                   {
                     guard: ({ context }) =>
-                      context.cieContext?.previousCiePreparationScreen === "PreparationCie",
+                      context.cieContext?.previousCiePreparationScreen ===
+                      "PreparationCie",
                     target: "PreparationCie"
                   }
                 ],
