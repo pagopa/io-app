@@ -5,7 +5,8 @@ import { itwSetOfflineBannerHidden } from "../store/actions/preferences.ts";
 import { itwShouldRenderOfflineBannerSelector } from "../store/selectors";
 import { openWebUrl } from "../../../../utils/url.ts";
 
-const offlineDocumentsFAQ = "https://assistenza.ioapp.it/hc/it/articles/34805335324049-Posso-usare-i-documenti-digitali-senza-connessione";
+const offlineDocumentsFAQ =
+  "https://assistenza.ioapp.it/hc/it/articles/34805335324049-Posso-usare-i-documenti-digitali-senza-connessione";
 
 export const ItwOfflineWalletBanner = () => {
   const dispatch = useIODispatch();
