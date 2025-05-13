@@ -22,6 +22,7 @@ import {
   RoundedRect,
   vec
 } from "@shopify/react-native-skia";
+import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import ItwHero from "../../../../../img/features/itWallet/l3/itw_hero.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import {
@@ -83,6 +84,11 @@ export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
         flexGrow: 1
       }}
     >
+      <FocusAwareStatusBar
+        animated
+        backgroundColor={backgroundColor}
+        barStyle="light-content"
+      />
       <ContentWrapper
         style={{
           backgroundColor,
