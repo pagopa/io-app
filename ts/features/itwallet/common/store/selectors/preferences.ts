@@ -98,7 +98,7 @@ export const itwIsFiscalCodeWhitelistedSelector = (state: GlobalState) =>
 export const itwIsL3EnabledAndFiscalCodeWhitelistedSelector = (
   state: GlobalState
 ) =>
-  state.features.itWallet.preferences.isL3Enabled &&
+  state.features.itWallet.preferences.isL3Enabled ||
   state.features.itWallet.preferences.isFiscalCodeWhitelisted;
 
 /**
