@@ -40,15 +40,18 @@ sequenceDiagram
   StartupSaga->>Session: Track keychain failures
   StartupSaga->>Session: Authenticate user
   Session-->>StartupSaga: sessionToken
-
   StartupSaga->>Lollipop: Get key info
   StartupSaga->>Session: Validate session token
   alt Token expired
     StartupSaga->>Session: Refresh session token
   end
 
-  %% --- Phase 5: Load session and profile ---
-  note over StartupSaga: Phase 5 – Load session and profile
+  %% --- Phase 5: Create backend client ---
+  note over StartupSaga: Phase 5 – Create backend client
+  StartupSaga->>Session: Create backendClient(apiUrlPrefix, sessionToken, keyInfo)
+
+  %% --- Phase 6: Load session and profile ---
+  note over StartupSaga: Phase 6 – Load session and profile
   StartupSaga->>Profile: Load session info
   alt Missing tokens (wallet or BPD)
     StartupSaga->>Profile: Retry loading session info
@@ -61,8 +64,8 @@ sequenceDiagram
   StartupSaga->>Profile: Load user profile
   Profile-->>StartupSaga: userProfile
 
-  %% --- Phase 6: Start onboarding ---
-  note over StartupSaga: Phase 6 – startupLoadSuccess(ONBOARDING)
+  %% --- Phase 7: Start onboarding ---
+  note over StartupSaga: Phase 7 – startupLoadSuccess(ONBOARDING)
   StartupSaga->>StartupSaga: startupLoadSuccess(ONBOARDING)
   StartupSaga->>System: Wait for navigator ready
   StartupSaga->>Onboarding: Start identification (PIN)
@@ -74,14 +77,15 @@ sequenceDiagram
   StartupSaga->>Onboarding: Set language, check Mixpanel opt-in
   StartupSaga->>Onboarding: Check fingerprint, email, PIN
 
-  %% --- Phase 7: Feature watchers ---
-  note over StartupSaga: Phase 7 – Feature watchers
+  %% --- Phase 8: Feature watchers ---
+  note over StartupSaga: Phase 8 – Feature watchers
   StartupSaga->>Wallet: watchWalletSaga
   StartupSaga->>FeatureWatchers: Messages, Services, IDPay, PN, CGN, TrialSystem
   StartupSaga->>FeatureWatchers: Watch payments with walletToken
 
-  %% --- Phase 8: Completion ---
-  note over StartupSaga: Phase 8 – Completion
+  %% --- Phase 9: Completion ---
+  note over StartupSaga: Phase 9 – Completion
   StartupSaga->>StartupSaga: startupLoadSuccess(AUTHENTICATED)
   StartupSaga->>App: App ready
+
 ```
