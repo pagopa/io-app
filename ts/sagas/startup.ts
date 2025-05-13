@@ -198,7 +198,11 @@ export function* initializeApplicationSaga(
   // remove all local notifications (see function comment)
   yield* call(cancellAllLocalNotifications);
   yield* call(previousInstallationDataDeleteSaga);
-  yield* put(previousInstallationDataDeleteSuccess()); // Consider moving this inside previousInstallationDataDeleteSaga
+  /**
+   * Consider moving previousInstallationDataDeleteSuccess inside previousInstallationDataDeleteSaga
+   * TODO: **add jira ticket**
+   */
+  yield* put(previousInstallationDataDeleteSuccess());
 
   // listen for mixpanel enabling events
   yield* takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
@@ -733,6 +737,8 @@ export function* initializeApplicationSaga(
 }
 
 // Consider moving this to a dedicated file
+// TODO: **add jira ticket**
+
 /**
  * Wait until the {@link NavigationService} is initialized.
  * The NavigationService is initialized when is called {@link RootContainer} componentDidMount and the ref is set with setTopLevelNavigator
