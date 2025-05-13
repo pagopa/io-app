@@ -68,6 +68,12 @@ export type EmailInsertScreenNavigationParams = Readonly<{
 
 const EMPTY_EMAIL = "";
 
+/**
+ * Since we have some users with a very large font size, that can't enter or use
+ * this screen, we need to set a maximum font size multiplier.
+ */
+const MAX_FONT_SIZE_MULTIPLIER = 1.2;
+
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.insert.help.title",
   body: "email.insert.help.content"
@@ -432,20 +438,26 @@ const EmailInsertScreen = () => {
               accessibilityRole="header"
               ref={accessibilityFirstFocuseViewRef}
             >
-              <H1 testID="title-test">
+              <H1
+                testID="title-test"
+                maxFontSizeMultiplier={MAX_FONT_SIZE_MULTIPLIER}
+              >
                 {isFirstOnboarding
                   ? I18n.t("email.newinsert.title")
                   : I18n.t("email.edit.title")}
               </H1>
             </View>
             <VSpacer size={16} />
-            <Body>
+            <Body maxFontSizeMultiplier={MAX_FONT_SIZE_MULTIPLIER}>
               {isFirstOnboarding ? (
                 I18n.t("email.newinsert.subtitle")
               ) : (
                 <>
                   {I18n.t("email.edit.subtitle")}
-                  <Body weight="Semibold">
+                  <Body
+                    weight="Semibold"
+                    maxFontSizeMultiplier={MAX_FONT_SIZE_MULTIPLIER}
+                  >
                     {` ${pipe(
                       optionEmail,
                       O.getOrElse(() => "")
