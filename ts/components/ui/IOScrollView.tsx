@@ -1,10 +1,10 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable functional/immutable-data */
 import {
-  ButtonLink,
-  ButtonOutline,
-  ButtonSolid,
   HeaderSecondLevel,
+  IOButton,
+  IOButtonBlockSpecificProps,
+  IOButtonLinkSpecificProps,
   IOColors,
   IOSpacer,
   IOSpacingScale,
@@ -16,11 +16,11 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 import {
-  useMemo,
   ComponentProps,
   Fragment,
   PropsWithChildren,
   useLayoutEffect,
+  useMemo,
   useState
 } from "react";
 
@@ -46,30 +46,34 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { WithTestID } from "../../types/WithTestID";
 import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
+import { WithTestID } from "../../types/WithTestID";
+
+type ButtonBlockProps = Omit<
+  IOButtonBlockSpecificProps,
+  "fullWidth" | "variant"
+>;
+
+type ButtonLinkProps = Omit<IOButtonLinkSpecificProps, "color" | "variant">;
 
 export type IOScrollViewActions =
   | {
       type: "SingleButton";
-      primary: Omit<ComponentProps<typeof ButtonSolid>, "fullWidth">;
+      primary: ButtonBlockProps;
       secondary?: never;
       tertiary?: never;
     }
   | {
       type: "TwoButtons";
-      primary: Omit<ComponentProps<typeof ButtonSolid>, "fullWidth">;
-      secondary: Omit<ComponentProps<typeof ButtonLink>, "color">;
+      primary: ButtonBlockProps;
+      secondary: ButtonLinkProps;
       tertiary?: never;
     }
   | {
       type: "ThreeButtons";
-      primary: Omit<ComponentProps<typeof ButtonSolid>, "fullWidth">;
-      secondary: Omit<
-        ComponentProps<typeof ButtonOutline>,
-        "fullWidth" | "color"
-      >;
-      tertiary: Omit<ComponentProps<typeof ButtonLink>, "color">;
+      primary: ButtonBlockProps;
+      secondary: ButtonBlockProps;
+      tertiary: ButtonLinkProps;
     };
 
 type IOSCrollViewHeaderScrollValues = ComponentProps<
@@ -103,12 +107,12 @@ const gradientOpacityScrollTrigger = 0.85;
 const gradientSafeAreaHeight: IOSpacingScale = 96;
 /* End content margin before the actions */
 const contentEndMargin: IOSpacingScale = 32;
-/* Margin between ButtonSolid and ButtonOutline */
+/* Margin between solid variant and outline variant */
 const spaceBetweenActions: IOSpacer = 16;
-/* Margin between ButtonSolid and ButtonLink */
+/* Margin between solid variant and link variant */
 const spaceBetweenActionAndLink: IOSpacer = 16;
 /* Extra bottom margin for iPhone bottom handle because
-   ButtonLink doesn't have a fixed height */
+   Link variant doesn't have a fixed height */
 const extraSafeAreaMargin: IOSpacingScale = 8;
 
 const styles = StyleSheet.create({
@@ -400,7 +404,9 @@ export const renderActionButtons = (
 
   return (
     <>
-      {primaryAction && <ButtonSolid fullWidth {...primaryAction} />}
+      {primaryAction && (
+        <IOButton variant="solid" fullWidth {...primaryAction} />
+      )}
 
       {type === "TwoButtons" && (
         <View
@@ -410,17 +416,14 @@ export const renderActionButtons = (
           }}
         >
           <VSpacer size={spaceBetweenActionAndLink} />
-          <ButtonLink
-            color="primary"
-            {...(secondaryAction as ComponentProps<typeof ButtonLink>)}
-          />
+          <IOButton variant="link" color="primary" {...secondaryAction} />
         </View>
       )}
 
       {type === "ThreeButtons" && (
         <Fragment>
           <VSpacer size={spaceBetweenActions} />
-          <ButtonOutline fullWidth color="primary" {...secondaryAction} />
+          <IOButton variant="outline" color="primary" {...secondaryAction} />
 
           <View
             style={{
@@ -429,7 +432,7 @@ export const renderActionButtons = (
             }}
           >
             <VSpacer size={spaceBetweenActionAndLink} />
-            <ButtonLink color="primary" {...tertiaryAction} />
+            <IOButton variant="link" color="primary" {...tertiaryAction} />
           </View>
         </Fragment>
       )}

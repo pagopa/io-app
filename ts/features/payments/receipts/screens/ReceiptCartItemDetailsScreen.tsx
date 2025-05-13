@@ -1,9 +1,4 @@
-import {
-  Divider,
-  H6,
-  ListItemInfo,
-  ListItemInfoCopy
-} from "@pagopa/io-app-design-system";
+import { Divider, H6, ListItemInfoCopy } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import { UserDetail } from "../../../../../definitions/pagopa/biz-events/UserDetail";
@@ -14,6 +9,7 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import * as analytics from "../analytics";
 import { PaymentsReceiptParamsList } from "../navigation/params";
 import { formatAmountText } from "../utils";
+import { PaymentListItemInfo } from "../../common/components/PaymentListItemInfo";
 
 export type ReceiptCartItemDetailsScreenParams = {
   cartItem: CartItem;
@@ -35,6 +31,12 @@ const ReceiptCartItemDetailsScreen = () => {
     </>
   );
 
+  const getDebtorTextString = (debtor: UserDetail): string => {
+    const name = debtor.name ?? "";
+    const taxCode = debtor.taxCode ? `(${debtor.taxCode})` : "";
+    return `${name} ${taxCode}`.trim();
+  };
+
   useOnFirstRender(() => {
     analytics.trackPaymentsOpenSubReceipt();
   });
@@ -48,7 +50,7 @@ const ReceiptCartItemDetailsScreen = () => {
     >
       {cartItem.amount && (
         <>
-          <ListItemInfo
+          <PaymentListItemInfo
             label={I18n.t("transaction.details.operation.amount")}
             value={formatAmountText(cartItem.amount)}
           />
@@ -57,7 +59,7 @@ const ReceiptCartItemDetailsScreen = () => {
       )}
       {cartItem.payee && (
         <>
-          <ListItemInfo
+          <PaymentListItemInfo
             label={I18n.t("transaction.details.operation.creditor")}
             value={cartItem.payee.name}
           />
@@ -66,9 +68,10 @@ const ReceiptCartItemDetailsScreen = () => {
       )}
       {cartItem.debtor && (cartItem.debtor.name ?? cartItem.debtor.taxCode) && (
         <>
-          <ListItemInfo
+          <PaymentListItemInfo
             label={I18n.t("transaction.details.operation.debtor")}
             value={getDebtorText(cartItem.debtor)}
+            copyableValue={getDebtorTextString(cartItem.debtor)}
           />
           <Divider />
         </>

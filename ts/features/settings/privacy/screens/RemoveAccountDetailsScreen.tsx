@@ -1,8 +1,8 @@
 /* eslint-disable functional/immutable-data */
 import {
-  ButtonSolid,
   ContentWrapper,
   H6,
+  IOButton,
   IOVisualCostants,
   RadioGroup,
   RadioItem,
@@ -56,14 +56,12 @@ const FooterButton = memo(({ isLoading, onPress }: FooterButtonProps) => {
     >
       <ContentWrapper>
         <VSpacer size={16} />
-        <ButtonSolid
+        <IOButton
           fullWidth
-          loading={isLoading}
+          variant="solid"
           color="danger"
+          loading={isLoading}
           label={I18n.t("profile.main.privacy.removeAccount.details.cta")}
-          accessibilityLabel={I18n.t(
-            "profile.main.privacy.removeAccount.details.cta"
-          )}
           onPress={onPress}
         />
       </ContentWrapper>

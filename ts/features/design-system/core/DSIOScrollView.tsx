@@ -1,6 +1,6 @@
 import {
   Body,
-  ButtonOutline,
+  IOButton,
   H2,
   IOColors,
   VSpacer,
@@ -45,9 +45,9 @@ export const DSIOScrollView = () => {
         }}
       />
       <VSpacer />
-      <ButtonOutline
+      <IOButton
+        variant="outline"
         label="Test"
-        accessibilityLabel={""}
         onPress={() => Alert.alert("Test button")}
       />
       {[...Array(2)].map((_el, i) => (

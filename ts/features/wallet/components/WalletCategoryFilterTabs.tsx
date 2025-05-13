@@ -89,7 +89,6 @@ const WalletCategoryFilterTabs = () => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 8,
-    paddingBottom: 16,
     marginHorizontal: -IOVisualCostants.appMarginDefault * 2,
     paddingHorizontal: IOVisualCostants.appMarginDefault
   }

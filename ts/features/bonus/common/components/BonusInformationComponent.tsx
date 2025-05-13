@@ -1,8 +1,8 @@
 import {
   Body,
-  ButtonSolidProps,
   ContentWrapper,
   H2,
+  IOButtonBlockSpecificProps,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as AR from "fp-ts/lib/Array";
@@ -117,24 +117,23 @@ const BonusInformationComponent = (props: Props) => {
     animatedRef: animatedScrollViewRef
   });
 
-  const cancelButtonProps: ButtonSolidProps = {
+  const cancelButtonProps: IOButtonBlockSpecificProps = {
     label: I18n.t("global.buttons.cancel"),
     fullWidth: true,
     color: "danger",
-    accessibilityLabel: I18n.t("global.buttons.cancel"),
     onPress: props.onCancel ?? constNull
   };
-  const requestButtonProps: ButtonSolidProps = {
+
+  const requestButtonProps: IOButtonBlockSpecificProps = {
     label: props.primaryCtaText,
-    testID: "activate-bonus-button",
     fullWidth: true,
-    accessibilityLabel: props.primaryCtaText,
-    onPress: props.onConfirm ?? constNull
+    onPress: props.onConfirm ?? constNull,
+    testID: "activate-bonus-button"
   };
+
   const backButtonProps = {
     label: props.secondaryAction.text,
     fullWidth: true,
-    accessibilityLabel: props.secondaryAction.text,
     onPress: props.onBack ?? constNull
   };
 

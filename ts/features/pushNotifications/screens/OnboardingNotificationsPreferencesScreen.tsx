@@ -4,10 +4,10 @@ import {
   VSpacer,
   ContentWrapper,
   IOStyles,
-  ButtonSolid,
   useIOToast,
   H1,
-  Body
+  Body,
+  IOButton
 } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { PushNotificationsContentTypeEnum } from "../../../../definitions/backend/PushNotificationsContentType";
@@ -138,8 +138,9 @@ export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
           }
         ]}
       >
-        <ButtonSolid
+        <IOButton
           fullWidth
+          variant="solid"
           loading={isUpdating}
           label={I18n.t("onboarding.notifications.continue")}
           onPress={upsertPreferences}

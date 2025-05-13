@@ -1,8 +1,8 @@
 import {
   BodySmall,
-  ButtonSolid,
-  ButtonSolidProps,
   H6,
+  IOButton,
+  IOButtonBlockSpecificProps,
   IOPictograms,
   Pictogram,
   VSpacer
@@ -12,7 +12,10 @@ import { StyleSheet, View } from "react-native";
 type Props = {
   title: string;
   body: string;
-  action: Pick<ButtonSolidProps, "label" | "accessibilityLabel" | "onPress">;
+  action: Pick<
+    IOButtonBlockSpecificProps,
+    "label" | "accessibilityLabel" | "onPress"
+  >;
   pictogram: IOPictograms;
 };
 
@@ -28,12 +31,12 @@ const CameraPermissionView = (props: Props) => (
       {props.body}
     </BodySmall>
     <VSpacer size={32} />
-    <ButtonSolid
-      label={props.action.label}
-      accessibilityLabel={props.action.label}
-      onPress={props.action.onPress}
+    <IOButton
+      fullWidth
+      variant="solid"
       color="contrast"
-      fullWidth={true}
+      label={props.action.label}
+      onPress={props.action.onPress}
     />
   </View>
 );
