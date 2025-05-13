@@ -1,6 +1,7 @@
 import { createStore, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { act } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -50,13 +51,15 @@ describe("Test FciRouterScreen", () => {
       render.component.queryByTestId("FciRouterLoadingScreenTestID")
     ).not.toBeNull();
 
-    render.store.dispatch(
-      fciSignatureRequestFromId.failure(
-        getNetworkError(
-          new Error(JSON.stringify({ ...mockedError, status: 500 }))
+    act(() => {
+      store.dispatch(
+        fciSignatureRequestFromId.failure(
+          getNetworkError(
+            new Error(JSON.stringify({ ...mockedError, status: 500 }))
+          )
         )
-      )
-    );
+      );
+    });
 
     expect(
       render.component.queryByTestId("GenericErrorComponentTestID")
@@ -75,11 +78,13 @@ describe("Test FciRouterScreen", () => {
       render.component.queryByTestId("FciRouterLoadingScreenTestID")
     ).not.toBeNull();
 
-    render.store.dispatch(
-      fciSignatureRequestFromId.failure(
-        getNetworkError(new Error(JSON.stringify(mockedError)))
-      )
-    );
+    act(() => {
+      render.store.dispatch(
+        fciSignatureRequestFromId.failure(
+          getNetworkError(new Error(JSON.stringify(mockedError)))
+        )
+      );
+    });
 
     expect(
       render.component.queryByTestId("WrongUserErrorComponentTestID")
@@ -103,9 +108,11 @@ describe("Test FciRouterScreen", () => {
       render.component.queryByTestId("FciRouterLoadingScreenTestID")
     ).not.toBeNull();
 
-    render.store.dispatch(
-      fciSignatureRequestFromId.success(expiredSignatureRequest)
-    );
+    act(() => {
+      render.store.dispatch(
+        fciSignatureRequestFromId.success(expiredSignatureRequest)
+      );
+    });
 
     expect(
       render.component.queryByTestId("ExpiredSignatureRequestTestID")
@@ -128,9 +135,12 @@ describe("Test FciRouterScreen", () => {
       ...mockSignatureRequestDetailView,
       status: SignatureRequestStatusEnum.WAIT_FOR_QTSP
     };
-    render.store.dispatch(
-      fciSignatureRequestFromId.success(qtspSignatureRequest)
-    );
+
+    act(() => {
+      render.store.dispatch(
+        fciSignatureRequestFromId.success(qtspSignatureRequest)
+      );
+    });
 
     expect(
       render.component.queryByTestId("WaitQtspSignatureRequestTestID")
@@ -154,10 +164,13 @@ describe("Test FciRouterScreen", () => {
       ...mockSignatureRequestDetailView,
       status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE
     };
-    render.store.dispatch(
-      fciSignatureRequestFromId.success(qtspSignatureRequest)
-    );
-    render.store.dispatch(fciStartRequest());
+    act(() => {
+      render.store.dispatch(
+        fciSignatureRequestFromId.success(qtspSignatureRequest)
+      );
+      render.store.dispatch(fciStartRequest());
+    });
+
     expect(store.getActions()).toContainEqual(fciStartRequest());
   });
 });

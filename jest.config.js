@@ -12,7 +12,7 @@ module.exports = {
     "./node_modules/@shopify/react-native-skia/jestSetup.js"
   ],
   globalSetup: "./jestGlobalSetup.js",
-  setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
+  setupFilesAfterEnv: ["./jestAfterEnvSetup.js"],
   collectCoverage: true,
   testPathIgnorePatterns: [".*fiscal-code.test.ts$"]
 };

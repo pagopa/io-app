@@ -22,6 +22,123 @@ exports[`ItwHighlightBanner should match the snapshot for large variant 1`] = `
   }
 >
   <View
+    onLayout={[Function]}
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skBlend
+        mode="lighten"
+      >
+        <skLinearGradient
+          colors={
+            [
+              "#0B3EE3",
+              "#234FFF",
+              "#436FFF",
+              "#2F5EFF",
+              "#1E53FF",
+              "#1848F0",
+              "#0B3EE3",
+              "#1F4DFF",
+              "#2A5CFF",
+              "#1943E8",
+              "#0B3EE3",
+            ]
+          }
+          end={
+            {
+              "get": [Function],
+              "value": JsiSkPoint {
+                "CanvasKit": undefined,
+                "__typename__": "Point",
+                "dispose": [Function],
+                "ref": Float32Array [
+                  0,
+                  0,
+                ],
+              },
+            }
+          }
+          mode="repeat"
+          start={
+            {
+              "get": [Function],
+              "value": JsiSkPoint {
+                "CanvasKit": undefined,
+                "__typename__": "Point",
+                "dispose": [Function],
+                "ref": Float32Array [
+                  0,
+                  0,
+                ],
+              },
+            }
+          }
+        />
+        <skLinearGradient
+          colors={
+            [
+              "#0B3EE3",
+              "#234FFF",
+              "#436FFF",
+              "#2F5EFF",
+              "#1E53FF",
+              "#1848F0",
+              "#0B3EE3",
+              "#1F4DFF",
+              "#2A5CFF",
+              "#1943E8",
+              "#0B3EE3",
+            ]
+          }
+          end={
+            {
+              "get": [Function],
+              "value": JsiSkPoint {
+                "CanvasKit": undefined,
+                "__typename__": "Point",
+                "dispose": [Function],
+                "ref": Float32Array [
+                  0,
+                  0,
+                ],
+              },
+            }
+          }
+          mode="repeat"
+          start={
+            {
+              "get": [Function],
+              "value": JsiSkPoint {
+                "CanvasKit": undefined,
+                "__typename__": "Point",
+                "dispose": [Function],
+                "ref": Float32Array [
+                  0,
+                  0,
+                ],
+              },
+            }
+          }
+        />
+      </skBlend>
+    </skRRect>
+  </View>
+  <View
     accessibilityLabel="title description action"
     accessible={true}
     style={
@@ -148,23 +265,23 @@ exports[`ItwHighlightBanner should match the snapshot for large variant 1`] = `
     <View>
       <Text
         allowFontScaling={true}
-        dynamicTypeRamp="body"
+        dynamicTypeRamp="footnote"
         maxFontSizeMultiplier={1.5}
         style={
           [
             {},
             {
-              "color": "#555C70",
+              "color": "#FFFFFF",
               "fontFamily": "Titillio",
-              "fontSize": 16,
+              "fontSize": 12,
               "fontStyle": "normal",
               "fontWeight": "400",
-              "lineHeight": 24,
+              "lineHeight": 18,
             },
           ]
         }
       >
-        Message can't be decoded
+        description
       </Text>
     </View>
     <View
@@ -355,6 +472,123 @@ exports[`ItwHighlightBanner should match the snapshot for small variant 1`] = `
     }
   >
     <View
+      onLayout={[Function]}
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <skRRect
+        height={0}
+        r={16}
+        width={0}
+        x={0}
+        y={0}
+      >
+        <skBlend
+          mode="lighten"
+        >
+          <skLinearGradient
+            colors={
+              [
+                "#0B3EE3",
+                "#234FFF",
+                "#436FFF",
+                "#2F5EFF",
+                "#1E53FF",
+                "#1848F0",
+                "#0B3EE3",
+                "#1F4DFF",
+                "#2A5CFF",
+                "#1943E8",
+                "#0B3EE3",
+              ]
+            }
+            end={
+              {
+                "get": [Function],
+                "value": JsiSkPoint {
+                  "CanvasKit": undefined,
+                  "__typename__": "Point",
+                  "dispose": [Function],
+                  "ref": Float32Array [
+                    0,
+                    0,
+                  ],
+                },
+              }
+            }
+            mode="repeat"
+            start={
+              {
+                "get": [Function],
+                "value": JsiSkPoint {
+                  "CanvasKit": undefined,
+                  "__typename__": "Point",
+                  "dispose": [Function],
+                  "ref": Float32Array [
+                    0,
+                    0,
+                  ],
+                },
+              }
+            }
+          />
+          <skLinearGradient
+            colors={
+              [
+                "#0B3EE3",
+                "#234FFF",
+                "#436FFF",
+                "#2F5EFF",
+                "#1E53FF",
+                "#1848F0",
+                "#0B3EE3",
+                "#1F4DFF",
+                "#2A5CFF",
+                "#1943E8",
+                "#0B3EE3",
+              ]
+            }
+            end={
+              {
+                "get": [Function],
+                "value": JsiSkPoint {
+                  "CanvasKit": undefined,
+                  "__typename__": "Point",
+                  "dispose": [Function],
+                  "ref": Float32Array [
+                    0,
+                    0,
+                  ],
+                },
+              }
+            }
+            mode="repeat"
+            start={
+              {
+                "get": [Function],
+                "value": JsiSkPoint {
+                  "CanvasKit": undefined,
+                  "__typename__": "Point",
+                  "dispose": [Function],
+                  "ref": Float32Array [
+                    0,
+                    0,
+                  ],
+                },
+              }
+            }
+          />
+        </skBlend>
+      </skRRect>
+    </View>
+    <View
       accessibilityLabel="title description action"
       accessible={true}
       style={
@@ -472,23 +706,23 @@ exports[`ItwHighlightBanner should match the snapshot for small variant 1`] = `
       <View>
         <Text
           allowFontScaling={true}
-          dynamicTypeRamp="body"
+          dynamicTypeRamp="footnote"
           maxFontSizeMultiplier={1.5}
           style={
             [
               {},
               {
-                "color": "#555C70",
+                "color": "#FFFFFF",
                 "fontFamily": "Titillio",
-                "fontSize": 16,
+                "fontSize": 12,
                 "fontStyle": "normal",
                 "fontWeight": "400",
-                "lineHeight": 24,
+                "lineHeight": 18,
               },
             ]
           }
         >
-          Message can't be decoded
+          description
         </Text>
       </View>
       <View

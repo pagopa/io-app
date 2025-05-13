@@ -112,7 +112,7 @@ describe("ProfileMainScreenTopBanner", () => {
       .mockImplementation((_: GlobalState) => "APPEARANCE_SETTINGS_BANNER");
 
     const root = renderComponent(<ProfileMainScreenTopBanner />);
-    const component = root.getByA11yLabel(
+    const component = root.getByLabelText(
       TypedI18n.t("profile.main.banner.close")
     );
 
