@@ -140,12 +140,12 @@ const reducer = (
         isWalletInstanceRemotelyActive
       };
 
-case getType(itwSetFiscalCodeWhitelisted): {
-  return {
-    ...state,
-    isFiscalCodeWhitelisted: action.payload
-  };
-}
+    case getType(itwSetFiscalCodeWhitelisted): {
+      return {
+        ...state,
+        isFiscalCodeWhitelisted: action.payload
+      };
+    }
     case getType(itwSetOfflineBannerHidden): {
       return {
         ...state,
