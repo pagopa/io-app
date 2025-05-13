@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs, assign } from "xstate";
+import { ActionArgs, assertEvent, assign } from "xstate";
 import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -26,7 +26,7 @@ import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store
 import { itwSetAuthLevel } from "../../common/store/actions/preferences.ts";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
 import { Context } from "./context";
-import { EidIssuanceEvents, GoToCieWarning } from "./events";
+import { EidIssuanceEvents } from "./events";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -149,7 +149,9 @@ export const createEidIssuanceActionsImplementation = (
 
   navigateToCieWarningScreen: ({
     event
-  }: ActionArgs<Context, GoToCieWarning, EidIssuanceEvents>) => {
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assertEvent(event, "go-to-cie-warning");
+
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
       params: {
