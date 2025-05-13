@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs, assign } from "xstate";
+import { ActionArgs, assertEvent, assign } from "xstate";
 import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -156,6 +156,19 @@ export const createEidIssuanceActionsImplementation = (
   navigateToWalletRevocationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
+    });
+  },
+
+  navigateToCieWarningScreen: ({
+    event
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assertEvent(event, "go-to-cie-warning");
+
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
+      params: {
+        warning: event.warning
+      }
     });
   },
 

@@ -1,8 +1,7 @@
 import I18n from "../../../../i18n.ts";
-import { ITW_ROUTES } from "../../navigation/routes.ts";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { CieWarningType } from "../screens/ItwIdentificationCieWarningScreen.tsx";
 import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet.tsx";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
 
 /**
  * Hook that manages the two bottom sheets used in the CIE identification flow:
@@ -10,13 +9,11 @@ import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdenti
  * - `pinBottomSheet`: displays information about the CIE PIN
  */
 export const useCieInfoAndPinBottomSheets = () => {
-  const navigation = useIONavigation();
+
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const navigateToCieWarning = (warning: CieWarningType) => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
-      params: { warning }
-    });
+    machineRef.send({ type: "go-to-cie-warning", warning });
   };
 
   const cieInfoBottomSheet = useItwIdentificationBottomSheet({

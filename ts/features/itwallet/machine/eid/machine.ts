@@ -44,6 +44,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToCieReadCardScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
+    navigateToCieWarningScreen: notImplemented,
     storeIntegrityKeyTag: notImplemented,
     cleanupIntegrityKeyTag: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
@@ -326,6 +327,9 @@ export const itwEidIssuanceMachine = setup({
                 target: "CieID"
               }
             ],
+            "go-to-cie-warning": {
+              target: "CieWarning"
+            },
             back: [
               {
                 guard: "isReissuing",
@@ -334,7 +338,16 @@ export const itwEidIssuanceMachine = setup({
               {
                 target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
               }
-            ],
+            ]
+          }
+        },
+        CieWarning: {
+          description: "Navigates to and handles the CIE warning screen.",
+          entry: "navigateToCieWarningScreen",
+          on: {
+            back: {
+              target: "ModeSelection"
+            },
             close: {
               actions: ["closeIssuance"]
             }
@@ -481,6 +494,27 @@ export const itwEidIssuanceMachine = setup({
                 { target: "InsertingCardPin" }
               ]
             },
+            CieWarning: {
+              description: "Navigates to and handles the CIE warning screen.",
+              entry: "navigateToCieWarningScreen",
+              on: {
+                back: [
+                  {
+                    guard: ({ context }) =>
+                      context.cieContext?.previousCiePreparationScreen === "PreparationPin",
+                    target: "PreparationPin"
+                  },
+                  {
+                    guard: ({ context }) =>
+                      context.cieContext?.previousCiePreparationScreen === "PreparationCie",
+                    target: "PreparationCie"
+                  }
+                ],
+                close: {
+                  actions: ["closeIssuance"]
+                }
+              }
+            },
             PreparationCie: {
               description:
                 "This state handles the CIE preparation screen, where the user is informed about the CIE card",
@@ -492,6 +526,14 @@ export const itwEidIssuanceMachine = setup({
                       "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
                   }
                 ],
+                "go-to-cie-warning": {
+                  target: "CieWarning",
+                  actions: assign(({ context }) => ({
+                    cieContext: _.merge(context.cieContext, {
+                      previousCiePreparationScreen: "PreparationCie"
+                    })
+                  }))
+                },
                 back: {
                   target:
                     "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
@@ -512,6 +554,14 @@ export const itwEidIssuanceMachine = setup({
                       "#itwEidIssuanceMachine.UserIdentification.CiePin.InsertingCardPin"
                   }
                 ],
+                "go-to-cie-warning": {
+                  target: "CieWarning",
+                  actions: assign(({ context }) => ({
+                    cieContext: _.merge(context.cieContext, {
+                      previousCiePreparationScreen: "PreparationPin"
+                    })
+                  }))
+                },
                 back: {
                   target:
                     "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie"

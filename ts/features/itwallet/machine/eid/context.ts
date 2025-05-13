@@ -29,6 +29,7 @@ export type AuthenticationContext = {
 export type CieContext = {
   isNFCEnabled: boolean;
   isCIEAuthenticationSupported: boolean;
+  previousCiePreparationScreen: string;
 };
 
 export type Context = {

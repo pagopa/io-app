@@ -3,9 +3,6 @@ import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScro
 import I18n from "../../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { EidIssuanceEvents } from "../../../machine/eid/events.ts";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
-import { CieWarningType } from "../../screens/ItwIdentificationCieWarningScreen.tsx";
-import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { useCieInfoAndPinBottomSheets } from "../../hooks/useCieInfoAndPinBottomSheets.ts";
 
 type InfoType = "cie" | "pin";
@@ -17,7 +14,6 @@ type GetContentParams = {
   presentCieBottomSheet: () => void;
   presentPinBottomSheet: () => void;
   sendEvent: (event: EidIssuanceEvents) => void;
-  navigateToCieWarning: (warning: CieWarningType) => void;
 };
 
 const getContent = ({
@@ -25,7 +21,6 @@ const getContent = ({
   presentCieBottomSheet,
   presentPinBottomSheet,
   sendEvent,
-  navigateToCieWarning
 }: GetContentParams) => {
   const isCie = infoType === "cie";
 
@@ -55,7 +50,11 @@ const getContent = ({
       label: I18n.t(
         `features.itWallet.identification.l3.mode.preparationScreen.${infoType}.secondaryAction`
       ),
-      onPress: () => navigateToCieWarning(isCie ? "noCie" : "noPin")
+      onPress: () =>
+        sendEvent({
+          type: "go-to-cie-warning",
+          warning: isCie ? "noCie" : "noPin"
+        })
     }
     // imageSource: require("../../../../../../img/features/itWallet/identification/")
   };
@@ -66,23 +65,11 @@ export const CiePreparationScreenContent = ({ infoType }: Props) => {
 
   const { cieInfoBottomSheet, pinBottomSheet } = useCieInfoAndPinBottomSheets();
 
-  const navigation = useIONavigation();
-
-  const navigateToCieWarning = (warning: CieWarningType) => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
-      params: {
-        warning
-      }
-    });
-  };
-
   const content = getContent({
     infoType,
     presentCieBottomSheet: cieInfoBottomSheet.present,
     presentPinBottomSheet: pinBottomSheet.present,
-    sendEvent: machineRef.send,
-    navigateToCieWarning
+    sendEvent: machineRef.send
   });
 
   return (
