@@ -110,13 +110,7 @@ const InnerComponent = () => {
       <View style={styles.cardContainer}>
         <BackgroundGradient />
         <View style={{ paddingBottom: 24 }}>
-          <View
-            style={{
-              alignItems: "center",
-              aspectRatio: 286 / 192,
-              marginHorizontal: -16
-            }}
-          >
+          <View style={styles.logoContainer}>
             <ItwHero width="100%" height="100%" />
           </View>
           <VStack space={16} style={{ alignItems: "center" }}>
@@ -312,6 +306,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 10,
     elevation: 5
+  },
+  logoContainer: {
+    alignItems: "center",
+    aspectRatio: 286 / 192,
+    marginHorizontal: -16
   },
   gradient: {
     position: "absolute",
