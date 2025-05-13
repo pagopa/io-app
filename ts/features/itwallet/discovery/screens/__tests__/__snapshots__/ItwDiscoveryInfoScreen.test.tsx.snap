@@ -1381,12 +1381,14 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true 1`] 
                                     style={
                                       {
                                         "alignItems": "center",
+                                        "aspectRatio": 1.4895833333333333,
+                                        "marginHorizontal": -16,
                                       }
                                     }
                                   >
                                     <SvgMock
-                                      height={192}
-                                      width={286}
+                                      height="100%"
+                                      width="100%"
                                     />
                                   </View>
                                   <View

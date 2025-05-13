@@ -104,8 +104,14 @@ const InnerComponent = () => {
       <View style={styles.cardContainer}>
         <BackgroundGradient />
         <View style={{ paddingBottom: 24 }}>
-          <View style={{ alignItems: "center" }}>
-            <ItwHero width={286} height={192} />
+          <View
+            style={{
+              alignItems: "center",
+              aspectRatio: 286 / 192,
+              marginHorizontal: -16
+            }}
+          >
+            <ItwHero width="100%" height="100%" />
           </View>
           <VStack space={16} style={{ alignItems: "center" }}>
             <Badge
