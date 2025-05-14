@@ -113,11 +113,20 @@ export const itwEidIssuanceMachine = setup({
       // We still need an empty onError to avoid uncaught promise rejection
     }
   },
+  on: {
+    // This action should only be used in the playground
+    reset: {
+      target: "#itwEidIssuanceMachine.Idle"
+    }
+  },
   states: {
     Idle: {
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
+          actions: assign(({ event }) => ({
+            isL3FeaturesEnabled: event.isL3
+          })),
           target: "TosAcceptance"
         },
         close: {
