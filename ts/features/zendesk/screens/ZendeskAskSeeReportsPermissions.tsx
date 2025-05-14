@@ -1,7 +1,7 @@
 import {
-  ButtonLink,
   ContentWrapper,
   Divider,
+  IOButton,
   IOToast,
   IOVisualCostants,
   ListItemHeader,
@@ -126,7 +126,8 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
       ignoreSafeAreaMargin={true}
     >
       <ContentWrapper>
-        <ButtonLink
+        <IOButton
+          variant="link"
           label={I18n.t("support.askPermissions.privacyLink")}
           onPress={() => {
             openWebUrl(zendeskPrivacyUrl, () =>

@@ -5,7 +5,6 @@ import {
   HeaderSecondLevel,
   HStack,
   Icon,
-  IOStyles,
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -13,7 +12,6 @@ import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback, useLayoutEffect, useMemo } from "react";
-import { View } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -158,21 +156,16 @@ const ContentView = ({ eid }: ContentViewProps) => {
         }
       }}
     >
-      <ContentWrapper>
-        <VStack space={24} style={{ flexGrow: 1 }}>
-          <HStack space={8} style={IOStyles.alignCenter}>
+      <ContentWrapper style={{ flexGrow: 1 }}>
+        <VStack space={24}>
+          <HStack space={8} style={{ alignItems: "center" }}>
             <Icon name="legalValue" color={theme["interactiveElem-default"]} />
             <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
           </HStack>
           <IOMarkdown
             content={I18n.t("features.itWallet.issuance.eidPreview.subtitle")}
           />
-          <View>
-            <ItwCredentialPreviewClaimsList
-              data={eid}
-              releaserVisible={false}
-            />
-          </View>
+          <ItwCredentialPreviewClaimsList data={eid} releaserVisible={false} />
         </VStack>
       </ContentWrapper>
     </ForceScrollDownView>

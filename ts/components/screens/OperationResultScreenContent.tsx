@@ -1,14 +1,11 @@
 import {
   Body,
   BodyProps,
-  ButtonLink,
-  ButtonLinkProps,
-  ButtonSolid,
-  ButtonSolidProps,
   ComposedBodyFromArray,
   H3,
+  IOButton,
+  IOButtonProps,
   IOPictograms,
-  IOStyles,
   IOVisualCostants,
   Pictogram,
   VSpacer,
@@ -24,19 +21,18 @@ import { Platform, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+type ButtonProps = Pick<
+  IOButtonProps,
+  "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
+>;
+
 type OperationResultScreenContentProps = WithTestID<{
   pictogram?: IOPictograms;
   title: string;
   subtitle?: string | Array<BodyProps>;
   subtitleProps?: Pick<BodyProps, "textBreakStrategy" | "lineBreakStrategyIOS">;
-  action?: Pick<
-    ButtonSolidProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
-  >;
-  secondaryAction?: Pick<
-    ButtonLinkProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
-  >;
+  action?: ButtonProps;
+  secondaryAction?: ButtonProps;
   isHeaderVisible?: boolean;
 }>;
 
@@ -73,7 +69,7 @@ const OperationResultScreenContent = forwardRef<
         ]}
       >
         {pictogram && (
-          <View style={IOStyles.alignCenter}>
+          <View style={{ alignItems: "center" }}>
             <Pictogram name={pictogram} size={120} />
             <VSpacer size={24} />
           </View>
@@ -94,18 +90,18 @@ const OperationResultScreenContent = forwardRef<
           </>
         )}
         {action && (
-          <View style={IOStyles.alignCenter}>
+          <View style={{ alignItems: "center" }}>
             <VSpacer size={24} />
             <View>
-              <ButtonSolid {...action} />
+              <IOButton variant="solid" {...action} />
             </View>
           </View>
         )}
         {secondaryAction && (
-          <View style={IOStyles.alignCenter}>
+          <View style={{ alignItems: "center" }}>
             <VSpacer size={24} />
             <View>
-              <ButtonLink {...secondaryAction} />
+              <IOButton variant="link" {...secondaryAction} />
             </View>
           </View>
         )}

@@ -11,7 +11,6 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -51,7 +50,7 @@ const IdPayInitiativeRulesInfoBox = (props: Props) => {
           {content}
         </Body>
         <VSpacer size={16} />
-        <View style={IOStyles.row}>
+        <View style={{ flexDirection: "row" }}>
           <Icon name="categLearning" color={theme["interactiveElem-default"]} />
           <HSpacer size={8} />
           <Body weight="Semibold" asLink onPress={() => present()}>

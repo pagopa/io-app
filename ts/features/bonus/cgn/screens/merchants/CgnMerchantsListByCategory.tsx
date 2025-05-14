@@ -1,8 +1,10 @@
 import {
+  ContentWrapper,
   Divider,
   H3,
   HSpacer,
   IOColors,
+  IOVisualCostants,
   Icon,
   hexToRgba
 } from "@pagopa/io-app-design-system";
@@ -20,7 +22,6 @@ import {
   isError,
   isLoading
 } from "../../../../../common/model/RemoteValue";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -47,9 +48,6 @@ export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
 }>;
 
 const CgnMerchantsListByCategory = () => {
-  // const screenHeight = Dimensions.get("window").height;
-  // const translationY = useSharedValue(0);
-
   const animatedFlatListRef = useAnimatedRef<Animated.FlatList<any>>();
 
   const dispatch = useIODispatch();
@@ -169,16 +167,13 @@ const CgnMerchantsListByCategory = () => {
         />
       )}
       {categorySpecs && (
-        <View
-          style={[
-            IOStyles.horizontalContentPadding,
-            {
-              backgroundColor: categorySpecs.colors,
-              paddingBottom: 24
-            }
-          ]}
+        <ContentWrapper
+          style={{
+            backgroundColor: categorySpecs.colors,
+            paddingBottom: 24
+          }}
         >
-          <View style={[IOStyles.row, { alignItems: "center" }]}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View
               style={{
                 justifyContent: "center",
@@ -202,7 +197,7 @@ const CgnMerchantsListByCategory = () => {
               </H3>
             </View>
           </View>
-        </View>
+        </ContentWrapper>
       )}
     </>
   );
@@ -243,7 +238,8 @@ const CgnMerchantsListByCategory = () => {
           scrollEventThrottle={8}
           snapToEnd={false}
           contentContainerStyle={{
-            flexGrow: 1
+            flexGrow: 1,
+            paddingBottom: IOVisualCostants.appMarginDefault
           }}
           refreshControl={refreshControl}
           data={merchantsAll}

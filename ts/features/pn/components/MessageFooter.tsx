@@ -1,12 +1,10 @@
 import { MutableRefObject, useCallback } from "react";
-import { View } from "react-native";
 import {
-  ButtonSolid,
-  IOStyles,
+  FooterActions,
+  FooterActionsMeasurements,
   useIOToast
 } from "@pagopa/io-app-design-system";
 import { useDispatch } from "react-redux";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../i18n";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIOSelector } from "../../../store/hooks";
@@ -26,6 +24,7 @@ type MessageFooterProps = {
   isCancelled: boolean;
   presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
   serviceId: ServiceId;
+  onMeasure: (measurements: FooterActionsMeasurements) => void;
 };
 
 export const MessageFooter = ({
@@ -33,9 +32,9 @@ export const MessageFooter = ({
   payments,
   maxVisiblePaymentCount,
   isCancelled,
-  presentPaymentsBottomSheetRef
+  presentPaymentsBottomSheetRef,
+  onMeasure
 }: MessageFooterProps) => {
-  const safeAreaInsets = useSafeAreaInsets();
   const dispatch = useDispatch();
   const toast = useIOToast();
   const buttonState = useIOSelector(state =>
@@ -76,21 +75,19 @@ export const MessageFooter = ({
     return null;
   }
   const isLoading = buttonState === "visibleLoading";
+
   return (
-    <View
-      style={[
-        IOStyles.footer,
-        { paddingBottom: safeAreaInsets.bottom + IOStyles.footer.paddingBottom }
-      ]}
-    >
-      <ButtonSolid
-        disabled={isLoading}
-        label={I18n.t("wallet.continue")}
-        accessibilityLabel={I18n.t("wallet.continue")}
-        onPress={onFooterPressCallback}
-        fullWidth
-        loading={isLoading}
-      />
-    </View>
+    <FooterActions
+      onMeasure={onMeasure}
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: I18n.t("wallet.continue"),
+          onPress: onFooterPressCallback,
+          disabled: isLoading,
+          loading: isLoading
+        }
+      }}
+    />
   );
 };

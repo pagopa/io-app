@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { H6, IOStyles, RadioGroup } from "@pagopa/io-app-design-system";
+import { H6, RadioGroup } from "@pagopa/io-app-design-system";
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
@@ -31,7 +31,7 @@ const IdPayMultiValuePrerequisitesScreen = () => {
     <PagerView
       ref={pagerRef}
       scrollEnabled={false}
-      style={IOStyles.flex}
+      style={{ flex: 1 }}
       initialPage={0}
     >
       {multiSelfDeclarations.map((selfDelcaration, index) => (

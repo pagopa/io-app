@@ -1,9 +1,4 @@
-import {
-  Body,
-  IOColors,
-  IOStyles,
-  ListItemCheckbox
-} from "@pagopa/io-app-design-system";
+import { Body, IOColors, ListItemCheckbox } from "@pagopa/io-app-design-system";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
@@ -23,10 +18,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderBottomColor: IOColors["grey-100"],
     borderBottomWidth: 1
-  },
-  details: {
-    paddingTop: 16,
-    paddingBottom: 8
   }
 });
 
@@ -48,7 +39,7 @@ const SignatureFieldItem = (props: Props) => {
         }}
         accessibilityLabel={props.title}
       />
-      <View style={[IOStyles.row, styles.details]}>
+      <View style={{ flexDirection: "row", paddingTop: 16, paddingBottom: 8 }}>
         <Body
           weight="Semibold"
           asLink

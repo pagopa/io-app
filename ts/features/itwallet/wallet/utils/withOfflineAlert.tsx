@@ -1,6 +1,6 @@
 import {
   AlertEdgeToEdgeWrapper,
-  ButtonSolid,
+  IOButton,
   IOColors,
   VStack,
   useIOToast
@@ -71,6 +71,23 @@ const useOfflineAlertDetailModal = (
     }
   }, [dispatch, isConnected, toast]);
 
+  const navigateOnAuthPage = useCallback(() => {
+    // Reset the offline access reason.
+    // Since this state is `undefined` when the user is online,
+    // the startup saga will proceed without blocking.
+    dispatch(resetOfflineAccessReason());
+    // Dispatch this action to mount the correct navigator.
+    dispatch(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
+  }, [dispatch]);
+
+  const handlePressModalAction = useCallback(() => {
+    if (offlineAccessReason === OfflineAccessReasonEnum.SESSION_EXPIRED) {
+      navigateOnAuthPage();
+    } else {
+      handleAppRestart();
+    }
+  }, [handleAppRestart, navigateOnAuthPage, offlineAccessReason]);
+
   return useIOBottomSheetModal({
     title: I18n.t(
       `features.itWallet.offline.${offlineAccessReason}.modal.title`
@@ -82,9 +99,12 @@ const useOfflineAlertDetailModal = (
             `features.itWallet.offline.${offlineAccessReason}.modal.content`
           )}
         />
-        <ButtonSolid
-          label={I18n.t("features.itWallet.offline.action")}
-          onPress={handleAppRestart}
+        <IOButton
+          variant="solid"
+          label={I18n.t(
+            `features.itWallet.offline.${offlineAccessReason}.modal.footerAction`
+          )}
+          onPress={handlePressModalAction}
         />
       </VStack>
     )

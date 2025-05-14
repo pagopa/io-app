@@ -96,7 +96,7 @@ export const itwEidIssuanceMachine = setup({
     hasIntegrityKeyTag: ({ context }) => context.integrityKeyTag !== undefined,
     hasValidWalletInstanceAttestation: notImplemented,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
-    isReissuing: ({ context }) => context.isReissuing === true
+    isReissuing: ({ context }) => context.isReissuing
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -301,6 +301,18 @@ export const itwEidIssuanceMachine = setup({
                 target: "CiePin"
               },
               {
+                guard: ({ event, context }) =>
+                  event.mode === "cieId" &&
+                  context.isL3FeaturesEnabled === true,
+                actions: assign(() => ({
+                  identification: {
+                    mode: "cieId",
+                    level: "L3"
+                  }
+                })),
+                target: "CieID"
+              },
+              {
                 guard: ({ event }) => event.mode === "cieId",
                 actions: assign(() => ({
                   identification: {
@@ -336,6 +348,7 @@ export const itwEidIssuanceMachine = setup({
                 src: "startAuthFlow",
                 input: ({ context }) => ({
                   walletInstanceAttestation: context.walletInstanceAttestation,
+                  isL3IssuanceEnabled: context.isL3FeaturesEnabled,
                   identification: context.identification
                 }),
                 onDone: {

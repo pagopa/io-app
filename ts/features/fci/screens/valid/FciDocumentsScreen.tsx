@@ -1,8 +1,4 @@
-import {
-  FooterActionsInline,
-  IOColors,
-  IOStyles
-} from "@pagopa/io-app-design-system";
+import { FooterActionsInline, IOColors } from "@pagopa/io-app-design-system";
 import {
   RouteProp,
   StackActions,
@@ -243,7 +239,7 @@ const FciDocumentsScreen = () => {
         disabled={false}
         testID={"FciDocumentsNavBarTestID"}
       />
-      <View style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
+      <View style={{ flex: 1 }} testID={"FciDocumentsScreenTestID"}>
         {documents.length > 0 && (
           <>
             {renderPager()}

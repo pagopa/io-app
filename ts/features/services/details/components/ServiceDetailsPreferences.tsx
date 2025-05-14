@@ -2,8 +2,8 @@ import { ComponentProps, useCallback, useEffect } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import {
   Divider,
-  IOStyles,
   IOToast,
+  IOVisualCostants,
   ListItemHeader,
   ListItemSwitch
 } from "@pagopa/io-app-design-system";
@@ -20,7 +20,7 @@ import {
   isErrorServicePreferenceSelector,
   isLoadingServicePreferenceSelector,
   serviceMetadataInfoSelector,
-  servicePreferenceResponseSuccessSelector
+  servicePreferenceResponseSuccessByIdSelector
 } from "../store/reducers";
 
 type PreferenceSwitchListItem = {
@@ -38,16 +38,16 @@ export const ServiceDetailsPreferences = ({
 
   const dispatch = useIODispatch();
 
-  const servicePreferenceResponseSuccess = useIOSelector(
-    servicePreferenceResponseSuccessSelector
+  const servicePreferenceResponseSuccess = useIOSelector(state =>
+    servicePreferenceResponseSuccessByIdSelector(state, serviceId)
   );
 
-  const isLoadingServicePreference = useIOSelector(
-    isLoadingServicePreferenceSelector
+  const isLoadingServicePreference = useIOSelector(state =>
+    isLoadingServicePreferenceSelector(state, serviceId)
   );
 
-  const isErrorServicePreference = useIOSelector(
-    isErrorServicePreferenceSelector
+  const isErrorServicePreference = useIOSelector(state =>
+    isErrorServicePreferenceSelector(state, serviceId)
   );
 
   const isPremiumMessagesOptInOutEnabled = useIOSelector(
@@ -157,7 +157,9 @@ export const ServiceDetailsPreferences = ({
         <ListItemHeader label={I18n.t("services.details.preferences.title")} />
       }
       ItemSeparatorComponent={() => <Divider />}
-      contentContainerStyle={IOStyles.horizontalContentPadding}
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
       data={filteredPreferenceListItems}
       keyExtractor={item => item.label}
       renderItem={renderItem}

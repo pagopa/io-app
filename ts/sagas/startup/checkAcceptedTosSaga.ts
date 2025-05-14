@@ -3,7 +3,7 @@ import { ActionType, getType } from "typesafe-actions";
 import { StackActions } from "@react-navigation/native";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { navigateToTosScreen } from "../../store/actions/navigation";
-import { tosAccepted } from "../../store/actions/onboarding";
+import { tosAccepted } from "../../features/onboarding/store/actions";
 import { profileUpsert } from "../../features/settings/common/store/actions";
 import { isProfileFirstOnBoarding } from "../../features/settings/common/store/utils/guards";
 import { ReduxSagaEffect } from "../../types/utils";

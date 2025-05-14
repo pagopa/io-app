@@ -378,6 +378,7 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                               align="xMidYMid"
                               bbHeight={16}
                               bbWidth={16}
+                              color="#BBC2D6"
                               focusable={false}
                               height={16}
                               importantForAccessibility="no-hide-descendants"
@@ -391,9 +392,6 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#BBC2D6",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 16,
                                     "width": 16,
@@ -405,7 +403,6 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                               width={16}
                             >
                               <RNSVGGroup
-                                color="#BBC2D6"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -497,6 +494,7 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                           align="xMidYMid"
                           bbHeight={24}
                           bbWidth={24}
+                          color="#D13333"
                           focusable={false}
                           height={24}
                           importantForAccessibility="no-hide-descendants"
@@ -510,9 +508,6 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                                 "borderWidth": 0,
                               },
                               {
-                                "color": "#D13333",
-                              },
-                              {
                                 "flex": 0,
                                 "height": 24,
                                 "width": 24,
@@ -524,7 +519,6 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                           width={24}
                         >
                           <RNSVGGroup
-                            color="#D13333"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -927,6 +921,7 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
                             align="xMidYMid"
                             bbHeight={16}
                             bbWidth={16}
+                            color="#555C70"
                             focusable={false}
                             height={16}
                             importantForAccessibility="no-hide-descendants"
@@ -940,9 +935,6 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#555C70",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 16,
                                   "width": 16,
@@ -954,7 +946,6 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
                             width={16}
                           >
                             <RNSVGGroup
-                              color="#555C70"
                               fill={
                                 {
                                   "payload": 4278190080,

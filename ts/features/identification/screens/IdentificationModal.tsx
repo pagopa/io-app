@@ -1,9 +1,8 @@
 import {
-  ButtonLink,
   ContentWrapper,
   H2,
+  IOButton,
   IOPictograms,
-  IOStyles,
   IconButton,
   Pictogram,
   ToastNotification,
@@ -428,7 +427,7 @@ export const IdentificationModal = () => {
                 </View>
               ) : (isDeviceScreenSmall || hugeFontEnabled) &&
                 isValidatingTask ? null : (
-                <View style={IOStyles.alignCenter}>
+                <View style={{ alignItems: "center" }}>
                   <Pictogram
                     pictogramStyle="light-content"
                     name={pictogramKey}
@@ -436,7 +435,7 @@ export const IdentificationModal = () => {
                   />
                 </View>
               )}
-              <View accessible ref={headerRef} style={IOStyles.alignCenter}>
+              <View accessible ref={headerRef} style={{ alignItems: "center" }}>
                 <VSpacer size={8} />
                 <H2 color={"white"} style={{ textAlign: "center" }}>
                   {titleLabel}
@@ -452,14 +451,15 @@ export const IdentificationModal = () => {
             <NumberPad />
             <View>
               <VSpacer size={isDeviceScreenSmall ? 16 : 32} />
-              <View style={IOStyles.selfCenter}>
-                <ButtonLink
+              <View style={{ alignSelf: "center" }}>
+                <IOButton
+                  variant="link"
                   textAlign="center"
+                  color="contrast"
                   /* Don't limit number of lines
                     when larger text is enabled */
                   numberOfLines={0}
                   accessibilityLabel={forgotCodeLabel}
-                  color="contrast"
                   label={forgotCodeLabel}
                   onPress={confirmResetAlert}
                 />

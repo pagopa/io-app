@@ -395,6 +395,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                             align="xMidYMid"
                             bbHeight={24}
                             bbWidth={24}
+                            color="#555C70"
                             focusable={false}
                             height={24}
                             importantForAccessibility="no-hide-descendants"
@@ -408,9 +409,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#555C70",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 24,
                                   "width": 24,
@@ -422,7 +420,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                             width={24}
                           >
                             <RNSVGGroup
-                              color="#555C70"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -928,6 +925,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                             align="xMidYMid"
                             bbHeight={24}
                             bbWidth={24}
+                            color="#555C70"
                             focusable={false}
                             height={24}
                             importantForAccessibility="no-hide-descendants"
@@ -941,9 +939,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#555C70",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 24,
                                   "width": 24,
@@ -955,7 +950,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                             width={24}
                           >
                             <RNSVGGroup
-                              color="#555C70"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -1461,6 +1455,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                             align="xMidYMid"
                             bbHeight={24}
                             bbWidth={24}
+                            color="#555C70"
                             focusable={false}
                             height={24}
                             importantForAccessibility="no-hide-descendants"
@@ -1474,9 +1469,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#555C70",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 24,
                                   "width": 24,
@@ -1488,7 +1480,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                             width={24}
                           >
                             <RNSVGGroup
-                              color="#555C70"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -1994,6 +1985,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                             align="xMidYMid"
                             bbHeight={24}
                             bbWidth={24}
+                            color="#555C70"
                             focusable={false}
                             height={24}
                             importantForAccessibility="no-hide-descendants"
@@ -2007,9 +1999,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#555C70",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 24,
                                   "width": 24,
@@ -2021,7 +2010,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                             width={24}
                           >
                             <RNSVGGroup
-                              color="#555C70"
                               fill={
                                 {
                                   "payload": 4278190080,

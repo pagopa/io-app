@@ -1,37 +1,31 @@
 import {
   Body,
   BodyProps,
-  ButtonLink,
-  ButtonLinkProps,
-  ButtonSolid,
-  ButtonSolidProps,
   ComposedBodyFromArray,
   ContentWrapper,
   H3,
+  IOButton,
+  IOButtonProps,
   IOPictograms,
-  IOStyles,
+  IOVisualCostants,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+type ButtonProps = Pick<
+  IOButtonProps,
+  "label" | "accessibilityLabel" | "onPress" | "testID"
+>;
 
 export type CustomWizardScreenProps = {
   title: string;
   description?: string | Array<BodyProps>;
   pictogram: IOPictograms;
-  primaryButton: Pick<
-    ButtonSolidProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID"
-  >;
-  actionButton?: Pick<
-    ButtonLinkProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID"
-  >;
-  buttonLink?: Pick<
-    ButtonLinkProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID"
-  >;
+  primaryButton: ButtonProps;
+  actionButton?: ButtonProps;
+  buttonLink?: ButtonProps;
 };
 
 /**
@@ -46,7 +40,7 @@ const CustomWizardScreen = ({
   actionButton,
   buttonLink
 }: CustomWizardScreenProps) => (
-  <SafeAreaView style={IOStyles.flex}>
+  <SafeAreaView style={{ flex: 1 }}>
     <WizardBody
       pictogram={pictogram}
       title={title}
@@ -54,12 +48,12 @@ const CustomWizardScreen = ({
       buttonLink={buttonLink}
     />
     <ContentWrapper>
-      <ButtonSolid {...primaryButton} fullWidth={true} />
+      <IOButton variant="solid" fullWidth {...primaryButton} />
       {actionButton && (
         <>
           <VSpacer size={24} />
-          <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
-            <ButtonLink {...actionButton} />
+          <View style={{ alignItems: "center", alignSelf: "center" }}>
+            <IOButton variant="link" {...actionButton} />
           </View>
           <VSpacer size={16} />
         </>
@@ -73,7 +67,7 @@ type CustomWizardBodyProps = {
   description?: string | Array<BodyProps>;
   pictogram: IOPictograms;
   buttonLink?: Pick<
-    ButtonLinkProps,
+    IOButtonProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
 };
@@ -85,7 +79,7 @@ const WizardBody = ({
   buttonLink
 }: CustomWizardBodyProps) => (
   <View style={styles.wizardContent}>
-    <View style={IOStyles.alignCenter}>
+    <View style={{ alignItems: "center" }}>
       <Pictogram name={pictogram} size={120} />
     </View>
     <VSpacer size={24} />
@@ -102,9 +96,9 @@ const WizardBody = ({
         </>
       )}
       {buttonLink && (
-        <View style={IOStyles.selfCenter}>
+        <View style={{ alignSelf: "center" }}>
           <VSpacer size={16} />
-          <ButtonLink {...buttonLink} />
+          <IOButton variant="link" {...buttonLink} />
         </View>
       )}
     </View>
@@ -116,9 +110,9 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   wizardContent: {
-    ...IOStyles.flex,
-    ...IOStyles.horizontalContentPadding,
-    ...IOStyles.centerJustified
+    flex: 1,
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    justifyContent: "center"
   }
 });
 

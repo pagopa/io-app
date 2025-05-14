@@ -1,4 +1,3 @@
-import { Text, View, SafeAreaView, ScrollView } from "react-native";
 import {
   Body,
   H4,
@@ -6,10 +5,10 @@ import {
   IOVisualCostants,
   hexToRgba
 } from "@pagopa/io-app-design-system";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { SafeAreaView, ScrollView, Text, View } from "react-native";
 
 export const DSSafeArea = () => (
-  <View style={IOStyles.flex}>
+  <View style={{ flex: 1 }}>
     <SafeAreaView style={{ flex: 1, backgroundColor: IOColors["error-100"] }}>
       <ScrollView contentContainerStyle={{ backgroundColor: IOColors.white }}>
         <View style={{ flex: 1 }}>

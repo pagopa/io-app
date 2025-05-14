@@ -1,3 +1,10 @@
+import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
+import CookieManager from "@react-native-cookies/cookies";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as T from "fp-ts/lib/Task";
+import * as TE from "fp-ts/lib/TaskEither";
 import {
   createRef,
   Dispatch,
@@ -7,7 +14,7 @@ import {
   useEffect,
   useState
 } from "react";
-import { View, Platform, StyleSheet } from "react-native";
+import { Platform, View } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -16,34 +23,21 @@ import {
   WebViewNavigationEvent,
   WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as T from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
-import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
-import CookieManager from "@react-native-cookies/cookies";
-import { IOColors, IOStyles } from "@pagopa/io-app-design-system";
+import { withLoadingSpinner } from "../../../../../components/helpers/withLoadingSpinner";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { selectedIdentityProviderSelector } from "../../../../../features/authentication/common/store/selectors";
+import { lollipopKeyTagSelector } from "../../../../../features/lollipop/store/reducers/lollipop";
+import { regenerateKeyGetRedirectsAndVerifySaml } from "../../../../../features/lollipop/utils/login";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import I18n from "../../../../../i18n";
-import { getIdpLoginUri } from "../../../common/utils/login";
-import { closeInjectedScript } from "../../../../../utils/webview";
-import { withLoadingSpinner } from "../../../../../components/helpers/withLoadingSpinner";
-import { lollipopKeyTagSelector } from "../../../../../features/lollipop/store/reducers/lollipop";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
-import { regenerateKeyGetRedirectsAndVerifySaml } from "../../../../../features/lollipop/utils/login";
 import { trackSpidLoginError } from "../../../../../utils/analytics";
+import { closeInjectedScript } from "../../../../../utils/webview";
+import { getIdpLoginUri } from "../../../common/utils/login";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
-import { selectedIdentityProviderSelector } from "../../../../../features/authentication/common/store/selectors";
-import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-
-const styles = StyleSheet.create({
-  errorContainer: {
-    backgroundColor: IOColors.white
-  }
-});
 
 // to make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
 // on Android it is not required
@@ -279,7 +273,7 @@ const CieWebView = (props: Props) => {
   }
 
   const WithLoading = withLoadingSpinner(() => (
-    <View style={IOStyles.flex}>
+    <View style={{ flex: 1 }}>
       {requestInfo.requestState === "AUTHORIZED" &&
         internalState.authUrl === undefined && (
           <WebView
@@ -313,25 +307,33 @@ const CieWebView = (props: Props) => {
 
 const ErrorComponent = (
   props: { onRetry: () => void } & Pick<Props, "onClose">
-) => (
-  <View style={[IOStyles.flex, styles.errorContainer]}>
-    <OperationResultScreenContent
-      pictogram="umbrella"
-      title={I18n.t("authentication.errors.network.title")}
-      action={{
-        label: I18n.t("global.buttons.retry"),
-        accessibilityLabel: I18n.t("global.buttons.retry"),
-        onPress: props.onRetry
-      }}
-      secondaryAction={{
-        label: I18n.t("global.buttons.cancel"),
-        accessibilityLabel: I18n.t("global.buttons.cancel"),
-        onPress: props.onClose
-      }}
-    />
-  </View>
-);
+) => {
+  const theme = useIOTheme();
 
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: IOColors[theme["appBackground-primary"]]
+      }}
+    >
+      <OperationResultScreenContent
+        pictogram="umbrella"
+        title={I18n.t("authentication.errors.network.title")}
+        action={{
+          label: I18n.t("global.buttons.retry"),
+          accessibilityLabel: I18n.t("global.buttons.retry"),
+          onPress: props.onRetry
+        }}
+        secondaryAction={{
+          label: I18n.t("global.buttons.cancel"),
+          accessibilityLabel: I18n.t("global.buttons.cancel"),
+          onPress: props.onClose
+        }}
+      />
+    </View>
+  );
+};
 /**
  * A screen to manage the request of authentication once the pin of the user's CIE has been inserted
  * 1) Start the first request with the getIdpLoginUri(CIE_IDP_ID) uri

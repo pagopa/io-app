@@ -14,7 +14,7 @@ jest.mock("../../../../../../store/hooks", () => ({
   useIOStore: jest.fn()
 }));
 
-jest.mock("../../../../../../utils/hooks/useOnboardingAbortAlert", () => ({
+jest.mock("../../../../../onboarding/hooks/useOnboardingAbortAlert", () => ({
   useOnboardingAbortAlert: () => ({
     showAlert: jest.fn()
   })

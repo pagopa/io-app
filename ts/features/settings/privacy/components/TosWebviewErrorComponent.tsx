@@ -1,11 +1,10 @@
 import {
+  ContentWrapper,
   FooterActions,
   H3,
-  IOStyles,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { View } from "react-native";
 import I18n from "../../../../i18n";
 
 type TosWebviewErrorComponentProps = {
@@ -16,13 +15,13 @@ const TosWebviewErrorComponent = ({
   handleRetry
 }: TosWebviewErrorComponentProps) => (
   <>
-    <View
-      style={[
-        IOStyles.flex,
-        IOStyles.alignCenter,
-        IOStyles.horizontalContentPadding,
-        IOStyles.centerJustified
-      ]}
+    {/* TODO: We should consider replacing this with `IOSCrollView` */}
+    <ContentWrapper
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center"
+      }}
       testID="toSErrorContainerView"
     >
       <Pictogram name="stopSecurity" />
@@ -30,7 +29,7 @@ const TosWebviewErrorComponent = ({
       <H3 testID="toSErrorContainerTitle" style={{ textAlign: "center" }}>
         {I18n.t("onboarding.tos.error")}
       </H3>
-    </View>
+    </ContentWrapper>
     <FooterActions
       actions={{
         type: "SingleButton",

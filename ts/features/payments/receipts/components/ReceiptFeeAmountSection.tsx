@@ -1,9 +1,4 @@
-import {
-  Body,
-  IOSkeleton,
-  IOStyles,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Body, IOSkeleton, VSpacer } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { InfoNotice } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 import I18n from "../../../../i18n";
@@ -19,7 +14,7 @@ const ReceiptFeeAmountSection = (props: Props) => {
 
   if (loading) {
     return (
-      <View style={IOStyles.flex} testID="loading-placeholder">
+      <View style={{ flex: 1 }} testID="loading-placeholder">
         <VSpacer size={4} />
         <IOSkeleton shape="rectangle" width="100%" height={16} radius={4} />
         <VSpacer size={8} />

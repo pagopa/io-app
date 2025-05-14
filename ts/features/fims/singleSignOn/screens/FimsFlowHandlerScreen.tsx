@@ -1,4 +1,4 @@
-import { Body, IOStyles } from "@pagopa/io-app-design-system";
+import { Body } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constTrue, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
@@ -145,7 +145,8 @@ export const FimsFlowHandlerScreen = (
       loadingState === "in-app-browser-loading" ||
       loadingState === "abort" ||
       loadingState === "idle" ? (
-        <View style={IOStyles.alignCenter}>
+        <View style={{ alignItems: "center" }}>
+          {/* TODO: Dark mode: Replace with theme values */}
           <Body color="grey-650">{I18n.t(`FIMS.loadingScreen.subtitle`)}</Body>
         </View>
       ) : (

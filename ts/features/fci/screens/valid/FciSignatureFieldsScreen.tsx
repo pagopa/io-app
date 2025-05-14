@@ -4,7 +4,7 @@ import {
   H4,
   IconButton,
   IOColors,
-  IOStyles,
+  IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Route, StackActions, useRoute } from "@react-navigation/native";
@@ -12,11 +12,11 @@ import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { constFalse, increment, pipe } from "fp-ts/lib/function";
 import {
-  useState,
+  ComponentProps,
   useContext,
-  useMemo,
   useEffect,
-  ComponentProps
+  useMemo,
+  useState
 } from "react";
 import { ScrollView, SectionList, View } from "react-native";
 import {
@@ -177,7 +177,7 @@ const FciSignatureFieldsScreen = () => {
           flexDirection: "row"
         }}
       >
-        <H4 style={IOStyles.flex}>{clauseLabel}</H4>
+        <H4>{clauseLabel}</H4>
 
         {/*
           Show info icon and signature field info only for unfair clauses
@@ -277,8 +277,13 @@ const FciSignatureFieldsScreen = () => {
   }
 
   return (
-    <View style={IOStyles.flex} testID={"FciSignatureFieldsTestID"}>
-      <ScrollView style={IOStyles.horizontalContentPadding}>
+    <View style={{ flex: 1 }} testID={"FciSignatureFieldsTestID"}>
+      {/* TODO: Replace with `IOScrollView` and `FooterActions` component. */}
+      <ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+      >
         <H2>{I18n.t("features.fci.signatureFields.title")}</H2>
         <VSpacer size={32} />
         {renderSignatureFields()}

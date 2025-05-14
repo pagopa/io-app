@@ -10,12 +10,10 @@ import {
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "./ItwIssuanceCredentialTrustIssuerScreen";
@@ -47,10 +45,10 @@ const getCredentialType = (params: unknown) =>
  * so we guard against invalid values in this screen.
  */
 export const ItwIssuanceCredentialAsyncContinuationScreen = ({
+  navigation,
   route
 }: ScreenProps) => {
   const credentialType = getCredentialType(route.params);
-  const navigation = useIONavigation();
 
   return pipe(
     credentialType,
@@ -147,28 +145,9 @@ const InnerComponent = ({ credentialType }: { credentialType: string }) => {
   }
 
   return (
-    <WrappedItwIssuanceCredentialTrustIssuerScreen
+    <ItwIssuanceCredentialTrustIssuerScreen
       credentialType={credentialType}
+      asyncContinuation
     />
   );
-};
-
-const WrappedItwIssuanceCredentialTrustIssuerScreen = ({
-  credentialType
-}: {
-  credentialType: string;
-}) => {
-  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-
-  // Transition the credential machine to the correct state when the credential selection screen is bypassed.
-  useOnFirstRender(() =>
-    machineRef.send({
-      type: "select-credential",
-      credentialType,
-      skipNavigation: true,
-      asyncContinuation: true
-    })
-  );
-
-  return <ItwIssuanceCredentialTrustIssuerScreen />;
 };

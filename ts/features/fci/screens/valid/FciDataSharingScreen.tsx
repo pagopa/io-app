@@ -3,7 +3,7 @@ import {
   FooterActionsInline,
   H2,
   HSpacer,
-  IOStyles,
+  IOVisualCostants,
   IconButton,
   ListItemNav,
   VSpacer
@@ -18,20 +18,20 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
+import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { capitalize } from "../../../../utils/strings";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 import {
   profileEmailSelector,
   profileFiscalCodeSelector,
   profileNameSelector,
   profileSelector
 } from "../../../settings/common/store/selectors";
-import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { capitalize } from "../../../../utils/strings";
 import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
-import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 
 const styles = StyleSheet.create({
   alertTextContainer: {
@@ -129,8 +129,11 @@ const FciDataSharingScreen = (): ReactElement => {
 
   return (
     <>
+      {/* TODO: Replace with `IOScrollView` and `FooterActions` component. */}
       <ScrollView
-        style={IOStyles.horizontalContentPadding}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
         testID={"FciDataSharingScreenListTestID"}
       >
         <H2>{I18n.t("features.fci.shareDataScreen.title")}</H2>

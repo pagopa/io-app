@@ -2,23 +2,23 @@ import {
   Divider,
   H6,
   IconButton,
-  IOStyles
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { Fragment, useMemo } from "react";
 import { View } from "react-native";
 import I18n from "../../../../../i18n.ts";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { ItwCredentialClaim } from "../../../common/components/ItwCredentialClaim.tsx";
 import { ItwIssuanceMetadata } from "../../../common/components/ItwIssuanceMetadata.tsx";
 import { ItwQrCodeClaimImage } from "../../../common/components/ItwQrCodeClaimImage.tsx";
+import { itwSetClaimValuesHidden } from "../../../common/store/actions/preferences.ts";
+import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import {
   parseClaims,
   WellKnownClaim
 } from "../../../common/utils/itwClaimsUtils.ts";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
-import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
-import { itwSetClaimValuesHidden } from "../../../common/store/actions/preferences.ts";
 
 type ItwPresentationClaimsSectionProps = {
   credential: StoredCredential;
@@ -27,6 +27,7 @@ type ItwPresentationClaimsSectionProps = {
 export const ItwPresentationClaimsSection = ({
   credential
 }: ItwPresentationClaimsSectionProps) => {
+  const theme = useIOTheme();
   const dispatch = useIODispatch();
 
   const credentialStatus = useMemo(
@@ -70,8 +71,10 @@ export const ItwPresentationClaimsSection = ({
         // If do not have claims, we should not render the title and the toggle
         claims.length > 0 && (
           <>
-            <View style={IOStyles.rowSpaceBetween}>
-              <H6 color="grey-700">
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <H6 color={theme["textHeading-tertiary"]}>
                 {I18n.t(
                   "features.itWallet.presentation.credentialDetails.documentDataTitle"
                 )}

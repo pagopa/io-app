@@ -1,4 +1,7 @@
-import { FooterActions, IOStyles } from "@pagopa/io-app-design-system";
+import {
+  FooterActions,
+  useFooterActionsMeasurements
+} from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { FunctionComponent, memo, useCallback, useState } from "react";
@@ -36,6 +39,11 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
 }: Props) => {
   const [hasError, setHasError] = useState(false);
 
+  const showFooter = shouldRenderFooter && onAcceptTos;
+
+  const { footerActionsMeasurements, handleFooterActionsMeasurements } =
+    useFooterActionsMeasurements();
+
   const handleError = useCallback(() => {
     handleLoadEnd();
     setHasError(true);
@@ -65,12 +73,20 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
     <TosWebviewErrorComponent handleRetry={handleRetry} />
   ) : (
     <>
-      <View style={IOStyles.flex} testID="toSWebViewContainer">
+      <View
+        style={{
+          flex: 1,
+          paddingBottom: showFooter
+            ? footerActionsMeasurements.safeBottomAreaHeight
+            : 0
+        }}
+        testID="toSWebViewContainer"
+      >
         <WebView
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
           textZoom={100}
-          style={IOStyles.flex}
+          style={{ flex: 1 }}
           onLoadEnd={handleLoadEnd}
           onError={handleError}
           onHttpError={handleError}
@@ -81,8 +97,10 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
           )}
         />
       </View>
-      {shouldRenderFooter && onAcceptTos && (
+      {showFooter && (
         <FooterActions
+          transparent
+          onMeasure={handleFooterActionsMeasurements}
           actions={{
             type: "SingleButton",
             primary: {

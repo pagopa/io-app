@@ -3,8 +3,7 @@
  * This screen is used as Privacy screen From Profile section.
  */
 import { useState } from "react";
-import { H2, IOStyles } from "@pagopa/io-app-design-system";
-import { View } from "react-native";
+import { ContentWrapper, H2 } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import TosWebviewComponent from "../shared/components/TosWebviewComponent";
@@ -52,7 +51,7 @@ const TosScreen = () => {
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <View style={IOStyles.horizontalContentPadding}>
+      <ContentWrapper>
         <H2
           accessible={true}
           accessibilityRole="header"
@@ -60,7 +59,7 @@ const TosScreen = () => {
         >
           {I18n.t("profile.main.privacy.privacyPolicy.title")}
         </H2>
-      </View>
+      </ContentWrapper>
       <TosWebviewComponent
         flow={flow}
         handleLoadEnd={handleLoadEnd}

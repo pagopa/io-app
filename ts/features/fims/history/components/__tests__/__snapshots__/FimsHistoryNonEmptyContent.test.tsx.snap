@@ -750,22 +750,21 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 24,
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "height": 48,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
                                     "backgroundColor": "#0B3EE3",
-                                    "overflow": "hidden",
-                                  },
-                                  {
-                                    "paddingHorizontal": 16,
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
                                   },
                                   {},
                                   false,
@@ -802,16 +801,21 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     [
                                       {},
                                       {
-                                        "color": "#FFFFFF",
+                                        "color": "#0E0F13",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 20,
+                                        "lineHeight": undefined,
                                       },
-                                      {
-                                        "alignSelf": "center",
-                                      },
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -1585,22 +1589,21 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 24,
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "height": 48,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
                                     "backgroundColor": "#0B3EE3",
-                                    "overflow": "hidden",
-                                  },
-                                  {
-                                    "paddingHorizontal": 16,
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
                                   },
                                   {},
                                   false,
@@ -3977,22 +3980,21 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 24,
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "height": 48,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
                                     "backgroundColor": "#0B3EE3",
-                                    "overflow": "hidden",
-                                  },
-                                  {
-                                    "paddingHorizontal": 16,
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
                                   },
                                   {},
                                   false,
@@ -4029,16 +4031,21 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     [
                                       {},
                                       {
-                                        "color": "#FFFFFF",
+                                        "color": "#0E0F13",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 20,
+                                        "lineHeight": undefined,
                                       },
-                                      {
-                                        "alignSelf": "center",
-                                      },
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -4879,22 +4886,21 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 24,
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "height": 48,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
                                     "backgroundColor": "#0B3EE3",
-                                    "overflow": "hidden",
-                                  },
-                                  {
-                                    "paddingHorizontal": 16,
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
                                   },
                                   {},
                                   false,
@@ -5931,22 +5937,21 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 24,
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "height": 48,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
                                     "backgroundColor": "#0B3EE3",
-                                    "overflow": "hidden",
-                                  },
-                                  {
-                                    "paddingHorizontal": 16,
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
                                   },
                                   {},
                                   false,
@@ -5983,16 +5988,21 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     [
                                       {},
                                       {
-                                        "color": "#FFFFFF",
+                                        "color": "#0E0F13",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 20,
+                                        "lineHeight": undefined,
                                       },
-                                      {
-                                        "alignSelf": "center",
-                                      },
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -6839,22 +6849,21 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 24,
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "height": 48,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
                                     "backgroundColor": "#0B3EE3",
-                                    "overflow": "hidden",
-                                  },
-                                  {
-                                    "paddingHorizontal": 16,
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
                                   },
                                   {},
                                   false,

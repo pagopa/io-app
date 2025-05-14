@@ -1,12 +1,11 @@
 import { memo, Fragment, useEffect } from "react";
 import { View } from "react-native";
 import {
-  ButtonSolid,
   Divider,
   H4,
   HStack,
   Icon,
-  IOStyles,
+  IOButton,
   VStack
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -38,7 +37,7 @@ type ItwEidInfoBottomSheetTitleProps = {
 export const ItwEidInfoBottomSheetTitle = ({
   isExpired
 }: ItwEidInfoBottomSheetTitleProps) => (
-  <HStack space={8} style={IOStyles.alignCenter}>
+  <HStack space={8} style={{ alignItems: "center" }}>
     <Icon name="legalValue" color={isExpired ? "grey-300" : "blueIO-500"} />
     <H4>
       {I18n.t(
@@ -102,10 +101,11 @@ const ItwEidInfoBottomSheetContent = ({
             "features.itWallet.presentation.bottomSheets.eidInfo.contentBottom"
           )}
         />
-        <ButtonSolid
-          label={I18n.t("features.itWallet.walletRevocation.cta")}
+        <IOButton
           fullWidth
+          variant="solid"
           color="danger"
+          label={I18n.t("features.itWallet.walletRevocation.cta")}
           onPress={navigateToWalletRevocationScreen}
         />
       </VStack>

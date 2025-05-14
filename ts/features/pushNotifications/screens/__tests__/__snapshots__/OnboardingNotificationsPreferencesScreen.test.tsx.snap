@@ -324,6 +324,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#555C70"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -337,9 +338,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#555C70",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -351,7 +349,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1097,22 +1094,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
                                 {
-                                  "height": 48,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
                                   "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
                                 },
                                 {},
                                 false,
@@ -1149,16 +1145,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   [
                                     {},
                                     {
-                                      "color": "#FFFFFF",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "alignSelf": "center",
-                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -1315,14 +1316,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -1340,6 +1339,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1353,9 +1353,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -1367,7 +1364,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1750,6 +1746,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#555C70"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -1763,9 +1760,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#555C70",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -1777,7 +1771,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2523,22 +2516,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
                                 {
-                                  "height": 48,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
                                   "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
                                 },
                                 {},
                                 false,
@@ -2576,16 +2568,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   [
                                     {},
                                     {
-                                      "color": "#FFFFFF",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "alignSelf": "center",
-                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -2742,14 +2739,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -2767,6 +2762,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -2780,9 +2776,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -2794,7 +2787,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -3177,6 +3169,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#555C70"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -3190,9 +3183,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#555C70",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -3204,7 +3194,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3950,22 +3939,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
                                 {
-                                  "height": 48,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
                                   "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
                                 },
                                 {},
                                 false,
@@ -4003,16 +3991,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   [
                                     {},
                                     {
-                                      "color": "#FFFFFF",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "alignSelf": "center",
-                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -4169,14 +4162,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -4194,6 +4185,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -4207,9 +4199,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -4221,7 +4210,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -4604,6 +4592,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#555C70"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -4617,9 +4606,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#555C70",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -4631,7 +4617,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -5377,22 +5362,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
                                 {
-                                  "height": 48,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
                                   "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
                                 },
                                 {},
                                 false,
@@ -5430,16 +5414,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   [
                                     {},
                                     {
-                                      "color": "#FFFFFF",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "alignSelf": "center",
-                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -5596,14 +5585,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -5621,6 +5608,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -5634,9 +5622,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -5648,7 +5633,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -6031,6 +6015,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#555C70"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -6044,9 +6029,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#555C70",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -6058,7 +6040,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -7094,22 +7075,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
                                 {
-                                  "height": 48,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
                                   "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
                                 },
                                 {},
                                 false,
@@ -7456,14 +7436,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -7481,6 +7459,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -7494,9 +7473,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -7508,7 +7484,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,

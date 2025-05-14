@@ -1,4 +1,9 @@
-import { Divider, FooterActions, IOToast } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  FooterActions,
+  IOToast,
+  IOVisualCostants
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 
@@ -15,7 +20,6 @@ import { connect } from "react-redux";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../../components/screens/BaseScreenComponent";
@@ -190,8 +194,12 @@ class AvailableBonusScreen extends PureComponent<Props> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["bonus_available_list"]}
       >
-        <SafeAreaView style={IOStyles.flex}>
-          <ScrollView contentContainerStyle={IOStyles.horizontalContentPadding}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <ScrollView
+            contentContainerStyle={{
+              paddingHorizontal: IOVisualCostants.appMarginDefault
+            }}
+          >
             <FlatList
               scrollEnabled={false}
               data={availableBonusesList.filter(experimentalAndVisibleBonus)}

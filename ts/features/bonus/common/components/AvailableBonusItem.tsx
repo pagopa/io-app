@@ -1,10 +1,9 @@
 import { Badge, Body, H6, HSpacer } from "@pagopa/io-app-design-system";
 
 import { FunctionComponent } from "react";
-import { Image, Pressable, StyleSheet, View } from "react-native";
+import { Image, Pressable, StyleSheet, View, ViewStyle } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { getRemoteLocale } from "../../../messages/utils/ctas";
 
@@ -20,9 +19,6 @@ const styles = StyleSheet.create({
   listItem: {
     alignItems: "center",
     flexDirection: "row"
-  },
-  disabled: {
-    opacity: 0.75
   },
   methodImage: {
     width: 48,
@@ -66,7 +62,7 @@ const renderBadge = (state: AvailableBonusItemState) => {
  */
 export const AvailableBonusItem: FunctionComponent<Props> = (props: Props) => {
   const { bonusItem, state } = props;
-  const disabledStyle = state !== "active" ? styles.disabled : {};
+  const disabledStyle: ViewStyle = state !== "active" ? { opacity: 0.75 } : {};
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusItem[getRemoteLocale()];
 
@@ -78,7 +74,13 @@ export const AvailableBonusItem: FunctionComponent<Props> = (props: Props) => {
       testID={`AvailableBonusItem-${bonusItem.id_type}`}
     >
       <View style={styles.columnLeft}>
-        <View style={[IOStyles.row, IOStyles.alignCenter, disabledStyle]}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            ...disabledStyle
+          }}
+        >
           <H6 color="grey-850">{bonusTypeLocalizedContent.name}</H6>
           <HSpacer size={8} />
           {renderBadge(state)}

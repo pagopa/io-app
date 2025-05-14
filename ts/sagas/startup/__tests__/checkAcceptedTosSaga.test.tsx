@@ -5,7 +5,7 @@ import {
 } from "@pagopa/ts-commons/lib/numbers";
 import { select } from "redux-saga/effects";
 import { navigateToTosScreen } from "../../../store/actions/navigation";
-import { tosAccepted } from "../../../store/actions/onboarding";
+import { tosAccepted } from "../../../features/onboarding/store/actions";
 import { isProfileFirstOnBoarding } from "../../../features/settings/common/store/utils/guards";
 import mockedProfile from "../../../__mocks__/initializedProfile";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";

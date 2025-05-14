@@ -68,6 +68,7 @@ const renderScreen = (
         isCancelled={isCancelled}
         payments={undefined}
         presentPaymentsBottomSheetRef={mockRef}
+        onMeasure={() => void 0}
       />
     ),
     "DUMMY",

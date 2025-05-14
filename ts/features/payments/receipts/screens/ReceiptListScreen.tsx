@@ -1,6 +1,6 @@
 import {
   Divider,
-  IOStyles,
+  IOVisualCostants,
   ListItemHeader
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -198,7 +198,7 @@ const ReceiptListScreen = () => {
       onRefresh={handleOnRefreshTransactionsList}
       scrollIndicatorInsets={{ right: 0 }}
       contentContainerStyle={{
-        ...IOStyles.horizontalContentPadding,
+        paddingHorizontal: IOVisualCostants.appMarginDefault,
         minHeight: isEmpty ? "100%" : undefined,
         paddingBottom: insets.bottom + 24
       }}

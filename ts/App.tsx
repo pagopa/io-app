@@ -44,7 +44,13 @@ Sentry.init({
   beforeSendTransaction(event) {
     return removeUserFromEvent(event);
   },
-  ignoreErrors: ["HTTPClientError"],
+  ignoreErrors: [
+    /HTTPClientError/i,
+    /HTTP Client Error with status code: 500/i,
+    /ANR/i,
+    /ApplicationNotResponding/i,
+    /Background ANR/i
+  ],
   integrations: integrations => [
     ...integrations,
     Sentry.reactNativeTracingIntegration()
@@ -53,7 +59,7 @@ Sentry.init({
   // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-message-in-my-error-being-truncated
   maxValueLength: 3000,
   tracesSampleRate: 0.2,
-  sampleRate: 0.3
+  sampleRate: 0.2
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself export

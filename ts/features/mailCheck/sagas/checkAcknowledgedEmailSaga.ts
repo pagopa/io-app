@@ -3,7 +3,7 @@ import { CommonActions } from "@react-navigation/native";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
-import { emailAcknowledged } from "../../../store/actions/onboarding";
+import { emailAcknowledged } from "../../onboarding/store/actions";
 import {
   isProfileEmailValidated,
   isProfileFirstOnBoarding,

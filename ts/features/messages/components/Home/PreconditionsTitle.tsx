@@ -1,4 +1,4 @@
-import { H3, IOSkeleton, IOStyles } from "@pagopa/io-app-design-system";
+import { H3, IOSkeleton } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -20,7 +20,7 @@ export const PreconditionsTitle = () => {
 };
 
 const PreconditionsSkeleton = () => (
-  <View style={IOStyles.flex} accessible={false}>
+  <View style={{ flex: 1 }} accessible={false}>
     <IOSkeleton shape="rectangle" width={182} height={20} radius={4} />
   </View>
 );
@@ -31,7 +31,7 @@ const PreconditionsHeader = () => {
     return null;
   }
   return (
-    <View style={IOStyles.flex}>
+    <View style={{ flex: 1 }}>
       <H3>{title}</H3>
     </View>
   );

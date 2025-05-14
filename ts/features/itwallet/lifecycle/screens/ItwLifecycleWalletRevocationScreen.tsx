@@ -1,5 +1,4 @@
-import { View } from "react-native";
-import { Body, IOStyles } from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
@@ -19,11 +18,11 @@ const RevocationLoadingScreen = () => {
         "features.itWallet.walletRevocation.loadingScreen.title"
       )}
     >
-      <View style={[IOStyles.alignCenter, IOStyles.horizontalContentPadding]}>
+      <ContentWrapper style={{ alignItems: "center" }}>
         <Body>
           {I18n.t("features.itWallet.walletRevocation.loadingScreen.subtitle")}
         </Body>
-      </View>
+      </ContentWrapper>
     </LoadingScreenContent>
   );
 };

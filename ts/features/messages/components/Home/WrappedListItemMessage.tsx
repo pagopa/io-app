@@ -30,7 +30,7 @@ import {
   accessibilityLabelForMessageItem,
   minDelayBetweenNavigationMilliseconds
 } from "./homeUtils";
-import { ListItemMessage } from "./DS/ListItemMessage";
+import { ListItemMessage, ListItemMessageProps } from "./DS/ListItemMessage";
 
 type WrappedListItemMessage = {
   index: number;
@@ -76,7 +76,7 @@ export const WrappedListItemMessage = ({
 
   const isRead = message.isRead;
 
-  const tag: ListItemMessage["tag"] =
+  const tag: ListItemMessageProps["tag"] =
     messageCategoryTag === SENDTagEnum.PN
       ? {
           variant: "legalMessage",
@@ -90,8 +90,8 @@ export const WrappedListItemMessage = ({
       : undefined;
 
   const accessibilityLabel = useMemo(
-    () => accessibilityLabelForMessageItem(message, isSelected),
-    [isSelected, message]
+    () => accessibilityLabelForMessageItem(message, source, isSelected),
+    [isSelected, message, source]
   );
 
   const toggleScheduledMessageArchivingCallback = useCallback(() => {

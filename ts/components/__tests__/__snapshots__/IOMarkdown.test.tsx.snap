@@ -482,14 +482,10 @@ exports[`IOMarkdown Should match snapshot 1`] = `
                               accessibilityRole="list"
                               accessible={true}
                               style={
-                                [
-                                  {
-                                    "flex": 1,
-                                  },
-                                  {
-                                    "flexGrow": 1,
-                                  },
-                                ]
+                                {
+                                  "flex": 1,
+                                  "flexGrow": 1,
+                                }
                               }
                             >
                               <View
@@ -530,14 +526,10 @@ exports[`IOMarkdown Should match snapshot 1`] = `
                                 <View
                                   accessible={false}
                                   style={
-                                    [
-                                      {
-                                        "flex": 1,
-                                      },
-                                      {
-                                        "flexShrink": 1,
-                                      },
-                                    ]
+                                    {
+                                      "flex": 1,
+                                      "flexShrink": 1,
+                                    }
                                   }
                                 >
                                   <Text
@@ -600,14 +592,10 @@ exports[`IOMarkdown Should match snapshot 1`] = `
                                 <View
                                   accessible={false}
                                   style={
-                                    [
-                                      {
-                                        "flex": 1,
-                                      },
-                                      {
-                                        "flexShrink": 1,
-                                      },
-                                    ]
+                                    {
+                                      "flex": 1,
+                                      "flexShrink": 1,
+                                    }
                                   }
                                 >
                                   <Text
@@ -670,14 +658,10 @@ exports[`IOMarkdown Should match snapshot 1`] = `
                                 <View
                                   accessible={false}
                                   style={
-                                    [
-                                      {
-                                        "flex": 1,
-                                      },
-                                      {
-                                        "flexShrink": 1,
-                                      },
-                                    ]
+                                    {
+                                      "flex": 1,
+                                      "flexShrink": 1,
+                                    }
                                   }
                                 >
                                   <Text
@@ -765,14 +749,10 @@ exports[`IOMarkdown Should match snapshot 1`] = `
                               accessibilityRole="list"
                               accessible={true}
                               style={
-                                [
-                                  {
-                                    "flex": 1,
-                                  },
-                                  {
-                                    "flexGrow": 1,
-                                  },
-                                ]
+                                {
+                                  "flex": 1,
+                                  "flexGrow": 1,
+                                }
                               }
                             >
                               <View
@@ -814,14 +794,10 @@ exports[`IOMarkdown Should match snapshot 1`] = `
                                 <View
                                   accessible={false}
                                   style={
-                                    [
-                                      {
-                                        "flex": 1,
-                                      },
-                                      {
-                                        "flexShrink": 1,
-                                      },
-                                    ]
+                                    {
+                                      "flex": 1,
+                                      "flexShrink": 1,
+                                    }
                                   }
                                 >
                                   <Text
@@ -885,14 +861,10 @@ exports[`IOMarkdown Should match snapshot 1`] = `
                                 <View
                                   accessible={false}
                                   style={
-                                    [
-                                      {
-                                        "flex": 1,
-                                      },
-                                      {
-                                        "flexShrink": 1,
-                                      },
-                                    ]
+                                    {
+                                      "flex": 1,
+                                      "flexShrink": 1,
+                                    }
                                   }
                                 >
                                   <Text
@@ -956,14 +928,10 @@ exports[`IOMarkdown Should match snapshot 1`] = `
                                 <View
                                   accessible={false}
                                   style={
-                                    [
-                                      {
-                                        "flex": 1,
-                                      },
-                                      {
-                                        "flexShrink": 1,
-                                      },
-                                    ]
+                                    {
+                                      "flex": 1,
+                                      "flexShrink": 1,
+                                    }
                                   }
                                 >
                                   <Text

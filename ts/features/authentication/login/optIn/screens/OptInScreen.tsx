@@ -6,7 +6,6 @@ import {
   FeatureInfo,
   GradientScrollView,
   H3,
-  IOStyles,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -123,7 +122,8 @@ const OptInScreen = () => {
         label: I18n.t("authentication.opt_in.button_decline_lv"),
         accessibilityLabel: I18n.t("authentication.opt_in.button_decline_lv"),
         onPress: () => navigateToIdpPage(false),
-        testID: "decline-button-test"
+        testID: "decline-button-test",
+        variant: "link"
       }}
     >
       <ContentWrapper>
@@ -132,12 +132,12 @@ const OptInScreen = () => {
           otherwise it will not be visible
           */}
         {Dimensions.get("screen").height > MIN_HEIGHT_TO_SHOW_FULL_RENDER && (
-          <View style={IOStyles.selfCenter} testID="pictogram-test">
+          <View style={{ alignSelf: "center" }} testID="pictogram-test">
             <Pictogram name="passcode" size={120} />
           </View>
         )}
         <VSpacer size={24} />
-        <View style={IOStyles.selfCenter}>
+        <View style={{ alignSelf: "center" }}>
           <Badge
             text={I18n.t("authentication.opt_in.news")}
             variant="highlight"
@@ -156,17 +156,23 @@ const OptInScreen = () => {
         </View>
         <VSpacer size={24} />
         <FeatureInfo
-          pictogramName="identityCheck"
+          pictogramProps={{
+            name: "identityCheck"
+          }}
           body={I18n.t("authentication.opt_in.identity_check")}
         />
         <VSpacer size={24} />
         <FeatureInfo
-          pictogramName="passcode"
+          pictogramProps={{
+            name: "passcode"
+          }}
           body={I18n.t("authentication.opt_in.passcode")}
         />
         <VSpacer size={24} />
         <FeatureInfo
-          pictogramName="notification"
+          pictogramProps={{
+            name: "notification"
+          }}
           body={I18n.t("authentication.opt_in.notification")}
           action={{
             accessibilityRole: "button",

@@ -1,12 +1,6 @@
-import {
-  Body,
-  ContentWrapper,
-  H3,
-  IOStyles,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper, H3, VStack } from "@pagopa/io-app-design-system";
 import { useRef } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { LoadingIndicator } from "../../../../../components/ui/LoadingIndicator";
@@ -17,19 +11,6 @@ import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { cgnActivationCancel } from "../../store/actions/activation";
 import { isCgnActivationLoading } from "../../store/reducers/activation";
 
-const styles = StyleSheet.create({
-  container: {
-    ...IOStyles.centerJustified,
-    ...IOStyles.flex
-  },
-  contentTitle: {
-    textAlign: "center"
-  },
-  content: {
-    alignItems: "center"
-  }
-});
-
 const LoadingComponent = () => {
   const ref = useRef<View>(null);
 
@@ -38,9 +19,13 @@ const LoadingComponent = () => {
   });
 
   return (
-    <SafeAreaView style={styles.container} accessible ref={ref}>
+    <SafeAreaView
+      style={{ flex: 1, justifyContent: "center" }}
+      accessible
+      ref={ref}
+    >
       <ContentWrapper>
-        <View style={styles.content}>
+        <VStack space={24} style={{ alignItems: "center" }}>
           <View
             accessible={false}
             accessibilityElementsHidden={true}
@@ -48,13 +33,13 @@ const LoadingComponent = () => {
           >
             <LoadingIndicator />
           </View>
-          <VSpacer size={24} />
-          <H3 style={styles.contentTitle}>
+          <H3 style={{ textAlign: "center" }}>
             {I18n.t("bonus.cgn.activation.loading.caption")}
           </H3>
-          <VSpacer size={24} />
-          <Body>{I18n.t("bonus.cgn.activation.loading.subCaption")}</Body>
-        </View>
+          <Body style={{ textAlign: "center" }}>
+            {I18n.t("bonus.cgn.activation.loading.subCaption")}
+          </Body>
+        </VStack>
       </ContentWrapper>
     </SafeAreaView>
   );

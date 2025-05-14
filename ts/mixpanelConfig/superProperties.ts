@@ -16,7 +16,7 @@ import {
   NotificationPermissionType,
   NotificationPreferenceConfiguration,
   ServiceConfigurationTrackingType
-} from "../features/settings/common/analytics/index.ts";
+} from "../features/settings/common/analytics";
 import { GlobalState } from "../store/reducers/types";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
@@ -35,6 +35,7 @@ import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
+import { isConnectedSelector } from "../features/connectivity/store/selectors";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -45,6 +46,8 @@ import {
   serviceConfigHandler,
   welfareStatusHandler
 } from "./mixpanelPropertyUtils";
+
+type ConnectivityStatus = "online" | "offline";
 
 type SuperProperties = {
   isScreenReaderEnabled: boolean;
@@ -66,6 +69,7 @@ type SuperProperties = {
   CGN_STATUS: TrackCgnStatus;
   WELFARE_STATUS: ReadonlyArray<string>;
   OFFLINE_ACCESS_REASON: string;
+  CONNECTION_STATUS: ConnectivityStatus;
 };
 
 export const updateMixpanelSuperProperties = async (
@@ -92,6 +96,7 @@ export const updateMixpanelSuperProperties = async (
   const CGN_STATUS = cgnStatusHandler(state);
   const WELFARE_STATUS = welfareStatusHandler(state);
   const OFFLINE_ACCESS_REASON = offlineReasonHandler(state);
+  const CONNECTION_STATUS = offlineStatusHandler(state);
 
   const superPropertiesObject: SuperProperties = {
     isScreenReaderEnabled: screenReaderEnabled,
@@ -113,7 +118,8 @@ export const updateMixpanelSuperProperties = async (
     SAVED_PAYMENT_METHOD,
     CGN_STATUS,
     WELFARE_STATUS,
-    OFFLINE_ACCESS_REASON
+    OFFLINE_ACCESS_REASON,
+    CONNECTION_STATUS
   };
 
   if (forceUpdateFor) {
@@ -153,6 +159,10 @@ const tsStatusHandler = (state: GlobalState): ItwTs => {
 const cedStatusHandler = (state: GlobalState): ItwCed => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
   return credentialsByType.EuropeanDisabilityCard ? "valid" : "not_available";
+};
+const offlineStatusHandler = (state: GlobalState): ConnectivityStatus => {
+  const isConnected = isConnectedSelector(state);
+  return isConnected ? "online" : "offline";
 };
 
 const offlineReasonHandler = (

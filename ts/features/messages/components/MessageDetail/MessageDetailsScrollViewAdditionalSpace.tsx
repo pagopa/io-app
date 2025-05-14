@@ -23,6 +23,8 @@ export const MessageDetailsScrollViewAdditionalSpace = ({
   );
   const hasAtLeastAButton = isShowingPaymentButton || hasCTA1 || hasCTA2;
 
+  /* TODO: Replace this logic with `FooterActions` and `useFooterActionsMeasurements` OR
+  `IOScrollView` that already manages the case with three buttons */
   const height =
     (hasAtLeastAButton ? IOStyles.footer.paddingBottom : 0) +
     (isShowingPaymentButton ? buttonSolidHeight + gapBetweenItemsInAGrid : 0) +
@@ -30,6 +32,7 @@ export const MessageDetailsScrollViewAdditionalSpace = ({
     (hasCTA2 ? buttonSolidHeight + gapBetweenItemsInAGrid : 0) +
     gapBetweenItemsInAGrid +
     safeAreaInsets.bottom;
+
   return (
     <View
       style={{

@@ -63,9 +63,9 @@ import { AuthenticationParamsList } from "../../features/authentication/common/n
 import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes.ts";
 import { SettingsParamsList } from "../../features/settings/common/navigation/params/SettingsParamsList.ts";
 import { SETTINGS_ROUTES } from "../../features/settings/common/navigation/routes.ts";
+import { OnboardingParamsList } from "../../features/onboarding/navigation/params/OnboardingParamsList.ts";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
-import { OnboardingParamsList } from "./OnboardingParamsList";
 
 export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;

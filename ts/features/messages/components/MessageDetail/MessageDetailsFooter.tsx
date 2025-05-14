@@ -1,30 +1,22 @@
-import { useMemo } from "react";
-import { StyleSheet, View } from "react-native";
 import {
+  ContentWrapper,
   IOColors,
-  IOStyles,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useIOSelector } from "../../../../store/hooks";
-import { serviceMetadataByIdSelector } from "../../../services/details/store/reducers";
+import { useMemo } from "react";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { UIMessageId } from "../../types";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
+import { serviceMetadataByIdSelector } from "../../../services/details/store/reducers";
+import { UIMessageId } from "../../types";
 import { ContactsListItem } from "./ContactsListItem";
 import {
   ShowMoreItems,
   ShowMoreListItem,
   ShowMoreSection
 } from "./ShowMoreListItem";
-
-const styles = StyleSheet.create({
-  container: {
-    paddingBottom: "75%",
-    marginBottom: "-75%"
-  }
-});
 
 export type MessageDetailsFooterProps = {
   messageId: UIMessageId;
@@ -115,12 +107,12 @@ export const MessageDetailsFooter = ({
   const theme = useIOTheme();
 
   return (
-    <View
-      style={[
-        IOStyles.horizontalContentPadding,
-        styles.container,
-        { backgroundColor: IOColors[theme["appBackground-secondary"]] }
-      ]}
+    <ContentWrapper
+      style={{
+        paddingBottom: "75%",
+        marginBottom: "-75%",
+        backgroundColor: IOColors[theme["appBackground-secondary"]]
+      }}
     >
       <VSpacer size={16} />
       {(serviceMetadata?.email || serviceMetadata?.phone) && (
@@ -129,8 +121,7 @@ export const MessageDetailsFooter = ({
           phone={serviceMetadata.phone}
         />
       )}
-
       <ShowMoreListItem sections={showMoreSectionData} />
-    </View>
+    </ContentWrapper>
   );
 };

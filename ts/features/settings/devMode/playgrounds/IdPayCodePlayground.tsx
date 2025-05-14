@@ -1,6 +1,6 @@
 import {
+  ContentWrapper,
   Divider,
-  IOStyles,
   ListItemNav,
   TextInput,
   VSpacer
@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView } from "react-native";
 import { IdPayCodeRoutes } from "../../../idpay/code/navigation/routes";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
@@ -49,7 +49,7 @@ export const IdPayCodePlayGround = () => {
 
   return (
     <ScrollView>
-      <View style={IOStyles.horizontalContentPadding}>
+      <ContentWrapper>
         <TextInput
           onChangeText={text => setInitiativeId(text)}
           value={initiativeId ?? ""}
@@ -74,7 +74,7 @@ export const IdPayCodePlayGround = () => {
           description={"IdPay Code is generated again"}
           onPress={navigateToRenew}
         />
-      </View>
+      </ContentWrapper>
     </ScrollView>
   );
 };

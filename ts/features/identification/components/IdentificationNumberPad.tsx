@@ -1,7 +1,6 @@
 import {
   BiometricsValidType,
   CodeInput,
-  IOStyles,
   IconButton,
   NumberPad,
   VSpacer
@@ -74,7 +73,7 @@ export const IdentificationNumberPad = (
 
   return (
     <>
-      <View testID="code-input" style={IOStyles.alignCenter}>
+      <View testID="code-input" style={{ alignItems: "center" }}>
         <CodeInput
           value={value}
           length={PIN_LENGTH}

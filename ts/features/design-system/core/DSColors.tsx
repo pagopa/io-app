@@ -15,7 +15,6 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { ColorValue, Dimensions, StyleSheet, Text, View } from "react-native";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import themeVariables from "../../../theme/variables";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
@@ -126,7 +125,7 @@ const ColorThemeGroup = ({
       {name && <H6 color={theme["textHeading-default"]}>{name}</H6>}
       {/* Show the two different columns
       with both light and dark modes */}
-      <View style={IOStyles.row}>
+      <View style={{ flexDirection: "row" }}>
         <View style={[styles.colorModeWrapper, styles.darkModeWrapper]} />
         <View style={[styles.colorModeWrapper, styles.lightModeWrapper]} />
         <View style={styles.colorItemsWrapper}>

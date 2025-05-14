@@ -50,6 +50,7 @@ import {
   INITIAL_STATE as identificationInitialState,
   identificationReducer
 } from "../../features/identification/store/reducers";
+import onboardingReducer from "../../features/onboarding/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import contentReducer, {
@@ -63,7 +64,6 @@ import entitiesReducer, {
 } from "./entities";
 import installationReducer from "./installation";
 import { navigationReducer } from "./navigation";
-import onboardingReducer from "./onboarding";
 import persistedPreferencesReducer, {
   initialPreferencesState
 } from "./persistedPreferences";
@@ -318,7 +318,9 @@ export function createRootReducer(
               isFingerprintEnabled: state.persistedPreferences
                 .isFingerprintEnabled
                 ? true
-                : undefined
+                : undefined,
+              isItwOfflineAccessEnabled:
+                state.persistedPreferences.isItwOfflineAccessEnabled
             },
             lollipop: {
               ...initialLollipopState,
