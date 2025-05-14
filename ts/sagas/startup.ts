@@ -492,7 +492,6 @@ export function* initializeApplicationSaga(
   if (!handleSessionExpiration) {
     yield* call(waitForMainNavigator);
   }
-  yield* call(fetchServicePreferencesForStartup);
 
   // yield* delay(0 as Millisecond);
   const hasPreviousSessionAndPin =
@@ -533,6 +532,8 @@ export function* initializeApplicationSaga(
       }
     }
   }
+
+  yield* call(fetchServicePreferencesForStartup);
 
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);
