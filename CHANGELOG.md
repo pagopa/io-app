@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0-rc.5](https://github.com/pagopa/io-app/compare/3.5.0-rc.4...3.5.0-rc.5) (2025-05-13)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2309](https://pagopa.atlassian.net/browse/SIW-2309)] Add link to offline FAQ on click of offline banner ([#6972](https://github.com/pagopa/io-app/issues/6972)) ([708186c](https://github.com/pagopa/io-app/commit/708186c50bcd375e5d80d535bcd856ee377faf71))
+
+
+### Bug Fixes
+
+* [[IOAPPX-496](https://pagopa.atlassian.net/browse/IOAPPX-496)] update design system version ([#6974](https://github.com/pagopa/io-app/issues/6974)) ([37c9950](https://github.com/pagopa/io-app/commit/37c99506eccce0ded1a1cc8371e142224072d2ae))
+* [[IOPID-2806](https://pagopa.atlassian.net/browse/IOPID-2806)] Add `maxFontSizeMultiplier` to `EmailInsertScreen` ([#6969](https://github.com/pagopa/io-app/issues/6969)) ([503786a](https://github.com/pagopa/io-app/commit/503786aee802acde060e4b5087dfc98bbe7cbcd6))
+
+## [3.5.0-rc.4](https://github.com/pagopa/io-app/compare/3.5.0-rc.3...3.5.0-rc.4) (2025-05-12)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2279](https://pagopa.atlassian.net/browse/SIW-2279)]  Add Informative Offline Usage Banner ([#6924](https://github.com/pagopa/io-app/issues/6924)) ([2e329d4](https://github.com/pagopa/io-app/commit/2e329d44c31e545ee9dfe5778d48f35f647fa2b9))
+* [[IOCOM-2336](https://pagopa.atlassian.net/browse/IOCOM-2336)] SEND preferences update refactor ([#6960](https://github.com/pagopa/io-app/issues/6960)) ([19ee6b6](https://github.com/pagopa/io-app/commit/19ee6b657fe3bed6bae0e81d32f66723f4818d3e))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2317](https://pagopa.atlassian.net/browse/SIW-2317)] Discovery banner not displayed when leaving eID issuance flow ([#6945](https://github.com/pagopa/io-app/issues/6945)) ([2750fef](https://github.com/pagopa/io-app/commit/2750fef32c191c06312f9ce22d1a82d19b7c8878))
+* **ToS:** [[IOPID-2989](https://pagopa.atlassian.net/browse/IOPID-2989)] Fix onboarding ToS scrolling ([#6958](https://github.com/pagopa/io-app/issues/6958)) ([34e0d49](https://github.com/pagopa/io-app/commit/34e0d494a0a9a6a094b0182cae838bc8bbc692fc))
+
 ## [3.5.0-rc.3](https://github.com/pagopa/io-app/compare/3.5.0-rc.2...3.5.0-rc.3) (2025-05-09)
 
 
