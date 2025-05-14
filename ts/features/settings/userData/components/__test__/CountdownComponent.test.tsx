@@ -5,8 +5,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 
-// Mock countdown context values
-const mockResetTimer = jest.fn();
 const mockStartTimer = jest.fn();
 const mockIsRunning = jest.fn();
 

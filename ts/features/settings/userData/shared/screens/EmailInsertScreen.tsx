@@ -457,6 +457,7 @@ const EmailInsertScreen = () => {
             <VSpacer size={16} />
             <TextInputValidation
               autoFocus={!userNavigateToEmailValidationScreen}
+              testID="email-input"
               textInputProps={{
                 autoCorrect: false,
                 autoCapitalize: "none",
@@ -488,6 +489,7 @@ const EmailInsertScreen = () => {
               variant="solid"
               label={I18n.t("global.buttons.continue")}
               onPress={continueOnPress}
+              testID="continue-button"
             />
             <VSpacer size={16} />
           </ContentWrapper>
