@@ -131,11 +131,8 @@ const reducer = (
       // - isL3Enabled
       // - isWalletInstanceRemotelyActive ->
       //  (the correct value will be set in the saga related to the wallet deactivation, but we should avoid to have this value undefined)
-      const {
-        claimValuesHidden,
-        isL3Enabled,
-        isWalletInstanceRemotelyActive
-      } = state;
+      const { claimValuesHidden, isL3Enabled, isWalletInstanceRemotelyActive } =
+        state;
       return {
         ...itwPreferencesInitialState,
         claimValuesHidden,
