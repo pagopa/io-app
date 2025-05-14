@@ -11,6 +11,8 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
+import { useIOSelector } from "../../../../../store/hooks.ts";
 
 type ItwPresentationDetailsHeaderProps = { credential: StoredCredential };
 
@@ -30,9 +32,12 @@ const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
   const { isExperimental } = useIOExperimentalDesign();
-
+  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const { backgroundColor, textColor, statusBarStyle } =
-    getThemeColorByCredentialType(credential.credentialType as CredentialType);
+    getThemeColorByCredentialType(
+      credential.credentialType as CredentialType,
+      isL3Enabled
+    );
 
   const headerContent = useMemo(() => {
     if (credentialsWithSkeumorphicCard.includes(credential.credentialType)) {

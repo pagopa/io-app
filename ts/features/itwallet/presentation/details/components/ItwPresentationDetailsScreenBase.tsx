@@ -20,6 +20,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { getHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
 
 export type CredentialCtaProps = Omit<ButtonSolidProps, "fullWidth">;
 
@@ -42,6 +44,7 @@ const ItwPresentationDetailsScreenBase = ({
 }: ItwPresentationDetailsScreenBaseProps) => {
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const safeAreaInsets = useSafeAreaInsets();
+  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
 
   const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);
@@ -64,7 +67,10 @@ const ItwPresentationDetailsScreenBase = ({
     [bottomMargin]
   );
 
-  const headerProps = getHeaderPropsByCredentialType(credential.credentialType);
+  const headerProps = getHeaderPropsByCredentialType(
+    credential.credentialType,
+    isL3Enabled
+  );
 
   useHeaderSecondLevel({
     scrollValues: {

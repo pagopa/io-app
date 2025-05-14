@@ -11,7 +11,10 @@ import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUti
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
-import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
+import {
+  itwIsClaimValueHiddenSelector,
+  itwIsL3EnabledSelector
+} from "../../../common/store/selectors/preferences.ts";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
 type Props = {
@@ -36,6 +39,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   }, [credential.credentialType]);
 
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
+  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
 
   const handleCardPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -48,7 +52,8 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   };
 
   const { backgroundColor } = getThemeColorByCredentialType(
-    credential.credentialType
+    credential.credentialType,
+    isL3Enabled
   );
 
   return (
