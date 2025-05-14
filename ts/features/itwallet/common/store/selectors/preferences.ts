@@ -97,7 +97,8 @@ export const itwIsFiscalCodeWhitelistedSelector = (state: GlobalState) =>
  */
 export const itwIsL3EnabledSelector = (state: GlobalState) =>
   (state.features.itWallet.preferences.isL3Enabled ||
-  state.features.itWallet.preferences.isFiscalCodeWhitelisted) ?? false;
+    state.features.itWallet.preferences.isFiscalCodeWhitelisted) ??
+  false;
 
 /**
  * Returns whether offline banner is hidden. Defaults to false.

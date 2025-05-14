@@ -14,7 +14,6 @@ import {
 import { itwSetL3LocallyEnabled } from "../../../../features/itwallet/common/store/actions/preferences";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
-
 export const ItwL3Section = () => {
   const dispatch = useIODispatch();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -44,7 +43,7 @@ export const ItwL3Section = () => {
       <ListItemInfo
         label={"Fiscal code whitelisted"}
         value={isFiscalCodeWhitelisted ? "YES" : "NO"}
-        />
+      />
       <ListItemNav
         value="Discovery L3"
         description="Navigate to the Discovery L3 info screen"
