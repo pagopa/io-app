@@ -44,15 +44,13 @@ import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { paymentAnalyticsDataSelector } from "../../payments/history/store/selectors";
 import { isIdPayLocallyEnabledSelector } from "../../../store/reducers/persistedPreferences.ts";
 import { ITW_REMOTE_ROUTES } from "../../itwallet/presentation/remote/navigation/routes.ts";
-import { itwIsL3EnabledAndFiscalCodeWhitelistedSelector } from "../../itwallet/common/store/selectors/preferences.ts";
+import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors/preferences.ts";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
-  const isL3Enabled = useIOSelector(
-    itwIsL3EnabledAndFiscalCodeWhitelistedSelector
-  );
+  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();

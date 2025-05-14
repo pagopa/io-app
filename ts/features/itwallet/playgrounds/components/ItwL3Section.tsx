@@ -7,26 +7,26 @@ import { View } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   itwIsFiscalCodeWhitelistedSelector,
-  itwIsL3EnabledSelector
+  itwIsL3LocallyEnabledSelector
 } from "../../../../features/itwallet/common/store/selectors/preferences";
-import { itwSetL3Enabled } from "../../../../features/itwallet/common/store/actions/preferences";
+import { itwSetL3LocallyEnabled } from "../../../../features/itwallet/common/store/actions/preferences";
 
 export const ItwL3Section = () => {
   const dispatch = useIODispatch();
 
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
+  const isL3LocallyEnabled = useIOSelector(itwIsL3LocallyEnabledSelector);
   const isFiscalCodeWhitelisted = useIOSelector(
     itwIsFiscalCodeWhitelistedSelector
   );
 
   return (
     <View>
-      <ListItemHeader label="IT Wallet (L3)" />
+      <ListItemHeader label="IT Wallet (L3 locally)" />
       <ListItemSwitch
-        label="Enable L3 wallet"
-        value={isL3Enabled}
+        label="Enable locally L3 wallet"
+        value={isL3LocallyEnabled}
         onSwitchValueChange={() => {
-          dispatch(itwSetL3Enabled(!isL3Enabled));
+          dispatch(itwSetL3LocallyEnabled(!isL3LocallyEnabled));
         }}
       />
       <ListItemInfo

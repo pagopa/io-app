@@ -77,11 +77,11 @@ export const itwIsWalletInstanceRemotelyActiveSelector = (state: GlobalState) =>
 
 /**
  * TEMPORARY LOCAL FF - TO BE REPLACED WITH REMOTE FF (SIW-2195)
- * Returns whether the L3 is enabled, which allows to use the new IT Wallet
+ * Returns whether the L3 is enabled locally, which allows to use the new IT Wallet
  * features for users with L3 authentication level
  */
-export const itwIsL3EnabledSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.isL3Enabled ?? false;
+export const itwIsL3LocallyEnabledSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isL3LocallyEnabled ?? false;
 
 /**
  * Returns whether the fiscal code is whitelisted for L3 features.
@@ -95,10 +95,8 @@ export const itwIsFiscalCodeWhitelistedSelector = (state: GlobalState) =>
  * @param state - The global state of the application.
  * @returns A boolean indicating whether L3 is enabled and the fiscal code is whitelisted.
  */
-export const itwIsL3EnabledAndFiscalCodeWhitelistedSelector = (
-  state: GlobalState
-) =>
-  state.features.itWallet.preferences.isL3Enabled ||
+export const itwIsL3EnabledSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isL3LocallyEnabled ||
   state.features.itWallet.preferences.isFiscalCodeWhitelisted;
 
 /**

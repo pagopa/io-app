@@ -14,7 +14,7 @@ import {
   itwAuthLevelSelector,
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
-  itwIsL3EnabledAndFiscalCodeWhitelistedSelector,
+  itwIsL3EnabledSelector,
   itwIsOfflineBannerHiddenSelector
 } from "./preferences";
 import {
@@ -33,7 +33,7 @@ import {
 export const isItwDiscoveryBannerRenderableSelector = (state: GlobalState) =>
   !itwLifecycleIsValidSelector(state) &&
   isItwEnabledSelector(state) &&
-  !itwIsL3EnabledAndFiscalCodeWhitelistedSelector(state);
+  !itwIsL3EnabledSelector(state);
 
 /**
  * Returns the renderable state of the discovery banner with the persisted user's preference:
@@ -108,5 +108,5 @@ export const itwShouldRenderOfflineBannerSelector = (state: GlobalState) =>
 export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
-  itwIsL3EnabledAndFiscalCodeWhitelistedSelector(state) &&
+  itwIsL3EnabledSelector(state) &&
   itwAuthLevelSelector(state) !== "L3";
