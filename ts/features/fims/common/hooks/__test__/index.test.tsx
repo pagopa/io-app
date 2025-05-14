@@ -471,7 +471,7 @@ describe("index", () => {
           features: {
             services: {
               details: {
-                byId: {
+                dataById: {
                   [serviceId]: servicePot
                 }
               }
@@ -502,7 +502,7 @@ describe("index", () => {
         features: {
           services: {
             details: {
-              byId: {
+              dataById: {
                 [serviceId]: pot.some(service)
               }
             }
@@ -575,7 +575,7 @@ const renderAutoFetchHook = (
     features: {
       services: {
         details: {
-          byId: {
+          dataById: {
             [storeServiceId]: servicePot
           }
         }
@@ -594,7 +594,7 @@ const renderFromServiceIdHook = (
     features: {
       services: {
         details: {
-          byId: {
+          dataById: {
             [storeServiceId]: servicePot
           }
         }
@@ -612,7 +612,7 @@ const renderFromAuthenticationFlowHook = (
     features: {
       services: {
         details: {
-          byId: {
+          dataById: {
             [storeServiceId]: servicePot
           }
         }

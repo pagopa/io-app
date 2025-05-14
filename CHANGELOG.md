@@ -2,6 +2,58 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0-rc.5](https://github.com/pagopa/io-app/compare/3.5.0-rc.4...3.5.0-rc.5) (2025-05-13)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2309](https://pagopa.atlassian.net/browse/SIW-2309)] Add link to offline FAQ on click of offline banner ([#6972](https://github.com/pagopa/io-app/issues/6972)) ([708186c](https://github.com/pagopa/io-app/commit/708186c50bcd375e5d80d535bcd856ee377faf71))
+
+
+### Bug Fixes
+
+* [[IOAPPX-496](https://pagopa.atlassian.net/browse/IOAPPX-496)] update design system version ([#6974](https://github.com/pagopa/io-app/issues/6974)) ([37c9950](https://github.com/pagopa/io-app/commit/37c99506eccce0ded1a1cc8371e142224072d2ae))
+* [[IOPID-2806](https://pagopa.atlassian.net/browse/IOPID-2806)] Add `maxFontSizeMultiplier` to `EmailInsertScreen` ([#6969](https://github.com/pagopa/io-app/issues/6969)) ([503786a](https://github.com/pagopa/io-app/commit/503786aee802acde060e4b5087dfc98bbe7cbcd6))
+
+## [3.5.0-rc.4](https://github.com/pagopa/io-app/compare/3.5.0-rc.3...3.5.0-rc.4) (2025-05-12)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2279](https://pagopa.atlassian.net/browse/SIW-2279)]  Add Informative Offline Usage Banner ([#6924](https://github.com/pagopa/io-app/issues/6924)) ([2e329d4](https://github.com/pagopa/io-app/commit/2e329d44c31e545ee9dfe5778d48f35f647fa2b9))
+* [[IOCOM-2336](https://pagopa.atlassian.net/browse/IOCOM-2336)] SEND preferences update refactor ([#6960](https://github.com/pagopa/io-app/issues/6960)) ([19ee6b6](https://github.com/pagopa/io-app/commit/19ee6b657fe3bed6bae0e81d32f66723f4818d3e))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2317](https://pagopa.atlassian.net/browse/SIW-2317)] Discovery banner not displayed when leaving eID issuance flow ([#6945](https://github.com/pagopa/io-app/issues/6945)) ([2750fef](https://github.com/pagopa/io-app/commit/2750fef32c191c06312f9ce22d1a82d19b7c8878))
+* **ToS:** [[IOPID-2989](https://pagopa.atlassian.net/browse/IOPID-2989)] Fix onboarding ToS scrolling ([#6958](https://github.com/pagopa/io-app/issues/6958)) ([34e0d49](https://github.com/pagopa/io-app/commit/34e0d494a0a9a6a094b0182cae838bc8bbc692fc))
+
+## [3.5.0-rc.3](https://github.com/pagopa/io-app/compare/3.5.0-rc.2...3.5.0-rc.3) (2025-05-09)
+
+
+### Chores
+
+* [[IOBP-1636](https://pagopa.atlassian.net/browse/IOBP-1636)] Copy and the privacy policy URL text update for payment summary page ([#6967](https://github.com/pagopa/io-app/issues/6967)) ([b25496e](https://github.com/pagopa/io-app/commit/b25496e4c0d43530bc5757a5dc8625f0b36ba76d))
+
+## [3.5.0-rc.2](https://github.com/pagopa/io-app/compare/3.5.0-rc.1...3.5.0-rc.2) (2025-05-08)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2358](https://pagopa.atlassian.net/browse/SIW-2358)] Bump io-app-design-system to version 5.6.0 ([#6964](https://github.com/pagopa/io-app/issues/6964)) ([af78760](https://github.com/pagopa/io-app/commit/af787607453f64e851b7ff563409b51039c7009e))
+* [[IOCOM-2334](https://pagopa.atlassian.net/browse/IOCOM-2334)] services reducer and selectors refactor ([#6938](https://github.com/pagopa/io-app/issues/6938)) ([aef91e3](https://github.com/pagopa/io-app/commit/aef91e376136a87d61a2dd8137c17bce96df07b3))
+* **IT Wallet:** [[SIW-2211](https://pagopa.atlassian.net/browse/SIW-2211),[SIW-2273](https://pagopa.atlassian.net/browse/SIW-2273)] Add IT Wallet upgrade banner ([#6929](https://github.com/pagopa/io-app/issues/6929)) ([1420e35](https://github.com/pagopa/io-app/commit/1420e357580827941893d0d636ae6ac1de33231b))
+* **IT Wallet:** [[SIW-2254](https://pagopa.atlassian.net/browse/SIW-2254)] Remote presentation add not trusted RP failure case ([#6903](https://github.com/pagopa/io-app/issues/6903)) ([f5131c5](https://github.com/pagopa/io-app/commit/f5131c57381364c6520045a62fabaee27f3df498))
+
+## [3.5.0-rc.1](https://github.com/pagopa/io-app/compare/3.5.0-rc.0...3.5.0-rc.1) (2025-05-07)
+
+
+### Chores
+
+* [[IOAPPX-495](https://pagopa.atlassian.net/browse/IOAPPX-495)] Automatically configure Reactotron host with the local machine's IP ([#6949](https://github.com/pagopa/io-app/issues/6949)) ([e23706c](https://github.com/pagopa/io-app/commit/e23706c660f4a09297be965e250144c531e5f8e1))
+* [[IOPLT-1096](https://pagopa.atlassian.net/browse/IOPLT-1096)] Replace all the buttons with unified `IOButton` ([#6919](https://github.com/pagopa/io-app/issues/6919)) ([dd782be](https://github.com/pagopa/io-app/commit/dd782bee82c17adeaa2d0407bc3be5e5351b803b))
+
 ## [3.5.0-rc.0](https://github.com/pagopa/io-app/compare/3.4.0-rc.5...3.5.0-rc.0) (2025-05-07)
 
 

@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
 import { ItwDiscoveryBanner } from "./ItwDiscoveryBanner";
@@ -17,15 +17,8 @@ export const ItwDiscoveryBannerStandalone = () => {
   }
 
   return (
-    <View style={styles.wrapper} testID="itwDiscoveryBannerStandaloneTestID">
+    <View testID="itwDiscoveryBannerStandaloneTestID">
       <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    marginTop: 16,
-    marginBottom: 24
-  }
-});

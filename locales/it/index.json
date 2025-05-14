@@ -3782,7 +3782,7 @@
       "reminderBanner": {
         "title": "Ricevi le tue comunicazioni a valore legale su IO!",
         "body": "Con IO è più semplice, ti basta attivare il servizio SEND.",
-        "cta": "Attiva SEND su IO",
+        "cta": "Scopri SEND su IO",
         "activationFlow": {
           "FAILURE_DETAILS_FETCH": {
             "title": "Non riusciamo ad attivare il servizio SEND",
@@ -4307,6 +4307,11 @@
             "content": "Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!",
             "action": "Inizia"
           },
+          "homeWithOffline": {
+            "title": "Novità: Documenti su IO, anche offline",
+            "content": "Da oggi puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.",
+            "action": "Attiva Documenti su IO"
+          },
           "homeActive": {
             "title": "Riattiva Documenti su IO",
             "content": "Per ragioni di sicurezza, quando cambi dispositivo o rimuovi l’app, devi aggiungere di nuovo i tuoi documenti al Portafoglio.",
@@ -4333,6 +4338,11 @@
           "title": "Documenti su IO è già attiva",
           "content": "Continua ad aggiungere le versioni digitali dei tuoi documenti al Portafoglio.",
           "action": "Vai al Portafoglio"
+        },
+        "offlineBanner": {
+          "title": "Novità: i tuoi documenti anche offline",
+          "content": "Da oggi puoi usare i tuoi documenti su IO anche senza connessione a internet.",
+          "action": "Scopri di più"
         }
       },
       "identification": {
@@ -4703,10 +4713,24 @@
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
           },
+          "untrustedRpScreen": {
+            "title": "Questo ente non è verificato",
+            "subtitle": "Per la tua sicurezza, IO permette di condividere le tue informazioni solo con enti verificati e certificati.",
+            "primaryAction": "Chiudi",
+            "secondaryAction": "Cosa significa?",
+            "bottomSheet": {
+              "title": "Sistema di verifica degli enti",
+              "contentTop": "IO controlla sempre che un ente sia verificato prima di consentire la lettura dei tuoi dati.",
+              "subtitle": "Quando un ente è verificato?",
+              "contentBottom": "Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.",
+              "primaryAction": "Scopri di più"
+            }
+          },
           "purpose": "Finalità: {{purpose}}",
           "success": {
             "title": "Fatto!",
-            "subtitle": "Continua sul sito dell'ente"
+            "subtitle": "Continua sul sito dell'ente.",
+            "cta": "Continua sul sito dell'ente"
           }
         }
       },
@@ -4801,6 +4825,13 @@
         },
         "action": "Ricarica l'app IO",
         "failure": "Nessuna connessione. Collegati a internet e riprova."
+      },
+      "upgrade": {
+        "banner": {
+          "title": "IT-Wallet per\ni tuoi documenti",
+          "description": "L’unico Wallet di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
+          "action": "Ottieni IT-Wallet"
+        }
       }
     }
   },

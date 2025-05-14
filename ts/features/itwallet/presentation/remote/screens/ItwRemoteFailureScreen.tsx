@@ -15,6 +15,7 @@ import I18n from "../../../../../i18n.ts";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
+import { useItwRemoteUntrustedRPBottomSheet } from "../hooks/useItwRemoteUntrustedRPBottomSheet.tsx";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
 
 export const ItwRemoteFailureScreen = () => {
@@ -41,6 +42,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
     failure: serializeFailureReason(failure)
   });
 
+  const { bottomSheet, present } = useItwRemoteUntrustedRPBottomSheet();
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => machineRef.send({ type: "close" }),
     customBodyMessage: I18n.t(`${i18nNs}.walletInactiveScreen.alert.body`)
@@ -137,6 +139,29 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
+        case RemoteFailureType.UNTRUSTED_RP: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.untrustedRpScreen.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.untrustedRpScreen.subtitle"
+            ),
+            pictogram: "stopSecurity",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.untrustedRpScreen.primaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.untrustedRpScreen.secondaryAction"
+              ),
+              onPress: present
+            }
+          };
+        }
       }
     };
 
@@ -148,6 +173,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
         {...resultScreenProps}
         subtitleProps={{ textBreakStrategy: "simple" }}
       />
+      {bottomSheet}
     </>
   );
 };

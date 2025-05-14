@@ -1,4 +1,4 @@
-import { assign, fromPromise, not, setup } from "xstate";
+import { and, assign, fromPromise, not, setup } from "xstate";
 import { InitialContext, Context } from "./context";
 import { mapEventToFailure, RemoteFailureType } from "./failure";
 import { RemoteEvents } from "./events";
@@ -46,7 +46,7 @@ export const itwRemoteMachine = setup({
   },
   guards: {
     isWalletActive: notImplemented,
-    areRequiredCredentialsAvailable: notImplemented,
+    isL3Enabled: notImplemented,
     isEidExpired: notImplemented
   }
 }).createMachine({
@@ -71,7 +71,7 @@ export const itwRemoteMachine = setup({
         "Perform preliminary checks on the wallet and necessary conditions before proceeding",
       always: [
         {
-          guard: not("isWalletActive"),
+          guard: not(and(["isWalletActive", "isL3Enabled"])),
           actions: assign({
             failure: {
               type: RemoteFailureType.WALLET_INACTIVE,
@@ -96,7 +96,6 @@ export const itwRemoteMachine = setup({
       ]
     },
     EvaluatingRelyingPartyTrust: {
-      entry: "navigateToClaimsDisclosureScreen",
       tags: [ItwPresentationTags.Loading],
       description: "Determine whether the Relying Party is a trusted entity",
       invoke: {
@@ -107,7 +106,12 @@ export const itwRemoteMachine = setup({
           actions: assign(({ event }) => event.output)
         },
         onError: {
-          actions: "setFailure",
+          actions: assign({
+            failure: {
+              type: RemoteFailureType.UNTRUSTED_RP,
+              reason: "RP is not trusted"
+            }
+          }),
           target: "Failure"
         }
       }
@@ -134,6 +138,7 @@ export const itwRemoteMachine = setup({
       }
     },
     ClaimsDisclosure: {
+      entry: "navigateToClaimsDisclosureScreen",
       description:
         "Display the list of claims to disclose for the verifiable presentation",
       on: {
