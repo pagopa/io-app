@@ -36,9 +36,9 @@ export type ItwPreferencesState = {
   // but the actual local wallet is not active
   isWalletInstanceRemotelyActive?: boolean;
   // TEMPORARY LOCAL FF - TO BE REPLACED WITH REMOTE FF (SIW-2195)
-  // Indicates whether the L3 is enabled locally, which allows to use the new IT Wallet
+  // Indicates whether the L3 is enabled, which allows to use the new IT Wallet
   // features for users with L3 authentication level
-  isL3LocallyEnabled?: boolean;
+  isL3Enabled?: boolean;
   // Indicates whether the fiscal code is whitelisted for L3 features
   isFiscalCodeWhitelisted?: boolean;
   // Indicates whether the offline banner should be hidden
@@ -122,7 +122,7 @@ const reducer = (
     case getType(itwSetL3LocallyEnabled): {
       return {
         ...state,
-        isL3LocallyEnabled: action.payload
+        isL3Enabled: action.payload
       };
     }
     case getType(itwLifecycleStoresReset):
@@ -133,13 +133,13 @@ const reducer = (
       //  (the correct value will be set in the saga related to the wallet deactivation, but we should avoid to have this value undefined)
       const {
         claimValuesHidden,
-        isL3LocallyEnabled,
+        isL3Enabled,
         isWalletInstanceRemotelyActive
       } = state;
       return {
         ...itwPreferencesInitialState,
         claimValuesHidden,
-        isL3LocallyEnabled,
+        isL3Enabled,
         isWalletInstanceRemotelyActive
       };
 
