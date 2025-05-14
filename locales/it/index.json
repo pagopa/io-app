@@ -3782,7 +3782,7 @@
       "reminderBanner": {
         "title": "Ricevi le tue comunicazioni a valore legale su IO!",
         "body": "Con IO è più semplice, ti basta attivare il servizio SEND.",
-        "cta": "Attiva SEND su IO",
+        "cta": "Scopri SEND su IO",
         "activationFlow": {
           "FAILURE_DETAILS_FETCH": {
             "title": "Non riusciamo ad attivare il servizio SEND",
