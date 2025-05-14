@@ -21,23 +21,42 @@ import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserData
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
-import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
-import { shouldTrackLevelSecurityMismatchSaga } from "../features/authentication/login/cie/sagas/trackLevelSecuritySaga";
+import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
+import { loadSessionInformationSaga } from "../features/authentication/common/saga/loadSessionInformationSaga";
+import {
+  checkSession,
+  watchCheckSessionSaga
+} from "../features/authentication/common/saga/watchCheckSessionSaga";
+import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
+import { watchSessionExpiredSaga } from "../features/authentication/common/saga/watchSessionExpiredSaga";
+import { sessionExpired } from "../features/authentication/common/store/actions";
+import {
+  sessionInfoSelector,
+  sessionTokenSelector
+} from "../features/authentication/common/store/selectors";
 import { setSecurityAdviceReadyToShow } from "../features/authentication/fastLogin/store/actions/securityAdviceActions";
 import { refreshSessionToken } from "../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import {
   isFastLoginEnabledSelector,
   tokenRefreshSelector
 } from "../features/authentication/fastLogin/store/selectors";
+import { shouldTrackLevelSecurityMismatchSaga } from "../features/authentication/login/cie/sagas/trackLevelSecuritySaga";
+import { userFromSuccessLoginSelector } from "../features/authentication/loginInfo/store/selectors";
+import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
+import { startAndReturnIdentificationResult } from "../features/identification/sagas";
+import { IdentificationResult } from "../features/identification/store/reducers";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
+import {
+  isDeviceOfflineWithWalletSaga,
+  watchSessionRefreshInOfflineSaga
+} from "../features/ingress/saga";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import {
-  watchItwSaga,
-  watchItwOfflineSaga
+  watchItwOfflineSaga,
+  watchItwSaga
 } from "../features/itwallet/common/saga";
-import { userFromSuccessLoginSelector } from "../features/authentication/loginInfo/store/selectors";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
@@ -46,8 +65,17 @@ import {
 } from "../features/lollipop/saga";
 import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
 import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
+import { checkAcknowledgedEmailSaga } from "../features/mailCheck/sagas/checkAcknowledgedEmailSaga";
+import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sagas/checkEmailNotificationPreferencesSaga";
+import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
+import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
+import { watchProfileEmailValidationChangedSaga } from "../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
+import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
+import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
+import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
+import { clearOnboarding } from "../features/onboarding/store/actions";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
@@ -56,6 +84,21 @@ import { profileAndSystemNotificationsPermissions } from "../features/pushNotifi
 import { pushNotificationTokenUpload } from "../features/pushNotifications/sagas/pushNotificationTokenUpload";
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import { watchServicesSaga } from "../features/services/common/saga";
+import { fetchServicePreferencesForStartup } from "../features/services/details/saga/handleGetServicePreference";
+import {
+  loadProfile,
+  watchProfile,
+  watchProfileRefreshRequestsSaga,
+  watchProfileUpsertRequestsSaga
+} from "../features/settings/common/sagas/profile";
+import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
+import {
+  clearCache,
+  resetProfileState
+} from "../features/settings/common/store/actions";
+import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
+import { profileSelector } from "../features/settings/common/store/selectors";
+import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
 import { watchWalletSaga } from "../features/wallet/saga";
@@ -71,70 +114,28 @@ import {
   applicationInitialized,
   startApplicationInitialization
 } from "../store/actions/application";
-import { sessionExpired } from "../features/authentication/common/store/actions";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { navigateToPrivacyScreen } from "../store/actions/navigation";
-import { clearOnboarding } from "../features/onboarding/store/actions";
-import {
-  clearCache,
-  resetProfileState
-} from "../features/settings/common/store/actions";
 import {
   startupLoadSuccess,
   startupTransientError
 } from "../store/actions/startup";
-import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
-import {
-  sessionInfoSelector,
-  sessionTokenSelector
-} from "../features/authentication/common/store/selectors";
 import {
   isIdPayEnabledSelector,
   isPnEnabledSelector,
   remoteConfigSelector
 } from "../store/reducers/backendStatus/remoteConfig";
-import { IdentificationResult } from "../features/identification/store/reducers";
-import { profileSelector } from "../features/settings/common/store/selectors";
-import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
 import {
   StartupStatusEnum,
   startupTransientErrorInitialState
 } from "../store/reducers/startup";
-import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
-import {
-  isDeviceOfflineWithWalletSaga,
-  watchSessionRefreshInOfflineSaga
-} from "../features/ingress/saga";
-import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
-import {
-  loadProfile,
-  watchProfile,
-  watchProfileRefreshRequestsSaga,
-  watchProfileUpsertRequestsSaga
-} from "../features/settings/common/sagas/profile";
-import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
-import { watchProfileEmailValidationChangedSaga } from "../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
-import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
-import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sagas/checkEmailNotificationPreferencesSaga";
-import { checkAcknowledgedEmailSaga } from "../features/mailCheck/sagas/checkAcknowledgedEmailSaga";
-import { loadSessionInformationSaga } from "../features/authentication/common/saga/loadSessionInformationSaga";
-import {
-  checkSession,
-  watchCheckSessionSaga
-} from "../features/authentication/common/saga/watchCheckSessionSaga";
-import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
-import { watchSessionExpiredSaga } from "../features/authentication/common/saga/watchSessionExpiredSaga";
-import { startAndReturnIdentificationResult } from "../features/identification/sagas";
-import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
-import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
-import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -531,6 +532,8 @@ export function* initializeApplicationSaga(
       }
     }
   }
+
+  yield* call(fetchServicePreferencesForStartup);
 
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);
