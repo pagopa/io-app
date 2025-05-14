@@ -89,7 +89,11 @@ export const createEidIssuanceActorsImplementation = (
       cieUtils.isNfcEnabled(),
       cieManager.isCIEAuthenticationSupported()
     ]);
-    return { isNFCEnabled, isCIEAuthenticationSupported };
+    return {
+      isNFCEnabled,
+      isCIEAuthenticationSupported,
+      previousCiePreparationScreen: "PreparationCie"
+    };
   }),
 
   startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
