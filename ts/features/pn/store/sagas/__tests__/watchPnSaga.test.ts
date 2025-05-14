@@ -29,16 +29,11 @@ const mockPnClient: Partial<CLIENT.PnClient> = {
 };
 
 // Extract functions from testable export
-const { testable, watchPnSaga } = SAGAS;
-const {
-  handlePnActivation,
-  reportPNServiceStatusOnFailure,
-  loadPreferenceIfValidId
-} = testable ?? {
+const { testable, watchPnSaga, tryLoadSENDPreferences } = SAGAS;
+const { handlePnActivation, reportPNServiceStatusOnFailure } = testable ?? {
   // this coalescence is purely to avoid TS errors
   handlePnActivation: jest.fn(),
-  reportPNServiceStatusOnFailure: jest.fn(),
-  loadPreferenceIfValidId: jest.fn()
+  reportPNServiceStatusOnFailure: jest.fn()
 };
 
 // Mock analytics functions
@@ -52,17 +47,23 @@ describe("watchPnSaga", () => {
     jest.clearAllMocks();
   });
 
-  describe("loadPreferenceIfValidId", () => {
+  describe("tryLoadSENDPreferences", () => {
     it("should dispatch loadServicePreference.request when serviceId is valid", () => {
-      testSaga(loadPreferenceIfValidId, mockServiceId)
+      testSaga(tryLoadSENDPreferences)
         .next()
+        .select(pnMessagingServiceIdSelector)
+        .next(mockServiceId)
         .put(loadServicePreference.request(mockServiceId))
         .next()
         .isDone();
     });
 
     it("should not dispatch loadServicePreference.request when serviceId is undefined", () => {
-      testSaga(loadPreferenceIfValidId, undefined).next().isDone();
+      testSaga(tryLoadSENDPreferences)
+        .next()
+        .select(pnMessagingServiceIdSelector)
+        .next(undefined)
+        .isDone();
     });
   });
 
@@ -88,7 +89,7 @@ describe("watchPnSaga", () => {
           [select(pnMessagingServiceIdSelector), mockServiceId]
         ])
         .put(pnActivationUpsert.success())
-        .call(loadPreferenceIfValidId, mockServiceId)
+        .call(tryLoadSENDPreferences)
         .run()
         .then(() => {
           expect(trackPNServiceStatusChangeSuccess).toHaveBeenCalledWith(true);
@@ -112,10 +113,11 @@ describe("watchPnSaga", () => {
           .provide([
             [select(isPnTestEnabledSelector), false],
             [select(pnMessagingServiceIdSelector), mockServiceId],
-            [call(reportPNServiceStatusOnFailure, false), undefined]
+            [select(servicePreferencePotByIdSelector, mockServiceId), pot.none],
+            [call(reportPNServiceStatusOnFailure, false, "A reason"), undefined]
           ])
           .put(pnActivationUpsert.failure())
-          .call(loadPreferenceIfValidId, mockServiceId)
+          .call(tryLoadSENDPreferences)
           .run()
           .then(() => {
             expect(onFailure).toHaveBeenCalled();
@@ -136,10 +138,11 @@ describe("watchPnSaga", () => {
         .provide([
           [select(isPnTestEnabledSelector), false],
           [select(pnMessagingServiceIdSelector), mockServiceId],
-          [call(reportPNServiceStatusOnFailure, false), undefined]
+          [select(servicePreferencePotByIdSelector, mockServiceId), pot.none],
+          [call(reportPNServiceStatusOnFailure, false, "A reason"), undefined]
         ])
         .put(pnActivationUpsert.failure())
-        .call(loadPreferenceIfValidId, mockServiceId)
+        .call(tryLoadSENDPreferences)
         .run()
         .then(() => {
           expect(onFailure).toHaveBeenCalled();
@@ -150,14 +153,17 @@ describe("watchPnSaga", () => {
 
   describe("reportPNServiceStatusOnFailure", () => {
     it("should use predictedValue when service preferences are not available", () => {
-      testSaga(reportPNServiceStatusOnFailure, true)
+      testSaga(reportPNServiceStatusOnFailure, true, "A reason")
         .next()
         .select(pnMessagingServiceIdSelector)
         .next(mockServiceId)
         .select(servicePreferencePotByIdSelector, mockServiceId)
         .next(pot.none)
         .isDone();
-      expect(trackPNServiceStatusChangeError).toHaveBeenCalledWith(true);
+      expect(trackPNServiceStatusChangeError).toHaveBeenCalledWith(
+        true,
+        "A reason"
+      );
     });
 
     it("should use inbox value from service preferences when available", () => {
@@ -166,7 +172,7 @@ describe("watchPnSaga", () => {
         value: { inbox: true }
       };
 
-      testSaga(reportPNServiceStatusOnFailure, false)
+      testSaga(reportPNServiceStatusOnFailure, false, "A reason")
         .next()
         .select(pnMessagingServiceIdSelector)
         .next(mockServiceId)
@@ -174,7 +180,10 @@ describe("watchPnSaga", () => {
         .next(pot.some(servicePreferences))
         .isDone();
 
-      expect(trackPNServiceStatusChangeError).toHaveBeenCalledWith(true);
+      expect(trackPNServiceStatusChangeError).toHaveBeenCalledWith(
+        true,
+        "A reason"
+      );
     });
   });
 
