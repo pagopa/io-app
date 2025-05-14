@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -38,12 +39,13 @@ function* handlePnActivation(
       isPnTestEnabledSelector
     );
 
-    const result = yield* call(upsertPnActivation, {
+    const requestData = {
       body: {
         activation_status
       },
       isTest
-    });
+    };
+    const result = yield* call(upsertPnActivation, requestData);
 
     if (E.isRight(result) && result.right.status === 204) {
       yield* all([
@@ -52,12 +54,18 @@ function* handlePnActivation(
         call(tryLoadSENDPreferences)
       ]);
       action.payload.onSuccess?.();
+    } else if (E.isLeft(result)) {
+      throw Error(readableReport(result.left));
     } else {
-      throw new Error();
+      throw Error(
+        `Status code: ${result.right.status} Request data: ${JSON.stringify(
+          requestData
+        )}`
+      );
     }
   } catch (e) {
     yield* all([
-      call(reportPNServiceStatusOnFailure, !activation_status),
+      call(reportPNServiceStatusOnFailure, !activation_status, `${e}`),
       put(pnActivationUpsert.failure()),
       call(tryLoadSENDPreferences)
     ]);
@@ -65,7 +73,10 @@ function* handlePnActivation(
   }
 }
 
-function* reportPNServiceStatusOnFailure(predictedValue: boolean) {
+function* reportPNServiceStatusOnFailure(
+  predictedValue: boolean,
+  reason: string
+) {
   const pnServiceId = yield* select(pnMessagingServiceIdSelector);
   const pnServicePreferencesPot = yield* select(
     servicePreferencePotByIdSelector,
@@ -81,7 +92,7 @@ function* reportPNServiceStatusOnFailure(predictedValue: boolean) {
     ),
     O.getOrElse(() => predictedValue)
   );
-  trackPNServiceStatusChangeError(isServiceActive);
+  trackPNServiceStatusChangeError(isServiceActive, reason);
 }
 
 export function* watchPnSaga(bearerToken: SessionToken): SagaIterator {
