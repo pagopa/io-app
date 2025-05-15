@@ -14,8 +14,8 @@ import {
   itwAuthLevelSelector,
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
-  itwIsOfflineBannerHiddenSelector,
-  itwIsL3EnabledSelector
+  itwIsL3EnabledSelector,
+  itwIsOfflineBannerHiddenSelector
 } from "./preferences";
 import {
   isItwEnabledSelector,
