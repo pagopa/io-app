@@ -896,6 +896,9 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],

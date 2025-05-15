@@ -1586,6 +1586,9 @@ exports[`WithLightModalContext should match snapshot 1`] = `
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],

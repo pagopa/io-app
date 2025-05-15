@@ -1302,6 +1302,9 @@ We use tools that allow us to record data on how you use the app, to provide you
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
