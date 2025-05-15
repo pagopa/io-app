@@ -896,6 +896,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -1541,6 +1544,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
                                         },
                                         {
                                           "color": undefined,
@@ -2511,6 +2517,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
                                         },
                                         {
                                           "color": undefined,
