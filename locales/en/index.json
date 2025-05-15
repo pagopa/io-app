@@ -4386,9 +4386,9 @@
             "preparationScreen": {
               "cie": {
                 "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
-                "content": "Dovrai appoggiarla alla parte superiore del tuo dispositivo per permentterne la lettura.",
+                "content": "Dovrai appoggiarla alla parte superiore del tuo dispositivo per permetterne la lettura.",
                 "buttonLink": "Cos'è la CIE?",
-                "primaryAction": "Ho pronto la CIE",
+                "primaryAction": "Ho pronta la CIE",
                 "secondaryAction": "Non ho la CIE"
               },
               "pin": {
