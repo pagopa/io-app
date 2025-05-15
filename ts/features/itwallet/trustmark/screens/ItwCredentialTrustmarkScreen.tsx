@@ -9,6 +9,7 @@ import { ItwTrustmarkExpirationTimer } from "../components/ItwTrustmarkExpiratio
 import { ItwTrustmarkQrCode } from "../components/ItwTrustmarkQrCode";
 import { ItwTrustmarkMachineProvider } from "../machine/provider";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
+import { withOfflineFailureScreen } from "../../wallet/utils/withOfflineFailureScreen.tsx";
 
 export type ItwCredentialTrustmarkScreenNavigationParams = {
   credentialType: string;
@@ -19,7 +20,7 @@ type ScreenProps = IOStackNavigationRouteProps<
   "ITW_PRESENTATION_CREDENTIAL_TRUSTMARK"
 >;
 
-export const ItwCredentialTrustmarkScreen = (params: ScreenProps) => {
+const ItwCredentialTrustmarkScreenComponent = (params: ScreenProps) => {
   const { credentialType } = params.route.params;
 
   usePreventScreenCapture();
@@ -44,3 +45,8 @@ export const ItwCredentialTrustmarkScreen = (params: ScreenProps) => {
     </ItwTrustmarkMachineProvider>
   );
 };
+
+// Offline failure screen HOC
+export const ItwCredentialTrustmarkScreen = withOfflineFailureScreen(
+  ItwCredentialTrustmarkScreenComponent
+);
