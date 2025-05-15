@@ -17,6 +17,7 @@ import {
   InitialContext
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
+import { CieWarningType } from "../../../identification/screens/ItwIdentificationCieWarningScreen.tsx";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -39,6 +40,7 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToCieReadCardScreen = jest.fn();
   const navigateToNfcInstructionsScreen = jest.fn();
   const navigateToCieIdLoginScreen = jest.fn();
+  const navigateToCieWarningScreen = jest.fn();
   const storeIntegrityKeyTag = jest.fn();
   const cleanupIntegrityKeyTag = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
@@ -81,6 +83,7 @@ describe("itwEidIssuanceMachine", () => {
       navigateToCieReadCardScreen,
       navigateToNfcInstructionsScreen,
       navigateToCieIdLoginScreen,
+      navigateToCieWarningScreen,
       storeIntegrityKeyTag,
       cleanupIntegrityKeyTag,
       storeWalletInstanceAttestation,
@@ -1244,6 +1247,47 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "accept-tos" });
 
     expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
+  });
+
+  it("Should navigate to CieWarning screen when 'go-to-cie-warning' event is received", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshotInModeSelection: MachineSnapshot = _.merge(
+      undefined,
+      initialSnapshot,
+      {
+        value: { UserIdentification: "ModeSelection" },
+        context: {
+          ...InitialContext,
+          integrityKeyTag: T_INTEGRITY_KEY,
+          walletInstanceAttestation: T_WIA
+        }
+      } as MachineSnapshot
+    );
+
+    const actor = createActor(mockedMachine, {
+      snapshot: snapshotInModeSelection
+    });
+
+    actor.start();
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: "ModeSelection"
+    });
+
+    const testWarningType: CieWarningType = "noCie" as CieWarningType;
+
+    actor.send({ type: "go-to-cie-warning", warning: testWarningType });
+
+    await waitFor(() => {
+      expect(actor.getSnapshot().value).toStrictEqual({
+        UserIdentification: "CieWarning"
+      });
+    });
+
+    expect(navigateToCieWarningScreen).toHaveBeenCalledTimes(1);
   });
 
   it("Should initialize the machine context with L3 active", async () => {

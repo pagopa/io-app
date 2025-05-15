@@ -889,6 +889,9 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                             "textAlign": "auto",
                                           },
                                           {
+                                            "color": "#FFFFFF",
+                                          },
+                                          {
                                             "color": undefined,
                                           },
                                         ],

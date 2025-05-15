@@ -929,6 +929,9 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                             "textAlign": "auto",
                                           },
                                           {
+                                            "color": "#FFFFFF",
+                                          },
+                                          {
                                             "color": undefined,
                                           },
                                         ],
