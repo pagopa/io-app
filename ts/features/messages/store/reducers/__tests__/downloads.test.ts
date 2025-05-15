@@ -22,7 +22,7 @@ import { UIMessageId } from "../../../types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../../../definitions/communications/ThirdPartyAttachment";
 
 const path = "/path/attachment.pdf";
 

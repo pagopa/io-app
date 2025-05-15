@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
-import { OrganizationName } from "../../../../../../definitions/backend/OrganizationName";
+import { OrganizationName } from "../../../../../../definitions/services/OrganizationName";
 import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { StandardServiceCategoryEnum } from "../../../../../../definitions/services/StandardServiceCategory";
 import { ScopeTypeEnum } from "../../../../../../definitions/services/ScopeType";

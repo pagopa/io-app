@@ -1,6 +1,6 @@
 import { AmountInEuroCents } from "@pagopa/io-pagopa-commons/lib/pagopa";
 
-import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
+import { EnteBeneficiario } from "../../definitions/payments/EnteBeneficiario";
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import {
   CreditCardCVC,

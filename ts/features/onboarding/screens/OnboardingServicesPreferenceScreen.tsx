@@ -7,7 +7,7 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native";
-import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/auth/ServicesPreferencesMode";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import I18n from "../../../i18n";
 import {

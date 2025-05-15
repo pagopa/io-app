@@ -9,8 +9,8 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { SagaCallReturnType } from "../../types/utils";
 import { getWalletError } from "../../utils/errors";
 import { readablePrivacyReport } from "../../utils/reporters";
-import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
-import { Detail_v2Enum } from "../../../definitions/backend/PaymentProblemJson";
+import { PaymentRequestsGetResponse } from "../../../definitions/payments/PaymentRequestsGetResponse";
+import { Detail_v2Enum } from "../../../definitions/payments/PaymentProblemJson";
 import { withRefreshApiCall } from "../../features/authentication/fastLogin/saga/utils";
 
 export function* commonPaymentVerificationProcedure<A extends Action>(

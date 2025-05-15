@@ -1,10 +1,10 @@
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 
-import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { TimeToLiveSeconds } from "../../../../definitions/communications/TimeToLiveSeconds";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
-import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
-import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
+import { OrganizationFiscalCode } from "../../../../definitions/communications/OrganizationFiscalCode";
+import { MessageCategory } from "../../../../definitions/communications/MessageCategory";
 import {
   NextPageMessagesSuccessPayload,
   PreviousPageMessagesSuccessPayload,

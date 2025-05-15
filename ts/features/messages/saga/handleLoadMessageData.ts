@@ -6,7 +6,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import {
   RequestGetMessageDataActionType,
@@ -24,11 +24,11 @@ import { loadServiceDetail } from "../../services/details/store/actions/details"
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";
 import { isLoadingOrUpdatingInbox } from "../store/reducers/allPaginated";
-import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
+import { TagEnum } from "../../../../definitions/communications/MessageCategoryPN";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { trackPNPushOpened } from "../../pn/analytics";
 import { isTestEnv } from "../../../utils/environment";
-import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { ThirdPartyMessageWithContent } from "../../../../definitions/communications/ThirdPartyMessageWithContent";
 import {
   trackMessageDataLoadFailure,
   trackMessageDataLoadPending,
@@ -36,7 +36,6 @@ import {
   trackMessageDataLoadSuccess,
   trackRemoteContentMessageDecodingWarning
 } from "../analytics";
-import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
 import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
 
 import { extractContentFromMessageSources } from "../utils";
@@ -45,6 +44,7 @@ import {
   ctasFromLocalizedCTAs,
   localizedCTAsFromFrontMatter
 } from "../utils/ctas";
+import { RemoteContentDetails } from "../../../../definitions/remote_content/RemoteContentDetails";
 
 export function* handleLoadMessageData(
   action: ActionType<typeof getMessageDataAction.request>

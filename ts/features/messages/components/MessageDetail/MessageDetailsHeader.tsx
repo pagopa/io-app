@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { Divider, H3, BodySmall, VSpacer } from "@pagopa/io-app-design-system";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { localeDateFormat } from "../../../../utils/locale";
 import I18n from "../../../../i18n";
 import { logosForService } from "../../../services/common/utils";

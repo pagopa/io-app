@@ -7,8 +7,8 @@ import { StatusBarProps } from "react-native";
 import {
   ProductCategory,
   ProductCategoryEnum
-} from "../../../../../definitions/cgn/merchants/ProductCategory";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+} from "../../../../../definitions/cgn/ProductCategory";
+import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions/cgn/ProductCategoryWithNewDiscountsCount";
 import { TranslationKeys } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
 

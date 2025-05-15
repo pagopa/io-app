@@ -1,5 +1,5 @@
-import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
-import { ThirdPartyMessagePrecondition } from "../../../../../../definitions/backend/ThirdPartyMessagePrecondition";
+import { MessageCategory } from "../../../../../../definitions/communications/MessageCategory";
+import { ThirdPartyMessagePrecondition } from "../../../../../../definitions/communications/ThirdPartyMessagePrecondition";
 import { UIMessageId } from "../../../types";
 import {
   errorPreconditionStatusAction,

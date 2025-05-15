@@ -4,15 +4,15 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
-import { SearchResult } from "../../../../../../definitions/cgn/merchants/SearchResult";
-import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
-import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { SearchRequest } from "../../../../../../definitions/cgn/merchants/SearchRequest";
-import { OfflineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OfflineMerchantSearchRequest";
-import { OnlineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OnlineMerchantSearchRequest";
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { CountResult } from "../../../../../../definitions/cgn/merchants/CountResult";
+import { SearchResult } from "../../../../../../definitions/cgn/SearchResult";
+import { OnlineMerchants } from "../../../../../../definitions/cgn/OnlineMerchants";
+import { OfflineMerchants } from "../../../../../../definitions/cgn/OfflineMerchants";
+import { Merchant } from "../../../../../../definitions/cgn/Merchant";
+import { SearchRequest } from "../../../../../../definitions/cgn/SearchRequest";
+import { OfflineMerchantSearchRequest } from "../../../../../../definitions/cgn/OfflineMerchantSearchRequest";
+import { OnlineMerchantSearchRequest } from "../../../../../../definitions/cgn/OnlineMerchantSearchRequest";
+import { Discount } from "../../../../../../definitions/cgn/Discount";
+import { CountResult } from "../../../../../../definitions/cgn/CountResult";
 
 /**
  * count merchants conventioned with CGN

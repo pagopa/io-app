@@ -1,7 +1,7 @@
 import { EmailString, FiscalCode } from "@pagopa/ts-commons/lib/strings";
-import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
-import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
-import { Version } from "../../definitions/backend/Version";
+import { InitializedProfile } from "../../definitions/auth/InitializedProfile";
+import { ServicesPreferencesModeEnum } from "../../definitions/auth/ServicesPreferencesMode";
+import { Version } from "../../definitions/auth/Version";
 
 const mockedProfile: InitializedProfile = {
   service_preferences_settings: {

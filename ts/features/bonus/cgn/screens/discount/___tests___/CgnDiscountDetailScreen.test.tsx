@@ -1,10 +1,10 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
-import { DiscountCodeTypeEnum } from "../../../../../../../definitions/cgn/merchants/DiscountCodeType";
-import { Merchant } from "../../../../../../../definitions/cgn/merchants/Merchant";
-import { SupportTypeEnum } from "../../../../../../../definitions/cgn/merchants/SupportType";
+import { Discount } from "../../../../../../../definitions/cgn/Discount";
+import { DiscountCodeTypeEnum } from "../../../../../../../definitions/cgn/DiscountCodeType";
+import { Merchant } from "../../../../../../../definitions/cgn/Merchant";
+import { SupportTypeEnum } from "../../../../../../../definitions/cgn/SupportType";
 import { remoteReady } from "../../../../../../common/model/RemoteValue";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";

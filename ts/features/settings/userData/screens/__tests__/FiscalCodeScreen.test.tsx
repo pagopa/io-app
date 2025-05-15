@@ -6,8 +6,8 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import FiscalCodeScreen from "../FiscalCodeScreen";
 import { profileLoadSuccess } from "../../../common/store/actions";
-import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
+import { EmailAddress } from "../../../../../../definitions/auth/EmailAddress";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/auth/ServicesPreferencesMode";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 jest.mock("../../../../../utils/brightness", () => ({

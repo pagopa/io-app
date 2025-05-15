@@ -14,18 +14,18 @@ import {
   loadThirdPartyMessage,
   upsertMessageStatusAttributes
 } from "../../store/actions";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../../store/reducers/detailsById";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/communications/ThirdPartyMessageWithContent";
 import { thirdPartyFromIdSelector } from "../../store/reducers/thirdPartyById";
-import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import { TagEnum } from "../../../../../definitions/communications/MessageCategoryPN";
 import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isLoadingOrUpdatingInbox } from "../../store/reducers/allPaginated";
-import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyMessage } from "../../../../../definitions/communications/ThirdPartyMessage";
+import { ThirdPartyAttachment } from "../../../../../definitions/communications/ThirdPartyAttachment";
 import { trackMessageDataLoadFailure } from "../../analytics";
 import { MessageGetStatusFailurePhaseType } from "../../store/reducers/messageGetStatus";
 

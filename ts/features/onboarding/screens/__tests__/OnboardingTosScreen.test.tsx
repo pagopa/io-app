@@ -11,12 +11,12 @@ import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
-import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../../definitions/auth/InitializedProfile";
 import ROUTES from "../../../../navigation/routes";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 // import * as ToastUtils from "../../../utils/showToast";
 import OnboardingTosScreen from "../OnboardingTosScreen";
-import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "../../../../../definitions/auth/ServicesPreferencesMode";
 import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 
 const CurrentTestToSVersion = 2.0;

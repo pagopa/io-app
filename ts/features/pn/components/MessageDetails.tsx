@@ -11,9 +11,9 @@ import {
   VSpacer,
   useFooterActionsMeasurements
 } from "@pagopa/io-app-design-system";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../definitions/communications/ThirdPartyAttachment";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import I18n from "../../../i18n";
 import { PNMessage } from "../store/types/types";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";

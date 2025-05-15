@@ -3,7 +3,7 @@ import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
+import { UserDataProcessingChoiceEnum } from "../../../../../definitions/auth/UserDataProcessingChoice";
 import { BackendClient } from "../../../../api/backend";
 import {
   deleteUserDataProcessing,

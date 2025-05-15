@@ -8,8 +8,8 @@ import { MessagePaymentBottomSheet } from "../MessagePaymentBottomSheet";
 import { UIMessageId } from "../../../messages/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { Detail_v2Enum } from "../../../../../definitions/payments/PaymentProblemJson";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
 describe("MessagePaymentBottomSheet", () => {
   it("should match snapshot, no payments", () => {

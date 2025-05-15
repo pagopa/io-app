@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
 import { Platform, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import { DiscountCodeTypeEnum } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
+import { DiscountCodeTypeEnum } from "../../../../../../definitions/cgn/DiscountCodeType";
 import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import {
