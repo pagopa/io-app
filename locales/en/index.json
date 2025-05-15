@@ -4376,6 +4376,18 @@
         }
       },
       "identification": {
+        "cieWarning": {
+          "primaryAction": "Scopri cosa puoi fare",
+          "closeAction": "Chiudi",
+          "noPin": {
+            "title": "Non puoi continuare senza il PIN della CIE",
+            "subtitle": "Se hai registrato un contatto di recupero quando hai richiesto la CIE, puoi reimpostare il PIN con l’app CieID.\n\n In alternativa, rivolgiti al tuo Comune per recuperare il PIN della tua carta."
+          },
+          "noCie": {
+            "title": "Non puoi continuare senza la carta di identità elettronica (CIE)",
+            "subtitle": "Per ottenere i vantaggi di IT-Wallet è necessario autenticarsi con la CIE.\n\n Richiedere la CIE è facile e veloce, scopri cosa puoi fare."
+          }
+        },
         "l3": {
           "mode": {
             "title": "Verifica la tua identità con CIE",
@@ -4742,6 +4754,25 @@
             "subtitle": "È un passaggio di verifica necessario per continuare ad usare IT-Wallet e per autenticarti.",
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
+          },
+          "relyingParty": {
+            "genericError": {
+              "title": "Comunicazione interrotta",
+              "subtitle": "Si è verificato un problema che ha impedito la comunicazione con l’ente.\n\nGenera un nuovo QR Code e riprova.",
+              "primaryAction": "Riprova",
+              "secondaryAction": "Chiudi"
+            },
+            "invalidAuthResponse": {
+              "title": "Non è possibile continuare",
+              "subtitle": "Verifica di essere in possesso dei requisiti necessari per accedere ai servizi.",
+              "primaryAction": "Ho capito",
+              "secondaryAction": "Maggiori dettagli"
+            },
+            "invalidRequestObject": {
+              "title": "Non puoi continuare con la richiesta",
+              "subtitle": "L’ente che richiede la verifica non sta comunicando i dati necessari per continuare. Riprova più tardi.",
+              "primaryAction": "Ho capito"
+            }
           },
           "untrustedRpScreen": {
             "title": "Questo ente non è verificato",
