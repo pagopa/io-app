@@ -96,3 +96,16 @@ export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   itwAuthLevelSelector(state) !== "L3";
+
+/**
+ * Returns whether the new IT-Wallet variant should be rendered.
+ * - The IT Wallet feature flag is enabled
+ * - The wallet is not offline
+ * - The L3 feature flag is enabled
+ * - The wallet is with L3 auth
+ */
+export const itwShouldRenderNewITWallet = (state: GlobalState) =>
+  isItwEnabledSelector(state) &&
+  !offlineAccessReasonSelector(state) &&
+  itwIsL3EnabledSelector(state) &&
+  itwAuthLevelSelector(state) === "L3";

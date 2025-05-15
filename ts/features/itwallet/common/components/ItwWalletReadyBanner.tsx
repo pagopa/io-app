@@ -3,11 +3,15 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { itwShouldRenderWalletReadyBannerSelector } from "../store/selectors";
+import {
+  itwShouldRenderNewITWallet,
+  itwShouldRenderWalletReadyBannerSelector
+} from "../store/selectors";
 
 export const ItwWalletReadyBanner = () => {
   const navigation = useIONavigation();
   const shouldRender = useIOSelector(itwShouldRenderWalletReadyBannerSelector);
+  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWallet);
 
   if (!shouldRender) {
     return null;
@@ -21,15 +25,26 @@ export const ItwWalletReadyBanner = () => {
 
   return (
     <Banner
+      {...(isNewItwRenderable
+        ? {
+            content: I18n.t(
+              "features.itWallet.issuance.emptyWallet.itwReadyBanner.content"
+            ),
+            color: "neutral"
+          }
+        : {
+            title: I18n.t("features.itWallet.issuance.eidResult.success.title"),
+            content: I18n.t(
+              "features.itWallet.issuance.eidResult.success.subtitle"
+            ),
+            action: I18n.t(
+              "features.itWallet.issuance.eidResult.success.actions.continueAlt"
+            ),
+            color: "turquoise",
+            onPress: handleOnPress
+          })}
       testID="itwWalletReadyBannerTestID"
-      title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
-      content={I18n.t("features.itWallet.issuance.eidResult.success.subtitle")}
-      action={I18n.t(
-        "features.itWallet.issuance.eidResult.success.actions.continueAlt"
-      )}
       pictogramName="itWallet"
-      color="turquoise"
-      onPress={handleOnPress}
     />
   );
 };

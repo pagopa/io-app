@@ -23,13 +23,13 @@ import {
 } from "../../itwallet/analytics";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
-import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletUpdate } from "../store/actions";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import {
   isWalletEmptySelector,
   isWalletScreenRefreshingSelector
 } from "../store/selectors";
+import { itwShouldRenderNewITWallet } from "../../itwallet/common/store/selectors";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen
@@ -47,6 +47,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
 
   const isWalletEmpty = useIOSelector(isWalletEmptySelector);
   const isRefreshingContent = useIOSelector(isWalletScreenRefreshingSelector);
+  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWallet);
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
@@ -63,12 +64,27 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     }
   }, [isRefreshingContent]);
 
+  const handleAddToWalletButtonPress = useCallback(() => {
+    trackWalletAdd();
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ONBOARDING
+    });
+  }, [navigation]);
+
   useHeaderFirstLevel({
     currentRoute: ROUTES.WALLET_HOME,
     headerProps: {
       testID: "wallet-home-header-title",
       title: I18n.t("wallet.wallet"),
-      animatedRef: scrollViewContentRef
+      animatedRef: scrollViewContentRef,
+      actions: [
+        {
+          accessibilityLabel: I18n.t("features.wallet.home.cta"),
+          icon: "documentAdd",
+          onPress: handleAddToWalletButtonPress
+        }
+      ],
+      variant: isNewItwRenderable ? "contrast" : "primary"
     }
   });
 
@@ -105,13 +121,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     }, [isNewElementAdded])
   );
 
-  const handleAddToWalletButtonPress = useCallback(() => {
-    trackWalletAdd();
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
-    });
-  }, [navigation]);
-
   /**
    * Returns the CTA props based on the screen state
    */
@@ -126,7 +135,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
       primary: {
         testID: "walletAddCardButtonTestID",
         label: I18n.t("features.wallet.home.cta"),
-        icon: "addSmall",
+        icon: "documentAdd",
         iconPosition: "end",
         onPress: handleAddToWalletButtonPress
       }
@@ -142,14 +151,15 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     <IOScrollView
       animatedRef={scrollViewContentRef}
       centerContent={true}
+      includeContentMargins={false}
       excludeSafeAreaMargins={true}
       refreshControlProps={{
         refreshing: isRefreshing,
         onRefresh: handleRefreshWallet
       }}
       actions={screenActions}
+      contentContainerStyle={{ paddingTop: isNewItwRenderable ? 0 : 16 }}
     >
-      <WalletCategoryFilterTabs />
       <WalletCardsContainer />
     </IOScrollView>
   );

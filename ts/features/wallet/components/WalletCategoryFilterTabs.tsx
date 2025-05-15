@@ -1,4 +1,5 @@
 import {
+  ContentWrapper,
   IOVisualCostants,
   TabItem,
   TabNavigation
@@ -58,31 +59,35 @@ const WalletCategoryFilterTabs = () => {
   };
 
   return (
-    <View style={styles.container} testID="CategoryTabsContainerTestID">
-      <TabNavigation
-        tabAlignment="start"
-        onItemPress={handleFilterSelected}
-        selectedIndex={selectedIndex}
-      >
-        {[
-          <TabItem
-            key={`category_tab_all`}
-            label={I18n.t(`features.wallet.cards.categories.all`)}
-            accessibilityLabel={I18n.t(`features.wallet.cards.categories.all`)}
-          />,
-          ...walletCardCategoryFilters.map(category => (
+    <ContentWrapper>
+      <View style={styles.container} testID="CategoryTabsContainerTestID">
+        <TabNavigation
+          tabAlignment="start"
+          onItemPress={handleFilterSelected}
+          selectedIndex={selectedIndex}
+        >
+          {[
             <TabItem
-              testID={`CategoryTabTestID-${category}`}
-              key={`category_tab_${category}`}
-              label={I18n.t(`features.wallet.cards.categories.${category}`)}
+              key={`category_tab_all`}
+              label={I18n.t(`features.wallet.cards.categories.all`)}
               accessibilityLabel={I18n.t(
-                `features.wallet.cards.categories.${category}`
+                `features.wallet.cards.categories.all`
               )}
-            />
-          ))
-        ]}
-      </TabNavigation>
-    </View>
+            />,
+            ...walletCardCategoryFilters.map(category => (
+              <TabItem
+                testID={`CategoryTabTestID-${category}`}
+                key={`category_tab_${category}`}
+                label={I18n.t(`features.wallet.cards.categories.${category}`)}
+                accessibilityLabel={I18n.t(
+                  `features.wallet.cards.categories.${category}`
+                )}
+              />
+            ))
+          ]}
+        </TabNavigation>
+      </View>
+    </ContentWrapper>
   );
 };
 
