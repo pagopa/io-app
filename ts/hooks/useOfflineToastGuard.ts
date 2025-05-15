@@ -4,10 +4,10 @@ import * as O from "fp-ts/lib/Option";
 import { useCallback } from "react";
 import { useRoute } from "@react-navigation/native";
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
-import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
 import I18n from "../i18n";
 import { useIOSelector } from "../store/hooks";
 import { trackOfflineActionNotAllowed } from "../utils/analytics.ts";
+import { isConnectedSelector } from "../features/connectivity/store/selectors";
 
 /**
  * Options for the offline guard.
@@ -25,27 +25,16 @@ export type OfflineGuardOptions = {
  * ```typescript
  * // Show toast when offline
  * const actionWithConnectivity = useOfflineToastGuard(performAction);
- *
- * // Only guard for specific offline reasons
- * const actionWithSpecificGuard = useOfflineGuard(performAction, {
- *   reasons: [OfflineAccessReasonEnum.NO_INTERNET_CONNECTION]
  * });
  * ```
- *
  * @param fn The function to execute when there is connectivity
- * @param options Optional configuration for the offline guard
  * @returns A wrapped function that either executes the provided function (when online)
  *          or shows a toast error message (when offline)
  */
-export const useOfflineToastGuard = (
-  fn: (...args: Array<any>) => any,
-  options: OfflineGuardOptions = {}
-) => {
-  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+export const useOfflineToastGuard = (fn: (...args: Array<any>) => any) => {
+  const isConnected = useIOSelector(isConnectedSelector);
   const toast = useIOToast();
   const { name } = useRoute();
-  const { reasons = Object.values(OfflineAccessReasonEnum) } = options;
-
   /**
    * The function that will be executed if there is no connectivity.
    */
@@ -59,9 +48,8 @@ export const useOfflineToastGuard = (
 
   return (...args: Array<any>) =>
     pipe(
-      offlineAccessReason,
+      !isConnected,
       O.fromNullable,
-      O.map(reason => reasons.includes(reason)),
       O.map(isOffline => (isOffline ? guardFn : () => fn(...args))),
       O.getOrElse(() => fn),
       f => f(...args)
