@@ -399,7 +399,7 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Ricevi le tue comunicazioni a valore legale su IO! Con IO è più semplice, ti basta attivare il servizio SEND. Attiva SEND su IO"
+                              accessibilityLabel="Ricevi le tue comunicazioni a valore legale su IO! Con IO è più semplice, ti basta attivare il servizio SEND. Scopri SEND su IO"
                               accessibilityRole="button"
                               accessible={true}
                               style={
@@ -452,7 +452,7 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                               </Text>
                               <View
                                 accessibilityElementsHidden={true}
-                                accessibilityLabel="Attiva SEND su IO"
+                                accessibilityLabel="Scopri SEND su IO"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -515,7 +515,7 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  Attiva SEND su IO
+                                  Scopri SEND su IO
                                 </Text>
                               </View>
                             </View>

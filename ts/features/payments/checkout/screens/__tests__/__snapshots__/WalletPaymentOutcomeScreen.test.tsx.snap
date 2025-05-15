@@ -549,6 +549,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -2541,6 +2544,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -4514,6 +4520,9 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -6470,6 +6479,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,
@@ -8444,6 +8456,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -10372,6 +10387,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -10511,6 +10529,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
                                               },
                                               {
                                                 "color": undefined,
@@ -12413,6 +12434,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -12552,6 +12576,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
                                               },
                                               {
                                                 "color": undefined,
@@ -14512,6 +14539,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -16418,6 +16448,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,
@@ -18412,6 +18445,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -20382,6 +20418,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,
@@ -22376,6 +22415,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -24304,6 +24346,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -24443,6 +24488,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
                                               },
                                               {
                                                 "color": undefined,
@@ -26437,6 +26485,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -28427,6 +28478,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,
@@ -30429,6 +30483,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -32401,6 +32458,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -34331,6 +34391,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -34470,6 +34533,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
                                               },
                                               {
                                                 "color": undefined,
@@ -36442,6 +36508,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,
@@ -38422,6 +38491,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -38561,6 +38633,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
                                               },
                                               {
                                                 "color": undefined,
@@ -40648,6 +40723,9 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -40787,6 +40865,9 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
                                               },
                                               {
                                                 "color": undefined,
@@ -42909,6 +42990,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -44840,6 +44924,9 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -44979,6 +45066,9 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
                                               },
                                               {
                                                 "color": undefined,
@@ -46973,6 +47063,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -47112,6 +47205,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
                                               },
                                               {
                                                 "color": undefined,
@@ -49070,6 +49166,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,
@@ -51072,6 +51171,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -53042,6 +53144,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,
@@ -55034,6 +55139,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,

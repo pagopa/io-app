@@ -471,6 +471,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                         "textAlign": "auto",
                                       },
                                       {
+                                        "color": "#FFFFFF",
+                                      },
+                                      {
                                         "color": undefined,
                                       },
                                     ],
@@ -609,6 +612,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "color": undefined,
@@ -1108,6 +1114,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                         "textAlign": "auto",
                                       },
                                       {
+                                        "color": "#FFFFFF",
+                                      },
+                                      {
                                         "color": undefined,
                                       },
                                     ],
@@ -1233,6 +1242,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     [
                                       {
                                         "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "color": undefined,
@@ -1373,6 +1385,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "color": undefined,
@@ -2216,6 +2231,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                     [
                                       {
                                         "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
                                       },
                                       {
                                         "color": undefined,
@@ -3695,6 +3713,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                         "textAlign": "auto",
                                       },
                                       {
+                                        "color": "#FFFFFF",
+                                      },
+                                      {
                                         "color": undefined,
                                       },
                                     ],
@@ -4191,6 +4212,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                         "textAlign": "auto",
                                       },
                                       {
+                                        "color": "#FFFFFF",
+                                      },
+                                      {
                                         "color": undefined,
                                       },
                                     ],
@@ -4329,6 +4353,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "color": undefined,
