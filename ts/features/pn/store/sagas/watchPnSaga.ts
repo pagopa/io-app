@@ -6,7 +6,6 @@ import { pipe } from "fp-ts/lib/function";
 import { SagaIterator } from "redux-saga";
 import { all, call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { apiUrlPrefix } from "../../../../config";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
@@ -23,9 +22,10 @@ import { PnClient, createPnClient } from "../../api/client";
 import { pnActivationUpsert, startPNPaymentStatusTracking } from "../actions";
 import { watchPaymentStatusForMixpanelTracking } from "./watchPaymentStatusSaga";
 
-function* loadPreferenceIfValidId(serviceId: ServiceId | undefined) {
-  if (serviceId !== undefined) {
-    yield* put(loadServicePreference.request(serviceId));
+export function* tryLoadSENDPreferences() {
+  const pnServiceId = yield* select(pnMessagingServiceIdSelector);
+  if (pnServiceId !== undefined) {
+    yield* put(loadServicePreference.request(pnServiceId));
   }
 }
 function* handlePnActivation(
@@ -33,7 +33,6 @@ function* handlePnActivation(
   action: ActionType<typeof pnActivationUpsert.request>
 ) {
   const activation_status = action.payload.value;
-  const pnServiceId = yield* select(pnMessagingServiceIdSelector);
 
   try {
     const isTest: ReturnType<typeof isPnTestEnabledSelector> = yield* select(
@@ -52,7 +51,7 @@ function* handlePnActivation(
       yield* all([
         call(trackPNServiceStatusChangeSuccess, activation_status),
         put(pnActivationUpsert.success()),
-        call(loadPreferenceIfValidId, pnServiceId)
+        call(tryLoadSENDPreferences)
       ]);
       action.payload.onSuccess?.();
     } else if (E.isLeft(result)) {
@@ -68,7 +67,7 @@ function* handlePnActivation(
     yield* all([
       call(reportPNServiceStatusOnFailure, !activation_status, `${e}`),
       put(pnActivationUpsert.failure()),
-      call(loadPreferenceIfValidId, pnServiceId)
+      call(tryLoadSENDPreferences)
     ]);
     action.payload.onFailure?.();
   }
@@ -114,7 +113,6 @@ export function* watchPnSaga(bearerToken: SessionToken): SagaIterator {
 export const testable = isTestEnv
   ? {
       handlePnActivation,
-      reportPNServiceStatusOnFailure,
-      loadPreferenceIfValidId
+      reportPNServiceStatusOnFailure
     }
   : undefined;

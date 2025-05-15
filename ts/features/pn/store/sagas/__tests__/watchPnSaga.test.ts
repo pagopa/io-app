@@ -29,16 +29,11 @@ const mockPnClient: Partial<CLIENT.PnClient> = {
 };
 
 // Extract functions from testable export
-const { testable, watchPnSaga } = SAGAS;
-const {
-  handlePnActivation,
-  reportPNServiceStatusOnFailure,
-  loadPreferenceIfValidId
-} = testable ?? {
+const { testable, watchPnSaga, tryLoadSENDPreferences } = SAGAS;
+const { handlePnActivation, reportPNServiceStatusOnFailure } = testable ?? {
   // this coalescence is purely to avoid TS errors
   handlePnActivation: jest.fn(),
-  reportPNServiceStatusOnFailure: jest.fn(),
-  loadPreferenceIfValidId: jest.fn()
+  reportPNServiceStatusOnFailure: jest.fn()
 };
 
 // Mock analytics functions
@@ -52,17 +47,23 @@ describe("watchPnSaga", () => {
     jest.clearAllMocks();
   });
 
-  describe("loadPreferenceIfValidId", () => {
+  describe("tryLoadSENDPreferences", () => {
     it("should dispatch loadServicePreference.request when serviceId is valid", () => {
-      testSaga(loadPreferenceIfValidId, mockServiceId)
+      testSaga(tryLoadSENDPreferences)
         .next()
+        .select(pnMessagingServiceIdSelector)
+        .next(mockServiceId)
         .put(loadServicePreference.request(mockServiceId))
         .next()
         .isDone();
     });
 
     it("should not dispatch loadServicePreference.request when serviceId is undefined", () => {
-      testSaga(loadPreferenceIfValidId, undefined).next().isDone();
+      testSaga(tryLoadSENDPreferences)
+        .next()
+        .select(pnMessagingServiceIdSelector)
+        .next(undefined)
+        .isDone();
     });
   });
 
@@ -88,7 +89,7 @@ describe("watchPnSaga", () => {
           [select(pnMessagingServiceIdSelector), mockServiceId]
         ])
         .put(pnActivationUpsert.success())
-        .call(loadPreferenceIfValidId, mockServiceId)
+        .call(tryLoadSENDPreferences)
         .run()
         .then(() => {
           expect(trackPNServiceStatusChangeSuccess).toHaveBeenCalledWith(true);
@@ -116,7 +117,7 @@ describe("watchPnSaga", () => {
             [call(reportPNServiceStatusOnFailure, false, "A reason"), undefined]
           ])
           .put(pnActivationUpsert.failure())
-          .call(loadPreferenceIfValidId, mockServiceId)
+          .call(tryLoadSENDPreferences)
           .run()
           .then(() => {
             expect(onFailure).toHaveBeenCalled();
@@ -141,7 +142,7 @@ describe("watchPnSaga", () => {
           [call(reportPNServiceStatusOnFailure, false, "A reason"), undefined]
         ])
         .put(pnActivationUpsert.failure())
-        .call(loadPreferenceIfValidId, mockServiceId)
+        .call(tryLoadSENDPreferences)
         .run()
         .then(() => {
           expect(onFailure).toHaveBeenCalled();
