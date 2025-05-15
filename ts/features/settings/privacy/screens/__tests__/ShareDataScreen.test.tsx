@@ -29,6 +29,8 @@ const mockToast = {
 
 describe("ShareDataScreen", () => {
   beforeEach(() => {
+    jest.useFakeTimers();
+
     jest.clearAllMocks();
 
     (hooks.useIOSelector as jest.Mock).mockImplementation(selector => {
@@ -45,6 +47,10 @@ describe("ShareDataScreen", () => {
     jest
       .spyOn(require("@pagopa/io-app-design-system"), "useIOToast")
       .mockReturnValue(mockToast);
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
   });
 
   it("should match snapshot", () => {
@@ -122,8 +128,6 @@ describe("ShareDataScreen", () => {
   });
 
   it("should announce accessibility message after enabling sharing", () => {
-    jest.useFakeTimers();
-
     const announceSpy = jest.spyOn(
       require("react-native").AccessibilityInfo,
       "announceForAccessibilityWithOptions"
@@ -140,8 +144,6 @@ describe("ShareDataScreen", () => {
       I18n.t("profile.main.privacy.shareData.screen.confirmToast"),
       { queue: true }
     );
-
-    jest.useRealTimers();
   });
 });
 
