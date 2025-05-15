@@ -1547,6 +1547,9 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                             "textAlign": "auto",
                                           },
                                           {
+                                            "color": "#FFFFFF",
+                                          },
+                                          {
                                             "color": undefined,
                                           },
                                         ],
@@ -1735,6 +1738,9 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
                                         },
                                         {
                                           "color": undefined,

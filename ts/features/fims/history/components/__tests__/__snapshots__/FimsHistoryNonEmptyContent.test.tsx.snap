@@ -813,6 +813,9 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -4043,6 +4046,9 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -5998,6 +6004,9 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
                                         },
                                         {
                                           "color": undefined,

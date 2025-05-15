@@ -42,6 +42,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToCieReadCardScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
+    navigateToCieWarningScreen: notImplemented,
     storeIntegrityKeyTag: notImplemented,
     cleanupIntegrityKeyTag: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
@@ -113,11 +114,20 @@ export const itwEidIssuanceMachine = setup({
       // We still need an empty onError to avoid uncaught promise rejection
     }
   },
+  on: {
+    // This action should only be used in the playground
+    reset: {
+      target: "#itwEidIssuanceMachine.Idle"
+    }
+  },
   states: {
     Idle: {
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
+          actions: assign(({ event }) => ({
+            isL3FeaturesEnabled: event.isL3
+          })),
           target: "TosAcceptance"
         },
         close: {
@@ -323,6 +333,9 @@ export const itwEidIssuanceMachine = setup({
                 target: "CieID"
               }
             ],
+            "go-to-cie-warning": {
+              target: "CieWarning"
+            },
             back: [
               {
                 guard: "isReissuing",
@@ -332,6 +345,18 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
               }
             ]
+          }
+        },
+        CieWarning: {
+          description: "Navigates to and handles the CIE warning screen.",
+          entry: "navigateToCieWarningScreen",
+          on: {
+            back: {
+              target: "ModeSelection"
+            },
+            close: {
+              actions: ["closeIssuance"]
+            }
           }
         },
         CieID: {

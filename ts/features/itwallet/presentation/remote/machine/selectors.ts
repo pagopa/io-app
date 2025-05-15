@@ -41,3 +41,5 @@ export const selectUnverifiedRequestObject = (snapshot: MachineSnapshot) =>
     O.map(jwt => jwt.payload as RequestObject),
     O.getOrElseW(constNull)
   );
+export const selectRedirectUri = (snapshot: MachineSnapshot) =>
+  snapshot.context.redirectUri;
