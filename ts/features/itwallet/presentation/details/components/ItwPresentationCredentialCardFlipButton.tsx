@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   row: {
+    marginTop: 5,
     width: "88%",
     flexDirection: "row",
     alignSelf: "center",
