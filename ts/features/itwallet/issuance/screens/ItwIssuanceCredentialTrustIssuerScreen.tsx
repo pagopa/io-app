@@ -56,6 +56,7 @@ export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
   credentialType?: string;
   asyncContinuation?: boolean;
 };
+import { withOfflineFailureScreen } from "../../wallet/utils/withOfflineFailureScreen.tsx";
 
 type ScreenProps =
   // Props received when used inside a <Stack.Screen>
@@ -66,7 +67,7 @@ type ScreenProps =
   // Props for standalone usage, outside a <Stack.Screen>
   | ItwIssuanceCredentialTrustIssuerNavigationParams;
 
-const ItwIssuanceCredentialTrustIssuerScreen = (props: ScreenProps) => {
+const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   const { credentialType, asyncContinuation } =
     ("route" in props ? props.route.params : props) ?? {};
 
@@ -248,4 +249,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   );
 };
 
-export { ItwIssuanceCredentialTrustIssuerScreen };
+// Offline failure screen HOC
+export const ItwIssuanceCredentialTrustIssuerScreen = withOfflineFailureScreen(
+  ItwIssuanceCredentialTrustIssuer
+);
