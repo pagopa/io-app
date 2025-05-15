@@ -1,19 +1,14 @@
-import { H5, IOButton, IOColors } from "@pagopa/io-app-design-system";
-import { memo, useState } from "react";
-import { Button, Image, StyleSheet, View } from "react-native";
-import {
-  Canvas,
-  LinearGradient,
-  RoundedRect,
-  vec
-} from "@shopify/react-native-skia";
+import { IOButton } from "@pagopa/io-app-design-system";
+import { memo } from "react";
+import { StyleSheet, View } from "react-native";
 import I18n from "../../../../../i18n.ts";
-import paypalLogoImage from "../../../../../../img/wallet/payment-methods/bpay.png";
+import { ItwLogo } from "../../../common/components/ItwLogo.tsx";
 
 type ItwPresentationCredentialCardFlipButtonProps = {
   isFlipped: boolean;
   handleOnPress: () => void;
   fullScreen?: boolean;
+  isL3Enabled?: boolean;
 };
 
 /**
@@ -22,31 +17,30 @@ type ItwPresentationCredentialCardFlipButtonProps = {
 const ItwPresentationCredentialCardFlipButton = ({
   isFlipped,
   handleOnPress,
-  fullScreen = false
-}: ItwPresentationCredentialCardFlipButtonProps) => (
+  fullScreen = false,
+  isL3Enabled = false
+}: ItwPresentationCredentialCardFlipButtonProps) => {
+
+  const rowStyle = fullScreen
+    ? styles.fullWidthButton
+    : isL3Enabled
+      ? styles.row
+      : styles.button;
+
+  const shouldRenderLogo = !fullScreen && isL3Enabled;
+
+  return (
   <View
-    style={fullScreen ? styles.fullWidthButton : styles.row}
+    style={rowStyle}
     accessible={true}
     accessibilityLabel={I18n.t(
       "features.itWallet.presentation.credentialDetails.card.showBack"
     )}
     accessibilityRole="switch"
-    accessibilityState={{ checked: isFlipped }}
+    accessibilityState={{checked: isFlipped}}
   >
-    <View style={styles.wrapper}>
-      <StaticGradientBackground />
-      <View style={styles.content}>
-        <Image
-          accessibilityIgnoresInvertColors
-          accessible={true}
-          accessibilityLabel="PayPal"
-          source={paypalLogoImage}
-          resizeMode="contain"
-          style={styles.icon}
-        />
-        <H5 style={styles.text}>{I18n.t("features.itWallet.title")}</H5>
-      </View>
-    </View>
+    {shouldRenderLogo && <ItwLogo/>}
+
     <IOButton
       variant={fullScreen ? "solid" : "link"}
       label={I18n.t(
@@ -59,31 +53,18 @@ const ItwPresentationCredentialCardFlipButton = ({
       iconPosition="end"
     />
   </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
+  button: {
+    alignSelf: "center"
+  },
   row: {
     width: "88%",
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "space-between"
-  },
-  wrapper: {
-    flexDirection: "row",
-    height: "100%"
-  },
-  content: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 12,
-    gap: 15
-  },
-  text: {
-    color: IOColors.white
-  },
-  icon: {
-    width: 20,
-    height: 20
   },
   fullWidthButton: {
     alignSelf: "stretch",
@@ -96,39 +77,3 @@ export const MemoizedItwPresentationCredentialCardFlipButton = memo(
 );
 
 export { MemoizedItwPresentationCredentialCardFlipButton as ItwPresentationCredentialCardFlipButton };
-
-const StaticGradientBackground = () => {
-  const [{ width, height }, setDimensions] = useState({ width: 0, height: 0 });
-
-  return (
-    <Canvas
-      style={StyleSheet.absoluteFill}
-      onLayout={event => {
-        setDimensions({
-          width: event.nativeEvent.layout.width,
-          height: event.nativeEvent.layout.height
-        });
-      }}
-    >
-      <RoundedRect x={0} y={0} width={width} height={height} r={100}>
-        <LinearGradient
-          start={vec(0, height)}
-          end={vec(width, 0)}
-          colors={[
-            "#0B3EE3",
-            "#234FFF",
-            "#436FFF",
-            "#2F5EFF",
-            "#1E53FF",
-            "#1848F0",
-            "#0B3EE3",
-            "#1F4DFF",
-            "#2A5CFF",
-            "#1943E8",
-            "#0B3EE3"
-          ]}
-        />
-      </RoundedRect>
-    </Canvas>
-  );
-};

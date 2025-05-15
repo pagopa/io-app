@@ -72,6 +72,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
       <ItwPresentationCredentialCardFlipButton
         isFlipped={isFlipped}
         handleOnPress={handleFlipButtonPress}
+        isL3Enabled={isL3Enabled}
       />
     </VStack>
   );
