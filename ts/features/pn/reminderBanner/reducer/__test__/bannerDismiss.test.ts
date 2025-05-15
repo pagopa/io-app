@@ -1,32 +1,41 @@
+jest.mock("../../../../../store/reducers/backendStatus/remoteConfig");
+jest.mock("../../../../services/details/store/reducers");
+
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 import { PersistPartial } from "redux-persist";
-import { applicationChangeState } from "../../../../../store/actions/application";
 import {
   logoutFailure,
   logoutSuccess
 } from "../../../../../features/authentication/common/store/actions";
-import { isPnEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { dismissPnActivationReminderBanner } from "../../../store/actions";
-import {
-  PnBannerDismissState as ReducerState,
-  isPnActivationReminderBannerRenderableSelector,
-  persistedPnBannerDismissReducer
-} from "../bannerDismiss";
+import * as remoteConfig from "../../../../../store/reducers/backendStatus/remoteConfig";
+import * as serviceDetails from "../../../../services/details/store/reducers";
+import * as bannerDismiss from "../bannerDismiss";
 
-// Mock the isPnEnabledSelector
-jest.mock("../../../../../store/reducers/backendStatus/remoteConfig", () => ({
-  isPnEnabledSelector: jest.fn()
-}));
+const mockIsPnRemoteEnabledSelector = jest.fn();
+const mockPnMessagingServiceIdSelector = jest.fn();
+const mockServicePreferenceByChannelPotSelector = jest.fn();
 
-type PnBannerDismissState = ReducerState & PersistPartial;
-const initialState: PnBannerDismissState = {
+(remoteConfig.isPnRemoteEnabledSelector as jest.Mock) =
+  mockIsPnRemoteEnabledSelector;
+(remoteConfig.pnMessagingServiceIdSelector as jest.Mock) =
+  mockPnMessagingServiceIdSelector;
+(serviceDetails.servicePreferenceByChannelPotSelector as jest.Mock) =
+  mockServicePreferenceByChannelPotSelector;
+
+type PnBannerDismissState = bannerDismiss.PnBannerDismissState & PersistPartial;
+const nonDimsissedState: PnBannerDismissState = {
   dismissed: false,
   _persist: {
     version: -1,
     rehydrated: false
   }
 };
+
+const { persistedPnBannerDismissReducer } = bannerDismiss;
 
 describe("persistedPnBannerDismissReducer", () => {
   it("should match snapshot [if this test fails, remember to add a migration to the store before updating the snapshot]", () => {
@@ -39,15 +48,15 @@ describe("persistedPnBannerDismissReducer", () => {
 
   it("should correctly dismiss on dismiss action", () => {
     const action = dismissPnActivationReminderBanner();
-    const state = persistedPnBannerDismissReducer(initialState, action);
+    const state = persistedPnBannerDismissReducer(nonDimsissedState, action);
     expect(state.dismissed).toEqual(true);
   });
 
   it("should not change state for unhandled action types", () => {
     const action = { type: "SOME_OTHER_ACTION" };
     // @ts-expect-error: action type is not supported
-    const state = persistedPnBannerDismissReducer(initialState, action);
-    expect(state).toEqual(initialState);
+    const state = persistedPnBannerDismissReducer(nonDimsissedState, action);
+    expect(state).toEqual(nonDimsissedState);
   });
   ["success", "failure"].forEach(type => {
     it(`should reset state on logout ${type}`, () => {
@@ -65,76 +74,82 @@ describe("persistedPnBannerDismissReducer", () => {
 });
 
 describe("isPnActivationReminderBannerRenderableSelector", () => {
-  const mockIsPnEnabledSelector = isPnEnabledSelector as jest.Mock;
-
   beforeEach(() => {
     jest.clearAllMocks();
+    mockPnMessagingServiceIdSelector.mockReturnValue("pn-service-id");
   });
 
-  it("should return true when PN is enabled and banner hasn't been dismissed", () => {
-    mockIsPnEnabledSelector.mockReturnValue(true);
+  const testCases = [true, false]
+    .map(hasBeenDismissed =>
+      [true, false].map(isRemoteEnabled =>
+        [true, false].map(isInboxEnabled => ({
+          hasBeenDismissed,
+          isRemoteEnabled,
+          isInboxEnabled,
+          result: isRemoteEnabled && !hasBeenDismissed && !isInboxEnabled
+        }))
+      )
+    )
+    .flat()
+    .flat();
+
+  test.each(testCases)(
+    "handles the following case: %p",
+    ({ hasBeenDismissed, isRemoteEnabled, isInboxEnabled, result }) => {
+      mockIsPnRemoteEnabledSelector.mockReturnValue(isRemoteEnabled);
+
+      mockServicePreferenceByChannelPotSelector.mockReturnValue(
+        pot.some(isInboxEnabled)
+      );
+
+      const state = {
+        features: {
+          pn: {
+            bannerDismiss: {
+              ...nonDimsissedState,
+              dismissed: hasBeenDismissed
+            }
+          }
+        }
+      } as GlobalState;
+
+      expect(
+        bannerDismiss.isPnActivationReminderBannerRenderableSelector(state)
+      ).toBe(result);
+      expect(mockIsPnRemoteEnabledSelector).toHaveBeenCalledWith(state);
+      expect(mockPnMessagingServiceIdSelector).toHaveBeenCalledWith(state);
+      expect(mockServicePreferenceByChannelPotSelector).toHaveBeenCalledWith(
+        state,
+        "pn-service-id",
+        "inbox"
+      );
+    }
+  );
+
+  it("should handle an error state for isPnInboxEnabled, treating it as 'false' ", () => {
+    mockIsPnRemoteEnabledSelector.mockReturnValue(true);
+
+    mockServicePreferenceByChannelPotSelector.mockReturnValue(pot.noneError);
 
     const state = {
       features: {
         pn: {
           bannerDismiss: {
-            ...initialState
+            ...nonDimsissedState
           }
         }
       }
     } as GlobalState;
 
-    expect(isPnActivationReminderBannerRenderableSelector(state)).toBe(true);
-    expect(mockIsPnEnabledSelector).toHaveBeenCalledWith(state);
-  });
-
-  it("should return false when PN is enabled but banner has been dismissed", () => {
-    mockIsPnEnabledSelector.mockReturnValue(true);
-
-    const state = {
-      features: {
-        pn: {
-          bannerDismiss: {
-            ...initialState,
-            dismissed: true
-          }
-        }
-      }
-    } as GlobalState;
-
-    expect(isPnActivationReminderBannerRenderableSelector(state)).toBe(false);
-  });
-
-  it("should return false when PN is disabled and banner hasn't been dismissed", () => {
-    mockIsPnEnabledSelector.mockReturnValue(false);
-
-    const state = {
-      features: {
-        pn: {
-          bannerDismiss: {
-            ...initialState
-          }
-        }
-      }
-    } as GlobalState;
-
-    expect(isPnActivationReminderBannerRenderableSelector(state)).toBe(false);
-  });
-
-  it("should return false when PN is disabled and banner has been dismissed", () => {
-    mockIsPnEnabledSelector.mockReturnValue(false);
-
-    const state = {
-      features: {
-        pn: {
-          bannerDismiss: {
-            ...initialState,
-            dismissed: true
-          }
-        }
-      }
-    } as unknown as GlobalState;
-
-    expect(isPnActivationReminderBannerRenderableSelector(state)).toBe(false);
+    expect(
+      bannerDismiss.isPnActivationReminderBannerRenderableSelector(state)
+    ).toBe(true);
+    expect(mockIsPnRemoteEnabledSelector).toHaveBeenCalledWith(state);
+    expect(mockPnMessagingServiceIdSelector).toHaveBeenCalledWith(state);
+    expect(mockServicePreferenceByChannelPotSelector).toHaveBeenCalledWith(
+      state,
+      "pn-service-id",
+      "inbox"
+    );
   });
 });

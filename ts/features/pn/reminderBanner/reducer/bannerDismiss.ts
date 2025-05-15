@@ -1,14 +1,19 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../store/actions/types";
-import { dismissPnActivationReminderBanner } from "../../store/actions";
-import { GlobalState } from "../../../../store/reducers/types";
-import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   logoutFailure,
   logoutSuccess
 } from "../../../../features/authentication/common/store/actions";
+import { Action } from "../../../../store/actions/types";
+import {
+  isPnRemoteEnabledSelector,
+  pnMessagingServiceIdSelector
+} from "../../../../store/reducers/backendStatus/remoteConfig";
+import { GlobalState } from "../../../../store/reducers/types";
+import { servicePreferenceByChannelPotSelector } from "../../../services/details/store/reducers";
+import { dismissPnActivationReminderBanner } from "../../store/actions";
 
 export type PnBannerDismissState = {
   dismissed: boolean;
@@ -47,7 +52,15 @@ export const persistedPnBannerDismissReducer = persistReducer(
 export const isPnActivationReminderBannerRenderableSelector = (
   state: GlobalState
 ) => {
-  const isPnEnabled = isPnEnabledSelector(state);
-  const hasBeenDismissed = state.features.pn.bannerDismiss.dismissed === true;
-  return isPnEnabled && !hasBeenDismissed;
+  const pnServiceId = pnMessagingServiceIdSelector(state);
+
+  const hasBannerBeenDismissed =
+    state.features.pn.bannerDismiss.dismissed === true;
+  const isPnRemoteEnabled = isPnRemoteEnabledSelector(state);
+  const isPnInboxEnabled = pot.getOrElse(
+    servicePreferenceByChannelPotSelector(state, pnServiceId, "inbox"),
+    false
+  );
+
+  return isPnRemoteEnabled && !hasBannerBeenDismissed && !isPnInboxEnabled;
 };
