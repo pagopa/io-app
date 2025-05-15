@@ -19,7 +19,7 @@ export const trackWalletPaymentRemoveMethodConfirm = (
 ) =>
   mixpanelTrack(
     "WALLET_PAYMENT_METHOD_REMOVE_CONFIRM",
-    buildEventProperties("UX", "action", props)
+    buildEventProperties("UX", "confirm", props)
   );
 
 export const trackWalletPaymentRemoveMethodSuccess = (
@@ -27,7 +27,7 @@ export const trackWalletPaymentRemoveMethodSuccess = (
 ) =>
   mixpanelTrack(
     "WALLET_PAYMENT_METHOD_REMOVE_SUCCESS",
-    buildEventProperties("UX", "action", props)
+    buildEventProperties("UX", "screen_view", props)
   );
 
 export const trackWalletPaymentRemoveMethodFailure = (
@@ -35,5 +35,5 @@ export const trackWalletPaymentRemoveMethodFailure = (
 ) =>
   mixpanelTrack(
     "WALLET_PAYMENT_METHOD_REMOVE_FAILURE",
-    buildEventProperties("UX", "action", props)
+    buildEventProperties("KO", undefined, props)
   );
