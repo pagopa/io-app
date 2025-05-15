@@ -2,9 +2,8 @@ import { createStore } from "redux";
 import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
-import * as ingressSelectors from "../../features/ingress/store/selectors";
+import * as connectivitySelectors from "../../features/connectivity/store/selectors";
 import I18n from "../../i18n";
-import { OfflineAccessReasonEnum } from "../../features/ingress/store/reducer";
 import { useOfflineToastGuard } from "../useOfflineToastGuard.ts";
 
 const mockNavigate = jest.fn();
@@ -61,8 +60,8 @@ describe("useConnectivityGuard", () => {
 
   it("should execute the function when connected", () => {
     jest
-      .spyOn(ingressSelectors, "offlineAccessReasonSelector")
-      .mockReturnValue(undefined);
+      .spyOn(connectivitySelectors, "isConnectedSelector")
+      .mockReturnValue(true);
 
     const mockFn = jest.fn();
     renderWithConnectivityGuard(mockFn, ["test", 123]);
@@ -75,8 +74,8 @@ describe("useConnectivityGuard", () => {
 
   it("should handle async functions when connected", async () => {
     jest
-      .spyOn(ingressSelectors, "offlineAccessReasonSelector")
-      .mockReturnValue(undefined);
+      .spyOn(connectivitySelectors, "isConnectedSelector")
+      .mockReturnValue(true);
 
     const mockAsyncFn = jest.fn().mockResolvedValue("success");
     renderWithConnectivityGuard(mockAsyncFn, ["test"]);
@@ -91,8 +90,8 @@ describe("useConnectivityGuard", () => {
 
   it("should not execute async functions when not connected", () => {
     jest
-      .spyOn(ingressSelectors, "offlineAccessReasonSelector")
-      .mockReturnValue(OfflineAccessReasonEnum.DEVICE_OFFLINE);
+      .spyOn(connectivitySelectors, "isConnectedSelector")
+      .mockReturnValue(false);
 
     const mockAsyncFn = jest.fn().mockResolvedValue("success");
     renderWithConnectivityGuard(mockAsyncFn, ["test"]);
@@ -105,8 +104,8 @@ describe("useConnectivityGuard", () => {
 
   it("should show error toast when not connected", () => {
     jest
-      .spyOn(ingressSelectors, "offlineAccessReasonSelector")
-      .mockReturnValue(OfflineAccessReasonEnum.DEVICE_OFFLINE);
+      .spyOn(connectivitySelectors, "isConnectedSelector")
+      .mockReturnValue(false);
 
     const mockFn = jest.fn();
     renderWithConnectivityGuard(mockFn, ["test", 123]);
