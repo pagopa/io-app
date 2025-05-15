@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0-rc.6](https://github.com/pagopa/io-app/compare/3.5.0-rc.5...3.5.0-rc.6) (2025-05-14)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2349](https://pagopa.atlassian.net/browse/SIW-2349)] Add `ItwPaywallComponent` ([#6954](https://github.com/pagopa/io-app/issues/6954)) ([4a69dab](https://github.com/pagopa/io-app/commit/4a69dabbf664048ccf44d93ec9a98e25ae676e85))
+* [[IOCOM-2343](https://pagopa.atlassian.net/browse/IOCOM-2343)] SEND banner i18n update ([#6976](https://github.com/pagopa/io-app/issues/6976)) ([bc70cb5](https://github.com/pagopa/io-app/commit/bc70cb5623f5b165650b9a08d473c641ec95560d))
+* **IT Wallet:** [[SIW-2281](https://pagopa.atlassian.net/browse/SIW-2281)] Add same device presentation ([#6970](https://github.com/pagopa/io-app/issues/6970)) ([7cd4979](https://github.com/pagopa/io-app/commit/7cd49797d24480442b3cef44b051256f5015e00a))
+* [[IOCOM-2335](https://pagopa.atlassian.net/browse/IOCOM-2335)] addition of SEND preferences request to startupSaga ([#6971](https://github.com/pagopa/io-app/issues/6971)) ([320115b](https://github.com/pagopa/io-app/commit/320115bf78b6619413a3263a840bf1d3838e6256))
+* **IT Wallet:** [[SIW-2301](https://pagopa.atlassian.net/browse/SIW-2301)] Track exception on sentry ([#6913](https://github.com/pagopa/io-app/issues/6913)) ([d9f213b](https://github.com/pagopa/io-app/commit/d9f213bd31a156a7f09df22ff89daba226126c13))
+
+
+### Chores
+
+* [[IOCOM-2364](https://pagopa.atlassian.net/browse/IOCOM-2364)] add `reason` to `PN_SERVICE_STATUS_CHANGE_ERROR` ([#6975](https://github.com/pagopa/io-app/issues/6975)) ([715d639](https://github.com/pagopa/io-app/commit/715d639a1a42ed79764713ebf9d9598466d7ce92))
+
+## [3.5.0-rc.5](https://github.com/pagopa/io-app/compare/3.5.0-rc.4...3.5.0-rc.5) (2025-05-13)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2309](https://pagopa.atlassian.net/browse/SIW-2309)] Add link to offline FAQ on click of offline banner ([#6972](https://github.com/pagopa/io-app/issues/6972)) ([708186c](https://github.com/pagopa/io-app/commit/708186c50bcd375e5d80d535bcd856ee377faf71))
+
+
+### Bug Fixes
+
+* [[IOAPPX-496](https://pagopa.atlassian.net/browse/IOAPPX-496)] update design system version ([#6974](https://github.com/pagopa/io-app/issues/6974)) ([37c9950](https://github.com/pagopa/io-app/commit/37c99506eccce0ded1a1cc8371e142224072d2ae))
+* [[IOPID-2806](https://pagopa.atlassian.net/browse/IOPID-2806)] Add `maxFontSizeMultiplier` to `EmailInsertScreen` ([#6969](https://github.com/pagopa/io-app/issues/6969)) ([503786a](https://github.com/pagopa/io-app/commit/503786aee802acde060e4b5087dfc98bbe7cbcd6))
+
 ## [3.5.0-rc.4](https://github.com/pagopa/io-app/compare/3.5.0-rc.3...3.5.0-rc.4) (2025-05-12)
 
 

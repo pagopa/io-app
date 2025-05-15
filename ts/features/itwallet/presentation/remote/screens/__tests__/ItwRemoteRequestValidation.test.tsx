@@ -11,6 +11,7 @@ import { ItwRemoteMachineContext } from "../../machine/provider.tsx";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList.ts";
 import { ItwRemoteParamsList } from "../../navigation/ItwRemoteParamsList.ts";
 import { itwRemoteMachine } from "../../machine/machine.ts";
+import { identificationSuccess } from "../../../../../identification/store/actions/index.ts";
 
 describe("ItwRemoteRequestValidationScreen", () => {
   it("it should render the screen correctly", () => {
@@ -53,7 +54,10 @@ describe("ItwRemoteRequestValidationScreen", () => {
   });
 
   const renderComponent = (payload: Partial<ItwRemoteRequestPayload> = {}) => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const globalState = appReducer(
+      appReducer(undefined, applicationChangeState("active")),
+      identificationSuccess({ isBiometric: true })
+    );
 
     const mockNavigation = new Proxy(
       {},
@@ -74,7 +78,8 @@ describe("ItwRemoteRequestValidationScreen", () => {
     const logic = itwRemoteMachine.provide({
       guards: {
         isWalletActive: jest.fn().mockReturnValue(true),
-        isEidExpired: jest.fn().mockReturnValue(false)
+        isEidExpired: jest.fn().mockReturnValue(false),
+        isL3Enabled: jest.fn().mockReturnValue(true)
       },
       actions: {
         navigateToClaimsDisclosureScreen: jest.fn()
