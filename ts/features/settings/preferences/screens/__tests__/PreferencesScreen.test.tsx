@@ -23,12 +23,6 @@ jest.mock("../../../../../utils/appSettings", () => ({
   openAppSettings: jest.fn()
 }));
 
-jest.mock("../../../../../utils/calendar", () => ({
-  checkAndRequestPermission: jest.fn(() =>
-    Promise.resolve({ authorized: true, asked: true })
-  )
-}));
-
 describe("PreferencesScreen", () => {
   const mockNavigate = jest.fn();
 

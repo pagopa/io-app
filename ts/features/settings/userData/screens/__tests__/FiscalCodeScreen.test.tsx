@@ -16,11 +16,18 @@ jest.mock("../../../../../utils/brightness", () => ({
   useMaxBrightness: jest.fn()
 }));
 
-jest.useFakeTimers();
-
 const FISCAL_CODE_TEST = "AAAAAA00A00A000A" as FiscalCode;
 
 describe(FiscalCodeScreen, () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.useFakeTimers();
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   it("should match snapshot", () => {
     const { component } = renderComponent();
     expect(component.toJSON()).toMatchSnapshot();

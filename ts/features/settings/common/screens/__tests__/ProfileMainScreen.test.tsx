@@ -17,8 +17,6 @@ jest.mock("../../../../../utils/environment", () => ({
 
 jest.spyOn(Alert, "alert");
 
-jest.useFakeTimers();
-
 const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(
@@ -49,6 +47,10 @@ describe(ProfileMainScreen, () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.useFakeTimers();
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
   });
   it("Should display the alert on logout press", () => {
     const { component } = renderComponent();
@@ -138,6 +140,7 @@ describe(ProfileMainScreen, () => {
     // developer mode section should be shown
     expect(component.getByTestId("developerModeSection")).toBeTruthy();
   });
+
   it("should reset tap counter after timeout", () => {
     const { component } = renderComponent();
     const appVersionButton = component.getByTestId("profileAppVersionButton");

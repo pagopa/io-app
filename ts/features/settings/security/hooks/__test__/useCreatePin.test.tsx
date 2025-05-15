@@ -5,7 +5,7 @@ import * as keychain from "../../../../../utils/keychain";
 import * as analytics from "../../../common/analytics";
 import * as hooks from "../../../../../store/hooks";
 import * as navigationHooks from "../../../../../navigation/params/AppParamsList";
-import * as i18n from "../../../../../i18n";
+import I18n from "../../../../../i18n";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import { createPinSuccess } from "../../store/actions/pinset";
 import { PinString } from "../../../../../types/PinString";
@@ -97,7 +97,7 @@ describe("useCreatePin", () => {
       createPinSuccess("1234" as PinString)
     );
     expect(mockToastSuccess).toHaveBeenCalledWith(
-      i18n.default.t("onboarding.pin.success.message")
+      I18n.t("onboarding.pin.success.message")
     );
     expect(mockNavigate).toHaveBeenCalledWith(
       SETTINGS_ROUTES.PROFILE_NAVIGATOR,

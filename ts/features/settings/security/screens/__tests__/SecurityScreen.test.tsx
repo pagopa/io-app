@@ -33,11 +33,15 @@ jest.mock("react-redux", () => ({
 }));
 
 describe("Test SecurityScreen", () => {
-  jest.useFakeTimers();
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
     mockAccessibilityInfo(false);
+    jest.useFakeTimers();
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
   });
 
   it("should be not null", () => {
