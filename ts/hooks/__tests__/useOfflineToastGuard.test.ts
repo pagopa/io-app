@@ -3,8 +3,10 @@ import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
 import * as connectivitySelectors from "../../features/connectivity/store/selectors";
+import * as ingressSelectors from "../../features/ingress/store/selectors";
 import I18n from "../../i18n";
 import { useOfflineToastGuard } from "../useOfflineToastGuard.ts";
+import { OfflineAccessReasonEnum } from "../../features/ingress/store/reducer";
 
 const mockNavigate = jest.fn();
 
@@ -106,6 +108,24 @@ describe("useConnectivityGuard", () => {
     jest
       .spyOn(connectivitySelectors, "isConnectedSelector")
       .mockReturnValue(false);
+
+    const mockFn = jest.fn();
+    renderWithConnectivityGuard(mockFn, ["test", 123]);
+
+    // Function should not be called
+    expect(mockFn).not.toHaveBeenCalled();
+    // Should show error toast
+    expect(mockToast).toHaveBeenCalledWith(I18n.t("global.offline.toast"));
+  });
+
+  it("should show error toast when connected but session refreshed", () => {
+    jest
+      .spyOn(connectivitySelectors, "isConnectedSelector")
+      .mockReturnValue(true);
+
+    jest
+      .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+      .mockReturnValue(OfflineAccessReasonEnum.SESSION_REFRESH);
 
     const mockFn = jest.fn();
     renderWithConnectivityGuard(mockFn, ["test", 123]);
