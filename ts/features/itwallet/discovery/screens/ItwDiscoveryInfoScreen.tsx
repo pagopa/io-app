@@ -1,15 +1,13 @@
 import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
+import { isNFCEnabledSelector } from "../../machine/eid/selectors.ts";
 import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoComponent.tsx";
 import { ItwPaywallComponent } from "../components/ItwPaywallComponent.tsx";
-import {
-  trackItWalletActivationStart,
-  trackItWalletIntroScreen
-} from "../../analytics/index.ts";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
+import { trackItWalletIntroScreen } from "../../analytics/index.ts";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
   isL3?: boolean;
@@ -28,26 +26,26 @@ export const ItwDiscoveryInfoScreen = ({
 }: ItwDiscoveryInfoScreenProps) => {
   const { isL3 = false } = route.params;
 
-  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-
   useFocusEffect(
     useCallback(() => {
       trackItWalletIntroScreen();
     }, [])
   );
 
-  useOnFirstRender(() => {
-    machineRef.send({ type: "start", isL3 });
-  });
-
-  const handleContinuePress = useCallback(() => {
-    trackItWalletActivationStart();
-    machineRef.send({ type: "accept-tos" });
-  }, [machineRef]);
-
   if (!isL3) {
-    return <ItwDiscoveryInfoComponent onContinuePress={handleContinuePress} />;
+    return <ItwDiscoveryInfoComponent />;
   }
 
-  return <ItwPaywallComponent onContinuePress={handleContinuePress} />;
+  return <ItwL3DiscoveryInfoComponent />;
+};
+
+const ItwL3DiscoveryInfoComponent = () => {
+  const isNfcEnabled =
+    ItwEidIssuanceMachineContext.useSelector(isNFCEnabledSelector);
+
+  if (!isNfcEnabled) {
+    return <ItwNfcNotSupportedComponent />;
+  }
+
+  return <ItwPaywallComponent />;
 };

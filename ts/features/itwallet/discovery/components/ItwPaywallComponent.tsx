@@ -34,8 +34,10 @@ import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { tosConfigSelector } from "../../../tos/store/selectors";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 const markdownRules = {
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
@@ -60,14 +62,15 @@ const markdownRules = {
   }
 };
 
-export type ItwPaywallComponentProps = {
-  onContinuePress: () => void;
-};
+export const ItwPaywallComponent = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
-export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
   const theme = useIOTheme();
-
   const backgroundColor = IOColors[theme["appBackground-accent"]];
+
+  useOnFirstRender(() => {
+    machineRef.send({ type: "start", isL3: true });
+  });
 
   useHeaderSecondLevel({
     backgroundColor,
