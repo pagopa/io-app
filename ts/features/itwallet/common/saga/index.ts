@@ -1,20 +1,23 @@
 import { SagaIterator } from "redux-saga";
-import { call, fork } from "typed-redux-saga/macro";
+import { call, fork, put } from "typed-redux-saga/macro";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
 import { checkCredentialsStatusAttestation } from "../../credentials/saga/checkCredentialsStatusAttestation";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
 import { watchItwLifecycleSaga } from "../../lifecycle/saga";
 import { warmUpIntegrityServiceSaga } from "../../lifecycle/saga/checkIntegrityServiceReadySaga";
+import { watchItwIdentificationSaga } from "../../identification/saga/index.ts";
 import {
   checkWalletInstanceInconsistencySaga,
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
+import { itwNfcIsEnabled } from "../../identification/store/actions/index.ts";
 
 export function* watchItwSaga(): SagaIterator {
   yield* fork(warmUpIntegrityServiceSaga);
   yield* fork(watchItwLifecycleSaga);
+  yield* fork(watchItwIdentificationSaga);
   // Check if the fiscal code is enabled, to enable the L3
   yield* fork(checkFiscalCodeEnabledSaga);
 
@@ -26,6 +29,8 @@ export function* watchItwSaga(): SagaIterator {
   if (!isWalletInstanceConsistent) {
     return;
   }
+
+  yield* put(itwNfcIsEnabled.request());
 
   // Status attestations of credentials are checked only in case of a valid wallet instance.
   // For this reason, these sagas must be called sequentially.

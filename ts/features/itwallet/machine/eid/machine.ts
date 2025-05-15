@@ -103,16 +103,6 @@ export const itwEidIssuanceMachine = setup({
   context: { ...InitialContext },
   initial: "Idle",
   entry: "onInit",
-  invoke: {
-    src: "getCieStatus",
-    onDone: {
-      actions: assign(({ event }) => ({ cieContext: event.output }))
-    },
-    onError: {
-      // Any failure during the CIE/NFC status check will not be handled or treated as a negative result
-      // We still need an empty onError to avoid uncaught promise rejection
-    }
-  },
   on: {
     // This action should only be used in the playground
     reset: {

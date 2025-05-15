@@ -28,7 +28,7 @@ export type AuthenticationContext = {
 
 export type CieContext = {
   isNFCEnabled: boolean;
-  isCIEAuthenticationSupported: boolean;
+  isCIEAuthenticationSupported: boolean | undefined;
 };
 
 export type Context = {
