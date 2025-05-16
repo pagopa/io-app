@@ -357,6 +357,9 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                           "textAlign": "auto",
                         },
                         {
+                          "color": "#FFFFFF",
+                        },
+                        {
                           "color": undefined,
                         },
                       ],
@@ -497,6 +500,9 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                       [
                         {
                           "textAlign": "auto",
+                        },
+                        {
+                          "color": "#0B3EE3",
                         },
                         {
                           "color": undefined,
@@ -876,6 +882,9 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                           "textAlign": "auto",
                         },
                         {
+                          "color": "#FFFFFF",
+                        },
+                        {
                           "color": undefined,
                         },
                       ],
@@ -1016,6 +1025,9 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                       [
                         {
                           "textAlign": "auto",
+                        },
+                        {
+                          "color": "#0B3EE3",
                         },
                         {
                           "color": undefined,
