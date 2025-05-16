@@ -1,11 +1,15 @@
 import { ContentWrapper, H1, VSpacer } from "@pagopa/io-app-design-system";
+import { useCallback } from "react";
 import { StyleSheet } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
 import I18n from "../../../../i18n.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
-import { trackOpenItwTos } from "../../analytics/index.ts";
+import {
+  trackItWalletActivationStart,
+  trackOpenItwTos
+} from "../../analytics/index.ts";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
@@ -13,29 +17,33 @@ import { generateLinkRuleWithCallback } from "../../common/utils/markdown.tsx";
 import { IOScrollView } from "../../../../components/ui/IOScrollView.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp.tsx";
-
-export type ItwDiscoveryInfoComponentProps = {
-  onContinuePress: () => void;
-};
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 
 /**
  * This is the component that shows the information about the discovery process
  * about the activation of the DIW. It uses a markdown component to render
- * the content of the screen. The screen is wrapped in a GradientScrollView
- * with a primary and secondary action.
+ * the content of the screen.
  */
-export const ItwDiscoveryInfoComponent = ({
-  onContinuePress
-}: ItwDiscoveryInfoComponentProps) => {
+export const ItwDiscoveryInfoComponent = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const { tos_url } = useIOSelector(tosConfigSelector);
+
+  useOnFirstRender(() => {
+    machineRef.send({ type: "start", isL3: false });
+  });
 
   useHeaderSecondLevel({
     contextualHelp: emptyContextualHelp,
     supportRequest: true,
     title: ""
   });
+
+  const handleContinuePress = useCallback(() => {
+    trackItWalletActivationStart();
+    machineRef.send({ type: "accept-tos" });
+  }, [machineRef]);
 
   return (
     <IOScrollView
@@ -47,7 +55,7 @@ export const ItwDiscoveryInfoComponent = ({
           disabled: itwActivationDisabled,
           label: I18n.t("global.buttons.continue"),
           accessibilityLabel: I18n.t("global.buttons.continue"),
-          onPress: onContinuePress
+          onPress: handleContinuePress
         }
       }}
     >
