@@ -23,6 +23,7 @@ import {
   Renderer
 } from "../../../../components/IOMarkdown/types";
 import {
+  isHttpLink,
   isHttpsLink,
   isIoInternalLink
 } from "../../../../components/ui/Markdown/handlers/link";
@@ -60,7 +61,10 @@ const DEFAULT_HEADING_MARGINS: HeadingMargins = {
 const handleOpenLink = (linkTo: (path: string) => void, url: string) => {
   if (isIoInternalLink(url)) {
     handleInternalLink(linkTo, url);
-  } else if (isHttpsLink(url)) {
+    // Non-secure HTTP links have to be supported since
+    // there are older messages with external http-links
+    // that redirect to https upon opening
+  } else if (isHttpsLink(url) || isHttpLink(url)) {
     openWebUrl(url, () => {
       IOToast.error(I18n.t("global.jserror.title"));
     });

@@ -10,6 +10,8 @@ export const isIoInternalLink = (href: string): boolean =>
 
 export const isHttpsLink = (href: string): boolean =>
   href.toLowerCase().startsWith("https://");
+export const isHttpLink = (href: string): boolean =>
+  href.toLowerCase().startsWith("http://");
 
 /**
  * a dedicated codec for CustomHandledLink
