@@ -1,27 +1,14 @@
-import {
-  ListItemHeader,
-  ListItemInfo,
-  ListItemNav,
-  ListItemSwitch
-} from "@pagopa/io-app-design-system";
+import {ListItemHeader, ListItemInfo, ListItemNav} from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { useCallback } from "react";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  itwIsFiscalCodeWhitelistedSelector,
-  itwIsL3LocallyEnabledSelector
-} from "../../../../features/itwallet/common/store/selectors/preferences";
-import { itwSetL3LocallyEnabled } from "../../../../features/itwallet/common/store/actions/preferences";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwIsL3EnabledSelector } from "../../../../features/itwallet/common/store/selectors/preferences";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 export const ItwL3Section = () => {
-  const dispatch = useIODispatch();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
-  const isL3LocallyEnabled = useIOSelector(itwIsL3LocallyEnabledSelector);
-  const isFiscalCodeWhitelisted = useIOSelector(
-    itwIsFiscalCodeWhitelistedSelector
-  );
+  const isFiscalCodeWhitelisted = useIOSelector(itwIsL3EnabledSelector);
 
   const navigateToTosL3Screen = useCallback(() => {
     machineRef.send({
@@ -32,14 +19,7 @@ export const ItwL3Section = () => {
 
   return (
     <View>
-      <ListItemHeader label="IT Wallet (L3 locally)" />
-      <ListItemSwitch
-        label="Enable locally L3 wallet"
-        value={isL3LocallyEnabled}
-        onSwitchValueChange={() => {
-          dispatch(itwSetL3LocallyEnabled(!isL3LocallyEnabled));
-        }}
-      />
+      <ListItemHeader label="IT Wallet (L3)" />
       <ListItemInfo
         label={"Fiscal code whitelisted"}
         value={isFiscalCodeWhitelisted ? "YES" : "NO"}
