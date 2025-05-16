@@ -4227,7 +4227,8 @@
       },
       "wallet": {
         "active": "Attivo",
-        "inactive": "Non attivo"
+        "inactive": "Non attivo",
+        "header": "Mostra identità"
       },
       "card": {
         "status": {
@@ -4764,6 +4765,14 @@
           "title": "Si è verificato un errore imprevisto",
           "subtitle": "Non è stato possibile disattivare il servizio. Riprova."
         }
+      },
+      "eidDetail": {
+        "title": "La mia identità",
+        "content": "Hai ottenuto IT-Wallet verificando i dati della tua identità con CIE. Ti consente di autenticarti ai servizi online.",
+        "header": {
+          "title": "I dati della mia identità"
+        },
+        "cta": "Disattiva IT-Wallet"
       },
       "feedback": {
         "banner": {

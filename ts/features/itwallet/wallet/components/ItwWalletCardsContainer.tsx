@@ -1,5 +1,6 @@
 import {
   ButtonText,
+  Icon,
   ListItemHeader,
   Optional
 } from "@pagopa/io-app-design-system";
@@ -25,6 +26,7 @@ import { itwCredentialsEidStatusSelector } from "../../credentials/store/selecto
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
 import { itwShouldRenderNewITWallet } from "../../common/store/selectors";
 import { ItwBadge } from "../../common/components/ItwBadge";
+import { ItwEidDetail } from "../../common/components/ItwEidDetail";
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWallet);
@@ -46,9 +48,18 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   });
 
   const eidInfoBottomSheet = useIOBottomSheetModal({
-    title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
+    title: isNewItwRenderable ? (
+      // TODO: Replace with IT-Wallet logo
+      <Icon name="navWallet" color="blueIO-500" size={32} />
+    ) : (
+      <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />
+    ),
     // Navigation does not seem to work when the bottom sheet's component is not inline
-    component: <ItwEidInfoBottomSheetContent navigation={navigation} />
+    component: isNewItwRenderable ? (
+      <ItwEidDetail navigation={navigation} />
+    ) : (
+      <ItwEidInfoBottomSheetContent navigation={navigation} />
+    )
   });
 
   useFocusEffect(
@@ -90,7 +101,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         <View style={styles.itwHeader}>
           <ItwBadge />
           <ButtonText onPress={eidInfoBottomSheet.present}>
-            Mostra identità
+            {I18n.t("features.itWallet.wallet.header")}
           </ButtonText>
         </View>
       )}
