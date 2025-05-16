@@ -15,13 +15,12 @@ import {
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIOSelector } from "../../../../store/hooks";
 import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../utils/url";
 import LoadingComponent from "../../../fci/components/LoadingComponent";
 import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
-import { dismissPnActivationReminderBanner } from "../../store/actions";
 import {
   PnBannerFlowStateKey,
   pnBannerFlowStateEnum
@@ -61,10 +60,6 @@ const LoadingScreen = ({ loadingState }: LoadingStateProps) => (
 
 const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
   const navigation = useIONavigation();
-  const dispatch = useIODispatch();
-  useOnFirstRender(() => {
-    dispatch(dismissPnActivationReminderBanner());
-  });
   useOnFirstRender(() => {
     if (flowState === "ALREADY_ACTIVE") {
       sendBannerMixpanelEvents.alreadyActive();
