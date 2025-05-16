@@ -1,10 +1,7 @@
-import { mixpanelTrack } from "../../../../../../mixpanel";
-import { updateMixpanelProfileProperties } from "../../../../../../mixpanelConfig/profileProperties";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import {
-  FlowType,
-  buildEventProperties
-} from "../../../../../../utils/analytics";
+import { mixpanelTrack } from "../../../../../mixpanel";
+import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/profileProperties";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { FlowType, buildEventProperties } from "../../../../../utils/analytics";
 
 export function trackToSWebViewError(flow: FlowType) {
   void mixpanelTrack(
