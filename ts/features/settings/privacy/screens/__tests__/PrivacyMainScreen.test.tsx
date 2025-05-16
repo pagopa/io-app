@@ -15,6 +15,12 @@ import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 jest.spyOn(Alert, "alert");
 
+const mockNavigate = jest.fn();
+
+jest.mock("../../../../../navigation/params/AppParamsList", () => ({
+  useIONavigation: () => ({ navigate: mockNavigate })
+}));
+
 describe("PrivacyMainScreen", () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -22,7 +28,7 @@ describe("PrivacyMainScreen", () => {
 
   it("should render ListItemComponent with titleBadge if export data is pending", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const screen = renderComponentMockStore({
+    const { getByTestId } = renderComponentMockStore({
       ...globalState,
       userDataProcessing: {
         [UserDataProcessingChoiceEnum.DELETE]: pot.none,
@@ -33,7 +39,7 @@ describe("PrivacyMainScreen", () => {
         })
       }
     });
-    const item = screen.component.getByTestId("profile-export-data");
+    const item = getByTestId("profile-export-data");
 
     expect(
       within(item).queryByText(I18n.t("profile.preferences.list.wip"))
@@ -42,7 +48,7 @@ describe("PrivacyMainScreen", () => {
 
   it("should render ListItemComponent with titleBadge if delete profile is pending", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const screen = renderComponentMockStore({
+    const { getByTestId } = renderComponentMockStore({
       ...globalState,
       userDataProcessing: {
         [UserDataProcessingChoiceEnum.DELETE]: pot.some({
@@ -54,7 +60,7 @@ describe("PrivacyMainScreen", () => {
       }
     });
 
-    const item = screen.component.getByTestId("profile-delete");
+    const item = getByTestId("profile-delete");
     expect(
       within(item).queryByText(I18n.t("profile.preferences.list.wip"))
     ).not.toBeNull();
@@ -68,7 +74,7 @@ describe("PrivacyMainScreen", () => {
         kind: "PotNoneLoading"
       })
     }));
-    const screen = renderComponentMockStore({
+    const { getByTestId } = renderComponentMockStore({
       ...globalState,
       userDataProcessing: {
         [UserDataProcessingChoiceEnum.DELETE]: pot.some(undefined),
@@ -80,7 +86,7 @@ describe("PrivacyMainScreen", () => {
       }
     });
 
-    const item = screen.component.getByTestId("profile-export-data");
+    const item = getByTestId("profile-export-data");
 
     fireEvent.press(item);
     expect(Alert.alert).toHaveBeenCalledTimes(1);
@@ -94,7 +100,7 @@ describe("PrivacyMainScreen", () => {
         kind: "PotNoneLoading"
       })
     }));
-    const screen = renderComponentMockStore({
+    const { getByTestId } = renderComponentMockStore({
       ...globalState,
       userDataProcessing: {
         [UserDataProcessingChoiceEnum.DELETE]: pot.some({
@@ -106,26 +112,50 @@ describe("PrivacyMainScreen", () => {
       }
     });
 
-    const item = screen.component.getByTestId("profile-delete");
+    const item = getByTestId("profile-delete");
 
     fireEvent.press(item);
     expect(Alert.alert).toHaveBeenCalledTimes(1);
   });
+
+  it("should show error toast if download fails after loading", () => {
+    jest.spyOn(hooks, "usePrevious").mockReturnValue({
+      [UserDataProcessingChoiceEnum.DOWNLOAD]: pot.toLoading(pot.none),
+      [UserDataProcessingChoiceEnum.DELETE]: pot.none
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const IOToast = require("@pagopa/io-app-design-system").IOToast;
+    const toastSpy = jest.spyOn(IOToast, "error").mockImplementation(jest.fn());
+
+    renderComponentMockStore({
+      userDataProcessing: {
+        [UserDataProcessingChoiceEnum.DOWNLOAD]: pot.toError(
+          pot.none,
+          new Error("fail")
+        ),
+        [UserDataProcessingChoiceEnum.DELETE]: pot.none
+      }
+    });
+
+    expect(toastSpy).toHaveBeenCalledWith(
+      I18n.t("profile.main.privacy.errorMessage")
+    );
+  });
 });
 
-const renderComponentMockStore = (state: GlobalState) => {
+const renderComponentMockStore = (stateOverride: Partial<GlobalState> = {}) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore({
-    ...state
-  } as GlobalState);
+  const store = mockStore({
+    ...globalState,
+    ...stateOverride
+  });
 
-  return {
-    component: renderScreenWithNavigationStoreContext(
-      PrivacyMainScreen,
-      SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN,
-      {},
-      store
-    ),
+  return renderScreenWithNavigationStoreContext(
+    PrivacyMainScreen,
+    SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN,
+    {},
     store
-  };
+  );
 };
