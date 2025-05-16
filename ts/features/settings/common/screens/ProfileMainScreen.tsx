@@ -159,7 +159,8 @@ const ProfileMainScreenFC = () => {
         // Data
         value: I18n.t("profile.main.data.title"),
         description: I18n.t("profile.main.data.description"),
-        onPress: navigateToProfile
+        onPress: navigateToProfile,
+        testID: "profileDataButton"
       },
       {
         // Preferences
@@ -284,7 +285,10 @@ const ProfileMainScreenFC = () => {
           onPress={onLogoutPress}
           accessibilityLabel={logoutLabel}
         />
-        <AppVersion onPress={onTapAppVersion} />
+        <AppVersion
+          testID="profileAppVersionButton"
+          onPress={onTapAppVersion}
+        />
       </ContentWrapper>
       {/* Developer Section */}
       {(isDebugModeEnabled || isDevEnv) && <DeveloperModeSection />}
@@ -302,6 +306,7 @@ const ProfileMainScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      testID="ProfileMainScreen"
       title={{
         label: I18n.t("global.buttons.settings")
       }}
