@@ -482,6 +482,9 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -1334,6 +1337,9 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
                                         },
                                         {
                                           "color": undefined,
