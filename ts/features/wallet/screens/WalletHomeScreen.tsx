@@ -30,6 +30,7 @@ import {
   isWalletScreenRefreshingSelector
 } from "../store/selectors";
 import { itwShouldRenderNewITWallet } from "../../itwallet/common/store/selectors";
+import { itwHasWalletAtLeastTwoCredentialsSelector } from "../../itwallet/credentials/store/selectors";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen
@@ -46,6 +47,9 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const dispatch = useIODispatch();
 
   const isWalletEmpty = useIOSelector(isWalletEmptySelector);
+  const atLeastTwoCredentialsInWallet = useIOSelector(
+    itwHasWalletAtLeastTwoCredentialsSelector
+  );
   const isRefreshingContent = useIOSelector(isWalletScreenRefreshingSelector);
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWallet);
 
@@ -125,7 +129,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
    * Returns the CTA props based on the screen state
    */
   const screenActions = useMemo((): IOScrollViewActions | undefined => {
-    if (isWalletEmpty) {
+    if (isWalletEmpty || atLeastTwoCredentialsInWallet) {
       // We need to displayed the CTA only if the wallet is not empty
       return undefined;
     }
@@ -140,7 +144,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         onPress: handleAddToWalletButtonPress
       }
     };
-  }, [isWalletEmpty, handleAddToWalletButtonPress]);
+  }, [
+    isWalletEmpty,
+    atLeastTwoCredentialsInWallet,
+    handleAddToWalletButtonPress
+  ]);
 
   const handleRefreshWallet = useCallback(() => {
     setIsRefreshing(true);

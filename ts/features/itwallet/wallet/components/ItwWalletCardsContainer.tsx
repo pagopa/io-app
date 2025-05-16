@@ -1,6 +1,11 @@
-import { ListItemHeader } from "@pagopa/io-app-design-system";
+import {
+  ButtonText,
+  ListItemHeader,
+  Optional
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
+import { StyleSheet, View } from "react-native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -18,8 +23,11 @@ import { ItwFeedbackBanner } from "../../common/components/ItwFeedbackBanner";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
+import { itwShouldRenderNewITWallet } from "../../common/store/selectors";
+import { ItwBadge } from "../../common/components/ItwBadge";
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
+  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWallet);
   const navigation = useIONavigation();
   const cards = useIOSelector(state =>
     selectWalletCardsByCategory(state, "itw")
@@ -51,8 +59,11 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     )
   );
 
-  const sectionHeader = useMemo(
-    (): ListItemHeader => ({
+  const sectionHeader = useMemo((): Optional<ListItemHeader> => {
+    if (isNewItwRenderable) {
+      return;
+    }
+    return {
       testID: "walletCardsCategoryItwHeaderTestID",
       iconName: "legalValue",
       iconColor: isEidExpired ? "grey-300" : "blueIO-500",
@@ -70,12 +81,19 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           testID: "walletCardsCategoryItwActiveBadgeTestID"
         }
       }
-    }),
-    [isEidExpired, eidInfoBottomSheet.present]
-  );
+    };
+  }, [isEidExpired, eidInfoBottomSheet.present, isNewItwRenderable]);
 
   return (
     <>
+      {isNewItwRenderable && (
+        <View style={styles.itwHeader}>
+          <ItwBadge />
+          <ButtonText onPress={eidInfoBottomSheet.present}>
+            Mostra identità
+          </ButtonText>
+        </View>
+      )}
       <WalletCardsCategoryContainer
         key={`cards_category_itw`}
         testID={`itwWalletCardsContainerTestID`}
@@ -96,4 +114,14 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       {appFeedbackBottomSheet}
     </>
   );
+});
+
+const styles = StyleSheet.create({
+  itwHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 8,
+    marginHorizontal: -8
+  }
 });
