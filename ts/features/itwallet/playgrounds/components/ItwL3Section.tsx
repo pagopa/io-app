@@ -1,4 +1,8 @@
-import {ListItemHeader, ListItemInfo, ListItemNav} from "@pagopa/io-app-design-system";
+import {
+  ListItemHeader,
+  ListItemInfo,
+  ListItemNav
+} from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { useCallback } from "react";
 import { useIOSelector } from "../../../../store/hooks";
