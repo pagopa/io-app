@@ -691,6 +691,9 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= ALREADY
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -1457,6 +1460,9 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= FAILURE
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,
@@ -2227,6 +2233,9 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= FAILURE
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -2945,6 +2954,9 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= SUCCESS
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,
@@ -4101,6 +4113,9 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -4864,6 +4879,9 @@ exports[`error screens should display an error screen in case of missing_sid err
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,
@@ -5634,6 +5652,9 @@ exports[`error screens should display an error screen in case of preferences err
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -6400,6 +6421,9 @@ exports[`loading screens + error interop should render the correct loading scree
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,

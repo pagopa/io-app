@@ -8,6 +8,7 @@ import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { tryLoadSENDPreferences } from "../../../pn/store/sagas/watchPnSaga";
 
 export const mapKinds: Record<
   number,
@@ -95,4 +96,8 @@ export function* handleGetServicePreference(
       })
     );
   }
+}
+
+export function* fetchServicePreferencesForStartup() {
+  yield* call(tryLoadSENDPreferences);
 }

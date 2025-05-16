@@ -71,6 +71,7 @@ const FiscalCodeScreen = () => {
       actions={{
         type: "SingleButton",
         primary: {
+          testID: "copy-fiscal-code-button",
           label: isCFCopied
             ? I18n.t("profile.fiscalCode.codeCopied")
             : I18n.t("profile.fiscalCode.copyCode"),

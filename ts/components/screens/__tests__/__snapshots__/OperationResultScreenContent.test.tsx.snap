@@ -554,6 +554,9 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -693,6 +696,9 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
                                               },
                                               {
                                                 "color": undefined,

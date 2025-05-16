@@ -13,7 +13,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { tosConfigSelector } from "../../../tos/store/selectors";
-import { trackTosScreen } from "../shared/components/analytics";
+import { trackTosScreen } from "../shared/analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",

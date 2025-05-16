@@ -300,7 +300,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "pn": {
     "activation": {
-      "kind": "PotNone",
+      "isActivating": false,
     },
     "bannerDismiss": {
       "dismissed": false,

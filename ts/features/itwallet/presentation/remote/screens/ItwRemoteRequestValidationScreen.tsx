@@ -10,6 +10,8 @@ import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
 import { ItwRemoteDeepLinkFailure } from "../components/ItwRemoteDeepLinkFailure.tsx";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { progressSelector } from "../../../../identification/store/selectors/index.ts";
 
 export type ItwRemoteRequestValidationScreenNavigationParams =
   Partial<ItwRemoteRequestPayload>;
@@ -21,6 +23,25 @@ type ScreenProps = IOStackNavigationRouteProps<
 
 const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
   useItwDisableGestureNavigation();
+
+  const identificationProgress = useIOSelector(progressSelector);
+
+  /**
+   * In case of same-device flow the app might not be running when the user opens the link,
+   * so the app is started and the user needs to complete the identification process.
+   * Here we wait for the identification to finish to avoid inconsistencies
+   * between the machine and the navigation.
+   * This also applies when the token expires and the user needs to identify again.
+   */
+  if (identificationProgress.kind !== "identified") {
+    return (
+      <ItwRemoteLoadingScreen
+        title={I18n.t(
+          "features.itWallet.presentation.remote.loadingScreen.request"
+        )}
+      />
+    );
+  }
 
   const payload = validateItwPresentationQrCodeParams(route.params);
 
