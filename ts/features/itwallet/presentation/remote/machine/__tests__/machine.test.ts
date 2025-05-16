@@ -298,6 +298,15 @@ describe("itwRemoteMachine", () => {
      * Get the RequestObject from the RP
      */
     await waitFor(actor, snapshot => snapshot.matches("GettingRequestObject"));
+    expect(getRequestObject).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
+      ...InitialContext,
+      requestObjectEncodedJwt: unverifiedRequestObject,
+      payload: qrCodePayload,
+      rpConf,
+      rpSubject: T_CLIENT_ID
+    });
+
     /**
      * Get the presentation details from the RP
      */
@@ -371,6 +380,7 @@ describe("itwRemoteMachine", () => {
     isWalletActive.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
     evaluateRelyingPartyTrust.mockResolvedValue({});
+    getRequestObject.mockReturnValue("");
     getPresentationDetails.mockRejectedValue({ message: "ERROR" });
 
     const actor = createActor(mockedMachine);
