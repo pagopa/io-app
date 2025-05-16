@@ -14,6 +14,9 @@ import { isDevEnv } from "../../../../../utils/environment";
 import itwCredentialsReducer, {
   ItwCredentialsState
 } from "../../../credentials/store/reducers";
+import identificationReducer, {
+  ItwIdentificationState
+} from "../../../identification/store/reducers";
 import issuanceReducer, {
   ItwIssuanceState
 } from "../../../issuance/store/reducers";
@@ -23,6 +26,7 @@ import wiaReducer, {
 import preferencesReducer, { ItwPreferencesState } from "./preferences";
 
 export type ItWalletState = {
+  identification: ItwIdentificationState;
   issuance: ItwIssuanceState & PersistPartial;
   credentials: ItwCredentialsState & PersistPartial;
   walletInstance: ItwWalletInstanceState & PersistPartial;
@@ -32,6 +36,7 @@ export type ItWalletState = {
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
 
 const itwReducer = combineReducers({
+  identification: identificationReducer,
   issuance: issuanceReducer,
   credentials: itwCredentialsReducer,
   walletInstance: wiaReducer,

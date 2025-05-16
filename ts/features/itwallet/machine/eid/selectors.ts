@@ -13,6 +13,9 @@ export const selectEidOption = (snapshot: MachineSnapshot) =>
 export const selectFailureOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.failure);
 
+export const hasNfcFeatureSelector = (snapshot: MachineSnapshot) =>
+  snapshot.context.hasNfcFeature ?? false;
+
 export const isNFCEnabledSelector = (snapshot: MachineSnapshot) =>
   snapshot.context.cieContext?.isNFCEnabled || false;
 
