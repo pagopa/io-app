@@ -1793,6 +1793,9 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, isN
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -1932,6 +1935,9 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, isN
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
                                               },
                                               {
                                                 "color": undefined,
@@ -2638,6 +2644,9 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, isN
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -2777,6 +2786,9 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, isN
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
                                               },
                                               {
                                                 "color": undefined,
