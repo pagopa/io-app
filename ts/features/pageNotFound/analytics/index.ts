@@ -11,3 +11,7 @@ export const track404ErrorScreenUpdateAppButton = async () => {
     buildEventProperties("UX", "action")
   );
 };
+
+export const track404ErrorScreenCloseButton = async () => {
+  void mixpanelTrack("404_ERROR_CLOSE", buildEventProperties("UX", "action"));
+};
