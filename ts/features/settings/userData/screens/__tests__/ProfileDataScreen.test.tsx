@@ -44,8 +44,14 @@ jest.mock("@react-navigation/native", () => {
 });
 
 describe("Test ProfileDataScreen", () => {
-  jest.useFakeTimers();
-  afterEach(jest.clearAllMocks);
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.useFakeTimers();
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
 
   it("should be not null", () => {
     const { component } = renderComponent();
