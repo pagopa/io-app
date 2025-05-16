@@ -33,7 +33,7 @@ import { trackTosUserExit } from "../../authentication/common/analytics";
 import {
   trackTosAccepted,
   trackTosScreen
-} from "../../settings/privacy/shared/components/analytics";
+} from "../../settings/privacy/shared/analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",
