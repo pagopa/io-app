@@ -418,6 +418,9 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                           "textAlign": "auto",
                         },
                         {
+                          "color": "#FFFFFF",
+                        },
+                        {
                           "color": undefined,
                         },
                       ],
@@ -790,6 +793,9 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
                       [
                         {
                           "textAlign": "auto",
+                        },
+                        {
+                          "color": "#FFFFFF",
                         },
                         {
                           "color": undefined,

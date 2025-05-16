@@ -529,6 +529,9 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       "textAlign": "auto",
                                     },
                                     {
+                                      "color": "#0B3EE3",
+                                    },
+                                    {
                                       "color": undefined,
                                     },
                                   ],

@@ -703,6 +703,9 @@ exports[`CieWrongCardScreen renders correctly and matches snapshot 1`] = `
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -842,6 +845,9 @@ exports[`CieWrongCardScreen renders correctly and matches snapshot 1`] = `
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
                                               },
                                               {
                                                 "color": undefined,
