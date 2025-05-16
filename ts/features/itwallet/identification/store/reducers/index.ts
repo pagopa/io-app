@@ -1,14 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { itwNfcIsEnabled } from "../actions";
+import { itwHasNfcFeature } from "../actions";
 
 export type ItwIdentificationState = {
-  isNfcEnabled: pot.Pot<boolean, Error>;
+  hasNfcFeature: pot.Pot<boolean, Error>;
 };
 
 export const itwIdentificationInitialState: ItwIdentificationState = {
-  isNfcEnabled: pot.none
+  hasNfcFeature: pot.none
 };
 
 const reducer = (
@@ -16,20 +16,20 @@ const reducer = (
   action: Action
 ): ItwIdentificationState => {
   switch (action.type) {
-    case getType(itwNfcIsEnabled.request):
+    case getType(itwHasNfcFeature.request):
       return {
         ...state,
-        isNfcEnabled: pot.toLoading(state.isNfcEnabled)
+        hasNfcFeature: pot.toLoading(state.hasNfcFeature)
       };
-    case getType(itwNfcIsEnabled.success):
+    case getType(itwHasNfcFeature.success):
       return {
         ...state,
-        isNfcEnabled: pot.some(action.payload)
+        hasNfcFeature: pot.some(action.payload)
       };
-    case getType(itwNfcIsEnabled.failure):
+    case getType(itwHasNfcFeature.failure):
       return {
         ...state,
-        isNfcEnabled: pot.toError(state.isNfcEnabled, action.payload)
+        hasNfcFeature: pot.toError(state.hasNfcFeature, action.payload)
       };
   }
   return state;

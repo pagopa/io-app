@@ -132,7 +132,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
     },
     "identification": {
-      "isNfcEnabled": {
+      "hasNfcFeature": {
         "kind": "PotNone",
       },
     },

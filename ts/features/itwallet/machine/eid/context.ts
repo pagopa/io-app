@@ -28,7 +28,7 @@ export type AuthenticationContext = {
 
 export type CieContext = {
   isNFCEnabled: boolean;
-  isCIEAuthenticationSupported: boolean | undefined;
+  isCIEAuthenticationSupported: boolean;
 };
 
 export type Context = {
@@ -43,6 +43,7 @@ export type Context = {
   // Flag to check if IT Wallet L3 features are enabled and thus we should allow to request
   // a PID credential and upgrade the existing credentials to L3
   isL3FeaturesEnabled: boolean | undefined;
+  hasNfcFeature: boolean | undefined;
 };
 
 export const InitialContext: Context = {
@@ -54,5 +55,6 @@ export const InitialContext: Context = {
   eid: undefined,
   failure: undefined,
   isReissuing: false,
-  isL3FeaturesEnabled: undefined
+  isL3FeaturesEnabled: undefined,
+  hasNfcFeature: undefined
 };

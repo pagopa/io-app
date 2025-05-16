@@ -9,7 +9,7 @@ import {
   checkWalletInstanceInconsistencySaga,
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
-import { checkNfcEnabledSaga } from "../../identification/saga/index.ts";
+import { checkHasNfcFeatureSaga } from "../../identification/saga/index.ts";
 import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
 
@@ -28,7 +28,7 @@ export function* watchItwSaga(): SagaIterator {
     return;
   }
 
-  yield* call(checkNfcEnabledSaga);
+  yield* call(checkHasNfcFeatureSaga);
 
   // Status attestations of credentials are checked only in case of a valid wallet instance.
   // For this reason, these sagas must be called sequentially.

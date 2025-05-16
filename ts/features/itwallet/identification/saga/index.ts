@@ -1,15 +1,15 @@
 import { call, put } from "typed-redux-saga/macro";
+import cieManager from "@pagopa/react-native-cie";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
-import { itwNfcIsEnabled } from "../store/actions";
-import * as cieUtils from "../../../authentication/login/cie/utils/cie";
+import { itwHasNfcFeature } from "../store/actions";
 
-export function* checkNfcEnabledSaga(): Generator<ReduxSagaEffect, void> {
+export function* checkHasNfcFeatureSaga(): Generator<ReduxSagaEffect, void> {
   try {
-    const isNfcEnabled: SagaCallReturnType<typeof cieUtils.isNfcEnabled> =
-      yield* call(cieUtils.isNfcEnabled);
-    yield* put(itwNfcIsEnabled.success(isNfcEnabled));
+    const hasNFCFeature: SagaCallReturnType<typeof cieManager.hasNFCFeature> =
+      yield* call(cieManager.hasNFCFeature);
+    yield* put(itwHasNfcFeature.success(hasNFCFeature));
   } catch (e) {
-    yield* put(itwNfcIsEnabled.failure(convertUnknownToError(e)));
+    yield* put(itwHasNfcFeature.failure(convertUnknownToError(e)));
   }
 }
