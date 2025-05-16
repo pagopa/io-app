@@ -6,6 +6,7 @@ export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
 export type Start = {
   type: "start";
+  isL3?: boolean;
 };
 
 export type AcceptTos = {
@@ -95,6 +96,9 @@ export type AcknowledgedCieInfo = {
 export type AcknowledgedCiePinInfo = {
   type: "acknowledged-cie-pin-info";
 };
+export type Reset = {
+  type: "reset";
+};
 
 export type EidIssuanceEvents =
   | Start
@@ -118,4 +122,5 @@ export type EidIssuanceEvents =
   | StartReissuing
   | GoToCieWarning
   | AcknowledgedCieInfo
-  | AcknowledgedCiePinInfo;
+  | AcknowledgedCiePinInfo
+  | Reset;

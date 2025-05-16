@@ -366,6 +366,9 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                         "textAlign": "auto",
                       },
                       {
+                        "color": "#0B3EE3",
+                      },
+                      {
                         "color": undefined,
                       },
                     ],

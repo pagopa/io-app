@@ -9949,6 +9949,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "textAlign": "auto",
                                       },
                                       {
+                                        "color": "#0B3EE3",
+                                      },
+                                      {
                                         "color": undefined,
                                       },
                                     ],
@@ -11706,6 +11709,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     [
                                       {
                                         "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "color": undefined,

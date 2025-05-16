@@ -862,6 +862,9 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -1000,6 +1003,9 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                         [
                                           {
                                             "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "color": undefined,

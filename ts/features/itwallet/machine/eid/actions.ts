@@ -24,7 +24,6 @@ import {
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwSetAuthLevel } from "../../common/store/actions/preferences.ts";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -33,9 +32,12 @@ export const createEidIssuanceActionsImplementation = (
   store: ReturnType<typeof useIOStore>,
   toast: IOToast
 ) => ({
-  navigateToTosScreen: () => {
+  navigateToTosScreen: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: { isL3: context.isL3FeaturesEnabled }
     });
   },
 
@@ -240,12 +242,10 @@ export const createEidIssuanceActionsImplementation = (
       const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(state);
       const walletInstanceAttestation =
         itwWalletInstanceAttestationSelector(state);
-      const isL3FeaturesEnabled = itwIsL3EnabledSelector(state);
 
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
-        walletInstanceAttestation,
-        isL3FeaturesEnabled
+        walletInstanceAttestation
       };
     }
   )

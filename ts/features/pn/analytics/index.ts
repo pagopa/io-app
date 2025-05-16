@@ -70,11 +70,15 @@ export const trackPNServiceStatusChangeSuccess = (activated?: boolean) =>
     })
   );
 
-export const trackPNServiceStatusChangeError = (currentStatus?: boolean) =>
+export const trackPNServiceStatusChangeError = (
+  currentStatus: boolean,
+  reason: string
+) =>
   void mixpanelTrack(
     "PN_SERVICE_STATUS_CHANGE_ERROR",
     buildEventProperties("KO", undefined, {
-      CURRENT_STATUS: pnServiceActivationStatusBoolToString(currentStatus)
+      CURRENT_STATUS: pnServiceActivationStatusBoolToString(currentStatus),
+      reason
     })
   );
 

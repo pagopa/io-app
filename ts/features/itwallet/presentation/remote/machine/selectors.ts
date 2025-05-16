@@ -26,3 +26,6 @@ export const selectRelyingPartyData = (snapshot: MachineSnapshot) =>
 export const selectUserSelectedOptionalCredentials = (
   snapshot: MachineSnapshot
 ) => snapshot.context.selectedOptionalCredentials;
+
+export const selectRedirectUri = (snapshot: MachineSnapshot) =>
+  snapshot.context.redirectUri;

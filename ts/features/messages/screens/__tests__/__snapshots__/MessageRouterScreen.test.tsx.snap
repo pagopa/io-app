@@ -2238,6 +2238,9 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -2377,6 +2380,9 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
                                               },
                                               {
                                                 "color": undefined,
