@@ -9,7 +9,7 @@ export const fromGeneratedToLocalSpidIdp = (
     name: idp.name,
     logo: {
       light: { uri: idp.logo },
-      dark: { uri: idp.logoDark }
+      ...(idp.logoDark ? { dark: { uri: idp.logoDark } } : {})
     },
     profileUrl: idp.profileUrl,
     isTestIdp: idp.isTestIdp

@@ -153,28 +153,28 @@ describe("configureStoreAndPersistor", () => {
             {
               id: "An ID 1",
               name: "A name 1",
-              logo: { light: { uri: "aLogoUrl 1" }, dark: { uri: undefined } },
+              logo: { light: { uri: "aLogoUrl 1" }, dark: undefined },
               profileUrl: "aProfileUrl 1",
               isTestIdp: undefined
             },
             {
               id: "An ID 2",
               name: "A name 2",
-              logo: { light: { uri: "aLogoUrl 2" }, dark: { uri: undefined } },
+              logo: { light: { uri: "aLogoUrl 2" }, dark: undefined },
               profileUrl: "aProfileUrl 2",
               isTestIdp: false
             },
             {
               id: "An ID 2",
               name: "A name 2",
-              logo: { light: { uri: "aLogoUrl 2" }, dark: { uri: undefined } },
+              logo: { light: { uri: "aLogoUrl 2" }, dark: undefined },
               profileUrl: "aProfileUrl 2",
               isTestIdp: true
             },
             {
               id: "",
               name: "",
-              logo: { light: { uri: "" }, dark: { uri: undefined } },
+              logo: { light: { uri: "" }, dark: undefined },
               profileUrl: "",
               isTestIdp: undefined
             }

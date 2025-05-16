@@ -95,7 +95,7 @@ describe("IDPS utils", () => {
       expect(result[0].logo.light).toEqual({
         uri: "https://example.com/logo3.png"
       });
-      expect(result[0].logo.dark).toEqual({ uri: undefined });
+      expect(result[0].logo.dark).toEqual(undefined);
       expect(result[0].profileUrl).toBe("https://example.com/profile3");
     });
   });
