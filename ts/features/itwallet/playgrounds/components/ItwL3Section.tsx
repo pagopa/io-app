@@ -1,17 +1,19 @@
 import {
   ListItemHeader,
   ListItemInfo,
-  ListItemNav
+  ListItemNav,
+  ListItemSwitch
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { useCallback } from "react";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwIsL3EnabledSelector } from "../../../../features/itwallet/common/store/selectors/preferences";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { itwSetFiscalCodeWhitelisted } from "../../common/store/actions/preferences";
 
 export const ItwL3Section = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-
+  const dispatch = useIODispatch();
   const isFiscalCodeWhitelisted = useIOSelector(itwIsL3EnabledSelector);
 
   const navigateToTosL3Screen = useCallback(() => {
@@ -27,6 +29,13 @@ export const ItwL3Section = () => {
       <ListItemInfo
         label={"Fiscal code whitelisted"}
         value={isFiscalCodeWhitelisted ? "YES" : "NO"}
+      />
+      <ListItemSwitch
+        label="Disable L3 ( this is only for testing purposes to return to L2 )"
+        value={isFiscalCodeWhitelisted}
+        onSwitchValueChange={() => {
+          dispatch(itwSetFiscalCodeWhitelisted(false));
+        }}
       />
       <ListItemNav
         value="Discovery L3"
