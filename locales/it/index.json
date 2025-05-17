@@ -2429,6 +2429,15 @@
           "subtitle": "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
         },
         "PAYMENT_ONGOING": {
+          "PAA_PAGAMENTO_IN_CORSO": {
+            "title": "C’è già un’operazione in corso, riprova più tardi",
+            "subtitle": "Se il problema persiste, contatta l'assistenza."
+          },
+          "PPT_PAGAMENTO_IN_CORSO": {
+            "countdownTitle": "C’è già un’operazione in corso, riprova tra {{minutes}} minuti",
+            "countdownExpiredTitle": "C’è già un’operazione in corso, riprova più tardi",
+            "subtitle": "Se il problema persiste, contatta l'assistenza."
+          },
           "title": "C’è già un’operazione in corso, riprova più tardi",
           "subtitle": "Se il problema persiste, puoi aprire una segnalazione."
         },
