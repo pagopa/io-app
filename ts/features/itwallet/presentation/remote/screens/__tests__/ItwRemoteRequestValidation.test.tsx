@@ -86,6 +86,7 @@ describe("ItwRemoteRequestValidationScreen", () => {
       },
       actors: {
         evaluateRelyingPartyTrust: fromPromise(jest.fn()),
+        getRequestObject: fromPromise(jest.fn()),
         getPresentationDetails: fromPromise(jest.fn())
       }
     });

@@ -1,7 +1,12 @@
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import { useCallback, useEffect, useMemo } from "react";
+import { Credential } from "@pagopa/io-react-native-wallet";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
-import { selectFailureOption } from "../machine/selectors.ts";
+import {
+  selectFailureOption,
+  selectUnverifiedRequestObject
+} from "../machine/selectors.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
 import {
@@ -21,6 +26,7 @@ import {
   useItwFailureSupportModal,
   ZendeskSubcategoryValue
 } from "../../../common/hooks/useItwFailureSupportModal.tsx";
+import { AuthErrorResponseBody } from "../utils/itwRemoteTypeUtils.ts";
 
 const zendeskAssistanceErrors = [
   RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE
@@ -44,6 +50,9 @@ type ContentViewProps = { failure: RemoteFailure };
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwRemoteMachineContext.useActorRef();
   const navigation = useIONavigation();
+  const unverifiedRequestObject = ItwRemoteMachineContext.useSelector(
+    selectUnverifiedRequestObject
+  );
   const i18nNs = "features.itWallet.presentation.remote"; // Common i18n namespace
 
   useDebugInfo({
@@ -63,7 +72,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   });
 
   const getOperationResultScreenContentProps =
-    (): OperationResultScreenContentProps => {
+    useCallback((): OperationResultScreenContentProps => {
       switch (failure.type) {
         case RemoteFailureType.UNEXPECTED:
           return {
@@ -240,7 +249,41 @@ const ContentView = ({ failure }: ContentViewProps) => {
           };
         }
       }
+    }, [
+      dismissalDialog.show,
+      failure.reason,
+      failure.type,
+      failureSupportModal.present,
+      machineRef,
+      navigation,
+      present
+    ]);
+
+  const authErrorBody = useMemo<AuthErrorResponseBody>(() => {
+    const subtitle = getOperationResultScreenContentProps().subtitle;
+    const errorDescription =
+      typeof subtitle === "string" ? subtitle : failure.type;
+
+    if (failure.type === RemoteFailureType.INVALID_REQUEST_OBJECT) {
+      return {
+        error: "invalid_request_object",
+        errorDescription
+      };
+    }
+    return {
+      error: "access_denied",
+      errorDescription
     };
+  }, [failure.type, getOperationResultScreenContentProps]);
+
+  useEffect(() => {
+    if (unverifiedRequestObject) {
+      void Credential.Presentation.sendAuthorizationErrorResponse(
+        unverifiedRequestObject,
+        authErrorBody
+      ).catch(constNull); // Catching errors to ensure the app doesn't crash if sending the authorization error response fails.
+    }
+  }, [authErrorBody, unverifiedRequestObject]);
 
   const resultScreenProps = getOperationResultScreenContentProps();
 

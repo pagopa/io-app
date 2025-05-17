@@ -20,11 +20,15 @@ export type EvaluateRelyingPartyTrustOutput = {
   rpConf: RelyingPartyConfiguration;
   rpSubject: string;
 };
-
+export type GetRequestObjectInput = Partial<{
+  qrCodePayload: ItwRemoteRequestPayload;
+}>;
+export type GetRequestObjectOutput = string;
 export type GetPresentationDetailsInput = Partial<{
   rpConf: RelyingPartyConfiguration;
   rpSubject: string;
   qrCodePayload: ItwRemoteRequestPayload;
+  requestObjectEncodedJwt: string;
 }>;
 export type GetPresentationDetailsOutput = {
   requestObject: RequestObject;
@@ -61,20 +65,33 @@ export const createRemoteActorsImplementation = (
     return { rpConf, rpSubject: subject };
   });
 
+  // The retrieval of the Request Object is managed by a dedicated actor to enable access
+  // to the `response_uri` parameter in the event of a validation failure during its processing.
+  const getRequestObject = fromPromise<
+    GetRequestObjectOutput,
+    GetRequestObjectInput
+  >(async ({ input }) => {
+    const { qrCodePayload } = input;
+    assert(qrCodePayload, "Missing required qrCodePayload");
+    const { request_uri } = qrCodePayload;
+
+    const { requestObjectEncodedJwt } =
+      await Credential.Presentation.getRequestObject(request_uri);
+
+    return requestObjectEncodedJwt;
+  });
+
   const getPresentationDetails = fromPromise<
     GetPresentationDetailsOutput,
     GetPresentationDetailsInput
   >(async ({ input }) => {
-    const { rpConf, rpSubject, qrCodePayload } = input;
+    const { rpConf, rpSubject, qrCodePayload, requestObjectEncodedJwt } = input;
     assert(
-      rpConf && rpSubject && qrCodePayload,
+      rpConf && rpSubject && qrCodePayload && requestObjectEncodedJwt,
       "Missing required getPresentationDetails actor params"
     );
 
-    const { request_uri, client_id, state } = qrCodePayload;
-
-    const { requestObjectEncodedJwt } =
-      await Credential.Presentation.getRequestObject(request_uri);
+    const { client_id, state } = qrCodePayload;
 
     const { requestObject } = await Credential.Presentation.verifyRequestObject(
       requestObjectEncodedJwt,
@@ -164,6 +181,7 @@ export const createRemoteActorsImplementation = (
 
   return {
     evaluateRelyingPartyTrust,
+    getRequestObject,
     getPresentationDetails,
     sendAuthorizationResponse
   };
