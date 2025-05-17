@@ -40,6 +40,7 @@ import Animated, {
   useAnimatedReaction,
   useAnimatedSensor,
   useDerivedValue,
+  useReducedMotion,
   useSharedValue
 } from "react-native-reanimated";
 import I18n from "../../../../i18n";
@@ -77,22 +78,26 @@ export const ItwCredentialTrustmark = ({
   credential,
   onPress
 }: ItwCredentialTrustmarkProps) => {
+  const reduceMotion = useReducedMotion();
+  const { themeType } = useIOThemeContext();
+
+  const isLightMode = themeType === "light";
+
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
 
-  const { themeType } = useIOThemeContext();
-
   /* If you want to restore the static variant of the trustmark,
-  please set the following variable to false */
-  const enableIridescence = true;
+  please set the following variable to false. We force the static
+  version to be rendered when `reduceMotion` is enabled. */
+  const enableIridescence = !reduceMotion;
 
   /* Styles */
-  const trustmarkTickOpacity = themeType === "light" ? 1 : 0.8;
-  const lightSkiaOpacity = themeType === "light" ? 0.7 : 0.25;
-  const buttonInnerBorderOpacity = themeType === "light" ? 0.35 : 0.25;
+  const trustmarkTickOpacity = isLightMode ? 1 : 0.8;
+  const lightSkiaOpacity = isLightMode ? 0.7 : 0.25;
+  const buttonInnerBorderOpacity = isLightMode ? 0.35 : 0.25;
   const buttonInnerBorderColorValue: ColorValue = "#CCCCCC";
-  const buttonBackgroundGradientOpacity = themeType === "light" ? 1 : 0.25;
+  const buttonBackgroundGradientOpacity = isLightMode ? 1 : 0.25;
 
   const buttonBackgroundGradient = {
     colors: ["#CCCCCC", "#F2F2F2", "#E9E9E9", "#E0E0E0"],
@@ -333,7 +338,10 @@ export const ItwCredentialTrustmark = ({
           </Caption>
           {!enableIridescence && (
             <Image
-              style={styles.trustmarkAsset}
+              style={{
+                ...styles.trustmarkAsset,
+                opacity: isLightMode ? 1 : 0.7
+              }}
               source={require("../../../../../img/features/itWallet/credential/trustmark.png")}
               accessibilityIgnoresInvertColors
             />
