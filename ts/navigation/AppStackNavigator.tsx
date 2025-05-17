@@ -138,6 +138,9 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
               parse: {
                 activate: activate => activate === "true"
               }
+            },
+            [SERVICES_ROUTES.INSTITUTION_SERVICES]: {
+              path: "institution-home"
             }
           }
         },
