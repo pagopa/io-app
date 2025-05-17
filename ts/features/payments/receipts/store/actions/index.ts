@@ -3,6 +3,7 @@ import { NetworkError } from "../../../../../utils/errors";
 import { NoticeListWrapResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeListWrapResponse";
 import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import { ReceiptsCategoryFilter } from "../../types";
+import { HideReceiptTrigger } from "../../analytics";
 
 export type PaymentsReceiptPayload = {
   firstLoad?: boolean;
@@ -76,6 +77,7 @@ export const getPaymentsReceiptDownloadAction = createAsyncAction(
 
 type PaymentsTransactionReceiptDeletePayload = {
   transactionId: string;
+  trigger: HideReceiptTrigger;
 };
 
 export const hidePaymentsReceiptAction = createAsyncAction(

@@ -5,53 +5,39 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import * as analytics from "../analytics";
+import {
+  analyticsHideReceiptAction,
+  analyticsHideReceiptConfirmAction
+} from "../analytics/utils";
 import { hidePaymentsReceiptAction } from "../store/actions";
+import { HideReceiptTrigger } from "../analytics";
 
 type Props = {
   transactionId: string;
+  trigger?: HideReceiptTrigger;
 };
 
 const HideReceiptButton = (props: Props) => {
-  const { transactionId } = props;
+  const { transactionId, trigger = "tap" } = props;
   const dispatch = useDispatch();
   const navigation = useIONavigation();
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
-  const analyticsHideReceiptAction = () => {
-    analytics.trackHideReceipt({
-      organization_name: paymentAnalyticsData?.receiptOrganizationName,
-      first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user: paymentAnalyticsData?.receiptUser,
-      organization_fiscal_code:
-        paymentAnalyticsData?.receiptOrganizationFiscalCode
-    });
-  };
-
-  const analyticsHideReceiptConfirmAction = () => {
-    analytics.trackHideReceiptConfirm({
-      organization_name: paymentAnalyticsData?.receiptOrganizationName,
-      first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user: paymentAnalyticsData?.receiptUser,
-      organization_fiscal_code:
-        paymentAnalyticsData?.receiptOrganizationFiscalCode
-    });
-  };
-
   const hideReceipt = () => {
     navigation.goBack();
 
-    analyticsHideReceiptConfirmAction();
+    analyticsHideReceiptConfirmAction(paymentAnalyticsData);
 
     dispatch(
       hidePaymentsReceiptAction.request({
-        transactionId
+        transactionId,
+        trigger
       })
     );
   };
 
   const handleHideFromList = () => {
-    analyticsHideReceiptAction();
+    analyticsHideReceiptAction(paymentAnalyticsData);
 
     Alert.alert(
       I18n.t("features.payments.transactions.receipt.hideBanner.title"),
