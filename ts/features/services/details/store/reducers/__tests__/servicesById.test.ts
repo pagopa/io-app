@@ -19,9 +19,9 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../../utils/tests";
 import {
-  isErrorServiceByIdSelector,
-  isLoadingServiceByIdSelector,
-  serviceByIdSelector,
+  isErrorServiceDetailsByIdSelector,
+  isLoadingServiceDetailsByIdSelector,
+  serviceDetailsByIdSelector,
   serviceMetadataByIdSelector,
   serviceMetadataInfoSelector
 } from "..";
@@ -104,7 +104,7 @@ describe("serviceById reducer", () => {
 describe("serviceById selectors", () => {
   describe("serviceByIdSelector", () => {
     it("should return the ServiceDetails when pot.some", () => {
-      const serviceById = serviceByIdSelector(
+      const serviceById = serviceDetailsByIdSelector(
         appReducer({} as GlobalState, loadServiceDetail.success(service)),
         serviceId
       );
@@ -113,11 +113,14 @@ describe("serviceById selectors", () => {
 
     it("should return undefined when not pot.some", () => {
       expect(
-        serviceByIdSelector(appReducer(undefined, {} as Action), serviceId)
+        serviceDetailsByIdSelector(
+          appReducer(undefined, {} as Action),
+          serviceId
+        )
       ).toBeUndefined();
 
       expect(
-        serviceByIdSelector(
+        serviceDetailsByIdSelector(
           appReducer({} as GlobalState, loadServiceDetail.request(serviceId)),
           serviceId
         )
@@ -129,7 +132,7 @@ describe("serviceById selectors", () => {
       };
 
       expect(
-        serviceByIdSelector(
+        serviceDetailsByIdSelector(
           appReducer({} as GlobalState, loadServiceDetail.failure(tError)),
           serviceId
         )
@@ -139,7 +142,7 @@ describe("serviceById selectors", () => {
 
   describe("isLoadingServiceByIdSelector", () => {
     it("should return true when pot.loading", () => {
-      const isLoadingServiceById = isLoadingServiceByIdSelector(
+      const isLoadingServiceById = isLoadingServiceDetailsByIdSelector(
         appReducer({} as GlobalState, loadServiceDetail.request(serviceId)),
         serviceId
       );
@@ -148,14 +151,14 @@ describe("serviceById selectors", () => {
 
     it("should return false when not pot.some", () => {
       expect(
-        isLoadingServiceByIdSelector(
+        isLoadingServiceDetailsByIdSelector(
           appReducer(undefined, {} as Action),
           serviceId
         )
       ).toStrictEqual(false);
 
       expect(
-        isLoadingServiceByIdSelector(
+        isLoadingServiceDetailsByIdSelector(
           appReducer({} as GlobalState, loadServiceDetail.success(service)),
           serviceId
         )
@@ -170,7 +173,7 @@ describe("serviceById selectors", () => {
         service_id: serviceId
       };
 
-      const isErrorServiceById = isErrorServiceByIdSelector(
+      const isErrorServiceById = isErrorServiceDetailsByIdSelector(
         appReducer({} as GlobalState, loadServiceDetail.failure(tError)),
         serviceId
       );
@@ -179,14 +182,14 @@ describe("serviceById selectors", () => {
 
     it("should return false when not pot.error", () => {
       expect(
-        isErrorServiceByIdSelector(
+        isErrorServiceDetailsByIdSelector(
           appReducer(undefined, {} as Action),
           serviceId
         )
       ).toStrictEqual(false);
 
       expect(
-        isErrorServiceByIdSelector(
+        isErrorServiceDetailsByIdSelector(
           appReducer({} as GlobalState, loadServiceDetail.success(service)),
           serviceId
         )

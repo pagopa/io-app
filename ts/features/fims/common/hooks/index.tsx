@@ -6,8 +6,8 @@ import {
   useIOStore
 } from "../../../../store/hooks";
 import {
-  serviceByIdPotSelector,
-  serviceByIdSelector
+  serviceDetailsByIdPotSelector,
+  serviceDetailsByIdSelector
 } from "../../../services/details/store/reducers";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { isStrictNone } from "../../../../utils/pot";
@@ -32,7 +32,7 @@ export type FIMSServiceData = {
 export const useAutoFetchingServiceByIdPot = (serviceId: ServiceId) => {
   const dispatch = useIODispatch();
   const serviceData = useIOSelector(state =>
-    serviceByIdPotSelector(state, serviceId)
+    serviceDetailsByIdPotSelector(state, serviceId)
   );
 
   useEffect(() => {
@@ -114,7 +114,7 @@ const serviceDataFromServiceId = (
   serviceId: ServiceId,
   state: GlobalState
 ): FIMSServiceData => {
-  const service = serviceByIdSelector(state, serviceId);
+  const service = serviceDetailsByIdSelector(state, serviceId);
   return service != null
     ? {
         organizationFiscalCode: service.organization.fiscal_code,

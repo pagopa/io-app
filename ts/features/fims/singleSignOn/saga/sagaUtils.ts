@@ -16,7 +16,7 @@ import {
   fimsRelyingPartyDomainSelector,
   relyingPartyServiceIdSelector
 } from "../store/selectors";
-import { serviceByIdSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
 import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import NavigationService from "../../../../navigation/NavigationService";
 import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
@@ -90,7 +90,7 @@ export const formatHttpClientResponseForMixPanel = (
 export function* computeAndTrackAuthenticationError(reason: string) {
   const serviceIdOrUndefined = yield* select(relyingPartyServiceIdSelector);
   const serviceOrUndefined = serviceIdOrUndefined
-    ? yield* select(serviceByIdSelector, serviceIdOrUndefined)
+    ? yield* select(serviceDetailsByIdSelector, serviceIdOrUndefined)
     : undefined;
   yield* call(
     trackAuthenticationError,

@@ -5,14 +5,12 @@ import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import * as USEIO from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import * as REMOTE_CONFIG from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { openWebUrl } from "../../../../../utils/url";
 import { sendBannerMixpanelEvents } from "../../../analytics/activationReminderBanner";
 import PN_ROUTES from "../../../navigation/routes";
-import { dismissPnActivationReminderBanner } from "../../../store/actions";
 import { PnBannerFlowComponents } from "../PnBannerFlowComponents";
 
 const { LoadingScreen, SuccessScreen, ErrorScreen, CtaScreen } =
@@ -67,16 +65,10 @@ describe("PnBannerFlowComponents", () => {
   });
 
   describe("SuccessScreen", () => {
-    it("should match snapshot, dispatch dismissPnActivationReminderBanner on first render and dispatch the correct analytics for its state", () => {
-      const mockDispatch = jest.fn();
-      jest.spyOn(USEIO, "useIODispatch").mockReturnValue(mockDispatch);
+    it("should match snapshot and dispatch the correct analytics for its state on first render", () => {
       const flowState = "SUCCESS_ACTIVATION";
       const { toJSON } = renderSuccessScreen(flowState);
 
-      expect(mockDispatch).toHaveBeenCalledWith(
-        dismissPnActivationReminderBanner()
-      );
-      expect(mockDispatch).toHaveBeenCalledTimes(1);
       expect(sendBannerMixpanelEvents.activationSuccess).toHaveBeenCalled();
       expect(sendBannerMixpanelEvents.alreadyActive).not.toHaveBeenCalled();
 

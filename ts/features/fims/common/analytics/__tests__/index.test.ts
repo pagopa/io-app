@@ -425,7 +425,7 @@ describe("computeAndTrackDataShareAccepted", () => {
               }
             } as ServiceDetails;
             jest
-              .spyOn(serviceSelectors, "serviceByIdSelector")
+              .spyOn(serviceSelectors, "serviceDetailsByIdSelector")
               .mockImplementation((_state, innerServiceId) =>
                 innerServiceId === service.id ? service : undefined
               );

@@ -19,13 +19,13 @@ import {
 } from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
 import { UIMessage, UIMessageDetails, UIMessageId } from "../types";
-import { serviceByIdPotSelector } from "../../services/details/store/reducers";
+import { serviceDetailsByIdPotSelector } from "../../services/details/store/reducers";
 import { loadServiceDetail } from "../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";
 import { isLoadingOrUpdatingInbox } from "../store/reducers/allPaginated";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
-import { isPnEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { trackPNPushOpened } from "../../pn/analytics";
 import { isTestEnv } from "../../../utils/environment";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
@@ -192,7 +192,10 @@ function* getPaginatedMessage(messageId: UIMessageId) {
 }
 
 function* getServiceDetails(serviceId: ServiceId) {
-  const initialServicePot = yield* select(serviceByIdPotSelector, serviceId);
+  const initialServicePot = yield* select(
+    serviceDetailsByIdPotSelector,
+    serviceId
+  );
   if (!pot.isSome(initialServicePot) || pot.isError(initialServicePot)) {
     yield* put(loadServiceDetail.request(serviceId));
 
@@ -204,7 +207,10 @@ function* getServiceDetails(serviceId: ServiceId) {
       return undefined;
     }
 
-    const finalServicePot = yield* select(serviceByIdPotSelector, serviceId);
+    const finalServicePot = yield* select(
+      serviceDetailsByIdPotSelector,
+      serviceId
+    );
     return pot.toUndefined(finalServicePot);
   }
 
@@ -319,7 +325,7 @@ function* dispatchSuccessAction(
   const attachmentCount =
     thirdPartyMessage?.third_party_message.attachments?.length ?? 0;
 
-  const isPnEnabled = yield* select(isPnEnabledSelector);
+  const isPnEnabled = yield* select(isPnRemoteEnabledSelector);
 
   const serviceId = paginatedMessage.serviceId;
   const hasFIMSCTA = computeHasFIMSCTA(
