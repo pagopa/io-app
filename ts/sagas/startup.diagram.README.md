@@ -88,4 +88,4 @@ sequenceDiagram
   StartupSaga->>StartupSaga: startupLoadSuccess(AUTHENTICATED)
   StartupSaga->>App: App ready
 
-```
+```;
