@@ -342,7 +342,7 @@ export function* initializeApplicationSaga(
 
   // spawn is used to detach this saga from its parent (startupSaga),
   // so it keeps running even if the parent is cancelled
-  yield* spawn(watchLogoutSaga, backendClient.logout);
+  yield* spawn(watchLogoutSaga, backendClient.logout); // this logic can be moved out of the startup saga
 
   if (zendeskEnabled) {
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
