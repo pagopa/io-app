@@ -13,6 +13,7 @@ import I18n from "../../../../../i18n";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
 import {
   ClaimDisplayFormat,
+  ImageClaim,
   getClaimDisplayValue,
   getSafeText
 } from "../../../common/utils/itwClaimsUtils";
@@ -24,9 +25,17 @@ import { groupCredentialsByPurpose } from "../utils/itwRemotePresentationUtils";
 const mapClaims = (claims: Array<ClaimDisplayFormat>) =>
   claims.map(c => {
     const displayValue = getClaimDisplayValue(c);
+    if (ImageClaim.is(displayValue)) {
+      return {
+        id: c.id,
+        value: displayValue,
+        description: c.label,
+        type: "image"
+      };
+    }
     return {
       id: c.id,
-      title: Array.isArray(displayValue)
+      value: Array.isArray(displayValue)
         ? displayValue.map(getSafeText).join(", ")
         : getSafeText(displayValue),
       description: c.label
