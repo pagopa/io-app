@@ -177,3 +177,11 @@ Created on **04/10/2024**
 
 - Patch to fix this jest error: `TypeError: _reactNative.AccessibilityInfo.announceForAccessibilityWithOptions is not a function`.  
 In the `react-native/jest/setup.js` the `announceForAccessibilityWithOptions` method mock was missing (see [this issue](https://github.com/facebook/react-native/issues/44014)), this patch adds it.  
+
+### react-native-reanimated+3.17.5.patch
+
+Created on **19/05/2025**
+
+#### Reason:
+
+- Patch to fix a visualization error that prevented cards to be incorrectly rendered in Wallet Home Screen.
