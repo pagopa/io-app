@@ -24,7 +24,6 @@ import {
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwSetAuthLevel } from "../../common/store/actions/preferences.ts";
-import { itwHasNfcFeatureSelector } from "../../identification/store/selectors/index.ts";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -228,15 +227,13 @@ export const createEidIssuanceActionsImplementation = (
   onInit: assign<Context, EidIssuanceEvents, unknown, EidIssuanceEvents, any>(
     () => {
       const state = store.getState();
-      const hasNfcFeature = itwHasNfcFeatureSelector(state);
       const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(state);
       const walletInstanceAttestation =
         itwWalletInstanceAttestationSelector(state);
 
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
-        walletInstanceAttestation,
-        hasNfcFeature
+        walletInstanceAttestation
       };
     }
   )
