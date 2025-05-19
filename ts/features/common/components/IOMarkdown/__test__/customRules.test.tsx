@@ -44,25 +44,28 @@ describe("customRules", () => {
       testable!.handleOpenLink(linkToMock, "ioit://whatever");
       expect(linkToMock).toHaveBeenCalledWith("/whatever");
     });
-    it("should call 'openWebUrl' for https:// protocol", () => {
-      const spyOnMockedOpenWebUrl = jest
-        .spyOn(URL, "openWebUrl")
-        .mockImplementation((_url, _onError) => undefined);
-      const spyOnIOToastError = jest.spyOn(IOToast, "error");
-      testable!.handleOpenLink(linkToMock, "https://whatever");
-      expect(spyOnMockedOpenWebUrl.mock.calls.length).toBe(1);
-      expect(spyOnMockedOpenWebUrl.mock.calls[0].length).toBe(2);
-      expect(spyOnMockedOpenWebUrl.mock.calls[0][0]).toBe("https://whatever");
-      expect(spyOnMockedOpenWebUrl.mock.calls[0][1]).toBeDefined();
-      const errorFunction = spyOnMockedOpenWebUrl.mock
-        .calls[0][1] as () => void;
-      errorFunction();
-      expect(spyOnIOToastError).toHaveBeenCalledWith(
-        I18n.t("global.jserror.title")
-      );
-    });
+    ["http://", "https://"].forEach(protocol =>
+      it(`should call 'openWebUrl' for ${protocol} protocol`, () => {
+        const spyOnMockedOpenWebUrl = jest
+          .spyOn(URL, "openWebUrl")
+          .mockImplementation((_url, _onError) => undefined);
+        const spyOnIOToastError = jest.spyOn(IOToast, "error");
+        testable!.handleOpenLink(linkToMock, `${protocol}whatever`);
+        expect(spyOnMockedOpenWebUrl.mock.calls.length).toBe(1);
+        expect(spyOnMockedOpenWebUrl.mock.calls[0].length).toBe(2);
+        expect(spyOnMockedOpenWebUrl.mock.calls[0][0]).toBe(
+          `${protocol}whatever`
+        );
+        expect(spyOnMockedOpenWebUrl.mock.calls[0][1]).toBeDefined();
+        const errorFunction = spyOnMockedOpenWebUrl.mock
+          .calls[0][1] as () => void;
+        errorFunction();
+        expect(spyOnIOToastError).toHaveBeenCalledWith(
+          I18n.t("global.jserror.title")
+        );
+      })
+    );
     [
-      "http://",
       "iosso://",
       "iohandledlink://",
       "clipboard://",
