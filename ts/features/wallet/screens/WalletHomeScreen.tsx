@@ -1,7 +1,8 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOColors, IOToast, useIOTheme } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+import { Dimensions, Platform, StyleSheet, View } from "react-native";
 import {
   IOScrollView,
   IOScrollViewActions
@@ -31,6 +32,7 @@ import {
 } from "../store/selectors";
 import { itwShouldRenderNewITWallet } from "../../itwallet/common/store/selectors";
 import { itwHasWalletAtLeastTwoCredentialsSelector } from "../../itwallet/credentials/store/selectors";
+import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen
@@ -42,9 +44,12 @@ type ScreenProps = IOStackNavigationRouteProps<
   "WALLET_HOME"
 >;
 
+const screenHeight = Dimensions.get("screen").height;
+
 const WalletHomeScreen = ({ route }: ScreenProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+  const theme = useIOTheme();
 
   const isWalletEmpty = useIOSelector(isWalletEmptySelector);
   const atLeastTwoCredentialsInWallet = useIOSelector(
@@ -60,6 +65,8 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   // This prevents to display the refresh indicator when the refresh is triggered by other components
   // For example, the payments section
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const shouldRenderCustomBG = Platform.OS === "ios" && isNewItwRenderable;
 
   useEffect(() => {
     // Mutate the local state only when the refresh ends
@@ -156,20 +163,44 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   }, [dispatch]);
 
   return (
-    <IOScrollView
-      animatedRef={scrollViewContentRef}
-      centerContent={true}
-      includeContentMargins={false}
-      excludeSafeAreaMargins={true}
-      refreshControlProps={{
-        refreshing: isRefreshing,
-        onRefresh: handleRefreshWallet
-      }}
-      actions={screenActions}
-      contentContainerStyle={{ paddingTop: isNewItwRenderable ? 0 : 16 }}
-    >
-      <WalletCardsContainer />
-    </IOScrollView>
+    <>
+      {shouldRenderCustomBG && (
+        // This View is displayed when a refresh control is triggered
+        // and is responsible for coloring the underlying content with
+        // the same blue used in the new Wallet L3.
+        <View
+          style={[
+            StyleSheet.absoluteFillObject,
+            {
+              height: screenHeight,
+              backgroundColor: WALLET_L3_BG_COLOR
+            }
+          ]}
+        />
+      )}
+      <IOScrollView
+        animatedRef={scrollViewContentRef}
+        centerContent={true}
+        includeContentMargins={false}
+        excludeSafeAreaMargins={true}
+        refreshControlProps={{
+          tintColor: shouldRenderCustomBG ? IOColors.white : undefined,
+          refreshing: isRefreshing,
+          onRefresh: handleRefreshWallet
+        }}
+        actions={screenActions}
+        contentContainerStyle={{
+          paddingTop: isNewItwRenderable ? 0 : 16,
+          ...(shouldRenderCustomBG
+            ? {
+                backgroundColor: IOColors[theme["appBackground-primary"]]
+              }
+            : {})
+        }}
+      >
+        <WalletCardsContainer />
+      </IOScrollView>
+    </>
   );
 };
 

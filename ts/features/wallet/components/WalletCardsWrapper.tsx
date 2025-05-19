@@ -1,9 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import { PropsWithChildren } from "react";
-import { IOColors } from "@pagopa/io-app-design-system";
 import { useIOSelector } from "../../../store/hooks";
 import { itwShouldRenderNewITWallet } from "../../itwallet/common/store/selectors";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
+import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
 import { WalletCategoryFilterTabs } from "./WalletCategoryFilterTabs";
 
 export const WalletCardsWrapper = ({ children }: PropsWithChildren) => {
@@ -31,7 +31,7 @@ export const WalletCardsWrapper = ({ children }: PropsWithChildren) => {
 
 const styles = StyleSheet.create({
   itwWrapper: {
-    backgroundColor: IOColors["blueIO-500"],
+    backgroundColor: WALLET_L3_BG_COLOR,
     borderBottomEndRadius: 16,
     borderBottomStartRadius: 16
   }
