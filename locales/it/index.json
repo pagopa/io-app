@@ -3782,7 +3782,7 @@
       "reminderBanner": {
         "title": "Ricevi le tue comunicazioni a valore legale su IO!",
         "body": "Con IO è più semplice, ti basta attivare il servizio SEND.",
-        "cta": "Attiva SEND su IO",
+        "cta": "Scopri SEND su IO",
         "activationFlow": {
           "FAILURE_DETAILS_FETCH": {
             "title": "Non riusciamo ad attivare il servizio SEND",
@@ -4308,6 +4308,11 @@
             "content": "Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!",
             "action": "Inizia"
           },
+          "homeWithOffline": {
+            "title": "Novità: Documenti su IO, anche offline",
+            "content": "Da oggi puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.",
+            "action": "Attiva Documenti su IO"
+          },
           "homeActive": {
             "title": "Riattiva Documenti su IO",
             "content": "Per ragioni di sicurezza, quando cambi dispositivo o rimuovi l’app, devi aggiungere di nuovo i tuoi documenti al Portafoglio.",
@@ -4324,7 +4329,7 @@
         },
         "title": "La versione digitale dei tuoi documenti, su IO",
         "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **4 Milioni** di persone stanno già usando i **Documenti su IO**!",
-        "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{privacyAndTosUrl}}).",
+        "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
         "upcomingWalletBanner": {
           "title": "Novità in arrivo: i tuoi Documenti su IO",
           "content": "Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!",
@@ -4334,9 +4339,56 @@
           "title": "Documenti su IO è già attiva",
           "content": "Continua ad aggiungere le versioni digitali dei tuoi documenti al Portafoglio.",
           "action": "Vai al Portafoglio"
+        },
+        "paywall": {
+          "badge": "Novità",
+          "description": "L'unico Wallet di Stato:\npubblico, sicuro, gratuito.",
+          "featureHighlights": {
+            "1": "Usi la tua Patente su IO come documento di riconoscimento",
+            "2": "Ti basta il tuo telefono per dimostrare la tua identità",
+            "3": "Hai tutto ciò che ti serve anche se lasci a casa il portafoglio",
+            "4": "Nuovi documenti ufficiali, solo sull’app IO",
+            "5": "Accedi in pochi tocchi ai servizi digitali della PA"
+          },
+          "productHighlights": {
+            "1": {
+              "title": "Facile, sicuro, ufficiale",
+              "content": "Ottienilo con la tua **Carta di Identità Elettronica (CIE)** e il suo **PIN**.\n\n\nIT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantenerli al sicuro."
+            },
+            "2": {
+              "title": "Nuovi documenti in arrivo",
+              "content": "ISEE, titoli di studio, certificazione a uso elettorale e altri: potrai aggiungere all’app IO nuovi documenti ufficiali."
+            },
+            "3": {
+              "title": "Tutto nelle tue mani",
+              "content": "Con IT-Wallet mostri il codice QR dei tuoi documenti digitali: chi verifica non dovrà tenere in mano il tuo dispositivo."
+            },
+            "4": {
+              "title": "Progettato con l'Europa",
+              "content": "IT-Wallet si integrerà al Portafoglio Digitale Europeo: potrai usare i tuoi documenti con pieno valore legale in tutta Europa."
+            }
+          },
+          "tos": "Premendo **Ottieni IT-Wallet** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}})"
+        },
+        "offlineBanner": {
+          "title": "Novità: i tuoi documenti anche offline",
+          "content": "Da oggi puoi usare i tuoi documenti su IO anche senza connessione a internet.",
+          "action": "Scopri di più"
         }
       },
       "identification": {
+        "cieWarning": {
+          "primaryAction": "Scopri cosa puoi fare",
+          "closeAction": "Chiudi",
+          "noPin": {
+            "title": "Non puoi continuare senza il PIN della CIE",
+            "subtitle": "Se hai registrato un contatto di recupero quando hai richiesto la CIE, puoi reimpostare il PIN con l’app CieID.\n\n In alternativa, rivolgiti al tuo Comune per recuperare il PIN della tua carta."
+          },
+          "noCie": {
+            "title": "Non puoi continuare senza la carta di identità elettronica (CIE)",
+            "subtitle": "Per ottenere i vantaggi di IT-Wallet è necessario autenticarsi con la CIE.\n\n Richiedere la CIE è facile e veloce, scopri cosa puoi fare."
+          }
+        },
         "l3": {
           "mode": {
             "title": "Verifica la tua identità con CIE",
@@ -4717,6 +4769,25 @@
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
           },
+          "relyingParty": {
+            "genericError": {
+              "title": "Comunicazione interrotta",
+              "subtitle": "Si è verificato un problema che ha impedito la comunicazione con l’ente.\n\nGenera un nuovo QR Code e riprova.",
+              "primaryAction": "Riprova",
+              "secondaryAction": "Chiudi"
+            },
+            "invalidAuthResponse": {
+              "title": "Non è possibile continuare",
+              "subtitle": "Verifica di essere in possesso dei requisiti necessari per accedere ai servizi.",
+              "primaryAction": "Ho capito",
+              "secondaryAction": "Maggiori dettagli"
+            },
+            "invalidRequestObject": {
+              "title": "Non puoi continuare con la richiesta",
+              "subtitle": "L’ente che richiede la verifica non sta comunicando i dati necessari per continuare. Riprova più tardi.",
+              "primaryAction": "Ho capito"
+            }
+          },
           "untrustedRpScreen": {
             "title": "Questo ente non è verificato",
             "subtitle": "Per la tua sicurezza, IO permette di condividere le tue informazioni solo con enti verificati e certificati.",
@@ -4733,7 +4804,8 @@
           "purpose": "Finalità: {{purpose}}",
           "success": {
             "title": "Fatto!",
-            "subtitle": "Continua sul sito dell'ente"
+            "subtitle": "Continua sul sito dell'ente.",
+            "cta": "Continua sul sito dell'ente"
           }
         }
       },
@@ -4801,7 +4873,7 @@
         }
       },
       "offline": {
-        "DEVICE_OFFLINE": {
+        "device_offline": {
           "alert": {
             "content": "Nessuna connessione.",
             "action": "Cosa posso fare?"
@@ -4812,7 +4884,7 @@
             "footerAction": "Ricarica l'app IO"
           }
         },
-        "SESSION_EXPIRED": {
+        "session_expired": {
           "alert": {
             "content": "Accedi di nuovo.",
             "action": "Perché?"
@@ -4823,7 +4895,7 @@
             "footerAction": "Accedi di nuovo"
           }
         },
-        "SESSION_REFRESH": {
+        "session_refresh": {
           "alert": {
             "content": "Alcuni servizi dell’app sono limitati in questo momento.",
             "action": "Cosa posso fare?"

@@ -28,9 +28,9 @@ const ItwDiscoveryBannerOnboarding = () => {
   const trackBannerProperties = useMemo(
     () => ({
       banner_id:
-        bannerType === "onboarding"
-          ? "itwDiscoveryBannerOnboardingTestID"
-          : "itwDiscoveryBannerOnboardingDeviceChanged",
+        bannerType === "reactivating"
+          ? "itwDiscoveryBannerOnboardingDeviceChanged"
+          : "itwDiscoveryBannerOnboardingTestID",
       banner_page: route.name,
       banner_landing: "ITW_ONBOARDING"
     }),
@@ -48,13 +48,21 @@ const ItwDiscoveryBannerOnboarding = () => {
   const handleOnPress = () => {
     trackItWalletBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: {}
     });
   };
 
   const bannerConfig = {
     onboarding: {
       content: I18n.t("features.itWallet.discovery.banner.home.content")
+    },
+    // TODO: Once offline access is fully integrated, the "homeWithOffline" copy can be
+    // merged into "home" and onboardingWithOffline config can be removed. [SIW-2330]
+    onboardingWithOffline: {
+      content: I18n.t(
+        "features.itWallet.discovery.banner.homeWithOffline.content"
+      )
     },
     reactivating: {
       content: I18n.t(

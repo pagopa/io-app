@@ -27,6 +27,7 @@ import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingRevi
 import { itwShouldRenderNewITWallet } from "../../common/store/selectors";
 import { ItwBadge } from "../../common/components/ItwBadge";
 import { ItwEidDetail } from "../../common/components/ItwEidDetail";
+import { ItwOfflineWalletBanner } from "../../common/components/ItwOfflineWalletBanner.tsx";
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWallet);
@@ -105,6 +106,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           </ButtonText>
         </View>
       )}
+      <ItwOfflineWalletBanner />
       <WalletCardsCategoryContainer
         key={`cards_category_itw`}
         testID={`itwWalletCardsContainerTestID`}
