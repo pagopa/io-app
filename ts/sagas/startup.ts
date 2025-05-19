@@ -201,7 +201,7 @@ export function* initializeApplicationSaga(
   yield* call(previousInstallationDataDeleteSaga);
   /**
    * Consider moving previousInstallationDataDeleteSuccess inside previousInstallationDataDeleteSaga
-   * TODO: **add jira ticket**
+   * TODO: https://pagopa.atlassian.net/browse/IOPID-3038
    */
   yield* put(previousInstallationDataDeleteSuccess());
 
@@ -213,10 +213,10 @@ export function* initializeApplicationSaga(
   // Retrieve and listen for notification permissions status changes
   yield* fork(notificationPermissionsListener);
 
-  // Get last logged in Profile from the state
   /**
+   * Get last logged in Profile from the state
    * Consider creating separate selectors for email and fiscal code (refer to the related use case below)
-   * TODO: **add jira ticket**
+   * TODO: https://pagopa.atlassian.net/browse/IOPID-3039
    */
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
     yield* select(profileSelector);
@@ -225,8 +225,11 @@ export function* initializeApplicationSaga(
     ? O.fromNullable(lastLoggedInProfileState.value.is_email_validated)
     : O.none;
 
-  // Watch for profile changes
-  yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated); // Verify whether this is still needed or can be removed
+  /**
+   * Watch for profile changes
+   * TODO: https://pagopa.atlassian.net/browse/IOPID-3040
+   */
+  yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
@@ -414,7 +417,9 @@ export function* initializeApplicationSaga(
   // Only in the scenario when we get here and session tokens are not available,
   // we have to load the session information from the backend.
   // In a future refactoring where the checkSession won't get the session tokens
-  // anymore, we will need to rethink about this check.-> TODO: **add jira ticket**
+  // anymore, we will need to rethink about this check.
+  // **However**, this refactor depends on the saga startup integer refactor,
+  // so it momentarily does not have a jira ticket assigned
   if (
     O.isNone(maybeSessionInformation) ||
     (O.isSome(maybeSessionInformation) &&
@@ -582,12 +587,19 @@ export function* initializeApplicationSaga(
   yield* call(checkConfiguredPinSaga);
   yield* call(checkAcknowledgedFingerprintSaga);
 
+  // email validation polling
   yield* fork(watchEmailValidationSaga);
 
   if (!hasPreviousSessionAndPin || userProfile.email === undefined) {
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
 
+  /**
+   * if the checks fail (email already taken or email not validated) then the user
+   * is sent back to the page that communicates the problem and from there if starts
+   * the validation flow. If the user wants to validate the email the flow
+   * that triggers polling begins (watchEmailValidationSaga)
+   */
   userProfile = (yield* call(checkEmailSaga)) ?? userProfile;
 
   // Check for both profile notifications permissions (anonymous
@@ -739,12 +751,11 @@ export function* initializeApplicationSaga(
   );
 }
 
-// Consider moving this to a dedicated file
-// TODO: **add jira ticket**
-
 /**
  * Wait until the {@link NavigationService} is initialized.
  * The NavigationService is initialized when is called {@link RootContainer} componentDidMount and the ref is set with setTopLevelNavigator
+ * Consider moving this to a dedicated file.
+ * TODO: https://pagopa.atlassian.net/browse/IOPID-3041
  */
 function* waitForNavigatorServiceInitialization() {
   // eslint-disable-next-line functional/no-let
@@ -777,7 +788,7 @@ function* waitForNavigatorServiceInitialization() {
 }
 
 // Consider moving this to a dedicated file
-// TODO: **add jira ticket**
+// TODO: https://pagopa.atlassian.net/browse/IOPID-3041
 
 function* waitForMainNavigator() {
   // eslint-disable-next-line functional/no-let
