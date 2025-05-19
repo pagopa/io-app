@@ -2,7 +2,7 @@ import { IOButton } from "@pagopa/io-app-design-system";
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../../i18n.ts";
-import { ItwLogo } from "../../../common/components/ItwLogo.tsx";
+import { ItwBadge } from "../../../common/components/ItwLogo.tsx";
 
 type ItwPresentationCredentialCardFlipButtonProps = {
   isFlipped: boolean;
@@ -26,7 +26,7 @@ const ItwPresentationCredentialCardFlipButton = ({
     ? styles.l3Button
     : styles.button;
 
-  const shouldRenderLogo = !fullScreen && isL3Enabled;
+  const shouldRenderItwBadge = !fullScreen && isL3Enabled;
 
   return (
     <View
@@ -38,7 +38,7 @@ const ItwPresentationCredentialCardFlipButton = ({
       accessibilityRole="switch"
       accessibilityState={{ checked: isFlipped }}
     >
-      {shouldRenderLogo && <ItwLogo />}
+      {shouldRenderItwBadge && <ItwBadge />}
 
       <IOButton
         variant={fullScreen ? "solid" : "link"}
