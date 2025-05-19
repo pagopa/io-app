@@ -340,8 +340,20 @@ export function* initializeApplicationSaga(
   // Since this saga is spawned and not forked
   // it will handle its own cancelation logic.
 
-  // spawn is used to detach this saga from its parent (startupSaga),
-  // so it keeps running even if the parent is cancelled
+  // watchLogoutSaga is launched using `spawn` to detach it from the startupSaga:
+  // this ensures it stays alive even if the parent saga is cancelled or restarted
+  // (e.g. on session expiration or when coming back online).
+  //
+  // Introduced in this PR: https://github.com/pagopa/io-app/pull/1417
+  // to ensure the logout listener remains active independently.
+  // It might be moved directly to the rootSaga, as it behaves like a global watcher.
+  // TODO: https://pagopa.atlassian.net/browse/IOPID-3043
+  //
+  // Caution: this saga handles user state cleanup during logout.
+  // Any changes should be made carefully to avoid regressions in session termination flows.
+
+  yield* spawn(watchLogoutSaga, backendClient.logout);
+
   yield* spawn(watchLogoutSaga, backendClient.logout); // this logic can be moved out of the startup saga
 
   if (zendeskEnabled) {
