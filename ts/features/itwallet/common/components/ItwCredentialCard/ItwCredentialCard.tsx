@@ -15,7 +15,6 @@ import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
-import { itwIsL3EnabledSelector } from "../../store/selectors/preferences";
 
 export type ItwCredentialCard = {
   credentialType: string;
@@ -36,10 +35,9 @@ export const ItwCredentialCard = ({
 
   const borderColorMap = useBorderColorByStatus();
   const statusTagProps = tagPropsByStatus[status];
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const { titleColor, titleOpacity, colorScheme } = useMemo<StyleProps>(() => {
     const isValid = validCredentialStatuses.includes(status);
-    const theme = getThemeColorByCredentialType(credentialType, isL3Enabled);
+    const theme = getThemeColorByCredentialType(credentialType);
 
     if (status === "unknown") {
       return {

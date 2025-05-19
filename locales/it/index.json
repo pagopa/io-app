@@ -4646,7 +4646,8 @@
           "trustmark": "Mostra certificato di autenticità",
           "openPdf": "Mostra documento",
           "shareButton": "Salva o condividi",
-          "fiscalCode": "Il tuo Codice Fiscale"
+          "fiscalCode": "Il tuo Codice Fiscale",
+          "showQRCode": "Mostra QR Code di verifica"
         },
         "eid": {
           "verificationExpired": {

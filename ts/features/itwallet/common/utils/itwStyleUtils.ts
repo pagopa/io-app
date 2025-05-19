@@ -2,8 +2,6 @@ import { StatusBarStyle } from "react-native";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { getCredentialNameFromType } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";
-import { itwIsL3EnabledSelector } from "../store/selectors/preferences";
-import { useIOSelector } from "../../../../store/hooks";
 
 export type CredentialTheme = {
   backgroundColor: string;
@@ -13,7 +11,7 @@ export type CredentialTheme = {
 
 export const getThemeColorByCredentialType = (
   credentialType: string,
-  isL3Enabled: boolean
+  isL3Enabled?: boolean
 ): CredentialTheme => {
   switch (credentialType) {
     case CredentialType.PID:
@@ -24,19 +22,12 @@ export const getThemeColorByCredentialType = (
         statusBarStyle: "light-content"
       };
     case CredentialType.DRIVING_LICENSE:
-      if (isL3Enabled) {
-        return {
-          backgroundColor: "#0B3EE3",
-          textColor: "#032D5C",
-          statusBarStyle: "light-content"
-        };
-      } else {
-        return {
-          backgroundColor: "#744C63",
-          textColor: "#652035",
-          statusBarStyle: "light-content"
-        };
-      }
+      const isL3Theme = isL3Enabled === true;
+      return {
+        backgroundColor: isL3Theme ? "#0B3EE3" : "#744C63",
+        textColor: isL3Theme ? "#032D5C" : "#652035",
+        statusBarStyle: "light-content"
+      };
     case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
       return {
         backgroundColor: "#B3DCF9",

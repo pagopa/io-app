@@ -8,7 +8,6 @@ import {
 } from "@shopify/react-native-skia";
 import { H5, IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n.ts";
-import paypalLogoImage from "../../../../../img/wallet/payment-methods/bpay.png";
 
 /**
  * This component renders the logo of the IT Wallet, image and text.
@@ -20,8 +19,6 @@ export const ItwLogo = () => (
       <Image
         accessibilityIgnoresInvertColors
         accessible={true}
-        accessibilityLabel="PayPal"
-        source={paypalLogoImage}
         resizeMode="contain"
         style={styles.icon}
       />
@@ -46,7 +43,8 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: 20,
-    height: 20
+    height: 20,
+    backgroundColor: IOColors.white
   }
 });
 

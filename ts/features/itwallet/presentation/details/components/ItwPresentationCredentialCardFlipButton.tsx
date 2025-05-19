@@ -20,39 +20,38 @@ const ItwPresentationCredentialCardFlipButton = ({
   fullScreen = false,
   isL3Enabled = false
 }: ItwPresentationCredentialCardFlipButtonProps) => {
-
   const rowStyle = fullScreen
     ? styles.fullWidthButton
     : isL3Enabled
-      ? styles.row
-      : styles.button;
+    ? styles.l3Button
+    : styles.button;
 
   const shouldRenderLogo = !fullScreen && isL3Enabled;
 
   return (
-  <View
-    style={rowStyle}
-    accessible={true}
-    accessibilityLabel={I18n.t(
-      "features.itWallet.presentation.credentialDetails.card.showBack"
-    )}
-    accessibilityRole="switch"
-    accessibilityState={{checked: isFlipped}}
-  >
-    {shouldRenderLogo && <ItwLogo/>}
-
-    <IOButton
-      variant={fullScreen ? "solid" : "link"}
-      label={I18n.t(
-        `features.itWallet.presentation.credentialDetails.card.${
-          isFlipped ? "showFront" : "showBack"
-        }`
+    <View
+      style={rowStyle}
+      accessible={true}
+      accessibilityLabel={I18n.t(
+        "features.itWallet.presentation.credentialDetails.card.showBack"
       )}
-      onPress={handleOnPress}
-      icon="switchCard"
-      iconPosition="end"
-    />
-  </View>
+      accessibilityRole="switch"
+      accessibilityState={{ checked: isFlipped }}
+    >
+      {shouldRenderLogo && <ItwLogo />}
+
+      <IOButton
+        variant={fullScreen ? "solid" : "link"}
+        label={I18n.t(
+          `features.itWallet.presentation.credentialDetails.card.${
+            isFlipped ? "showFront" : "showBack"
+          }`
+        )}
+        onPress={handleOnPress}
+        icon="switchCard"
+        iconPosition="end"
+      />
+    </View>
   );
 };
 
@@ -60,8 +59,8 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: "center"
   },
-  row: {
-    marginTop: 5,
+  l3Button: {
+    marginTop: 10,
     width: "88%",
     flexDirection: "row",
     alignSelf: "center",

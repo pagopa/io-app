@@ -34,15 +34,18 @@ import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase.tsx";
-import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
 import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus.tsx";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
-import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
+import {
+  itwIsL3EnabledSelector,
+  itwIsPendingReviewSelector
+} from "../../../common/store/selectors/preferences.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
 import { useOfflineGuard } from "../../../../../hooks/useOfflineGuard.ts";
+import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -101,6 +104,7 @@ const ItwPresentationCredentialDetail = ({
 }: ItwPresentationCredentialDetailProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
 
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
@@ -157,7 +161,12 @@ const ItwPresentationCredentialDetail = ({
     );
   }
 
-  const ctaProps = getCtaProps(credential, navigation);
+  const ctaProps = getCtaProps(
+    credential,
+    navigation,
+    handleTrustmarkPress,
+    isL3Enabled
+  );
 
   return (
     <ItwPresentationDetailsScreenBase
@@ -172,10 +181,12 @@ const ItwPresentationCredentialDetail = ({
           <ItwPresentationCredentialStatusAlert credential={credential} />
           <ItwPresentationCredentialInfoAlert credential={credential} />
           <ItwPresentationClaimsSection credential={credential} />
-          <ItwCredentialTrustmark
-            credential={credential}
-            onPress={handleTrustmarkPress}
-          />
+          {!isL3Enabled && (
+            <ItwCredentialTrustmark
+              credential={credential}
+              onPress={handleTrustmarkPress}
+            />
+          )}
           <ItwPresentationDetailsFooter credential={credential} />
         </VStack>
       </ContentWrapper>
@@ -185,29 +196,40 @@ const ItwPresentationCredentialDetail = ({
 
 const getCtaProps = (
   credential: StoredCredential,
-  navigation: ReturnType<typeof useIONavigation>
+  navigation: ReturnType<typeof useIONavigation>,
+  trustmarkPressHandler: () => void,
+  isL3Enabled: boolean
 ): CredentialCtaProps | undefined => {
   const { parsedCredential } = credential;
+  const credentialType = credential.credentialType;
+  const contentClaim = parsedCredential[WellKnownClaim.content];
 
-  const onPress = () => {
-    if (CREDENTIALS_MAP[credential.credentialType] === "ITW_TS_V2") {
-      trackWalletCredentialShowFAC_SIMILE();
-    }
-
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
-      params: {
-        attachmentClaim: parsedCredential[WellKnownClaim.content]
-      }
-    });
-  };
+  if (credentialType === CredentialType.DRIVING_LICENSE && isL3Enabled) {
+    return {
+      label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
+      icon: "qrCode",
+      iconPosition: "end",
+      onPress: trustmarkPressHandler
+    };
+  }
 
   // If the "content" claim exists, return a CTA to view and download it.
-  if (parsedCredential[WellKnownClaim.content]) {
+  if (contentClaim) {
     return {
       label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
       icon: "docPaymentTitle",
-      onPress
+      onPress: () => {
+        if (CREDENTIALS_MAP[credentialType] === "ITW_TS_V2") {
+          trackWalletCredentialShowFAC_SIMILE();
+        }
+
+        navigation.navigate(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
+          params: {
+            attachmentClaim: contentClaim
+          }
+        });
+      }
     };
   }
 
