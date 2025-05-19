@@ -33,6 +33,13 @@ type ItwEidInfoBottomSheetContentProps = {
   navigation: ReturnType<typeof useIONavigation>;
 };
 
+/**
+ * This component displays detailed information about the citizen's `PID`,
+ * the credential's validity status, and allows the citizen to deactivate the IT-Wallet.
+ *
+ * @note This variant is used in the case of IT-Wallet activation.
+ *       Otherwise, refer to `ItwEidInfoBottomSheetContent`.
+ */
 const ItwEidDetail = ({ navigation }: ItwEidInfoBottomSheetContentProps) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
@@ -63,9 +70,7 @@ const ItwEidDetail = ({ navigation }: ItwEidInfoBottomSheetContentProps) => {
         <H4>{I18n.t("features.itWallet.eidDetail.title")}</H4>
         <Body>{I18n.t("features.itWallet.eidDetail.content")}</Body>
         <ListItemHeader
-          // TODO: Replace this icon
-          iconName="legalValue"
-          iconColor="blueIO-500"
+          iconName="security"
           label={I18n.t("features.itWallet.eidDetail.header.title")}
         />
         <View>
