@@ -12,6 +12,7 @@ import I18n from "../../../../i18n.ts";
 /**
  * This component renders the logo of the IT Wallet, image and text.
  */
+// TODO: replace with the correct image [SIW-2412]
 export const ItwBadge = () => (
   <View style={styles.container}>
     <StaticGradientBackground />

@@ -2,7 +2,7 @@ import { IOButton } from "@pagopa/io-app-design-system";
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../../i18n.ts";
-import { ItwBadge } from "../../../common/components/ItwLogo.tsx";
+import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
 
 type ItwPresentationCredentialCardFlipButtonProps = {
   isFlipped: boolean;
