@@ -1,33 +1,37 @@
-import { useCallback } from "react";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useCallback } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { SpidIdp } from "../../../../utils/idps";
+import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { idpSelected } from "../../common/store/actions";
 import { fastLoginOptInFFEnabled } from "../../fastLogin/store/selectors";
 import {
-  isCieSupportedSelector,
-  isCieLoginUatEnabledSelector
+  isCieLoginUatEnabledSelector,
+  isCieSupportedSelector
 } from "../../login/cie/store/selectors";
 import { cieFlowForDevServerEnabled, SpidLevel } from "../../login/cie/utils";
-import { idpSelected } from "../../common/store/actions";
-import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import {
   ChosenIdentifier,
   Identifier
 } from "../../login/optIn/screens/OptInScreen";
 import { cieIDSetSelectedSecurityLevel } from "../cie/store/actions";
-import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 
 export const IdpCIE: SpidIdp = {
   id: "cie",
   name: "CIE",
-  logo: "",
+  logo: {
+    light: { uri: "" }
+  },
   profileUrl: ""
 };
 export const IdpCIE_ID: SpidIdp = {
   id: "cieid",
   name: "CIE_ID",
-  logo: "",
+  logo: {
+    light: { uri: "" }
+  },
   profileUrl: ""
 };
 
