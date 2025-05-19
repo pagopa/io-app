@@ -1,5 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as A from "fp-ts/lib/Array";
+import * as P from "fp-ts/Predicate";
 import _ from "lodash";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -17,6 +19,7 @@ import {
   ItwJwtCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils";
+import { isItwCredential } from "../../../common/utils/itwCredentialUtils";
 
 export const itwCredentialsSelector = (state: GlobalState) =>
   state.features.itWallet.credentials;
@@ -127,5 +130,18 @@ export const itwCredentialsEidStatusSelector = createSelector(
       // eID does not have status attestation nor expiry date, so it safe to assume its status is based on the JWT only
       O.map(eid => getCredentialStatus(eid) as ItwJwtCredentialStatus),
       O.toUndefined
+    )
+);
+
+/**
+ * Returns all credentials that do NOT conform to an ITW credential
+ */
+export const itwL2CredentialsSelector = createSelector(
+  itwCredentialsSelector,
+  ({ credentials }) =>
+    pipe(
+      credentials,
+      A.filterMap(O.map(c => c.credential)),
+      A.filter(P.not(isItwCredential))
     )
 );
