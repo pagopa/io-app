@@ -199,6 +199,21 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         }}
       >
         <WalletCardsContainer />
+        {shouldRenderCustomBG && (
+          // This View is displayed when the `ScrollView` reaches the bottom
+          // and is responsible for coloring the underlying content with
+          // the same color used in the `contentContainerStyle`.
+          <View
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              bottom: -screenHeight,
+              height: screenHeight,
+              backgroundColor: IOColors[theme["appBackground-primary"]]
+            }}
+          />
+        )}
       </IOScrollView>
     </>
   );
