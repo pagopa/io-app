@@ -198,7 +198,7 @@ export function* initializeApplicationSaga(
 
   // remove all local notifications (see function comment)
   yield* call(cancellAllLocalNotifications);
-  yield* call(previousInstallationDataDeleteSaga);
+  yield* call(previousInstallationDataDeleteSaga); // consider to move out of the startup saga
   /**
    * Consider moving previousInstallationDataDeleteSuccess inside previousInstallationDataDeleteSaga
    * TODO: https://pagopa.atlassian.net/browse/IOPID-3038
@@ -235,6 +235,9 @@ export function* initializeApplicationSaga(
   // user profile.
   // Might be removable: https://github.com/pagopa/io-app/pull/398/files#diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31
   // It was likely used by the old ingress screen to track check progress
+  // If removed, ensure the condition `if (O.isNone(maybeUserProfile))` is preserved,
+  // as it plays a key role in detecting uninitialized profiles.
+  // TODO: https://pagopa.atlassian.net/browse/IOPID-3042
 
   if (!handleSessionExpiration) {
     yield* put(resetProfileState()); // Consider identifying all scenarios where the profile should be reset (e.g. Wallet offline).
