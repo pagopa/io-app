@@ -10,9 +10,9 @@ import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUt
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
+import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
 type ItwPresentationDetailsHeaderProps = { credential: StoredCredential };
 
