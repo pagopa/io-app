@@ -57,6 +57,7 @@ const FooterButton = memo(({ isLoading, onPress }: FooterButtonProps) => {
       <ContentWrapper>
         <VSpacer size={16} />
         <IOButton
+          testID="remove-account-button"
           fullWidth
           variant="solid"
           color="danger"
