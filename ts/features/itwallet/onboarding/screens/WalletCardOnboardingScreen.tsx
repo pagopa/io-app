@@ -41,6 +41,7 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwOnboardingModuleCredential } from "../components/ItwOnboardingModuleCredential";
+import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard.ts";
 
 // List of available credentials to show to the user
 const availableCredentials = [
@@ -100,15 +101,17 @@ const ItwCredentialOnboardingSection = () => {
 
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
 
-  const beginCredentialIssuance = useCallback(
-    (type: string) => {
-      machineRef.send({
-        type: "select-credential",
-        credentialType: type,
-        skipNavigation: true
-      });
-    },
-    [machineRef]
+  const beginCredentialIssuance = useOfflineToastGuard(
+    useCallback(
+      (type: string) => {
+        machineRef.send({
+          type: "select-credential",
+          credentialType: type,
+          skipNavigation: true
+        });
+      },
+      [machineRef]
+    )
   );
 
   return (

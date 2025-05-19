@@ -1078,6 +1078,9 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -1931,6 +1934,9 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -2068,6 +2074,9 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                         [
                                           {
                                             "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "color": undefined,

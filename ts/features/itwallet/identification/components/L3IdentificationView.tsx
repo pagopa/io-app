@@ -10,6 +10,8 @@ import {
 import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet.tsx";
 import I18n from "../../../../i18n.ts";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader.tsx";
+import { CieWarningType } from "../screens/ItwIdentificationCieWarningScreen.tsx";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
 
 type L3IdentificationViewProps = {
   handleCiePinPress: () => void;
@@ -20,6 +22,12 @@ export const L3IdentificationView = ({
   handleCiePinPress,
   handleCieIdPress
 }: L3IdentificationViewProps) => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+
+  const navigateToCieWarning = (warning: CieWarningType) => {
+    machineRef.send({ type: "go-to-cie-warning", warning });
+  };
+
   const cieBottomSheet = useItwIdentificationBottomSheet({
     title: I18n.t(
       "features.itWallet.identification.l3.mode.bottomSheet.cie.title"
@@ -71,7 +79,7 @@ export const L3IdentificationView = ({
           "features.itWallet.identification.l3.mode.bottomSheet.cieInfo.primaryAction"
         ),
         onPress: () => {
-          cieBottomSheet.dismiss();
+          cieInfoBottomSheet.dismiss();
         }
       },
       {
@@ -79,7 +87,8 @@ export const L3IdentificationView = ({
           "features.itWallet.identification.l3.mode.bottomSheet.cieInfo.secondaryAction"
         ),
         onPress: () => {
-          cieBottomSheet.dismiss();
+          navigateToCieWarning("noCie");
+          cieInfoBottomSheet.dismiss();
         }
       }
     ]
@@ -104,7 +113,7 @@ export const L3IdentificationView = ({
           "features.itWallet.identification.l3.mode.bottomSheet.pin.primaryAction"
         ),
         onPress: () => {
-          cieBottomSheet.dismiss();
+          pinBottomSheet.dismiss();
         }
       },
       {
@@ -112,7 +121,8 @@ export const L3IdentificationView = ({
           "features.itWallet.identification.l3.mode.bottomSheet.pin.secondaryAction"
         ),
         onPress: () => {
-          cieBottomSheet.dismiss();
+          navigateToCieWarning("noPin");
+          pinBottomSheet.dismiss();
         }
       }
     ]

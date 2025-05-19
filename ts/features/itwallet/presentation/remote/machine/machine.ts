@@ -1,4 +1,4 @@
-import { assign, fromPromise, not, setup } from "xstate";
+import { and, assign, fromPromise, not, setup } from "xstate";
 import { InitialContext, Context } from "./context";
 import { mapEventToFailure, RemoteFailureType } from "./failure";
 import { RemoteEvents } from "./events";
@@ -28,6 +28,7 @@ export const itwRemoteMachine = setup({
     navigateToClaimsDisclosureScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     navigateToAuthResponseScreen: notImplemented,
+    navigateToBarcodeScanScreen: notImplemented,
     closePresentation: notImplemented
   },
   actors: {
@@ -46,7 +47,7 @@ export const itwRemoteMachine = setup({
   },
   guards: {
     isWalletActive: notImplemented,
-    areRequiredCredentialsAvailable: notImplemented,
+    isL3Enabled: notImplemented,
     isEidExpired: notImplemented
   }
 }).createMachine({
@@ -71,7 +72,7 @@ export const itwRemoteMachine = setup({
         "Perform preliminary checks on the wallet and necessary conditions before proceeding",
       always: [
         {
-          guard: not("isWalletActive"),
+          guard: not(and(["isWalletActive", "isL3Enabled"])),
           actions: assign({
             failure: {
               type: RemoteFailureType.WALLET_INACTIVE,
@@ -208,6 +209,9 @@ export const itwRemoteMachine = setup({
         },
         "go-to-identification-mode": {
           actions: "navigateToIdentificationModeScreen"
+        },
+        "go-to-barcode-scan": {
+          actions: "navigateToBarcodeScanScreen"
         },
         close: {
           actions: "closePresentation"

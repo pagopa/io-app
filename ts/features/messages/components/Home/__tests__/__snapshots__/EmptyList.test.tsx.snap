@@ -1242,6 +1242,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -6915,6 +6918,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,

@@ -44,7 +44,6 @@ import {
   itwIsPendingReviewSelector
 } from "../../../common/store/selectors/preferences.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
-import { useOfflineGuard } from "../../../../../hooks/useOfflineGuard.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
@@ -124,7 +123,7 @@ const ItwPresentationCredentialDetail = ({
   /**
    * Show the credential trustmark screen after user identification
    */
-  const handleTrustmarkPress = useOfflineGuard(() => {
+  const handleTrustmarkPress = () => {
     trackWalletCredentialShowTrustmark(
       CREDENTIALS_MAP[credential.credentialType]
     );
@@ -149,7 +148,7 @@ const ItwPresentationCredentialDetail = ({
         }
       )
     );
-  });
+  };
 
   if (status === "unknown") {
     return <ItwPresentationCredentialUnknownStatus credential={credential} />;
