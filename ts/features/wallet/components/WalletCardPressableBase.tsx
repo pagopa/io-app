@@ -5,7 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { PropsWithChildren } from "react";
 
-import { Pressable, PressableProps } from "react-native-gesture-handler";
+import { Pressable } from "react-native";
 import Animated from "react-native-reanimated";
 
 export type WalletCardPressableBaseProps = WithTestID<PressableBaseProps>;
@@ -24,13 +24,13 @@ export const WalletCardPressableBase = ({
 
   return (
     <Pressable
-      onPress={onPress as PressableProps["onPress"]}
+      onPress={onPress}
       testID={testID}
       accessible={true}
       accessibilityLabel={accessibilityLabel}
       accessibilityRole="button"
-      onPressIn={onPressIn as any as PressableProps["onPressIn"]}
-      onPressOut={onPressOut as any as PressableProps["onPressOut"]}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
       onTouchEnd={onPressOut}
     >
       <Animated.View style={scaleAnimatedStyle}>{children}</Animated.View>
