@@ -28,7 +28,8 @@ import { PaymentHistory } from "../../types";
 import {
   storeNewPaymentAttemptAction,
   storePaymentOutcomeToHistory,
-  storePaymentsBrowserTypeAction
+  storePaymentsBrowserTypeAction,
+  removeExpiredPaymentsOngoingFailedAction
 } from "../actions";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { getPaymentsWalletUserMethods } from "../../../wallet/store/actions";
@@ -293,6 +294,18 @@ const reducer = (
           ...state.analyticsData,
           browserType: action.payload
         }
+      };
+    case getType(removeExpiredPaymentsOngoingFailedAction):
+      if (!state.paymentsOngoingFailed) {
+        return state;
+      }
+      return {
+        ...state,
+        paymentsOngoingFailed: Object.fromEntries(
+          Object.entries(state.paymentsOngoingFailed).filter(
+            ([rptId]) => !action.payload.includes(rptId as RptId)
+          )
+        )
       };
     case getType(differentProfileLoggedIn):
     case getType(clearCache):
