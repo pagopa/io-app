@@ -13,14 +13,25 @@ export function* cleanExpiredPaymentsOngoingFailed(): SagaIterator {
   const paymentsOngoingFailed = yield* select(selectPaymentsOngoingFailed);
 
   if (paymentsOngoingFailed) {
-    const now = new Date().getTime();
+    const nowWall = Date.now();
+    const nowPerf = performance.now();
+    const MAX_ALLOWED_DRIFT = 60000;
+
     const expiredRptIds = Object.entries(paymentsOngoingFailed)
-      .filter(
-        ([_, failureDate]) =>
-          failureDate &&
-          now - new Date(failureDate).getTime() >=
-            PAYMENT_ONGOING_FAILURE_WAIT_TIME
-      )
+      .filter(([_, failure]) => {
+        if (!failure) {
+          return false;
+        }
+
+        const deltaWall = nowWall - failure.wallClock;
+        const deltaPerf = nowPerf - failure.appClock;
+        const discrepancy = Math.abs(deltaWall - deltaPerf);
+
+        const effectiveElapsed =
+          discrepancy > MAX_ALLOWED_DRIFT ? deltaPerf : deltaWall;
+
+        return effectiveElapsed >= PAYMENT_ONGOING_FAILURE_WAIT_TIME;
+      })
       .map(([rptId]) => rptId as RptId);
 
     if (expiredRptIds.length > 0) {

@@ -51,13 +51,18 @@ import * as receiptsAnalytics from "../../../receipts/analytics";
 import { createSetTransform } from "../../../../../store/transforms/setTransform";
 import * as analytics from "../../../checkout/analytics";
 
+export type PaymentsOngoingFailedClockTime = {
+  wallClock: number;
+  appClock: number;
+};
+
 export type PaymentsHistoryState = {
   analyticsData?: PaymentAnalyticsData;
   ongoingPayment?: PaymentHistory;
   archive: ReadonlyArray<PaymentHistory>;
   receiptsOpened: Set<string>;
   PDFsOpened: Set<string>;
-  paymentsOngoingFailed?: Record<RptId, Date>;
+  paymentsOngoingFailed?: Record<RptId, PaymentsOngoingFailedClockTime>;
 };
 
 const INITIAL_STATE: PaymentsHistoryState = {
@@ -146,9 +151,14 @@ const reducer = (
       const isPaymentPptInProgress =
         failure?.faultCodeDetail === "PPT_PAGAMENTO_IN_CORSO";
 
+      const failureDateEntry = {
+        wallClock: Date.now(),
+        appClock: performance.now()
+      };
+
       const ongoingFailedUpdate =
         rptId && isPaymentPptInProgress && !state.paymentsOngoingFailed?.[rptId]
-          ? { [rptId]: new Date() }
+          ? { [rptId]: failureDateEntry }
           : {};
 
       return updatePaymentHistory(

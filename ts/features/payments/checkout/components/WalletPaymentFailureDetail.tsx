@@ -126,26 +126,41 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   };
 
   /**
-   * This function calculates the minutes to wait before retrying the payment
-   * in case of a payment ongoing failure (PPT_PAGAMENTO_IN_CORSO).
-   * @returns The number of minutes to wait before retrying the payment.
+   * Calculates the remaining minutes a user must wait before retrying a payment
+   * that previously failed due to an ongoing payment error (e.g., PPT_PAGAMENTO_IN_CORSO).
+   *
+   * This function uses both `Date.now()` (wall clock) and `performance.now()` (monotonic clock)
+   * to mitigate the risk of user manipulation of the system clock or time zone changes.
+   *
+   * If the discrepancy between the two time sources exceeds a defined threshold (e.g., 60 seconds),
+   * it falls back to the more reliable `performance.now()` to determine the elapsed time.
+   *
+   * @returns The number of minutes the user must wait before retrying the payment. Returns 0 if no wait is required.
    */
   const getPaymentOngoingMinutesToWait = () => {
     const firstTimeFailed = paymentOngoingHistory?.rptId
       ? paymentOngoingFailed?.[paymentOngoingHistory.rptId]
       : undefined;
 
-    return firstTimeFailed
-      ? Math.max(
-          Math.ceil(
-            (new Date(firstTimeFailed).getTime() +
-              PAYMENT_ONGOING_FAILURE_WAIT_TIME -
-              new Date().getTime()) /
-              60000
-          ),
-          0
-        )
-      : 0;
+    if (!firstTimeFailed) {
+      return 0;
+    }
+
+    const nowWall = Date.now();
+    const nowPerf = performance.now();
+    const MAX_ALLOWED_DRIFT = 60000;
+
+    const deltaWall = nowWall - firstTimeFailed.wallClock;
+    const deltaPerf = nowPerf - firstTimeFailed.appClock;
+    const discrepancy = Math.abs(deltaWall - deltaPerf);
+
+    const effectiveElapsed =
+      discrepancy > MAX_ALLOWED_DRIFT ? deltaPerf : deltaWall;
+
+    return Math.max(
+      Math.ceil((PAYMENT_ONGOING_FAILURE_WAIT_TIME - effectiveElapsed) / 60000),
+      0
+    );
   };
 
   const selectOtherPaymentMethodAction: OperationResultScreenContentProps["action"] =
