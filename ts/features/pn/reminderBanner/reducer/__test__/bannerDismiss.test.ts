@@ -1,7 +1,6 @@
 jest.mock("../../../../../store/reducers/backendStatus/remoteConfig");
 jest.mock("../../../../services/details/store/reducers");
 
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 import { PersistPartial } from "redux-persist";
 import {
@@ -9,22 +8,15 @@ import {
   logoutSuccess
 } from "../../../../../features/authentication/common/store/actions";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import * as remoteConfig from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { dismissPnActivationReminderBanner } from "../../../store/actions";
-import * as remoteConfig from "../../../../../store/reducers/backendStatus/remoteConfig";
-import * as serviceDetails from "../../../../services/details/store/reducers";
 import * as bannerDismiss from "../bannerDismiss";
 
 const mockIsPnRemoteEnabledSelector = jest.fn();
-const mockPnMessagingServiceIdSelector = jest.fn();
-const mockServicePreferenceByChannelPotSelector = jest.fn();
 
 (remoteConfig.isPnRemoteEnabledSelector as jest.Mock) =
   mockIsPnRemoteEnabledSelector;
-(remoteConfig.pnMessagingServiceIdSelector as jest.Mock) =
-  mockPnMessagingServiceIdSelector;
-(serviceDetails.servicePreferenceByChannelPotSelector as jest.Mock) =
-  mockServicePreferenceByChannelPotSelector;
 
 type PnBannerDismissState = bannerDismiss.PnBannerDismissState & PersistPartial;
 const nonDimsissedState: PnBannerDismissState = {
@@ -76,31 +68,22 @@ describe("persistedPnBannerDismissReducer", () => {
 describe("isPnActivationReminderBannerRenderableSelector", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockPnMessagingServiceIdSelector.mockReturnValue("pn-service-id");
   });
 
   const testCases = [true, false]
     .map(hasBeenDismissed =>
-      [true, false].map(isRemoteEnabled =>
-        [true, false].map(isInboxEnabled => ({
-          hasBeenDismissed,
-          isRemoteEnabled,
-          isInboxEnabled,
-          result: isRemoteEnabled && !hasBeenDismissed && !isInboxEnabled
-        }))
-      )
+      [true, false].map(isRemoteEnabled => ({
+        hasBeenDismissed,
+        isRemoteEnabled,
+        result: isRemoteEnabled && !hasBeenDismissed
+      }))
     )
-    .flat()
     .flat();
 
   test.each(testCases)(
     "handles the following case: %p",
-    ({ hasBeenDismissed, isRemoteEnabled, isInboxEnabled, result }) => {
+    ({ hasBeenDismissed, isRemoteEnabled, result }) => {
       mockIsPnRemoteEnabledSelector.mockReturnValue(isRemoteEnabled);
-
-      mockServicePreferenceByChannelPotSelector.mockReturnValue(
-        pot.some(isInboxEnabled)
-      );
 
       const state = {
         features: {
@@ -117,39 +100,6 @@ describe("isPnActivationReminderBannerRenderableSelector", () => {
         bannerDismiss.isPnActivationReminderBannerRenderableSelector(state)
       ).toBe(result);
       expect(mockIsPnRemoteEnabledSelector).toHaveBeenCalledWith(state);
-      expect(mockPnMessagingServiceIdSelector).toHaveBeenCalledWith(state);
-      expect(mockServicePreferenceByChannelPotSelector).toHaveBeenCalledWith(
-        state,
-        "pn-service-id",
-        "inbox"
-      );
     }
   );
-
-  it("should handle an error state for isPnInboxEnabled, treating it as 'false' ", () => {
-    mockIsPnRemoteEnabledSelector.mockReturnValue(true);
-
-    mockServicePreferenceByChannelPotSelector.mockReturnValue(pot.noneError);
-
-    const state = {
-      features: {
-        pn: {
-          bannerDismiss: {
-            ...nonDimsissedState
-          }
-        }
-      }
-    } as GlobalState;
-
-    expect(
-      bannerDismiss.isPnActivationReminderBannerRenderableSelector(state)
-    ).toBe(true);
-    expect(mockIsPnRemoteEnabledSelector).toHaveBeenCalledWith(state);
-    expect(mockPnMessagingServiceIdSelector).toHaveBeenCalledWith(state);
-    expect(mockServicePreferenceByChannelPotSelector).toHaveBeenCalledWith(
-      state,
-      "pn-service-id",
-      "inbox"
-    );
-  });
 });
