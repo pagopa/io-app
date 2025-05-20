@@ -19,7 +19,7 @@ type FooterActionsMargin = {
  *    We expose this value in case of need.
  */
 export const useFooterActionsMargin = (
-  excludeSafeAreaMargins: boolean
+  excludeSafeAreaMargins?: boolean
 ): FooterActionsMargin => {
   const insets = useSafeAreaInsets();
 

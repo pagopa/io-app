@@ -15,7 +15,13 @@ import {
 } from "@pagopa/io-app-design-system";
 import { TxtLinkNode, TxtParagraphNode } from "@textlint/ast-node-types";
 import { useCallback, useState } from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet,
+  View
+} from "react-native";
 import {
   Canvas,
   LinearGradient,
@@ -36,6 +42,7 @@ import { tosConfigSelector } from "../../../tos/store/selectors";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { IOScrollViewWithReveal } from "../../../../components/ui/IOScrollViewWithReveal";
 
 const markdownRules = {
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
@@ -78,10 +85,17 @@ export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
   });
 
   return (
-    <IOScrollView
-      includeContentMargins={false}
-      contentContainerStyle={{
-        flexGrow: 1
+    <IOScrollViewWithReveal
+      // debugMode
+      actions={{
+        anchor: {
+          label: "Scopri tutti i vantaggi",
+          onPress: () => Alert.alert("Scopri tutti i vantaggi")
+        },
+        primary: {
+          label: "Ottieni IT Wallet",
+          onPress: () => Alert.alert("Ottieni IT Wallet")
+        }
       }}
     >
       <FocusAwareStatusBar
@@ -98,7 +112,7 @@ export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
       >
         <InnerComponent />
       </ContentWrapper>
-    </IOScrollView>
+    </IOScrollViewWithReveal>
   );
 };
 
