@@ -27,11 +27,8 @@ import {
   ColorValue,
   LayoutChangeEvent,
   LayoutRectangle,
-  RefreshControl,
-  RefreshControlProps,
   StyleSheet,
-  View,
-  ViewStyle
+  View
 } from "react-native";
 import { easeGradient } from "react-native-easing-gradient";
 import LinearGradient from "react-native-linear-gradient";
@@ -44,9 +41,9 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue
 } from "react-native-reanimated";
+import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
 import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
 import { WithTestID } from "../../types/WithTestID";
-import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
 
 type ButtonBlockProps = Omit<
   IOButtonBlockSpecificProps,

@@ -13,6 +13,12 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import {
+  Canvas,
+  LinearGradient,
+  RoundedRect,
+  vec
+} from "@shopify/react-native-skia";
 import { TxtLinkNode, TxtParagraphNode } from "@textlint/ast-node-types";
 import { useCallback, useState } from "react";
 import {
@@ -22,13 +28,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import {
-  Canvas,
-  LinearGradient,
-  RoundedRect,
-  vec
-} from "@shopify/react-native-skia";
-import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import ItwHero from "../../../../../img/features/itWallet/l3/itw_hero.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import {
@@ -36,13 +35,13 @@ import {
   handleOpenLink
 } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
+import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { IOScrollViewWithReveal } from "../../../../components/ui/IOScrollViewWithReveal";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { tosConfigSelector } from "../../../tos/store/selectors";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IOScrollViewWithReveal } from "../../../../components/ui/IOScrollViewWithReveal";
+import { tosConfigSelector } from "../../../tos/store/selectors";
 
 const markdownRules = {
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
