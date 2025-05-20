@@ -506,6 +506,9 @@ export function* initializeApplicationSaga(
   // If user logged in with different credentials, but this device still has
   // user data loaded, then delete data keeping current session (user already
   // logged in)
+  // Refactor: this logic might be duplicated with the one that dispatches the `differentProfileLoggedIn` action.
+  // Consider consolidating the logic in one place to ensure consistency and avoid duplication.
+  // See related Jira task: https://pagopa.atlassian.net/browse/IOPID-3047
   if (
     pot.isSome(lastLoggedInProfileState) &&
     lastLoggedInProfileState.value.fiscal_code !== userProfile.fiscal_code
