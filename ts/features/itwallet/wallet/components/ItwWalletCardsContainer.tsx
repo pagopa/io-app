@@ -1,6 +1,6 @@
 import {
-  ButtonText,
   Icon,
+  IOButton,
   ListItemHeader,
   Optional
 } from "@pagopa/io-app-design-system";
@@ -101,9 +101,12 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       {isNewItwRenderable && (
         <View style={styles.itwHeader}>
           <ItwBadge />
-          <ButtonText onPress={eidInfoBottomSheet.present}>
-            {I18n.t("features.itWallet.wallet.header")}
-          </ButtonText>
+          <IOButton
+            color="contrast"
+            variant="link"
+            label={I18n.t("features.itWallet.wallet.header")}
+            onPress={eidInfoBottomSheet.present}
+          />
         </View>
       )}
       <ItwOfflineWalletBanner />
