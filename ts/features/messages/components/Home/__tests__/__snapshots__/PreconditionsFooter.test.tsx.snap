@@ -524,6 +524,9 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -662,6 +665,9 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                         [
                                           {
                                             "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "color": undefined,
@@ -1593,6 +1599,9 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -1731,6 +1740,9 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                         [
                                           {
                                             "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "color": undefined,

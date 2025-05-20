@@ -711,6 +711,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                               "textAlign": "auto",
                                             },
                                             {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
                                               "color": undefined,
                                             },
                                           ],
@@ -967,6 +970,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
                                         },
                                         {
                                           "color": undefined,
@@ -1706,6 +1712,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                               "textAlign": "auto",
                                             },
                                             {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
                                               "color": undefined,
                                             },
                                           ],
@@ -1964,6 +1973,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -2089,6 +2101,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "color": undefined,
@@ -2228,6 +2243,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         [
                                           {
                                             "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "color": undefined,
@@ -2968,6 +2986,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                               "textAlign": "auto",
                                             },
                                             {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
                                               "color": undefined,
                                             },
                                           ],
@@ -3226,6 +3247,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -3363,6 +3387,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         [
                                           {
                                             "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "color": undefined,
@@ -4229,6 +4256,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -5092,6 +5122,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -5217,6 +5250,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "color": undefined,
@@ -5356,6 +5392,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         [
                                           {
                                             "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "color": undefined,
@@ -6222,6 +6261,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -6359,6 +6401,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         [
                                           {
                                             "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "color": undefined,
@@ -7076,6 +7121,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                               "textAlign": "auto",
                                             },
                                             {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
                                               "color": undefined,
                                             },
                                           ],
@@ -7332,6 +7380,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
                                         },
                                         {
                                           "color": undefined,
@@ -8048,6 +8099,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                               "textAlign": "auto",
                                             },
                                             {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
                                               "color": undefined,
                                             },
                                           ],
@@ -8306,6 +8360,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -8431,6 +8488,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "color": undefined,
@@ -8570,6 +8630,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         [
                                           {
                                             "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "color": undefined,
@@ -9287,6 +9350,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                               "textAlign": "auto",
                                             },
                                             {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
                                               "color": undefined,
                                             },
                                           ],
@@ -9545,6 +9611,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -9682,6 +9751,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         [
                                           {
                                             "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "color": undefined,
@@ -10525,6 +10597,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -11365,6 +11440,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -11490,6 +11568,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "color": undefined,
@@ -11629,6 +11710,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         [
                                           {
                                             "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "color": undefined,
@@ -12472,6 +12556,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -12609,6 +12696,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         [
                                           {
                                             "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "color": undefined,

@@ -351,6 +351,9 @@ Try updating IO.
                           "textAlign": "auto",
                         },
                         {
+                          "color": "#FFFFFF",
+                        },
+                        {
                           "color": undefined,
                         },
                       ],
@@ -491,6 +494,9 @@ Try updating IO.
                       [
                         {
                           "textAlign": "auto",
+                        },
+                        {
+                          "color": "#0B3EE3",
                         },
                         {
                           "color": undefined,

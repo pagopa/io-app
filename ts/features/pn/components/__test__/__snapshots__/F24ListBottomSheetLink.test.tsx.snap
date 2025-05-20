@@ -479,6 +479,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       "textAlign": "auto",
                                     },
                                     {
+                                      "color": "#0B3EE3",
+                                    },
+                                    {
                                       "color": undefined,
                                     },
                                   ],
@@ -3250,6 +3253,9 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                                       "textAlign": "auto",
                                     },
                                     {
+                                      "color": "#0B3EE3",
+                                    },
+                                    {
                                       "color": undefined,
                                     },
                                   ],
@@ -3796,6 +3802,9 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                   [
                                     {
                                       "textAlign": "auto",
+                                    },
+                                    {
+                                      "color": "#0B3EE3",
                                     },
                                     {
                                       "color": undefined,

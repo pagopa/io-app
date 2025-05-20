@@ -4,7 +4,7 @@ import { buildEventProperties } from "../../../../../utils/analytics";
 import {
   trackToSWebViewError,
   trackToSWebViewErrorRetry
-} from "../../../../settings/privacy/shared/components/analytics";
+} from "../../../../settings/privacy/shared/analytics";
 import { SpidLevel } from "../../../login/cie/utils";
 import {
   IdpCIE,

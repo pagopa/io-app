@@ -952,6 +952,9 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -1740,6 +1743,9 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,
@@ -3741,6 +3747,9 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot, dispatch di
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,

@@ -637,6 +637,9 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],

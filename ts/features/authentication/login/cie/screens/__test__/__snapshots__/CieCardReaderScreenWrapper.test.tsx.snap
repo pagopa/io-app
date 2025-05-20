@@ -808,6 +808,9 @@ exports[`CieCardReaderScreenWrapper Should match the snapshot 1`] = `
                                                     "textAlign": "auto",
                                                   },
                                                   {
+                                                    "color": "#0B3EE3",
+                                                  },
+                                                  {
                                                     "color": undefined,
                                                   },
                                                 ],

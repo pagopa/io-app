@@ -1171,6 +1171,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "textAlign": "auto",
                                       },
                                       {
+                                        "color": "#FFFFFF",
+                                      },
+                                      {
                                         "color": undefined,
                                       },
                                     ],
@@ -2613,6 +2616,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     [
                                       {
                                         "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
                                       },
                                       {
                                         "color": undefined,
@@ -4059,6 +4065,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "textAlign": "auto",
                                       },
                                       {
+                                        "color": "#FFFFFF",
+                                      },
+                                      {
                                         "color": undefined,
                                       },
                                     ],
@@ -5501,6 +5510,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     [
                                       {
                                         "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
                                       },
                                       {
                                         "color": undefined,

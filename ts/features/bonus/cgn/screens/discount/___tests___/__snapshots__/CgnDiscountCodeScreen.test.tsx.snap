@@ -714,6 +714,9 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -854,6 +857,9 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
                                               },
                                               {
                                                 "color": undefined,

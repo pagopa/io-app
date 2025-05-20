@@ -764,6 +764,9 @@ exports[`error screens should display an error screen in case of missing_sid err
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -1557,6 +1560,9 @@ exports[`error screens should display an error screen in case of preferences err
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],
@@ -2348,6 +2354,9 @@ exports[`loading screens + error interop should render the correct loading scree
                                             [
                                               {
                                                 "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
                                               },
                                               {
                                                 "color": undefined,
