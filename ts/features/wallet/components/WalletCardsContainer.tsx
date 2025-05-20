@@ -1,6 +1,7 @@
 import {
   ContentWrapper,
   ListItemHeader,
+  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
@@ -104,6 +105,7 @@ const WalletBannersContainer = () => (
  */
 const WalletCardsContainerSkeleton = () => (
   <ContentWrapper>
+    <VSpacer />
     <WalletCardSkeleton testID="walletCardSkeletonTestID_1" cardProps={{}} />
     <WalletCardSkeleton testID="walletCardSkeletonTestID_2" cardProps={{}} />
     <WalletCardSkeleton testID="walletCardSkeletonTestID_3" cardProps={{}} />

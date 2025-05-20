@@ -33,6 +33,7 @@ import {
 import { itwShouldRenderNewITWallet } from "../../itwallet/common/store/selectors";
 import { itwHasWalletAtLeastTwoCredentialsSelector } from "../../itwallet/credentials/store/selectors";
 import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
+import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen
@@ -190,7 +191,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         }}
         actions={screenActions}
         contentContainerStyle={{
-          paddingTop: isNewItwRenderable ? 0 : 16,
           ...(shouldRenderCustomBG
             ? {
                 backgroundColor: IOColors[theme["appBackground-primary"]]
@@ -198,6 +198,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
             : {})
         }}
       >
+        {!isNewItwRenderable && <WalletCategoryFilterTabs />}
         <WalletCardsContainer />
         {shouldRenderCustomBG && (
           // This View is displayed when the `ScrollView` reaches the bottom

@@ -4,7 +4,6 @@ import { useIOSelector } from "../../../store/hooks";
 import { itwShouldRenderNewITWallet } from "../../itwallet/common/store/selectors";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
-import { WalletCategoryFilterTabs } from "./WalletCategoryFilterTabs";
 
 export const WalletCardsWrapper = ({ children }: PropsWithChildren) => {
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWallet);
@@ -21,12 +20,7 @@ export const WalletCardsWrapper = ({ children }: PropsWithChildren) => {
     );
   }
 
-  return (
-    <>
-      <WalletCategoryFilterTabs />
-      {children}
-    </>
-  );
+  return children;
 };
 
 const styles = StyleSheet.create({
