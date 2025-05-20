@@ -242,6 +242,7 @@ const WalletPaymentConfirmScreen = () => {
           Link: (param, renderer) => (
             <Body
               asLink
+              key={param.raw}
               weight="Semibold"
               onPress={() => onLinkPress(param.url)}
               accessibilityRole="link"

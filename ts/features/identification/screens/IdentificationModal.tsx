@@ -18,11 +18,11 @@ import {
   Alert,
   Modal,
   Platform,
+  ScrollView,
   StatusBar,
   StyleSheet,
   View
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import { areTwoMinElapsedFromLastActivity } from "../../authentication/fastLogin/store/actions/sessionRefreshActions";
