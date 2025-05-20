@@ -1,3 +1,4 @@
+import { AccessibilityInfo } from "react-native";
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../store/reducers";
@@ -13,6 +14,8 @@ import {
   toScheduledPayload
 } from "../../../store/actions/preconditions";
 import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
+import { toggleScheduledMessageArchivingAction } from "../../../store/actions/archiving";
+import * as homeUtils from "../homeUtils";
 
 jest.mock("rn-qr-generator", () => ({}));
 jest.mock("react-native-screenshot-prevent", () => ({}));
@@ -34,11 +37,23 @@ jest.mock("react-redux", () => ({
 
 jest.mock("./../DS/ListItemMessage");
 
+// eslint-disable-next-line functional/no-let
+let mockIsAndroid = true;
+jest.mock("../../../../../utils/platform", () => ({
+  get isAndroid() {
+    return mockIsAndroid;
+  }
+}));
+
 describe("WrappedListItemMessage", () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
+    jest.restoreAllMocks();
   });
+  const mockedAnnounceForAccessibility = jest
+    .spyOn(AccessibilityInfo, "announceForAccessibility")
+    .mockImplementation(jest.fn());
   [0, 1].forEach(index =>
     (["INBOX", "ARCHIVE", "SEARCH"] as const).forEach(source =>
       (
@@ -126,6 +141,93 @@ describe("WrappedListItemMessage", () => {
       )
     );
   });
+  const commonAccessibilityTestCode = (
+    isAndroid: boolean,
+    screenReaderEnabled: boolean | undefined,
+    shouldAnnounce: boolean,
+    isLongTap: boolean
+  ) => {
+    mockIsAndroid = isAndroid;
+    const mockAccessibilityLabelForMessageItem = jest
+      .spyOn(homeUtils, "accessibilityLabelForMessageItem")
+      .mockImplementation(() => "Mock announcement");
+    const message = generateMessage(
+      { tag: "GENERIC" } as MessageCategory,
+      false,
+      false
+    );
+    const component = renderComponent(
+      0,
+      message,
+      true,
+      "INBOX",
+      screenReaderEnabled
+    );
+
+    const pressable = component.getByTestId("wrapped_message_list_item_0");
+    if (isLongTap) {
+      fireEvent(pressable, "onLongPress");
+    } else {
+      fireEvent.press(pressable);
+    }
+
+    if (shouldAnnounce) {
+      expect(mockAccessibilityLabelForMessageItem.mock.calls.length).toBe(2);
+      expect(mockAccessibilityLabelForMessageItem.mock.calls[0].length).toBe(3);
+      expect(mockAccessibilityLabelForMessageItem.mock.calls[1][0]).toEqual(
+        message
+      );
+      expect(mockAccessibilityLabelForMessageItem.mock.calls[1][1]).toBe(
+        "INBOX"
+      );
+      expect(mockAccessibilityLabelForMessageItem.mock.calls[1][2]).toBe(false);
+
+      expect(mockedAnnounceForAccessibility.mock.calls.length).toBe(1);
+      expect(mockedAnnounceForAccessibility.mock.calls[0].length).toBe(1);
+      expect(mockedAnnounceForAccessibility.mock.calls[0][0]).toBe(
+        "Mock announcement"
+      );
+    } else {
+      expect(mockAccessibilityLabelForMessageItem.mock.calls.length).toBe(1);
+
+      expect(mockedAnnounceForAccessibility.mock.calls.length).toBe(0);
+    }
+
+    expect(mockDispatch.mock.calls.length).toBe(1);
+    expect(mockDispatch.mock.calls[0].length).toBe(1);
+    expect(mockDispatch.mock.calls[0][0]).toEqual(
+      toggleScheduledMessageArchivingAction({
+        messageId: message.id,
+        fromInboxToArchive: true
+      })
+    );
+  };
+  [false, true].forEach(isAndroid =>
+    [undefined, false, true].forEach(screenReaderEnabled => {
+      it(`should ${
+        screenReaderEnabled ? "" : "not "
+      }announce accessibility and dispatch a toggle action, when long pressing a message on ${
+        isAndroid ? "Android" : "iOS"
+      }`, () =>
+        commonAccessibilityTestCode(
+          isAndroid,
+          screenReaderEnabled,
+          !!screenReaderEnabled,
+          true
+        ));
+      it(`should ${
+        screenReaderEnabled && isAndroid ? "" : "not "
+      }announce accessibility and dispatch a toggle action, when tapping a message on ${
+        isAndroid ? "Android" : "iOS"
+      }`, () =>
+        commonAccessibilityTestCode(
+          isAndroid,
+          screenReaderEnabled,
+          !!screenReaderEnabled && isAndroid,
+          false
+        ));
+    })
+  );
 });
 
 const generateMessage = (
@@ -149,7 +251,8 @@ const renderComponent = (
   index: number,
   message: UIMessage,
   isArchiving: boolean,
-  source: "INBOX" | "ARCHIVE" | "SEARCH"
+  source: "INBOX" | "ARCHIVE" | "SEARCH",
+  screenReaderEnabled: boolean = false
 ) => {
   const paymentId: string = "00112233445566778899001122334";
   const initialState = appReducer(undefined, applicationChangeState("active"));
@@ -172,6 +275,10 @@ const renderComponent = (
           kind: "COMPLETED"
         }
       }
+    },
+    preferences: {
+      ...initialState.preferences,
+      screenReaderEnabled
     }
   } as GlobalState;
   const store = createStore(appReducer, stateWithPayment as any);
