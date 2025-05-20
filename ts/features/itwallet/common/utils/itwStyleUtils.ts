@@ -2,6 +2,7 @@ import { StatusBarStyle } from "react-native";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { getCredentialNameFromType } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";
+import { IOColors } from "@pagopa/io-app-design-system";
 
 export type CredentialTheme = {
   backgroundColor: string;
@@ -23,7 +24,7 @@ export const getThemeColorByCredentialType = (
       };
     case CredentialType.DRIVING_LICENSE:
       return {
-        backgroundColor: isL3Enabled ? "#0B3EE3" : "#744C63",
+        backgroundColor: isL3Enabled ? IOColors["blueIO-500"] : "#744C63",
         textColor: isL3Enabled ? "#032D5C" : "#652035",
         statusBarStyle: "light-content"
       };
