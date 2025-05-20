@@ -351,10 +351,7 @@ export function* initializeApplicationSaga(
   //
   // Caution: this saga handles user state cleanup during logout.
   // Any changes should be made carefully to avoid regressions in session termination flows.
-
   yield* spawn(watchLogoutSaga, backendClient.logout);
-
-  yield* spawn(watchLogoutSaga, backendClient.logout); // this logic can be moved out of the startup saga
 
   if (zendeskEnabled) {
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
