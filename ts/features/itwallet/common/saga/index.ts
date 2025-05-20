@@ -9,7 +9,7 @@ import {
   checkWalletInstanceInconsistencySaga,
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
-import { checkHasNfcFeatureSaga } from "../../identification/saga/index.ts";
+import { checkHasNfcFeatureSaga } from "../../identification/saga";
 import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
 
