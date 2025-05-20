@@ -18,9 +18,8 @@ export function* watchItwSaga(): SagaIterator {
   yield* fork(watchItwLifecycleSaga);
   // Check if the fiscal code is enabled, to enable the L3
   yield* fork(checkFiscalCodeEnabledSaga);
-
   // Check if the device has the NFC Feature
-  yield* call(checkHasNfcFeatureSaga);
+  yield* fork(checkHasNfcFeatureSaga);
 
   const isWalletInstanceConsistent = yield* call(
     checkWalletInstanceInconsistencySaga
