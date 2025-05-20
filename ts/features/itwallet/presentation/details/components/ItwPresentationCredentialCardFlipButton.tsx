@@ -18,7 +18,7 @@ const ItwPresentationCredentialCardFlipButton = ({
   fullScreen = false
 }: ItwPresentationCredentialCardFlipButtonProps) => (
   <View
-    style={[fullScreen && styles.fullWidthButton]}
+    style={fullScreen ? styles.fullWidthButton : styles.button}
     accessible={true}
     accessibilityLabel={I18n.t(
       "features.itWallet.presentation.credentialDetails.card.showBack"
@@ -41,6 +41,9 @@ const ItwPresentationCredentialCardFlipButton = ({
 );
 
 const styles = StyleSheet.create({
+  button: {
+    alignSelf: "center"
+  },
   fullWidthButton: {
     alignSelf: "stretch",
     marginHorizontal: "5%"

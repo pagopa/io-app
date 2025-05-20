@@ -8,6 +8,7 @@ import {
 } from "@shopify/react-native-skia";
 import { H5, IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n.ts";
+import { itwGradientColors } from "../utils/constants.ts";
 
 /**
  * This component renders the logo of the IT Wallet, image and text.
@@ -66,19 +67,7 @@ const StaticGradientBackground = () => {
         <LinearGradient
           start={vec(0, height)}
           end={vec(width, 0)}
-          colors={[
-            "#0B3EE3",
-            "#234FFF",
-            "#436FFF",
-            "#2F5EFF",
-            "#1E53FF",
-            "#1848F0",
-            "#0B3EE3",
-            "#1F4DFF",
-            "#2A5CFF",
-            "#1943E8",
-            "#0B3EE3"
-          ]}
+          colors={itwGradientColors}
         />
       </RoundedRect>
     </Canvas>
