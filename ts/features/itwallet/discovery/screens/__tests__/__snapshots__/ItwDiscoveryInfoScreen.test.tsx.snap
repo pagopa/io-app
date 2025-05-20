@@ -1317,7 +1317,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true 1`] 
                           [
                             {
                               "flexGrow": 1,
-                              "paddingBottom": 56,
+                              "paddingBottom": 124,
                             },
                           ]
                         }
@@ -2431,6 +2431,136 @@ pubblico, sicuro, gratuito.
                                     }
                                   />
                                   <View
+                                    accessibilityLabel="Toggle anchor link"
+                                    accessibilityRole="button"
+                                    accessibilityState={
+                                      {
+                                        "busy": false,
+                                        "checked": undefined,
+                                        "disabled": false,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
+                                    }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
+                                    style={
+                                      {
+                                        "alignSelf": "auto",
+                                        "flexShrink": 1,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      style={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "borderCurve": "continuous",
+                                            "elevation": 0,
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
+                                            "overflow": "hidden",
+                                            "textAlignVertical": "center",
+                                          },
+                                          {
+                                            "paddingHorizontal": 24,
+                                          },
+                                          {
+                                            "backgroundColor": "rgba(9,50,182,0)",
+                                            "borderColor": "#FFFFFF",
+                                            "borderRadius": 8,
+                                            "borderWidth": 2,
+                                            "height": 48,
+                                          },
+                                          {},
+                                          false,
+                                          {
+                                            "backgroundColor": undefined,
+                                            "borderColor": undefined,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                            },
+                                            {
+                                              "columnGap": 8,
+                                            },
+                                            false,
+                                          ]
+                                        }
+                                      >
+                                        <Text
+                                          accessibilityElementsHidden={true}
+                                          accessible={false}
+                                          allowFontScaling={true}
+                                          ellipsizeMode="tail"
+                                          importantForAccessibility="no-hide-descendants"
+                                          maxFontSizeMultiplier={1.5}
+                                          numberOfLines={1}
+                                          style={
+                                            [
+                                              {},
+                                              {
+                                                "color": "#0E0F13",
+                                                "fontFamily": "Titillio",
+                                                "fontSize": 16,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": undefined,
+                                              },
+                                              [
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                                {
+                                                  "color": "#FFFFFF",
+                                                },
+                                                {
+                                                  "color": undefined,
+                                                },
+                                              ],
+                                            ]
+                                          }
+                                        >
+                                          Toggle anchor link
+                                        </Text>
+                                      </View>
+                                    </View>
+                                  </View>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 24,
+                                      }
+                                    }
+                                  />
+                                  <View
                                     style={
                                       {
                                         "backgroundColor": "#D2D6E3",
@@ -3176,7 +3306,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                               "width": "100%",
                             },
                             {
-                              "height": 144,
+                              "height": 244,
                               "paddingBottom": 24,
                             },
                           ]
@@ -3274,7 +3404,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                               }
                               style={
                                 {
-                                  "height": 120,
+                                  "height": 170,
                                 }
                               }
                             />
@@ -3284,13 +3414,12 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                               {
                                 "backgroundColor": "#0B3EE3",
                                 "bottom": 0,
-                                "height": 24,
+                                "height": 74,
                               }
                             }
                           />
                         </View>
                         <View
-                          onLayout={[Function]}
                           pointerEvents="box-none"
                           style={
                             {
@@ -3301,6 +3430,8 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                           }
                         >
                           <View
+                            entering={BaseAnimationMock {}}
+                            exiting={BaseAnimationMock {}}
                             style={
                               {
                                 "alignSelf": "center",

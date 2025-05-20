@@ -6,6 +6,7 @@ import {
   FeatureInfo,
   H4,
   H6,
+  IOButton,
   IOColors,
   IOIcons,
   Icon,
@@ -71,7 +72,10 @@ export type ItwPaywallComponentProps = {
 };
 
 export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
+  const { tos_url } = useIOSelector(tosConfigSelector);
+
   const theme = useIOTheme();
+  const [hideAnchorLink, setHideAnchorLink] = useState(false);
 
   const backgroundColor = IOColors[theme["appBackground-accent"]];
 
@@ -85,7 +89,7 @@ export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
 
   return (
     <IOScrollViewWithReveal
-      // debugMode
+      hideAnchorAction={hideAnchorLink}
       actions={{
         anchor: {
           label: "Scopri tutti i vantaggi",
@@ -109,46 +113,47 @@ export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
           marginVertical: "-100%"
         }}
       >
-        <InnerComponent />
+        <VStack space={24}>
+          <View style={styles.cardContainer}>
+            <BackgroundGradient />
+            <View style={{ paddingBottom: 24 }}>
+              <View style={styles.logoContainer}>
+                <ItwHero width="100%" height="100%" />
+              </View>
+              <VStack space={16} style={{ alignItems: "center" }}>
+                <Badge
+                  variant="highlight"
+                  text={I18n.t("features.itWallet.discovery.paywall.badge")}
+                />
+                <H4 color="white" style={{ textAlign: "center" }}>
+                  {I18n.t("features.itWallet.discovery.paywall.description")}
+                </H4>
+              </VStack>
+              <VSpacer size={32} />
+              <FeatureHighlights />
+              <VSpacer size={24} />
+              <IOButton
+                onPress={() => {
+                  setHideAnchorLink(prevState => !prevState);
+                }}
+                variant="outline"
+                color="contrast"
+                label="Toggle anchor link"
+              />
+              <VSpacer size={24} />
+              <Divider />
+              <ProductHighlights />
+            </View>
+          </View>
+          <IOMarkdown
+            content={I18n.t("features.itWallet.discovery.paywall.tos", {
+              tos_url
+            })}
+            rules={markdownRules}
+          />
+        </VStack>
       </ContentWrapper>
     </IOScrollViewWithReveal>
-  );
-};
-
-const InnerComponent = () => {
-  const { tos_url } = useIOSelector(tosConfigSelector);
-
-  return (
-    <VStack space={24}>
-      <View style={styles.cardContainer}>
-        <BackgroundGradient />
-        <View style={{ paddingBottom: 24 }}>
-          <View style={styles.logoContainer}>
-            <ItwHero width="100%" height="100%" />
-          </View>
-          <VStack space={16} style={{ alignItems: "center" }}>
-            <Badge
-              variant="highlight"
-              text={I18n.t("features.itWallet.discovery.paywall.badge")}
-            />
-            <H4 color="white" style={{ textAlign: "center" }}>
-              {I18n.t("features.itWallet.discovery.paywall.description")}
-            </H4>
-          </VStack>
-          <VSpacer size={32} />
-          <FeatureHighlights />
-          <VSpacer size={24} />
-          <Divider />
-          <ProductHighlights />
-        </View>
-      </View>
-      <IOMarkdown
-        content={I18n.t("features.itWallet.discovery.paywall.tos", {
-          tos_url
-        })}
-        rules={markdownRules}
-      />
-    </VStack>
   );
 };
 

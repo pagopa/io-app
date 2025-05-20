@@ -19,23 +19,18 @@ import {
   Fragment,
   PropsWithChildren,
   useLayoutEffect,
-  useMemo,
-  useState
+  useMemo
 } from "react";
 
-import {
-  ColorValue,
-  LayoutChangeEvent,
-  LayoutRectangle,
-  StyleSheet,
-  View
-} from "react-native";
+import { ColorValue, StyleSheet, View } from "react-native";
 import { easeGradient } from "react-native-easing-gradient";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, {
   AnimatedRef,
   Easing,
   Extrapolation,
+  FadeIn,
+  FadeOut,
   interpolate,
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -60,9 +55,10 @@ export type IOScrollViewRevealActions = {
 type IOScrollViewWithRevealProps = WithTestID<
   PropsWithChildren<{
     headerConfig?: ComponentProps<typeof HeaderSecondLevel>;
-    actions?: IOScrollViewRevealActions;
+    actions: IOScrollViewRevealActions;
     debugMode?: boolean;
     animatedRef?: AnimatedRef<Animated.ScrollView>;
+    hideAnchorAction?: boolean;
   }>
 >;
 
@@ -71,8 +67,6 @@ type IOScrollViewWithRevealProps = WithTestID<
 const gradientOpacityScrollTrigger = 0.85;
 /* Extended gradient area above the actions */
 const gradientSafeAreaHeight: number = 120;
-/* End content margin before the actions */
-const contentEndMargin: IOSpacingScale = 32;
 /* Margin between solid variant and link variant */
 const spaceBetweenActionAndLink: IOSpacer = 16;
 /* Extra bottom margin for iPhone bottom handle because
@@ -117,6 +111,7 @@ export const IOScrollViewWithReveal = ({
   actions,
   debugMode = false,
   animatedRef,
+  hideAnchorAction = false,
   testID
 }: IOScrollViewWithRevealProps) => {
   const alertProps = useStatusAlertProps();
@@ -131,13 +126,9 @@ export const IOScrollViewWithReveal = ({
   const scrollPositionPercentage =
     useSharedValue(0); /* Scroll position (Relative) */
 
-  /* Total height of actions */
-  const [actionBlockHeight, setActionBlockHeight] =
-    useState<LayoutRectangle["height"]>(0);
-
-  const getActionBlockHeight = (event: LayoutChangeEvent) => {
-    setActionBlockHeight(event.nativeEvent.layout.height);
-  };
+  /* We need a fixed height, because when the anchor action is hidden,
+    there's a layout shift in the button container */
+  const actionBlockHeight: number = 100;
 
   const { bottomMargin, needSafeAreaMargin } = useFooterActionsMargin();
 
@@ -168,8 +159,7 @@ export const IOScrollViewWithReveal = ({
 
   /* Height of the safe bottom area, applied to the ScrollView:
      Actions + Content end margin */
-  const safeBottomAreaHeight =
-    bottomMargin + actionBlockHeight + contentEndMargin;
+  const safeBottomAreaHeight = bottomMargin + actionBlockHeight;
 
   const handleScroll = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {
@@ -226,9 +216,7 @@ export const IOScrollViewWithReveal = ({
         decelerationRate="normal"
         contentContainerStyle={[
           {
-            paddingBottom: actions
-              ? safeBottomAreaHeight
-              : bottomMargin + contentEndMargin,
+            paddingBottom: actions ? safeBottomAreaHeight : bottomMargin,
             flexGrow: 1
           }
         ]}
@@ -286,47 +274,34 @@ export const IOScrollViewWithReveal = ({
               }}
             />
           </Animated.View>
-          <View
-            style={styles.buttonContainer}
-            onLayout={getActionBlockHeight}
-            pointerEvents="box-none"
-          >
-            {renderActionButtons(actions, extraBottomMargin)}
+          <View style={styles.buttonContainer} pointerEvents="box-none">
+            {!hideAnchorAction && (
+              <Animated.View
+                entering={FadeIn.duration(200).easing(
+                  Easing.inOut(Easing.ease)
+                )}
+                exiting={FadeOut.duration(200).easing(
+                  Easing.inOut(Easing.ease)
+                )}
+                style={{
+                  alignSelf: "center",
+                  marginBottom: extraBottomMargin
+                }}
+              >
+                <IOButton variant="link" color="contrast" {...actions.anchor} />
+                <VSpacer size={spaceBetweenActionAndLink} />
+              </Animated.View>
+            )}
+
+            <IOButton
+              variant="solid"
+              color="contrast"
+              fullWidth
+              {...actions.primary}
+            />
           </View>
         </View>
       )}
     </Fragment>
-  );
-};
-
-export const renderActionButtons = (
-  actions: IOScrollViewRevealActions,
-  extraBottomMargin: number
-) => {
-  const { primary: primaryAction, anchor: anchorAction } = actions;
-
-  return (
-    <>
-      {anchorAction && (
-        <View
-          style={{
-            alignSelf: "center",
-            marginBottom: extraBottomMargin
-          }}
-        >
-          <IOButton variant="link" color="contrast" {...anchorAction} />
-          <VSpacer size={spaceBetweenActionAndLink} />
-        </View>
-      )}
-
-      {primaryAction && (
-        <IOButton
-          variant="solid"
-          color="contrast"
-          fullWidth
-          {...primaryAction}
-        />
-      )}
-    </>
   );
 };
