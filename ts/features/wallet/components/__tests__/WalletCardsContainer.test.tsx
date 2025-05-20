@@ -3,8 +3,7 @@ import _ from "lodash";
 
 import { ComponentType } from "react";
 import configureMockStore from "redux-mock-store";
-import { Pressable } from "react-native-gesture-handler";
-import { Alert } from "react-native";
+import { Alert, Pressable } from "react-native";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
