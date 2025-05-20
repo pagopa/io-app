@@ -73,6 +73,9 @@ const useOfflineAlertDetailModal = (
   }, [dispatch, isConnected, toast]);
 
   const navigateOnAuthPage = useCallback(() => {
+    trackItwOfflineRicaricaAppIO({
+      source: "bottom_sheet"
+    });
     // Reset the offline access reason.
     // Since this state is `undefined` when the user is online,
     // the startup saga will proceed without blocking.

@@ -167,7 +167,7 @@ type ItwCopyListItem = {
 
 type ItwOfflineBanner = {
   screen: string;
-  error_message_type: OfflineAccessReasonEnum;
+  error_message_type?: OfflineAccessReasonEnum;
   use_case: "starting_app" | "foreground" | "background";
 };
 
