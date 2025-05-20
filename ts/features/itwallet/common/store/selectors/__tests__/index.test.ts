@@ -19,7 +19,6 @@ import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import * as credentialsSelectors from "../../../../credentials/store/selectors";
 import * as preferencesSelectors from "../preferences";
 import * as remoteConfigSelectors from "../remoteConfig";
-import * as persistedSelectors from "../../../../../../store/reducers/persistedPreferences.ts";
 import * as ingressSelectors from "../../../../../ingress/store/selectors";
 import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
 
@@ -155,28 +154,17 @@ describe("itwOfflineAccessAvailableSelector", () => {
   });
 
   it.each`
-    isWalletValid | isOfflineEnabled | isBannerHidden | shouldRenderBanner
-    ${true}       | ${true}          | ${false}       | ${true}
-    ${true}       | ${true}          | ${true}        | ${false}
-    ${false}      | ${true}          | ${false}       | ${false}
-    ${false}      | ${true}          | ${true}        | ${false}
-    ${true}       | ${false}         | ${false}       | ${false}
-    ${true}       | ${false}         | ${true}        | ${false}
+    isWalletValid | isBannerHidden | shouldRenderBanner
+    ${false}      | ${false}       | ${false}
+    ${false}      | ${true}        | ${false}
+    ${true}       | ${false}       | ${true}
+    ${true}       | ${true}        | ${false}
   `(
-    "should render banner: $shouldRenderBanner when wallet valid: $isWalletValid, offline enabled: $isOfflineEnabled and banner hidden: $isBannerHidden",
-    ({
-      isWalletValid,
-      isOfflineEnabled,
-      isBannerHidden,
-      shouldRenderBanner
-    }) => {
+    "should render banner: $shouldRenderBanner when wallet valid: $isWalletValid and banner hidden: $isBannerHidden",
+    ({ isWalletValid, isBannerHidden, shouldRenderBanner }) => {
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockImplementation(() => isWalletValid);
-
-      jest
-        .spyOn(persistedSelectors, "isItwOfflineAccessEnabledSelector")
-        .mockImplementation(() => isOfflineEnabled);
 
       jest
         .spyOn(preferencesSelectors, "itwIsOfflineBannerHiddenSelector")
