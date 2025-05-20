@@ -12,7 +12,7 @@ type Props = {
   resultScreenProps: OperationResultScreenContentProps;
 };
 
-export const useSendAuthorizationResponse = ({
+export const useItwSendAuthorizationErrorResponse = ({
   failure,
   resultScreenProps
 }: Props) => {
