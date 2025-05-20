@@ -7,12 +7,11 @@ import {
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import LottieView from "lottie-react-native";
 import { useCallback, useState } from "react";
-import { View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import LottieView from "lottie-react-native";
 
 /* Animated Pictograms */
 import empty from "../../../../assets/animated-pictograms/Empty.json";
@@ -24,9 +23,9 @@ import scanCardiOS from "../../../../assets/animated-pictograms/ScanCardiOS.json
 import search from "../../../../assets/animated-pictograms/Search.json";
 import success from "../../../../assets/animated-pictograms/Success.json";
 import umbrella from "../../../../assets/animated-pictograms/Umbrella.json";
+import waiting from "../../../../assets/animated-pictograms/Waiting.json";
 import warning from "../../../../assets/animated-pictograms/Warning.json";
 import welcome from "../../../../assets/animated-pictograms/Welcome.json";
-import waiting from "../../../../assets/animated-pictograms/Waiting.json";
 
 export const DSAnimatedPictograms = () => {
   const insets = useSafeAreaInsets();
