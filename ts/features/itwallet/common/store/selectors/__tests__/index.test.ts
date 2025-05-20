@@ -12,7 +12,6 @@ import { itwStoreIntegrityKeyTag } from "../../../../issuance/store/actions";
 import { itwCredentialsStore } from "../../../../credentials/store/actions";
 import { CredentialType } from "../../../utils/itwMocksUtils";
 import { StoredCredential } from "../../../utils/itwTypesUtils";
-import { setItwOfflineAccessEnabled } from "../../../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../../../store/reducers";
 import { Action } from "../../../../../../store/actions/types";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
@@ -128,8 +127,7 @@ describe("itwOfflineAccessAvailableSelector", () => {
           { credentialType: CredentialType.PID },
           { credentialType: CredentialType.DRIVING_LICENSE }
         ] as Array<StoredCredential>)
-      ),
-      curriedAppReducer(setItwOfflineAccessEnabled(true))
+      )
     );
 
     expect(itwOfflineAccessAvailableSelector(globalState)).toEqual(true);
@@ -146,8 +144,7 @@ describe("itwOfflineAccessAvailableSelector", () => {
         itwCredentialsStore([
           { credentialType: CredentialType.PID }
         ] as Array<StoredCredential>)
-      ),
-      curriedAppReducer(setItwOfflineAccessEnabled(true))
+      )
     );
 
     expect(itwOfflineAccessAvailableSelector(globalState)).toEqual(false);
