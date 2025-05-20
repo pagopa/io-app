@@ -22,10 +22,9 @@ export const getThemeColorByCredentialType = (
         statusBarStyle: "light-content"
       };
     case CredentialType.DRIVING_LICENSE:
-      const isL3Theme = isL3Enabled === true;
       return {
-        backgroundColor: isL3Theme ? "#0B3EE3" : "#744C63",
-        textColor: isL3Theme ? "#032D5C" : "#652035",
+        backgroundColor: isL3Enabled ? "#0B3EE3" : "#744C63",
+        textColor: isL3Enabled ? "#032D5C" : "#652035",
         statusBarStyle: "light-content"
       };
     case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
