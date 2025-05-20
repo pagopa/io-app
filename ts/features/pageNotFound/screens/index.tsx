@@ -6,7 +6,7 @@ import { openAppStoreUrl } from "../../../utils/url";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   track404ErrorScreen,
-  // track404ErrorScreenCloseButton,
+  track404ErrorScreenCloseButton,
   track404ErrorScreenUpdateAppButton
 } from "../analytics";
 
@@ -40,8 +40,7 @@ export const PageNotFound = () => {
         testID: BTN_CLOSE_TEST_ID,
         label: I18n.t("global.buttons.close"),
         onPress: () => {
-          // This function is commented out because we are waiting for the legal approval
-          // void track404ErrorScreenCloseButton();
+          void track404ErrorScreenCloseButton();
           popToTop();
         }
       }}
