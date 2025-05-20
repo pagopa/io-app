@@ -1318,21 +1318,13 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true 1`] 
                             {
                               "flexGrow": 1,
                               "paddingBottom": 56,
-                              "paddingHorizontal": 0,
                             },
-                            {},
                           ]
                         }
                         decelerationRate="normal"
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -3173,6 +3165,408 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                           </View>
                         </View>
                       </RCTScrollView>
+                      <View
+                        pointerEvents="box-none"
+                        style={
+                          [
+                            {
+                              "bottom": 0,
+                              "justifyContent": "flex-end",
+                              "position": "absolute",
+                              "width": "100%",
+                            },
+                            {
+                              "height": 144,
+                              "paddingBottom": 24,
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          pointerEvents="none"
+                          style={
+                            [
+                              {
+                                "bottom": 0,
+                                "left": 0,
+                                "position": "absolute",
+                                "right": 0,
+                                "top": 0,
+                              },
+                              false,
+                            ]
+                          }
+                        >
+                          <View
+                            style={
+                              [
+                                {
+                                  "opacity": undefined,
+                                },
+                                false,
+                              ]
+                            }
+                          >
+                            <BVLinearGradient
+                              colors={
+                                [
+                                  736995,
+                                  202063587,
+                                  403390179,
+                                  604716771,
+                                  806043363,
+                                  1024147171,
+                                  1225473763,
+                                  1426800355,
+                                  1628126947,
+                                  1829453539,
+                                  2030780131,
+                                  2248883939,
+                                  2450210531,
+                                  2651537123,
+                                  2852863715,
+                                  3054190307,
+                                  3255516899,
+                                  3473620707,
+                                  3674947299,
+                                  3876273891,
+                                  4077600483,
+                                  4278927075,
+                                ]
+                              }
+                              endPoint={
+                                {
+                                  "x": 0.5,
+                                  "y": 1,
+                                }
+                              }
+                              locations={
+                                [
+                                  0,
+                                  0.047619047619047616,
+                                  0.09523809523809523,
+                                  0.14285714285714285,
+                                  0.19047619047619047,
+                                  0.23809523809523808,
+                                  0.2857142857142857,
+                                  0.3333333333333333,
+                                  0.38095238095238093,
+                                  0.42857142857142855,
+                                  0.47619047619047616,
+                                  0.5238095238095237,
+                                  0.5714285714285714,
+                                  0.6190476190476191,
+                                  0.6666666666666666,
+                                  0.7142857142857142,
+                                  0.7619047619047619,
+                                  0.8095238095238095,
+                                  0.8571428571428571,
+                                  0.9047619047619047,
+                                  0.9523809523809523,
+                                  1,
+                                ]
+                              }
+                              startPoint={
+                                {
+                                  "x": 0.5,
+                                  "y": 0,
+                                }
+                              }
+                              style={
+                                {
+                                  "height": 120,
+                                }
+                              }
+                            />
+                          </View>
+                          <View
+                            style={
+                              {
+                                "backgroundColor": "#0B3EE3",
+                                "bottom": 0,
+                                "height": 24,
+                              }
+                            }
+                          />
+                        </View>
+                        <View
+                          onLayout={[Function]}
+                          pointerEvents="box-none"
+                          style={
+                            {
+                              "flexShrink": 0,
+                              "paddingHorizontal": 24,
+                              "width": "100%",
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "alignSelf": "center",
+                                "marginBottom": 0,
+                              }
+                            }
+                          >
+                            <View
+                              accessibilityLabel="Scopri tutti i vantaggi"
+                              accessibilityRole="button"
+                              accessibilityState={
+                                {
+                                  "busy": false,
+                                  "checked": undefined,
+                                  "disabled": false,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
+                              }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              hitSlop={
+                                {
+                                  "bottom": 14,
+                                  "left": 24,
+                                  "right": 24,
+                                  "top": 14,
+                                }
+                              }
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
+                              style={
+                                {
+                                  "alignSelf": "flex-start",
+                                }
+                              }
+                            >
+                              <View
+                                style={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "elevation": 0,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "overflow": "hidden",
+                                      "textAlignVertical": "center",
+                                    },
+                                    {
+                                      "paddingHorizontal": 0,
+                                    },
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderColor": "#FFFFFF",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": undefined,
+                                    },
+                                    {},
+                                    false,
+                                    {},
+                                  ]
+                                }
+                              >
+                                <View
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    accessibilityElementsHidden={true}
+                                    accessible={false}
+                                    allowFontScaling={true}
+                                    ellipsizeMode="tail"
+                                    importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 20,
+                                        },
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#FFFFFF",
+                                          },
+                                          {
+                                            "color": undefined,
+                                          },
+                                        ],
+                                      ]
+                                    }
+                                  >
+                                    Scopri tutti i vantaggi
+                                  </Text>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "height": 16,
+                                }
+                              }
+                            />
+                          </View>
+                          <View
+                            accessibilityLabel="Ottieni IT Wallet"
+                            accessibilityRole="button"
+                            accessibilityState={
+                              {
+                                "busy": false,
+                                "checked": undefined,
+                                "disabled": false,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
+                              }
+                            }
+                            accessible={true}
+                            collapsable={false}
+                            focusable={true}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#FFFFFF",
+                                    "borderColor": "#0B3EE3",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              <View
+                                style={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                              >
+                                <Text
+                                  accessibilityElementsHidden={true}
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  ellipsizeMode="tail"
+                                  importantForAccessibility="no-hide-descendants"
+                                  maxFontSizeMultiplier={1.5}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0E0F13",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": undefined,
+                                      },
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ],
+                                    ]
+                                  }
+                                >
+                                  Ottieni IT Wallet
+                                </Text>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
                     </View>
                     <View
                       collapsable={false}
