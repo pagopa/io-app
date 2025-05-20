@@ -194,12 +194,12 @@ export const IOScrollView = ({
   /* GENERATE EASING GRADIENT
      Background color should be app main background
      (both light and dark themes) */
-  const HEADER_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
+  const APP_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
 
   const { colors, locations } = easeGradient({
     colorStops: {
-      0: { color: hexToRgba(HEADER_BG_COLOR, 0) },
-      1: { color: HEADER_BG_COLOR }
+      0: { color: hexToRgba(APP_BG_COLOR, 0) },
+      1: { color: APP_BG_COLOR }
     },
     easing: Easing.ease,
     extraColorStopsPerTransition: 20
@@ -365,7 +365,7 @@ export const IOScrollView = ({
               style={{
                 bottom: 0,
                 height: safeBackgroundBlockHeight,
-                backgroundColor: HEADER_BG_COLOR
+                backgroundColor: APP_BG_COLOR
               }}
             />
           </Animated.View>
