@@ -3,6 +3,9 @@
  */
 export const HIDDEN_CLAIM_TEXT = "******";
 
+/**
+ * Defines the colors used in the gradient of the ITW components
+ */
 export const itwGradientColors = [
   "#0B3EE3",
   "#234FFF",
