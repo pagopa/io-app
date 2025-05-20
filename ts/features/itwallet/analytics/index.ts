@@ -890,7 +890,7 @@ export const trackItwOfflineBanner = ({
   use_case
 }: ItwOfflineBanner) => {
   void mixpanelTrack(
-    ITW_TECH_EVENTS.ITW_ID_REQUEST_SUCCESS,
+    ITW_TECH_EVENTS.ITW_OFFLINE_BANNER,
     buildEventProperties("TECH", undefined, {
       screen,
       error_message_type,

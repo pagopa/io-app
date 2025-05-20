@@ -2,8 +2,8 @@ import {
   AlertEdgeToEdgeWrapper,
   IOButton,
   IOColors,
-  VStack,
-  useIOToast
+  useIOToast,
+  VStack
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -24,6 +24,7 @@ import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import {
   trackItwOfflineBanner,
+  trackItwOfflineBottomSheet,
   trackItwOfflineReloadFailure,
   trackItwOfflineRicaricaAppIO
 } from "../../analytics";
@@ -55,7 +56,7 @@ const useOfflineAlertDetailModal = (
   const handleAppRestart = useCallback(() => {
     if (isConnected) {
       trackItwOfflineRicaricaAppIO({
-        source: "banner"
+        source: "bottom_sheet"
       });
       // Reset the offline access reason.
       // Since this state is `undefined` when the user is online,
@@ -147,6 +148,11 @@ const OfflineAlertWrapper = ({
     });
   });
 
+  const openBottomSheet = useCallback(() => {
+    detailModal.present();
+    trackItwOfflineBottomSheet();
+  }, [detailModal]);
+
   return (
     <AlertEdgeToEdgeWrapper
       alertProps={{
@@ -157,7 +163,7 @@ const OfflineAlertWrapper = ({
           `features.itWallet.offline.${offlineAccessReason}.alert.action`
         ),
         variant: "info",
-        onPress: detailModal.present
+        onPress: openBottomSheet
       }}
     >
       <StatusBar
