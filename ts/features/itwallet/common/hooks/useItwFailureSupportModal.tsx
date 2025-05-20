@@ -36,6 +36,7 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { IssuanceFailure } from "../../machine/eid/failure";
 import { CredentialIssuanceFailure } from "../../machine/credential/failure";
 import { ItwFailure } from "../utils/ItwFailureTypes.ts";
+import { RemoteFailure } from "../../presentation/remote/machine/failure.ts";
 
 const { isWalletProviderResponseError, isIssuerResponseError } = Errors;
 
@@ -91,7 +92,11 @@ const extractErrorCode = (failure: Props["failure"]) => {
 const isDefined = <T,>(x: T | undefined | null | ""): x is T => Boolean(x);
 
 type Props = {
-  failure: IssuanceFailure | CredentialIssuanceFailure | ItwFailure;
+  failure:
+    | IssuanceFailure
+    | CredentialIssuanceFailure
+    | ItwFailure
+    | RemoteFailure;
   credentialType?: string;
   supportChatEnabled: boolean;
   zendeskSubcategory: ZendeskSubcategoryValue;

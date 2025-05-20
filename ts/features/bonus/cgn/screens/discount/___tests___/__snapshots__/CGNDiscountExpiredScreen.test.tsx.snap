@@ -708,6 +708,9 @@ exports[`CGNDiscountExpiredScreen should render correctly 1`] = `
                                                 "textAlign": "auto",
                                               },
                                               {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
                                                 "color": undefined,
                                               },
                                             ],

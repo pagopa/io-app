@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0-rc.8](https://github.com/pagopa/io-app/compare/3.5.0-rc.7...3.5.0-rc.8) (2025-05-19)
+
+
+### Bug Fixes
+
+* crash navigating to ITW discovery screen from CTAs ([f3ab596](https://github.com/pagopa/io-app/commit/f3ab5960ddbc30f6bf4da482c622ce96dfed47ee))
+
+
+### Chores
+
+* **release:** 3.5.0-rc.8 ([910a9c0](https://github.com/pagopa/io-app/commit/910a9c0bff5c29c667d9373b80877d41fef0ca55))
+
+## [3.5.0-rc.7](https://github.com/pagopa/io-app/compare/3.5.0-rc.6...3.5.0-rc.7) (2025-05-15)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2107](https://pagopa.atlassian.net/browse/SIW-2107)] Implement Trial System to enable L3 features ([#6946](https://github.com/pagopa/io-app/issues/6946)) ([f109d3b](https://github.com/pagopa/io-app/commit/f109d3b3ba13fd1a608e20dee8790b84430074d3))
+* **IT Wallet:** [[SIW-2224](https://pagopa.atlassian.net/browse/SIW-2224)] Implement wallet offline Mixpanel tracking  ([#6920](https://github.com/pagopa/io-app/issues/6920)) ([bd8baf7](https://github.com/pagopa/io-app/commit/bd8baf7bc0fe46d464ffd90fc88c35c61baf3222))
+* **IT Wallet:** [[SIW-2270](https://pagopa.atlassian.net/browse/SIW-2270),[SIW-2271](https://pagopa.atlassian.net/browse/SIW-2271)] add CIE warning screen and related messages ([#6962](https://github.com/pagopa/io-app/issues/6962)) ([1aa386f](https://github.com/pagopa/io-app/commit/1aa386fbb6e7d8f5e6b8e7aed13bae0080b5a945))
+
+
+### Bug Fixes
+
+* [[IOAPPX-497](https://pagopa.atlassian.net/browse/IOAPPX-497)] Button foreground color on disable state update ([#6980](https://github.com/pagopa/io-app/issues/6980)) ([b86b000](https://github.com/pagopa/io-app/commit/b86b00020832aa51857946ac510b20422aff1435)), closes [/github.com/pagopa/io-app/pull/6750#issuecomment-2879310599](https://github.com/pagopa//github.com/pagopa/io-app/pull/6750/issues/issuecomment-2879310599) [/github.com/pagopa/io-app/pull/6750#issuecomment-2879310599](https://github.com/pagopa//github.com/pagopa/io-app/pull/6750/issues/issuecomment-2879310599)
+
+
+### Chores
+
+* [[IOBP-1646](https://pagopa.atlassian.net/browse/IOBP-1646)] Track MyBank PSP banner on mixpanel ([#6979](https://github.com/pagopa/io-app/issues/6979)) ([5c8dd40](https://github.com/pagopa/io-app/commit/5c8dd40a6d7daaad7dcd14186c72d6420d64d943))
+
 ## [3.5.0-rc.6](https://github.com/pagopa/io-app/compare/3.5.0-rc.5...3.5.0-rc.6) (2025-05-14)
 
 

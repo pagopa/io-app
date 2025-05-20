@@ -560,7 +560,7 @@ const DeveloperModeSection = () => {
 
   return (
     <>
-      <ContentWrapper>
+      <ContentWrapper testID="developerModeSection">
         <VSpacer size={24} />
         <H2 color={theme["textHeading-default"]}>
           {I18n.t("profile.main.developersSectionHeader")}
@@ -569,6 +569,7 @@ const DeveloperModeSection = () => {
 
         {/* Enable/Disable Developer Mode */}
         <ListItemSwitch
+          testID="debugModeSwitch"
           label={I18n.t("profile.main.debugMode")}
           value={isDebugModeEnabled}
           onSwitchValueChange={enabled =>
