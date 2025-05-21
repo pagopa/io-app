@@ -450,7 +450,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                   "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
@@ -595,7 +594,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     "paddingHorizontal": 0,
                                   },
                                   {
-                                    "backgroundColor": "transparent",
                                     "borderColor": "#0B3EE3",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
@@ -1125,7 +1123,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
@@ -1254,7 +1251,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   "paddingHorizontal": 24,
                                 },
                                 {
-                                  "backgroundColor": "rgba(9,50,182,0)",
                                   "borderColor": "#0B3EE3",
                                   "borderRadius": 8,
                                   "borderWidth": 2,
@@ -1400,7 +1396,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     "paddingHorizontal": 0,
                                   },
                                   {
-                                    "backgroundColor": "transparent",
                                     "borderColor": "#0B3EE3",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
@@ -2308,7 +2303,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                   "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
@@ -3217,7 +3211,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                   "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
@@ -3884,7 +3877,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                   "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
@@ -4415,7 +4407,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                   "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
@@ -4560,7 +4551,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     "paddingHorizontal": 0,
                                   },
                                   {
-                                    "backgroundColor": "transparent",
                                     "borderColor": "#0B3EE3",
                                     "borderRadius": 8,
                                     "borderWidth": 0,

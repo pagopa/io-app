@@ -707,7 +707,6 @@ exports[`error screens should display an error screen in case of missing_sid err
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -1499,7 +1498,6 @@ exports[`error screens should display an error screen in case of preferences err
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -2291,7 +2289,6 @@ exports[`loading screens + error interop should render the correct loading scree
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,

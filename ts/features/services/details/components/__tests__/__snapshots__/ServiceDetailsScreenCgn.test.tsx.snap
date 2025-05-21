@@ -443,7 +443,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                     "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#D13333",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
@@ -1321,7 +1320,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                     "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,

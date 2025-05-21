@@ -292,7 +292,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                     "paddingHorizontal": 24,
                   },
                   {
-                    "backgroundColor": "#0B3EE3",
                     "borderColor": "#FFFFFF",
                     "borderRadius": 8,
                     "borderWidth": 0,
@@ -720,7 +719,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
                     "paddingHorizontal": 24,
                   },
                   {
-                    "backgroundColor": "#0B3EE3",
                     "borderColor": "#FFFFFF",
                     "borderRadius": 8,
                     "borderWidth": 0,

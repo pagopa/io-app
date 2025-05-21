@@ -868,7 +868,6 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                       "paddingHorizontal": 16,
                                     },
                                     {
-                                      "backgroundColor": "#0B3EE3",
                                       "borderColor": "#FFFFFF",
                                       "borderRadius": 8,
                                       "borderWidth": 0,

@@ -395,7 +395,6 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
                         "paddingHorizontal": 24,
                       },
                       {
-                        "backgroundColor": "rgba(9,50,182,0)",
                         "borderColor": "#0B3EE3",
                         "borderRadius": 8,
                         "borderWidth": 2,

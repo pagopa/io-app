@@ -857,7 +857,6 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                                     "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#D13333",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,

@@ -1231,7 +1231,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -7227,7 +7226,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,

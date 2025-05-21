@@ -614,7 +614,6 @@ exports[`MessageGreenPassScreen Should match snapshost 1`] = `
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,

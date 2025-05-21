@@ -421,7 +421,6 @@ exports[`MessageDetailsPaymentButton should match snapshot when loading 1`] = `
                                 "paddingHorizontal": 16,
                               },
                               {
-                                "backgroundColor": "#0B3EE3",
                                 "borderColor": "#FFFFFF",
                                 "borderRadius": 8,
                                 "borderWidth": 0,
@@ -1058,7 +1057,6 @@ exports[`MessageDetailsPaymentButton should match snapshot when not loading 1`] 
                                 "paddingHorizontal": 16,
                               },
                               {
-                                "backgroundColor": "#0B3EE3",
                                 "borderColor": "#FFFFFF",
                                 "borderRadius": 8,
                                 "borderWidth": 0,

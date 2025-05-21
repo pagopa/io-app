@@ -1118,7 +1118,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
@@ -2564,7 +2563,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
@@ -4011,7 +4009,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
@@ -5458,7 +5455,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
@@ -7195,7 +7191,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,

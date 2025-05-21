@@ -177,7 +177,6 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   "paddingHorizontal": 0,
                 },
                 {
-                  "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
                   "borderRadius": 8,
                   "borderWidth": 0,
@@ -436,7 +435,6 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                 "paddingHorizontal": 16,
               },
               {
-                "backgroundColor": "#0B3EE3",
                 "borderColor": "#FFFFFF",
                 "borderRadius": 8,
                 "borderWidth": 0,
@@ -581,7 +579,6 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   "paddingHorizontal": 0,
                 },
                 {
-                  "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
                   "borderRadius": 8,
                   "borderWidth": 0,
@@ -827,7 +824,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   "paddingHorizontal": 0,
                 },
                 {
-                  "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
                   "borderRadius": 8,
                   "borderWidth": 0,
@@ -1188,7 +1184,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "paddingHorizontal": 0,
                   },
                   {
-                    "backgroundColor": "transparent",
                     "borderColor": "#0B3EE3",
                     "borderRadius": 8,
                     "borderWidth": 0,
@@ -1455,7 +1450,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 "paddingHorizontal": 16,
               },
               {
-                "backgroundColor": "#0B3EE3",
                 "borderColor": "#FFFFFF",
                 "borderRadius": 8,
                 "borderWidth": 0,
@@ -1600,7 +1594,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   "paddingHorizontal": 0,
                 },
                 {
-                  "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
                   "borderRadius": 8,
                   "borderWidth": 0,
@@ -2525,7 +2518,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 "paddingHorizontal": 16,
               },
               {
-                "backgroundColor": "#0B3EE3",
                 "borderColor": "#FFFFFF",
                 "borderRadius": 8,
                 "borderWidth": 0,
@@ -2881,7 +2873,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 "paddingHorizontal": 16,
               },
               {
-                "backgroundColor": "#0B3EE3",
                 "borderColor": "#FFFFFF",
                 "borderRadius": 8,
                 "borderWidth": 0,
@@ -3026,7 +3017,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                   "paddingHorizontal": 0,
                 },
                 {
-                  "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
                   "borderRadius": 8,
                   "borderWidth": 0,

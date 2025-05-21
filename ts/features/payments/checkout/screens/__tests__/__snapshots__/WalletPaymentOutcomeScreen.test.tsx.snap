@@ -499,7 +499,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -2504,7 +2503,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -4490,7 +4488,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -6461,7 +6458,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -8446,7 +8442,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -10387,7 +10382,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -10533,7 +10527,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 0,
                                         },
                                         {
-                                          "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -12444,7 +12437,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -12590,7 +12582,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 0,
                                         },
                                         {
-                                          "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -14559,7 +14550,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -16480,7 +16470,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -18485,7 +18474,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -20470,7 +20458,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -22475,7 +22462,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -24416,7 +24402,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -24562,7 +24547,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 0,
                                         },
                                         {
-                                          "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -26565,7 +26549,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -28570,7 +28553,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -30583,7 +30565,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -32568,7 +32549,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -34511,7 +34491,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -34657,7 +34636,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 0,
                                         },
                                         {
-                                          "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -36640,7 +36618,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -38631,7 +38608,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -38777,7 +38753,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 0,
                                         },
                                         {
-                                          "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -40873,7 +40848,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -41019,7 +40993,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           "paddingHorizontal": 0,
                                         },
                                         {
-                                          "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -43150,7 +43123,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -45094,7 +45066,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -45240,7 +45211,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "paddingHorizontal": 0,
                                         },
                                         {
-                                          "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -47243,7 +47213,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -47389,7 +47358,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 0,
                                         },
                                         {
-                                          "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -49358,7 +49326,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -51371,7 +51338,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -53356,7 +53322,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
@@ -55361,7 +55326,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "paddingHorizontal": 24,
                                         },
                                         {
-                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,

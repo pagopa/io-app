@@ -875,7 +875,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                     "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
@@ -1557,7 +1556,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                     "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
@@ -2562,7 +2560,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                     "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,

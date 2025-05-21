@@ -967,7 +967,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
@@ -1111,7 +1110,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       "paddingHorizontal": 0,
                                     },
                                     {
-                                      "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
                                       "borderRadius": 8,
                                       "borderWidth": 0,

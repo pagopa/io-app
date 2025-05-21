@@ -293,7 +293,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "paddingHorizontal": 24,
                   },
                   {
-                    "backgroundColor": "#0B3EE3",
                     "borderColor": "#FFFFFF",
                     "borderRadius": 8,
                     "borderWidth": 0,
@@ -440,7 +439,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "paddingHorizontal": 0,
                   },
                   {
-                    "backgroundColor": "transparent",
                     "borderColor": "#0B3EE3",
                     "borderRadius": 8,
                     "borderWidth": 0,
@@ -807,7 +805,6 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "paddingHorizontal": 24,
                   },
                   {
-                    "backgroundColor": "#0B3EE3",
                     "borderColor": "#FFFFFF",
                     "borderRadius": 8,
                     "borderWidth": 0,
@@ -954,7 +951,6 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "paddingHorizontal": 0,
                   },
                   {
-                    "backgroundColor": "transparent",
                     "borderColor": "#0B3EE3",
                     "borderRadius": 8,
                     "borderWidth": 0,

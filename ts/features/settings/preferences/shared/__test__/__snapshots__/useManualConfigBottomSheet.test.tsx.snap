@@ -500,7 +500,6 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                                         "paddingHorizontal": 16,
                                       },
                                       {
-                                        "backgroundColor": "rgba(9,50,182,0)",
                                         "borderColor": "#0B3EE3",
                                         "borderRadius": 8,
                                         "borderWidth": 2,
@@ -631,7 +630,6 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                                         "paddingHorizontal": 16,
                                       },
                                       {
-                                        "backgroundColor": "#D13333",
                                         "borderColor": "#FFFFFF",
                                         "borderRadius": 8,
                                         "borderWidth": 0,

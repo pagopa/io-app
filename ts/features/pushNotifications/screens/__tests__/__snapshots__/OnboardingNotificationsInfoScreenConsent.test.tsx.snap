@@ -1049,7 +1049,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,

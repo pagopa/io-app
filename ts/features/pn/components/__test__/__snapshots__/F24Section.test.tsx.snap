@@ -510,7 +510,6 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                 "paddingHorizontal": 0,
                               },
                               {
-                                "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
                                 "borderRadius": 8,
                                 "borderWidth": 0,

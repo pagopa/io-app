@@ -792,7 +792,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
@@ -1666,7 +1665,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
@@ -4153,7 +4151,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
@@ -5094,7 +5091,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
@@ -6177,7 +6173,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
@@ -7124,7 +7119,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
