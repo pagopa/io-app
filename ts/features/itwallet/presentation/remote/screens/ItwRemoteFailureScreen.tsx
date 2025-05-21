@@ -21,6 +21,7 @@ import {
   useItwFailureSupportModal,
   ZendeskSubcategoryValue
 } from "../../../common/hooks/useItwFailureSupportModal.tsx";
+import { useItwSendAuthorizationErrorResponse } from "../hooks/useItwSendAuthorizationErrorResponse.tsx";
 
 const zendeskAssistanceErrors = [
   RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE
@@ -243,6 +244,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
     };
 
   const resultScreenProps = getOperationResultScreenContentProps();
+
+  useItwSendAuthorizationErrorResponse({ failure, resultScreenProps });
 
   return (
     <>

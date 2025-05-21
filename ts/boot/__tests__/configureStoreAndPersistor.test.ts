@@ -26,7 +26,7 @@ describe("configureStoreAndPersistor", () => {
   describe("CURRENT_REDUX_STORE_VERSION", () => {
     it("should match expected value", () => {
       const version = testable!.CURRENT_REDUX_STORE_VERSION;
-      expect(version).toBe(43);
+      expect(version).toBe(44);
     });
   });
   describe("migrations", () => {
