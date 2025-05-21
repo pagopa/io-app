@@ -6,7 +6,6 @@ import {
   FeatureInfo,
   H4,
   H6,
-  IOButton,
   IOColors,
   IOIcons,
   Icon,
@@ -29,6 +28,12 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import Animated, {
+  useAnimatedRef,
+  useDerivedValue,
+  useScrollViewOffset,
+  useSharedValue
+} from "react-native-reanimated";
 import ItwHero from "../../../../../img/features/itWallet/l3/itw_hero.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import {
@@ -71,11 +76,32 @@ export type ItwPaywallComponentProps = {
   onContinuePress: () => void;
 };
 
+const scrollOffset = 12;
+
 export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
   const { tos_url } = useIOSelector(tosConfigSelector);
 
   const theme = useIOTheme();
-  const [hideAnchorLink, setHideAnchorLink] = useState(false);
+
+  const [productHighlightsY, setProductHighlightsY] = useState(0);
+  const animatedRef = useAnimatedRef<Animated.ScrollView>();
+  const scrollPosition = useScrollViewOffset(animatedRef);
+  const hideAnchorLink = useSharedValue(false);
+
+  useDerivedValue(() => {
+    if (productHighlightsY > 0) {
+      // eslint-disable-next-line functional/immutable-data
+      hideAnchorLink.value =
+        scrollPosition.value >= productHighlightsY - scrollOffset;
+    }
+  });
+
+  const handleScrollToHighlights = useCallback(() => {
+    animatedRef.current?.scrollTo({
+      y: productHighlightsY - scrollOffset,
+      animated: true
+    });
+  }, [animatedRef, productHighlightsY]);
 
   const backgroundColor = IOColors[theme["appBackground-accent"]];
 
@@ -89,11 +115,12 @@ export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
 
   return (
     <IOScrollViewWithReveal
+      animatedRef={animatedRef}
       hideAnchorAction={hideAnchorLink}
       actions={{
         anchor: {
           label: "Scopri tutti i vantaggi",
-          onPress: () => Alert.alert("Scopri tutti i vantaggi")
+          onPress: handleScrollToHighlights
         },
         primary: {
           label: "Ottieni IT Wallet",
@@ -132,17 +159,15 @@ export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
               <VSpacer size={32} />
               <FeatureHighlights />
               <VSpacer size={24} />
-              <IOButton
-                onPress={() => {
-                  setHideAnchorLink(prevState => !prevState);
-                }}
-                variant="outline"
-                color="contrast"
-                label="Toggle anchor link"
-              />
-              <VSpacer size={24} />
+
               <Divider />
-              <ProductHighlights />
+              <View
+                onLayout={event => {
+                  setProductHighlightsY(event.nativeEvent.layout.y);
+                }}
+              >
+                <ProductHighlights />
+              </View>
             </View>
           </View>
           <IOMarkdown

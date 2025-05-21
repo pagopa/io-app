@@ -30,11 +30,11 @@ import Animated, {
   Easing,
   Extrapolation,
   interpolate,
+  SharedValue,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
-  withTiming,
-  WithTimingConfig
+  withTiming
 } from "react-native-reanimated";
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
 import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
@@ -57,8 +57,8 @@ type IOScrollViewWithRevealProps = WithTestID<
     headerConfig?: ComponentProps<typeof HeaderSecondLevel>;
     actions: IOScrollViewRevealActions;
     debugMode?: boolean;
-    animatedRef?: AnimatedRef<Animated.ScrollView>;
-    hideAnchorAction?: boolean;
+    animatedRef: AnimatedRef<Animated.ScrollView>;
+    hideAnchorAction: SharedValue<boolean>;
   }>
 >;
 
@@ -66,12 +66,13 @@ type IOScrollViewWithRevealProps = WithTestID<
    the gradient opaciy transition */
 const gradientOpacityScrollTrigger = 0.85;
 /* Extended gradient area above the actions */
-const gradientSafeAreaHeight: number = 120;
+const gradientSafeAreaHeight: number = 180;
 /* Margin between solid variant and link variant */
 const spaceBetweenActionAndLink: IOSpacer = 16;
 /* Extra bottom margin for iPhone bottom handle because
    Link variant doesn't have a fixed height */
 const extraSafeAreaMargin: IOSpacingScale = 8;
+const anchorLinkTransitionDuration: number = 400; // in ms
 
 const styles = StyleSheet.create({
   gradientBottomActions: {
@@ -112,7 +113,7 @@ export const IOScrollViewWithReveal = ({
   actions,
   debugMode = false,
   animatedRef,
-  hideAnchorAction = false,
+  hideAnchorAction,
   testID
 }: IOScrollViewWithRevealProps) => {
   const alertProps = useStatusAlertProps();
@@ -206,6 +207,27 @@ export const IOScrollViewWithReveal = ({
     }
   }, [headerConfig, navigation, scrollPositionAbsolute, ignoreSafeAreaMargin]);
 
+  const anchorLinkHeight = useSharedValue(0);
+
+  const anchorLinkAnimatedStyle = useAnimatedStyle(() => {
+    const transitionConfig = {
+      duration: anchorLinkTransitionDuration,
+      easing: Easing.inOut(Easing.exp)
+    };
+
+    return {
+      opacity: withTiming(hideAnchorAction.value ? 0 : 1, transitionConfig),
+      transform: [
+        {
+          translateY: withTiming(
+            hideAnchorAction.value ? anchorLinkHeight.value : 0,
+            transitionConfig
+          )
+        }
+      ]
+    };
+  });
+
   return (
     <Fragment>
       <Animated.ScrollView
@@ -276,19 +298,15 @@ export const IOScrollViewWithReveal = ({
             />
           </Animated.View>
           <View style={styles.buttonContainer} pointerEvents="box-none">
-            {!hideAnchorAction && (
-              <Animated.View
-                entering={enterTransitionAnchorLink}
-                exiting={exitTransitionAnchorLink}
-                style={{
-                  position: "absolute",
-                  alignSelf: "center"
-                }}
-              >
-                <IOButton variant="link" color="contrast" {...actions.anchor} />
-                <VSpacer size={spaceBetweenActionAndLink} />
-              </Animated.View>
-            )}
+            <Animated.View
+              onLayout={event => {
+                anchorLinkHeight.value = event.nativeEvent.layout.height;
+              }}
+              style={[{ alignSelf: "center" }, anchorLinkAnimatedStyle]}
+            >
+              <IOButton variant="link" color="contrast" {...actions.anchor} />
+              <VSpacer size={spaceBetweenActionAndLink} />
+            </Animated.View>
 
             <View style={{ marginBottom: extraBottomMargin }}>
               <IOButton
@@ -303,55 +321,4 @@ export const IOScrollViewWithReveal = ({
       )}
     </Fragment>
   );
-};
-
-/**
-A custom enter transition designed for the anchor link
-used in the `IOScrollViewWithReveal` component.
-*/
-
-const anchorLinkTransitionDuration: number = 600; /* in ms */
-
-const enterTransitionConfig: WithTimingConfig = {
-  duration: anchorLinkTransitionDuration,
-  easing: Easing.out(Easing.exp)
-};
-
-const exitTransitionConfig: WithTimingConfig = {
-  duration: anchorLinkTransitionDuration,
-  easing: Easing.inOut(Easing.exp)
-};
-
-const enterTransitionAnchorLink = (values: { targetHeight: number }) => {
-  "worklet";
-  const animations = {
-    opacity: withTiming(1, enterTransitionConfig),
-    transform: [
-      { translateY: withTiming(-values.targetHeight, enterTransitionConfig) }
-    ]
-  };
-  const initialValues = {
-    opacity: 0,
-    transform: [{ translateY: 0 }]
-  };
-  return {
-    initialValues,
-    animations
-  };
-};
-
-const exitTransitionAnchorLink = (values: { currentHeight: number }) => {
-  "worklet";
-  const animations = {
-    opacity: withTiming(0, exitTransitionConfig),
-    transform: [{ translateY: withTiming(0, exitTransitionConfig) }]
-  };
-  const initialValues = {
-    opacity: 1,
-    transform: [{ translateY: -values.currentHeight }]
-  };
-  return {
-    initialValues,
-    animations
-  };
 };
