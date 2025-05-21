@@ -11,11 +11,9 @@ import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUti
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
-import {
-  itwIsClaimValueHiddenSelector
-} from "../../../common/store/selectors/preferences.ts";
+import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
-import {isItwCredential} from "../../../common/utils/itwCredentialUtils.ts";
+import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
 type Props = {

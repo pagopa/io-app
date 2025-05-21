@@ -6,7 +6,10 @@ import {
 import { useMemo, memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
-import { getCredentialNameFromType, isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
+import {
+  getCredentialNameFromType,
+  isItwCredential
+} from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";

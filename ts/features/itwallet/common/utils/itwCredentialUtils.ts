@@ -1,11 +1,11 @@
 import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { decode } from "@pagopa/io-react-native-jwt";
+import * as E from "fp-ts/lib/Either";
 import I18n from "../../../../i18n";
 import { CredentialType } from "./itwMocksUtils";
 import { ItwCredentialStatus } from "./itwTypesUtils";
-import { decode } from "@pagopa/io-react-native-jwt";
-import * as E from "fp-ts/lib/Either";
 
 export const itwCredentialNameByCredentialType: {
   [type: string]: string;

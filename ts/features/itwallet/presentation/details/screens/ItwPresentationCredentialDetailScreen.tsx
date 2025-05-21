@@ -39,9 +39,7 @@ import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresent
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
-import {
-  itwIsPendingReviewSelector
-} from "../../../common/store/selectors/preferences.ts";
+import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
 import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
