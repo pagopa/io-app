@@ -9,7 +9,10 @@ import { differentProfileLoggedIn } from "../../../../../store/actions/crossSess
 import * as remoteConfig from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { loginSuccess } from "../../../../authentication/common/store/actions";
+import {
+  loginSuccess,
+  logoutSuccess
+} from "../../../../authentication/common/store/actions";
 import * as serviceDetails from "../../../../services/details/store/reducers";
 import { dismissPnActivationReminderBanner } from "../../../store/actions";
 import * as bannerDismiss from "../bannerDismiss";
@@ -79,6 +82,8 @@ describe("persistedPnBannerDismissReducer", () => {
         store.dispatch(dismissPnActivationReminderBanner());
       }
       expect(store.getState()).toEqual({ dismissed: hasBeenDismissed });
+
+      store.dispatch(logoutSuccess());
 
       store.dispatch(
         loginSuccess({
