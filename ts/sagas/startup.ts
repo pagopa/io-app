@@ -125,7 +125,7 @@ import {
 } from "../store/actions/startup";
 import {
   isIdPayEnabledSelector,
-  isPnEnabledSelector,
+  isPnRemoteEnabledSelector,
   remoteConfigSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import {
@@ -660,8 +660,8 @@ export function* initializeApplicationSaga(
   // Start watching for cgn actions
   yield* fork(watchBonusCgnSaga, sessionToken);
 
-  const pnEnabled: ReturnType<typeof isPnEnabledSelector> = yield* select(
-    isPnEnabledSelector
+  const pnEnabled: ReturnType<typeof isPnRemoteEnabledSelector> = yield* select(
+    isPnRemoteEnabledSelector
   );
 
   if (pnEnabled) {

@@ -1,14 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../store/actions/types";
-import { dismissPnActivationReminderBanner } from "../../store/actions";
-import { GlobalState } from "../../../../store/reducers/types";
-import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   logoutFailure,
   logoutSuccess
 } from "../../../../features/authentication/common/store/actions";
+import { Action } from "../../../../store/actions/types";
+import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { GlobalState } from "../../../../store/reducers/types";
+import { dismissPnActivationReminderBanner } from "../../store/actions";
 
 export type PnBannerDismissState = {
   dismissed: boolean;
@@ -47,7 +47,9 @@ export const persistedPnBannerDismissReducer = persistReducer(
 export const isPnActivationReminderBannerRenderableSelector = (
   state: GlobalState
 ) => {
-  const isPnEnabled = isPnEnabledSelector(state);
-  const hasBeenDismissed = state.features.pn.bannerDismiss.dismissed === true;
-  return isPnEnabled && !hasBeenDismissed;
+  const hasBannerBeenDismissed =
+    state.features.pn.bannerDismiss.dismissed === true;
+  const isPnRemoteEnabled = isPnRemoteEnabledSelector(state);
+
+  return isPnRemoteEnabled && !hasBannerBeenDismissed;
 };

@@ -3,7 +3,7 @@ import { ServiceDetails } from "../../../../../definitions/services/ServiceDetai
 import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { serviceByIdSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
 import { fimsCtaTextSelector } from "../../singleSignOn/store/selectors";
 
 export const trackAuthenticationStart = (
@@ -140,7 +140,7 @@ export const computeAndTrackDataShareAccepted = (
   serviceId: ServiceId,
   state: GlobalState
 ) => {
-  const service = serviceByIdSelector(state, serviceId);
+  const service = serviceDetailsByIdSelector(state, serviceId);
   const ctaText = fimsCtaTextSelector(state);
   trackDataShareAccepted(
     serviceId,

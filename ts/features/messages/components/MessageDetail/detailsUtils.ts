@@ -1,6 +1,6 @@
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { GlobalState } from "../../../../store/reducers/types";
-import { serviceByIdSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
 import { trackCTAPressed, trackPaymentStart } from "../../analytics";
 import { CTA } from "../../../../types/LocalizedCTAs";
 
@@ -10,7 +10,7 @@ export const computeAndTrackCTAPressAnalytics = (
   serviceId: ServiceId,
   state: GlobalState
 ) => {
-  const service = serviceByIdSelector(state, serviceId);
+  const service = serviceDetailsByIdSelector(state, serviceId);
   trackCTAPressed(
     serviceId,
     service?.name,
@@ -25,7 +25,7 @@ export const computeAndTrackPaymentStart = (
   serviceId: ServiceId,
   state: GlobalState
 ) => {
-  const service = serviceByIdSelector(state, serviceId);
+  const service = serviceDetailsByIdSelector(state, serviceId);
   trackPaymentStart(
     serviceId,
     service?.name,
