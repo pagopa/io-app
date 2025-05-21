@@ -4,15 +4,13 @@ jest.mock("../../../../services/details/store/reducers");
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 import { PersistPartial } from "redux-persist";
-import {
-  logoutFailure,
-  logoutSuccess
-} from "../../../../../features/authentication/common/store/actions";
+import { logoutSuccess } from "../../../../../features/authentication/common/store/actions";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { dismissPnActivationReminderBanner } from "../../../store/actions";
+import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 import * as remoteConfig from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { GlobalState } from "../../../../../store/reducers/types";
 import * as serviceDetails from "../../../../services/details/store/reducers";
+import { dismissPnActivationReminderBanner } from "../../../store/actions";
 import * as bannerDismiss from "../bannerDismiss";
 
 const mockIsPnRemoteEnabledSelector = jest.fn();
@@ -59,17 +57,29 @@ describe("persistedPnBannerDismissReducer", () => {
     const state = persistedPnBannerDismissReducer(nonDimsissedState, action);
     expect(state).toEqual(nonDimsissedState);
   });
-  ["success", "failure"].forEach(type => {
-    it(`should reset state on logout ${type}`, () => {
+  const testCases = [true, false]
+    .map(isSameUser =>
+      [true, false].map(hasBeenDismissed => ({
+        isSameUser,
+        hasBeenDismissed,
+        result: isSameUser ? hasBeenDismissed : false
+      }))
+    )
+    .flat();
+
+  testCases.forEach(({ isSameUser, hasBeenDismissed, result }) => {
+    it(`should ${
+      isSameUser ? "not " : ""
+    }reset state on login, after the banner has ${
+      hasBeenDismissed ? "" : "not "
+    }been dismissed`, () => {
       const store = createStore(persistedPnBannerDismissReducer);
-      store.dispatch(dismissPnActivationReminderBanner());
-      expect(store.getState()).toEqual({ dismissed: true });
-      store.dispatch(
-        type === "success"
-          ? logoutSuccess()
-          : logoutFailure({ error: new Error() })
-      );
-      expect(store.getState()).toEqual({ dismissed: false });
+      if (hasBeenDismissed) {
+        store.dispatch(dismissPnActivationReminderBanner());
+      }
+      expect(store.getState()).toEqual({ dismissed: hasBeenDismissed });
+      store.dispatch(isSameUser ? logoutSuccess() : differentProfileLoggedIn());
+      expect(store.getState()).toEqual({ dismissed: result });
     });
   });
 });
