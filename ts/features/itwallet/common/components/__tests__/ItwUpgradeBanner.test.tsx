@@ -8,7 +8,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import * as selectors from "../../store/selectors";
 import { ItwUpgradeBanner } from "../ItwUpgradeBanner";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import * as cieUtils from "../../../../authentication/login/cie/utils/cie";
 
 import I18n from "../../../../../i18n";
 
@@ -21,16 +20,6 @@ jest.mock("@react-navigation/native", () => {
     useNavigation: () => ({
       navigate: mockNavigate
     })
-  };
-});
-
-jest.mock("../../../../authentication/login/cie/utils/cie", () => {
-  const actual = jest.requireActual(
-    "../../../../authentication/login/cie/utils/cie"
-  );
-  return {
-    ...actual,
-    isNfcEnabled: jest.fn()
   };
 });
 
@@ -57,8 +46,6 @@ describe("ItwUpgradeBanner", () => {
     jest
       .spyOn(selectors, "itwShouldRenderL3UpgradeBannerSelector")
       .mockReturnValue(true);
-
-    (cieUtils.isNfcEnabled as jest.Mock).mockResolvedValue(true);
 
     const { getByText } = renderComponent();
 
