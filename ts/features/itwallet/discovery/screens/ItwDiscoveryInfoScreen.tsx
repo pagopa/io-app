@@ -24,7 +24,7 @@ export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<
 export const ItwDiscoveryInfoScreen = ({
   route
 }: ItwDiscoveryInfoScreenProps) => {
-  const { isL3 = false } = route.params;
+  const { isL3 = false } = route.params ?? {};
 
   useFocusEffect(
     useCallback(() => {
