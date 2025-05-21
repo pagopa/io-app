@@ -27,6 +27,7 @@ const mockServicePreferenceByChannelPotSelector = jest.fn();
   mockServicePreferenceByChannelPotSelector;
 
 type PnBannerDismissState = bannerDismiss.PnBannerDismissState & PersistPartial;
+
 const nonDimsissedState: PnBannerDismissState = {
   dismissed: false,
   _persist: {
