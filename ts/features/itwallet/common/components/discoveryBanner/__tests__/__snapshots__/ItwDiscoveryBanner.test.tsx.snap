@@ -431,7 +431,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                             }
                           >
                             <View
-                              accessibilityLabel="Novità: Documenti su IO Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti! Inizia"
+                              accessibilityLabel="Novità: Documenti su IO, anche offline Da oggi puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet. Attiva Documenti su IO"
                               accessibilityRole="button"
                               accessible={true}
                               style={
@@ -460,7 +460,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                                   ]
                                 }
                               >
-                                Novità: Documenti su IO
+                                Novità: Documenti su IO, anche offline
                               </Text>
                               <Text
                                 allowFontScaling={true}
@@ -480,11 +480,11 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                                   ]
                                 }
                               >
-                                Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!
+                                Da oggi puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.
                               </Text>
                               <View
                                 accessibilityElementsHidden={true}
-                                accessibilityLabel="Inizia"
+                                accessibilityLabel="Attiva Documenti su IO"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -547,7 +547,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                                     ]
                                   }
                                 >
-                                  Inizia
+                                  Attiva Documenti su IO
                                 </Text>
                               </View>
                             </View>

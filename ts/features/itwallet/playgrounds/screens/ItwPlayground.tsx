@@ -6,7 +6,6 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { ItwBannerSection } from "../components/ItwBannerSection";
 import { ItwL3Section } from "../components/ItwL3Section";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
-import { ItwOfflineSection } from "../components/ItwOfflineSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
 
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
@@ -32,7 +31,6 @@ const ItwPlayground = () => {
     <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
       <ContentWrapper>
         <VStack space={8}>
-          <ItwOfflineSection />
           <ItwL3Section />
           <ItwLifecycleSection />
           <ItwSkeumorphicCredentialSection />
