@@ -6,16 +6,16 @@ import {
 import { useMemo, memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
-import {
-  getCredentialNameFromType,
-  isItwCredential
-} from "../../../common/utils/itwCredentialUtils.ts";
+import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
-type ItwPresentationDetailsHeaderProps = { credential: StoredCredential };
+type ItwPresentationDetailsHeaderProps = {
+  credential: StoredCredential;
+  isL3Credential: boolean;
+};
 
 /**
  * Credentials that should display a skeumorphic card
@@ -30,10 +30,10 @@ const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
  * If the credential needs to show the card, it will render the card, otherwise it will render the header with the title
  */
 const ItwPresentationDetailsHeader = ({
-  credential
+  credential,
+  isL3Credential
 }: ItwPresentationDetailsHeaderProps) => {
   const { isExperimental } = useIOExperimentalDesign();
-  const isL3Credential = isItwCredential(credential.credential);
   const { backgroundColor, textColor, statusBarStyle } =
     getThemeColorByCredentialType(
       credential.credentialType as CredentialType,
@@ -42,7 +42,12 @@ const ItwPresentationDetailsHeader = ({
 
   const headerContent = useMemo(() => {
     if (credentialsWithSkeumorphicCard.includes(credential.credentialType)) {
-      return <ItwPresentationCredentialCard credential={credential} />;
+      return (
+        <ItwPresentationCredentialCard
+          credential={credential}
+          isL3Credential={isL3Credential}
+        />
+      );
     }
 
     return (

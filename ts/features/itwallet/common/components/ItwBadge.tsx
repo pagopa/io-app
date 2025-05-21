@@ -44,7 +44,7 @@ const StaticGradientBackground = () => {
       <RoundedRect x={0} y={0} width={width} height={height} r={100}>
         <LinearGradient
           start={vec(0, height)}
-          end={vec(width, height + width * Math.tan(60 * Math.PI / 180))}
+          end={vec(width, height + width * Math.tan((60 * Math.PI) / 180))}
           colors={["#002FCB", "#003BFE", "#0335DA", "#053FFF", "#0335DD"]}
         />
       </RoundedRect>

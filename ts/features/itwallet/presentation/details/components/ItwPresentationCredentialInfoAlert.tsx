@@ -8,10 +8,10 @@ import {
   ItwCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils.ts";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
 
 type Props = {
   credential: StoredCredential;
+  isL3Credential: boolean;
 };
 
 const validStates: Array<ItwCredentialStatus | undefined> = [
@@ -23,13 +23,15 @@ const validStates: Array<ItwCredentialStatus | undefined> = [
 /**
  * Informative alert that is only visible when a credential is in a valid state.
  */
-const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
+const ItwPresentationCredentialInfoAlert = ({
+  credential,
+  isL3Credential
+}: Props) => {
   const { credentialType } = credential;
 
   const { status } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
 
   if (!validStates.includes(status)) {
     return null;
@@ -40,7 +42,7 @@ const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
       <Alert
         testID="itwMdlBannerTestID"
         content={
-          isL3Enabled
+          isL3Credential
             ? I18n.t("features.itWallet.presentation.alerts.mdl.contentL3")
             : I18n.t("features.itWallet.presentation.alerts.mdl.content")
         }
