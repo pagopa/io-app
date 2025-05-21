@@ -1,4 +1,3 @@
-import { isItwOfflineAccessEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
@@ -78,24 +77,20 @@ export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
  * selectors:
  * - if the wallet is operation or valid
  * - if the wallet contains at least one credential
- * - if the offline access is enabled
  */
 export const itwOfflineAccessAvailableSelector = (state: GlobalState) =>
-  isItwOfflineAccessEnabledSelector(state) &&
   itwLifecycleIsOperationalOrValid(state) &&
   state.features.itWallet.credentials.credentials.length > 0;
 
 /**
  * Returns if the offline banner should be visible. The banner is visible if:
  * - The Wallet has a valid Wallet Instance
- * - The Wallet has offline access enabled
  * - The user did not close the banner
  * @param state the application global state
  * @returns true if the banner should be visible, false otherwise
  */
 export const itwShouldRenderOfflineBannerSelector = (state: GlobalState) =>
   itwLifecycleIsValidSelector(state) &&
-  isItwOfflineAccessEnabledSelector(state) &&
   !itwIsOfflineBannerHiddenSelector(state);
 
 /**
