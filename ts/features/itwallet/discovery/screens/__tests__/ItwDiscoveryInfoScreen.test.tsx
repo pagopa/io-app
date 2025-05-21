@@ -1,10 +1,11 @@
 import configureMockStore from "redux-mock-store";
-import { createActor } from "xstate";
-import _ from "lodash";
+import { Action } from "redux";
+import { reproduceSequence } from "../../../../../utils/tests";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import * as selectors from "../../../common/store/selectors/preferences";
+import { itwHasNfcFeature } from "../../../identification/store/actions";
+import { itwSetWalletInstanceRemotelyActive } from "../../../common/store/actions/preferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
@@ -20,32 +21,38 @@ describe("ItwDiscoveryInfoScreen", () => {
     expect(component).toMatchSnapshot();
   });
 
-  it("should match the snapshot when isL3 is truea and isNfcEnabled is true", () => {
+  it("should match the snapshot when isL3 is true and hasNfcFeature is true", () => {
     const component = renderComponent(true, true);
     expect(component).toMatchSnapshot();
   });
 
-  it("should match the snapshot when isL3 is true, isNfcEnabled is false and itwIsWalletInstanceRemotelyActiveSelector is true", () => {
-    jest
-      .spyOn(selectors, "itwIsWalletInstanceRemotelyActiveSelector")
-      .mockReturnValue(true);
-
-    const component = renderComponent(true, false);
+  it("should match the snapshot when isL3 is true, hasNfcFeature is false and itwIsWalletInstanceRemotelyActiveSelector is true", () => {
+    const component = renderComponent(true, false, true);
     expect(component).toMatchSnapshot();
   });
 
-  it("should match the snapshot when isL3 is true, isNfcEnabled is false and itwIsWalletInstanceRemotelyActiveSelector is false", () => {
-    jest
-      .spyOn(selectors, "itwIsWalletInstanceRemotelyActiveSelector")
-      .mockReturnValue(false);
-
-    const component = renderComponent(true, false);
+  it("should match the snapshot when isL3 is true, hasNfcFeature is false and itwIsWalletInstanceRemotelyActiveSelector is false", () => {
+    const component = renderComponent(true, false, false);
     expect(component).toMatchSnapshot();
   });
 });
 
-const renderComponent = (isL3: boolean, isNFCEnabled: boolean = false) => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
+const renderComponent = (
+  isL3: boolean,
+  hasNfc: boolean = false,
+  isWalletInstanceRemotelyActive: boolean = false
+) => {
+  const sequenceOfActions: ReadonlyArray<Action> = [
+    applicationChangeState("active"),
+    itwHasNfcFeature.success(hasNfc),
+    itwSetWalletInstanceRemotelyActive(isWalletInstanceRemotelyActive)
+  ];
+
+  const globalState: GlobalState = reproduceSequence(
+    {} as GlobalState,
+    appReducer,
+    sequenceOfActions
+  );
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
@@ -57,23 +64,9 @@ const renderComponent = (isL3: boolean, isNFCEnabled: boolean = false) => {
         navigateToTosScreen: () => undefined
       }
     });
-    const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
 
     return (
-      <ItwEidIssuanceMachineContext.Provider
-        logic={logic}
-        options={{
-          snapshot: _.merge(initialSnapshot, {
-            value: "Idle",
-            context: {
-              cieContext: {
-                isNFCEnabled,
-                isCIEAuthenticationSupported: true
-              }
-            }
-          })
-        }}
-      >
+      <ItwEidIssuanceMachineContext.Provider logic={logic}>
         <ItwDiscoveryInfoScreen {...props} />
       </ItwEidIssuanceMachineContext.Provider>
     );

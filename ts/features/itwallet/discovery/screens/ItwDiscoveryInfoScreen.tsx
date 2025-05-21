@@ -2,12 +2,12 @@ import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
-import { isNFCEnabledSelector } from "../../machine/eid/selectors.ts";
 import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoComponent.tsx";
 import { ItwPaywallComponent } from "../components/ItwPaywallComponent.tsx";
 import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
 import { trackItWalletIntroScreen } from "../../analytics/index.ts";
+import { useIOSelector } from "../../../../store/hooks.ts";
+import { itwHasNfcFeatureSelector } from "../../identification/store/selectors/index.ts";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
   isL3?: boolean;
@@ -40,10 +40,9 @@ export const ItwDiscoveryInfoScreen = ({
 };
 
 const ItwL3DiscoveryInfoComponent = () => {
-  const isNfcEnabled =
-    ItwEidIssuanceMachineContext.useSelector(isNFCEnabledSelector);
+  const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
 
-  if (!isNfcEnabled) {
+  if (!hasNfcFeature) {
     return <ItwNfcNotSupportedComponent />;
   }
 
