@@ -11,6 +11,8 @@ import {
   EvaluateRelyingPartyTrustOutput,
   GetPresentationDetailsInput,
   GetPresentationDetailsOutput,
+  GetRequestObjectInput,
+  GetRequestObjectOutput,
   SendAuthorizationResponseInput,
   SendAuthorizationResponseOutput
 } from "../actors.ts";
@@ -45,6 +47,7 @@ describe("itwRemoteMachine", () => {
   const isEidExpired = jest.fn();
 
   const evaluateRelyingPartyTrust = jest.fn();
+  const getRequestObject = jest.fn();
   const getPresentationDetails = jest.fn();
   const sendAuthorizationResponse = jest.fn();
 
@@ -62,6 +65,10 @@ describe("itwRemoteMachine", () => {
         EvaluateRelyingPartyTrustOutput,
         EvaluateRelyingPartyTrustInput
       >(evaluateRelyingPartyTrust),
+      getRequestObject: fromPromise<
+        GetRequestObjectOutput,
+        GetRequestObjectInput
+      >(getRequestObject),
       getPresentationDetails: fromPromise<
         GetPresentationDetailsOutput,
         GetPresentationDetailsInput
@@ -231,6 +238,7 @@ describe("itwRemoteMachine", () => {
      */
     const rpConf = {} as RelyingPartyConfiguration;
     const presentationDetails = [] as EnrichedPresentationDetails;
+    const unverifiedRequestObject = "";
     const requestObject = {
       ...({} as RequestObject),
       client_id: T_CLIENT_ID,
@@ -251,6 +259,7 @@ describe("itwRemoteMachine", () => {
       rpConf,
       rpSubject: T_CLIENT_ID
     });
+    getRequestObject.mockResolvedValue(unverifiedRequestObject);
     getPresentationDetails.mockResolvedValue({
       requestObject,
       presentationDetails
@@ -286,6 +295,19 @@ describe("itwRemoteMachine", () => {
     });
 
     /**
+     * Get the RequestObject from the RP
+     */
+    await waitFor(actor, snapshot => snapshot.matches("GettingRequestObject"));
+    expect(getRequestObject).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
+      ...InitialContext,
+      requestObjectEncodedJwt: unverifiedRequestObject,
+      payload: qrCodePayload,
+      rpConf,
+      rpSubject: T_CLIENT_ID
+    });
+
+    /**
      * Get the presentation details from the RP
      */
     await waitFor(actor, snapshot =>
@@ -294,6 +316,7 @@ describe("itwRemoteMachine", () => {
     expect(getPresentationDetails).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       rpConf,
       rpSubject: T_CLIENT_ID,
@@ -314,6 +337,7 @@ describe("itwRemoteMachine", () => {
     actor.send({ type: "toggle-credential", credentialIds: ["cred03"] });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       rpConf,
       rpSubject: T_CLIENT_ID,
@@ -333,6 +357,7 @@ describe("itwRemoteMachine", () => {
     expect(sendAuthorizationResponse).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       rpConf,
       rpSubject: T_CLIENT_ID,
@@ -355,6 +380,7 @@ describe("itwRemoteMachine", () => {
     isWalletActive.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
     evaluateRelyingPartyTrust.mockResolvedValue({});
+    getRequestObject.mockReturnValue("");
     getPresentationDetails.mockRejectedValue({ message: "ERROR" });
 
     const actor = createActor(mockedMachine);

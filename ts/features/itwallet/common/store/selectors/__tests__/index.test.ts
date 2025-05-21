@@ -12,14 +12,12 @@ import { itwStoreIntegrityKeyTag } from "../../../../issuance/store/actions";
 import { itwCredentialsStore } from "../../../../credentials/store/actions";
 import { CredentialType } from "../../../utils/itwMocksUtils";
 import { StoredCredential } from "../../../utils/itwTypesUtils";
-import { setItwOfflineAccessEnabled } from "../../../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../../../store/reducers";
 import { Action } from "../../../../../../store/actions/types";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import * as credentialsSelectors from "../../../../credentials/store/selectors";
 import * as preferencesSelectors from "../preferences";
 import * as remoteConfigSelectors from "../remoteConfig";
-import * as persistedSelectors from "../../../../../../store/reducers/persistedPreferences.ts";
 import * as ingressSelectors from "../../../../../ingress/store/selectors";
 import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
 
@@ -129,8 +127,7 @@ describe("itwOfflineAccessAvailableSelector", () => {
           { credentialType: CredentialType.PID },
           { credentialType: CredentialType.DRIVING_LICENSE }
         ] as Array<StoredCredential>)
-      ),
-      curriedAppReducer(setItwOfflineAccessEnabled(true))
+      )
     );
 
     expect(itwOfflineAccessAvailableSelector(globalState)).toEqual(true);
@@ -147,36 +144,24 @@ describe("itwOfflineAccessAvailableSelector", () => {
         itwCredentialsStore([
           { credentialType: CredentialType.PID }
         ] as Array<StoredCredential>)
-      ),
-      curriedAppReducer(setItwOfflineAccessEnabled(true))
+      )
     );
 
     expect(itwOfflineAccessAvailableSelector(globalState)).toEqual(false);
   });
 
   it.each`
-    isWalletValid | isOfflineEnabled | isBannerHidden | shouldRenderBanner
-    ${true}       | ${true}          | ${false}       | ${true}
-    ${true}       | ${true}          | ${true}        | ${false}
-    ${false}      | ${true}          | ${false}       | ${false}
-    ${false}      | ${true}          | ${true}        | ${false}
-    ${true}       | ${false}         | ${false}       | ${false}
-    ${true}       | ${false}         | ${true}        | ${false}
+    isWalletValid | isBannerHidden | shouldRenderBanner
+    ${false}      | ${false}       | ${false}
+    ${false}      | ${true}        | ${false}
+    ${true}       | ${false}       | ${true}
+    ${true}       | ${true}        | ${false}
   `(
-    "should render banner: $shouldRenderBanner when wallet valid: $isWalletValid, offline enabled: $isOfflineEnabled and banner hidden: $isBannerHidden",
-    ({
-      isWalletValid,
-      isOfflineEnabled,
-      isBannerHidden,
-      shouldRenderBanner
-    }) => {
+    "should render banner: $shouldRenderBanner when wallet valid: $isWalletValid and banner hidden: $isBannerHidden",
+    ({ isWalletValid, isBannerHidden, shouldRenderBanner }) => {
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockImplementation(() => isWalletValid);
-
-      jest
-        .spyOn(persistedSelectors, "isItwOfflineAccessEnabledSelector")
-        .mockImplementation(() => isOfflineEnabled);
 
       jest
         .spyOn(preferencesSelectors, "itwIsOfflineBannerHiddenSelector")
