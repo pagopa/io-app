@@ -1,8 +1,8 @@
 import { StatusBarStyle } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { getCredentialNameFromType } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";
-import { IOColors } from "@pagopa/io-app-design-system";
 
 export type CredentialTheme = {
   backgroundColor: string;
