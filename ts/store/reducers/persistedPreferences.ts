@@ -20,7 +20,6 @@ import {
   preferencesPnTestEnvironmentSetEnabled,
   preferencesIdPayTestSetEnabled,
   preferencesExperimentalDesignEnabled,
-  setItwOfflineAccessEnabled,
   preferencesFontSet,
   TypefaceChoice
 } from "../actions/persistedPreferences";
@@ -48,7 +47,6 @@ export type PersistedPreferencesState = Readonly<{
   // changing the variable value later). Typescript cannot detect this so
   // be sure to handle such case when reading and using this value
   isExperimentalDesignEnabled: boolean;
-  isItwOfflineAccessEnabled: boolean;
   fontPreference: TypefaceChoice;
 }>;
 
@@ -64,7 +62,6 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isPnTestEnabled: false,
   isIdPayTestEnabled: false,
   isExperimentalDesignEnabled: false,
-  isItwOfflineAccessEnabled: false,
   fontPreference: "comfortable"
 };
 
@@ -168,13 +165,6 @@ export default function preferencesReducer(
     };
   }
 
-  if (isActionOf(setItwOfflineAccessEnabled, action)) {
-    return {
-      ...state,
-      isItwOfflineAccessEnabled: action.payload
-    };
-  }
-
   return state;
 }
 
@@ -219,9 +209,6 @@ export const isExperimentalDesignEnabledSelector = (state: GlobalState) =>
 
 export const fontPreferenceSelector = (state: GlobalState): TypefaceChoice =>
   state.persistedPreferences.fontPreference ?? "comfortable";
-
-export const isItwOfflineAccessEnabledSelector = (state: GlobalState) =>
-  state.persistedPreferences.isItwOfflineAccessEnabled;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<
