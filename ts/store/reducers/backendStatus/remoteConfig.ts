@@ -217,7 +217,7 @@ export const barcodesScannerConfigSelector = createSelector(
  * Return the remote config about PN enabled/disabled
  * if there is no data, false is the default value -> (PN disabled)
  */
-export const isPnEnabledSelector = (state: GlobalState) =>
+export const isPnRemoteEnabledSelector = (state: GlobalState) =>
   pipe(
     state.remoteConfig,
     O.map(config => config.pn.enabled),
