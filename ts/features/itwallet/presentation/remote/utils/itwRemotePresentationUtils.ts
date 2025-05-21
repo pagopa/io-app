@@ -44,7 +44,7 @@ export const enrichPresentationDetails = (
   presentationDetails.map(details => {
     const credential = credentialsByType[details.vct];
 
-    // This should never happen if we passed the DCQL query evaluation
+    // This should never happen if we pass the DCQL query evaluation
     assert(credential, `${details.vct} credential was not found in the wallet`);
 
     const parsedClaims = parseClaims(credential.parsedCredential, {
@@ -53,10 +53,10 @@ export const enrichPresentationDetails = (
 
     return {
       ...details,
+      // Only include claims that are part of the parsed credential
+      // This ensures that technical claims like `iat` are not displayed to the user
       claimsToDisplay: details.requiredDisclosures
         .map(([, claimName]) => parsedClaims.find(({ id }) => id === claimName))
-        // Only include claims that are part of the parsed credential
-        // This ensures that technical claims like `iat` are not displayed to the user
         .filter(isDefined)
     };
   });
