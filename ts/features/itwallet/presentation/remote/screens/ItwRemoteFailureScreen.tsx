@@ -134,7 +134,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 `${i18nNs}.missingCredentialsScreen.secondaryAction`
               ),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: dismissalDialog.show
             }
           };
         }
@@ -156,22 +156,20 @@ const ContentView = ({ failure }: ContentViewProps) => {
         }
         case RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE: {
           return {
-            title: I18n.t(
-              "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.title"
-            ),
+            title: I18n.t(`${i18nNs}.relyingParty.invalidAuthResponse.title`),
             subtitle: I18n.t(
-              "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.subtitle"
+              `${i18nNs}.relyingParty.invalidAuthResponse.subtitle`
             ),
             pictogram: "stopSecurity",
             action: {
               label: I18n.t(
-                "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.primaryAction"
+                `${i18nNs}.relyingParty.invalidAuthResponse.primaryAction`
               ),
               onPress: () => machineRef.send({ type: "close" })
             },
             secondaryAction: {
               label: I18n.t(
-                "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.secondaryAction"
+                `${i18nNs}.relyingParty.invalidAuthResponse.secondaryAction`
               ),
               onPress: failureSupportModal.present
             }
@@ -179,22 +177,18 @@ const ContentView = ({ failure }: ContentViewProps) => {
         }
         case RemoteFailureType.RELYING_PARTY_GENERIC: {
           return {
-            title: I18n.t(
-              "features.itWallet.presentation.remote.relyingParty.genericError.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.presentation.remote.relyingParty.genericError.subtitle"
-            ),
+            title: I18n.t(`${i18nNs}.relyingParty.genericError.title`),
+            subtitle: I18n.t(`${i18nNs}.relyingParty.genericError.subtitle`),
             pictogram: "umbrella",
             action: {
               label: I18n.t(
-                "features.itWallet.presentation.remote.relyingParty.genericError.primaryAction"
+                `${i18nNs}.relyingParty.genericError.primaryAction`
               ),
               onPress: () => machineRef.send({ type: "go-to-barcode-scan" })
             },
             secondaryAction: {
               label: I18n.t(
-                "features.itWallet.presentation.remote.relyingParty.genericError.secondaryAction"
+                `${i18nNs}.relyingParty.genericError.secondaryAction`
               ),
               onPress: () => machineRef.send({ type: "close" })
             }
@@ -202,16 +196,14 @@ const ContentView = ({ failure }: ContentViewProps) => {
         }
         case RemoteFailureType.INVALID_REQUEST_OBJECT: {
           return {
-            title: I18n.t(
-              "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.title"
-            ),
+            title: I18n.t(`${i18nNs}.relyingParty.invalidRequestObject.title`),
             subtitle: I18n.t(
-              "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.subtitle"
+              `${i18nNs}.relyingParty.invalidRequestObject.subtitle`
             ),
             pictogram: "umbrella",
             action: {
               label: I18n.t(
-                "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.primaryAction"
+                `${i18nNs}.relyingParty.invalidRequestObject.primaryAction`
               ),
               onPress: () => machineRef.send({ type: "close" })
             }
@@ -219,23 +211,15 @@ const ContentView = ({ failure }: ContentViewProps) => {
         }
         case RemoteFailureType.UNTRUSTED_RP: {
           return {
-            title: I18n.t(
-              "features.itWallet.presentation.remote.untrustedRpScreen.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.presentation.remote.untrustedRpScreen.subtitle"
-            ),
+            title: I18n.t(`${i18nNs}.untrustedRpScreen.title`),
+            subtitle: I18n.t(`${i18nNs}.untrustedRpScreen.subtitle`),
             pictogram: "stopSecurity",
             action: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.untrustedRpScreen.primaryAction"
-              ),
+              label: I18n.t(`${i18nNs}.untrustedRpScreen.primaryAction`),
               onPress: () => machineRef.send({ type: "close" })
             },
             secondaryAction: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.untrustedRpScreen.secondaryAction"
-              ),
+              label: I18n.t(`${i18nNs}.untrustedRpScreen.secondaryAction`),
               onPress: present
             }
           };

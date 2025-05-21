@@ -9,6 +9,7 @@ import {
   checkWalletInstanceInconsistencySaga,
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
+import { checkHasNfcFeatureSaga } from "../../identification/saga";
 import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
 
@@ -40,4 +41,6 @@ export function* watchItwSaga(): SagaIterator {
 export function* watchItwOfflineSaga(): SagaIterator {
   yield* fork(watchItwCredentialsSaga);
   yield* fork(handleWalletCredentialsRehydration);
+  // Check if the device has the NFC Feature
+  yield* fork(checkHasNfcFeatureSaga);
 }
