@@ -41,9 +41,6 @@ const NotificationPayload = t.partial({
 });
 
 export const configurePushNotifications = (store: Store) => {
-  if (isDevEnv) {
-    return;
-  }
   // Create the default channel used for notifications, the callback return false if the channel already exists
   PushNotification.createChannel(
     {
