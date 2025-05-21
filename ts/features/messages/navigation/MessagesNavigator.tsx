@@ -5,7 +5,7 @@ import { MessageRouterScreen } from "../screens/MessageRouterScreen";
 import { PnStackNavigator } from "../../pn/navigation/navigator";
 import PN_ROUTES from "../../pn/navigation/routes";
 import { useIOSelector } from "../../../store/hooks";
-import { isPnEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessageGreenPassScreen } from "../screens/MessageGreenPassScreen";
 import { MessagesParamsList } from "./params";
@@ -14,7 +14,7 @@ import { MESSAGES_ROUTES } from "./routes";
 const Stack = createStackNavigator<MessagesParamsList>();
 
 export const MessagesStackNavigator = () => {
-  const isPnEnabled = useIOSelector(isPnEnabledSelector);
+  const isPnEnabled = useIOSelector(isPnRemoteEnabledSelector);
 
   return (
     <Stack.Navigator

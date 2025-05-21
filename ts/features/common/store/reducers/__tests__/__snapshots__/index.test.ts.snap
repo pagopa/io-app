@@ -257,6 +257,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "history": {
       "PDFsOpened": Set {},
       "archive": [],
+      "paymentsOngoingFailed": {},
       "receiptsOpened": Set {},
     },
     "home": {

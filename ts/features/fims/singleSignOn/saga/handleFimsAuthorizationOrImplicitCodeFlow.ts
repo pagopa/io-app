@@ -25,7 +25,7 @@ import {
   lollipopPublicKeySelector
 } from "../../../lollipop/store/reducers/lollipop";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
-import { serviceByIdSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
 import {
   fimsCtaTextSelector,
   relyingPartyServiceIdSelector
@@ -383,7 +383,7 @@ const validateAndProcessExtractedFormData = (
 export function* computeAndTrackInAppBrowserOpening() {
   const serviceId = yield* select(relyingPartyServiceIdSelector);
   const service = serviceId
-    ? yield* select(serviceByIdSelector, serviceId)
+    ? yield* select(serviceDetailsByIdSelector, serviceId)
     : undefined;
   const ctaText = yield* select(fimsCtaTextSelector);
   yield* call(
