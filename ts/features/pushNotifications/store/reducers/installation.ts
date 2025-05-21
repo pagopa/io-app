@@ -58,6 +58,21 @@ export const installationReducer = (
 ): InstallationState => {
   switch (action.type) {
     case getType(newPushNotificationsToken):
+      const actionToken = action.payload;
+      // If registeredToken is defined and matches the action's token,
+      // then the tokenStatus must be preserved. The input state is
+      // returned, since there are no changes to the state.
+      if (
+        state.registeredToken != null &&
+        state.registeredToken === actionToken
+      ) {
+        return state;
+      }
+      // In this case:
+      // - registeredToken is undefined, then tokenStatus must be unsent
+      // - registeredToken is defined but different from the action's
+      //   token, then tokenStatus must be unsent since it is new,
+      //   regardless of the previous tokenState
       return {
         ...state,
         token: action.payload,
