@@ -4,11 +4,12 @@ jest.mock("../../../../services/details/store/reducers");
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 import { PersistPartial } from "redux-persist";
-import { logoutSuccess } from "../../../../../features/authentication/common/store/actions";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 import * as remoteConfig from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { SessionToken } from "../../../../../types/SessionToken";
+import { loginSuccess } from "../../../../authentication/common/store/actions";
 import * as serviceDetails from "../../../../services/details/store/reducers";
 import { dismissPnActivationReminderBanner } from "../../../store/actions";
 import * as bannerDismiss from "../bannerDismiss";
@@ -78,7 +79,18 @@ describe("persistedPnBannerDismissReducer", () => {
         store.dispatch(dismissPnActivationReminderBanner());
       }
       expect(store.getState()).toEqual({ dismissed: hasBeenDismissed });
-      store.dispatch(isSameUser ? logoutSuccess() : differentProfileLoggedIn());
+
+      store.dispatch(
+        loginSuccess({
+          token: "" as SessionToken,
+          idp: "test"
+        })
+      );
+
+      if (!isSameUser) {
+        store.dispatch(differentProfileLoggedIn());
+      }
+
       expect(store.getState()).toEqual({ dismissed: result });
     });
   });
