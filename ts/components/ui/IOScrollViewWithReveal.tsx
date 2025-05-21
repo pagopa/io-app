@@ -1,6 +1,7 @@
 /* eslint-disable functional/immutable-data */
 import {
   HeaderSecondLevel,
+  hexToRgba,
   IOButton,
   IOButtonBlockSpecificProps,
   IOButtonLinkSpecificProps,
@@ -8,9 +9,8 @@ import {
   IOSpacer,
   IOSpacingScale,
   IOVisualCostants,
-  VSpacer,
-  hexToRgba,
-  useIOTheme
+  useIOTheme,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 
@@ -29,12 +29,12 @@ import Animated, {
   AnimatedRef,
   Easing,
   Extrapolation,
-  FadeIn,
-  FadeOut,
   interpolate,
   useAnimatedScrollHandler,
   useAnimatedStyle,
-  useSharedValue
+  useSharedValue,
+  withTiming,
+  WithTimingConfig
 } from "react-native-reanimated";
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
 import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
@@ -277,31 +277,80 @@ export const IOScrollViewWithReveal = ({
           <View style={styles.buttonContainer} pointerEvents="box-none">
             {!hideAnchorAction && (
               <Animated.View
-                entering={FadeIn.duration(200).easing(
-                  Easing.inOut(Easing.ease)
-                )}
-                exiting={FadeOut.duration(200).easing(
-                  Easing.inOut(Easing.ease)
-                )}
-                style={{
-                  alignSelf: "center",
-                  marginBottom: extraBottomMargin
-                }}
+                entering={enterTransitionAnchorLink}
+                exiting={exitTransitionAnchorLink}
+                style={{ alignSelf: "center" }}
               >
                 <IOButton variant="link" color="contrast" {...actions.anchor} />
                 <VSpacer size={spaceBetweenActionAndLink} />
               </Animated.View>
             )}
 
-            <IOButton
-              variant="solid"
-              color="contrast"
-              fullWidth
-              {...actions.primary}
-            />
+            <View style={{ marginBottom: extraBottomMargin }}>
+              <IOButton
+                variant="solid"
+                color="contrast"
+                fullWidth
+                {...actions.primary}
+              />
+            </View>
           </View>
         </View>
       )}
     </Fragment>
   );
+};
+
+/**
+A custom enter transition designed for the anchor link
+used in the `IOScrollViewWithReveal` component.
+*/
+
+const anchorLinkEnterTransitionDuration: number = 500; /* in ms */
+const anchorLinkExitTransitionDuration: number = 400; /* in ms */
+
+const enterTransitionConfig: WithTimingConfig = {
+  duration: anchorLinkEnterTransitionDuration,
+  easing: Easing.out(Easing.exp)
+};
+
+const exitTransitionConfig: WithTimingConfig = {
+  duration: anchorLinkExitTransitionDuration,
+  easing: Easing.out(Easing.exp)
+};
+
+const enterTransitionAnchorLink = (values: { targetHeight: number }) => {
+  "worklet";
+  const animations = {
+    opacity: withTiming(1, enterTransitionConfig),
+    transform: [{ translateY: withTiming(0, enterTransitionConfig) }]
+  };
+  const initialValues = {
+    opacity: 0,
+    transform: [{ translateY: values.targetHeight * 0.75 }]
+  };
+  return {
+    initialValues,
+    animations
+  };
+};
+
+const exitTransitionAnchorLink = (values: { targetHeight: number }) => {
+  "worklet";
+  const animations = {
+    opacity: withTiming(0, exitTransitionConfig),
+    transform: [
+      {
+        translateY: withTiming(values.targetHeight * 0.75, exitTransitionConfig)
+      }
+    ]
+  };
+  const initialValues = {
+    opacity: 1,
+    transform: [{ translateY: 0 }]
+  };
+  return {
+    initialValues,
+    animations
+  };
 };
