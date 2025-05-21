@@ -3425,17 +3425,18 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                             {
                               "flexShrink": 0,
                               "paddingHorizontal": 24,
+                              "position": "relative",
                               "width": "100%",
                             }
                           }
                         >
                           <View
-                            entering={BaseAnimationMock {}}
-                            exiting={BaseAnimationMock {}}
+                            entering={[Function]}
+                            exiting={[Function]}
                             style={
                               {
                                 "alignSelf": "center",
-                                "marginBottom": 0,
+                                "position": "absolute",
                               }
                             }
                           >
@@ -3575,72 +3576,49 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                             />
                           </View>
                           <View
-                            accessibilityLabel="Ottieni IT Wallet"
-                            accessibilityRole="button"
-                            accessibilityState={
-                              {
-                                "busy": false,
-                                "checked": undefined,
-                                "disabled": false,
-                                "expanded": undefined,
-                                "selected": undefined,
-                              }
-                            }
-                            accessibilityValue={
-                              {
-                                "max": undefined,
-                                "min": undefined,
-                                "now": undefined,
-                                "text": undefined,
-                              }
-                            }
-                            accessible={true}
-                            collapsable={false}
-                            focusable={true}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onResponderGrant={[Function]}
-                            onResponderMove={[Function]}
-                            onResponderRelease={[Function]}
-                            onResponderTerminate={[Function]}
-                            onResponderTerminationRequest={[Function]}
-                            onStartShouldSetResponder={[Function]}
                             style={
                               {
-                                "alignSelf": "stretch",
-                                "flexShrink": 0,
+                                "marginBottom": 0,
                               }
                             }
                           >
                             <View
+                              accessibilityLabel="Ottieni IT Wallet"
+                              accessibilityRole="button"
+                              accessibilityState={
+                                {
+                                  "busy": false,
+                                  "checked": undefined,
+                                  "disabled": false,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
+                              }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
                               style={
-                                [
-                                  {
-                                    "alignItems": "center",
-                                    "borderCurve": "continuous",
-                                    "elevation": 0,
-                                    "flexDirection": "row",
-                                    "justifyContent": "center",
-                                    "overflow": "hidden",
-                                    "textAlignVertical": "center",
-                                  },
-                                  {
-                                    "paddingHorizontal": 16,
-                                  },
-                                  {
-                                    "backgroundColor": "#FFFFFF",
-                                    "borderColor": "#0B3EE3",
-                                    "borderRadius": 8,
-                                    "borderWidth": 0,
-                                    "height": 48,
-                                  },
-                                  {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
-                                ]
+                                {
+                                  "alignSelf": "stretch",
+                                  "flexShrink": 0,
+                                }
                               }
                             >
                               <View
@@ -3648,51 +3626,82 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                                   [
                                     {
                                       "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                      "overflow": "hidden",
+                                      "textAlignVertical": "center",
                                     },
                                     {
-                                      "columnGap": 8,
+                                      "paddingHorizontal": 16,
                                     },
+                                    {
+                                      "backgroundColor": "#FFFFFF",
+                                      "borderColor": "#0B3EE3",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": 48,
+                                    },
+                                    {},
                                     false,
+                                    {
+                                      "backgroundColor": undefined,
+                                    },
                                   ]
                                 }
                               >
-                                <Text
-                                  accessibilityElementsHidden={true}
-                                  accessible={false}
-                                  allowFontScaling={true}
-                                  ellipsizeMode="tail"
-                                  importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={1}
+                                <View
                                   style={
                                     [
-                                      {},
                                       {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
                                       },
-                                      [
-                                        {
-                                          "textAlign": "auto",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
-                                          "color": undefined,
-                                        },
-                                      ],
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
                                     ]
                                   }
                                 >
-                                  Ottieni IT Wallet
-                                </Text>
+                                  <Text
+                                    accessibilityElementsHidden={true}
+                                    accessible={false}
+                                    allowFontScaling={true}
+                                    ellipsizeMode="tail"
+                                    importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": undefined,
+                                        },
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                          },
+                                          {
+                                            "color": undefined,
+                                          },
+                                        ],
+                                      ]
+                                    }
+                                  >
+                                    Ottieni IT Wallet
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
