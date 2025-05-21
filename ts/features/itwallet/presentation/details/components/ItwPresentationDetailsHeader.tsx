@@ -6,12 +6,10 @@ import {
 import { useMemo, memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
-import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
+import { getCredentialNameFromType, isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
-import { useIOSelector } from "../../../../../store/hooks.ts";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
 type ItwPresentationDetailsHeaderProps = { credential: StoredCredential };
@@ -32,11 +30,11 @@ const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
   const { isExperimental } = useIOExperimentalDesign();
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
+  const isL3Credential = isItwCredential(credential.credential);
   const { backgroundColor, textColor, statusBarStyle } =
     getThemeColorByCredentialType(
       credential.credentialType as CredentialType,
-      isL3Enabled
+      isL3Credential
     );
 
   const headerContent = useMemo(() => {

@@ -40,11 +40,11 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
 import {
-  itwIsL3EnabledSelector,
   itwIsPendingReviewSelector
 } from "../../../common/store/selectors/preferences.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
+import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -103,7 +103,7 @@ const ItwPresentationCredentialDetail = ({
 }: ItwPresentationCredentialDetailProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
+  const isL3Credential = isItwCredential(credential.credential);
 
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
@@ -164,7 +164,7 @@ const ItwPresentationCredentialDetail = ({
     credential,
     navigation,
     handleTrustmarkPress,
-    isL3Enabled
+    isL3Credential
   );
 
   return (
@@ -180,7 +180,7 @@ const ItwPresentationCredentialDetail = ({
           <ItwPresentationCredentialStatusAlert credential={credential} />
           <ItwPresentationCredentialInfoAlert credential={credential} />
           <ItwPresentationClaimsSection credential={credential} />
-          {!isL3Enabled && (
+          {!isL3Credential && (
             <ItwCredentialTrustmark
               credential={credential}
               onPress={handleTrustmarkPress}
@@ -197,13 +197,13 @@ const getCtaProps = (
   credential: StoredCredential,
   navigation: ReturnType<typeof useIONavigation>,
   trustmarkPressHandler: () => void,
-  isL3Enabled: boolean
+  isL3Credential: boolean
 ): CredentialCtaProps | undefined => {
   const { parsedCredential } = credential;
   const credentialType = credential.credentialType;
   const contentClaim = parsedCredential[WellKnownClaim.content];
 
-  if (credentialType === CredentialType.DRIVING_LICENSE && isL3Enabled) {
+  if (credentialType === CredentialType.DRIVING_LICENSE && isL3Credential) {
     return {
       label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
       icon: "qrCode",

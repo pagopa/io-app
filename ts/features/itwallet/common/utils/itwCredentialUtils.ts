@@ -4,6 +4,8 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
 import { CredentialType } from "./itwMocksUtils";
 import { ItwCredentialStatus } from "./itwTypesUtils";
+import { decode } from "@pagopa/io-react-native-jwt";
+import * as E from "fp-ts/lib/Either";
 
 export const itwCredentialNameByCredentialType: {
   [type: string]: string;
@@ -82,3 +84,16 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
   "expiring",
   "jwtExpiring"
 ];
+
+/**
+ * Checks if a credential is an ITW enabled credential by checking the
+ * JWT header's typ parameter.
+ * @param sdJwt - The SD-JWT string to check
+ * @returns boolean indicating if the credential is an ITW credential (L3)
+ */
+export const isItwCredential = (sdJwt: string): boolean =>
+  pipe(
+    E.tryCatch(() => decode(sdJwt), E.toError),
+    E.map(({ protectedHeader }) => protectedHeader.typ === "dc+sd-jwt"),
+    E.getOrElse(() => false)
+  );
