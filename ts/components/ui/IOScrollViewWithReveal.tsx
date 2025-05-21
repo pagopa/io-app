@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject
   },
   buttonContainer: {
+    position: "relative",
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     width: "100%",
     flexShrink: 0
@@ -279,7 +280,10 @@ export const IOScrollViewWithReveal = ({
               <Animated.View
                 entering={enterTransitionAnchorLink}
                 exiting={exitTransitionAnchorLink}
-                style={{ alignSelf: "center" }}
+                style={{
+                  position: "absolute",
+                  alignSelf: "center"
+                }}
               >
                 <IOButton variant="link" color="contrast" {...actions.anchor} />
                 <VSpacer size={spaceBetweenActionAndLink} />
@@ -306,28 +310,29 @@ A custom enter transition designed for the anchor link
 used in the `IOScrollViewWithReveal` component.
 */
 
-const anchorLinkEnterTransitionDuration: number = 500; /* in ms */
-const anchorLinkExitTransitionDuration: number = 400; /* in ms */
+const anchorLinkTransitionDuration: number = 600; /* in ms */
 
 const enterTransitionConfig: WithTimingConfig = {
-  duration: anchorLinkEnterTransitionDuration,
+  duration: anchorLinkTransitionDuration,
   easing: Easing.out(Easing.exp)
 };
 
 const exitTransitionConfig: WithTimingConfig = {
-  duration: anchorLinkExitTransitionDuration,
-  easing: Easing.out(Easing.exp)
+  duration: anchorLinkTransitionDuration,
+  easing: Easing.inOut(Easing.exp)
 };
 
 const enterTransitionAnchorLink = (values: { targetHeight: number }) => {
   "worklet";
   const animations = {
     opacity: withTiming(1, enterTransitionConfig),
-    transform: [{ translateY: withTiming(0, enterTransitionConfig) }]
+    transform: [
+      { translateY: withTiming(-values.targetHeight, enterTransitionConfig) }
+    ]
   };
   const initialValues = {
     opacity: 0,
-    transform: [{ translateY: values.targetHeight * 0.75 }]
+    transform: [{ translateY: 0 }]
   };
   return {
     initialValues,
@@ -335,19 +340,15 @@ const enterTransitionAnchorLink = (values: { targetHeight: number }) => {
   };
 };
 
-const exitTransitionAnchorLink = (values: { targetHeight: number }) => {
+const exitTransitionAnchorLink = (values: { currentHeight: number }) => {
   "worklet";
   const animations = {
     opacity: withTiming(0, exitTransitionConfig),
-    transform: [
-      {
-        translateY: withTiming(values.targetHeight * 0.75, exitTransitionConfig)
-      }
-    ]
+    transform: [{ translateY: withTiming(0, exitTransitionConfig) }]
   };
   const initialValues = {
     opacity: 1,
-    transform: [{ translateY: 0 }]
+    transform: [{ translateY: -values.currentHeight }]
   };
   return {
     initialValues,
