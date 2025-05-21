@@ -2,10 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
-import {
-  logoutFailure,
-  logoutSuccess
-} from "../../../../features/authentication/common/store/actions";
+import { differentProfileLoggedIn } from "../../../../store/actions/crossSessions";
 import { Action } from "../../../../store/actions/types";
 import {
   isPnRemoteEnabledSelector,
@@ -31,10 +28,8 @@ const pnBannerDismissReducer = (
       return {
         dismissed: true
       };
-    // Logout changes are handled here in order to make
-    // sure that they are immediately persisted
-    case getType(logoutSuccess):
-    case getType(logoutFailure):
+    // the dismiss state has to be reset when, after logging out, the user logs in with a different profile
+    case getType(differentProfileLoggedIn):
       return INITIAL_STATE;
   }
   return state;
