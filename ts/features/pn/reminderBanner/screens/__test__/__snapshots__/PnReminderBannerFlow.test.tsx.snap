@@ -378,29 +378,25 @@ exports[`error screens should display an error screen in case of missing_sid err
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                         testID="error-MISSING-SID"
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -1174,29 +1170,25 @@ exports[`error screens should display an error screen in case of preferences err
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                         testID="error-FAILURE_DETAILS_FETCH"
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -1970,29 +1962,25 @@ exports[`loading screens + error interop should render the correct loading scree
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                         testID="error-FAILURE_DETAILS_FETCH"
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View

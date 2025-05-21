@@ -1359,29 +1359,25 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                         testID="error-FAILURE_DETAILS_FETCH"
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -3411,29 +3407,25 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot, dispatch di
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                         testID="success-SUCCESS_ACTIVATION"
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View

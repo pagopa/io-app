@@ -156,7 +156,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={3}
+                handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -2621,7 +2621,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={2}
+                handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -2684,28 +2684,24 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View

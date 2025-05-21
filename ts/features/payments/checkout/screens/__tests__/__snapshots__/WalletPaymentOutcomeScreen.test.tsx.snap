@@ -156,7 +156,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={2}
+                handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -219,28 +219,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -2118,7 +2114,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={4}
+                handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -2181,28 +2177,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -4127,7 +4119,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={6}
+                handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -4190,28 +4182,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -6117,7 +6105,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={8}
+                handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -6180,28 +6168,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -8092,7 +8076,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={10}
+                handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -8155,28 +8139,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -10081,7 +10061,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={12}
+                handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -10144,28 +10124,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -12170,7 +12146,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={14}
+                handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -12233,28 +12209,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -14231,7 +14203,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={16}
+                handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -14294,28 +14266,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -16206,7 +16174,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={18}
+                handlerTag={9}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -16269,28 +16237,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -18131,7 +18095,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={20}
+                handlerTag={10}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -18194,28 +18158,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -20140,7 +20100,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={22}
+                handlerTag={11}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -20203,28 +20163,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -22129,7 +22085,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={24}
+                handlerTag={12}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -22192,28 +22148,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -24138,7 +24090,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={26}
+                handlerTag={13}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -24201,28 +24153,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -26227,7 +26175,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={28}
+                handlerTag={14}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -26290,28 +26238,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -28236,7 +28180,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={30}
+                handlerTag={15}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -28299,28 +28243,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -30245,7 +30185,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={32}
+                handlerTag={16}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -30308,28 +30248,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -32262,7 +32198,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={34}
+                handlerTag={17}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -32325,28 +32261,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -34251,7 +34183,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={36}
+                handlerTag={18}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -34314,28 +34246,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -36342,7 +36270,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={38}
+                handlerTag={19}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -36405,28 +36333,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -38331,7 +38255,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={40}
+                handlerTag={20}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -38394,28 +38318,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -40576,7 +40496,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={42}
+                handlerTag={21}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -40639,28 +40559,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -42822,7 +42738,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={44}
+                handlerTag={22}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -42885,28 +42801,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -44853,7 +44765,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={46}
+                handlerTag={23}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -44916,28 +44828,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -46945,7 +46853,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={48}
+                handlerTag={24}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -47008,28 +46916,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -49098,7 +49002,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={50}
+                handlerTag={25}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -49161,28 +49065,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -51073,7 +50973,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={52}
+                handlerTag={26}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -51136,28 +51036,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -53090,7 +52986,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={54}
+                handlerTag={27}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -53153,28 +53049,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -55079,7 +54971,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={56}
+                handlerTag={28}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -55142,28 +55034,24 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View

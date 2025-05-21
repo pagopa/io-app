@@ -378,28 +378,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -985,28 +981,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -2458,28 +2450,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -3443,28 +3431,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -4428,28 +4412,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -5413,28 +5393,24 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -6398,28 +6374,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -7005,28 +6977,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -8478,28 +8446,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -9463,28 +9427,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -10448,28 +10408,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View
@@ -11433,28 +11389,24 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
                             ]
                           }
-                          handlerTag={-1}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
                         >
                           <View>
                             <View

@@ -366,31 +366,39 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                         }
                       }
                     >
-                      <RNGestureHandlerButton
+                      <View
                         accessibilityRole="button"
-                        accessible={true}
-                        collapsable={false}
-                        enabled={true}
-                        hitSlop={
+                        accessibilityState={
                           {
-                            "bottom": 0,
-                            "left": 0,
-                            "right": 0,
-                            "top": 0,
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
                           }
                         }
-                        onTouchEnd={[Function]}
-                        rippleColor="transparent"
-                        style={
-                          [
-                            {},
-                            undefined,
-                          ]
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
                         }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        onTouchEnd={[Function]}
                         testID="PaymentCardSmallTestID-pressable"
-                        testOnly_onPress={[Function]}
-                        testOnly_onPressIn={[Function]}
-                        testOnly_onPressOut={[Function]}
                       >
                         <View
                           style={
@@ -541,7 +549,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                             </Text>
                           </View>
                         </View>
-                      </RNGestureHandlerButton>
+                      </View>
                     </View>
                   </View>
                 </View>

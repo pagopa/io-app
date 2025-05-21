@@ -13,28 +13,24 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
   style={
     {
       "flexGrow": 1,
-      "marginHorizontal": 24,
     }
   }
 >
   <RCTScrollView
+    alwaysBounceVertical={false}
     centerContent={true}
-    collapsable={false}
     contentContainerStyle={
       [
         {
           "alignContent": "center",
           "alignItems": "stretch",
-          "flex": 1,
+          "flexGrow": 1,
           "justifyContent": "center",
+          "padding": 24,
         },
         false,
       ]
     }
-    handlerTag={-1}
-    handlerType="NativeViewGestureHandler"
-    onGestureHandlerEvent={[Function]}
-    onGestureHandlerStateChange={[Function]}
   >
     <View>
       <View
