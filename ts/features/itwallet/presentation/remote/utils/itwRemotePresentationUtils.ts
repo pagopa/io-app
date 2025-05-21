@@ -1,10 +1,12 @@
 import { Credential } from "@pagopa/io-react-native-wallet";
 import * as E from "fp-ts/lib/Either";
 import {
-  ClaimDisplayFormat,
-  getClaimsFullLocale
+  WellKnownClaim,
+  parseClaims
 } from "../../../common/utils/itwClaimsUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { isDefined } from "../../../../../utils/guards";
+import { assert } from "../../../../../utils/assert";
 import {
   EnrichedPresentationDetails,
   ItwRemoteQrRawPayload,
@@ -37,31 +39,27 @@ export const validateItwPresentationQrCodeParams = (
  */
 export const enrichPresentationDetails = (
   presentationDetails: PresentationDetails,
-  credentialsByType: Record<string, StoredCredential>
-): EnrichedPresentationDetails => {
-  const claimsLocale = getClaimsFullLocale();
+  credentialsByType: Record<string, StoredCredential | undefined>
+): EnrichedPresentationDetails =>
+  presentationDetails.map(details => {
+    const credential = credentialsByType[details.vct];
 
-  return presentationDetails.map(c => {
-    const credential = credentialsByType[c.vct];
+    // This should never happen if we passed the DCQL query evaluation
+    assert(credential, `${details.vct} credential was not found in the wallet`);
+
+    const parsedClaims = parseClaims(credential.parsedCredential, {
+      exclude: [WellKnownClaim.unique_id]
+    });
+
     return {
-      ...c,
-      claimsToDisplay: c.requiredDisclosures.map<ClaimDisplayFormat>(
-        ([, claimName, claimValue]) => {
-          const claimDisplayName =
-            credential?.parsedCredential[claimName]?.name;
-          return {
-            id: claimName,
-            label:
-              typeof claimDisplayName === "string"
-                ? claimDisplayName
-                : claimDisplayName?.[claimsLocale] ?? claimName,
-            value: claimValue as string
-          };
-        }
-      )
+      ...details,
+      claimsToDisplay: details.requiredDisclosures
+        .map(([, claimName]) => parsedClaims.find(({ id }) => id === claimName))
+        // Only include claims that are part of the parsed credential
+        // This ensures that technical claims like `iat` are not displayed to the user
+        .filter(isDefined)
     };
   });
-};
 
 type PresentationDetail = EnrichedPresentationDetails[number];
 
