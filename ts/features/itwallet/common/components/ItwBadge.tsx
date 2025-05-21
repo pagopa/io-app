@@ -8,7 +8,6 @@ import {
 } from "@shopify/react-native-skia";
 import { H5, IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n.ts";
-import { itwGradientColors } from "../utils/constants.ts";
 
 /**
  * This component renders the logo of the IT Wallet, image and text.
@@ -28,6 +27,30 @@ export const ItwBadge = () => (
     </View>
   </View>
 );
+
+const StaticGradientBackground = () => {
+  const [{ width, height }, setDimensions] = useState({ width: 0, height: 0 });
+
+  return (
+    <Canvas
+      style={StyleSheet.absoluteFill}
+      onLayout={event => {
+        setDimensions({
+          width: event.nativeEvent.layout.width,
+          height: event.nativeEvent.layout.height
+        });
+      }}
+    >
+      <RoundedRect x={0} y={0} width={width} height={height} r={100}>
+        <LinearGradient
+          start={vec(0, height)}
+          end={vec(width, 60)}
+          colors={["#002FCB", "#003BFE", "#0335DA", "#053FFF", "#0335DD"]}
+        />
+      </RoundedRect>
+    </Canvas>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -49,27 +72,3 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white
   }
 });
-
-const StaticGradientBackground = () => {
-  const [{ width, height }, setDimensions] = useState({ width: 0, height: 0 });
-
-  return (
-    <Canvas
-      style={StyleSheet.absoluteFill}
-      onLayout={event => {
-        setDimensions({
-          width: event.nativeEvent.layout.width,
-          height: event.nativeEvent.layout.height
-        });
-      }}
-    >
-      <RoundedRect x={0} y={0} width={width} height={height} r={100}>
-        <LinearGradient
-          start={vec(0, height)}
-          end={vec(width, 0)}
-          colors={itwGradientColors}
-        />
-      </RoundedRect>
-    </Canvas>
-  );
-};
