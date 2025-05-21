@@ -67,7 +67,7 @@ const ItwPresentationDetailsHeader = ({
         </ContentWrapper>
       </View>
     );
-  }, [credential, backgroundColor, textColor, isExperimental]);
+  }, [credential, backgroundColor, textColor, isExperimental, isL3Credential]);
 
   return (
     <View>
