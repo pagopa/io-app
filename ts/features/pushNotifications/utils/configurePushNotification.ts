@@ -24,7 +24,7 @@ import { isLoadingOrUpdating } from "../../../utils/pot";
 import { isArchivingInProcessingModeSelector } from "../../messages/store/reducers/archiving";
 import { GlobalState } from "../../../store/reducers/types";
 import { trackNewPushNotificationsTokenGenerated } from "../analytics";
-import { isTestEnv } from "../../../utils/environment";
+import { isDevEnv, isTestEnv } from "../../../utils/environment";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { Store } from "../../../store/actions/types";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
@@ -41,6 +41,9 @@ const NotificationPayload = t.partial({
 });
 
 export const configurePushNotifications = (store: Store) => {
+  if (isDevEnv) {
+    return;
+  }
   // Create the default channel used for notifications, the callback return false if the channel already exists
   PushNotification.createChannel(
     {

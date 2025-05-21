@@ -4401,7 +4401,8 @@
           "mode": {
             "title": "Verifica la tua identità con CIE",
             "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet.",
-            "action": "Inizia",
+            "primaryAction": "Inizia",
+            "secondaryAction": "Non ho la CIE",
             "ciePin": {
               "header": "Avrai bisogno di:",
               "card": "La tua carta d’identità elettronica (CIE)",
@@ -4430,6 +4431,17 @@
                 "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE;\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
                 "primaryAction": "Ho capito",
                 "secondaryAction": "Non trovo il PIN della CIE"
+              },
+              "noCie": {
+                "title": "Se non hai la CIE puoi \ncontinuare senza i vantaggi di IT-Wallet",
+                "description": "Puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
+                "content": {
+                  "firstAttention": "Non potrai usare la Patente come documento d'identità",
+                  "secondAttention": "Non potrai usare IT-Wallet per accedere ai servizi digitali della PA",
+                  "thirdAttention": "Non potrai ottenere i nuovi documenti disponibili solo con IT-Wallet"
+                },
+                "primaryAction": "Continua senza IT-Wallet",
+                "secondaryAction": "Torna indietro"
               }
             }
           }

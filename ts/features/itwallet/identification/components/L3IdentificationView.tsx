@@ -12,6 +12,7 @@ import I18n from "../../../../i18n.ts";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader.tsx";
 import { CieWarningType } from "../screens/ItwIdentificationCieWarningScreen.tsx";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
+import {useNoCieBottomSheet} from "../hooks/useNoCieBottomSheet.tsx";
 
 type L3IdentificationViewProps = {
   handleCiePinPress: () => void;
@@ -128,6 +129,8 @@ export const L3IdentificationView = ({
     ]
   });
 
+  const { noCieBottomSheet } = useNoCieBottomSheet();
+
   return (
     <IOScrollViewWithLargeHeader
       title={{
@@ -138,14 +141,22 @@ export const L3IdentificationView = ({
       )}
       headerActionsProp={{ showHelp: true }}
       actions={{
-        type: "SingleButton",
+        type: "TwoButtons",
         primary: {
-          label: I18n.t("features.itWallet.identification.l3.mode.action"),
+          label: I18n.t("features.itWallet.identification.l3.mode.primaryAction"),
           accessibilityLabel: I18n.t(
-            "features.itWallet.identification.l3.mode.action"
+            "features.itWallet.identification.l3.mode.primaryAction"
           ),
           onPress: handleCiePinPress,
           testID: "l3-primary-action"
+        },
+        secondary: {
+          label: I18n.t("features.itWallet.identification.l3.mode.secondaryAction"),
+          accessibilityLabel: I18n.t(
+            "features.itWallet.identification.l3.mode.secondaryAction"
+          ),
+          onPress: noCieBottomSheet.present,
+          testID: "l3-secondary-action"
         }
       }}
       testID="l3-identification-view"
@@ -211,7 +222,10 @@ export const L3IdentificationView = ({
         {cieBottomSheet.bottomSheet}
         {cieInfoBottomSheet.bottomSheet}
         {pinBottomSheet.bottomSheet}
+        {noCieBottomSheet.bottomSheet}
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );
 };
+
+

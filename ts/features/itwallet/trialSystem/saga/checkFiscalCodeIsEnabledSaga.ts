@@ -12,6 +12,7 @@ import { handleGetWhitelistedStatus } from "./handleGetWhitelistedStatus.ts";
 export function* checkFiscalCodeEnabledSaga(): SagaIterator {
   const sessionToken = yield* select(sessionTokenSelector);
   assert(sessionToken, "Missing session token");
+  console.log("checkFiscalCodeEnabledSaga");
   const client = createItWalletClient(apiUrlPrefix, sessionToken);
   yield* call(handleGetWhitelistedStatus, client, sessionToken);
 }
