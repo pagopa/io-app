@@ -15,7 +15,12 @@ export const storePaymentsBrowserTypeAction = createStandardAction(
   "PAYMENTS_STORE_BROWSER_TYPE"
 )<PaymentAnalyticsBrowserType>();
 
+export const removeExpiredPaymentsOngoingFailedAction = createStandardAction(
+  "PAYMENTS_REMOVE_EXPIRED_ONGOING_FAILED"
+)<ReadonlyArray<RptId>>();
+
 export type PaymentsHistoryActions =
   | ActionType<typeof storeNewPaymentAttemptAction>
   | ActionType<typeof storePaymentOutcomeToHistory>
-  | ActionType<typeof storePaymentsBrowserTypeAction>;
+  | ActionType<typeof storePaymentsBrowserTypeAction>
+  | ActionType<typeof removeExpiredPaymentsOngoingFailedAction>;

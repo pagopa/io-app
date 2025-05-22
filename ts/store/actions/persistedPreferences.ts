@@ -55,10 +55,6 @@ export const preferencesFontSet = createStandardAction(
   "PREFERENCES_DESIGN_SYSTEM_SET_ENABLED"
 )<TypefaceChoice>();
 
-export const setItwOfflineAccessEnabled = createStandardAction(
-  "PREFERENCES_ITW_OFFLINE_ACCESS_ENABLED_SET"
-)<boolean>();
-
 export type PersistedPreferencesActions = ActionType<
   | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferredCalendarSaveSuccess
@@ -71,6 +67,5 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferencesPnTestEnvironmentSetEnabled
   | typeof preferencesIdPayTestSetEnabled
   | typeof preferencesExperimentalDesignEnabled
-  | typeof setItwOfflineAccessEnabled
   | typeof preferencesFontSet
 >;
