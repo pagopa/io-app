@@ -1,4 +1,4 @@
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -17,14 +17,16 @@ describe("EmailInsertScreen", () => {
       component.queryByText(I18n.t("global.buttons.continue"))
     ).toBeDefined();
   });
-  it("the header button should be render correctly and the user can press it", () => {
+  it("the header button should be render correctly and the user can press it", async () => {
     const component = renderComponent();
     const continueButton = component.queryByText(
       I18n.t("global.buttons.continue")
     );
     expect(continueButton).toBeTruthy();
     if (continueButton) {
-      fireEvent.press(continueButton);
+      await act(async () => {
+        fireEvent.press(continueButton);
+      });
     }
   });
 });
