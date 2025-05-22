@@ -20,6 +20,13 @@ import { mixpanelTrack } from "../mixpanel";
 import { currentRouteSelector } from "../store/reducers/navigation";
 import { buildEventProperties } from "../utils/analytics";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
+import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
+
+// This is a list of routes where the offline alert should not be shown
+const blackListOfflineAlertRoutes = new Set<string>([
+  ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
+  ITW_ROUTES.OFFLINE.WALLET
+]);
 
 const statusVariantMap: Record<LevelEnum, AlertEdgeToEdgeProps["variant"]> = {
   [LevelEnum.normal]: "info",
@@ -68,6 +75,10 @@ export const useStatusAlertProps = (
   const localeFallback = fallbackForLocalizedMessageKeys(locale);
 
   useEffect(() => {
+    // If the user is offline and the current route is not in the blacklist, show the alert
+    if (blackListOfflineAlertRoutes.has(currentRoute)) {
+      return;
+    }
     if (isConnected === false) {
       setConnectivityAlert({
         variant: "info",
