@@ -251,5 +251,29 @@ describe("configureStoreAndPersistor", () => {
         });
       });
     });
+
+    it("should migrate from 43 to 44", () => {
+      const prevState = {
+        persistedPreferences: {
+          isItwOfflineAccessEnabled: true
+        },
+        _persist: {
+          version: 43,
+          rehydrated: false
+        }
+      };
+
+      const from43To44Migration = testable!.migrations[44];
+      expect(from43To44Migration).toBeDefined();
+      const nextState = from43To44Migration(prevState);
+
+      expect(nextState).toEqual({
+        persistedPreferences: {},
+        _persist: {
+          version: 43,
+          rehydrated: false
+        }
+      });
+    });
   });
 });
