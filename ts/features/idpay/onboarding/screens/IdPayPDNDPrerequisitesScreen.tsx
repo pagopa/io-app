@@ -14,7 +14,7 @@ import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdPotSelector } from "../../../services/details/store/reducers";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../machine/selectors";
 import { getPDNDCriteriaDescription } from "../utils/strings";
@@ -28,7 +28,7 @@ export const IdPayPDNDPrerequisitesScreen = () => {
 
   const serviceName = pipe(
     useIOSelector(state =>
-      serviceByIdPotSelector(state, serviceId as ServiceId)
+      serviceDetailsByIdPotSelector(state, serviceId as ServiceId)
     ),
     pot.toOption,
     O.fold(
