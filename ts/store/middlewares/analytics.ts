@@ -46,6 +46,7 @@ import { buildEventProperties } from "../../utils/analytics";
 import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";
 import { trackIdentificationAction } from "../../features/identification/analytics";
+import { trackOfflineAccessReason } from "../../features/ingress/analytics";
 import { trackContentAction } from "./contentAnalytics";
 
 const trackAction =
@@ -171,6 +172,9 @@ export const actionTracking =
       void trackServicesAction(action);
       void trackZendesk(action);
       void trackIdentificationAction(action);
+
+      // Track mixpanel offline access reason
+      void trackOfflineAccessReason(action, middleware.getState());
 
       const fciEnvironment = fciEnvironmentSelector(middleware.getState());
       void trackFciAction(fciEnvironment)(action);

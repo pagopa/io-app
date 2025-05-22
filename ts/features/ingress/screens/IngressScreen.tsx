@@ -29,7 +29,6 @@ import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { identificationRequest } from "../../identification/store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
 import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
-import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties.ts";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
@@ -89,13 +88,8 @@ export const IngressScreen = () => {
   useEffect(() => {
     const visualizeOfflineWallet =
       isConnected === false && isOfflineAccessAvailable;
-    const state = store.getState();
 
     if (visualizeOfflineWallet) {
-      void updateMixpanelSuperProperties(state, {
-        property: "OFFLINE_ACCESS_REASON",
-        value: OfflineAccessReasonEnum.DEVICE_OFFLINE
-      });
       // This dispatch could be placed inside `onSuccess`,
       // but executing it here ensures the startup saga stops immediately.
       dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE));
