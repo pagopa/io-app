@@ -253,27 +253,70 @@ describe("configureStoreAndPersistor", () => {
     });
 
     it("should migrate from 43 to 44", () => {
-      const prevState = {
-        persistedPreferences: {
-          isItwOfflineAccessEnabled: true
+      const basePersistedGlobalStateAt43 = {
+        content: {
+          idps: remoteUndefined,
+          municipality: {
+            codiceCatastale: pot.none,
+            data: pot.none
+          },
+          contextualHelp: pot.none
         },
+        crossSessions: {
+          hashedFiscalCode:
+            "6494e783ad296f016b2105f8fe7dc2979551a37d3a5c40624e2ee8eee64e8017"
+        },
+        installation: {
+          isFirstRunAfterInstall: false,
+          appVersionHistory: [
+            "2.81.0.8",
+            "2.81.1.1",
+            "2.82.0.7",
+            "2.83.0.7",
+            "3.0.0.8",
+            "3.1.0.2",
+            "3.2.0.8",
+            "3.3.0.8",
+            "3.4.0.5",
+            "3.5.0.8"
+          ]
+        },
+        onboarding: {
+          isFingerprintAcknowledged: false
+        },
+        persistedPreferences: {
+          isFingerprintEnabled: undefined,
+          preferredCalendar: undefined,
+          preferredLanguage: undefined,
+          wasServiceAlertDisplayedOnce: false,
+          isPagoPATestEnabled: false,
+          isCustomEmailChannelEnabled: pot.none,
+          continueWithRootOrJailbreak: false,
+          isMixpanelEnabled: null,
+          isPnTestEnabled: false,
+          isIdPayTestEnabled: false,
+          fontPreference: "comfortable",
+          isExperimentalDesignEnabled: false
+        },
+        profile: pot.none,
         _persist: {
           version: 43,
           rehydrated: false
         }
       };
+      const persistedStateAt43 = {
+        ...basePersistedGlobalStateAt43,
+        persistedPreferences: {
+          ...basePersistedGlobalStateAt43.persistedPreferences,
+          isItwOfflineAccessEnabled: true
+        }
+      };
 
       const from43To44Migration = testable!.migrations[44];
       expect(from43To44Migration).toBeDefined();
-      const nextState = from43To44Migration(prevState);
+      const nextState = from43To44Migration(persistedStateAt43);
 
-      expect(nextState).toEqual({
-        persistedPreferences: {},
-        _persist: {
-          version: 43,
-          rehydrated: false
-        }
-      });
+      expect(nextState).toStrictEqual(basePersistedGlobalStateAt43);
     });
   });
 });
