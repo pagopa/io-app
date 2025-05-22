@@ -4150,6 +4150,10 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, has
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -4161,10 +4165,6 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, has
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -4296,6 +4296,8 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, has
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -4306,8 +4308,6 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, has
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -5001,6 +5001,10 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, has
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -5012,10 +5016,6 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, has
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -5147,6 +5147,8 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, has
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -5157,8 +5159,6 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, has
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }

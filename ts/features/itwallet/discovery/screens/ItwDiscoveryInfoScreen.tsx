@@ -36,12 +36,10 @@ export const ItwDiscoveryInfoScreen = ({
 
   useFocusEffect(
     useCallback(() => {
-      if (!hasNfcFeature) {
-        return;
+      if (!isL3 || hasNfcFeature) {
+        trackItWalletIntroScreen();
       }
-
-      trackItWalletIntroScreen();
-    }, [hasNfcFeature])
+    }, [hasNfcFeature, isL3])
   );
 
   useOnFirstRender(() => {
