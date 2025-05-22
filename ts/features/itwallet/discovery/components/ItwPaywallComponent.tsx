@@ -20,7 +20,7 @@ import {
   vec
 } from "@shopify/react-native-skia";
 import { TxtLinkNode, TxtParagraphNode } from "@textlint/ast-node-types";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   Alert,
   FlatList,
@@ -46,6 +46,7 @@ import { IOScrollViewWithReveal } from "../../../../components/ui/IOScrollViewWi
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { tosConfigSelector } from "../../../tos/store/selectors";
 
@@ -76,32 +77,44 @@ export type ItwPaywallComponentProps = {
   onContinuePress: () => void;
 };
 
-const scrollOffset = 12;
+// Offset to avoid to scroll to the block without margins
+const scrollOffset: number = 12;
+// Percentage of the visible block after which the anchor link is hidden
+const intersectionRatio: number = 0.3;
 
 export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
   const { tos_url } = useIOSelector(tosConfigSelector);
 
   const theme = useIOTheme();
 
-  const [productHighlightsY, setProductHighlightsY] = useState(0);
+  const [productHighlightsLayout, setProductHighlightsLayout] = useState({
+    y: 0,
+    height: 0
+  });
+
+  const productHighlightsRef = useRef<View>(null);
   const animatedRef = useAnimatedRef<Animated.ScrollView>();
   const scrollPosition = useScrollViewOffset(animatedRef);
   const hideAnchorLink = useSharedValue(false);
 
   useDerivedValue(() => {
-    if (productHighlightsY > 0) {
+    const threshold: number =
+      productHighlightsLayout.height * (1 - intersectionRatio);
+
+    if (productHighlightsLayout.y > 0) {
       // eslint-disable-next-line functional/immutable-data
       hideAnchorLink.value =
-        scrollPosition.value >= productHighlightsY - scrollOffset;
+        scrollPosition.value >= productHighlightsLayout.y - threshold;
     }
   });
 
   const handleScrollToHighlights = useCallback(() => {
     animatedRef.current?.scrollTo({
-      y: productHighlightsY - scrollOffset,
+      y: productHighlightsLayout.y - scrollOffset,
       animated: true
     });
-  }, [animatedRef, productHighlightsY]);
+    setAccessibilityFocus(productHighlightsRef);
+  }, [animatedRef, productHighlightsLayout]);
 
   const backgroundColor = IOColors[theme["appBackground-accent"]];
 
@@ -162,8 +175,12 @@ export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
 
               <Divider />
               <View
+                ref={productHighlightsRef}
                 onLayout={event => {
-                  setProductHighlightsY(event.nativeEvent.layout.y);
+                  setProductHighlightsLayout({
+                    y: event.nativeEvent.layout.y,
+                    height: event.nativeEvent.layout.height
+                  });
                 }}
               >
                 <ProductHighlights />

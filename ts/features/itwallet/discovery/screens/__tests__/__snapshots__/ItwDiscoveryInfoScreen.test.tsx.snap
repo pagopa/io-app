@@ -3180,7 +3180,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                               "width": "100%",
                             },
                             {
-                              "height": 304,
+                              "height": 204,
                               "paddingBottom": 24,
                             },
                           ]
@@ -3278,7 +3278,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                               }
                               style={
                                 {
-                                  "height": 230,
+                                  "height": 130,
                                 }
                               }
                             />

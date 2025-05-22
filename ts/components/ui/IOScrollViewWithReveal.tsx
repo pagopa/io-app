@@ -66,13 +66,13 @@ type IOScrollViewWithRevealProps = WithTestID<
    the gradient opaciy transition */
 const gradientOpacityScrollTrigger = 0.85;
 /* Extended gradient area above the actions */
-const gradientSafeAreaHeight: number = 180;
+const gradientSafeAreaHeight: number = 80;
 /* Margin between solid variant and link variant */
 const spaceBetweenActionAndLink: IOSpacer = 16;
 /* Extra bottom margin for iPhone bottom handle because
    Link variant doesn't have a fixed height */
 const extraSafeAreaMargin: IOSpacingScale = 8;
-const anchorLinkTransitionDuration: number = 400; // in ms
+const anchorLinkTransitionDuration: number = 600; // in ms
 
 const styles = StyleSheet.create({
   gradientBottomActions: {
@@ -142,7 +142,7 @@ export const IOScrollViewWithReveal = ({
       0: { color: hexToRgba(APP_BG_COLOR, 0) },
       1: { color: APP_BG_COLOR }
     },
-    easing: Easing.ease,
+    easing: Easing.out(Easing.ease),
     extraColorStopsPerTransition: 20
   });
 
