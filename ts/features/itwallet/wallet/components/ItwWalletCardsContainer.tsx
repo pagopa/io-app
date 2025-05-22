@@ -2,7 +2,8 @@ import {
   Icon,
   IOButton,
   ListItemHeader,
-  Optional
+  Optional,
+  VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
@@ -109,25 +110,27 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           />
         </View>
       )}
-      <ItwOfflineWalletBanner />
-      <WalletCardsCategoryContainer
-        key={`cards_category_itw`}
-        testID={`itwWalletCardsContainerTestID`}
-        cards={cards}
-        header={sectionHeader}
-        topElement={
-          <>
-            <ItwWalletReadyBanner />
-            <ItwEidLifecycleAlert
-              lifecycleStatus={["jwtExpiring", "jwtExpired"]}
-              navigation={navigation}
-            />
-          </>
-        }
-        bottomElement={<ItwFeedbackBanner />}
-      />
-      {eidInfoBottomSheet.bottomSheet}
-      {appFeedbackBottomSheet}
+      <VStack>
+        <ItwOfflineWalletBanner />
+        <WalletCardsCategoryContainer
+          key={`cards_category_itw`}
+          testID={`itwWalletCardsContainerTestID`}
+          cards={cards}
+          header={sectionHeader}
+          topElement={
+            <>
+              <ItwWalletReadyBanner />
+              <ItwEidLifecycleAlert
+                lifecycleStatus={["jwtExpiring", "jwtExpired"]}
+                navigation={navigation}
+              />
+            </>
+          }
+          bottomElement={<ItwFeedbackBanner />}
+        />
+        {eidInfoBottomSheet.bottomSheet}
+        {appFeedbackBottomSheet}
+      </VStack>
     </>
   );
 });
