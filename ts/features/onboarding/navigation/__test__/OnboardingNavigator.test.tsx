@@ -8,6 +8,51 @@ import { GlobalState } from "../../../../store/reducers/types";
 import OnboardingNavigator from "../OnboardingNavigator";
 import ROUTES from "../../../../navigation/routes";
 
+jest.mock("react-native-background-timer", () => ({
+  runBackgroundTimer: jest.fn(),
+  stopBackgroundTimer: jest.fn(),
+  setTimeout: jest.fn(),
+  clearTimeout: jest.fn(),
+  setInterval: jest.fn(),
+  clearInterval: jest.fn()
+}));
+
+const ROUTES_TO_TEST = [
+  { name: ROUTES.ONBOARDING_SHARE_DATA },
+  {
+    name: ROUTES.ONBOARDING_SERVICES_PREFERENCE,
+    params: { isFirstOnboarding: true }
+  },
+  { name: ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE },
+  { name: ROUTES.ONBOARDING_TOS },
+  { name: ROUTES.ONBOARDING_PIN },
+  { name: ROUTES.ONBOARDING_FINGERPRINT },
+  { name: ROUTES.ONBOARDING_MISSING_DEVICE_PIN },
+  { name: ROUTES.ONBOARDING_MISSING_DEVICE_BIOMETRIC },
+  {
+    name: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
+    params: {
+      isOnboarding: true,
+      isFciEditEmailFlow: false,
+      isEditingPreviouslyInsertedEmailMode: false
+    }
+  },
+  {
+    name: ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN,
+    params: {
+      isOnboarding: true,
+      isFciEditEmailFlow: false,
+      sendEmailAtFirstRender: true
+    }
+  },
+  { name: ROUTES.ONBOARDING_COMPLETED },
+  {
+    name: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
+    params: { isFirstOnboarding: true }
+  },
+  { name: ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT }
+];
+
 const createMockStore = () => {
   const defaultState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();
@@ -36,46 +81,23 @@ describe("OnboardingNavigator", () => {
     const { getByTestId } = renderComponent();
     expect(getByTestId("OnboardingShareDataScreen")).toBeTruthy();
   });
+});
 
-  it("renders ONBOARDING_TOS with header shown", () => {
-    const result = renderComponent({
-      routes: [
-        {
-          name: ROUTES.ONBOARDING_TOS
-        }
-      ],
-      index: 0,
-      type: "stack"
+describe("OnboardingNavigator - all routes", () => {
+  ROUTES_TO_TEST.forEach(route => {
+    it(`renders ${route.name} correctly`, () => {
+      const result = renderComponent({
+        routes: [
+          {
+            name: route.name,
+            params: route.params
+          }
+        ],
+        index: 0,
+        type: "stack"
+      });
+
+      expect(result.toJSON()).toBeTruthy();
     });
-
-    expect(result.toJSON()).toBeTruthy();
-  });
-
-  it("renders ONBOARDING_COMPLETED with header hidden", () => {
-    const result = renderComponent({
-      routes: [
-        {
-          name: ROUTES.ONBOARDING_COMPLETED
-        }
-      ],
-      index: 0,
-      type: "stack"
-    });
-
-    expect(result.toJSON()).toBeTruthy();
-  });
-
-  it("renders ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT as modal", () => {
-    const result = renderComponent({
-      routes: [
-        {
-          name: ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT
-        }
-      ],
-      index: 0,
-      type: "stack"
-    });
-
-    expect(result.toJSON()).toBeTruthy();
   });
 });
