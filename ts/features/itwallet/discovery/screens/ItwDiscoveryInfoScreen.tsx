@@ -8,6 +8,8 @@ import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedCom
 import { trackItWalletIntroScreen } from "../../analytics/index.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwHasNfcFeatureSelector } from "../../identification/store/selectors/index.ts";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
   isL3?: boolean;
@@ -26,21 +28,32 @@ export const ItwDiscoveryInfoScreen = ({
 }: ItwDiscoveryInfoScreenProps) => {
   const { isL3 = false } = route.params ?? {};
 
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
+
   useFocusEffect(
     useCallback(() => {
+      if (!hasNfcFeature) {
+        return;
+      }
+
       trackItWalletIntroScreen();
-    }, [])
+    }, [hasNfcFeature])
   );
+
+  useOnFirstRender(() => {
+    if (!isL3) {
+      machineRef.send({ type: "start", isL3: false });
+    }
+
+    if (hasNfcFeature) {
+      machineRef.send({ type: "start", isL3: true });
+    }
+  });
 
   if (!isL3) {
     return <ItwDiscoveryInfoComponent />;
   }
-
-  return <ItwL3DiscoveryInfoComponent />;
-};
-
-const ItwL3DiscoveryInfoComponent = () => {
-  const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
 
   if (!hasNfcFeature) {
     return <ItwNfcNotSupportedComponent />;

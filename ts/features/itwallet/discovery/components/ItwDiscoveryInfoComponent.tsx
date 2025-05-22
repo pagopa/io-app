@@ -17,7 +17,6 @@ import { generateLinkRuleWithCallback } from "../../common/utils/markdown.tsx";
 import { IOScrollView } from "../../../../components/ui/IOScrollView.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp.tsx";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 
 /**
  * This is the component that shows the information about the discovery process
@@ -29,10 +28,6 @@ export const ItwDiscoveryInfoComponent = () => {
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const { tos_url } = useIOSelector(tosConfigSelector);
-
-  useOnFirstRender(() => {
-    machineRef.send({ type: "start", isL3: false });
-  });
 
   useHeaderSecondLevel({
     contextualHelp: emptyContextualHelp,
