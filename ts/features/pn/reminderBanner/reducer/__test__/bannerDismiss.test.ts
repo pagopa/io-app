@@ -3,7 +3,7 @@ jest.mock("../../../../services/details/store/reducers");
 
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
-import { PersistPartial } from "redux-persist";
+import { PersistPartial, PersistedState } from "redux-persist";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 import * as remoteConfig from "../../../../../store/reducers/backendStatus/remoteConfig";
@@ -38,9 +38,35 @@ const nonDimsissedState: PnBannerDismissState = {
   }
 };
 
-const { persistedPnBannerDismissReducer } = bannerDismiss;
+const { persistedPnBannerDismissReducer, testable } = bannerDismiss;
 
 describe("persistedPnBannerDismissReducer", () => {
+  describe("migrations", () => {
+    it("should match the expected persistance version, and not have any higher-version migrations", () => {
+      const expectedVersion = testable!.CURRENT_STORE_VERSION;
+      expect(expectedVersion).toBe(0);
+      expect(testable!.migrations[expectedVersion + 1]).toBeUndefined();
+    });
+
+    it("should correctly apply the first migration", () => {
+      const state = {
+        dismissed: true,
+        _persist: {
+          version: -1,
+          rehydrated: false
+        }
+      } as PersistedState;
+
+      const firstMigration = testable!.migrations[0];
+      expect(firstMigration).toBeDefined();
+      const migratedState = firstMigration(state);
+      expect(migratedState).toEqual({
+        ...state,
+        dismissed: false
+      });
+    });
+  });
+
   it("should match snapshot [if this test fails, remember to add a migration to the store before updating the snapshot]", () => {
     const state = persistedPnBannerDismissReducer(
       undefined,

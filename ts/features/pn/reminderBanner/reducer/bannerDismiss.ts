@@ -1,6 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { persistReducer } from "redux-persist";
+import {
+  MigrationManifest,
+  PersistConfig,
+  PersistedState,
+  createMigrate,
+  persistReducer
+} from "redux-persist";
 import { getType } from "typesafe-actions";
 import { differentProfileLoggedIn } from "../../../../store/actions/crossSessions";
 import { Action } from "../../../../store/actions/types";
@@ -11,6 +17,7 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import { servicePreferenceByChannelPotSelector } from "../../../services/details/store/reducers";
 import { dismissPnActivationReminderBanner } from "../../store/actions";
+import { isDevEnv, isTestEnv } from "../../../../utils/environment";
 
 export type PnBannerDismissState = {
   dismissed: boolean;
@@ -34,12 +41,24 @@ const pnBannerDismissReducer = (
   }
   return state;
 };
-const persistConfig = {
+const CURRENT_STORE_VERSION = 0;
+const migrations: MigrationManifest = {
+  // the dismission state is reset to analyze the behaviour of the banner's new UI
+  "0": state =>
+    ({
+      ...state,
+      dismissed: false
+    } as PersistedState)
+};
+
+const persistConfig: PersistConfig = {
   key: "pnBannerDismiss",
   storage: AsyncStorage,
-  version: -1,
+  version: CURRENT_STORE_VERSION,
+  migrate: createMigrate(migrations, { debug: isDevEnv }),
   whitelist: ["dismissed"]
 };
+
 export const persistedPnBannerDismissReducer = persistReducer(
   persistConfig,
   pnBannerDismissReducer
@@ -59,3 +78,7 @@ export const isPnActivationReminderBannerRenderableSelector = (
 
   return isPnRemoteEnabled && !hasBannerBeenDismissed && !isPnInboxEnabled;
 };
+
+export const testable = isTestEnv
+  ? { CURRENT_STORE_VERSION, migrations }
+  : undefined;
