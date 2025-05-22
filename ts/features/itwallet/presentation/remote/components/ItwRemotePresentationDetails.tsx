@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { ComponentProps, memo, useMemo } from "react";
 import { View } from "react-native";
 import {
   Alert,
@@ -22,7 +22,9 @@ import { ItwRemoteMachineContext } from "../machine/provider";
 import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
 import { groupCredentialsByPurpose } from "../utils/itwRemotePresentationUtils";
 
-const mapClaims = (claims: Array<ClaimDisplayFormat>) =>
+const mapClaims = (
+  claims: Array<ClaimDisplayFormat>
+): ComponentProps<typeof ClaimsSelector>["items"] =>
   claims.map(c => {
     const displayValue = getClaimDisplayValue(c);
     if (ImageClaim.is(displayValue)) {
