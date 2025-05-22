@@ -683,21 +683,13 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                       <View
                         style={
                           {
-                            "paddingHorizontal": 24,
+                            "height": 16,
                           }
                         }
-                      >
-                        <View
-                          style={
-                            {
-                              "height": 16,
-                            }
-                          }
-                        />
-                        <View
-                          testID="itwDiscoveryBannerStandaloneTestID"
-                        />
-                      </View>
+                      />
+                      <View
+                        testID="itwDiscoveryBannerStandaloneTestID"
+                      />
                     </View>
                   </View>
                 </View>
