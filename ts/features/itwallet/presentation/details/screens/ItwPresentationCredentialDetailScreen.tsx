@@ -46,7 +46,7 @@ import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
-  // This is just for test
+  // Used for viewing credential detail from the Playground
   isL3Enabled?: boolean;
 };
 
