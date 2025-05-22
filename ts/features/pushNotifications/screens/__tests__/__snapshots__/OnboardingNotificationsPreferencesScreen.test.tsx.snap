@@ -1100,6 +1100,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {
+                                  "backgroundColor": undefined,
+                                },
                                 {
                                   "paddingHorizontal": 16,
                                 },
@@ -1111,10 +1115,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "height": 48,
                                 },
                                 {},
-                                false,
-                                {
-                                  "backgroundColor": undefined,
-                                },
                               ]
                             }
                           >
@@ -2525,6 +2525,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {
+                                  "backgroundColor": undefined,
+                                },
                                 {
                                   "paddingHorizontal": 16,
                                 },
@@ -2536,10 +2540,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "height": 48,
                                 },
                                 {},
-                                false,
-                                {
-                                  "backgroundColor": undefined,
-                                },
                               ]
                             }
                           >
@@ -3951,6 +3951,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {
+                                  "backgroundColor": undefined,
+                                },
                                 {
                                   "paddingHorizontal": 16,
                                 },
@@ -3962,10 +3966,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "height": 48,
                                 },
                                 {},
-                                false,
-                                {
-                                  "backgroundColor": undefined,
-                                },
                               ]
                             }
                           >
@@ -5377,6 +5377,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {
+                                  "backgroundColor": undefined,
+                                },
                                 {
                                   "paddingHorizontal": 16,
                                 },
@@ -5388,10 +5392,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "height": 48,
                                 },
                                 {},
-                                false,
-                                {
-                                  "backgroundColor": undefined,
-                                },
                               ]
                             }
                           >
@@ -7093,6 +7093,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {
+                                  "backgroundColor": undefined,
+                                },
                                 {
                                   "paddingHorizontal": 16,
                                 },
@@ -7104,10 +7108,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   "height": 48,
                                 },
                                 {},
-                                false,
-                                {
-                                  "backgroundColor": undefined,
-                                },
                               ]
                             }
                           >

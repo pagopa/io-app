@@ -681,6 +681,10 @@ exports[`fimshistoryKoScreen should match snapshot 1`] = `
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -692,10 +696,6 @@ exports[`fimshistoryKoScreen should match snapshot 1`] = `
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -828,6 +828,8 @@ exports[`fimshistoryKoScreen should match snapshot 1`] = `
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -838,8 +840,6 @@ exports[`fimshistoryKoScreen should match snapshot 1`] = `
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }

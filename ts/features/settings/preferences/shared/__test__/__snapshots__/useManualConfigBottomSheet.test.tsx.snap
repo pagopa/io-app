@@ -464,6 +464,11 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
+                                      false,
+                                      {
+                                        "backgroundColor": undefined,
+                                        "borderColor": undefined,
+                                      },
                                       {
                                         "paddingHorizontal": 16,
                                       },
@@ -475,11 +480,6 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                                         "height": 48,
                                       },
                                       {},
-                                      false,
-                                      {
-                                        "backgroundColor": undefined,
-                                        "borderColor": undefined,
-                                      },
                                     ]
                                   }
                                 >
@@ -595,6 +595,10 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
+                                      false,
+                                      {
+                                        "backgroundColor": undefined,
+                                      },
                                       {
                                         "paddingHorizontal": 16,
                                       },
@@ -606,10 +610,6 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                                         "height": 48,
                                       },
                                       {},
-                                      false,
-                                      {
-                                        "backgroundColor": undefined,
-                                      },
                                     ]
                                   }
                                 >
