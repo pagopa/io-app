@@ -181,12 +181,12 @@ function* generateCryptoKeyPair(keyTag: string) {
     const publicKey = yield* call(generate, keyTag);
     yield* put(lollipopSetPublicKey({ publicKey }));
     const mixPanelEnabled = yield* select(isMixpanelEnabled);
-    if (mixPanelEnabled) {
+    if (mixPanelEnabled === false) {
       yield* call(trackLollipopKeyGenerationSuccess, publicKey.kty);
     }
   } catch (e) {
     const mixPanelEnabled = yield* select(isMixpanelEnabled);
-    if (mixPanelEnabled) {
+    if (mixPanelEnabled === false) {
       const { message } = toCryptoError(e);
       yield* call(trackLollipopKeyGenerationFailure, message);
     }
