@@ -10,7 +10,7 @@ import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/r
 import { trackIngressScreen } from "../../settings/common/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isBackendStatusLoadedSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { setIsBlockingScreen, setOfflineAccessReason } from "../store/actions";
 import ModalSectionStatusComponent from "../../../components/SectionStatus/modal";
@@ -34,7 +34,6 @@ const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
 
 export const IngressScreen = () => {
-  const store = useIOStore();
   const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
   const dispatch = useIODispatch();
@@ -104,7 +103,7 @@ export const IngressScreen = () => {
         })
       );
     }
-  }, [dispatch, isConnected, isOfflineAccessAvailable, store]);
+  }, [dispatch, isConnected, isOfflineAccessAvailable]);
 
   if (isConnected === false && !isOfflineAccessAvailable) {
     return <IngressScreenNoInternetConnection />;
