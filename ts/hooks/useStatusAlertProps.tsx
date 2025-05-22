@@ -25,6 +25,8 @@ import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 // This is a list of routes where the offline alert should not be shown
 const blackListOfflineAlertRoutes = new Set<string>([
   ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
+  ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL,
+  ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
   ITW_ROUTES.OFFLINE.WALLET
 ]);
 
