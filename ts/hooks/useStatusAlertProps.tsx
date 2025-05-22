@@ -79,6 +79,7 @@ export const useStatusAlertProps = (
   useEffect(() => {
     // If the user is offline and the current route is not in the blacklist, show the alert
     if (blackListOfflineAlertRoutes.has(currentRoute)) {
+      setConnectivityAlert(undefined);
       return;
     }
     if (isConnected === false) {
