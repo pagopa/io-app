@@ -417,20 +417,21 @@ exports[`MessageDetailsPaymentButton should match snapshot when loading 1`] = `
                                 "overflow": "hidden",
                                 "textAlignVertical": "center",
                               },
+                              false,
+                              {
+                                "backgroundColor": undefined,
+                              },
                               {
                                 "paddingHorizontal": 16,
                               },
                               {
+                                "backgroundColor": "#0B3EE3",
                                 "borderColor": "#FFFFFF",
                                 "borderRadius": 8,
                                 "borderWidth": 0,
                                 "height": 48,
                               },
                               {},
-                              false,
-                              {
-                                "backgroundColor": undefined,
-                              },
                             ]
                           }
                         >
@@ -1053,20 +1054,21 @@ exports[`MessageDetailsPaymentButton should match snapshot when not loading 1`] 
                                 "overflow": "hidden",
                                 "textAlignVertical": "center",
                               },
+                              false,
+                              {
+                                "backgroundColor": undefined,
+                              },
                               {
                                 "paddingHorizontal": 16,
                               },
                               {
+                                "backgroundColor": "#0B3EE3",
                                 "borderColor": "#FFFFFF",
                                 "borderRadius": 8,
                                 "borderWidth": 0,
                                 "height": 48,
                               },
                               {},
-                              false,
-                              {
-                                "backgroundColor": undefined,
-                              },
                             ]
                           }
                         >

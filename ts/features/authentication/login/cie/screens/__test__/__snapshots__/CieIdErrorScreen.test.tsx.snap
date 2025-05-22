@@ -289,20 +289,21 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {
+                    "backgroundColor": undefined,
+                  },
                   {
                     "paddingHorizontal": 24,
                   },
                   {
+                    "backgroundColor": "#0B3EE3",
                     "borderColor": "#FFFFFF",
                     "borderRadius": 8,
                     "borderWidth": 0,
                     "height": 48,
                   },
                   {},
-                  false,
-                  {
-                    "backgroundColor": undefined,
-                  },
                 ]
               }
             >
@@ -435,17 +436,18 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {},
                   {
                     "paddingHorizontal": 0,
                   },
                   {
+                    "backgroundColor": "transparent",
                     "borderColor": "#0B3EE3",
                     "borderRadius": 8,
                     "borderWidth": 0,
                     "height": undefined,
                   },
-                  {},
-                  false,
                   {},
                 ]
               }
@@ -801,20 +803,21 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {
+                    "backgroundColor": undefined,
+                  },
                   {
                     "paddingHorizontal": 24,
                   },
                   {
+                    "backgroundColor": "#0B3EE3",
                     "borderColor": "#FFFFFF",
                     "borderRadius": 8,
                     "borderWidth": 0,
                     "height": 48,
                   },
                   {},
-                  false,
-                  {
-                    "backgroundColor": undefined,
-                  },
                 ]
               }
             >
@@ -947,17 +950,18 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {},
                   {
                     "paddingHorizontal": 0,
                   },
                   {
+                    "backgroundColor": "transparent",
                     "borderColor": "#0B3EE3",
                     "borderRadius": 8,
                     "borderWidth": 0,
                     "height": undefined,
                   },
-                  {},
-                  false,
                   {},
                 ]
               }

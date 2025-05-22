@@ -703,20 +703,21 @@ exports[`error screens should display an error screen in case of missing_sid err
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -1494,20 +1495,21 @@ exports[`error screens should display an error screen in case of preferences err
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -2285,20 +2287,21 @@ exports[`loading screens + error interop should render the correct loading scree
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "borderColor": "#FFFFFF",
                                           "borderRadius": 8,
                                           "borderWidth": 0,
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >

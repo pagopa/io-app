@@ -1222,20 +1222,21 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1773,21 +1774,21 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  false,
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#BBC2D6",
                                     "borderColor": "#555C70",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {
-                                    "backgroundColor": "#BBC2D6",
                                     "opacity": 0.5,
                                   },
-                                  false,
-                                  false,
                                 ]
                               }
                             >

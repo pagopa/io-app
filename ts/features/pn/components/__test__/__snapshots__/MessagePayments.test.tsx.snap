@@ -10118,17 +10118,18 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {},
                                 {
                                   "paddingHorizontal": 0,
                                 },
                                 {
+                                  "backgroundColor": "transparent",
                                   "borderColor": "#0B3EE3",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
                                   "height": undefined,
                                 },
-                                {},
-                                false,
                                 {},
                               ]
                             }
@@ -11911,17 +11912,18 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {},
                                 {
                                   "paddingHorizontal": 0,
                                 },
                                 {
+                                  "backgroundColor": "transparent",
                                   "borderColor": "#0B3EE3",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
                                   "height": undefined,
                                 },
-                                {},
-                                false,
                                 {},
                               ]
                             }

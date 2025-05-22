@@ -424,17 +424,18 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                 "overflow": "hidden",
                                 "textAlignVertical": "center",
                               },
+                              false,
+                              {},
                               {
                                 "paddingHorizontal": 0,
                               },
                               {
+                                "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
                                 "borderRadius": 8,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
-                              {},
-                              false,
                               {},
                             ]
                           }
@@ -3197,17 +3198,18 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                                 "overflow": "hidden",
                                 "textAlignVertical": "center",
                               },
+                              false,
+                              {},
                               {
                                 "paddingHorizontal": 0,
                               },
                               {
+                                "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
                                 "borderRadius": 8,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
-                              {},
-                              false,
                               {},
                             ]
                           }
@@ -3747,17 +3749,18 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                 "overflow": "hidden",
                                 "textAlignVertical": "center",
                               },
+                              false,
+                              {},
                               {
                                 "paddingHorizontal": 0,
                               },
                               {
+                                "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
                                 "borderRadius": 8,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
-                              {},
-                              false,
                               {},
                             ]
                           }

@@ -438,20 +438,21 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#D13333",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1314,20 +1315,21 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -2808,20 +2810,21 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >

@@ -446,20 +446,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {
+                                  "backgroundColor": undefined,
+                                },
                                 {
                                   "paddingHorizontal": 16,
                                 },
                                 {
+                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
                                   "height": 48,
                                 },
                                 {},
-                                false,
-                                {
-                                  "backgroundColor": undefined,
-                                },
                               ]
                             }
                           >
@@ -590,17 +591,18 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {},
                                   {
                                     "paddingHorizontal": 0,
                                   },
                                   {
+                                    "backgroundColor": "transparent",
                                     "borderColor": "#0B3EE3",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": undefined,
                                   },
-                                  {},
-                                  false,
                                   {},
                                 ]
                               }
@@ -1119,20 +1121,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {
+                                  "backgroundColor": undefined,
+                                },
                                 {
                                   "paddingHorizontal": 16,
                                 },
                                 {
+                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
                                   "height": 48,
                                 },
                                 {},
-                                false,
-                                {
-                                  "backgroundColor": undefined,
-                                },
                               ]
                             }
                           >
@@ -1247,21 +1250,22 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {
+                                  "backgroundColor": undefined,
+                                  "borderColor": undefined,
+                                },
                                 {
                                   "paddingHorizontal": 24,
                                 },
                                 {
+                                  "backgroundColor": "rgba(9,50,182,0)",
                                   "borderColor": "#0B3EE3",
                                   "borderRadius": 8,
                                   "borderWidth": 2,
                                   "height": 48,
                                 },
                                 {},
-                                false,
-                                {
-                                  "backgroundColor": undefined,
-                                  "borderColor": undefined,
-                                },
                               ]
                             }
                           >
@@ -1392,17 +1396,18 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {},
                                   {
                                     "paddingHorizontal": 0,
                                   },
                                   {
+                                    "backgroundColor": "transparent",
                                     "borderColor": "#0B3EE3",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": undefined,
                                   },
-                                  {},
-                                  false,
                                   {},
                                 ]
                               }
@@ -2299,20 +2304,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {
+                                  "backgroundColor": undefined,
+                                },
                                 {
                                   "paddingHorizontal": 16,
                                 },
                                 {
+                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
                                   "height": 48,
                                 },
                                 {},
-                                false,
-                                {
-                                  "backgroundColor": undefined,
-                                },
                               ]
                             }
                           >
@@ -3207,20 +3213,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {
+                                  "backgroundColor": undefined,
+                                },
                                 {
                                   "paddingHorizontal": 16,
                                 },
                                 {
+                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
                                   "height": 48,
                                 },
                                 {},
-                                false,
-                                {
-                                  "backgroundColor": undefined,
-                                },
                               ]
                             }
                           >
@@ -3873,20 +3880,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {
+                                  "backgroundColor": undefined,
+                                },
                                 {
                                   "paddingHorizontal": 16,
                                 },
                                 {
+                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
                                   "height": 48,
                                 },
                                 {},
-                                false,
-                                {
-                                  "backgroundColor": undefined,
-                                },
                               ]
                             }
                           >
@@ -4403,20 +4411,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {
+                                  "backgroundColor": undefined,
+                                },
                                 {
                                   "paddingHorizontal": 16,
                                 },
                                 {
+                                  "backgroundColor": "#0B3EE3",
                                   "borderColor": "#FFFFFF",
                                   "borderRadius": 8,
                                   "borderWidth": 0,
                                   "height": 48,
                                 },
                                 {},
-                                false,
-                                {
-                                  "backgroundColor": undefined,
-                                },
                               ]
                             }
                           >
@@ -4547,17 +4556,18 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {},
                                   {
                                     "paddingHorizontal": 0,
                                   },
                                   {
+                                    "backgroundColor": "transparent",
                                     "borderColor": "#0B3EE3",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": undefined,
                                   },
-                                  {},
-                                  false,
                                   {},
                                 ]
                               }

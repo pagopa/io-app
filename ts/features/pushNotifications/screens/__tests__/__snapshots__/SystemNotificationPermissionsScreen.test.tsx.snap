@@ -837,20 +837,21 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -981,17 +982,18 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
                                     {
+                                      "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
                                       "borderRadius": 8,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }

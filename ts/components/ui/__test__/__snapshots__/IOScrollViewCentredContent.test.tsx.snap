@@ -656,17 +656,18 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
+                                      false,
+                                      {},
                                       {
                                         "paddingHorizontal": 0,
                                       },
                                       {
+                                        "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
                                         "borderRadius": 8,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
-                                      {},
-                                      false,
                                       {},
                                     ]
                                   }
@@ -914,20 +915,21 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1655,17 +1657,18 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
+                                      false,
+                                      {},
                                       {
                                         "paddingHorizontal": 0,
                                       },
                                       {
+                                        "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
                                         "borderRadius": 8,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
-                                      {},
-                                      false,
                                       {},
                                     ]
                                   }
@@ -1913,20 +1916,21 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -2041,21 +2045,22 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                    "borderColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 24,
                                   },
                                   {
+                                    "backgroundColor": "rgba(9,50,182,0)",
                                     "borderColor": "#0B3EE3",
                                     "borderRadius": 8,
                                     "borderWidth": 2,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                    "borderColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -2185,17 +2190,18 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
                                     {
+                                      "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
                                       "borderRadius": 8,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }
@@ -2925,17 +2931,18 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
+                                      false,
+                                      {},
                                       {
                                         "paddingHorizontal": 0,
                                       },
                                       {
+                                        "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
                                         "borderRadius": 8,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
-                                      {},
-                                      false,
                                       {},
                                     ]
                                   }
@@ -3183,20 +3190,21 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -3326,17 +3334,18 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
                                     {
+                                      "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
                                       "borderRadius": 8,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }
@@ -4190,20 +4199,21 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -5055,20 +5065,21 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -5183,21 +5194,22 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                    "borderColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 24,
                                   },
                                   {
+                                    "backgroundColor": "rgba(9,50,182,0)",
                                     "borderColor": "#0B3EE3",
                                     "borderRadius": 8,
                                     "borderWidth": 2,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                    "borderColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -5327,17 +5339,18 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
                                     {
+                                      "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
                                       "borderRadius": 8,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }
@@ -6191,20 +6204,21 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -6334,17 +6348,18 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
                                     {
+                                      "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
                                       "borderRadius": 8,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }
@@ -7051,17 +7066,18 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
+                                      false,
+                                      {},
                                       {
                                         "paddingHorizontal": 0,
                                       },
                                       {
+                                        "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
                                         "borderRadius": 8,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
-                                      {},
-                                      false,
                                       {},
                                     ]
                                   }
@@ -7309,20 +7325,21 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -8027,17 +8044,18 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
+                                      false,
+                                      {},
                                       {
                                         "paddingHorizontal": 0,
                                       },
                                       {
+                                        "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
                                         "borderRadius": 8,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
-                                      {},
-                                      false,
                                       {},
                                     ]
                                   }
@@ -8285,20 +8303,21 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -8413,21 +8432,22 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                    "borderColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 24,
                                   },
                                   {
+                                    "backgroundColor": "rgba(9,50,182,0)",
                                     "borderColor": "#0B3EE3",
                                     "borderRadius": 8,
                                     "borderWidth": 2,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                    "borderColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -8557,17 +8577,18 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
                                     {
+                                      "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
                                       "borderRadius": 8,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }
@@ -9274,17 +9295,18 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
+                                      false,
+                                      {},
                                       {
                                         "paddingHorizontal": 0,
                                       },
                                       {
+                                        "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
                                         "borderRadius": 8,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
-                                      {},
-                                      false,
                                       {},
                                     ]
                                   }
@@ -9532,20 +9554,21 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -9675,17 +9698,18 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
                                     {
+                                      "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
                                       "borderRadius": 8,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }
@@ -10516,20 +10540,21 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -11358,20 +11383,21 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -11486,21 +11512,22 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                    "borderColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 24,
                                   },
                                   {
+                                    "backgroundColor": "rgba(9,50,182,0)",
                                     "borderColor": "#0B3EE3",
                                     "borderRadius": 8,
                                     "borderWidth": 2,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                    "borderColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -11630,17 +11657,18 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
                                     {
+                                      "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
                                       "borderRadius": 8,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }
@@ -12471,20 +12499,21 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "borderColor": "#FFFFFF",
                                     "borderRadius": 8,
                                     "borderWidth": 0,
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -12614,17 +12643,18 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
                                     {
+                                      "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
                                       "borderRadius": 8,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }
