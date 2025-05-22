@@ -82,7 +82,7 @@ const HideReceiptButton = (props: Props) => {
           "features.payments.transactions.receipt.hideFromList"
         )}
         icon="eyeHide"
-        variant="primary"
+        variant="danger"
       />
     </ContentWrapper>
   );

@@ -48,7 +48,7 @@ export const Preconditions = () => {
     [navigation]
   );
   const modal = useIOBottomSheetModal({
-    snapPoint: [500],
+    snapPoint: [550],
     title: <PreconditionsTitle />,
     component: <PreconditionsContent footerHeight={footerHeight} />,
     footer: (

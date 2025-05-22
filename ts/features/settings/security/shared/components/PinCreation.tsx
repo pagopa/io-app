@@ -1,8 +1,7 @@
 /* eslint-disable functional/immutable-data */
 import {
-  ButtonLink,
-  ButtonOutline,
   ContentWrapper,
+  IOButton,
   NumberPad,
   Pictogram,
   VSpacer
@@ -257,7 +256,8 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
           />
           <VSpacer />
           <View style={{ alignSelf: "center" }}>
-            <ButtonLink
+            <IOButton
+              variant="link"
               onPress={present}
               label={I18n.t("onboarding.pin.policy.title")}
             />
@@ -267,9 +267,9 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
       </View>
       {isDevEnv && (
         <View style={{ alignSelf: "center" }}>
-          <ButtonOutline
+          <IOButton
+            variant="outline"
             label={`Enter Pin: ${defaultPin} (DevEnv Only)`}
-            accessibilityLabel=""
             onPress={insertValidPin}
           />
         </View>

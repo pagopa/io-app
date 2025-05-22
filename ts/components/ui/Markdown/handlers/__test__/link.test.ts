@@ -1,6 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import {
   deriveCustomHandledLink,
+  isHttpLink,
   isHttpsLink,
   isIoInternalLink
 } from "../link";
@@ -110,6 +111,39 @@ describe("isHttpsLink", () => {
     it(`should return false for '${protocol}'`, () => {
       const isHttps = isHttpsLink(`${protocol}whatever`);
       expect(isHttps).toBe(false);
+    });
+  });
+});
+
+describe("isHttpLink", () => {
+  ["http://", "hTtP://", "HTTP://"].forEach(protocol => {
+    it(`should return true for '${protocol}'`, () => {
+      const isHttp = isHttpLink(`${protocol}whatever`);
+      expect(isHttp).toBe(true);
+    });
+  });
+  [
+    "http:/",
+    "http:",
+    "http",
+    "https://",
+    "ioit://",
+    "iohandledlink://",
+    "iosso://",
+    "clipboard://",
+    "clipboard:",
+    "sms://",
+    "sms:",
+    "tel://",
+    "tel:",
+    "mailto://",
+    "mailto:",
+    "copy://",
+    "copy:"
+  ].forEach(protocol => {
+    it(`should return false for '${protocol}'`, () => {
+      const isHttp = isHttpLink(`${protocol}whatever`);
+      expect(isHttp).toBe(false);
     });
   });
 });

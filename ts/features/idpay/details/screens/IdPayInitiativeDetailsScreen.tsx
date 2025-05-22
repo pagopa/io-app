@@ -1,8 +1,8 @@
 import {
   Body,
-  ButtonSolid,
   ContentWrapper,
   H6,
+  IOButton,
   LabelMini,
   Pictogram,
   Tag,
@@ -272,12 +272,9 @@ const IdPayInitiativeDetailsScreen = () => {
                       )}
                     </Body>
                     <VSpacer size={16} />
-                    <ButtonSolid
-                      accessibilityLabel={I18n.t(
-                        "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
-                      )}
-                      fullWidth={true}
-                      color="primary"
+                    <IOButton
+                      fullWidth
+                      variant="solid"
                       onPress={navigateToConfiguration}
                       label={I18n.t(
                         "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"

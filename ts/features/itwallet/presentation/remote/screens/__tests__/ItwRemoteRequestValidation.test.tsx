@@ -1,15 +1,17 @@
 import { createStore } from "redux";
+import { fromPromise } from "xstate";
 import { ITW_REMOTE_ROUTES } from "../../navigation/routes.ts";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
 import { GlobalState } from "../../../../../../store/reducers/types.ts";
 import { ItwRemoteRequestValidationScreen } from "../ItwRemoteRequestValidationScreen.tsx";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application.ts";
-import { ItwRemoteRequestPayload } from "../../Utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteRequestPayload } from "../../utils/itwRemoteTypeUtils.ts";
 import { ItwRemoteMachineContext } from "../../machine/provider.tsx";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList.ts";
 import { ItwRemoteParamsList } from "../../navigation/ItwRemoteParamsList.ts";
 import { itwRemoteMachine } from "../../machine/machine.ts";
+import { identificationSuccess } from "../../../../../identification/store/actions/index.ts";
 
 describe("ItwRemoteRequestValidationScreen", () => {
   it("it should render the screen correctly", () => {
@@ -31,7 +33,6 @@ describe("ItwRemoteRequestValidationScreen", () => {
 
   it("should render failure screen if missing required fields", () => {
     const partialPayload = {
-      client_id: "abc123xy",
       request_uri: "https://example.com/callback"
     } as ItwRemoteRequestPayload;
 
@@ -53,7 +54,10 @@ describe("ItwRemoteRequestValidationScreen", () => {
   });
 
   const renderComponent = (payload: Partial<ItwRemoteRequestPayload> = {}) => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const globalState = appReducer(
+      appReducer(undefined, applicationChangeState("active")),
+      identificationSuccess({ isBiometric: true })
+    );
 
     const mockNavigation = new Proxy(
       {},
@@ -74,10 +78,16 @@ describe("ItwRemoteRequestValidationScreen", () => {
     const logic = itwRemoteMachine.provide({
       guards: {
         isWalletActive: jest.fn().mockReturnValue(true),
-        isEidExpired: jest.fn().mockReturnValue(false)
+        isEidExpired: jest.fn().mockReturnValue(false),
+        isL3Enabled: jest.fn().mockReturnValue(true)
       },
       actions: {
         navigateToClaimsDisclosureScreen: jest.fn()
+      },
+      actors: {
+        evaluateRelyingPartyTrust: fromPromise(jest.fn()),
+        getRequestObject: fromPromise(jest.fn()),
+        getPresentationDetails: fromPromise(jest.fn())
       }
     });
 

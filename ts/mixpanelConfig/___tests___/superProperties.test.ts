@@ -107,6 +107,7 @@ describe("superProperties", () => {
             appReadableVersion: "1.0.0.0",
             biometricTechnology: "FACE_ID",
             colorScheme: mockColorScheme,
+            CONNECTION_STATUS: "online",
             fontScale: 2.0,
             isScreenLockSet: true,
             isScreenReaderEnabled: true,
@@ -121,7 +122,8 @@ describe("superProperties", () => {
             NOTIFICATION_PERMISSION: notificationPermissionTuple[1],
             SAVED_PAYMENT_METHOD: 0,
             SERVICE_CONFIGURATION: "AUTO",
-            WELFARE_STATUS: []
+            WELFARE_STATUS: [],
+            OFFLINE_ACCESS_REASON: "not_available"
           });
         });
       })
@@ -156,6 +158,9 @@ const generateMockedGlobalState = (
           authLevel: "L2"
         }
       },
+      ingress: {
+        offlineAccessReason: undefined
+      },
       loginFeatures: {
         fastLogin: {
           optIn: {
@@ -173,6 +178,9 @@ const generateMockedGlobalState = (
         placeholders: {
           items: {}
         }
+      },
+      connectivityStatus: {
+        isConnected: true
       }
     },
     persistedPreferences: {

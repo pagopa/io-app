@@ -27,7 +27,9 @@ import { WalletPaymentFailure } from "../../../checkout/types/WalletPaymentFailu
 import { PaymentHistory } from "../../types";
 import {
   storeNewPaymentAttemptAction,
-  storePaymentOutcomeToHistory
+  storePaymentOutcomeToHistory,
+  storePaymentsBrowserTypeAction,
+  removeExpiredPaymentsOngoingFailedAction
 } from "../actions";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { getPaymentsWalletUserMethods } from "../../../wallet/store/actions";
@@ -47,6 +49,12 @@ import {
 } from "../../../receipts/store/actions";
 import * as receiptsAnalytics from "../../../receipts/analytics";
 import { createSetTransform } from "../../../../../store/transforms/setTransform";
+import * as analytics from "../../../checkout/analytics";
+
+export type PaymentsOngoingFailedClockTime = {
+  wallClock: number;
+  appClock: number;
+};
 
 export type PaymentsHistoryState = {
   analyticsData?: PaymentAnalyticsData;
@@ -54,12 +62,14 @@ export type PaymentsHistoryState = {
   archive: ReadonlyArray<PaymentHistory>;
   receiptsOpened: Set<string>;
   PDFsOpened: Set<string>;
+  paymentsOngoingFailed?: Record<RptId, PaymentsOngoingFailedClockTime>;
 };
 
 const INITIAL_STATE: PaymentsHistoryState = {
   archive: [],
   receiptsOpened: new Set(),
-  PDFsOpened: new Set()
+  PDFsOpened: new Set(),
+  paymentsOngoingFailed: {}
 };
 
 export const ARCHIVE_SIZE = 15;
@@ -99,6 +109,10 @@ const reducer = (
     case getType(paymentsGetPaymentDetailsAction.success):
       return {
         ...state,
+        paymentsOngoingFailed: {
+          ...state.paymentsOngoingFailed,
+          [action.payload.rptId]: undefined
+        },
         analyticsData: {
           ...state.analyticsData,
           verifiedData: action.payload,
@@ -126,7 +140,38 @@ const reducer = (
         ...(action.payload === "0" ? { success: true } : {})
       });
     case getType(paymentsGetPaymentDetailsAction.failure):
-    case getType(paymentsCreateTransactionAction.failure):
+    case getType(paymentsCreateTransactionAction.failure): {
+      const failure = pipe(
+        WalletPaymentFailure.decode(action.payload),
+        O.fromEither,
+        O.toUndefined
+      );
+
+      const rptId = state.ongoingPayment?.rptId;
+      const isPaymentPptInProgress =
+        failure?.faultCodeDetail === "PPT_PAGAMENTO_IN_CORSO";
+
+      const failureDateEntry = {
+        wallClock: Date.now(),
+        appClock: performance.now()
+      };
+
+      const ongoingFailedUpdate =
+        rptId && isPaymentPptInProgress && !state.paymentsOngoingFailed?.[rptId]
+          ? { [rptId]: failureDateEntry }
+          : {};
+
+      return updatePaymentHistory(
+        {
+          ...state,
+          paymentsOngoingFailed: {
+            ...state.paymentsOngoingFailed,
+            ...ongoingFailedUpdate
+          }
+        },
+        { failure }
+      );
+    }
     case getType(paymentsGetPaymentTransactionInfoAction.failure):
       return updatePaymentHistory(state, {
         failure: pipe(
@@ -249,6 +294,29 @@ const reducer = (
         PDFsOpened: new Set(state.PDFsOpened).add(action.payload.transactionId)
       };
     }
+    case getType(storePaymentsBrowserTypeAction):
+      analytics.trackPaymentBrowserLanding({
+        browser_type: action.payload
+      });
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          browserType: action.payload
+        }
+      };
+    case getType(removeExpiredPaymentsOngoingFailedAction):
+      if (!state.paymentsOngoingFailed) {
+        return state;
+      }
+      return {
+        ...state,
+        paymentsOngoingFailed: Object.fromEntries(
+          Object.entries(state.paymentsOngoingFailed).filter(
+            ([rptId]) => !action.payload.includes(rptId as RptId)
+          )
+        )
+      };
     case getType(differentProfileLoggedIn):
     case getType(clearCache):
       return INITIAL_STATE;
@@ -312,7 +380,8 @@ const updatePaymentHistory = (
       ongoingPayment: updatedOngoingPaymentHistory,
       archive: appendItemToArchive(state.archive, updatedOngoingPaymentHistory),
       receiptsOpened: state.receiptsOpened,
-      PDFsOpened: state.PDFsOpened
+      PDFsOpened: state.PDFsOpened,
+      paymentsOngoingFailed: state.paymentsOngoingFailed
     };
   }
 
@@ -321,7 +390,8 @@ const updatePaymentHistory = (
     ongoingPayment: updatedOngoingPaymentHistory,
     archive: [..._.dropRight(state.archive), updatedOngoingPaymentHistory],
     receiptsOpened: state.receiptsOpened,
-    PDFsOpened: state.PDFsOpened
+    PDFsOpened: state.PDFsOpened,
+    paymentsOngoingFailed: state.paymentsOngoingFailed
   };
 };
 
@@ -331,7 +401,7 @@ const persistConfig: PersistConfig = {
   key: "paymentHistory",
   storage: AsyncStorage,
   version: CURRENT_REDUX_PAYMENT_HISTORY_STORE_VERSION,
-  whitelist: ["archive", "receiptsOpened"],
+  whitelist: ["archive", "receiptsOpened", "paymentsOngoingFailed"],
   transforms: [createSetTransform(["receiptsOpened"])]
 };
 

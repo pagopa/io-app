@@ -4,11 +4,11 @@
  */
 import {
   Banner,
-  ButtonSolid,
   ContentWrapper,
   ModuleNavigation,
   Tooltip,
   useIOToast,
+  IOButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
@@ -33,6 +33,7 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import I18n from "../../../../../i18n";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { sessionExpired } from "../../../common/store/actions";
 import {
   useIODispatch,
   useIOSelector,
@@ -55,10 +56,7 @@ import {
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import {
-  resetAuthenticationState,
-  sessionExpired
-} from "../../../common/store/actions";
+
 import { isSessionExpiredSelector } from "../../../common/store/selectors";
 import { cieIDDisableTourGuide } from "../../cie/store/actions";
 import {
@@ -69,6 +67,12 @@ import { SpidLevel } from "../../cie/utils";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
 import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
+import { setOfflineAccessReason } from "../../../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
+import { identificationRequest } from "../../../../identification/store/actions";
+import { startupLoadSuccess } from "../../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../../store/reducers/startup";
+import { itwOfflineAccessAvailableSelector } from "../../../../itwallet/common/store/selectors";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",
@@ -85,6 +89,9 @@ export const LandingScreen = () => {
   const insets = useSafeAreaInsets();
   const isCieIDTourGuideEnabled = useIOSelector(
     isCieIDTourGuideEnabledSelector
+  );
+  const itwOfflineAccessAvailable = useIOSelector(
+    itwOfflineAccessAvailableSelector
   );
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const {
@@ -207,7 +214,6 @@ export const LandingScreen = () => {
     if (isSessionExpired) {
       // eslint-disable-next-line functional/immutable-data
       isSessionExpiredRef.current = isSessionExpired;
-      dispatch(resetAuthenticationState());
     }
   });
 
@@ -332,6 +338,20 @@ export const LandingScreen = () => {
       []
     );
 
+    const navigateToWallet = () => {
+      dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.SESSION_EXPIRED));
+      dispatch(
+        identificationRequest(false, false, undefined, undefined, {
+          onSuccess: () => {
+            // This dispatch mounts the new offline navigator.
+            // It must be initialized **after** the user completes
+            // biometric authentication to prevent graphical glitches.
+            dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
+          }
+        })
+      );
+    };
+
     return (
       <View style={{ flex: 1 }} testID="LandingScreen">
         {isSessionExpiredRef.current ? (
@@ -375,21 +395,20 @@ export const LandingScreen = () => {
             title={I18n.t("authentication.landing.tour_guide.title")}
             content={I18n.t("authentication.landing.tour_guide.content")}
           >
-            <ButtonSolid
-              testID="landing-button-login-cie"
-              accessibilityLabel={I18n.t("authentication.landing.loginCie")}
+            <IOButton
               fullWidth
+              variant="solid"
               color={isCieUatEnabled ? "danger" : "primary"}
               label={I18n.t("authentication.landing.loginCie")}
               icon="cieLetter"
               onPress={navigateToCiePinScreen}
+              testID="landing-button-login-cie"
             />
           </Tooltip>
           <VSpacer size={SPACE_BETWEEN_BUTTONS} />
-          <ButtonSolid
-            testID="landing-button-login-spid"
+          <IOButton
             fullWidth
-            accessibilityLabel={I18n.t("authentication.landing.loginSpid")}
+            variant="solid"
             color="primary"
             // if CIE is not supported, since the new DS has not a
             // "semi-enabled" state, we leave the button enabled
@@ -400,20 +419,21 @@ export const LandingScreen = () => {
               void trackSpidLoginSelected();
               navigateToIdpSelection();
             }}
+            testID="landing-button-login-spid"
           />
           <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
-          {/* This code has not been removed because an equal link will have to
-          be reinstated when this story will be implemented: https://pagopa.atlassian.net/browse/IOPID-2689 */}
-          {/* <View style={{ alignSelf: "center" }}>
-            <ButtonLink
-              accessibilityRole="link"
-              accessibilityLabel={I18n.t("authentication.landing.privacyLink")}
-              color="primary"
-              label={I18n.t("authentication.landing.privacyLink")}
-              onPress={navigateToPrivacyUrl}
-            />
-            <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
-          </View> */}
+          {itwOfflineAccessAvailable && isSessionExpired && (
+            <View style={{ alignSelf: "center" }}>
+              <IOButton
+                variant="link"
+                accessibilityRole="link"
+                color="primary"
+                label={I18n.t("authentication.landing.show_wallet")}
+                onPress={navigateToWallet}
+              />
+              <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
+            </View>
+          )}
           {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
           {bottomSheet}
           {infoBottomsheetComponent}

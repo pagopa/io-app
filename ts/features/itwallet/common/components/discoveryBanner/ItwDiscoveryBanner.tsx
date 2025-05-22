@@ -15,10 +15,18 @@ import { useIODispatch } from "../../../../../store/hooks";
 import { itwCloseDiscoveryBanner } from "../../store/actions/preferences";
 import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
 
-/**
- * to use in flows where we want to handle the banner's visibility logic externally
- *  (see MultiBanner feature for the landing screen)
- */
+const bannerConfig = {
+  onboarding: {
+    content: I18n.t("features.itWallet.discovery.banner.home.content"),
+    title: I18n.t("features.itWallet.discovery.banner.home.title"),
+    action: I18n.t("features.itWallet.discovery.banner.home.action")
+  },
+  reactivating: {
+    content: I18n.t("features.itWallet.discovery.banner.homeActive.content"),
+    title: I18n.t("features.itWallet.discovery.banner.homeActive.title"),
+    action: I18n.t("features.itWallet.discovery.banner.homeActive.action")
+  }
+} as const;
 
 export type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
@@ -27,6 +35,10 @@ export type ItwDiscoveryBannerProps = {
   handleOnClose?: () => void;
 };
 
+/**
+ * Discovery banner used in flows where we want to handle the banner's visibility logic externally
+ *  (see MultiBanner feature for the landing screen)
+ */
 export const ItwDiscoveryBanner = ({
   withTitle = true,
   ignoreMargins = false,
@@ -42,9 +54,9 @@ export const ItwDiscoveryBanner = ({
   const trackBannerProperties = useMemo(
     () => ({
       banner_id:
-        bannerType === "onboarding"
-          ? "itwDiscoveryBannerTestID"
-          : "itwDiscoveryBannerDeviceChanged",
+        bannerType === "reactivating"
+          ? "itwDiscoveryBannerDeviceChanged"
+          : "itwDiscoveryBannerTestID",
       banner_page: route.name,
       banner_landing: "ITW_INTRO"
     }),
@@ -53,7 +65,8 @@ export const ItwDiscoveryBanner = ({
   const handleOnPress = () => {
     trackItWalletBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: {}
     });
   };
   useOnFirstRender(() => {
@@ -64,19 +77,6 @@ export const ItwDiscoveryBanner = ({
     trackItWalletBannerClosure(trackBannerProperties);
     handleOnClose?.();
     dispatch(itwCloseDiscoveryBanner());
-  };
-
-  const bannerConfig = {
-    onboarding: {
-      content: I18n.t("features.itWallet.discovery.banner.home.content"),
-      title: I18n.t("features.itWallet.discovery.banner.home.title"),
-      action: I18n.t("features.itWallet.discovery.banner.home.action")
-    },
-    reactivating: {
-      content: I18n.t("features.itWallet.discovery.banner.homeActive.content"),
-      title: I18n.t("features.itWallet.discovery.banner.homeActive.title"),
-      action: I18n.t("features.itWallet.discovery.banner.homeActive.action")
-    }
   };
 
   if (!bannerType) {

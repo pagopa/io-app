@@ -4,27 +4,30 @@ import I18n from "../../i18n";
 
 type OfflineFailureComponentProps = {
   onRetry?: () => void;
+  isHeaderVisible?: boolean;
 };
 
 export const OfflineFailureComponent = ({
-  onRetry
-}: OfflineFailureComponentProps) => (
-  <OperationResultScreenContent
-    pictogram="lostConnection"
-    title={I18n.t("global.offline.screen.title")}
-    subtitle={I18n.t("global.offline.screen.subtitle")}
-    secondaryAction={
-      onRetry
-        ? {
-            label: I18n.t("global.offline.screen.action"),
-            onPress: onRetry
-          }
-        : undefined
-    }
-  />
-);
-
-export const OfflineFailureScreen = () => {
+  onRetry,
+  isHeaderVisible
+}: OfflineFailureComponentProps) => {
   useHeaderSecondLevel({ title: "" });
-  return <OfflineFailureComponent />;
+  return (
+    <OperationResultScreenContent
+      pictogram="lostConnection"
+      title={I18n.t("global.offline.screen.title")}
+      subtitle={I18n.t("global.offline.screen.subtitle")}
+      secondaryAction={
+        onRetry
+          ? {
+              label: I18n.t("global.offline.screen.action"),
+              onPress: onRetry
+            }
+          : undefined
+      }
+      isHeaderVisible={isHeaderVisible}
+    />
+  );
 };
+
+export const OfflineFailureScreen = () => <OfflineFailureComponent />;

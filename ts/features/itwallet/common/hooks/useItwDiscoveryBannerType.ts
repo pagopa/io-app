@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { itwIsWalletInstanceRemotelyActiveSelector } from "../store/selectors/preferences";
 import { useIOSelector } from "../../../../store/hooks.ts";
 
-type DiscoveryBannerType = "onboarding" | "reactivating";
+export type DiscoveryBannerType = "onboarding" | "reactivating";
 
 /**
  * Hook to determine the type of the ITW discovery banner to display based on the wallet's state.

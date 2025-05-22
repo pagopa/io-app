@@ -1,5 +1,3 @@
-import { ItwRemoteRequestPayload } from "../../presentation/remote/Utils/itwRemoteTypeUtils.ts";
-
 /**
  * This file defines error types for the support bottom sheet (useItwFailureSupportModal), specifically for cases
  * that don't fall under the existing IssuanceFailure and CredentialIssuanceFailure types.
@@ -15,7 +13,7 @@ export enum ItwFailureType {
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
  */
 export type ReasonTypeByFailure = {
-  [ItwFailureType.ITW_REMOTE_PAYLOAD_INVALID]: Partial<ItwRemoteRequestPayload>;
+  [ItwFailureType.ITW_REMOTE_PAYLOAD_INVALID]: Error;
 };
 
 type TypedRemoteFailures = {

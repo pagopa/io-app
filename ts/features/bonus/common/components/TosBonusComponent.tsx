@@ -1,6 +1,5 @@
 import {
-  ButtonOutline,
-  ButtonSolidProps,
+  IOButton,
   FooterActions,
   H2,
   IconButton,
@@ -68,11 +67,6 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
     return () => subscription.remove();
   });
 
-  const closeButtonProps: ButtonSolidProps = {
-    onPress: props.onClose,
-    label: I18n.t("global.buttons.close")
-  };
-
   const handleLoadEnd = () => setOnLoadEnd(true);
 
   const handleError = () => {
@@ -90,14 +84,14 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
         <H2>{I18n.t("onboarding.tos.error")}</H2>
 
         <View style={styles.errorButtonsContainer}>
-          <ButtonOutline
+          <IOButton
+            fullWidth
+            variant="outline"
             label={I18n.t("global.buttons.retry")}
-            accessibilityLabel={I18n.t("global.buttons.retry")}
             onPress={() => {
               setOnLoadEnd(false);
               setHasError(false);
             }}
-            fullWidth
           />
         </View>
       </View>
@@ -141,7 +135,10 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
         <FooterActions
           actions={{
             type: "SingleButton",
-            primary: closeButtonProps
+            primary: {
+              onPress: props.onClose,
+              label: I18n.t("global.buttons.close")
+            }
           }}
         />
       )}

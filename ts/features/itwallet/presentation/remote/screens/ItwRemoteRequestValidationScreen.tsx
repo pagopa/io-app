@@ -1,14 +1,17 @@
-import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
+import * as E from "fp-ts/lib/Either";
 import I18n from "../../../../../i18n.ts";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
-import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";
+import { validateItwPresentationQrCodeParams } from "../utils/itwRemotePresentationUtils.ts";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
 import { ItwRemoteDeepLinkFailure } from "../components/ItwRemoteDeepLinkFailure.tsx";
+import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { progressSelector } from "../../../../identification/store/selectors/index.ts";
 
 export type ItwRemoteRequestValidationScreenNavigationParams =
   Partial<ItwRemoteRequestPayload>;
@@ -18,20 +21,37 @@ type ScreenProps = IOStackNavigationRouteProps<
   "ITW_REMOTE_REQUEST_VALIDATION"
 >;
 
-const ItwRemoteRequestValidationScreen = (params: ScreenProps) => {
+const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
   useItwDisableGestureNavigation();
 
-  // Add default value for request_uri_method if not present
-  const payload = {
-    ...params.route.params,
-    request_uri_method: params.route.params.request_uri_method ?? "GET"
-  };
+  const identificationProgress = useIOSelector(progressSelector);
 
-  if (!ItwRemoteRequestPayload.is(payload)) {
-    return <ItwRemoteDeepLinkFailure payload={payload} />;
+  /**
+   * In case of same-device flow the app might not be running when the user opens the link,
+   * so the app is started and the user needs to complete the identification process.
+   * Here we wait for the identification to finish to avoid inconsistencies
+   * between the machine and the navigation.
+   * This also applies when the token expires and the user needs to identify again.
+   */
+  if (identificationProgress.kind !== "identified") {
+    return (
+      <ItwRemoteLoadingScreen
+        title={I18n.t(
+          "features.itWallet.presentation.remote.loadingScreen.request"
+        )}
+      />
+    );
   }
 
-  return <ContentView payload={payload} />;
+  const payload = validateItwPresentationQrCodeParams(route.params);
+
+  if (E.isLeft(payload)) {
+    return (
+      <ItwRemoteDeepLinkFailure failure={payload.left} payload={route.params} />
+    );
+  }
+
+  return <ContentView payload={payload.right} />;
 };
 
 const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {
@@ -47,20 +67,11 @@ const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {
   );
 
   return (
-    <LoadingScreenContent
-      testID={"loader"}
-      contentTitle={I18n.t(
-        "features.itWallet.presentation.remote.loadingScreen.title"
+    <ItwRemoteLoadingScreen
+      title={I18n.t(
+        "features.itWallet.presentation.remote.loadingScreen.request"
       )}
-    >
-      <ContentWrapper style={{ alignItems: "center" }}>
-        <Body>
-          {I18n.t(
-            "features.itWallet.presentation.remote.loadingScreen.subtitle"
-          )}
-        </Body>
-      </ContentWrapper>
-    </LoadingScreenContent>
+    />
   );
 };
 

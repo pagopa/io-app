@@ -2,13 +2,18 @@
 import {
   Caption,
   hexToRgba,
+  useIOThemeContext,
   useScaleAnimation,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import {
   Canvas,
+  ColorMatrix,
+  Group,
   ImageSVG,
   Mask,
+  OpacityMatrix,
+  Paint,
   Rect,
   Circle as SkiaCircle,
   Group as SkiaGroup,
@@ -35,6 +40,7 @@ import Animated, {
   useAnimatedReaction,
   useAnimatedSensor,
   useDerivedValue,
+  useReducedMotion,
   useSharedValue
 } from "react-native-reanimated";
 import I18n from "../../../../i18n";
@@ -61,16 +67,9 @@ const TRUSTMARK_STAMP_SIZE = TRUSTMARK_HEIGHT * 1.75;
 const TRUSTMARK_STAMP_SIZE_RASTER = TRUSTMARK_HEIGHT * 1.5;
 const TRUSTMARK_GRADIENT_HEIGHT = TRUSTMARK_STAMP_SIZE * 2;
 const buttonBorderRadius = 12;
-const buttonInnerBorderColor: ColorValue = "#CCCCCC";
-const buttonBackgroundGradient = {
-  colors: ["#CCCCCC", "#F2F2F2", "#E9E9E9", "#E0E0E0"],
-  locations: [0, 0.35, 0.7, 1],
-  center: { x: 0.5, y: 0.7 }
-};
 
 /* Light */
 const lightScaleMultiplier = 1;
-const lightSkiaOpacity = 0.7;
 const lightSize: LayoutRectangle["width"] = 250;
 const visibleLightPercentage = 0.25; // Visible light when it's near box boundaries
 
@@ -79,13 +78,37 @@ export const ItwCredentialTrustmark = ({
   credential,
   onPress
 }: ItwCredentialTrustmarkProps) => {
+  const reduceMotion = useReducedMotion();
+  const { themeType } = useIOThemeContext();
+
+  const isLightMode = themeType === "light";
+
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
 
   /* If you want to restore the static variant of the trustmark,
-  please set the following variable to false */
-  const enableIridescence = true;
+  please set the following variable to false. We force the static
+  version to be rendered when `reduceMotion` is enabled. */
+  const enableIridescence = !reduceMotion;
+
+  /* Styles */
+  const trustmarkTickOpacity = isLightMode ? 1 : 0.8;
+  const lightSkiaOpacity = isLightMode ? 0.7 : 0.25;
+  const buttonInnerBorderOpacity = isLightMode ? 0.35 : 0.25;
+  const buttonInnerBorderColorValue: ColorValue = "#CCCCCC";
+  const buttonBackgroundGradientOpacity = isLightMode ? 1 : 0.25;
+
+  const buttonBackgroundGradient = {
+    colors: ["#CCCCCC", "#F2F2F2", "#E9E9E9", "#E0E0E0"],
+    locations: [0, 0.35, 0.7, 1],
+    center: { x: 0.5, y: 0.7 }
+  };
+
+  const buttonInnerBorderColor: ColorValue = hexToRgba(
+    buttonInnerBorderColorValue,
+    buttonInnerBorderOpacity
+  );
 
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
   const currentRoll = useSharedValue(0);
@@ -247,13 +270,21 @@ export const ItwCredentialTrustmark = ({
           </SkiaGroup>
         }
       >
-        <ImageSVG
-          svg={trustMarkStampSVG}
-          x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
-          y={-TRUSTMARK_STAMP_SIZE * 0.18}
-          width={TRUSTMARK_STAMP_SIZE}
-          height={TRUSTMARK_STAMP_SIZE}
-        />
+        <Group
+          layer={
+            <Paint>
+              <ColorMatrix matrix={OpacityMatrix(trustmarkTickOpacity)} />
+            </Paint>
+          }
+        >
+          <ImageSVG
+            svg={trustMarkStampSVG}
+            x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
+            y={-TRUSTMARK_STAMP_SIZE * 0.18}
+            width={TRUSTMARK_STAMP_SIZE}
+            height={TRUSTMARK_STAMP_SIZE}
+          />
+        </Group>
       </Mask>
     </Canvas>
   );
@@ -288,9 +319,17 @@ export const ItwCredentialTrustmark = ({
           angleCenter={buttonBackgroundGradient.center}
           locations={buttonBackgroundGradient.locations}
           colors={buttonBackgroundGradient.colors}
-          style={styles.gradientView}
+          style={[
+            styles.gradientView,
+            { opacity: buttonBackgroundGradientOpacity }
+          ]}
         />
-        <View style={styles.buttonInnerBorder} />
+        <View
+          style={[
+            styles.buttonInnerBorder,
+            { borderColor: buttonInnerBorderColor }
+          ]}
+        />
         <View style={styles.content}>
           <Caption>
             {I18n.t(
@@ -299,7 +338,10 @@ export const ItwCredentialTrustmark = ({
           </Caption>
           {!enableIridescence && (
             <Image
-              style={styles.trustmarkAsset}
+              style={{
+                ...styles.trustmarkAsset,
+                opacity: isLightMode ? 1 : 0.7
+              }}
               source={require("../../../../../img/features/itWallet/credential/trustmark.png")}
               accessibilityIgnoresInvertColors
             />
@@ -325,7 +367,6 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     borderRadius: buttonBorderRadius - 1,
     borderCurve: "continuous",
-    borderColor: hexToRgba(buttonInnerBorderColor, 0.35),
     borderWidth: 1
   },
   content: {

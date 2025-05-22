@@ -18,10 +18,11 @@ import {
 import { Fragment } from "react";
 import { Alert, View } from "react-native";
 import I18n from "../../../i18n";
-
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-
-import { ListItemMessage } from "../../messages/components/Home/DS/ListItemMessage";
+import {
+  ListItemMessage,
+  ListItemMessageProps
+} from "../../messages/components/Home/DS/ListItemMessage";
 import { ListItemMessageSkeleton } from "../../messages/components/Home/DS/ListItemMessageSkeleton";
 import { getBadgePropsByTransactionStatus } from "../../payments/common/utils";
 import { ListItemTransactionStatus } from "../../payments/common/utils/types";
@@ -216,7 +217,7 @@ const renderListItemNav = () => (
   </VStack>
 );
 
-const listItemMessageSample: ListItemMessage = {
+const listItemMessageSample: ListItemMessageProps = {
   formattedDate: "09 dic",
   isRead: false,
   messageTitle: "Il tuo appuntamento",

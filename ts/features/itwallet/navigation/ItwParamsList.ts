@@ -1,10 +1,13 @@
+import { ItwDiscoveryInfoScreenNavigationParams } from "../discovery/screens/ItwDiscoveryInfoScreen";
 import { ItwIdentificationModeSelectionScreenNavigationParams } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import { ItwCieWrongCiePinScreenNavigationParams } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import { ItwIssuanceCredentialAsyncContinuationNavigationParams } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
+import { ItwIssuanceCredentialTrustIssuerNavigationParams } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
 import { ItwPresentationCredentialAttachmentNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModalNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
+import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
@@ -12,12 +15,17 @@ export type ItwParamsList = {
   // OFFLINE WALLET
   [ITW_ROUTES.OFFLINE.WALLET]: undefined;
   // DISCOVERY
-  [ITW_ROUTES.DISCOVERY.INFO]: undefined;
+  [ITW_ROUTES.DISCOVERY.INFO]:
+    | ItwDiscoveryInfoScreenNavigationParams
+    | undefined;
   [ITW_ROUTES.DISCOVERY.IPZS_PRIVACY]: undefined;
   [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]: undefined;
   // IDENTIFICATION
   [ITW_ROUTES.IDENTIFICATION
     .MODE_SELECTION]: ItwIdentificationModeSelectionScreenNavigationParams;
+  // IDENTIFICATION ERRORS
+  [ITW_ROUTES.IDENTIFICATION
+    .CIE_WARNING]: ItwIdentificationCieWarningScreenNavigationParams;
   // IDENTIFICATION SPID
   [ITW_ROUTES.IDENTIFICATION.IDP_SELECTION]: undefined;
   [ITW_ROUTES.IDENTIFICATION.SPID.LOGIN]: undefined;
@@ -35,7 +43,9 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUANCE.EID_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_RESULT]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_FAILURE]: undefined;
-  [ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER]: undefined;
+  [ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER]:
+    | ItwIssuanceCredentialTrustIssuerNavigationParams
+    | undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE]: undefined;
   [ITW_ROUTES.ISSUANCE

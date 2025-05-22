@@ -4,13 +4,15 @@ import { Action } from "../../../../../store/actions/types";
 import {
   itwCloseDiscoveryBanner,
   itwCloseFeedbackBanner,
+  itwSetOfflineBannerHidden,
   itwFlagCredentialAsRequested,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
-  itwSetL3Enabled,
+  itwSetFiscalCodeWhitelisted,
   itwSetReviewPending,
   itwSetWalletInstanceRemotelyActive,
-  itwUnflagCredentialAsRequested
+  itwUnflagCredentialAsRequested,
+  itwSetL3LocallyEnabled
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
@@ -37,6 +39,10 @@ export type ItwPreferencesState = {
   // Indicates whether the L3 is enabled, which allows to use the new IT Wallet
   // features for users with L3 authentication level
   isL3Enabled?: boolean;
+  // Indicates whether the fiscal code is whitelisted for L3 features
+  isFiscalCodeWhitelisted?: boolean;
+  // Indicates whether the offline banner should be hidden
+  offlineBannerHidden?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -113,7 +119,7 @@ const reducer = (
       };
     }
 
-    case getType(itwSetL3Enabled): {
+    case getType(itwSetL3LocallyEnabled): {
       return {
         ...state,
         isL3Enabled: action.payload
@@ -123,12 +129,29 @@ const reducer = (
       // When the wallet is being reset, we need to persist only the preferences:
       // - claimValuesHidden
       // - isL3Enabled
-      const { claimValuesHidden, isL3Enabled } = state;
+      // - isWalletInstanceRemotelyActive ->
+      //  (the correct value will be set in the saga related to the wallet deactivation, but we should avoid to have this value undefined)
+      const { claimValuesHidden, isL3Enabled, isWalletInstanceRemotelyActive } =
+        state;
       return {
         ...itwPreferencesInitialState,
         claimValuesHidden,
-        isL3Enabled
+        isL3Enabled,
+        isWalletInstanceRemotelyActive
       };
+
+    case getType(itwSetFiscalCodeWhitelisted): {
+      return {
+        ...state,
+        isFiscalCodeWhitelisted: action.payload
+      };
+    }
+    case getType(itwSetOfflineBannerHidden): {
+      return {
+        ...state,
+        offlineBannerHidden: action.payload
+      };
+    }
 
     default:
       return state;

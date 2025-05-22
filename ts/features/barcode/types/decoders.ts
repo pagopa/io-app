@@ -11,7 +11,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { decodePosteDataMatrix } from "../../../utils/payment";
-import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/Utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/utils/itwRemoteTypeUtils";
+import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -119,11 +120,13 @@ const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
     ),
     O.map(match => new URLSearchParams(match[1])),
     O.chainEitherK(params =>
-      ItwRemoteRequestPayload.decode({
+      validateItwPresentationQrCodeParams({
         client_id: params.get("client_id"),
         request_uri: params.get("request_uri"),
         state: params.get("state"),
-        request_uri_method: params.get("request_uri_method") ?? "GET"
+        request_uri_method: params.get(
+          "request_uri_method"
+        ) as ItwRemoteRequestPayload["request_uri_method"]
       })
     ),
     O.map(itwRemoteRequestPayload => ({

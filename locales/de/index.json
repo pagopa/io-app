@@ -1362,8 +1362,7 @@
       "fee": "Kommission ",
       "feeAppliedBy": "Angewandt von: ",
       "editButton": "Ändern",
-      "termsAndConditions": "Wenn du fortfährst, erklärst du folgende Informationen gelesen und verstanden zu haben: ",
-      "termsAndConditionsLink": "Nutzungsbedingungen und Datenschutzrichtlinie",
+      "termsAndConditions": "Mit dem Fortfahren akzeptieren Sie die [Nutzungsbedingungen](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) und bestätigen, die [Datenschutzerklärung](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) von {{pspName}} gelesen zu haben.",
       "a11y": {
         "announce": "Zusammenfassung Ihrer Zahlung"
       }
@@ -2411,13 +2410,16 @@
   "messages": {
     "accessibility": {
       "message": {
+        "archive": "archiviare",
+        "description": "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{instructions}}",
+        "deselectInstructions": "Tieni premuto per deselezionare",
         "read": "Mitteilung",
-        "unread": "Ungelesene Mitteilung",
-        "archived": "Archiviert",
-        "description": "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}",
-        "received_on": "erhalten am",
         "received_at": "erhalten um",
-        "selected": "ausgewählt"
+        "received_on": "erhalten am",
+        "selectInstructions": "Press and hold to select and later",
+        "selected": "ausgewählt",
+        "unarchive": "unarchive",
+        "unread": "Ungelesene Mitteilung"
       }
     },
     "contextualHelpTitle": "Mitteilungen verwenden",
@@ -3493,7 +3495,7 @@
         },
         "title": "Die digitale Version deiner Dokumente in IO",
         "content": "###### Dokumente in IO: So funktioniert es \n Du kannst jetzt die **digitale Version deiner persönlichen Dokumente**, wie z. B. deinen Führerschein und deine Gesundheitskarte, zu deinem IO-Konto hinzufügen.\n\nAktiviere die Funktion **Dokumente in IO**, um sie immer auf deinem Gerät zur Hand zu haben.  \n ###### Es geht schnell und einfach \n Du benötigst deine **SPID** oder **CIE** (Elektronische Identitätskarte) Zugangsdaten, um die Aktivierung abzuschließen: dies ist ein notwendiger Sicherheitsschritt, um die Sicherheit deiner Daten zu gewährleisten.",
-        "tos": "Indem du auf **Weiter** tippst, bestätigst du, dass du die [Datenschutzbestimmungen und Nutzungsbedingungen]({{privacyAndTosUrl}}) gelesen und verstanden hast.",
+        "tos": "Indem du auf **Weiter** tippst, bestätigst du, dass du die [Datenschutzbestimmungen und Nutzungsbedingungen]({{tos_url}}) gelesen und verstanden hast.",
         "upcomingWalletBanner": {
           "title": "Demnächst: deine Dokumente in IO",
           "content": "Bald kannst du digitale Versionen deiner persönlichen Dokumente wie Führerschein und Gesundheitskarte in dein IO-Konto einfügen!",

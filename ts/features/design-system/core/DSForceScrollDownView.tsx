@@ -1,10 +1,9 @@
 import {
   Body,
-  ButtonLink,
-  ButtonOutline,
   ContentWrapper,
   FooterActions,
   ForceScrollDownView,
+  IOButton,
   IOVisualCostants,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -69,13 +68,15 @@ export const DSForceScrollDownView = () => {
             ))}
           </VStack>
           <VStack space={16} style={{ alignItems: "flex-start" }}>
-            <ButtonOutline
+            <IOButton
+              variant="outline"
               label="Change button configuration"
               onPress={() => {
                 setFooterActions(alternativeFooterActions);
               }}
             />
-            <ButtonLink
+            <IOButton
+              variant="link"
               label="Reset button configuration"
               onPress={() => {
                 setFooterActions(defaultFooterActions);

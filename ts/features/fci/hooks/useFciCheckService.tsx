@@ -6,12 +6,12 @@ import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { upsertServicePreference } from "../../services/details/store/actions/preference";
-import { servicePreferencePotSelector } from "../../services/details/store/reducers";
 import { isServicePreferenceResponseSuccess } from "../../services/details/types/ServicePreferenceResponse";
 import { trackFciUxConversion } from "../analytics";
 import { fciStartSigningRequest } from "../store/actions";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import { fciMetadataServiceIdSelector } from "../store/reducers/fciMetadata";
+import { servicePreferencePotByIdSelector } from "../../services/details/store/reducers";
 
 /**
  * A hook that returns a function to present the abort signature flow bottom sheet
@@ -19,7 +19,9 @@ import { fciMetadataServiceIdSelector } from "../store/reducers/fciMetadata";
 export const useFciCheckService = () => {
   const dispatch = useIODispatch();
   const fciServiceId = useIOSelector(fciMetadataServiceIdSelector);
-  const servicePreferencePot = useIOSelector(servicePreferencePotSelector);
+  const servicePreferencePot = useIOSelector(state =>
+    servicePreferencePotByIdSelector(state, fciServiceId)
+  );
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const servicePreferenceValue = pot.getOrElse(servicePreferencePot, undefined);
   const cancelButtonProps: ComponentProps<

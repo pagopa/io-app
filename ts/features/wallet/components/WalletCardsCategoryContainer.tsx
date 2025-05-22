@@ -1,10 +1,15 @@
-import { ListItemHeader, WithTestID } from "@pagopa/io-app-design-system";
+import {
+  ListItemHeader,
+  VSpacer,
+  WithTestID
+} from "@pagopa/io-app-design-system";
 import { Platform, StyleSheet } from "react-native";
 import Animated, {
   FadeInDown,
   FadeOutDown,
   LinearTransition
 } from "react-native-reanimated";
+import { useMemo } from "react";
 import { WalletCard } from "../types";
 import { renderWalletCardFn } from "../utils";
 
@@ -32,30 +37,38 @@ export const WalletCardsCategoryContainer = ({
   topElement,
   bottomElement,
   testID
-}: WalletCardsCategoryContainerProps) => (
-  <Animated.View
-    style={styles.container}
-    testID={testID}
-    layout={LinearTransition.duration(200)}
-  >
-    {header && <ListItemHeader {...header} />}
+}: WalletCardsCategoryContainerProps) => {
+  const headerComponent = useMemo(
+    () => (
+      <>
+        {header ? <ListItemHeader {...header} /> : <VSpacer size={16} />}
+        {topElement}
+      </>
+    ),
+    [header, topElement]
+  );
+
+  return (
     <Animated.FlatList
+      testID={testID}
       scrollEnabled={false}
       data={cards}
       renderItem={({ index, item }) =>
         renderWalletCardFn(item, index < cards.length - 1)
       }
       itemLayoutAnimation={itemLayoutAnimation}
+      layout={LinearTransition.duration(200)}
+      contentContainerStyle={styles.container}
       style={styles.cardList}
       entering={FadeInDown.duration(150)}
       exiting={FadeOutDown.duration(150)}
-      ListHeaderComponent={topElement}
+      ListHeaderComponent={headerComponent}
       ListHeaderComponentStyle={styles.listHeader}
       ListFooterComponent={bottomElement}
       ListFooterComponentStyle={styles.listFooter}
     />
-  </Animated.View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -131,6 +131,11 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "_tag": "None",
       },
     },
+    "identification": {
+      "hasNfcFeature": {
+        "kind": "PotNone",
+      },
+    },
     "issuance": {
       "integrityKeyTag": {
         "_tag": "None",
@@ -252,6 +257,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "history": {
       "PDFsOpened": Set {},
       "archive": [],
+      "paymentsOngoingFailed": {},
       "receiptsOpened": Set {},
     },
     "home": {
@@ -299,7 +305,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "pn": {
     "activation": {
-      "kind": "PotNone",
+      "isActivating": false,
     },
     "bannerDismiss": {
       "dismissed": false,
@@ -308,10 +314,8 @@ exports[`featuresPersistor should match snapshot 1`] = `
   "profileSettings": {},
   "services": {
     "details": {
-      "byId": {},
-      "servicePreference": {
-        "kind": "PotNone",
-      },
+      "dataById": {},
+      "preferencesById": {},
     },
     "home": {
       "featuredInstitutions": {

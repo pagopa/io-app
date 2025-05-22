@@ -1,8 +1,9 @@
 import {
-  ButtonSolid,
   ContentWrapper,
   Divider,
   H2,
+  IOButton,
+  IOButtonBlockSpecificProps,
   IOToast,
   IOVisualCostants,
   ListItemHeader,
@@ -77,7 +78,7 @@ type TestEnvironmentsListItem = Pick<
 
 type DevActionButton = {
   condition: boolean;
-} & Pick<ComponentProps<typeof ButtonSolid>, "color" | "label" | "onPress">;
+} & Pick<IOButtonBlockSpecificProps, "color" | "label" | "onPress">;
 
 const DeveloperActionsSection = () => {
   const dispatch = useIODispatch();
@@ -175,8 +176,9 @@ const DeveloperActionsSection = () => {
   const renderDevActionButton = ({
     item: { color = "danger", label, onPress }
   }: ListRenderItemInfo<DevActionButton>) => (
-    <ButtonSolid
+    <IOButton
       fullWidth
+      variant="solid"
       color={color}
       label={label}
       accessibilityLabel={label}
@@ -558,7 +560,7 @@ const DeveloperModeSection = () => {
 
   return (
     <>
-      <ContentWrapper>
+      <ContentWrapper testID="developerModeSection">
         <VSpacer size={24} />
         <H2 color={theme["textHeading-default"]}>
           {I18n.t("profile.main.developersSectionHeader")}
@@ -567,6 +569,7 @@ const DeveloperModeSection = () => {
 
         {/* Enable/Disable Developer Mode */}
         <ListItemSwitch
+          testID="debugModeSwitch"
           label={I18n.t("profile.main.debugMode")}
           value={isDebugModeEnabled}
           onSwitchValueChange={enabled =>
