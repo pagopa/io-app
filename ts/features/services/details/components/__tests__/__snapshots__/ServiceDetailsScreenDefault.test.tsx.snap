@@ -1021,6 +1021,10 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -1032,10 +1036,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1877,6 +1877,10 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -1888,10 +1892,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -2021,6 +2021,8 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
@@ -2031,8 +2033,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }

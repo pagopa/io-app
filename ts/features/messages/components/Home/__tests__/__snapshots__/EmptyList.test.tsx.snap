@@ -1185,6 +1185,10 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -1196,10 +1200,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -6863,6 +6863,10 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -6874,10 +6878,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
