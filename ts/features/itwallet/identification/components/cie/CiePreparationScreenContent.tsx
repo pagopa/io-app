@@ -78,7 +78,7 @@ export const CiePreparationScreenContent = ({ infoType }: Props) => {
     sendEvent: machineRef.send
   });
   // Define image container height as 50% of screen height
-  const imageHeight = screenHeight * 0.5;
+  const imageHeightContainer = screenHeight * 0.5;
 
   return (
     <IOScrollViewWithLargeHeader
@@ -97,7 +97,7 @@ export const CiePreparationScreenContent = ({ infoType }: Props) => {
           label={content.buttonLink.label}
           onPress={content.buttonLink.onPress}
         />
-        <View style={[styles.imageContainer, { height: imageHeight }]}>
+        <View style={[styles.imageContainer, { height: imageHeightContainer }]}>
           <Image
             accessibilityIgnoresInvertColors
             source={content.imageSource}
