@@ -5,10 +5,10 @@
 import {
   Banner,
   ContentWrapper,
+  IOButton,
   ModuleNavigation,
   Tooltip,
   useIOToast,
-  IOButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
@@ -73,6 +73,7 @@ import { identificationRequest } from "../../../../identification/store/actions"
 import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { itwOfflineAccessAvailableSelector } from "../../../../itwallet/common/store/selectors";
+import { updateMixpanelSuperProperties } from "../../../../../mixpanelConfig/superProperties.ts";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",
@@ -339,6 +340,11 @@ export const LandingScreen = () => {
     );
 
     const navigateToWallet = () => {
+      const state = store.getState();
+      void updateMixpanelSuperProperties(state, {
+        property: "OFFLINE_ACCESS_REASON",
+        value: OfflineAccessReasonEnum.SESSION_EXPIRED
+      });
       dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.SESSION_EXPIRED));
       dispatch(
         identificationRequest(false, false, undefined, undefined, {

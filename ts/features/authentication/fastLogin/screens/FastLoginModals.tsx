@@ -5,10 +5,15 @@ import {
   askUserToRefreshSessionToken,
   clearTokenRefreshError
 } from "../store/actions/tokenRefreshActions";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
 import { setOfflineAccessReason } from "../../../ingress/store/actions";
 import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
 import { itwOfflineAccessAvailableSelector } from "../../../itwallet/common/store/selectors";
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties.ts";
 import RefreshTokenLoadingScreen from "./RefreshTokenLoadingScreen";
 import AskUserInteractionScreen from "./AskUserInteractionScreen";
 
@@ -16,6 +21,7 @@ const FastLoginModals = (
   tokenRefreshing: TokenRefreshState,
   isFastLoginUserInteractionNeeded: boolean
 ) => {
+  const store = useIOStore();
   const dispatch = useIODispatch();
   const isOfflineAccessAvailable = useIOSelector(
     itwOfflineAccessAvailableSelector
@@ -47,6 +53,11 @@ const FastLoginModals = (
 
   if (tokenRefreshing.kind === "transient-error") {
     if (isOfflineAccessAvailable) {
+      const state = store.getState();
+      void updateMixpanelSuperProperties(state, {
+        property: "OFFLINE_ACCESS_REASON",
+        value: OfflineAccessReasonEnum.SESSION_REFRESH
+      });
       dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.SESSION_REFRESH));
       return undefined;
     }

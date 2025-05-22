@@ -10,7 +10,7 @@ import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/r
 import { trackIngressScreen } from "../../settings/common/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { isBackendStatusLoadedSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { setIsBlockingScreen, setOfflineAccessReason } from "../store/actions";
 import ModalSectionStatusComponent from "../../../components/SectionStatus/modal";
@@ -29,11 +29,13 @@ import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { identificationRequest } from "../../identification/store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
 import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
+import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties.ts";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
 
 export const IngressScreen = () => {
+  const store = useIOStore();
   const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
   const dispatch = useIODispatch();
@@ -87,8 +89,13 @@ export const IngressScreen = () => {
   useEffect(() => {
     const visualizeOfflineWallet =
       isConnected === false && isOfflineAccessAvailable;
+    const state = store.getState();
 
     if (visualizeOfflineWallet) {
+      void updateMixpanelSuperProperties(state, {
+        property: "OFFLINE_ACCESS_REASON",
+        value: OfflineAccessReasonEnum.DEVICE_OFFLINE
+      });
       // This dispatch could be placed inside `onSuccess`,
       // but executing it here ensures the startup saga stops immediately.
       dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE));
@@ -103,7 +110,7 @@ export const IngressScreen = () => {
         })
       );
     }
-  }, [dispatch, isConnected, isOfflineAccessAvailable]);
+  }, [dispatch, isConnected, isOfflineAccessAvailable, store]);
 
   if (isConnected === false && !isOfflineAccessAvailable) {
     return <IngressScreenNoInternetConnection />;
