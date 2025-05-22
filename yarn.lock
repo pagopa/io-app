@@ -3830,13 +3830,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-integrity@npm:^0.3.1":
-  version: 0.3.1
-  resolution: "@pagopa/io-react-native-integrity@npm:0.3.1"
+"@pagopa/io-react-native-integrity@npm:^0.3.2":
+  version: 0.3.2
+  resolution: "@pagopa/io-react-native-integrity@npm:0.3.2"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 74dc08b56af8b5b41015c2b4ef96fa6359eb0c0e1d7050e958adef26230fce694162c1546b1056562905941a9fbfba790ad179456c8832cfce55b800daff7e2b
+  checksum: 9adf99e81c119b07924a9b4edb58334d7891c958f7928199f69f49496aac4c133f668515141aa54b39c44b6f6a7088ee70d22ae7d48639605cf4d557de6c8f71
   languageName: node
   linkType: hard
 
@@ -13671,7 +13671,7 @@ __metadata:
     "@pagopa/io-react-native-cieid": ^0.3.5
     "@pagopa/io-react-native-crypto": ^1.0.1
     "@pagopa/io-react-native-http-client": 1.0.5
-    "@pagopa/io-react-native-integrity": ^0.3.1
+    "@pagopa/io-react-native-integrity": ^0.3.2
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": ^1.0.8
     "@pagopa/io-react-native-secure-storage": ^0.2.0

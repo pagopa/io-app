@@ -32,14 +32,14 @@ describe("isItwDiscoveryBannerRenderableSelector", () => {
   });
 
   it.each`
-    itwEnabled | lifecycleValid | expected
-    ${true}    | ${true}        | ${false}
-    ${true}    | ${false}       | ${true}
-    ${false}   | ${true}        | ${false}
-    ${false}   | ${false}       | ${false}
+    itwEnabled | lifecycleValid | offlineAccessReason                       | expected
+    ${true}    | ${false}       | ${undefined}                              | ${true}
+    ${true}    | ${false}       | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${false}
+    ${true}    | ${true}        | ${undefined}                              | ${false}
+    ${false}   | ${false}       | ${undefined}                              | ${false}
   `(
-    "should return $expected when isItwEnabled is $itwEnabled, and lifecycleValid is $lifecycleValid",
-    ({ itwEnabled, lifecycleValid, expected }) => {
+    "should return $expected when isItwEnabled is $itwEnabled, lifecycleValid is $lifecycleValid, and offlineAccessReason is $offlineAccessReason",
+    ({ itwEnabled, lifecycleValid, offlineAccessReason, expected }) => {
       jest
         .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
         .mockReturnValue(itwEnabled);
@@ -49,6 +49,9 @@ describe("isItwDiscoveryBannerRenderableSelector", () => {
       jest
         .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
         .mockReturnValue(false);
+      jest
+        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+        .mockReturnValue(offlineAccessReason);
 
       expect(
         isItwDiscoveryBannerRenderableSelector({} as unknown as GlobalState)
@@ -63,31 +66,22 @@ describe("itwShouldRenderFeedbackBannerSelector", () => {
     jest.clearAllMocks();
   });
   it.each`
-    remotelyEnabled | hasValidWallet | walletIsEmpty | bannerIsHidden | expected
-    ${true}         | ${true}        | ${true}       | ${true}        | ${false}
-    ${true}         | ${true}        | ${true}       | ${false}       | ${false}
-    ${true}         | ${true}        | ${false}      | ${true}        | ${false}
-    ${true}         | ${true}        | ${false}      | ${false}       | ${true}
-    ${true}         | ${false}       | ${true}       | ${true}        | ${false}
-    ${true}         | ${false}       | ${true}       | ${false}       | ${false}
-    ${true}         | ${false}       | ${false}      | ${true}        | ${false}
-    ${true}         | ${false}       | ${false}      | ${false}       | ${false}
-    ${false}        | ${true}        | ${true}       | ${true}        | ${false}
-    ${false}        | ${true}        | ${true}       | ${false}       | ${false}
-    ${false}        | ${true}        | ${false}      | ${true}        | ${false}
-    ${false}        | ${true}        | ${false}      | ${false}       | ${false}
-    ${false}        | ${false}       | ${true}       | ${true}        | ${false}
-    ${false}        | ${false}       | ${true}       | ${false}       | ${false}
-    ${false}        | ${false}       | ${false}      | ${true}        | ${false}
-    ${false}        | ${false}       | ${false}      | ${false}       | ${false}
+    remotelyEnabled | hasValidWallet | walletIsEmpty | bannerIsHidden | offlineAccessReason                       | expected
+    ${true}         | ${true}        | ${false}      | ${false}       | ${undefined}                              | ${true}
+    ${true}         | ${true}        | ${false}      | ${false}       | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${false}
+    ${true}         | ${true}        | ${false}      | ${true}        | ${undefined}                              | ${false}
+    ${true}         | ${true}        | ${true}       | ${false}       | ${undefined}                              | ${false}
+    ${true}         | ${false}       | ${false}      | ${false}       | ${undefined}                              | ${false}
+    ${false}        | ${true}        | ${false}      | ${false}       | ${undefined}                              | ${false}
   `(
-    "should return $expected when remotelyEnabled is $remotelyEnabled, hasValidWallet is $hasValidWallet, walletIsEmpty is $walletIsEmpty, and bannerIsHidden is $bannerIsHidden",
+    "should return $expected when remotelyEnabled is $remotelyEnabled, hasValidWallet is $hasValidWallet, walletIsEmpty is $walletIsEmpty, bannerIsHidden is $bannerIsHidden, and offlineAccessReason is $offlineAccessReason",
     ({
       hasValidWallet,
       walletIsEmpty,
       bannerIsHidden,
       expected,
-      remotelyEnabled
+      remotelyEnabled,
+      offlineAccessReason
     }) => {
       jest
         .spyOn(remoteConfigSelectors, "isItwFeedbackBannerEnabledSelector")
@@ -101,6 +95,9 @@ describe("itwShouldRenderFeedbackBannerSelector", () => {
       jest
         .spyOn(preferencesSelectors, "itwIsFeedbackBannerHiddenSelector")
         .mockReturnValue(bannerIsHidden);
+      jest
+        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+        .mockReturnValue(offlineAccessReason);
 
       expect(
         itwShouldRenderFeedbackBannerSelector({} as unknown as GlobalState)
@@ -151,14 +148,22 @@ describe("itwOfflineAccessAvailableSelector", () => {
   });
 
   it.each`
-    isWalletValid | isBannerHidden | shouldRenderBanner
-    ${false}      | ${false}       | ${false}
-    ${false}      | ${true}        | ${false}
-    ${true}       | ${false}       | ${true}
-    ${true}       | ${true}        | ${false}
+    isWalletValid | isBannerHidden | offlineAccessReason                       | shouldRenderBanner
+    ${true}       | ${false}       | ${undefined}                              | ${true}
+    ${true}       | ${false}       | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${false}
+    ${true}       | ${true}        | ${undefined}                              | ${false}
+    ${false}      | ${false}       | ${undefined}                              | ${false}
   `(
-    "should render banner: $shouldRenderBanner when wallet valid: $isWalletValid and banner hidden: $isBannerHidden",
-    ({ isWalletValid, isBannerHidden, shouldRenderBanner }) => {
+    "should render banner: $shouldRenderBanner when wallet valid: $isWalletValid, banner hidden: $isBannerHidden and offlineAccessReason: $offlineAccessReason",
+    ({
+      isWalletValid,
+      isBannerHidden,
+      offlineAccessReason,
+      shouldRenderBanner
+    }) => {
+      jest
+        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+        .mockReturnValue(offlineAccessReason);
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockImplementation(() => isWalletValid);
@@ -182,11 +187,11 @@ describe("itwShouldRenderL3UpgradeBannerSelector", () => {
 
   it.each`
     itwEnabled | offlineAccessReason                       | isL3Enabled | authLevel    | expected
-    ${true}    | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${"L2"}      | ${false}
-    ${true}    | ${undefined}                              | ${false}    | ${"L2"}      | ${false}
-    ${true}    | ${undefined}                              | ${true}     | ${"L3"}      | ${false}
-    ${true}    | ${undefined}                              | ${true}     | ${"L2"}      | ${true}
     ${true}    | ${undefined}                              | ${true}     | ${undefined} | ${true}
+    ${true}    | ${undefined}                              | ${true}     | ${"L2"}      | ${true}
+    ${true}    | ${undefined}                              | ${false}    | ${"L2"}      | ${false}
+    ${true}    | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${"L2"}      | ${false}
+    ${false}   | ${undefined}                              | ${true}     | ${"L2"}      | ${true}
   `(
     "should return $expected when offlineAccessReason is $offlineAccessReason, isL3Enabled is $isL3Enabled, authLevel is $authLevel",
     ({ offlineAccessReason, isL3Enabled, authLevel, expected }) => {
