@@ -1,3 +1,4 @@
+import { Dimensions, Image, StyleSheet, View } from "react-native";
 import { ContentWrapper, IOButton } from "@pagopa/io-app-design-system";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../../i18n";
@@ -5,7 +6,7 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { EidIssuanceEvents } from "../../../machine/eid/events.ts";
 import { useCieInfoAndPinBottomSheets } from "../../hooks/useCieInfoAndPinBottomSheets.ts";
 
-type InfoType = "cie" | "pin";
+type InfoType = "cie" | "ciePin";
 
 type Props = { infoType: InfoType };
 
@@ -15,6 +16,9 @@ type GetContentParams = {
   presentPinBottomSheet: () => void;
   sendEvent: (event: EidIssuanceEvents) => void;
 };
+
+// Get the screen height to calculate a responsive image container height
+const screenHeight = Dimensions.get("window").height;
 
 const getContent = ({
   infoType,
@@ -55,8 +59,10 @@ const getContent = ({
           type: "go-to-cie-warning",
           warning: isCie ? "noCie" : "noPin"
         })
-    }
-    // imageSource: require("../../../../../../img/features/itWallet/identification/")
+    },
+    imageSource: isCie
+      ? require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif")
+      : require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif")
   };
 };
 
@@ -71,6 +77,8 @@ export const CiePreparationScreenContent = ({ infoType }: Props) => {
     presentPinBottomSheet: pinBottomSheet.present,
     sendEvent: machineRef.send
   });
+  // Define image container height as 50% of screen height
+  const imageHeight = screenHeight * 0.5;
 
   return (
     <IOScrollViewWithLargeHeader
@@ -89,18 +97,28 @@ export const CiePreparationScreenContent = ({ infoType }: Props) => {
           label={content.buttonLink.label}
           onPress={content.buttonLink.onPress}
         />
-        {/**
-        TODO: [SIW-2361] Replace with the correct image when available
-         If it's a gif, remember to add  "implementation 'com.facebook.fresco:animated-gif:3.6.0'"
-        in android/app/build.gradle, otherwise it won't work on Android
-        */}
-        {/*
-        <Image
-          source={imageSource}
-        /> */}
+        <View style={[styles.imageContainer, { height: imageHeight }]}>
+          <Image
+            accessibilityIgnoresInvertColors
+            source={content.imageSource}
+            resizeMode="contain"
+            style={styles.image}
+          />
+        </View>
         {cieInfoBottomSheet.bottomSheet}
         {pinBottomSheet.bottomSheet}
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );
 };
+
+const styles = StyleSheet.create({
+  imageContainer: {
+    width: "100%",
+    marginTop: 15
+  },
+  image: {
+    width: "100%",
+    height: "100%"
+  }
+});
