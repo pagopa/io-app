@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { useIOSelector } from "../../../../../store/hooks";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
 import { ItwDiscoveryBanner } from "./ItwDiscoveryBanner";
@@ -18,11 +18,11 @@ export const ItwDiscoveryBannerStandalone = () => {
   }
 
   return (
-    <ContentWrapper>
+    <>
       <VSpacer />
       <View testID="itwDiscoveryBannerStandaloneTestID">
         <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
       </View>
-    </ContentWrapper>
+    </>
   );
 };
