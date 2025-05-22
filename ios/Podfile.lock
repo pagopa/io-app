@@ -107,7 +107,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - pagopa-io-react-native-integrity (0.3.1):
+  - pagopa-io-react-native-integrity (0.3.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2609,7 +2609,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-cieid: fbec2a09807357509e986e1ae831c38e559d4ac2
   pagopa-io-react-native-crypto: 9fc27db71785efd281454fd0e0d023c4ce1594d0
   pagopa-io-react-native-http-client: b2620097b64752b290374f7d2aab64e537f89f03
-  pagopa-io-react-native-integrity: c6dad7d38b5800d430ce2f1b4796884f85384e8d
+  pagopa-io-react-native-integrity: 6d5ea10255884e516422e09c5cd937d4dbaa8f27
   pagopa-io-react-native-jwt: 0ac1bc58dbd1e40277c4c9086af7898438a7ea45
   pagopa-io-react-native-login-utils: 74e61211dc61332979344fdb8a5c4d7eaae40aed
   pagopa-io-react-native-secure-storage: 90b255f9597712d45a1087b6c10c1ab45c3dff79

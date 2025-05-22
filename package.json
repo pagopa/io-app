@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "3.5.0-rc.8",
+  "version": "3.6.0-rc.1",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -63,7 +63,7 @@
     "@pagopa/io-react-native-cieid": "^0.3.5",
     "@pagopa/io-react-native-crypto": "^1.0.1",
     "@pagopa/io-react-native-http-client": "1.0.5",
-    "@pagopa/io-react-native-integrity": "^0.3.1",
+    "@pagopa/io-react-native-integrity": "^0.3.2",
     "@pagopa/io-react-native-jwt": "^2.1.0",
     "@pagopa/io-react-native-login-utils": "^1.0.9",
     "@pagopa/io-react-native-secure-storage": "^0.2.0",
