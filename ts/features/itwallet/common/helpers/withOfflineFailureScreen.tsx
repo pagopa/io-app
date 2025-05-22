@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
-import { useIOSelector } from "../../../../store/hooks.ts";
-import { OfflineFailureComponent } from "../../../../components/error/OfflineFailure.tsx";
-import { trackContentNotAvailable } from "../../../../utils/analytics.ts";
+import { useIOSelector } from "../../../../store/hooks";
+import { OfflineFailureComponent } from "../../../../components/error/OfflineFailure";
+import { trackContentNotAvailable } from "../../../../utils/analytics";
 import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 
