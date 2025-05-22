@@ -1,7 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import {
   BodySmall,
-  ContentWrapper,
   IOAlertSpacing,
   IOColors,
   Icon
@@ -27,17 +26,15 @@ export const ItwWalletNotAvailableBanner = withWalletCategoryFilter(
     }
 
     return (
-      <ContentWrapper>
-        <View style={styles.bannerContainer}>
-          <Icon name="warningFilled" />
-          <BodySmall style={styles.textCenter}>
-            {I18n.t("features.itWallet.generic.walletNotAvailable.message")}
-          </BodySmall>
-          <BodySmall style={styles.textCenter}>
-            {I18n.t("features.itWallet.generic.walletNotAvailable.cta")}
-          </BodySmall>
-        </View>
-      </ContentWrapper>
+      <View style={styles.bannerContainer}>
+        <Icon name="warningFilled" />
+        <BodySmall style={styles.textCenter}>
+          {I18n.t("features.itWallet.generic.walletNotAvailable.message")}
+        </BodySmall>
+        <BodySmall style={styles.textCenter}>
+          {I18n.t("features.itWallet.generic.walletNotAvailable.cta")}
+        </BodySmall>
+      </View>
     );
   }
 );

@@ -1,11 +1,12 @@
 import { StyleSheet, View } from "react-native";
 import { PropsWithChildren } from "react";
-import { useIOSelector } from "../../../store/hooks";
-import { itwShouldRenderNewITWallet } from "../../itwallet/common/store/selectors";
-import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
+import { IOVisualCostants } from "@pagopa/io-app-design-system";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwShouldRenderNewITWallet } from "../store/selectors";
+import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { WALLET_L3_BG_COLOR } from "../utils/constants";
 
-export const WalletCardsWrapper = ({ children }: PropsWithChildren) => {
+export const ItwWalletCardsWrapper = ({ children }: PropsWithChildren) => {
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWallet);
 
   if (isNewItwRenderable) {
@@ -25,6 +26,8 @@ export const WalletCardsWrapper = ({ children }: PropsWithChildren) => {
 
 const styles = StyleSheet.create({
   itwWrapper: {
+    marginHorizontal: -(IOVisualCostants.appMarginDefault + 1),
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
     backgroundColor: WALLET_L3_BG_COLOR,
     borderBottomEndRadius: 16,
     borderBottomStartRadius: 16

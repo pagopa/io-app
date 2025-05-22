@@ -169,20 +169,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         // This View is displayed when a refresh control is triggered
         // and is responsible for coloring the underlying content with
         // the same blue used in the new Wallet L3.
-        <View
-          style={[
-            StyleSheet.absoluteFillObject,
-            {
-              height: screenHeight,
-              backgroundColor: WALLET_L3_BG_COLOR
-            }
-          ]}
-        />
+        <View style={[StyleSheet.absoluteFillObject, styles.itwBlueBg]} />
       )}
       <IOScrollView
         animatedRef={scrollViewContentRef}
         centerContent={true}
-        includeContentMargins={false}
         excludeSafeAreaMargins={true}
         refreshControlProps={{
           tintColor: shouldRenderCustomBG ? IOColors.white : undefined,
@@ -205,19 +196,31 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
           // and is responsible for coloring the underlying content with
           // the same color used in the `contentContainerStyle`.
           <View
-            style={{
-              position: "absolute",
-              left: 0,
-              right: 0,
-              bottom: -screenHeight,
-              height: screenHeight,
-              backgroundColor: IOColors[theme["appBackground-primary"]]
-            }}
+            style={[
+              styles.scrollViewFillEndContent,
+              {
+                backgroundColor: IOColors[theme["appBackground-primary"]]
+              }
+            ]}
           />
         )}
       </IOScrollView>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  itwBlueBg: {
+    height: screenHeight,
+    backgroundColor: WALLET_L3_BG_COLOR
+  },
+  scrollViewFillEndContent: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: -screenHeight,
+    height: screenHeight
+  }
+});
 
 export { WalletHomeScreen };

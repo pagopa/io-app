@@ -1,9 +1,4 @@
-import {
-  ContentWrapper,
-  ListItemHeader,
-  VSpacer,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { ListItemHeader, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
@@ -24,7 +19,7 @@ import {
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
 import { ItwUpgradeBanner } from "../../itwallet/common/components/ItwUpgradeBanner";
-import { WalletCardsWrapper } from "./WalletCardsWrapper";
+import { ItwWalletCardsWrapper } from "../../itwallet/common/components/ItwWalletCardsWrapper";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
@@ -62,15 +57,11 @@ const WalletCardsContainer = () => {
     return (
       <View testID="walletCardsContainerTestID" style={{ flex: 1 }}>
         {shouldRenderItwCardsContainer && (
-          <WalletCardsWrapper>
-            <ContentWrapper>
-              <ItwWalletCardsContainer />
-            </ContentWrapper>
-          </WalletCardsWrapper>
+          <ItwWalletCardsWrapper>
+            <ItwWalletCardsContainer />
+          </ItwWalletCardsWrapper>
         )}
-        <ContentWrapper>
-          <OtherWalletCardsContainer />
-        </ContentWrapper>
+        <OtherWalletCardsContainer />
       </View>
     );
   }, [
@@ -104,12 +95,12 @@ const WalletBannersContainer = () => (
  * Skeleton for the wallet cards container
  */
 const WalletCardsContainerSkeleton = () => (
-  <ContentWrapper>
+  <>
     <VSpacer />
     <WalletCardSkeleton testID="walletCardSkeletonTestID_1" cardProps={{}} />
     <WalletCardSkeleton testID="walletCardSkeletonTestID_2" cardProps={{}} />
     <WalletCardSkeleton testID="walletCardSkeletonTestID_3" cardProps={{}} />
-  </ContentWrapper>
+  </>
 );
 
 /**

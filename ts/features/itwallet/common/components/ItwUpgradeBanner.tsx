@@ -1,4 +1,4 @@
-import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -22,7 +22,7 @@ export const ItwUpgradeBanner = () => {
   };
 
   return (
-    <ContentWrapper>
+    <>
       <VSpacer />
       <ItwHighlightBanner
         testID="itwUpgradeBannerTestID"
@@ -31,6 +31,6 @@ export const ItwUpgradeBanner = () => {
         action={I18n.t("features.itWallet.upgrade.banner.action")}
         onPress={handleOnPress}
       />
-    </ContentWrapper>
+    </>
   );
 };

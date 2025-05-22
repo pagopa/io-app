@@ -1,5 +1,4 @@
 import {
-  ContentWrapper,
   IOVisualCostants,
   TabItem,
   TabNavigation
@@ -59,35 +58,31 @@ const WalletCategoryFilterTabs = () => {
   };
 
   return (
-    <ContentWrapper>
-      <View style={styles.container} testID="CategoryTabsContainerTestID">
-        <TabNavigation
-          tabAlignment="start"
-          onItemPress={handleFilterSelected}
-          selectedIndex={selectedIndex}
-        >
-          {[
+    <View style={styles.container} testID="CategoryTabsContainerTestID">
+      <TabNavigation
+        tabAlignment="start"
+        onItemPress={handleFilterSelected}
+        selectedIndex={selectedIndex}
+      >
+        {[
+          <TabItem
+            key={`category_tab_all`}
+            label={I18n.t(`features.wallet.cards.categories.all`)}
+            accessibilityLabel={I18n.t(`features.wallet.cards.categories.all`)}
+          />,
+          ...walletCardCategoryFilters.map(category => (
             <TabItem
-              key={`category_tab_all`}
-              label={I18n.t(`features.wallet.cards.categories.all`)}
+              testID={`CategoryTabTestID-${category}`}
+              key={`category_tab_${category}`}
+              label={I18n.t(`features.wallet.cards.categories.${category}`)}
               accessibilityLabel={I18n.t(
-                `features.wallet.cards.categories.all`
+                `features.wallet.cards.categories.${category}`
               )}
-            />,
-            ...walletCardCategoryFilters.map(category => (
-              <TabItem
-                testID={`CategoryTabTestID-${category}`}
-                key={`category_tab_${category}`}
-                label={I18n.t(`features.wallet.cards.categories.${category}`)}
-                accessibilityLabel={I18n.t(
-                  `features.wallet.cards.categories.${category}`
-                )}
-              />
-            ))
-          ]}
-        </TabNavigation>
-      </View>
-    </ContentWrapper>
+            />
+          ))
+        ]}
+      </TabNavigation>
+    </View>
   );
 };
 
