@@ -60,7 +60,11 @@ const markdownRules = {
   }
 };
 
-export const ItwPaywallComponent = () => {
+export type ItwPaywallComponentProps = {
+  onContinuePress: () => void;
+};
+
+export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
   const theme = useIOTheme();
   const backgroundColor = IOColors[theme["appBackground-accent"]];
 

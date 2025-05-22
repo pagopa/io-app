@@ -5,7 +5,10 @@ import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoComponent.tsx";
 import { ItwPaywallComponent } from "../components/ItwPaywallComponent.tsx";
 import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
-import { trackItWalletIntroScreen } from "../../analytics/index.ts";
+import {
+  trackItWalletActivationStart,
+  trackItWalletIntroScreen
+} from "../../analytics/index.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwHasNfcFeatureSelector } from "../../identification/store/selectors/index.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
@@ -51,13 +54,18 @@ export const ItwDiscoveryInfoScreen = ({
     }
   });
 
+  const handleContinuePress = useCallback(() => {
+    trackItWalletActivationStart();
+    machineRef.send({ type: "accept-tos" });
+  }, [machineRef]);
+
   if (!isL3) {
-    return <ItwDiscoveryInfoComponent />;
+    return <ItwDiscoveryInfoComponent onContinuePress={handleContinuePress} />;
   }
 
   if (!hasNfcFeature) {
     return <ItwNfcNotSupportedComponent />;
   }
 
-  return <ItwPaywallComponent />;
+  return <ItwPaywallComponent onContinuePress={handleContinuePress} />;
 };
