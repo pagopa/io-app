@@ -474,6 +474,8 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                 "overflow": "hidden",
                                 "textAlignVertical": "center",
                               },
+                              false,
+                              {},
                               {
                                 "paddingHorizontal": 0,
                               },
@@ -484,8 +486,6 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
-                              {},
-                              false,
                               {},
                             ]
                           }

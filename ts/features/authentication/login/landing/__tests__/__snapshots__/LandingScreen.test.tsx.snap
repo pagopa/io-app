@@ -1428,6 +1428,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {
+                                      "backgroundColor": undefined,
+                                    },
                                     {
                                       "paddingHorizontal": 16,
                                     },
@@ -1439,10 +1443,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       "height": 48,
                                     },
                                     {},
-                                    false,
-                                    {
-                                      "backgroundColor": undefined,
-                                    },
                                   ]
                                 }
                               >
@@ -1621,6 +1621,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -1632,10 +1636,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >

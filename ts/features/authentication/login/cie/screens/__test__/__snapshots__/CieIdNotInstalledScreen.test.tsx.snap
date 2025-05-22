@@ -286,6 +286,10 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {
+                    "backgroundColor": undefined,
+                  },
                   {
                     "paddingHorizontal": 24,
                   },
@@ -297,10 +301,6 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
                     "height": 48,
                   },
                   {},
-                  false,
-                  {
-                    "backgroundColor": undefined,
-                  },
                 ]
               }
             >
@@ -433,6 +433,8 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {},
                   {
                     "paddingHorizontal": 0,
                   },
@@ -443,8 +445,6 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
                     "borderWidth": 0,
                     "height": undefined,
                   },
-                  {},
-                  false,
                   {},
                 ]
               }
