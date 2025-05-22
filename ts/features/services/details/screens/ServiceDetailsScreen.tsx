@@ -28,9 +28,9 @@ import { ServiceDetailsTosAndPrivacy } from "../components/ServiceDetailsTosAndP
 import { loadServiceDetail } from "../store/actions/details";
 import { loadServicePreference } from "../store/actions/preference";
 import {
-  isErrorServiceByIdSelector,
-  isLoadingServiceByIdSelector,
-  serviceByIdSelector,
+  isErrorServiceDetailsByIdSelector,
+  isLoadingServiceDetailsByIdSelector,
+  serviceDetailsByIdSelector,
   serviceMetadataByIdSelector,
   serviceMetadataInfoSelector
 } from "../store/reducers";
@@ -64,14 +64,16 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
   const dispatch = useIODispatch();
   const isFirstRender = useFirstRender();
 
-  const service = useIOSelector(state => serviceByIdSelector(state, serviceId));
+  const service = useIOSelector(state =>
+    serviceDetailsByIdSelector(state, serviceId)
+  );
 
   const isLoadingService = useIOSelector(state =>
-    isLoadingServiceByIdSelector(state, serviceId)
+    isLoadingServiceDetailsByIdSelector(state, serviceId)
   );
 
   const isErrorService = useIOSelector(state =>
-    isErrorServiceByIdSelector(state, serviceId)
+    isErrorServiceDetailsByIdSelector(state, serviceId)
   );
 
   const serviceMetadata = useIOSelector(state =>
