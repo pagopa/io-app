@@ -16,7 +16,7 @@ const OnboardingCompletedScreen = () => {
   const isFastLoginEnabled = useIOSelector(isFastLoginEnabledSelector);
   const idp = useIOSelector(loggedInIdpSelector);
 
-  const idpName = idp ? idp.name : "";
+  const idpName = idp?.name ?? "";
   const route = useRoute();
 
   useOnFirstRender(() => {
