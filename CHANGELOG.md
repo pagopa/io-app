@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0-canary.7032](https://github.com/pagopa/io-app/compare/3.6.0-rc.1...3.6.0-canary.7032) (2025-05-22)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2347](https://pagopa.atlassian.net/browse/SIW-2347)] Enable attestation generation with fallback over TEE ([#6995](https://github.com/pagopa/io-app/issues/6995)) ([2e423e8](https://github.com/pagopa/io-app/commit/2e423e8165240743100b52eecae83e3ba398c365))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2424](https://pagopa.atlassian.net/browse/SIW-2424)] Remove banners within offline app ([#7000](https://github.com/pagopa/io-app/issues/7000)) ([bfd0288](https://github.com/pagopa/io-app/commit/bfd0288753b693bb1d6d021fcd6b4d18a49754e2))
+
 ## [3.6.0-rc.1](https://github.com/pagopa/io-app/compare/3.6.0-rc.0...3.6.0-rc.1) (2025-05-21)
 
 ## [3.6.0-rc.0](https://github.com/pagopa/io-app/compare/3.5.0-rc.7...3.6.0-rc.0) (2025-05-21)
