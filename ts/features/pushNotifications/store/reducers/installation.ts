@@ -76,6 +76,7 @@ export const installationReducer = (
       return {
         ...state,
         token: action.payload,
+        registeredToken: undefined,
         tokenStatus: { status: "unsent" }
       };
     case getType(pushNotificationsTokenUploaded):
