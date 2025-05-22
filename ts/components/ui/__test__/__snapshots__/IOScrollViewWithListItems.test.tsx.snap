@@ -839,6 +839,10 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -850,10 +854,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1489,6 +1489,10 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -1500,10 +1504,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -2462,6 +2462,10 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -2473,10 +2477,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
