@@ -6,7 +6,7 @@ import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   isPnAppVersionSupportedSelector,
-  isPnEnabledSelector
+  isPnRemoteEnabledSelector
 } from "../../../store/reducers/backendStatus/remoteConfig";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { openAppStoreUrl } from "../../../utils/url";
@@ -69,7 +69,7 @@ export const useSpecialCtaPn = (
   serviceId: ServiceId,
   activate: boolean = false
 ): IOScrollViewActions["primary"] | undefined => {
-  const isPnEnabled = useIOSelector(isPnEnabledSelector);
+  const isPnEnabled = useIOSelector(isPnRemoteEnabledSelector);
   const isPnSupported = useIOSelector(isPnAppVersionSupportedSelector);
 
   const { activationHandler, isLoadingPnActivation } =
