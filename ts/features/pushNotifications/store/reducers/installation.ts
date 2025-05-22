@@ -34,6 +34,9 @@ export type TokenStatus =
   | TokenStatusSentConfirmed;
 
 export type InstallationState = Readonly<{
+  // This ID is a legacy feature that is not used anymore but is required as a mandatory parameter
+  // when submitting the push notification token to the backend (latter does nothing with it,
+  // apart from checking its presence in the url)
   id: string;
   // the current push notification token release from push notification service (APNS, Firebase)
   token?: string;
@@ -58,21 +61,25 @@ export const installationReducer = (
 ): InstallationState => {
   switch (action.type) {
     case getType(newPushNotificationsToken):
-      const actionToken = action.payload;
+      const actionNewToken = action.payload;
       // If registeredToken is defined and matches the action's token,
-      // then the tokenStatus must be preserved. The input state is
-      // returned, since there are no changes to the state.
+      // then 'tokenStatus' must be preserved. 'token' and 'registeredToken'
+      // are set to the same value, to make sure that the state is consistent
       if (
         state.registeredToken != null &&
-        state.registeredToken === actionToken
+        state.registeredToken === actionNewToken
       ) {
-        return state;
+        return {
+          ...state,
+          token: actionNewToken,
+          registeredToken: actionNewToken
+        };
       }
       // In this case:
-      // - registeredToken is undefined, then tokenStatus must be unsent
+      // - registeredToken is undefined, then 'tokenStatus' must be unsent
       // - registeredToken is defined but different from the action's
-      //   token, then tokenStatus must be unsent since it is new,
-      //   regardless of the previous tokenState
+      //   token, then 'tokenStatus' must be unsent since it is new,
+      //   regardless of the previous tokenStatus
       return {
         ...state,
         token: action.payload,
@@ -80,6 +87,18 @@ export const installationReducer = (
         tokenStatus: { status: "unsent" }
       };
     case getType(pushNotificationsTokenUploaded):
+      const actionRegisteredToken = action.payload;
+      // This should never happen, since the action's token comes from
+      // 'state.token'. Nonetheless, if 'state.token' and action's token
+      // are different, make sure to treat the 'state.token' as unsent
+      // and clear the 'registeredToken'
+      if (state.token !== actionRegisteredToken) {
+        return {
+          ...state,
+          registeredToken: undefined,
+          tokenStatus: { status: "unsent" }
+        };
+      }
       const newTokenStatus: TokenStatus =
         state.tokenStatus.status === "unsent"
           ? { status: "sentUnconfirmed", date: generateTokenRegistrationTime() }
@@ -89,7 +108,7 @@ export const installationReducer = (
         registeredToken: action.payload,
         tokenStatus: newTokenStatus
       };
-    // clear registeredToken when the authentication is not longer valid
+    // Clear registeredToken when the authentication is not longer valid
     // IO backend will automatically delete it on the next user login
     case getType(sessionExpired):
     case getType(sessionInvalid):
