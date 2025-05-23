@@ -46,7 +46,7 @@ import { buildEventProperties } from "../../utils/analytics";
 import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";
 import { trackIdentificationAction } from "../../features/identification/analytics";
-import { trackOfflineAccessReason } from "../../features/ingress/analytics";
+import { trackOfflineAccessReason } from "../../features/itwallet/analytics";
 import { trackContentAction } from "./contentAnalytics";
 
 const trackAction =
