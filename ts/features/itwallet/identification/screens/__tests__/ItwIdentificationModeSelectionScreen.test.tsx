@@ -1,32 +1,24 @@
 import configureMockStore from "redux-mock-store";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
+import { createActor } from "xstate";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as remoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
-import * as preferencesSelectors from "../../../common/store/selectors/preferences";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwIdentificationModeSelectionScreen } from "../ItwIdentificationModeSelectionScreen";
+import {
+  ItwIdentificationModeSelectionScreen,
+  ItwIdentificationModeSelectionScreenProps
+} from "../ItwIdentificationModeSelectionScreen";
 
 jest.mock("../../../../../config", () => ({
   itwEnabled: true
 }));
 
-jest.mock("../../../machine/eid/selectors", () => ({
-  isCIEAuthenticationSupportedSelector: () => true
-}));
-
 describe("ItwIdentificationModeSelectionScreen", () => {
   beforeEach(() => {
-    // Default mock for L3 disabled
-    jest
-      .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
-      .mockReturnValue(false);
-
     // Default mock for no disabled methods
     jest
       .spyOn(remoteConfigSelectors, "itwDisabledIdentificationMethodsSelector")
@@ -43,12 +35,6 @@ describe("ItwIdentificationModeSelectionScreen", () => {
   });
 
   describe("DefaultIdentificationView (L3 disabled)", () => {
-    beforeEach(() => {
-      jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
-        .mockReturnValue(false);
-    });
-
     it("should show all authentication methods when none are disabled", () => {
       const component = renderComponent();
 
@@ -104,14 +90,8 @@ describe("ItwIdentificationModeSelectionScreen", () => {
   });
 
   describe("L3IdentificationView (L3 enabled)", () => {
-    beforeEach(() => {
-      jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
-        .mockReturnValue(true);
-    });
-
     it("should render L3 view with appropriate elements", () => {
-      const component = renderComponent();
+      const component = renderComponent(true);
 
       expect(component.queryByTestId("l3-identification-view")).not.toBeNull();
       expect(component.queryByTestId("l3-primary-action")).not.toBeNull();
@@ -121,46 +101,52 @@ describe("ItwIdentificationModeSelectionScreen", () => {
       expect(component.queryByTestId("Spid")).toBeNull();
     });
   });
+});
 
-  const renderComponent = (eidReissuing = false) => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const mockStore = configureMockStore<GlobalState>();
-    const store: ReturnType<typeof mockStore> = mockStore(globalState);
+const renderComponent = (isL3FeaturesEnabled = false, eidReissuing = false) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
 
+  const mockStore = configureMockStore<GlobalState>();
+  const store: ReturnType<typeof mockStore> = mockStore(globalState);
+
+  const WrappedComponent = (
+    props: ItwIdentificationModeSelectionScreenProps
+  ) => {
     const logic = itwEidIssuanceMachine.provide({
       actions: {
-        onInit: jest.fn()
+        onInit: jest.fn(),
+        navigateToIdentificationModeScreen: () => undefined
       }
     });
 
-    const mockNavigation = new Proxy(
-      {},
-      {
-        get: () => jest.fn()
+    const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+    const snapshot: typeof initialSnapshot = {
+      ...initialSnapshot,
+      value: { UserIdentification: "ModeSelection" },
+      context: {
+        ...initialSnapshot.context,
+        isL3FeaturesEnabled,
+        cieContext: {
+          isNFCEnabled: true,
+          isCIEAuthenticationSupported: true
+        }
       }
-    ) as unknown as IOStackNavigationProp<
-      ItwParamsList,
-      "ITW_IDENTIFICATION_MODE_SELECTION"
-    >;
-
-    const route = {
-      key: "ITW_IDENTIFICATION_MODE_SELECTION",
-      name: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
-      params: { eidReissuing }
     };
 
-    return renderScreenWithNavigationStoreContext<GlobalState>(
-      () => (
-        <ItwEidIssuanceMachineContext.Provider logic={logic}>
-          <ItwIdentificationModeSelectionScreen
-            navigation={mockNavigation}
-            route={route}
-          />
-        </ItwEidIssuanceMachineContext.Provider>
-      ),
-      ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
-      {},
-      store
+    return (
+      <ItwEidIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ snapshot }}
+      >
+        <ItwIdentificationModeSelectionScreen {...props} />
+      </ItwEidIssuanceMachineContext.Provider>
     );
   };
-});
+
+  return renderScreenWithNavigationStoreContext<GlobalState>(
+    WrappedComponent,
+    ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+    { eidReissuing },
+    store
+  );
+};
