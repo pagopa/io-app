@@ -19,6 +19,7 @@ import { pipe } from "fp-ts/lib/function";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert,
+  Dimensions,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -69,17 +70,22 @@ export type EmailInsertScreenNavigationParams = Readonly<{
 
 const EMPTY_EMAIL = "";
 
+const MIN_HEIGHT_TO_ENABLE_FULL_FONT_SCALING = 820;
+const screenHeight = Dimensions.get("screen").height;
+
 /**
- * Since we have some users with a very large font size, that can't enter or use
+ * Since we have some iOS users with a very large font size, that can't enter or use
  * this screen, we need to set a maximum font size multiplier.
  */
 const MAX_FONT_SIZE_MULTIPLIER = Platform.select({
-  ios: 1.2,
+  ios: screenHeight >= MIN_HEIGHT_TO_ENABLE_FULL_FONT_SCALING ? undefined : 1.2,
   android: undefined
 });
 
-// We use this information to disable autofocus on the input field.
-// Some iOS users with a zoomed screen freeze entering this screen.
+/**
+ * Since we have some iOS users with a very large font size, that can't enter or use
+ * this screen, we use this information to disable autofocus on the input field.
+ */
 const isScreenZoomed = isDisplayZoomed();
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
