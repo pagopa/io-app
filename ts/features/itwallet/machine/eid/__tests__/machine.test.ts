@@ -36,6 +36,8 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToFailureScreen = jest.fn();
   const navigateToWallet = jest.fn();
   const navigateToCredentialCatalog = jest.fn();
+  const navigateToCiePreparationScreen = jest.fn();
+  const navigateToCiePinPreparationScreen = jest.fn();
   const navigateToCiePinScreen = jest.fn();
   const navigateToCieReadCardScreen = jest.fn();
   const navigateToNfcInstructionsScreen = jest.fn();
@@ -79,6 +81,8 @@ describe("itwEidIssuanceMachine", () => {
       navigateToFailureScreen,
       navigateToWallet,
       navigateToCredentialCatalog,
+      navigateToCiePreparationScreen,
+      navigateToCiePinPreparationScreen,
       navigateToCiePinScreen,
       navigateToCieReadCardScreen,
       navigateToNfcInstructionsScreen,
@@ -393,7 +397,8 @@ describe("itwEidIssuanceMachine", () => {
         walletInstanceAttestation: T_WIA,
         cieContext: {
           isNFCEnabled: true,
-          isCIEAuthenticationSupported: true
+          isCIEAuthenticationSupported: true,
+          previousCiePreparationScreen: "PreparationPin"
         }
       }
     } as MachineSnapshot);
@@ -422,7 +427,8 @@ describe("itwEidIssuanceMachine", () => {
       identification: undefined,
       cieContext: {
         isNFCEnabled: true,
-        isCIEAuthenticationSupported: true
+        isCIEAuthenticationSupported: true,
+        previousCiePreparationScreen: "PreparationPin"
       }
     });
     expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
@@ -454,7 +460,8 @@ describe("itwEidIssuanceMachine", () => {
       },
       cieContext: {
         isNFCEnabled: true,
-        isCIEAuthenticationSupported: true
+        isCIEAuthenticationSupported: true,
+        previousCiePreparationScreen: "PreparationPin"
       }
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -510,7 +517,8 @@ describe("itwEidIssuanceMachine", () => {
         walletInstanceAttestation: T_WIA,
         cieContext: {
           isNFCEnabled: false,
-          isCIEAuthenticationSupported: true
+          isCIEAuthenticationSupported: true,
+          previousCiePreparationScreen: "PreparationPin"
         }
       }
     } as MachineSnapshot);
@@ -546,7 +554,8 @@ describe("itwEidIssuanceMachine", () => {
       },
       cieContext: {
         isNFCEnabled: false,
-        isCIEAuthenticationSupported: true
+        isCIEAuthenticationSupported: true,
+        previousCiePreparationScreen: "PreparationPin"
       }
     });
     expect(navigateToNfcInstructionsScreen).toHaveBeenCalledTimes(1);
@@ -575,7 +584,8 @@ describe("itwEidIssuanceMachine", () => {
       },
       cieContext: {
         isNFCEnabled: true,
-        isCIEAuthenticationSupported: true
+        isCIEAuthenticationSupported: true,
+        previousCiePreparationScreen: "PreparationPin"
       }
     });
 
@@ -1290,6 +1300,144 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToCieWarningScreen).toHaveBeenCalledTimes(1);
   });
 
+  it("Should navigate to InsertingCardPin through the preparation screens if L3 is enabled", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: "ModeSelection" },
+      context: {
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: T_WIA,
+        isL3FeaturesEnabled: true
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "select-identification-mode", mode: "ciePin" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "PreparationCie"
+      }
+    });
+
+    expect(navigateToCiePreparationScreen).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "acknowledged-cie-info" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "PreparationPin"
+      }
+    });
+
+    expect(navigateToCiePinPreparationScreen).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "acknowledged-cie-pin-info" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "InsertingCardPin"
+      }
+    });
+
+    expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should navigate to InsertingCardPin directly if L3 isn't enabled", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: "ModeSelection" },
+      context: {
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: T_WIA,
+        isL3FeaturesEnabled: false
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "select-identification-mode", mode: "ciePin" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "InsertingCardPin"
+      }
+    });
+
+    expect(navigateToCiePreparationScreen).toHaveBeenCalledTimes(0);
+    expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should return to PreparationPin when navigating back from CieWarning", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: "ModeSelection" },
+      context: {
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: T_WIA,
+        isL3FeaturesEnabled: true,
+        cieContext: {
+          isNFCEnabled: true,
+          isCIEAuthenticationSupported: true,
+          previousCiePreparationScreen: "PreparationCie"
+        }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "select-identification-mode", mode: "ciePin" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "PreparationCie"
+      }
+    });
+
+    expect(navigateToCiePreparationScreen).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "acknowledged-cie-info" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "PreparationPin"
+      }
+    });
+
+    const testWarningType: CieWarningType = "noCie" as CieWarningType;
+
+    actor.send({ type: "go-to-cie-warning", warning: testWarningType });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "CieWarning"
+      }
+    });
+
+    expect(navigateToCieWarningScreen).toHaveBeenCalledTimes(1);
+
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
+      ...InitialContext,
+      integrityKeyTag: T_INTEGRITY_KEY,
+      walletInstanceAttestation: T_WIA,
+      isL3FeaturesEnabled: true,
+      cieContext: {
+        isNFCEnabled: true,
+        isCIEAuthenticationSupported: true,
+        previousCiePreparationScreen: "PreparationPin"
+      }
+    });
+  });
   it("Should initialize the machine context with L3 active", async () => {
     const actor = createActor(mockedMachine);
     actor.start();

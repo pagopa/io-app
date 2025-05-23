@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { useIOSelector } from "../../../../store/hooks";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import {
   trackItWalletIDMethod,
@@ -8,24 +7,28 @@ import {
 } from "../../analytics";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
 import { L3IdentificationView } from "../components/L3IdentificationView.tsx";
 import { DefaultIdentificationView } from "../components/DefaultIdentificationView.tsx";
+import { isL3FeaturesEnabled } from "../../machine/eid/selectors.ts";
 
 export type ItwIdentificationModeSelectionScreenNavigationParams = {
   eidReissuing?: boolean;
 };
 
-type ScreenProps = IOStackNavigationRouteProps<
-  ItwParamsList,
-  "ITW_IDENTIFICATION_MODE_SELECTION"
->;
+export type ItwIdentificationModeSelectionScreenProps =
+  IOStackNavigationRouteProps<
+    ItwParamsList,
+    "ITW_IDENTIFICATION_MODE_SELECTION"
+  >;
 
-export const ItwIdentificationModeSelectionScreen = (params: ScreenProps) => {
+export const ItwIdentificationModeSelectionScreen = (
+  props: ItwIdentificationModeSelectionScreenProps
+) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
+  const isL3Enabled =
+    ItwEidIssuanceMachineContext.useSelector(isL3FeaturesEnabled);
 
-  const { eidReissuing } = params.route.params;
+  const { eidReissuing } = props.route.params;
 
   useFocusEffect(
     useCallback(() => {

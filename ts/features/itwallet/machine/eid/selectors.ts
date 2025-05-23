@@ -44,3 +44,6 @@ export const selectIsLoading = (snapshot: MachineSnapshot) =>
 
 export const selectIsCieIdEidRequest = (snapshot: MachineSnapshot) =>
   snapshot.context.identification?.mode === "cieId";
+
+export const isL3FeaturesEnabled = (snapshot: MachineSnapshot) =>
+  snapshot.context.isL3FeaturesEnabled ?? false;

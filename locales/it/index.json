@@ -4343,6 +4343,18 @@
           "content": "Continua ad aggiungere le versioni digitali dei tuoi documenti al Portafoglio.",
           "action": "Vai al Portafoglio"
         },
+        "nfcNotSupported": {
+          "title": "IT-Wallet richiede un dispositivo con tecnologia NFC",
+          "subtitle": "Il tuo dispositivo non è dotato di tecnologia NFC, necessaria per il funzionamento dei portafogli digitali.",
+          "actions": {
+            "continue": "Continua senza IT-Wallet",
+            "cancel": "Non ora",
+            "l3": {
+              "continue": "Scopri di più",
+              "cancel": "Chiudi"
+            }
+          }
+        },
         "paywall": {
           "badge": "Novità",
           "description": "L'unico Wallet di Stato:\npubblico, sicuro, gratuito.",
@@ -4437,6 +4449,22 @@
                 },
                 "primaryAction": "Continua senza IT-Wallet",
                 "secondaryAction": "Torna indietro"
+              }
+            },
+            "preparationScreen": {
+              "cie": {
+                "title": "Prepara la tua carta di identità elettronica (CIE)",
+                "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
+                "buttonLink": "Cos'è la CIE?",
+                "primaryAction": "Ho pronta la CIE",
+                "secondaryAction": "Non ho la CIE"
+              },
+              "ciePin": {
+                "title": "Prepara il PIN della tua carta di identità \nelettronica (CIE)",
+                "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell'identità.",
+                "buttonLink": "Cos'è il PIN della CIE?",
+                "primaryAction": "Ho pronto il PIN",
+                "secondaryAction": "Non trovo il PIN della CIE"
               }
             }
           }

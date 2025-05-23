@@ -1,9 +1,12 @@
-import {StyleSheet, View} from "react-native";
-import {FooterActions, Pictogram, VSpacer} from "@pagopa/io-app-design-system";
-import {useIOBottomSheetModal} from "../../../../utils/hooks/bottomSheet.tsx";
+import { StyleSheet, View } from "react-native";
+import {
+  FooterActions,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import I18n from "../../../../i18n.ts";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import {ItwEidIssuanceMachineContext} from "../../machine/provider.tsx";
 
 const noCieContentKeys = [
   "features.itWallet.identification.l3.mode.bottomSheet.noCie.content.firstAttention",
@@ -15,8 +18,6 @@ const noCieContentKeys = [
  * Hook to manage the no CIE bottom sheet
  */
 export const useNoCieBottomSheet = () => {
-  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-
   const noCieBottomSheet = useIOBottomSheetModal({
     title: I18n.t(
       "features.itWallet.identification.l3.mode.bottomSheet.noCie.title"
@@ -28,7 +29,7 @@ export const useNoCieBottomSheet = () => {
             "features.itWallet.identification.l3.mode.bottomSheet.noCie.description"
           )}
         />
-        <VSpacer size={8}/>
+        <VSpacer size={8} />
         <View>
           {noCieContentKeys.map((key, index) => (
             <View key={index} style={styles.row}>
@@ -49,14 +50,18 @@ export const useNoCieBottomSheet = () => {
         actions={{
           type: "TwoButtons",
           primary: {
-            label: I18n.t("features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"),
+            label: I18n.t(
+              "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
+            ),
             accessibilityLabel: I18n.t(
               "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
             ),
-            onPress: () => {},
+            onPress: () => {}
           },
           secondary: {
-            label: I18n.t("features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"),
+            label: I18n.t(
+              "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
+            ),
             accessibilityLabel: I18n.t(
               "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
             ),
