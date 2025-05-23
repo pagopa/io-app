@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { ComponentProps, memo, useMemo } from "react";
 import { View } from "react-native";
 import {
   Alert,
@@ -13,6 +13,7 @@ import I18n from "../../../../../i18n";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
 import {
   ClaimDisplayFormat,
+  ImageClaim,
   getClaimDisplayValue,
   getSafeText
 } from "../../../common/utils/itwClaimsUtils";
@@ -21,9 +22,19 @@ import { ItwRemoteMachineContext } from "../machine/provider";
 import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
 import { groupCredentialsByPurpose } from "../utils/itwRemotePresentationUtils";
 
-const mapClaims = (claims: Array<ClaimDisplayFormat>) =>
+const mapClaims = (
+  claims: Array<ClaimDisplayFormat>
+): ComponentProps<typeof ClaimsSelector>["items"] =>
   claims.map(c => {
     const displayValue = getClaimDisplayValue(c);
+    if (ImageClaim.is(displayValue)) {
+      return {
+        id: c.id,
+        value: displayValue,
+        description: c.label,
+        type: "image"
+      };
+    }
     return {
       id: c.id,
       value: Array.isArray(displayValue)

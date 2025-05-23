@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors.ts";
 import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
@@ -10,6 +9,7 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { L3IdentificationView } from "../components/L3IdentificationView.tsx";
 import { DefaultIdentificationView } from "../components/DefaultIdentificationView.tsx";
+import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors.ts";
 
 export type ItwIdentificationModeSelectionScreenNavigationParams = {
   eidReissuing?: boolean;
@@ -63,7 +63,6 @@ export const ItwIdentificationModeSelectionScreen = (
   ) : (
     <DefaultIdentificationView
       onSpidPress={handleSpidPress}
-      onCiePinPress={handleCiePinPress}
       onCieIdPress={handleCieIdPress}
     />
   );
