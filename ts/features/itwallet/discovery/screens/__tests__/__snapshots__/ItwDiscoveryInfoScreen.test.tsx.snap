@@ -686,10 +686,6 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -701,6 +697,10 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                                     "height": 48,
                                   },
                                   {},
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                 ]
                               }
                             >
