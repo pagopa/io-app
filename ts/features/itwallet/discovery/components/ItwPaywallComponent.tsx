@@ -11,7 +11,8 @@ import {
   Icon,
   VSpacer,
   VStack,
-  useIOTheme
+  useIOTheme,
+  IOButton
 } from "@pagopa/io-app-design-system";
 import { TxtLinkNode, TxtParagraphNode } from "@textlint/ast-node-types";
 import { useCallback, useState } from "react";
@@ -36,6 +37,7 @@ import { tosConfigSelector } from "../../../tos/store/selectors";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
 
 const markdownRules = {
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
@@ -103,6 +105,10 @@ export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
 
 const InnerComponent = () => {
   const { tos_url } = useIOSelector(tosConfigSelector);
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const handleContinuePress = useCallback(() => {
+    machineRef.send({ type: "accept-tos" });
+  }, [machineRef]);
 
   return (
     <VStack space={24}>
@@ -133,6 +139,13 @@ const InnerComponent = () => {
           tos_url
         })}
         rules={markdownRules}
+      />
+      {/* this is a placeholder to continue in the l3 stream  */}
+      <IOButton
+        color={"contrast"}
+        accessibilityHint="Tap to trigger test alert"
+        label={"Ottieni IT-Wallet"}
+        onPress={handleContinuePress}
       />
     </VStack>
   );
