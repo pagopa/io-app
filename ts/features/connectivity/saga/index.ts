@@ -37,14 +37,12 @@ export function* connectionStatusSaga(
   while (true) {
     try {
       const libraryResponse = yield* call(fetchNetInfoState());
-      console.log("lib response", libraryResponse);
 
       if (E.isRight(libraryResponse)) {
         const backendResponse = yield* call(
           checkBackendConnectionStatus,
           client
         );
-        console.log("backend response", backendResponse);
 
         const isAppConnected =
           !!libraryResponse.right.isConnected && backendResponse;
@@ -57,15 +55,12 @@ export function* connectionStatusSaga(
         void updateMixpanelSuperProperties(state);
 
         if (isAppConnected) {
-          console.log("start success timer");
           yield* call(startTimer, CONNECTIVITY_STATUS_LOAD_INTERVAL);
           continue;
         }
-        console.log("start failure timer");
         yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
         continue;
       }
-      console.log("start failure timer");
       yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
       continue;
     } catch (e) {
