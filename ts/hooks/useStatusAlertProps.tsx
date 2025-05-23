@@ -125,7 +125,7 @@ export const useStatusAlertProps = (
        */
       return undefined;
     }
-    if (isConnected === false || connectivityAlert) {
+    if (isConnected === false && connectivityAlert) {
       return {
         alertProps: connectivityAlert,
         bottomSheet
