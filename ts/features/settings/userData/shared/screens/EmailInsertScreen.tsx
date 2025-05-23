@@ -28,6 +28,7 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import validator from "validator";
+import { isDisplayZoomed } from "react-native-device-info";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -73,6 +74,10 @@ const EMPTY_EMAIL = "";
  * this screen, we need to set a maximum font size multiplier.
  */
 const MAX_FONT_SIZE_MULTIPLIER = 1.2;
+
+// We use this information to disable autofocus on the input field.
+// Some iOS users with a zoomed screen freeze entering this screen.
+const isScreenZoomed = isDisplayZoomed();
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.insert.help.title",
@@ -321,6 +326,8 @@ const EmailInsertScreen = () => {
     acknowledgeOnEmailValidated.value === false &&
     isOnboarding;
 
+  const useAutoFocus = !isScreenZoomed && !userNavigateToEmailValidationScreen;
+
   // If we navigate to this screen with acknowledgeOnEmailValidated set to false,
   // let the user navigate the email validation screen
   useEffect(() => {
@@ -468,7 +475,7 @@ const EmailInsertScreen = () => {
             </Body>
             <VSpacer size={16} />
             <TextInputValidation
-              autoFocus={!userNavigateToEmailValidationScreen}
+              autoFocus={useAutoFocus}
               testID="email-input"
               textInputProps={{
                 autoCorrect: false,
@@ -503,8 +510,8 @@ const EmailInsertScreen = () => {
               onPress={continueOnPress}
               testID="continue-button"
             />
-            <VSpacer size={16} />
           </ContentWrapper>
+          {Platform.OS === "android" && <VSpacer size={16} />}
         </KeyboardAvoidingView>
       </SafeAreaView>
     </LoadingSpinnerOverlay>
