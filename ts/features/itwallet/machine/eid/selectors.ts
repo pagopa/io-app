@@ -7,18 +7,14 @@ import { IdentificationContext } from "./context";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
+export const isL3FeaturesEnabledSelector = (snapshot: MachineSnapshot) =>
+  snapshot.context.isL3FeaturesEnabled ?? false;
+
 export const selectEidOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.eid);
 
 export const selectFailureOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.failure);
-
-export const isNFCEnabledSelector = (snapshot: MachineSnapshot) =>
-  snapshot.context.cieContext?.isNFCEnabled || false;
-
-export const isCIEAuthenticationSupportedSelector = (
-  snapshot: MachineSnapshot
-) => snapshot.context.cieContext?.isCIEAuthenticationSupported || false;
 
 export const selectIdentification = (snapshot: MachineSnapshot) =>
   snapshot.context.identification;
@@ -41,9 +37,3 @@ export const selectAuthUrlOption = (snapshot: MachineSnapshot) =>
 
 export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwTags.Loading);
-
-export const selectIsCieIdEidRequest = (snapshot: MachineSnapshot) =>
-  snapshot.context.identification?.mode === "cieId";
-
-export const isL3FeaturesEnabled = (snapshot: MachineSnapshot) =>
-  snapshot.context.isL3FeaturesEnabled ?? false;

@@ -9,7 +9,7 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { L3IdentificationView } from "../components/L3IdentificationView.tsx";
 import { DefaultIdentificationView } from "../components/DefaultIdentificationView.tsx";
-import { isL3FeaturesEnabled } from "../../machine/eid/selectors.ts";
+import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors.ts";
 
 export type ItwIdentificationModeSelectionScreenNavigationParams = {
   eidReissuing?: boolean;
@@ -25,8 +25,9 @@ export const ItwIdentificationModeSelectionScreen = (
   props: ItwIdentificationModeSelectionScreenProps
 ) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isL3Enabled =
-    ItwEidIssuanceMachineContext.useSelector(isL3FeaturesEnabled);
+  const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
 
   const { eidReissuing } = props.route.params;
 
@@ -62,7 +63,6 @@ export const ItwIdentificationModeSelectionScreen = (
   ) : (
     <DefaultIdentificationView
       onSpidPress={handleSpidPress}
-      onCiePinPress={handleCiePinPress}
       onCieIdPress={handleCieIdPress}
     />
   );
