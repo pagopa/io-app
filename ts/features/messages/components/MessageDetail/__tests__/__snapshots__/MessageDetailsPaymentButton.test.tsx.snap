@@ -385,6 +385,10 @@ exports[`MessageDetailsPaymentButton should match snapshot when loading 1`] = `
                                 "overflow": "hidden",
                                 "textAlignVertical": "center",
                               },
+                              false,
+                              {
+                                "backgroundColor": undefined,
+                              },
                               {
                                 "paddingHorizontal": 16,
                               },
@@ -396,10 +400,6 @@ exports[`MessageDetailsPaymentButton should match snapshot when loading 1`] = `
                                 "height": 48,
                               },
                               {},
-                              false,
-                              {
-                                "backgroundColor": undefined,
-                              },
                             ]
                           }
                         >
@@ -990,6 +990,10 @@ exports[`MessageDetailsPaymentButton should match snapshot when not loading 1`] 
                                 "overflow": "hidden",
                                 "textAlignVertical": "center",
                               },
+                              false,
+                              {
+                                "backgroundColor": undefined,
+                              },
                               {
                                 "paddingHorizontal": 16,
                               },
@@ -1001,10 +1005,6 @@ exports[`MessageDetailsPaymentButton should match snapshot when not loading 1`] 
                                 "height": 48,
                               },
                               {},
-                              false,
-                              {
-                                "backgroundColor": undefined,
-                              },
                             ]
                           }
                         >

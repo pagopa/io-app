@@ -832,6 +832,10 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {
+                                      "backgroundColor": undefined,
+                                    },
                                     {
                                       "paddingHorizontal": 16,
                                     },
@@ -843,10 +847,6 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                       "height": 48,
                                     },
                                     {},
-                                    false,
-                                    {
-                                      "backgroundColor": undefined,
-                                    },
                                   ]
                                 }
                               >
