@@ -805,6 +805,10 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -816,10 +820,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -950,6 +950,8 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
@@ -960,8 +962,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }

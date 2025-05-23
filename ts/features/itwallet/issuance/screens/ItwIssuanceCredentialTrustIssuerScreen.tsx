@@ -51,12 +51,12 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
   credentialType?: string;
   asyncContinuation?: boolean;
 };
-import { withOfflineFailureScreen } from "../../wallet/utils/withOfflineFailureScreen.tsx";
 
 type ScreenProps =
   // Props received when used inside a <Stack.Screen>
