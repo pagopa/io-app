@@ -44,9 +44,7 @@ export const useOfflineToastGuard = (fn: (...args: Array<any>) => any) => {
 
   const guardFn = useCallback(() => {
     toast.error(I18n.t("global.offline.toast"));
-    trackOfflineActionNotAllowed({
-      screen: name
-    });
+    trackOfflineActionNotAllowed(name);
     return undefined;
   }, [name, toast]);
 

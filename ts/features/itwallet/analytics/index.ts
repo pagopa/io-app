@@ -1,3 +1,4 @@
+import { getType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
@@ -11,6 +12,11 @@ import {
 } from "../common/utils/itwTypesUtils";
 import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
 import { OfflineAccessReasonEnum } from "../../ingress/store/reducer";
+import { Action } from "../../../store/actions/types.ts";
+import {
+  resetOfflineAccessReason,
+  setOfflineAccessReason
+} from "../../ingress/store/actions";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -167,7 +173,7 @@ type ItwCopyListItem = {
 
 type ItwOfflineBanner = {
   screen: string;
-  error_message_type: OfflineAccessReasonEnum;
+  error_message_type?: OfflineAccessReasonEnum;
   use_case: "starting_app" | "foreground" | "background";
 };
 
@@ -890,7 +896,7 @@ export const trackItwOfflineBanner = ({
   use_case
 }: ItwOfflineBanner) => {
   void mixpanelTrack(
-    ITW_TECH_EVENTS.ITW_ID_REQUEST_SUCCESS,
+    ITW_TECH_EVENTS.ITW_OFFLINE_BANNER,
     buildEventProperties("TECH", undefined, {
       screen,
       error_message_type,
@@ -953,3 +959,26 @@ export const updatePropertiesWalletRevoked = (state: GlobalState) => {
 };
 
 // #endregion PROFILE AND SUPER PROPERTIES UPDATE
+
+/**
+ * Track the reason for offline access on Mixpanel
+ * @param action - The action that was dispatched
+ * @param state - The current state of the application
+ */
+export const trackOfflineAccessReason = (
+  action: Action,
+  state: GlobalState
+): void | ReadonlyArray<null> => {
+  switch (action.type) {
+    case getType(setOfflineAccessReason):
+      return void updateMixpanelSuperProperties(state, {
+        property: "OFFLINE_ACCESS_REASON",
+        value: action.payload
+      });
+    case getType(resetOfflineAccessReason):
+      return void updateMixpanelSuperProperties(state, {
+        property: "OFFLINE_ACCESS_REASON",
+        value: "not_available"
+      });
+  }
+};

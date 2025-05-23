@@ -83,6 +83,13 @@ export const useStatusAlertProps = (
           );
         }
       });
+
+      void mixpanelTrack(
+        "OFFLINE_BANNER",
+        buildEventProperties("TECH", undefined, {
+          screen: currentRoute
+        })
+      );
     }
     if (prevIsConnected === false && isConnected === true) {
       setConnectivityAlert({
@@ -101,7 +108,13 @@ export const useStatusAlertProps = (
         setConnectivityAlert(undefined);
       }, 3000);
     }
-  }, [isConnected, present, prevIsConnected, currentRoute]);
+  }, [
+    isConnected,
+    present,
+    prevIsConnected,
+    currentRoute,
+    offlineAccessReason
+  ]);
 
   return useMemo(() => {
     if (offlineAccessReason) {

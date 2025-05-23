@@ -5,10 +5,10 @@
 import {
   Banner,
   ContentWrapper,
+  IOButton,
   ModuleNavigation,
   Tooltip,
   useIOToast,
-  IOButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
