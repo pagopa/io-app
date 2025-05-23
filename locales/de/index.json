@@ -3690,9 +3690,17 @@
             "contentBottom": "###### Wie funktioniert das?\n\nDeine **Identität wird bei der Aktivierung über SPID oder CIE verifiziert**.",
             "triggerLabel": "Was ist das?",
             "alert": {
-              "valid": "Die letzte Überprüfung ist vom {{date}}.",
-              "expiring": "Überprüfe deine Identität bis {{date}}.",
-              "expired": "Für die weitere Nutzung von Dokumente in IO ist ein kurzer Überprüfungsschritt erforderlich."
+              "documents": {
+                "valid": "Die letzte Überprüfung ist vom {{date}}.",
+                "expiring": "Überprüfe deine Identität bis {{date}}.",
+                "expired": "Für die weitere Nutzung von Dokumente in IO ist ein kurzer Überprüfungsschritt erforderlich."
+              },
+              "itw": {
+                "valid": "L'ultima verifica della tua identità è del {{date}}.",
+                "expiring": "Verifica la tua identità per continuare ad usare IT-Wallet entro il {{date}}.",
+                "expired": "Verifica la tua identità per continuare ad usare IT-Wallet.",
+                "action": "Inizia la verifica"
+              }
             }
           },
           "MDL": {
