@@ -66,7 +66,6 @@ export type ItwPaywallComponentProps = {
 
 export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
   const theme = useIOTheme();
-
   const backgroundColor = IOColors[theme["appBackground-accent"]];
 
   useHeaderSecondLevel({
