@@ -425,6 +425,10 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -436,10 +440,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1282,6 +1282,10 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -1293,10 +1297,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >

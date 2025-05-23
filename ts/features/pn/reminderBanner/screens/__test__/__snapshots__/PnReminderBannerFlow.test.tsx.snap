@@ -634,6 +634,10 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= ALREADY
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -645,10 +649,6 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= ALREADY
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -1405,6 +1405,10 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= FAILURE
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -1416,10 +1420,6 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= FAILURE
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -2176,6 +2176,10 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= FAILURE
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -2187,10 +2191,6 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= FAILURE
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -2899,6 +2899,10 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= SUCCESS
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -2910,10 +2914,6 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= SUCCESS
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -4056,6 +4056,10 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -4067,10 +4071,6 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -4824,6 +4824,10 @@ exports[`error screens should display an error screen in case of missing_sid err
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -4835,10 +4839,6 @@ exports[`error screens should display an error screen in case of missing_sid err
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -5595,6 +5595,10 @@ exports[`error screens should display an error screen in case of preferences err
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -5606,10 +5610,6 @@ exports[`error screens should display an error screen in case of preferences err
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -6366,6 +6366,10 @@ exports[`loading screens + error interop should render the correct loading scree
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -6377,10 +6381,6 @@ exports[`loading screens + error interop should render the correct loading scree
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >

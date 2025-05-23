@@ -931,6 +931,10 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -942,10 +946,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1075,6 +1075,8 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
@@ -1085,8 +1087,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }

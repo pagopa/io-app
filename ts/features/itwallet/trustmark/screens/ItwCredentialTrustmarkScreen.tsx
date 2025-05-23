@@ -9,7 +9,7 @@ import { ItwTrustmarkExpirationTimer } from "../components/ItwTrustmarkExpiratio
 import { ItwTrustmarkQrCode } from "../components/ItwTrustmarkQrCode";
 import { ItwTrustmarkMachineProvider } from "../machine/provider";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
-import { withOfflineFailureScreen } from "../../wallet/utils/withOfflineFailureScreen.tsx";
+import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
 
 export type ItwCredentialTrustmarkScreenNavigationParams = {
   credentialType: string;
