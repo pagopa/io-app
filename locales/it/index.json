@@ -4330,9 +4330,14 @@
             "action": "Inizia"
           }
         },
-        "title": "La versione digitale dei tuoi documenti, su IO",
-        "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **4 Milioni** di persone stanno già usando i **Documenti su IO**!",
-        "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
+        "title": "Aggiungi i tuoi documenti\ndigitali su IO",
+        "featureHighlights": {
+          "1": "Aggiungi la versione digitale di alcuni dei tuoi documenti nel Portafoglio dell'app",
+          "2": "Hai a disposizione la Patente di guida, la Tessera sanitaria - Tessera europea di assicurazione malattia e la Carta Europea della Disabilità",
+          "3": "Mostri i tuoi documenti dal telefono, in totale sicurezza",
+          "4": "Puoi usare la tua Patente su IO per dimostrare la tua idoneità alla guida"
+        },
+        "content": "###### Come ottenerli \n\n Continua per ottenere i tuoi documenti su IO: puoi usare **SPID** o **CieID (livello 2)**. \n\n\n\n Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
         "upcomingWalletBanner": {
           "title": "Novità in arrivo: i tuoi Documenti su IO",
           "content": "Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!",
