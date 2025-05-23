@@ -4,7 +4,6 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { applicationChangeState } from "../../../../store/actions/application";
 import * as HOOKS from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
-import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { openAppStoreUrl } from "../../../../utils/url";
 import * as ANALYTICS from "../../analytics";
@@ -225,39 +224,11 @@ const renderHook = (state: HookState, activateFlag: boolean = false) => {
     return <></>;
   };
 
-  const globalState = appReducer(
-    {
-      backendStatus: {
-        value: {
-          pn: {
-            enabled: state.isPnEnabled,
-            supported: state.isPnSupported
-          }
-        }
-      },
-      entities: {
-        services: {
-          byId: {
-            [mockServiceId]: {
-              service_id: mockServiceId
-            }
-          }
-        }
-      },
-      features: {
-        pn: {
-          activation: {
-            isLoading: state.isLoadingPnActivation
-          }
-        }
-      }
-    } as unknown as GlobalState,
-    applicationChangeState("active")
-  );
+  const globalState = appReducer(undefined, applicationChangeState("active"));
 
   // Mock the servicePreferenceByChannel hook
   jest.spyOn(HOOKS, "useIOSelector").mockImplementation(selector => {
-    if (selector.name === "isPnEnabledSelector") {
+    if (selector.name === "isPnRemoteEnabledSelector") {
       return state.isPnEnabled;
     }
     if (selector.name === "isPnAppVersionSupportedSelector") {
@@ -269,7 +240,6 @@ const renderHook = (state: HookState, activateFlag: boolean = false) => {
     return undefined;
   });
 
-  // Mock the useServicePreferenceByChannel hook
   const mockHook = jest.requireActual(
     "../../../services/details/hooks/useServicePreference"
   );

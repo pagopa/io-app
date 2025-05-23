@@ -9894,6 +9894,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {},
                                 {
                                   "paddingHorizontal": 0,
                                 },
@@ -9904,8 +9906,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "borderWidth": 0,
                                   "height": undefined,
                                 },
-                                {},
-                                false,
                                 {},
                               ]
                             }
@@ -11656,6 +11656,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
+                                false,
+                                {},
                                 {
                                   "paddingHorizontal": 0,
                                 },
@@ -11666,8 +11668,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "borderWidth": 0,
                                   "height": undefined,
                                 },
-                                {},
-                                false,
                                 {},
                               ]
                             }
