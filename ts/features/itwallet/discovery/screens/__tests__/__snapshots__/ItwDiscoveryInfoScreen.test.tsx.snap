@@ -3532,7 +3532,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
 </View>
 `;
 
-exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, hasNfcFeature is false and itwIsWalletInstanceRemotelyActiveSelector is false 1`] = `
+exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, hasNfcFeature is false and itwLifecycleIsValidSelector is false 1`] = `
 <View
   style={
     {
@@ -4383,7 +4383,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, has
 </View>
 `;
 
-exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, hasNfcFeature is false and itwIsWalletInstanceRemotelyActiveSelector is true 1`] = `
+exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true, hasNfcFeature is false and itwLifecycleIsValidSelector is true 1`] = `
 <View
   style={
     {
