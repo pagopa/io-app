@@ -173,7 +173,7 @@ describe("enrichPresentationDetails", () => {
     }
   } as unknown as StoredCredential;
 
-  it("should work when all disclosures are found in the parsed credential", () => {
+  it("should include all disclosures that are found in the parsed credential", () => {
     const [result] = enrichPresentationDetails(
       [
         {
@@ -197,7 +197,7 @@ describe("enrichPresentationDetails", () => {
     ]);
   });
 
-  it("should work when some disclosure is missing in the parsed credential", () => {
+  it("should exclude disclosures that are missing in the parsed credential", () => {
     const [result] = enrichPresentationDetails(
       [
         {
@@ -218,8 +218,29 @@ describe("enrichPresentationDetails", () => {
 
     expect(result.claimsToDisplay).toEqual([
       { id: "name", label: "Name", value: "Mario" },
-      { id: "surname", label: "Surname", value: "Rossi" },
-      { id: "iat", label: "iat", value: 123456 }
+      { id: "surname", label: "Surname", value: "Rossi" }
     ]);
+  });
+
+  it("should throw when a credential is not found", () => {
+    expect(() =>
+      enrichPresentationDetails(
+        [
+          {
+            id: "one",
+            credential: "",
+            keyTag: "one-keytag",
+            vct: "missing_PID",
+            requiredDisclosures: [
+              ["salt1", "name", "Mario"],
+              ["salt2", "surname", "Rossi"],
+              ["salt3", "iat", 123456]
+            ],
+            purposes: [{ required: true }]
+          }
+        ],
+        { PID: storedCredentialMock }
+      )
+    ).toThrow("missing_PID credential was not found in the wallet");
   });
 });
