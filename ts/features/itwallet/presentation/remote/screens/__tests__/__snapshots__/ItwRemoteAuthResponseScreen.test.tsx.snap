@@ -299,6 +299,10 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {
+                    "backgroundColor": undefined,
+                  },
                   {
                     "paddingHorizontal": 24,
                   },
@@ -310,10 +314,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                     "height": 48,
                   },
                   {},
-                  false,
-                  {
-                    "backgroundColor": undefined,
-                  },
                 ]
               }
             >
@@ -738,6 +738,10 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {
+                    "backgroundColor": undefined,
+                  },
                   {
                     "paddingHorizontal": 24,
                   },
@@ -749,10 +753,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
                     "height": 48,
                   },
                   {},
-                  false,
-                  {
-                    "backgroundColor": undefined,
-                  },
                 ]
               }
             >

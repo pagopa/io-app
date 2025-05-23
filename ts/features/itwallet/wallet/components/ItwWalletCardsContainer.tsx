@@ -1,4 +1,4 @@
-import { ListItemHeader } from "@pagopa/io-app-design-system";
+import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -76,7 +76,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   );
 
   return (
-    <>
+    <VStack>
       <ItwOfflineWalletBanner />
       <WalletCardsCategoryContainer
         key={`cards_category_itw`}
@@ -96,6 +96,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       />
       {eidInfoBottomSheet.bottomSheet}
       {appFeedbackBottomSheet}
-    </>
+    </VStack>
   );
 });
