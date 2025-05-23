@@ -173,7 +173,7 @@ export const actionTracking =
       void trackZendesk(action);
       void trackIdentificationAction(action);
 
-      // Track mixpanel offline access reason
+      // Define MP super property that indicates the reason for offline access
       void trackOfflineAccessReason(action, middleware.getState());
 
       const fciEnvironment = fciEnvironmentSelector(middleware.getState());
