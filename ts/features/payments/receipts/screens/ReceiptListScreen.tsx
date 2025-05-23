@@ -1,11 +1,12 @@
 import {
+  ContentWrapper,
   Divider,
   IOVisualCostants,
   ListItemHeader
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp } from "@react-navigation/native";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { LayoutChangeEvent, SectionList, SectionListData } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
@@ -167,7 +168,9 @@ const ReceiptListScreen = () => {
   const renderLoadingFooter = () => (
     <>
       {isLoading && (
-        <ReceiptLoadingList showSectionTitleSkeleton={!continuationToken} />
+        <ContentWrapper>
+          <ReceiptLoadingList showSectionTitleSkeleton={!continuationToken} />
+        </ContentWrapper>
       )}
     </>
   );
@@ -191,6 +194,8 @@ const ReceiptListScreen = () => {
       <OperationResultScreenContent isHeaderVisible {...emptyProps} />
     </ReceiptFadeInOutAnimationView>
   ) : undefined;
+
+  const openedItemRef = useRef<(() => void) | null>(null);
 
   return (
     <AnimatedSectionList
@@ -229,6 +234,7 @@ const ReceiptListScreen = () => {
       renderItem={({ item }) => (
         <ReceiptFadeInOutAnimationView>
           <ReceiptListItemTransaction
+            openedItemRef={openedItemRef}
             onPress={() => handleNavigateToTransactionDetails(item)}
             transaction={item}
           />
