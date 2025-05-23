@@ -13,6 +13,17 @@ import { apiUrlPrefix } from "../../../config";
 const CONNECTIVITY_STATUS_LOAD_INTERVAL = (60 * 1000) as Millisecond;
 const CONNECTIVITY_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
 
+function* checkBackendConnectionStatus(
+  client: ConnectivityClient
+): Generator<ReduxSagaEffect, boolean, unknown> {
+  try {
+    const response = yield* call(client.getPing, {});
+    return E.isRight(response) && response.right.status === 204;
+  } catch (e) {
+    return false;
+  }
+}
+
 /**
  * this saga requests and checks the connection status
  */
@@ -26,26 +37,35 @@ export function* connectionStatusSaga(
   while (true) {
     try {
       const libraryResponse = yield* call(fetchNetInfoState());
-      const backendResponse = yield* call(client.getPing, {});
+      console.log("lib response", libraryResponse);
 
-      if (E.isRight(libraryResponse) && E.isRight(backendResponse)) {
+      if (E.isRight(libraryResponse)) {
+        const backendResponse = yield* call(
+          checkBackendConnectionStatus,
+          client
+        );
+        console.log("backend response", backendResponse);
+
         const isAppConnected =
-          libraryResponse.right.isConnected &&
-          backendResponse.right.status === 204;
+          !!libraryResponse.right.isConnected && backendResponse;
+
         // App is connected update the store and wait for the next check
-        yield* put(setConnectionStatus(true));
+        yield* put(setConnectionStatus(isAppConnected));
 
         // update mixpanel super properties
         const state = (yield* select()) as GlobalState;
         void updateMixpanelSuperProperties(state);
 
         if (isAppConnected) {
+          console.log("start success timer");
           yield* call(startTimer, CONNECTIVITY_STATUS_LOAD_INTERVAL);
           continue;
         }
+        console.log("start failure timer");
         yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
         continue;
       }
+      console.log("start failure timer");
       yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
       continue;
     } catch (e) {
