@@ -863,6 +863,10 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -874,10 +878,6 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1631,6 +1631,10 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -1642,10 +1646,6 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -3546,6 +3546,10 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot, dispatch di
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -3557,10 +3561,6 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot, dispatch di
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
