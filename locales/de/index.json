@@ -3500,6 +3500,7 @@
           "3": "Mostri i tuoi documenti dal telefono, in totale sicurezza",
           "4": "Puoi usare la tua Patente su IO per dimostrare la tua idoneità alla guida"
         },
+        "content": "###### Come ottenerli \n\n Continua per ottenere i tuoi documenti su IO: puoi usare **SPID** o **CieID (livello 2)**. \n\n\n\n Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
         "upcomingWalletBanner": {
           "title": "Demnächst: deine Dokumente in IO",
           "content": "Bald kannst du digitale Versionen deiner persönlichen Dokumente wie Führerschein und Gesundheitskarte in dein IO-Konto einfügen!",
