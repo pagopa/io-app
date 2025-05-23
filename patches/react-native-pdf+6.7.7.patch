@@ -1,8 +1,8 @@
 diff --git a/node_modules/react-native-pdf/ios/RNPDFPdf/RNPDFPdfView.mm b/node_modules/react-native-pdf/ios/RNPDFPdf/RNPDFPdfView.mm
-index 1e8f5c6..ee3aa74 100644
+index cddec76..ed71109 100644
 --- a/node_modules/react-native-pdf/ios/RNPDFPdf/RNPDFPdfView.mm
 +++ b/node_modules/react-native-pdf/ios/RNPDFPdf/RNPDFPdfView.mm
-@@ -374,12 +374,16 @@ using namespace facebook::react;
+@@ -397,12 +397,16 @@ - (void)didSetProps:(NSArray<NSString *> *)changedProps
          }
  
          if (_pdfDocument && ([changedProps containsObject:@"path"] || [changedProps containsObject:@"enableAnnotationRendering"])) {

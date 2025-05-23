@@ -37,7 +37,7 @@ const CieLoginConfigScreen = () => {
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={"CIE Login Settings"}>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }} testID="CieLoginConfigScreen">
         <ContentWrapper>
           {locked ? (
             <PinView pin={pin} setPin={setPin} />

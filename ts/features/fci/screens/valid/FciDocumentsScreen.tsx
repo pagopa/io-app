@@ -164,6 +164,11 @@ const FciDocumentsScreen = () => {
     );
 
   const renderPager = () => (
+    /** Be aware that, in react-native-pdf 6.7.7, on Android, there
+     * is a bug where onLoadComplete callback is not called. So,
+     * in order to detect proper PDF loading ending, we rely on
+     * onPageChanged, which is called to report that the first page
+     * has loaded */
     <Pdf
       ref={pdfRef}
       source={{
@@ -172,7 +177,10 @@ const FciDocumentsScreen = () => {
       onLoadComplete={(numberOfPages, _) => {
         setTotalPages(numberOfPages);
       }}
-      onPageChanged={(page, _) => {
+      onPageChanged={(page, numberOfPages) => {
+        if (totalPages === 0) {
+          setTotalPages(numberOfPages);
+        }
         setCurrentPage(page);
       }}
       enablePaging

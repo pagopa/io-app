@@ -8,8 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useCallback, useRef, useState } from "react";
-import { Alert as NativeAlert, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList, Alert as NativeAlert, View } from "react-native";
 import { defaultPin } from "../../../../../config";
 import { isValidPinNumber } from "../../../../../features/authentication/fastLogin/utils/pinPolicy";
 import { useCreatePin } from "../../hooks/useCreatePin";

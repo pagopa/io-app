@@ -1,6 +1,6 @@
 import { PreloadedState, createStore } from "redux";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
-import { fireEvent, waitFor } from "@testing-library/react-native";
+import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -60,7 +60,10 @@ describe(FiscalCodeScreen, () => {
       ).toBeDefined();
     });
 
-    jest.advanceTimersByTime(6000);
+    act(() => {
+      jest.advanceTimersByTime(6000);
+    });
+
     expect(
       component.getByText(I18n.t("profile.fiscalCode.copyCode"))
     ).toBeDefined();

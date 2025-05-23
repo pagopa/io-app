@@ -1,5 +1,5 @@
 import configureMockStore from "redux-mock-store";
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { ActionType } from "typesafe-actions";
 import SecurityScreen from "../SecurityScreen";
 import I18n from "../../../../../i18n";
@@ -170,7 +170,9 @@ describe("Test SecurityScreen", () => {
       .mockResolvedValueOnce("FaceID");
 
     const { component } = renderComponent();
-    await Promise.resolve();
+    await act(async () => {
+      await Promise.resolve();
+    });
     const switchItem = component.getByTestId("biometric-recognition");
     expect(switchItem).toBeTruthy();
     fireEvent(switchItem, "onSwitchValueChange");

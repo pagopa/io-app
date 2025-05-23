@@ -91,7 +91,7 @@ describe("AuthErrorComponent", () => {
         const onRetryMock = jest.fn();
         const onCancelMock = jest.fn();
 
-        const { getByText, queryByText } = render(
+        const { getByText, getByLabelText, queryByText } = render(
           <AuthErrorComponent
             authLevel="L2"
             errorCodeOrMessage={errorCodeOrMessage}
@@ -113,12 +113,12 @@ describe("AuthErrorComponent", () => {
         }
 
         if (expectRetryCalled) {
-          fireEvent.press(getByText(I18n.t("global.buttons.retry")));
+          fireEvent.press(getByLabelText(I18n.t("global.buttons.retry")));
           expect(onRetryMock).toHaveBeenCalled();
         }
 
         if (expectCancelCalled) {
-          fireEvent.press(getByText(I18n.t("global.buttons.close")));
+          fireEvent.press(getByLabelText(I18n.t("global.buttons.close")));
           expect(onCancelMock).toHaveBeenCalled();
         }
       });
