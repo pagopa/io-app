@@ -686,6 +686,10 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -697,10 +701,6 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -3380,6 +3380,8 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
@@ -3390,8 +3392,6 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }
@@ -3515,6 +3515,10 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {
+                                      "backgroundColor": undefined,
+                                    },
                                     {
                                       "paddingHorizontal": 16,
                                     },
@@ -3526,10 +3530,6 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                                       "height": 48,
                                     },
                                     {},
-                                    false,
-                                    {
-                                      "backgroundColor": undefined,
-                                    },
                                   ]
                                 }
                               >
