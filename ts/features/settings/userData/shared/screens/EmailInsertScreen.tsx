@@ -73,7 +73,10 @@ const EMPTY_EMAIL = "";
  * Since we have some users with a very large font size, that can't enter or use
  * this screen, we need to set a maximum font size multiplier.
  */
-const MAX_FONT_SIZE_MULTIPLIER = 1.2;
+const MAX_FONT_SIZE_MULTIPLIER = Platform.select({
+  ios: 1.2,
+  android: undefined
+});
 
 // We use this information to disable autofocus on the input field.
 // Some iOS users with a zoomed screen freeze entering this screen.
