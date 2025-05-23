@@ -1,10 +1,9 @@
 import { useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
 import I18n from "../../../i18n";
 import { completeOnboarding } from "../store/actions";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { idpSelector } from "../../authentication/common/store/selectors";
+import { loggedInIdpSelector } from "../../authentication/common/store/selectors";
 import { getFlowType } from "../../../utils/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { trackThankYouPageScreen } from "../../settings/common/analytics";
@@ -15,9 +14,9 @@ const OnboardingCompletedScreen = () => {
   const dispatch = useIODispatch();
 
   const isFastLoginEnabled = useIOSelector(isFastLoginEnabledSelector);
-  const idpSelected = useIOSelector(idpSelector);
+  const idp = useIOSelector(loggedInIdpSelector);
 
-  const idp = O.isSome(idpSelected) ? idpSelected.value.name : "";
+  const idpName = idp?.name ?? "";
   const route = useRoute();
 
   useOnFirstRender(() => {
@@ -27,7 +26,7 @@ const OnboardingCompletedScreen = () => {
   const handleContinue = () => {
     trackLoginEnded(
       isFastLoginEnabled,
-      idp,
+      idpName,
       getFlowType(false, true),
       route.name
     );
