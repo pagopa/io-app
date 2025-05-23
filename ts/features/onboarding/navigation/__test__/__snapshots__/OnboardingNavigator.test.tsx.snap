@@ -1404,6 +1404,10 @@ We use tools that allow us to record data on how you use the app, to provide you
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -1415,10 +1419,6 @@ We use tools that allow us to record data on how you use the app, to provide you
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1548,6 +1548,8 @@ We use tools that allow us to record data on how you use the app, to provide you
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
@@ -1558,8 +1560,6 @@ We use tools that allow us to record data on how you use the app, to provide you
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }
