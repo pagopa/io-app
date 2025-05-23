@@ -2570,7 +2570,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 27a63f2218affdf1a426d56682f9b174904838b3
   RNI18n: 11ec5086508673ef71b5b567da3e8bcca8a926e1
   RNKeychain: bd09fc5dcf4e0c4166a5d4012beaf2e093fcd9f5
-  RNPermissions: a4ae2524bd9cfb86f9c490b200b17f8dadb12e5a
+  RNPermissions: 17eb2e3935b1acdfd38b042a616519d5dece1ad1
   RNQrGenerator: 60eab4f7c9e3f09db78029636fe356dca5cb585f
   RNReactNativeHapticFeedback: 00ba111b82aa266bb3ee1aa576831c2ea9a9dfad
   RNReanimated: fea25bf524c62b2e7167edef63a398ca16a157fd
@@ -2597,6 +2597,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: b512cfc74b6bf8490e589f02cf52e27ed4f2bebe
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: 80686cfc2be2bcdc2b273e1709b13d531f5ebcfb
+PODFILE CHECKSUM: 676e7ca8fdf63b23087dc6ad67785177b5098b33
 
 COCOAPODS: 1.16.2
