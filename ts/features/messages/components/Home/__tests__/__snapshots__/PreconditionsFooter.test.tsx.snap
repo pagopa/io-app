@@ -435,6 +435,10 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -446,10 +450,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -580,6 +580,8 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
@@ -590,8 +592,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }
@@ -1446,6 +1446,10 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -1457,10 +1461,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1591,6 +1591,8 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
@@ -1601,8 +1603,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }

@@ -566,6 +566,10 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -577,10 +581,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
