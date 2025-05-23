@@ -26,7 +26,7 @@ const mapClaims = (claims: Array<ClaimDisplayFormat>) =>
     const displayValue = getClaimDisplayValue(c);
     return {
       id: c.id,
-      title: Array.isArray(displayValue)
+      value: Array.isArray(displayValue)
         ? displayValue.map(getSafeText).join(", ")
         : getSafeText(displayValue),
       description: c.label

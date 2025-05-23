@@ -497,6 +497,10 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -508,10 +512,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -643,6 +643,8 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -653,8 +655,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
