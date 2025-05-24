@@ -85,6 +85,7 @@ const OnboardingShareDataScreen = (): ReactElement => {
       }}
       description={I18n.t("profile.main.privacy.shareData.screen.description")}
       actions={actions}
+      testID="OnboardingShareDataScreen"
     >
       <SafeAreaView style={{ flex: 1 }}>
         <ContentWrapper style={{ flexGrow: 1 }}>

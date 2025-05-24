@@ -108,7 +108,6 @@ describe("EmailInsertScreen", () => {
   it("should detect different email and show duplication error", async () => {
     const screen = renderComponent();
     fireEvent.changeText(screen.getByTestId("email-input"), "");
-    screen.debug();
     fireEvent.press(screen.getByText(I18n.t("global.buttons.continue")));
     // eslint-disable-next-line sonarjs/no-identical-functions
     await waitFor(() => {

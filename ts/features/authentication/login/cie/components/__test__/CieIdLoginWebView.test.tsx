@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { fireEvent, render } from "@testing-library/react-native";
+import { act, fireEvent, render } from "@testing-library/react-native";
 import { EmitterSubscription, Linking } from "react-native";
 import CieIdLoginWebView from "../CieIdLoginWebView";
 import * as loginHooks from "../../../../../lollipop/hooks/useLollipopLoginSource";
@@ -62,7 +62,7 @@ describe(CieIdLoginWebView, () => {
     jest.restoreAllMocks();
     jest.clearAllMocks();
   });
-  it("Should match the snapshot", () => {
+  it("Should match the snapshot", async () => {
     jest
       .spyOn(Linking, "addEventListener")
       // @ts-ignore
@@ -83,8 +83,10 @@ describe(CieIdLoginWebView, () => {
     const cancelButton = await findByTestId(
       "loadingSpinnerOverlayCancelButton"
     );
-    fireEvent.press(cancelButton);
 
+    await act(async () => {
+      fireEvent.press(cancelButton);
+    });
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
@@ -99,7 +101,7 @@ describe(CieIdLoginWebView, () => {
 
     expect(idpScreen).toBeTruthy();
   });
-  it("Should navigate to error screen", () => {
+  it("Should navigate to error screen", async () => {
     // @ts-ignore
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
@@ -110,14 +112,15 @@ describe(CieIdLoginWebView, () => {
 
     expect(idpScreen).toBeFalsy();
     const webView = getByTestId("cie-id-webview");
-
-    fireEvent(webView, "error", { nativeEvent: {} });
+    await act(() => {
+      fireEvent(webView, "error", { nativeEvent: {} });
+    });
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
     });
   });
-  it("Should trigger onHttpError and execute navigation to error screen", () => {
+  it("Should trigger onHttpError and execute navigation to error screen", async () => {
     // @ts-ignore
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
@@ -127,15 +130,19 @@ describe(CieIdLoginWebView, () => {
     const idpScreen = queryByTestId("idp-successful-authentication");
 
     expect(idpScreen).toBeFalsy();
-    const webView = getByTestId("cie-id-webview");
 
-    fireEvent(webView, "error", { nativeEvent: { statusCode: 401, url: [] } });
+    const webView = getByTestId("cie-id-webview");
+    await act(() => {
+      fireEvent(webView, "error", {
+        nativeEvent: { statusCode: 401, url: [] }
+      });
+    });
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
     });
   });
-  it("Should trigger onHttpError without navigating to the error screen", () => {
+  it("Should trigger onHttpError without navigating to the error screen", async () => {
     // @ts-ignore
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
@@ -146,14 +153,17 @@ describe(CieIdLoginWebView, () => {
 
     expect(idpScreen).toBeFalsy();
     const webView = getByTestId("cie-id-webview");
-
-    fireEvent(webView, "error", { nativeEvent: { statusCode: 403, url: [] } });
+    await act(() => {
+      fireEvent(webView, "error", {
+        nativeEvent: { statusCode: 403, url: [] }
+      });
+    });
     expect(mockReplace).toHaveBeenCalledTimes(0);
     expect(mockReplace).not.toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
     });
   });
-  it("Should trigger onHttpError and navigate to the error screen", () => {
+  it("Should trigger onHttpError and navigate to the error screen", async () => {
     // @ts-ignore
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
@@ -164,16 +174,17 @@ describe(CieIdLoginWebView, () => {
 
     expect(idpScreen).toBeFalsy();
     const webView = getByTestId("cie-id-webview");
-
-    fireEvent(webView, "error", {
-      nativeEvent: { statusCode: 403, url: [API_PREFIX_URL] }
+    await act(() => {
+      fireEvent(webView, "error", {
+        nativeEvent: { statusCode: 403, url: [API_PREFIX_URL] }
+      });
     });
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
     });
   });
-  it("Should trigger an authentication error", () => {
+  it("Should trigger an authentication error", async () => {
     // @ts-ignore
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
@@ -184,9 +195,10 @@ describe(CieIdLoginWebView, () => {
 
     expect(idpScreen).toBeFalsy();
     const webView = getByTestId("cie-id-webview");
-
-    fireEvent(webView, "onShouldStartLoadWithRequest", {
-      url: `${API_PREFIX_URL}/error.html?errorCode=generic`
+    await act(() => {
+      fireEvent(webView, "onShouldStartLoadWithRequest", {
+        url: `${API_PREFIX_URL}/error.html?errorCode=generic`
+      });
     });
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
@@ -203,7 +215,7 @@ describe(CieIdLoginWebView, () => {
       }
     });
   });
-  it("Should execute the login", () => {
+  it("Should execute the login", async () => {
     // @ts-ignore
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
@@ -214,9 +226,10 @@ describe(CieIdLoginWebView, () => {
 
     expect(idpScreen).toBeFalsy();
     const webView = getByTestId("cie-id-webview");
-
-    fireEvent(webView, "onShouldStartLoadWithRequest", {
-      url: `${API_PREFIX_URL}/profile.html?token=my-secret-token`
+    await act(() => {
+      fireEvent(webView, "onShouldStartLoadWithRequest", {
+        url: `${API_PREFIX_URL}/profile.html?token=my-secret-token`
+      });
     });
     expect(mockReplace).toHaveBeenCalledTimes(0);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
@@ -224,7 +237,7 @@ describe(CieIdLoginWebView, () => {
       loginSuccess({ idp: "cieid", token: "my-secret-token" as SessionToken })
     );
   });
-  it("Shouldn't execute the login because of missing token", () => {
+  it("Shouldn't execute the login because of missing token", async () => {
     // @ts-ignore
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
@@ -235,9 +248,10 @@ describe(CieIdLoginWebView, () => {
 
     expect(idpScreen).toBeFalsy();
     const webView = getByTestId("cie-id-webview");
-
-    fireEvent(webView, "onShouldStartLoadWithRequest", {
-      url: `${API_PREFIX_URL}/profile.html?token=`
+    await act(() => {
+      fireEvent(webView, "onShouldStartLoadWithRequest", {
+        url: `${API_PREFIX_URL}/profile.html?token=`
+      });
     });
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
