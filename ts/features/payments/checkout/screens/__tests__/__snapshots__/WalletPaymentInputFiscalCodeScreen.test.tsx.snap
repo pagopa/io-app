@@ -608,6 +608,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                 inputAccessoryViewID="fiscalCodeInputAccessoryView"
                                 inputMode="numeric"
                                 keyboardType="number-pad"
+                                maxFontSizeMultiplier={1.5}
                                 maxLength={11}
                                 onBlur={[Function]}
                                 onChangeText={[Function]}
@@ -660,6 +661,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                               >
                                 <Text
                                   accessible={false}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   onLayout={[Function]}
                                   style={

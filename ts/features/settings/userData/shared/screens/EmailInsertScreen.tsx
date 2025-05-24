@@ -19,6 +19,7 @@ import { pipe } from "fp-ts/lib/function";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert,
+  Dimensions,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -28,6 +29,7 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import validator from "validator";
+import { isDisplayZoomed } from "react-native-device-info";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -68,11 +70,23 @@ export type EmailInsertScreenNavigationParams = Readonly<{
 
 const EMPTY_EMAIL = "";
 
+const MIN_HEIGHT_TO_ENABLE_FULL_FONT_SCALING = 820;
+const screenHeight = Dimensions.get("screen").height;
+
 /**
- * Since we have some users with a very large font size, that can't enter or use
+ * Since we have some iOS users with a very large font size, that can't enter or use
  * this screen, we need to set a maximum font size multiplier.
  */
-const MAX_FONT_SIZE_MULTIPLIER = 1.2;
+const MAX_FONT_SIZE_MULTIPLIER = Platform.select({
+  ios: screenHeight >= MIN_HEIGHT_TO_ENABLE_FULL_FONT_SCALING ? undefined : 1.2,
+  android: undefined
+});
+
+/**
+ * Since we have some iOS users with a very large font size, that can't enter or use
+ * this screen, we use this information to disable autofocus on the input field.
+ */
+const isScreenZoomed = isDisplayZoomed();
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.insert.help.title",
@@ -321,6 +335,8 @@ const EmailInsertScreen = () => {
     acknowledgeOnEmailValidated.value === false &&
     isOnboarding;
 
+  const useAutoFocus = !isScreenZoomed && !userNavigateToEmailValidationScreen;
+
   // If we navigate to this screen with acknowledgeOnEmailValidated set to false,
   // let the user navigate the email validation screen
   useEffect(() => {
@@ -468,7 +484,7 @@ const EmailInsertScreen = () => {
             </Body>
             <VSpacer size={16} />
             <TextInputValidation
-              autoFocus={!userNavigateToEmailValidationScreen}
+              autoFocus={useAutoFocus}
               testID="email-input"
               textInputProps={{
                 autoCorrect: false,
@@ -503,8 +519,8 @@ const EmailInsertScreen = () => {
               onPress={continueOnPress}
               testID="continue-button"
             />
-            <VSpacer size={16} />
           </ContentWrapper>
+          {Platform.OS === "android" && <VSpacer size={16} />}
         </KeyboardAvoidingView>
       </SafeAreaView>
     </LoadingSpinnerOverlay>

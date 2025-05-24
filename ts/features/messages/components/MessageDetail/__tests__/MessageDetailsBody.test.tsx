@@ -19,7 +19,8 @@ jest.mock("react-native-screenshot-prevent", () => ({}));
 
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: () => "2.0.0.0",
-  getVersion: () => "2.0.0.0"
+  getVersion: () => "2.0.0.0",
+  isDisplayZoomed: () => false
 }));
 
 const serviceId = "01JRAEYE4SKF5BEW41J9H9NWFM" as ServiceId;
