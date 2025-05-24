@@ -21,8 +21,8 @@ import {
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, { AnimatedRef } from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
 import { useScrollHeaderAnimation } from "../../hooks/useScrollHeaderAnimation";
 import {
   IOScrollView,
@@ -121,17 +121,9 @@ export const IOListView = <T,>({
     setActionBlockHeight(event.nativeEvent.layout.height);
   };
 
-  const insets = useSafeAreaInsets();
-  const needSafeAreaMargin = insets.bottom !== 0;
-
-  /* Check if the iPhone bottom handle is present.
-       If not, or if you don't need safe area insets,
-       add a default margin to prevent the button
-       from sticking to the bottom. */
-  const bottomMargin =
-    !needSafeAreaMargin || excludeSafeAreaMargins
-      ? IOVisualCostants.appMarginDefault
-      : insets.bottom;
+  const { bottomMargin, needSafeAreaMargin } = useFooterActionsMargin(
+    excludeSafeAreaMargins
+  );
 
   /* GENERATE EASING GRADIENT
        Background color should be app main background

@@ -1,6 +1,7 @@
 /* eslint-disable functional/immutable-data */
 import {
   HeaderSecondLevel,
+  hexToRgba,
   IOButton,
   IOButtonBlockSpecificProps,
   IOButtonLinkSpecificProps,
@@ -8,9 +9,8 @@ import {
   IOSpacer,
   IOSpacingScale,
   IOVisualCostants,
-  VSpacer,
-  hexToRgba,
-  useIOTheme
+  useIOTheme,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 
@@ -19,20 +19,10 @@ import {
   Fragment,
   PropsWithChildren,
   useLayoutEffect,
-  useMemo,
-  useState
+  useMemo
 } from "react";
 
-import {
-  ColorValue,
-  LayoutChangeEvent,
-  LayoutRectangle,
-  RefreshControl,
-  RefreshControlProps,
-  StyleSheet,
-  View,
-  ViewStyle
-} from "react-native";
+import { ColorValue, StyleSheet, View } from "react-native";
 import { easeGradient } from "react-native-easing-gradient";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, {
@@ -40,62 +30,35 @@ import Animated, {
   Easing,
   Extrapolation,
   interpolate,
+  SharedValue,
   useAnimatedScrollHandler,
   useAnimatedStyle,
-  useSharedValue
+  useSharedValue,
+  withTiming
 } from "react-native-reanimated";
+import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
 import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
 import { WithTestID } from "../../types/WithTestID";
-import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
 
 type ButtonBlockProps = Omit<
   IOButtonBlockSpecificProps,
-  "fullWidth" | "variant"
+  "fullWidth" | "variant" | "color"
 >;
 
 type ButtonLinkProps = Omit<IOButtonLinkSpecificProps, "color" | "variant">;
 
-export type IOScrollViewActions =
-  | {
-      type: "SingleButton";
-      primary: ButtonBlockProps;
-      secondary?: never;
-      tertiary?: never;
-    }
-  | {
-      type: "TwoButtons";
-      primary: ButtonBlockProps;
-      secondary: ButtonLinkProps;
-      tertiary?: never;
-    }
-  | {
-      type: "ThreeButtons";
-      primary: ButtonBlockProps;
-      secondary: ButtonBlockProps;
-      tertiary: ButtonLinkProps;
-    };
+export type IOScrollViewRevealActions = {
+  primary: ButtonBlockProps;
+  anchor: ButtonLinkProps;
+};
 
-type IOSCrollViewHeaderScrollValues = ComponentProps<
-  typeof HeaderSecondLevel
->["scrollValues"];
-
-type IOScrollView = WithTestID<
+type IOScrollViewWithRevealProps = WithTestID<
   PropsWithChildren<{
     headerConfig?: ComponentProps<typeof HeaderSecondLevel>;
-    actions?: IOScrollViewActions;
+    actions: IOScrollViewRevealActions;
     debugMode?: boolean;
-    animatedRef?: AnimatedRef<Animated.ScrollView>;
-    snapOffset?: number;
-    /* Don't include safe area insets */
-    excludeSafeAreaMargins?: boolean;
-    /* Don't include end content margin */
-    excludeEndContentMargin?: boolean;
-    /* Include page margins */
-    includeContentMargins?: boolean;
-    /* Center content in iOS without inertial scrolling */
-    centerContent?: boolean;
-    refreshControlProps?: RefreshControlProps;
-    contentContainerStyle?: ViewStyle;
+    animatedRef: AnimatedRef<Animated.ScrollView>;
+    hideAnchorAction: SharedValue<boolean>;
   }>
 >;
 
@@ -103,16 +66,13 @@ type IOScrollView = WithTestID<
    the gradient opaciy transition */
 const gradientOpacityScrollTrigger = 0.85;
 /* Extended gradient area above the actions */
-const gradientSafeAreaHeight: IOSpacingScale = 96;
-/* End content margin before the actions */
-const contentEndMargin: IOSpacingScale = 32;
-/* Margin between solid variant and outline variant */
-const spaceBetweenActions: IOSpacer = 16;
+const gradientSafeAreaHeight: number = 80;
 /* Margin between solid variant and link variant */
 const spaceBetweenActionAndLink: IOSpacer = 16;
 /* Extra bottom margin for iPhone bottom handle because
    Link variant doesn't have a fixed height */
 const extraSafeAreaMargin: IOSpacingScale = 8;
+const anchorLinkTransitionDuration: number = 600; // in ms
 
 const styles = StyleSheet.create({
   gradientBottomActions: {
@@ -125,15 +85,10 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject
   },
   buttonContainer: {
+    position: "relative",
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     width: "100%",
     flexShrink: 0
-  },
-  centerContentWrapper: {
-    flexGrow: 1,
-    alignItems: "stretch",
-    justifyContent: "center",
-    alignContent: "center"
   }
 });
 
@@ -152,21 +107,15 @@ const styles = StyleSheet.create({
  * @param {boolean} [includeContentMargins=true] Include horizontal screen margins
  * @param {boolean} [debugMode=false] Enable debug mode. Only for testing purposes
  */
-export const IOScrollView = ({
+export const IOScrollViewWithReveal = ({
   headerConfig,
   children,
   actions,
-  snapOffset,
-  excludeSafeAreaMargins = false,
-  excludeEndContentMargin = false,
-  includeContentMargins = true,
   debugMode = false,
   animatedRef,
-  centerContent,
-  refreshControlProps,
-  contentContainerStyle,
+  hideAnchorAction,
   testID
-}: IOScrollView) => {
+}: IOScrollViewWithRevealProps) => {
   const alertProps = useStatusAlertProps();
   const theme = useIOTheme();
 
@@ -179,40 +128,32 @@ export const IOScrollView = ({
   const scrollPositionPercentage =
     useSharedValue(0); /* Scroll position (Relative) */
 
-  /* Total height of actions */
-  const [actionBlockHeight, setActionBlockHeight] =
-    useState<LayoutRectangle["height"]>(0);
+  /* We need a fixed height, because when the anchor action is hidden,
+    there's a layout shift in the button container */
+  const actionBlockHeight: number = 100;
 
-  const getActionBlockHeight = (event: LayoutChangeEvent) => {
-    setActionBlockHeight(event.nativeEvent.layout.height);
-  };
+  const { bottomMargin, needSafeAreaMargin } = useFooterActionsMargin();
 
-  const { bottomMargin, needSafeAreaMargin } = useFooterActionsMargin(
-    excludeSafeAreaMargins
-  );
-
-  /* GENERATE EASING GRADIENT
-     Background color should be app main background
-     (both light and dark themes) */
-  const APP_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
+  /* GENERATE EASING GRADIENT */
+  const APP_BG_COLOR: ColorValue = IOColors[theme["appBackground-accent"]];
 
   const { colors, locations } = easeGradient({
     colorStops: {
       0: { color: hexToRgba(APP_BG_COLOR, 0) },
       1: { color: APP_BG_COLOR }
     },
-    easing: Easing.ease,
+    easing: Easing.out(Easing.ease),
     extraColorStopsPerTransition: 20
   });
 
   /* When the secondary action is visible, add extra margin
      to avoid little space from iPhone bottom handle */
   const extraBottomMargin =
-    actions?.secondary && needSafeAreaMargin ? extraSafeAreaMargin : 0;
+    actions?.anchor && needSafeAreaMargin ? extraSafeAreaMargin : 0;
 
   /* Safe background block. Cover at least 85% of the space
      to avoid glitchy elements underneath */
-  const safeBackgroundBlockHeight = (bottomMargin + actionBlockHeight) * 0.85;
+  const safeBackgroundBlockHeight = bottomMargin + actionBlockHeight * 0.5;
 
   /* Total height of "Actions + Gradient" area */
   const gradientAreaHeight =
@@ -220,8 +161,7 @@ export const IOScrollView = ({
 
   /* Height of the safe bottom area, applied to the ScrollView:
      Actions + Content end margin */
-  const safeBottomAreaHeight =
-    bottomMargin + actionBlockHeight + contentEndMargin;
+  const safeBottomAreaHeight = bottomMargin + actionBlockHeight;
 
   const handleScroll = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {
@@ -254,34 +194,39 @@ export const IOScrollView = ({
      `useLayoutEffect` hook */
 
   useLayoutEffect(() => {
-    const scrollValues: IOSCrollViewHeaderScrollValues = {
-      contentOffsetY: scrollPositionAbsolute,
-      triggerOffset: snapOffset || 0
-    };
-
     if (headerConfig) {
       navigation.setOptions({
         header: () => (
           <HeaderSecondLevel
             {...headerConfig}
             ignoreSafeAreaMargin={ignoreSafeAreaMargin}
-            scrollValues={scrollValues}
           />
         ),
         headerTransparent: headerConfig.transparent
       });
     }
-  }, [
-    headerConfig,
-    navigation,
-    scrollPositionAbsolute,
-    snapOffset,
-    ignoreSafeAreaMargin
-  ]);
+  }, [headerConfig, navigation, scrollPositionAbsolute, ignoreSafeAreaMargin]);
 
-  const RefreshControlComponent = refreshControlProps ? (
-    <RefreshControl {...refreshControlProps} />
-  ) : undefined;
+  const anchorLinkHeight = useSharedValue(0);
+
+  const anchorLinkAnimatedStyle = useAnimatedStyle(() => {
+    const transitionConfig = {
+      duration: anchorLinkTransitionDuration,
+      easing: Easing.inOut(Easing.exp)
+    };
+
+    return {
+      opacity: withTiming(hideAnchorAction.value ? 0 : 1, transitionConfig),
+      transform: [
+        {
+          translateY: withTiming(
+            hideAnchorAction.value ? anchorLinkHeight.value : 0,
+            transitionConfig
+          )
+        }
+      ]
+    };
+  });
 
   return (
     <Fragment>
@@ -290,30 +235,13 @@ export const IOScrollView = ({
         testID={testID}
         onScroll={handleScroll}
         scrollEventThrottle={8}
-        snapToOffsets={
-          // If there is a refresh control, don't snap to offsets
-          // This is a react-native bug: https://github.com/facebook/react-native/issues/27324
-          RefreshControlComponent ? undefined : [0, snapOffset || 0]
-        }
         snapToEnd={false}
         decelerationRate="normal"
-        refreshControl={RefreshControlComponent}
-        centerContent={centerContent}
         contentContainerStyle={[
           {
-            paddingBottom: excludeEndContentMargin
-              ? 0
-              : actions
-              ? safeBottomAreaHeight
-              : bottomMargin + contentEndMargin,
-            paddingHorizontal: includeContentMargins
-              ? IOVisualCostants.appMarginDefault
-              : 0,
-            ...contentContainerStyle
-          },
-          /* Apply the same logic used in the
-          `OperationResultScreenContent` component */
-          centerContent ? styles.centerContentWrapper : {}
+            paddingBottom: actions ? safeBottomAreaHeight : bottomMargin,
+            flexGrow: 1
+          }
         ]}
       >
         {children}
@@ -369,64 +297,28 @@ export const IOScrollView = ({
               }}
             />
           </Animated.View>
-          <View
-            style={styles.buttonContainer}
-            onLayout={getActionBlockHeight}
-            pointerEvents="box-none"
-          >
-            {renderActionButtons(actions, extraBottomMargin)}
+          <View style={styles.buttonContainer} pointerEvents="box-none">
+            <Animated.View
+              onLayout={event => {
+                anchorLinkHeight.value = event.nativeEvent.layout.height;
+              }}
+              style={[{ alignSelf: "center" }, anchorLinkAnimatedStyle]}
+            >
+              <IOButton variant="link" color="contrast" {...actions.anchor} />
+              <VSpacer size={spaceBetweenActionAndLink} />
+            </Animated.View>
+
+            <View style={{ marginBottom: extraBottomMargin }}>
+              <IOButton
+                variant="solid"
+                color="contrast"
+                fullWidth
+                {...actions.primary}
+              />
+            </View>
           </View>
         </View>
       )}
     </Fragment>
-  );
-};
-
-export const renderActionButtons = (
-  actions: IOScrollViewActions,
-  extraBottomMargin: number
-) => {
-  const {
-    type,
-    primary: primaryAction,
-    secondary: secondaryAction,
-    tertiary: tertiaryAction
-  } = actions;
-
-  return (
-    <>
-      {primaryAction && (
-        <IOButton variant="solid" fullWidth {...primaryAction} />
-      )}
-
-      {type === "TwoButtons" && (
-        <View
-          style={{
-            alignSelf: "center",
-            marginBottom: extraBottomMargin
-          }}
-        >
-          <VSpacer size={spaceBetweenActionAndLink} />
-          <IOButton variant="link" color="primary" {...secondaryAction} />
-        </View>
-      )}
-
-      {type === "ThreeButtons" && (
-        <Fragment>
-          <VSpacer size={spaceBetweenActions} />
-          <IOButton variant="outline" color="primary" {...secondaryAction} />
-
-          <View
-            style={{
-              alignSelf: "center",
-              marginBottom: extraBottomMargin
-            }}
-          >
-            <VSpacer size={spaceBetweenActionAndLink} />
-            <IOButton variant="link" color="primary" {...tertiaryAction} />
-          </View>
-        </Fragment>
-      )}
-    </>
   );
 };
