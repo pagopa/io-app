@@ -12,17 +12,22 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
+import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
 type Props = {
   credential: StoredCredential;
+  isL3Credential: boolean;
 };
 
 /**
  * This component renders the credential card in the presentation screen.
- * If the credential supports the skeumorphic card, it also renders it with the flip button.
+ * If the credential supports the skeumorphic card, it also renders it with the flip button and If L3 is enabled, it shows the badge.
  */
-const ItwPresentationCredentialCard = ({ credential }: Props) => {
+const ItwPresentationCredentialCard = ({
+  credential,
+  isL3Credential
+}: Props) => {
   const navigation = useIONavigation();
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -48,7 +53,8 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   };
 
   const { backgroundColor } = getThemeColorByCredentialType(
-    credential.credentialType
+    credential.credentialType,
+    isL3Credential
   );
 
   return (
@@ -64,10 +70,15 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
           />
         </FlipGestureDetector>
       </CardContainer>
-      <ItwPresentationCredentialCardFlipButton
-        isFlipped={isFlipped}
-        handleOnPress={handleFlipButtonPress}
-      />
+      <View
+        style={isL3Credential ? styles.horizontalLayout : styles.centeredLayout}
+      >
+        {isL3Credential && <ItwBadge />}
+        <ItwPresentationCredentialCardFlipButton
+          isFlipped={isFlipped}
+          handleOnPress={handleFlipButtonPress}
+        />
+      </View>
     </VStack>
   );
 };
@@ -101,6 +112,16 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     zIndex: -1
+  },
+  horizontalLayout: {
+    marginTop: 10,
+    width: "88%",
+    flexDirection: "row",
+    alignSelf: "center",
+    justifyContent: "space-between"
+  },
+  centeredLayout: {
+    alignSelf: "center"
   }
 });
 

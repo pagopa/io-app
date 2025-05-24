@@ -34,7 +34,6 @@ import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase.tsx";
-import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
 import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus.tsx";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
@@ -42,9 +41,13 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
 import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
+import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
+import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
+  // Used for viewing credential detail from the Playground
+  isL3Enabled?: boolean;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -57,7 +60,7 @@ type Props = IOStackNavigationRouteProps<
  */
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
-  const { credentialType } = route.params;
+  const { credentialType, isL3Enabled } = route.params;
   const credentialOption = useIOSelector(
     itwCredentialByTypeSelector(credentialType)
   );
@@ -84,22 +87,28 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   }
 
   return (
-    <ItwPresentationCredentialDetail credential={credentialOption.value} />
+    <ItwPresentationCredentialDetail
+      credential={credentialOption.value}
+      isL3Enabled={isL3Enabled}
+    />
   );
 };
 
 type ItwPresentationCredentialDetailProps = {
   credential: StoredCredential;
+  isL3Enabled?: boolean;
 };
 
 /**
  * Component that renders the credential detail content.
  */
 const ItwPresentationCredentialDetail = ({
-  credential
+  credential,
+  isL3Enabled
 }: ItwPresentationCredentialDetailProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+  const isL3Credential = isL3Enabled ?? isItwCredential(credential.credential);
 
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
@@ -156,25 +165,39 @@ const ItwPresentationCredentialDetail = ({
     );
   }
 
-  const ctaProps = getCtaProps(credential, navigation);
+  const ctaProps = getCtaProps(
+    credential,
+    navigation,
+    handleTrustmarkPress,
+    isL3Credential
+  );
 
   return (
     <ItwPresentationDetailsScreenBase
       credential={credential}
       ctaProps={ctaProps}
+      isL3Credential={isL3Credential}
     >
-      <ItwPresentationDetailsHeader credential={credential} />
+      <ItwPresentationDetailsHeader
+        credential={credential}
+        isL3Credential={isL3Credential}
+      />
       <VSpacer size={24} />
       <ContentWrapper>
         <VStack space={24}>
           <ItwPresentationAdditionalInfoSection credential={credential} />
           <ItwPresentationCredentialStatusAlert credential={credential} />
-          <ItwPresentationCredentialInfoAlert credential={credential} />
-          <ItwPresentationClaimsSection credential={credential} />
-          <ItwCredentialTrustmark
+          <ItwPresentationCredentialInfoAlert
             credential={credential}
-            onPress={handleTrustmarkPress}
+            isL3Credential={isL3Credential}
           />
+          <ItwPresentationClaimsSection credential={credential} />
+          {!isL3Credential && (
+            <ItwCredentialTrustmark
+              credential={credential}
+              onPress={handleTrustmarkPress}
+            />
+          )}
           <ItwPresentationDetailsFooter credential={credential} />
         </VStack>
       </ContentWrapper>
@@ -184,29 +207,40 @@ const ItwPresentationCredentialDetail = ({
 
 const getCtaProps = (
   credential: StoredCredential,
-  navigation: ReturnType<typeof useIONavigation>
+  navigation: ReturnType<typeof useIONavigation>,
+  trustmarkPressHandler: () => void,
+  isL3Credential: boolean
 ): CredentialCtaProps | undefined => {
   const { parsedCredential } = credential;
+  const credentialType = credential.credentialType;
+  const contentClaim = parsedCredential[WellKnownClaim.content];
 
-  const onPress = () => {
-    if (CREDENTIALS_MAP[credential.credentialType] === "ITW_TS_V2") {
-      trackWalletCredentialShowFAC_SIMILE();
-    }
-
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
-      params: {
-        attachmentClaim: parsedCredential[WellKnownClaim.content]
-      }
-    });
-  };
+  if (credentialType === CredentialType.DRIVING_LICENSE && isL3Credential) {
+    return {
+      label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
+      icon: "qrCode",
+      iconPosition: "end",
+      onPress: trustmarkPressHandler
+    };
+  }
 
   // If the "content" claim exists, return a CTA to view and download it.
-  if (parsedCredential[WellKnownClaim.content]) {
+  if (contentClaim) {
     return {
       label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
       icon: "docPaymentTitle",
-      onPress
+      onPress: () => {
+        if (CREDENTIALS_MAP[credentialType] === "ITW_TS_V2") {
+          trackWalletCredentialShowFAC_SIMILE();
+        }
+
+        navigation.navigate(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
+          params: {
+            attachmentClaim: contentClaim
+          }
+        });
+      }
     };
   }
 

@@ -25,6 +25,7 @@ export type CredentialCtaProps = Omit<ButtonSolidProps, "fullWidth">;
 
 export type ItwPresentationDetailsScreenBaseProps = {
   credential: StoredCredential;
+  isL3Credential: boolean;
   children?: ReactNode;
   ctaProps?: CredentialCtaProps;
 };
@@ -37,6 +38,7 @@ const spaceBetweenActions: IOSpacer = 24;
 
 const ItwPresentationDetailsScreenBase = ({
   credential,
+  isL3Credential,
   children,
   ctaProps
 }: ItwPresentationDetailsScreenBaseProps) => {
@@ -64,7 +66,10 @@ const ItwPresentationDetailsScreenBase = ({
     [bottomMargin]
   );
 
-  const headerProps = getHeaderPropsByCredentialType(credential.credentialType);
+  const headerProps = getHeaderPropsByCredentialType(
+    credential.credentialType,
+    isL3Credential
+  );
 
   useHeaderSecondLevel({
     scrollValues: {
