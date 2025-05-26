@@ -103,11 +103,6 @@ export const ItwPresentationCredentialDetail = ({
   const dispatch = useIODispatch();
   const isL3Credential = isItwCredential(credential.credential);
 
-  console.log(
-    "Rendering ItwPresentationCredentialDetail with credential:",
-    credential
-  );
-
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
