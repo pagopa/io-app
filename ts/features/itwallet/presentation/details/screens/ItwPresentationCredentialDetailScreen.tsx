@@ -46,8 +46,6 @@ import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
-  // Used for viewing credential detail from the Playground
-  isL3Enabled?: boolean;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -60,7 +58,7 @@ type Props = IOStackNavigationRouteProps<
  */
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
-  const { credentialType, isL3Enabled } = route.params;
+  const { credentialType } = route.params;
   const credentialOption = useIOSelector(
     itwCredentialByTypeSelector(credentialType)
   );
@@ -87,28 +85,28 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   }
 
   return (
-    <ItwPresentationCredentialDetail
-      credential={credentialOption.value}
-      isL3Enabled={isL3Enabled}
-    />
+    <ItwPresentationCredentialDetail credential={credentialOption.value} />
   );
 };
 
 type ItwPresentationCredentialDetailProps = {
   credential: StoredCredential;
-  isL3Enabled?: boolean;
 };
 
 /**
  * Component that renders the credential detail content.
  */
-const ItwPresentationCredentialDetail = ({
-  credential,
-  isL3Enabled
+export const ItwPresentationCredentialDetail = ({
+  credential
 }: ItwPresentationCredentialDetailProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const isL3Credential = isL3Enabled ?? isItwCredential(credential.credential);
+  const isL3Credential = isItwCredential(credential.credential);
+
+  console.log(
+    "Rendering ItwPresentationCredentialDetail with credential:",
+    credential
+  );
 
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
@@ -176,21 +174,14 @@ const ItwPresentationCredentialDetail = ({
     <ItwPresentationDetailsScreenBase
       credential={credential}
       ctaProps={ctaProps}
-      isL3Credential={isL3Credential}
     >
-      <ItwPresentationDetailsHeader
-        credential={credential}
-        isL3Credential={isL3Credential}
-      />
+      <ItwPresentationDetailsHeader credential={credential} />
       <VSpacer size={24} />
       <ContentWrapper>
         <VStack space={24}>
           <ItwPresentationAdditionalInfoSection credential={credential} />
           <ItwPresentationCredentialStatusAlert credential={credential} />
-          <ItwPresentationCredentialInfoAlert
-            credential={credential}
-            isL3Credential={isL3Credential}
-          />
+          <ItwPresentationCredentialInfoAlert credential={credential} />
           <ItwPresentationClaimsSection credential={credential} />
           {!isL3Credential && (
             <ItwCredentialTrustmark

@@ -13,13 +13,11 @@ import {
 } from "../../../../features/itwallet/common/store/selectors/preferences";
 import { itwSetL3LocallyEnabled } from "../../../../features/itwallet/common/store/actions/preferences";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import {ItwL3CredentialSection} from "./ItwL3CredentialSection.tsx";
 
 export const ItwL3Section = () => {
   const dispatch = useIODispatch();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const navigation = useIONavigation();
 
   const isL3LocallyEnabled = useIOSelector(itwIsL3LocallyEnabledSelector);
   const isFiscalCodeWhitelisted = useIOSelector(
@@ -32,16 +30,6 @@ export const ItwL3Section = () => {
       isL3: true
     });
   }, [machineRef]);
-
-  const handleCredentialPress = (credentialType: string) => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
-      params: {
-        credentialType,
-        isL3Enabled: true
-      }
-    });
-  };
 
   return (
     <View>
@@ -62,16 +50,7 @@ export const ItwL3Section = () => {
         description="Navigate to the Discovery L3 info screen"
         onPress={navigateToTosL3Screen}
       />
-      <ListItemNav
-        value="Driving License L3"
-        description="Navigate to the Driving License detail screen"
-        onPress={() => handleCredentialPress("MDL")}
-      />
-      <ListItemNav
-        value="EU Health Insurance Card L3"
-        description="Navigate to the EHIC detail screen"
-        onPress={() => handleCredentialPress("EuropeanHealthInsuranceCard")}
-      />
+      <ItwL3CredentialSection/>
     </View>
   );
 };

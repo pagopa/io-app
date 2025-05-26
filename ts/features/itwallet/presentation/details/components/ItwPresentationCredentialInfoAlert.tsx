@@ -8,10 +8,10 @@ import {
   ItwCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils.ts";
+import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
 
 type Props = {
   credential: StoredCredential;
-  isL3Credential: boolean;
 };
 
 const validStates: Array<ItwCredentialStatus | undefined> = [
@@ -23,15 +23,13 @@ const validStates: Array<ItwCredentialStatus | undefined> = [
 /**
  * Informative alert that is only visible when a credential is in a valid state.
  */
-const ItwPresentationCredentialInfoAlert = ({
-  credential,
-  isL3Credential
-}: Props) => {
+const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
   const { credentialType } = credential;
 
   const { status } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
+  const isL3Credential = isItwCredential(credential.credential);
 
   if (!validStates.includes(status)) {
     return null;

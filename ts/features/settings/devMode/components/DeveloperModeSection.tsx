@@ -387,7 +387,7 @@ const PlaygroundsSection = () => {
       value: "Documenti su IO",
       onPress: () =>
         navigation.navigate(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.PLAYGROUNDS
+          screen: ITW_ROUTES.PLAYGROUNDS.MAIN
         })
     },
     {
