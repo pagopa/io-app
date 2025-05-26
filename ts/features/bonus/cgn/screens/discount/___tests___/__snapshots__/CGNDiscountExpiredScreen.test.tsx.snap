@@ -651,6 +651,10 @@ exports[`CGNDiscountExpiredScreen should render correctly 1`] = `
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -662,10 +666,6 @@ exports[`CGNDiscountExpiredScreen should render correctly 1`] = `
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >

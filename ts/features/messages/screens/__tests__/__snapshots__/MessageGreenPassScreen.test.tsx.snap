@@ -589,6 +589,10 @@ exports[`MessageGreenPassScreen Should match snapshost 1`] = `
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -600,10 +604,6 @@ exports[`MessageGreenPassScreen Should match snapshost 1`] = `
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >

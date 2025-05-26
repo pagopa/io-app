@@ -4,7 +4,6 @@ import { useCallback } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
-import { ItwOfflineSection } from "../components/ItwOfflineSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
 import { ItwL3Section } from "../components/ItwL3Section";
 import { ItwBannerSection } from "../components/ItwBannerSection";
@@ -32,7 +31,6 @@ const ItwPlayground = () => {
     <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
       <ContentWrapper>
         <VStack space={8}>
-          <ItwOfflineSection />
           <ItwL3Section />
           <ItwLifecycleSection />
           <ItwSkeumorphicCredentialSection />
