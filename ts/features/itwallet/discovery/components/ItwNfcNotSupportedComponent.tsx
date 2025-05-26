@@ -13,7 +13,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { openWebUrl } from "../../../../utils/url";
 
-const NFC_NOT_SUPPORTED_HELP_URL =
+const NFC_NOT_SUPPORTED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/35541811236113-Cosa-serve-per-usare-IT-Wallet";
 
 export const ItwNfcNotSupportedComponent = () => {
@@ -27,7 +27,7 @@ export const ItwNfcNotSupportedComponent = () => {
   const goBack = useCallback(() => navigation.goBack(), [navigation]);
 
   const handleOpenFaq = () =>
-    openWebUrl(NFC_NOT_SUPPORTED_HELP_URL, () =>
+    openWebUrl(NFC_NOT_SUPPORTED_FAQ_URL, () =>
       IOToast.error(I18n.t("genericError"))
     );
 
