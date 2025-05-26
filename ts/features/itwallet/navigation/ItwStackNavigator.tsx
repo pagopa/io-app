@@ -49,6 +49,7 @@ import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { ItwIdentificationCieWarningScreen } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
+import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
 
 const Stack = createStackNavigator<ItwParamsList>();
 
@@ -234,7 +235,14 @@ const InnerNavigator = () => {
         component={ItwPresentationCredentialFiscalCodeModal}
       />
       {/* PLAYGROUNDS */}
-      <Stack.Screen name={ITW_ROUTES.PLAYGROUNDS} component={ItwPlayground} />
+      <Stack.Screen
+        name={ITW_ROUTES.PLAYGROUNDS.MAIN}
+        component={ItwPlayground}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.PLAYGROUNDS.CREDENTIAL_DETAIL}
+        component={ItwL3CredentialDetailScreen}
+      />
       {/* LIFECYCLE */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}

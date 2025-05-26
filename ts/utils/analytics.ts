@@ -235,7 +235,7 @@ export function trackHelpCenterCtaTapped(
  *
  * @param screen - The screen where the user tried to perform the action
  */
-export const trackOfflineActionNotAllowed = (screen: { screen: string }) => {
+export const trackOfflineActionNotAllowed = (screen: string) => {
   void mixpanelTrack(
     "OFFLINE_ACTION_NOT_ALLOWED",
     buildEventProperties("KO", "error", { screen })
@@ -245,12 +245,12 @@ export const trackOfflineActionNotAllowed = (screen: { screen: string }) => {
 /**
  * Track the event when the user tries to access a content that is not available offline
  *
- * @param screen - The screen where the user tried to access the content
+ * @param content - The screen where the user tried to access the content
  */
-export const trackContentNotAvailable = (screen: { screen: string }) => {
+export const trackContentNotAvailable = (content: string) => {
   void mixpanelTrack(
     "OFFLINE_CONTENT_NOT_AVAILABLE",
-    buildEventProperties("KO", "error", { screen })
+    buildEventProperties("KO", "error", { content })
   );
 };
 
