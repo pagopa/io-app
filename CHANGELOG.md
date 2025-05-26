@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0-rc.3](https://github.com/pagopa/io-app/compare/3.6.0-rc.2...3.6.0-rc.3) (2025-05-23)
+
+
+### Bug Fixes
+
+* [[IOPID-2953](https://pagopa.atlassian.net/browse/IOPID-2953)] Lollipop key generation tracking ([#7001](https://github.com/pagopa/io-app/issues/7001)) ([4b6226a](https://github.com/pagopa/io-app/commit/4b6226ac6212cb51cb82937a885f4e1091d09892))
+* **IT Wallet:** [[SIW-2366](https://pagopa.atlassian.net/browse/SIW-2366)] Display image claims in the presentation disclosure screen ([#7002](https://github.com/pagopa/io-app/issues/7002)) ([f2a237e](https://github.com/pagopa/io-app/commit/f2a237ecf1d0323c4f4abcbb7e451dd3a18349c7))
+
+
+### Chores
+
+* [[IOPLT-805](https://pagopa.atlassian.net/browse/IOPLT-805)] Add iOS and Android app icons for the canary release ([#6930](https://github.com/pagopa/io-app/issues/6930)) ([e21c056](https://github.com/pagopa/io-app/commit/e21c05659e3ed60aa3deaa9991691605d737bfa7))
+
+## [3.6.0-rc.2](https://github.com/pagopa/io-app/compare/3.6.0-rc.1...3.6.0-rc.2) (2025-05-22)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2347](https://pagopa.atlassian.net/browse/SIW-2347)] Enable attestation generation with fallback over TEE ([#6995](https://github.com/pagopa/io-app/issues/6995)) ([2e423e8](https://github.com/pagopa/io-app/commit/2e423e8165240743100b52eecae83e3ba398c365))
+* **IT Wallet:** [[SIW-2411](https://pagopa.atlassian.net/browse/SIW-2411)] Track banner and tap events in offline banner ([#7003](https://github.com/pagopa/io-app/issues/7003)) ([8851cb0](https://github.com/pagopa/io-app/commit/8851cb00e6d157782e2cf9d966f51543a1ebc839))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2424](https://pagopa.atlassian.net/browse/SIW-2424)] Remove banners within offline app ([#7000](https://github.com/pagopa/io-app/issues/7000)) ([bfd0288](https://github.com/pagopa/io-app/commit/bfd0288753b693bb1d6d021fcd6b4d18a49754e2))
+* **IT Wallet:** [[SIW-2439](https://pagopa.atlassian.net/browse/SIW-2439)] Add missing test for store migration (43→44) ([#7005](https://github.com/pagopa/io-app/issues/7005)) ([6a88faa](https://github.com/pagopa/io-app/commit/6a88faad6f736c6aaf77f4b0f933c1a226c00bc1))
+
 ## [3.6.0-rc.1](https://github.com/pagopa/io-app/compare/3.6.0-rc.0...3.6.0-rc.1) (2025-05-21)
 
 ## [3.6.0-rc.0](https://github.com/pagopa/io-app/compare/3.5.0-rc.7...3.6.0-rc.0) (2025-05-21)

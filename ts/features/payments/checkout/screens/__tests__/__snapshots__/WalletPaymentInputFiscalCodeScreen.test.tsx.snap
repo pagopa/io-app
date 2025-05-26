@@ -872,6 +872,10 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {
+                                      "backgroundColor": undefined,
+                                    },
                                     {
                                       "paddingHorizontal": 16,
                                     },
@@ -883,10 +887,6 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                       "height": 48,
                                     },
                                     {},
-                                    false,
-                                    {
-                                      "backgroundColor": undefined,
-                                    },
                                   ]
                                 }
                               >

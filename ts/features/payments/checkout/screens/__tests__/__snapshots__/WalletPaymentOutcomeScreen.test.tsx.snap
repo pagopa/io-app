@@ -492,6 +492,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -503,10 +507,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -2487,6 +2487,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -2498,10 +2502,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -4463,6 +4463,10 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -4474,10 +4478,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -6424,6 +6424,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -6435,10 +6439,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -8399,6 +8399,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -8410,10 +8414,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -10330,6 +10330,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -10341,10 +10345,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -10476,6 +10476,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -10486,8 +10488,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -12377,6 +12377,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -12388,10 +12392,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -12523,6 +12523,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -12533,8 +12535,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -14482,6 +14482,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -14493,10 +14497,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -16393,6 +16393,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -16404,10 +16408,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -18388,6 +18388,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -18399,10 +18403,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -20363,6 +20363,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -20374,10 +20378,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -22358,6 +22358,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -22369,10 +22373,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -24289,6 +24289,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -24300,10 +24304,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -24435,6 +24435,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -24445,8 +24447,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -26428,6 +26428,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -26439,10 +26443,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -28423,6 +28423,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -28434,10 +28438,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -30426,6 +30426,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -30437,10 +30441,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -32401,6 +32401,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -32412,10 +32416,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -34334,6 +34334,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -34345,10 +34349,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -34480,6 +34480,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -34490,8 +34492,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -36453,6 +36453,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -36464,10 +36468,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -38434,6 +38434,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -38445,10 +38449,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -38580,6 +38580,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -38590,8 +38592,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -40666,6 +40666,10 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -40677,10 +40681,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -40812,6 +40812,8 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -40822,8 +40824,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -42933,6 +42933,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -42944,10 +42948,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -44867,6 +44867,10 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -44878,10 +44882,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -45013,6 +45013,8 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -45023,8 +45025,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -47006,6 +47006,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -47017,10 +47021,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -47152,6 +47152,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -47162,8 +47164,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -49111,6 +49111,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -49122,10 +49126,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -51114,6 +51114,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -51125,10 +51129,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -53089,6 +53089,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -53100,10 +53104,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -55084,6 +55084,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -55095,10 +55099,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >

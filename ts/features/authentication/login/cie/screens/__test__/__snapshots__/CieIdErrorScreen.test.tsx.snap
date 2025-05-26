@@ -300,6 +300,10 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {
+                    "backgroundColor": undefined,
+                  },
                   {
                     "paddingHorizontal": 24,
                   },
@@ -311,10 +315,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "height": 48,
                   },
                   {},
-                  false,
-                  {
-                    "backgroundColor": undefined,
-                  },
                 ]
               }
             >
@@ -447,6 +447,8 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {},
                   {
                     "paddingHorizontal": 0,
                   },
@@ -457,8 +459,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "borderWidth": 0,
                     "height": undefined,
                   },
-                  {},
-                  false,
                   {},
                 ]
               }
@@ -825,6 +825,10 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {
+                    "backgroundColor": undefined,
+                  },
                   {
                     "paddingHorizontal": 24,
                   },
@@ -836,10 +840,6 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "height": 48,
                   },
                   {},
-                  false,
-                  {
-                    "backgroundColor": undefined,
-                  },
                 ]
               }
             >
@@ -972,6 +972,8 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {},
                   {
                     "paddingHorizontal": 0,
                   },
@@ -982,8 +984,6 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "borderWidth": 0,
                     "height": undefined,
                   },
-                  {},
-                  false,
                   {},
                 ]
               }
