@@ -45,6 +45,7 @@ export const ItwDiscoveryInfoScreen = ({
   useOnFirstRender(() => {
     if (!isL3) {
       machineRef.send({ type: "start", isL3: false });
+      return;
     }
 
     if (hasNfcFeature) {
