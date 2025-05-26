@@ -278,7 +278,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
 
   const renderTableRow = (data: Array<TableRow>) =>
     data.map((row, i) => (
-      <>
+      <View key={i}>
         <ListItemInfo
           key={row.testID}
           label={row.label}
@@ -286,7 +286,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
           testID={row.testID}
         />
         {i !== data.length - 1 && <Divider />}
-      </>
+      </View>
     ));
 
   const renderBeneficiaryDetailsContent = () => {
