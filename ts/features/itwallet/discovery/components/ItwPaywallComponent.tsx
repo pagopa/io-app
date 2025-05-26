@@ -13,16 +13,27 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { TxtLinkNode, TxtParagraphNode } from "@textlint/ast-node-types";
-import { useCallback, useState } from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import {
   Canvas,
   LinearGradient,
   RoundedRect,
   vec
 } from "@shopify/react-native-skia";
-import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { TxtLinkNode, TxtParagraphNode } from "@textlint/ast-node-types";
+import { useCallback, useRef, useState } from "react";
+import {
+  Alert,
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet,
+  View
+} from "react-native";
+import Animated, {
+  useAnimatedRef,
+  useDerivedValue,
+  useScrollViewOffset,
+  useSharedValue
+} from "react-native-reanimated";
 import ItwHero from "../../../../../img/features/itWallet/l3/itw_hero.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import {
@@ -30,13 +41,15 @@ import {
   handleOpenLink
 } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
+import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { IOScrollViewWithReveal } from "../../../../components/ui/IOScrollViewWithReveal";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { tosConfigSelector } from "../../../tos/store/selectors";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { itwGradientColors } from "../../common/utils/constants.ts";
+import { tosConfigSelector } from "../../../tos/store/selectors";
 
 const markdownRules = {
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
@@ -65,8 +78,44 @@ export type ItwPaywallComponentProps = {
   onContinuePress: () => void;
 };
 
+// Offset to avoid to scroll to the block without margins
+const scrollOffset: number = 12;
+// Percentage of the visible block after which the anchor link is hidden
+const intersectionRatio: number = 0.3;
+
 export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
+  const { tos_url } = useIOSelector(tosConfigSelector);
+
   const theme = useIOTheme();
+
+  const [productHighlightsLayout, setProductHighlightsLayout] = useState({
+    y: 0,
+    height: 0
+  });
+
+  const productHighlightsRef = useRef<View>(null);
+  const animatedRef = useAnimatedRef<Animated.ScrollView>();
+  const scrollPosition = useScrollViewOffset(animatedRef);
+  const hideAnchorLink = useSharedValue(false);
+
+  useDerivedValue(() => {
+    const threshold: number =
+      productHighlightsLayout.height * (1 - intersectionRatio);
+
+    if (productHighlightsLayout.y > 0) {
+      // eslint-disable-next-line functional/immutable-data
+      hideAnchorLink.value =
+        scrollPosition.value >= productHighlightsLayout.y - threshold;
+    }
+  });
+
+  const handleScrollToHighlights = useCallback(() => {
+    animatedRef.current?.scrollTo({
+      y: productHighlightsLayout.y - scrollOffset,
+      animated: true
+    });
+    setAccessibilityFocus(productHighlightsRef);
+  }, [animatedRef, productHighlightsLayout]);
 
   const backgroundColor = IOColors[theme["appBackground-accent"]];
 
@@ -79,10 +128,18 @@ export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
   });
 
   return (
-    <IOScrollView
-      includeContentMargins={false}
-      contentContainerStyle={{
-        flexGrow: 1
+    <IOScrollViewWithReveal
+      animatedRef={animatedRef}
+      hideAnchorAction={hideAnchorLink}
+      actions={{
+        anchor: {
+          label: "Scopri tutti i vantaggi",
+          onPress: handleScrollToHighlights
+        },
+        primary: {
+          label: "Ottieni IT Wallet",
+          onPress: () => Alert.alert("Ottieni IT Wallet")
+        }
       }}
     >
       <FocusAwareStatusBar
@@ -97,46 +154,49 @@ export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
           marginVertical: "-100%"
         }}
       >
-        <InnerComponent />
-      </ContentWrapper>
-    </IOScrollView>
-  );
-};
+        <VStack space={24}>
+          <View style={styles.cardContainer}>
+            <BackgroundGradient />
+            <View style={{ paddingBottom: 24 }}>
+              <View style={styles.logoContainer}>
+                <ItwHero width="100%" height="100%" />
+              </View>
+              <VStack space={16} style={{ alignItems: "center" }}>
+                <Badge
+                  variant="highlight"
+                  text={I18n.t("features.itWallet.discovery.paywall.badge")}
+                />
+                <H4 color="white" style={{ textAlign: "center" }}>
+                  {I18n.t("features.itWallet.discovery.paywall.description")}
+                </H4>
+              </VStack>
+              <VSpacer size={32} />
+              <FeatureHighlights />
+              <VSpacer size={24} />
 
-const InnerComponent = () => {
-  const { tos_url } = useIOSelector(tosConfigSelector);
-
-  return (
-    <VStack space={24}>
-      <View style={styles.cardContainer}>
-        <BackgroundGradient />
-        <View style={{ paddingBottom: 24 }}>
-          <View style={styles.logoContainer}>
-            <ItwHero width="100%" height="100%" />
+              <Divider />
+              <View
+                ref={productHighlightsRef}
+                onLayout={event => {
+                  setProductHighlightsLayout({
+                    y: event.nativeEvent.layout.y,
+                    height: event.nativeEvent.layout.height
+                  });
+                }}
+              >
+                <ProductHighlights />
+              </View>
+            </View>
           </View>
-          <VStack space={16} style={{ alignItems: "center" }}>
-            <Badge
-              variant="highlight"
-              text={I18n.t("features.itWallet.discovery.paywall.badge")}
-            />
-            <H4 color="white" style={{ textAlign: "center" }}>
-              {I18n.t("features.itWallet.discovery.paywall.description")}
-            </H4>
-          </VStack>
-          <VSpacer size={32} />
-          <FeatureHighlights />
-          <VSpacer size={24} />
-          <Divider />
-          <ProductHighlights />
-        </View>
-      </View>
-      <IOMarkdown
-        content={I18n.t("features.itWallet.discovery.paywall.tos", {
-          tos_url
-        })}
-        rules={markdownRules}
-      />
-    </VStack>
+          <IOMarkdown
+            content={I18n.t("features.itWallet.discovery.paywall.tos", {
+              tos_url
+            })}
+            rules={markdownRules}
+          />
+        </VStack>
+      </ContentWrapper>
+    </IOScrollViewWithReveal>
   );
 };
 
