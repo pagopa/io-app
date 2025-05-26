@@ -52,9 +52,7 @@ export const withOfflineFailureScreen =
 
     useEffect(() => {
       if (isOffline) {
-        trackContentNotAvailable({
-          screen: name
-        });
+        trackContentNotAvailable(name);
       }
     }, [name, isOffline]);
 
