@@ -29,7 +29,6 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import validator from "validator";
-import { isDisplayZoomed } from "react-native-device-info";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -61,6 +60,10 @@ import {
 } from "../../../../mailCheck/analytics";
 import { trackTosUserExit } from "../../../../authentication/common/analytics";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
+import {
+  COMPACT_SCREEN_MAX_HEIGHT,
+  isDisplayZoomed
+} from "../../../../../utils/device";
 
 export type EmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
@@ -70,7 +73,7 @@ export type EmailInsertScreenNavigationParams = Readonly<{
 
 const EMPTY_EMAIL = "";
 
-const MIN_HEIGHT_TO_ENABLE_FULL_FONT_SCALING = 820;
+const MIN_HEIGHT_TO_ENABLE_FULL_FONT_SCALING = COMPACT_SCREEN_MAX_HEIGHT;
 const screenHeight = Dimensions.get("screen").height;
 
 /**

@@ -33,6 +33,7 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import { CieIdLoginProps } from "../../cie/components/CieIdLoginWebView";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { COMPACT_SCREEN_MAX_HEIGHT } from "../../../../../utils/device";
 
 export enum Identifier {
   SPID = "SPID",
@@ -54,7 +55,7 @@ export type ChosenIdentifier =
       params: CieIdLoginProps;
     };
 
-export const MIN_HEIGHT_TO_SHOW_FULL_RENDER = 820;
+const MIN_HEIGHT_TO_SHOW_FULL_RENDER = COMPACT_SCREEN_MAX_HEIGHT;
 
 const authScreensMap = {
   CIE: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN,

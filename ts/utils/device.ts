@@ -6,6 +6,8 @@ import { constFalse } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 
+export const COMPACT_SCREEN_MAX_HEIGHT = 820;
+
 export const getDeviceId = (): string => DeviceInfo.getUniqueIdSync();
 
 export const getFontScale = (): Promise<number> => DeviceInfo.getFontScale();
@@ -28,3 +30,5 @@ export const getDeviceAppVersion = (): string =>
   });
 
 export const isTablet = (): boolean => DeviceInfo.isTablet();
+
+export const isDisplayZoomed = (): boolean => DeviceInfo.isDisplayZoomed();
