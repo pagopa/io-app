@@ -13,8 +13,8 @@ import { itwCredentialStatusSelector } from "../../../credentials/store/selector
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
-import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
+import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
 type Props = {
   credential: StoredCredential;

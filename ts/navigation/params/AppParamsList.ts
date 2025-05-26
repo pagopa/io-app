@@ -65,9 +65,9 @@ import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navi
 import { SettingsParamsList } from "../../features/settings/common/navigation/params/SettingsParamsList.ts";
 import { SETTINGS_ROUTES } from "../../features/settings/common/navigation/routes.ts";
 import { OnboardingParamsList } from "../../features/onboarding/navigation/params/OnboardingParamsList.ts";
+import { ITW_PLAYGROUND_ROUTES } from "../../features/itwallet/playgrounds/navigation/routes.ts";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
-import { ITW_PLAYGROUND_ROUTES } from "../../features/itwallet/playgrounds/navigation/routes.ts";
 
 export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;
