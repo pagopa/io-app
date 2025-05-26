@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0-rc.3](https://github.com/pagopa/io-app/compare/3.6.0-rc.2...3.6.0-rc.3) (2025-05-23)
+
+
+### Bug Fixes
+
+* [[IOPID-2953](https://pagopa.atlassian.net/browse/IOPID-2953)] Lollipop key generation tracking ([#7001](https://github.com/pagopa/io-app/issues/7001)) ([4b6226a](https://github.com/pagopa/io-app/commit/4b6226ac6212cb51cb82937a885f4e1091d09892))
+* **IT Wallet:** [[SIW-2366](https://pagopa.atlassian.net/browse/SIW-2366)] Display image claims in the presentation disclosure screen ([#7002](https://github.com/pagopa/io-app/issues/7002)) ([f2a237e](https://github.com/pagopa/io-app/commit/f2a237ecf1d0323c4f4abcbb7e451dd3a18349c7))
+
+
+### Chores
+
+* [[IOPLT-805](https://pagopa.atlassian.net/browse/IOPLT-805)] Add iOS and Android app icons for the canary release ([#6930](https://github.com/pagopa/io-app/issues/6930)) ([e21c056](https://github.com/pagopa/io-app/commit/e21c05659e3ed60aa3deaa9991691605d737bfa7))
+
 ## [3.6.0-rc.2](https://github.com/pagopa/io-app/compare/3.6.0-rc.1...3.6.0-rc.2) (2025-05-22)
 
 
