@@ -13,7 +13,7 @@ import {
 } from "../../../../features/itwallet/common/store/selectors/preferences";
 import { itwSetL3LocallyEnabled } from "../../../../features/itwallet/common/store/actions/preferences";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { ItwL3CredentialSection } from "./ItwL3CredentialSection.tsx";
+import { ItwL3CredentialsSection } from "./ItwL3CredentialsSection.tsx";
 
 export const ItwL3Section = () => {
   const dispatch = useIODispatch();
@@ -50,7 +50,7 @@ export const ItwL3Section = () => {
         description="Navigate to the Discovery L3 info screen"
         onPress={navigateToTosL3Screen}
       />
-      <ItwL3CredentialSection />
+      <ItwL3CredentialsSection />
     </View>
   );
 };

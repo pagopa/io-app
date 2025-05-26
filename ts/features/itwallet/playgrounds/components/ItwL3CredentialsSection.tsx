@@ -5,7 +5,7 @@ import { CredentialL3Key } from "../../common/utils/itwMocksUtils.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 
-export const ItwL3CredentialSection = () => {
+export const ItwL3CredentialsSection = () => {
   const navigation = useIONavigation();
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
 
