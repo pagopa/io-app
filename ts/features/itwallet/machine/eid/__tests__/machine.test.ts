@@ -398,7 +398,7 @@ describe("itwEidIssuanceMachine", () => {
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true,
-          previousCiePreparationScreen: "PreparationPin"
+          previousCieWarningScreen: "PreparationPin"
         }
       }
     } as MachineSnapshot);
@@ -428,7 +428,7 @@ describe("itwEidIssuanceMachine", () => {
       cieContext: {
         isNFCEnabled: true,
         isCIEAuthenticationSupported: true,
-        previousCiePreparationScreen: "PreparationPin"
+        previousCieWarningScreen: "PreparationPin"
       }
     });
     expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
@@ -461,7 +461,7 @@ describe("itwEidIssuanceMachine", () => {
       cieContext: {
         isNFCEnabled: true,
         isCIEAuthenticationSupported: true,
-        previousCiePreparationScreen: "PreparationPin"
+        previousCieWarningScreen: "PreparationPin"
       }
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -518,7 +518,7 @@ describe("itwEidIssuanceMachine", () => {
         cieContext: {
           isNFCEnabled: false,
           isCIEAuthenticationSupported: true,
-          previousCiePreparationScreen: "PreparationPin"
+          previousCieWarningScreen: "PreparationPin"
         }
       }
     } as MachineSnapshot);
@@ -555,7 +555,7 @@ describe("itwEidIssuanceMachine", () => {
       cieContext: {
         isNFCEnabled: false,
         isCIEAuthenticationSupported: true,
-        previousCiePreparationScreen: "PreparationPin"
+        previousCieWarningScreen: "PreparationPin"
       }
     });
     expect(navigateToNfcInstructionsScreen).toHaveBeenCalledTimes(1);
@@ -585,7 +585,7 @@ describe("itwEidIssuanceMachine", () => {
       cieContext: {
         isNFCEnabled: true,
         isCIEAuthenticationSupported: true,
-        previousCiePreparationScreen: "PreparationPin"
+        previousCieWarningScreen: "PreparationPin"
       }
     });
 
@@ -1388,7 +1388,7 @@ describe("itwEidIssuanceMachine", () => {
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true,
-          previousCiePreparationScreen: "PreparationCie"
+          previousCieWarningScreen: "PreparationCie"
         }
       }
     } as MachineSnapshot);
@@ -1419,9 +1419,7 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "go-to-cie-warning", warning: testWarningType });
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: {
-        CiePin: "CieWarning"
-      }
+      UserIdentification: "CieWarning"
     });
 
     expect(navigateToCieWarningScreen).toHaveBeenCalledTimes(1);
@@ -1434,7 +1432,7 @@ describe("itwEidIssuanceMachine", () => {
       cieContext: {
         isNFCEnabled: true,
         isCIEAuthenticationSupported: true,
-        previousCiePreparationScreen: "PreparationPin"
+        previousCieWarningScreen: "PreparationPin"
       }
     });
   });
