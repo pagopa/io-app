@@ -5,6 +5,7 @@ import { ReduxSagaEffect } from "../../../../types/utils";
 import { getBometricState } from "../../../../utils/biometrics";
 import { isFingerprintEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { isScreenLockSet } from "../../../../utils/device";
+import { isDevEnv } from "../../../../utils/environment";
 import {
   handleBiometricAvailable,
   hanldeMissingDevicePin,
@@ -66,3 +67,7 @@ export function* checkAcknowledgedFingerprintSaga(): Generator<
     }
   }
 }
+
+export const testable = isDevEnv
+  ? { onboardFingerprintIfAvailableSaga }
+  : undefined;
