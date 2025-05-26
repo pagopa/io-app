@@ -4,7 +4,7 @@ import {
 } from "../../common/utils/itwMocksUtils";
 import { ItwPresentationCredentialDetail } from "../../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
-import {ItwPlaygroundParamsList} from "../navigation/ItwPlaygroundParamsList.ts";
+import { ItwPlaygroundParamsList } from "../navigation/ItwPlaygroundParamsList.ts";
 
 export type ItwL3CredentialDetailScreenNavigationParams = {
   credentialType: CredentialL3Key;
