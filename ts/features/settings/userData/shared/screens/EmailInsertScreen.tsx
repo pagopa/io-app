@@ -523,7 +523,7 @@ const EmailInsertScreen = () => {
               testID="continue-button"
             />
           </ContentWrapper>
-          {Platform.OS === "android" && <VSpacer size={16} />}
+          <VSpacer size={16} />
         </KeyboardAvoidingView>
       </SafeAreaView>
     </LoadingSpinnerOverlay>
