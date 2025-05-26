@@ -4337,7 +4337,8 @@
           "3": "Mostri i tuoi documenti dal telefono, in totale sicurezza",
           "4": "Puoi usare la tua Patente su IO per dimostrare la tua idoneità alla guida"
         },
-        "content": "###### Come ottenerli \n\n Continua per ottenere i tuoi documenti su IO: puoi usare **SPID** o **CieID (livello 2)**. \n\n\n\n Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
+        "content": "###### Come ottenerli \n\n Continua per ottenere i tuoi documenti su IO: puoi usare **SPID** o **CieID (livello 2)**.",
+        "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
         "upcomingWalletBanner": {
           "title": "Novità in arrivo: i tuoi Documenti su IO",
           "content": "Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!",

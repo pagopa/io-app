@@ -1161,13 +1161,8 @@ digitali su IO
                                   </Text>
                                   .
                                 </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 16,
-                                    }
-                                  }
-                                />
+                              </View>
+                              <View>
                                 <Text
                                   allowFontScaling={true}
                                   dynamicTypeRamp="body"

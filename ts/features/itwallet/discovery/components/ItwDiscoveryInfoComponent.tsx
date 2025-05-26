@@ -91,8 +91,9 @@ export const ItwDiscoveryInfoComponent = ({
               name: "security"
             }}
           />
+          <IOMarkdown content={I18n.t("features.itWallet.discovery.content")} />
           <IOMarkdown
-            content={I18n.t("features.itWallet.discovery.content", {
+            content={I18n.t("features.itWallet.discovery.tos", {
               tos_url
             })}
             rules={generateLinkRuleWithCallback(trackOpenItwTos)}
