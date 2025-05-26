@@ -45,6 +45,8 @@ declare -a apis=(
   "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_sign.yaml"
   # ITW APIs
   "./definitions/itw https://raw.githubusercontent.com/pagopa/io-backend/$IO_WALLET_BACKEND_VERSION/api_io_wallet.yaml"
+  # Connectivity APIs (used for connectivity checks)
+  "./definitions/connectivity https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_public.yaml"
 )
 
 for elem in "${apis[@]}"; do
