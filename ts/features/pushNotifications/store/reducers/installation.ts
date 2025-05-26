@@ -82,7 +82,7 @@ export const installationReducer = (
       //   regardless of the previous tokenStatus
       return {
         ...state,
-        token: action.payload,
+        token: actionNewToken,
         registeredToken: undefined,
         tokenStatus: { status: "unsent" }
       };
@@ -105,7 +105,7 @@ export const installationReducer = (
           : { status: "sentConfirmed" };
       return {
         ...state,
-        registeredToken: action.payload,
+        registeredToken: actionRegisteredToken,
         tokenStatus: newTokenStatus
       };
     // Clear registeredToken when the authentication is not longer valid
