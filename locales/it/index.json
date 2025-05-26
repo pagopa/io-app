@@ -4759,6 +4759,17 @@
             },
             "secondaryAction": "Non ora"
           },
+          "invalidCredentialsScreen": {
+            "title": {
+              "one": "Non puoi continuare con la richiesta perché {{credentialName}} non è valida",
+              "other": "Non puoi continuare con la richiesta perché alcuni documenti non risultano validi"
+            },
+            "subtitle": {
+              "one": "Assicurati di essere in possesso del documento richiesto valido e poi riprova.",
+              "other": "Assicurati di essere in possesso dei documenti richiesti validi e poi riprova."
+            },
+            "primaryAction": "Ho capito"
+          },
           "deepLinkValidationErrorScreen": {
             "title": "Il link sembra non funzionare",
             "subtitle": "Ti suggeriamo di riprovare.\nSe il problema persiste, contatta l'assistenza.",
