@@ -46,6 +46,7 @@ import { buildEventProperties } from "../../utils/analytics";
 import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";
 import { trackIdentificationAction } from "../../features/identification/analytics";
+import { trackOfflineAccessReason } from "../../features/itwallet/analytics";
 import { trackContentAction } from "./contentAnalytics";
 
 const trackAction =
@@ -171,6 +172,9 @@ export const actionTracking =
       void trackServicesAction(action);
       void trackZendesk(action);
       void trackIdentificationAction(action);
+
+      // Define MP super property that indicates the reason for offline access
+      void trackOfflineAccessReason(action, middleware.getState());
 
       const fciEnvironment = fciEnvironmentSelector(middleware.getState());
       void trackFciAction(fciEnvironment)(action);
