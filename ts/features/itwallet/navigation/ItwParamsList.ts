@@ -9,7 +9,6 @@ import { ItwPresentationCredentialDetailNavigationParams } from "../presentation
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
 import { ITW_ROUTES } from "./routes";
-import { ItwL3CredentialDetailScreenNavigationParams } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
 
 export type ItwParamsList = {
   [ITW_ROUTES.ONBOARDING]: undefined;
@@ -62,10 +61,7 @@ export type ItwParamsList = {
     .CREDENTIAL_CARD_MODAL]: ItwPresentationCredentialCardModalNavigationParams;
   [ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL]: undefined;
   [ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED]: undefined;
-  // PLAYGROUNDS
-  [ITW_ROUTES.PLAYGROUNDS.MAIN]: undefined;
-  [ITW_ROUTES.PLAYGROUNDS
-    .CREDENTIAL_DETAIL]: ItwL3CredentialDetailScreenNavigationParams;
+  // OTHERS
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
   [ITW_ROUTES.WALLET_REVOCATION_SCREEN]: undefined;
 };

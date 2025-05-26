@@ -20,9 +20,5 @@ export const ItwL3CredentialDetailScreen = (params: ScreenProps) => {
 
   const credential = ItwStoredCredentialsMocks.L3[credentialType];
 
-  return (
-    <>
-      <ItwPresentationCredentialDetail credential={credential} />
-    </>
-  );
+  return <ItwPresentationCredentialDetail credential={credential} />;
 };
