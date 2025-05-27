@@ -339,12 +339,7 @@ export const itwEidIssuanceMachine = setup({
               target: "L2Identification"
             },
             "go-to-cie-warning": {
-              target: "CieWarning",
-              actions: assign(({ context }) => ({
-                cieContext: _.merge(context.cieContext, {
-                  previousCieWarningScreen: "L3Identification"
-                })
-              }))
+              target: "CieWarning.L3Identification"
             },
             back: [
               {
@@ -382,27 +377,25 @@ export const itwEidIssuanceMachine = setup({
         CieWarning: {
           description: "Navigates to and handles the CIE warning screen.",
           entry: "navigateToCieWarningScreen",
-          on: {
-            back: [
-              {
-                guard: ({ context }) =>
-                  context.cieContext?.previousCieWarningScreen ===
-                  "PreparationCie",
-                target:
-                  "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie"
-              },
-              {
-                guard: ({ context }) =>
-                  context.cieContext?.previousCieWarningScreen ===
-                  "PreparationPin",
-                target:
-                  "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
-              },
-              {
-                target:
-                  "#itwEidIssuanceMachine.UserIdentification.EvaluateIdentificationLevel"
+          initial: "ModeSelection",
+          states: {
+            L3Identification: {
+              on: {
+                back: "#itwEidIssuanceMachine.UserIdentification.L3Identification"
               }
-            ],
+            },
+            PreparationCie: {
+              on: {
+                back: "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie"
+              }
+            },
+            PreparationPin: {
+              on: {
+                back: "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
+              }
+            }
+          },
+          on: {
             close: {
               actions: ["closeIssuance"]
             }
@@ -563,12 +556,7 @@ export const itwEidIssuanceMachine = setup({
                 ],
                 "go-to-cie-warning": {
                   target:
-                    "#itwEidIssuanceMachine.UserIdentification.CieWarning",
-                  actions: assign(({ context }) => ({
-                    cieContext: _.merge(context.cieContext, {
-                      previousCieWarningScreen: "PreparationCie"
-                    })
-                  }))
+                    "#itwEidIssuanceMachine.UserIdentification.CieWarning.PreparationCie"
                 },
                 back: {
                   target:
@@ -592,12 +580,7 @@ export const itwEidIssuanceMachine = setup({
                 ],
                 "go-to-cie-warning": {
                   target:
-                    "#itwEidIssuanceMachine.UserIdentification.CieWarning",
-                  actions: assign(({ context }) => ({
-                    cieContext: _.merge(context.cieContext, {
-                      previousCieWarningScreen: "PreparationPin"
-                    })
-                  }))
+                    "#itwEidIssuanceMachine.UserIdentification.CieWarning.PreparationPin"
                 },
                 back: {
                   target:

@@ -397,8 +397,7 @@ describe("itwEidIssuanceMachine", () => {
         walletInstanceAttestation: T_WIA,
         cieContext: {
           isNFCEnabled: true,
-          isCIEAuthenticationSupported: true,
-          previousCieWarningScreen: "PreparationPin"
+          isCIEAuthenticationSupported: true
         }
       }
     } as MachineSnapshot);
@@ -427,8 +426,7 @@ describe("itwEidIssuanceMachine", () => {
       identification: undefined,
       cieContext: {
         isNFCEnabled: true,
-        isCIEAuthenticationSupported: true,
-        previousCieWarningScreen: "PreparationPin"
+        isCIEAuthenticationSupported: true
       }
     });
     expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
@@ -460,8 +458,7 @@ describe("itwEidIssuanceMachine", () => {
       },
       cieContext: {
         isNFCEnabled: true,
-        isCIEAuthenticationSupported: true,
-        previousCieWarningScreen: "PreparationPin"
+        isCIEAuthenticationSupported: true
       }
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -517,8 +514,7 @@ describe("itwEidIssuanceMachine", () => {
         walletInstanceAttestation: T_WIA,
         cieContext: {
           isNFCEnabled: false,
-          isCIEAuthenticationSupported: true,
-          previousCieWarningScreen: "PreparationPin"
+          isCIEAuthenticationSupported: true
         }
       }
     } as MachineSnapshot);
@@ -554,8 +550,7 @@ describe("itwEidIssuanceMachine", () => {
       },
       cieContext: {
         isNFCEnabled: false,
-        isCIEAuthenticationSupported: true,
-        previousCieWarningScreen: "PreparationPin"
+        isCIEAuthenticationSupported: true
       }
     });
     expect(navigateToNfcInstructionsScreen).toHaveBeenCalledTimes(1);
@@ -584,8 +579,7 @@ describe("itwEidIssuanceMachine", () => {
       },
       cieContext: {
         isNFCEnabled: true,
-        isCIEAuthenticationSupported: true,
-        previousCieWarningScreen: "PreparationPin"
+        isCIEAuthenticationSupported: true
       }
     });
 
@@ -1293,7 +1287,9 @@ describe("itwEidIssuanceMachine", () => {
 
     await waitFor(() => {
       expect(actor.getSnapshot().value).toStrictEqual({
-        UserIdentification: "CieWarning"
+        UserIdentification: {
+          CieWarning: "ModeSelection"
+        }
       });
     });
 
@@ -1387,8 +1383,7 @@ describe("itwEidIssuanceMachine", () => {
         isL3FeaturesEnabled: true,
         cieContext: {
           isNFCEnabled: true,
-          isCIEAuthenticationSupported: true,
-          previousCieWarningScreen: "PreparationCie"
+          isCIEAuthenticationSupported: true
         }
       }
     } as MachineSnapshot);
@@ -1419,20 +1414,20 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "go-to-cie-warning", warning: testWarningType });
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: "CieWarning"
+      UserIdentification: {
+        CieWarning: "PreparationPin"
+      }
     });
 
     expect(navigateToCieWarningScreen).toHaveBeenCalledTimes(1);
 
-    expect(actor.getSnapshot().context).toStrictEqual<Context>({
-      ...InitialContext,
-      integrityKeyTag: T_INTEGRITY_KEY,
-      walletInstanceAttestation: T_WIA,
-      isL3FeaturesEnabled: true,
-      cieContext: {
-        isNFCEnabled: true,
-        isCIEAuthenticationSupported: true,
-        previousCieWarningScreen: "PreparationPin"
+    actor.send({ type: "back" });
+
+    expect(navigateToCiePinPreparationScreen).toHaveBeenCalledTimes(2);
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "PreparationPin"
       }
     });
   });
