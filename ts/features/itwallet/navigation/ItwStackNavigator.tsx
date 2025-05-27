@@ -17,7 +17,6 @@ import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrong
 import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import ItwCieIdLoginScreen from "../identification/screens/cieId/ItwCieIdLoginScreen";
 import { ItwIdentificationIdpSelectionScreen } from "../identification/screens/ItwIdentificationIdpSelectionScreen";
-import { ItwIdentificationModeSelectionScreen } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import ItwSpidIdpLoginScreen from "../identification/screens/spid/ItwSpidIdpLoginScreen";
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialFailureScreen } from "../issuance/screens/ItwIssuanceCredentialFailureScreen";
@@ -51,6 +50,8 @@ import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { ItwIdentificationCieWarningScreen } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
+import { ItwL3IdentificationModeSelectionScreen } from "../identification/screens/ItwL3IdentificationModeSelectionScreen.tsx";
+import { ItwDefaultIdentificationModeSelectionScreen } from "../identification/screens/ItwL2IdentificationModeSelectionScreen.tsx";
 
 const Stack = createStackNavigator<ItwParamsList>();
 
@@ -110,8 +111,12 @@ const InnerNavigator = () => {
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
-        component={ItwIdentificationModeSelectionScreen}
+        name={ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L2}
+        component={ItwDefaultIdentificationModeSelectionScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L3}
+        component={ItwL3IdentificationModeSelectionScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE_WARNING}

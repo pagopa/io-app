@@ -1,16 +1,13 @@
-/*
-import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../analytics";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { L3IdentificationView } from "../components/L3IdentificationView.tsx";
 import { DefaultIdentificationView } from "../components/DefaultIdentificationView.tsx";
-import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors.ts";
 
 export type ItwIdentificationModeSelectionScreenNavigationParams = {
   eidReissuing?: boolean;
@@ -19,16 +16,13 @@ export type ItwIdentificationModeSelectionScreenNavigationParams = {
 export type ItwIdentificationModeSelectionScreenProps =
   IOStackNavigationRouteProps<
     ItwParamsList,
-    "ITW_IDENTIFICATION_MODE_SELECTION"
+    "ITW_IDENTIFICATION_LEVEL_SELECTION_L2"
   >;
 
-export const ItwIdentificationModeSelectionScreen = (
+export const ItwDefaultIdentificationModeSelectionScreen = (
   props: ItwIdentificationModeSelectionScreenProps
 ) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isL3Enabled =
-    ItwEidIssuanceMachineContext.useSelector(isL3FeaturesEnabledSelector);
-
   const { eidReissuing } = props.route.params;
 
   useFocusEffect(
@@ -40,31 +34,20 @@ export const ItwIdentificationModeSelectionScreen = (
   );
   useFocusEffect(trackItWalletIDMethod);
 
-  const handleSpidPress = useCallback(() => {
+  const handleSpidPress = () => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
     trackItWalletIDMethodSelected({ ITW_ID_method: "spid" });
-  }, [machineRef]);
+  };
 
-  const handleCiePinPress = useCallback(() => {
-    machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin" });
-  }, [machineRef]);
-
-  const handleCieIdPress = useCallback(() => {
+  const handleCieIdPress = () => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
     trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
-  }, [machineRef]);
+  };
 
-  return isL3Enabled ? (
-    <L3IdentificationView
-      handleCiePinPress={handleCiePinPress}
-      handleCieIdPress={handleCieIdPress}
-    />
-  ) : (
+  return (
     <DefaultIdentificationView
       onSpidPress={handleSpidPress}
       onCieIdPress={handleCieIdPress}
     />
   );
 };
-*/

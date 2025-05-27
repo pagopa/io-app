@@ -21,8 +21,10 @@ export type ItwParamsList = {
   [ITW_ROUTES.DISCOVERY.IPZS_PRIVACY]: undefined;
   [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]: undefined;
   // IDENTIFICATION
-  [ITW_ROUTES.IDENTIFICATION
-    .MODE_SELECTION]: ItwIdentificationModeSelectionScreenNavigationParams;
+  [ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION
+    .L2]: ItwIdentificationModeSelectionScreenNavigationParams;
+  [ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION
+    .L3]: ItwIdentificationModeSelectionScreenNavigationParams;
   // IDENTIFICATION ERRORS
   [ITW_ROUTES.IDENTIFICATION
     .CIE_WARNING]: ItwIdentificationCieWarningScreenNavigationParams;

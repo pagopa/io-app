@@ -7,6 +7,7 @@ import {
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import I18n from "../../../../i18n.ts";
 import IOMarkdown from "../../../../components/IOMarkdown";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
 
 const noCieContentKeys = [
   "features.itWallet.identification.l3.mode.bottomSheet.noCie.content.firstAttention",
@@ -18,6 +19,11 @@ const noCieContentKeys = [
  * Hook to manage the no CIE bottom sheet
  */
 export const useNoCieBottomSheet = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const navigateToL2Identification = () => {
+    machineRef.send({ type: "go-to-l2-identification" });
+    noCieBottomSheet.dismiss();
+  };
   const noCieBottomSheet = useIOBottomSheetModal({
     title: I18n.t(
       "features.itWallet.identification.l3.mode.bottomSheet.noCie.title"
@@ -56,7 +62,7 @@ export const useNoCieBottomSheet = () => {
             accessibilityLabel: I18n.t(
               "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
             ),
-            onPress: () => {}
+            onPress: navigateToL2Identification
           },
           secondary: {
             label: I18n.t(

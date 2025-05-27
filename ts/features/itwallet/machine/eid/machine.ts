@@ -30,6 +30,8 @@ export const itwEidIssuanceMachine = setup({
     navigateToTosScreen: notImplemented,
     navigateToIpzsPrivacyScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
+    navigateToL2IdentificationScreen: notImplemented,
+    navigateToL3IdentificationScreen: notImplemented,
     navigateToIdpSelectionScreen: notImplemented,
     navigateToSpidLoginScreen: notImplemented,
     navigateToCieIdLoginScreen: notImplemented,
@@ -299,16 +301,23 @@ export const itwEidIssuanceMachine = setup({
     UserIdentification: {
       description:
         "User identification flow. Once we get the user token we can continue to the eID issuance",
-      initial: "ModeSelection",
+      initial: "EvaluateIdentificationLevel",
       states: {
-        ModeSelection: {
-          entry: "navigateToIdentificationModeScreen",
+        EvaluateIdentificationLevel: {
+          always: [
+            {
+              guard: "isL3FeaturesEnabled",
+              target: "L3Identification"
+            },
+            {
+              target: "L2Identification"
+            }
+          ]
+        },
+        L3Identification: {
+          entry: "navigateToL3IdentificationScreen",
           on: {
             "select-identification-mode": [
-              {
-                guard: ({ event }) => event.mode === "spid",
-                target: "Spid"
-              },
               {
                 guard: ({ event }) => event.mode === "ciePin",
                 target: "CiePin"
@@ -324,23 +333,16 @@ export const itwEidIssuanceMachine = setup({
                   }
                 })),
                 target: "CieID"
-              },
-              {
-                guard: ({ event }) => event.mode === "cieId",
-                actions: assign(() => ({
-                  identification: {
-                    mode: "cieId",
-                    level: "L2"
-                  }
-                })),
-                target: "CieID"
               }
             ],
+            "go-to-l2-identification": {
+              target: "L2Identification"
+            },
             "go-to-cie-warning": {
               target: "CieWarning",
               actions: assign(({ context }) => ({
                 cieContext: _.merge(context.cieContext, {
-                  previousCieWarningScreen: "ModeSelection"
+                  previousCieWarningScreen: "L3Identification"
                 })
               }))
             },
@@ -353,6 +355,28 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
               }
             ]
+          }
+        },
+        L2Identification: {
+          entry: "navigateToL2IdentificationScreen",
+          on: {
+            "select-identification-mode": [
+              {
+                guard: ({ event }) => event.mode === "spid",
+                target: "Spid"
+              },
+              {
+                guard: ({ event }) => event.mode === "cieId",
+                actions: assign(() => ({
+                  identification: {
+                    mode: "cieId",
+                    level: "L2"
+                  }
+                })),
+                target: "CieID"
+              }
+            ],
+            back: "L3Identification"
           }
         },
         CieWarning: {
@@ -376,7 +400,7 @@ export const itwEidIssuanceMachine = setup({
               },
               {
                 target:
-                  "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                  "#itwEidIssuanceMachine.UserIdentification.EvaluateIdentificationLevel"
               }
             ],
             close: {
@@ -433,7 +457,8 @@ export const itwEidIssuanceMachine = setup({
           },
           on: {
             back: {
-              target: "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+              target:
+                "#itwEidIssuanceMachine.UserIdentification.EvaluateIdentificationLevel"
             }
           },
           onDone: {
@@ -462,7 +487,7 @@ export const itwEidIssuanceMachine = setup({
                 },
                 back: {
                   target:
-                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                    "#itwEidIssuanceMachine.UserIdentification.L2Identification"
                 }
               }
             },
@@ -547,7 +572,7 @@ export const itwEidIssuanceMachine = setup({
                 },
                 back: {
                   target:
-                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                    "#itwEidIssuanceMachine.UserIdentification.EvaluateIdentificationLevel"
                 },
                 close: {
                   actions: ["closeIssuance"]
@@ -621,7 +646,7 @@ export const itwEidIssuanceMachine = setup({
                   },
                   {
                     target:
-                      "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                      "#itwEidIssuanceMachine.UserIdentification.EvaluateIdentificationLevel"
                   }
                 ]
               }
@@ -639,7 +664,7 @@ export const itwEidIssuanceMachine = setup({
                 },
                 back: {
                   target:
-                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                    "#itwEidIssuanceMachine.UserIdentification.EvaluateIdentificationLevel"
                 }
               }
             },
