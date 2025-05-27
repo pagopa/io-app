@@ -38,7 +38,11 @@ export type AnimatedPictogram = {
   loop: LottieViewProps["loop"];
 };
 
-export const AnimatedPictogram = ({ name, size, loop }: AnimatedPictogram) => (
+export const AnimatedPictogram = ({
+  name,
+  size,
+  loop = true
+}: AnimatedPictogram) => (
   <LottieView
     autoPlay={true}
     loop={loop}
