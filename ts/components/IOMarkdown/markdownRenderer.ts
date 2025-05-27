@@ -33,6 +33,29 @@ export function getRenderMarkdown(
 }
 
 /**
+ * Sanitize and clean the markdown content from `\n` characters that should not affect by the IO guidelines for markdown texts.
+ * ref: https://docs.pagopa.it/io-guida-tecnica/risorse-utili/guida-al-markdown#andare-a-capo
+ * Following the guidelines:
+ * - "  \n" | "\n\n"  => don't replace with anything
+ * - "\n" | " \n" | " \n "  => replace with a blank space " "
+ * @param content The markdown content to sanitize
+ * @returns The sanitized markdown content
+ */
+export function sanitizeMarkdownNewlines(content: string): string {
+  // Handle the newlines that should be preserved (double newlines or line breaks)
+  // We temporarily replace them with a marker to preserve them
+  const lineBreakMarker = "___LINEBREAK_MARKER___";
+  const paragraphBreakMarker = "___PARAGRAPHBREAK_MARKER___";
+  const temporaryMD = content
+    .replace(/ {2}\n/g, lineBreakMarker) // preserve "  \n" (line breaks)
+    .replace(/\n\n/g, paragraphBreakMarker); // preserve "\n\n" (paragraph breaks)
+  const regex = /[^\S\s]*( ?\n ?)[^\S\s]*/g;
+
+  // Replace the matched pattern with a single space
+  return temporaryMD.replace(regex, " ");
+}
+
+/**
  * This component extends the `parse` method of `@textlint/markdown-to-ast` by inserting a custom node with type `Spacer` between first-level nodes that have at least one empty line between them.
  *
  * The spacer node takes a `size` of `8` when a single empty row is encountered, and `16` when 2 or more empty rows are encountered.
@@ -40,7 +63,10 @@ export function getRenderMarkdown(
  * @returns The parsed content.
  */
 export function parse(content: string): Array<AnyTxtNodeWithSpacer> {
-  const parsedContent = textLintParse(content);
+  // Sanitize the markdown content to avoid issues with newlines
+  // that should not affect the IO guidelines for markdown texts.
+  const sanitizedContent = sanitizeMarkdownNewlines(content);
+  const parsedContent = textLintParse(sanitizedContent);
   return integrateParent(parsedContent).children.reduce<
     Array<AnyTxtNodeWithSpacer>
   >((acc, currNode, idx, self) => {
