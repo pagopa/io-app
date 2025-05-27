@@ -21,12 +21,7 @@ import {
 } from "@shopify/react-native-skia";
 import { TxtLinkNode, TxtParagraphNode } from "@textlint/ast-node-types";
 import { useCallback, useRef, useState } from "react";
-import {
-  FlatList,
-  ListRenderItemInfo,
-  StyleSheet,
-  View
-} from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedRef,
   useDerivedValue,
@@ -48,7 +43,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { tosConfigSelector } from "../../../tos/store/selectors";
-import {ItwEidIssuanceMachineContext} from "../../machine/provider.tsx";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
 
 const markdownRules = {
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {

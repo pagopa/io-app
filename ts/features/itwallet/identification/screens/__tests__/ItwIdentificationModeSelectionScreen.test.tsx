@@ -130,7 +130,6 @@ const renderComponent = (isL3FeaturesEnabled = false, eidReissuing = false) => {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true,
           previousCieWarningScreen: "PreparationCie"
-
         }
       }
     };
