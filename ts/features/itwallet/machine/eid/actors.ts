@@ -92,7 +92,7 @@ export const createEidIssuanceActorsImplementation = (
     return {
       isNFCEnabled,
       isCIEAuthenticationSupported,
-      previousCiePreparationScreen: "PreparationCie"
+      previousCieWarningScreen: "PreparationCie"
     };
   }),
 
