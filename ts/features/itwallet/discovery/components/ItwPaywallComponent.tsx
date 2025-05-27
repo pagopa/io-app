@@ -11,7 +11,7 @@ import {
   Icon,
   VSpacer,
   VStack,
-  useIOTheme,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import {
   Canvas,
