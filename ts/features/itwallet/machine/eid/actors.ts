@@ -91,8 +91,7 @@ export const createEidIssuanceActorsImplementation = (
     ]);
     return {
       isNFCEnabled,
-      isCIEAuthenticationSupported,
-      previousCieWarningScreen: "PreparationCie"
+      isCIEAuthenticationSupported
     };
   }),
 
