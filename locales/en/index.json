@@ -4759,7 +4759,7 @@
             },
             "secondaryAction": "Non ora"
           },
-                    "invalidCredentialsScreen": {
+          "invalidCredentialsScreen": {
             "title": {
               "one": "Non puoi continuare con la richiesta perché {{credentialName}} non è valida",
               "other": "Non puoi continuare con la richiesta perché alcuni documenti non risultano validi"
