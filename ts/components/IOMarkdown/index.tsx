@@ -69,7 +69,12 @@ const UnsafeIOMarkdown = ({
   return <View>{parsedContent.map(renderMarkdown)}</View>;
 };
 
-const IOMarkdown = ({ content, rules, onError }: IOMarkdownProps) => (
+const IOMarkdown = ({
+  content,
+  rules,
+  onError,
+  sanitizeNewLines
+}: IOMarkdownProps) => (
   <Sentry.ErrorBoundary
     fallback={
       <View>
@@ -78,7 +83,11 @@ const IOMarkdown = ({ content, rules, onError }: IOMarkdownProps) => (
     }
     onError={onError}
   >
-    <UnsafeIOMarkdown content={content} rules={rules} />
+    <UnsafeIOMarkdown
+      content={content}
+      rules={rules}
+      sanitizeNewLines={sanitizeNewLines}
+    />
   </Sentry.ErrorBoundary>
 );
 export default memo(IOMarkdown);
