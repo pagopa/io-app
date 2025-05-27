@@ -9,7 +9,8 @@ import { IOMarkdownRenderRules } from "./types";
 import {
   getRenderMarkdown,
   parse,
-  sanitizeMarkdownForImages
+  sanitizeMarkdownForImages,
+  sanitizeMarkdownNewlines
 } from "./markdownRenderer";
 import { DEFAULT_RULES } from "./renderRules";
 
@@ -31,6 +32,12 @@ export type IOMarkdownProps = {
    * The render rules that can be used to override the `DEFAULT_RULES`.
    */
   rules?: Partial<IOMarkdownRenderRules>;
+  /**
+   * If `true`, the component will render the markdown content sanitizing the new line markers.
+   * If `false`, it will render the markdown content as it has been received.
+   * Defaults to `true`.
+   */
+  sanitizeNewLines?: boolean;
 };
 
 /**
@@ -38,10 +45,19 @@ export type IOMarkdownProps = {
  *
  * It's possible to override every single rule by passing a custom `rules` object.
  */
-const UnsafeIOMarkdown = ({ content, rules }: UnsafeProps) => {
+const UnsafeIOMarkdown = ({
+  content,
+  rules,
+  sanitizeNewLines
+}: UnsafeProps) => {
   const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
 
-  const sanitizedMarkdown = sanitizeMarkdownForImages(content);
+  // Sanitize the markdown content to avoid issues with newlines
+  // that should not affect the IO guidelines for markdown texts.
+  const sanitizedContent = sanitizeNewLines
+    ? sanitizeMarkdownNewlines(content)
+    : content;
+  const sanitizedMarkdown = sanitizeMarkdownForImages(sanitizedContent);
   const parsedContent = parse(sanitizedMarkdown);
   const renderMarkdown = getRenderMarkdown(
     {

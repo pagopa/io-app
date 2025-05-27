@@ -66,10 +66,7 @@ export function sanitizeMarkdownNewlines(content: string): string {
  * @returns The parsed content.
  */
 export function parse(content: string): Array<AnyTxtNodeWithSpacer> {
-  // Sanitize the markdown content to avoid issues with newlines
-  // that should not affect the IO guidelines for markdown texts.
-  const sanitizedContent = sanitizeMarkdownNewlines(content);
-  const parsedContent = textLintParse(sanitizedContent);
+  const parsedContent = textLintParse(content);
   return integrateParent(parsedContent).children.reduce<
     Array<AnyTxtNodeWithSpacer>
   >((acc, currNode, idx, self) => {
