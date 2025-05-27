@@ -661,6 +661,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -672,10 +676,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -807,6 +807,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -817,8 +819,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -2040,6 +2040,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -2051,10 +2055,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -3275,6 +3275,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -3286,10 +3290,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -4530,6 +4530,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -4541,10 +4545,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -5506,6 +5506,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -5517,10 +5521,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -5652,6 +5652,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -5662,8 +5664,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -6871,6 +6871,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -6882,10 +6886,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -7017,6 +7017,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -7027,8 +7029,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -8272,6 +8272,10 @@ Genera un nuovo QR Code e riprova.
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -8283,10 +8287,6 @@ Genera un nuovo QR Code e riprova.
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -8418,6 +8418,8 @@ Genera un nuovo QR Code e riprova.
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -8428,8 +8430,6 @@ Genera un nuovo QR Code e riprova.
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -9434,6 +9434,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -9445,10 +9449,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -9580,6 +9580,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -9590,8 +9592,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -10814,6 +10814,10 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -10825,10 +10829,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -10960,6 +10960,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -10970,8 +10972,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -12231,6 +12231,10 @@ continuare
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -12242,10 +12246,6 @@ continuare
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -12377,6 +12377,8 @@ continuare
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -12387,8 +12389,6 @@ continuare
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
