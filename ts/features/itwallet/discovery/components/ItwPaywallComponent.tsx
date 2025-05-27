@@ -21,13 +21,7 @@ import {
 } from "@shopify/react-native-skia";
 import { TxtLinkNode, TxtParagraphNode } from "@textlint/ast-node-types";
 import { useCallback, useRef, useState } from "react";
-import {
-  Alert,
-  FlatList,
-  ListRenderItemInfo,
-  StyleSheet,
-  View
-} from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedRef,
   useDerivedValue,

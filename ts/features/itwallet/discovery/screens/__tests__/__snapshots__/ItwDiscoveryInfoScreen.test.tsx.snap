@@ -3465,7 +3465,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                             }
                           >
                             <View
-                              accessibilityLabel="Ottieni IT Wallet"
+                              accessibilityLabel="Ottieni IT-Wallet"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -3581,7 +3581,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                                       ]
                                     }
                                   >
-                                    Ottieni IT Wallet
+                                    Ottieni IT-Wallet
                                   </Text>
                                 </View>
                               </View>
