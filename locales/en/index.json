@@ -3789,8 +3789,8 @@
     },
     "pn": {
       "reminderBanner": {
-        "title": "Ricevi le tue comunicazioni a valore legale su IO!",
-        "body": "Con IO è più semplice, ti basta attivare il servizio SEND.",
+        "title": "Risparmia sui costi di notifica!",
+        "body": "Attiva SEND per ricevere le comunicazioni a valore legale direttamente in app.",
         "cta": "Scopri SEND su IO",
         "activationFlow": {
           "FAILURE_DETAILS_FETCH": {
@@ -4342,6 +4342,18 @@
           "title": "Documenti su IO è già attiva",
           "content": "Continua ad aggiungere le versioni digitali dei tuoi documenti al Portafoglio.",
           "action": "Vai al Portafoglio"
+        },
+        "nfcNotSupported": {
+          "title": "IT-Wallet richiede un dispositivo con tecnologia NFC",
+          "subtitle": "Il tuo dispositivo non è dotato di tecnologia NFC, necessaria per il funzionamento dei portafogli digitali.",
+          "actions": {
+            "continue": "Continua senza IT-Wallet",
+            "cancel": "Non ora",
+            "l3": {
+              "continue": "Scopri di più",
+              "cancel": "Chiudi"
+            }
+          }
         },
         "paywall": {
           "badge": "Novità",
