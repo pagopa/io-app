@@ -10,7 +10,10 @@ export type IdentificationContext =
   | { mode: "ciePin"; level: "L3"; pin: string }
   | { mode: "spid"; level: "L2"; idpId: string };
 
-type CiePreparationScreen = "PreparationCie" | "PreparationPin";
+type PreviosCieWaringScreen =
+  | "ModeSelection"
+  | "PreparationCie"
+  | "PreparationPin";
 
 /**
  * When authenticating with CIE + PIN the flow is interrupted
@@ -31,7 +34,7 @@ export type AuthenticationContext = {
 export type CieContext = {
   isNFCEnabled: boolean;
   isCIEAuthenticationSupported: boolean;
-  previousCiePreparationScreen: CiePreparationScreen;
+  previousCieWarningScreen: PreviosCieWaringScreen;
 };
 
 export type Context = {

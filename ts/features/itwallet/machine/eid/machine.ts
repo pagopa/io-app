@@ -337,7 +337,12 @@ export const itwEidIssuanceMachine = setup({
               }
             ],
             "go-to-cie-warning": {
-              target: "CieWarning"
+              target: "CieWarning",
+              actions: assign(({ context }) => ({
+                cieContext: _.merge(context.cieContext, {
+                  previousCieWarningScreen: "ModeSelection"
+                })
+              }))
             },
             back: [
               {
@@ -354,9 +359,26 @@ export const itwEidIssuanceMachine = setup({
           description: "Navigates to and handles the CIE warning screen.",
           entry: "navigateToCieWarningScreen",
           on: {
-            back: {
-              target: "ModeSelection"
-            },
+            back: [
+              {
+                guard: ({ context }) =>
+                  context.cieContext?.previousCieWarningScreen ===
+                  "PreparationCie",
+                target:
+                  "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie"
+              },
+              {
+                guard: ({ context }) =>
+                  context.cieContext?.previousCieWarningScreen ===
+                  "PreparationPin",
+                target:
+                  "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
+              },
+              {
+                target:
+                  "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+              }
+            ],
             close: {
               actions: ["closeIssuance"]
             }
@@ -503,29 +525,6 @@ export const itwEidIssuanceMachine = setup({
                 { target: "InsertingCardPin" }
               ]
             },
-            CieWarning: {
-              description: "Navigates to and handles the CIE warning screen.",
-              entry: "navigateToCieWarningScreen",
-              on: {
-                back: [
-                  {
-                    guard: ({ context }) =>
-                      context.cieContext?.previousCiePreparationScreen ===
-                      "PreparationPin",
-                    target: "PreparationPin"
-                  },
-                  {
-                    guard: ({ context }) =>
-                      context.cieContext?.previousCiePreparationScreen ===
-                      "PreparationCie",
-                    target: "PreparationCie"
-                  }
-                ],
-                close: {
-                  actions: ["closeIssuance"]
-                }
-              }
-            },
             PreparationCie: {
               description:
                 "This state handles the CIE preparation screen, where the user is informed about the CIE card",
@@ -538,10 +537,11 @@ export const itwEidIssuanceMachine = setup({
                   }
                 ],
                 "go-to-cie-warning": {
-                  target: "CieWarning",
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CieWarning",
                   actions: assign(({ context }) => ({
                     cieContext: _.merge(context.cieContext, {
-                      previousCiePreparationScreen: "PreparationCie"
+                      previousCieWarningScreen: "PreparationCie"
                     })
                   }))
                 },
@@ -566,10 +566,11 @@ export const itwEidIssuanceMachine = setup({
                   }
                 ],
                 "go-to-cie-warning": {
-                  target: "CieWarning",
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CieWarning",
                   actions: assign(({ context }) => ({
                     cieContext: _.merge(context.cieContext, {
-                      previousCiePreparationScreen: "PreparationPin"
+                      previousCieWarningScreen: "PreparationPin"
                     })
                   }))
                 },

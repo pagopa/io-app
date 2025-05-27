@@ -1,11 +1,9 @@
 import configureMockStore from "redux-mock-store";
-import { Action } from "redux";
-import { reproduceSequence } from "../../../../../utils/tests";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { itwHasNfcFeature } from "../../../identification/store/actions";
-import { itwSetWalletInstanceRemotelyActive } from "../../../common/store/actions/preferences";
+import * as itwLifecycleSelectors from "../../../lifecycle/store/selectors";
+import * as itwIdentificationSelectors from "../../../identification/store/selectors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
@@ -16,43 +14,51 @@ import {
 } from "../ItwDiscoveryInfoScreen";
 
 describe("ItwDiscoveryInfoScreen", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should match the snapshot when isL3 is false", () => {
     const component = renderComponent(false);
     expect(component).toMatchSnapshot();
   });
 
   it("should match the snapshot when isL3 is true and hasNfcFeature is true", () => {
-    const component = renderComponent(true, true);
+    jest
+      .spyOn(itwIdentificationSelectors, "itwHasNfcFeatureSelector")
+      .mockReturnValue(true);
+
+    const component = renderComponent(true);
     expect(component).toMatchSnapshot();
   });
 
-  it("should match the snapshot when isL3 is true, hasNfcFeature is false and itwIsWalletInstanceRemotelyActiveSelector is true", () => {
-    const component = renderComponent(true, false, true);
+  it("should match the snapshot when isL3 is true, hasNfcFeature is false and itwLifecycleIsValidSelector is true", () => {
+    jest
+      .spyOn(itwIdentificationSelectors, "itwHasNfcFeatureSelector")
+      .mockReturnValue(false);
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(true);
+
+    const component = renderComponent(true);
     expect(component).toMatchSnapshot();
   });
 
-  it("should match the snapshot when isL3 is true, hasNfcFeature is false and itwIsWalletInstanceRemotelyActiveSelector is false", () => {
-    const component = renderComponent(true, false, false);
+  it("should match the snapshot when isL3 is true, hasNfcFeature is false and itwLifecycleIsValidSelector is false", () => {
+    jest
+      .spyOn(itwIdentificationSelectors, "itwHasNfcFeatureSelector")
+      .mockReturnValue(false);
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(false);
+
+    const component = renderComponent(true);
     expect(component).toMatchSnapshot();
   });
 });
 
-const renderComponent = (
-  isL3: boolean,
-  hasNfc: boolean = false,
-  isWalletInstanceRemotelyActive: boolean = false
-) => {
-  const sequenceOfActions: ReadonlyArray<Action> = [
-    applicationChangeState("active"),
-    itwHasNfcFeature.success(hasNfc),
-    itwSetWalletInstanceRemotelyActive(isWalletInstanceRemotelyActive)
-  ];
-
-  const globalState: GlobalState = reproduceSequence(
-    {} as GlobalState,
-    appReducer,
-    sequenceOfActions
-  );
+const renderComponent = (isL3: boolean) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
