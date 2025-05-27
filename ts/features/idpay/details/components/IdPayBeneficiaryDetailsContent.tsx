@@ -278,7 +278,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
 
   const renderTableRow = (data: Array<TableRow>) =>
     data.map((row, i) => (
-      <View key={i}>
+      <View key={row.testID}>
         <ListItemInfo
           key={row.testID}
           label={row.label}
