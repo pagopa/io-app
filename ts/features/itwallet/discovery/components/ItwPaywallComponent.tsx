@@ -43,7 +43,6 @@ import { useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { tosConfigSelector } from "../../../tos/store/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
 
 const markdownRules = {
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
