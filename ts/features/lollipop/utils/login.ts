@@ -66,6 +66,7 @@ export const lollipopSamlVerify = (
           return;
         }
 
+        console.log("🍭 ✅ Lollipop SAML request verified successfully");
         onSuccess();
       })
       .catch(_ => {

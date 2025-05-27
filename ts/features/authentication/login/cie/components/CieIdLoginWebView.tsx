@@ -7,16 +7,24 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import _isEqual from "lodash/isEqual";
 import {
   WebViewErrorEvent,
-  WebViewHttpErrorEvent
+  WebViewHttpErrorEvent,
+  WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
+import CookieManager from "@react-native-cookies/cookies";
+import { pipe } from "fp-ts/lib/function";
+import * as TE from "fp-ts/lib/TaskEither";
+import * as O from "fp-ts/lib/Option";
+import * as T from "fp-ts/lib/Task";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { getCieIDLoginUri, isAuthenticationUrl, SpidLevel } from "../utils";
-import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { loggedInAuthSelector } from "../../../common/store/selectors";
+import {
+  loggedInAuthSelector,
+  selectedIdentityProviderSelector
+} from "../../../common/store/selectors";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { isDevEnv } from "../../../../../utils/environment";
 import { onLoginUriChanged } from "../../../common/utils/login";
@@ -35,6 +43,11 @@ import {
 } from "../utils/cie";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { lollipopKeyTagSelector } from "../../../../lollipop/store/reducers/lollipop";
+import { regenerateKeyGetRedirectsAndVerifySaml } from "../../../../lollipop/utils/login";
+import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
+import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 
 export type WebViewLoginNavigationProps = {
   spidLevel: SpidLevel;
@@ -128,8 +141,65 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     [navigateToCieIdAuthUrlError]
   );
 
-  const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
-    useLollipopLoginSource(navigateToCieIdAuthenticationError, loginUri);
+  type RequestInfoAuthorizedState = {
+    requestState: "AUTHORIZED";
+    nativeAttempts: number;
+    url: string;
+  };
+
+  type RequestInfoLoadingState = {
+    requestState: "LOADING";
+    nativeAttempts: number;
+  };
+
+  type RequestInfo = RequestInfoLoadingState | RequestInfoAuthorizedState;
+  const [requestInfo, setRequestInfo] = useState<RequestInfo>({
+    requestState: "LOADING",
+    nativeAttempts: 0
+  });
+
+  const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
+  const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
+  const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
+  const idp = useIOSelector(selectedIdentityProviderSelector);
+
+  // We navigate back here on retries with a replacement of the screen
+  useOnFirstRender(() => {
+    if (O.isSome(maybeKeyTag) && requestInfo.requestState === "LOADING") {
+      void pipe(
+        TE.tryCatch(
+          () =>
+            Platform.OS === "android"
+              ? CookieManager.removeSessionCookies()
+              : Promise.resolve(true),
+          () => new Error("Error clearing cookies")
+        ),
+        TE.chain(_ => () => {
+          console.log("🔑 Regenerating lollipop key for CIE ID login");
+          return regenerateKeyGetRedirectsAndVerifySaml(
+            loginUri,
+            maybeKeyTag.value,
+            mixpanelEnabled,
+            isFastLogin,
+            dispatch,
+            idp?.id
+          );
+        }),
+        TE.fold(
+          e =>
+            T.of(handleLoginFailure("Error generating key", JSON.stringify(e))),
+          url =>
+            T.of(
+              setRequestInfo({
+                requestState: "AUTHORIZED",
+                nativeAttempts: requestInfo.nativeAttempts,
+                url
+              })
+            )
+        )
+      )();
+    }
+  });
 
   const handleLoginFailure = useCallback(
     (code?: string, message?: string) => {
@@ -232,10 +302,6 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   ): boolean => {
     const url = event.url;
 
-    if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
-      return false;
-    }
-
     if (isAuthenticationUrl(url)) {
       handleOpenCieIdApp(url);
 
@@ -271,14 +337,19 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const { showAlert } = useOnboardingAbortAlert();
 
   const headerProps: HeaderSecondLevelHookProps = useMemo(() => {
-    if (webviewSource && !isLoadingWebView) {
+    if (requestInfo.requestState === "AUTHORIZED" && !isLoadingWebView) {
       return { title: "", goBack: () => showAlert(navigateToLandingScreen) };
     }
     return {
       title: "",
       canGoBack: false
     };
-  }, [isLoadingWebView, navigateToLandingScreen, showAlert, webviewSource]);
+  }, [
+    isLoadingWebView,
+    navigateToLandingScreen,
+    requestInfo.requestState,
+    showAlert
+  ]);
 
   useHeaderSecondLevel(headerProps);
 
@@ -288,7 +359,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
   return (
     <SafeAreaView style={styles.container} edges={["bottom"]}>
-      {(webviewSource || authenticatedUrl) && (
+      {(requestInfo.requestState === "AUTHORIZED" || authenticatedUrl) && (
         <WebView
           testID="cie-id-webview"
           ref={webView}
@@ -301,15 +372,25 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
               <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
             );
           }}
-          onLoadEnd={() => setIsLoadingWebView(false)}
           originWhitelist={originSchemasWhiteList}
           onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+          onNavigationStateChange={event => {
+            console.log("✅ " + event.url);
+          }}
           onHttpError={handleLoadingError}
           onError={handleLoadingError}
-          source={authenticatedUrl ? { uri: authenticatedUrl } : webviewSource}
+          source={
+            authenticatedUrl
+              ? { uri: authenticatedUrl }
+              : requestInfo.requestState === "AUTHORIZED"
+              ? ({ uri: requestInfo.url } as WebViewSource)
+              : undefined
+          }
+          sharedCookiesEnabled={true}
+          thirdPartyCookiesEnabled={true}
         />
       )}
-      {!webviewSource && (
+      {requestInfo.requestState !== "AUTHORIZED" && (
         <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
       )}
     </SafeAreaView>

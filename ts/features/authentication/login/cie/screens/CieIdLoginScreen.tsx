@@ -12,6 +12,8 @@ const CieIdLoginScreen = () => {
       >
     >();
 
+  console.log("🔥 1. CieIdLoginScreen route params:", route.params);
+
   return <CieIdLoginWebView {...route.params} />;
 };
 
