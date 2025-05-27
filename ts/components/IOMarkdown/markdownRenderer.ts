@@ -47,12 +47,15 @@ export function sanitizeMarkdownNewlines(content: string): string {
   const lineBreakMarker = "___LINEBREAK_MARKER___";
   const paragraphBreakMarker = "___PARAGRAPHBREAK_MARKER___";
   const temporaryMD = content
-    .replace(/ {2}\n/g, lineBreakMarker) // preserve "  \n" (line breaks)
-    .replace(/\n\n/g, paragraphBreakMarker); // preserve "\n\n" (paragraph breaks)
+    .replace(/\n\n/g, paragraphBreakMarker) // preserve "\n\n" (paragraph breaks)
+    .replace(/ {2}\n/g, lineBreakMarker); // preserve "  \n" (line breaks)
   const regex = /[^\S\s]*( ?\n ?)[^\S\s]*/g;
 
   // Replace the matched pattern with a single space
-  return temporaryMD.replace(regex, " ");
+  return temporaryMD
+    .replace(regex, " ")
+    .replace(new RegExp(paragraphBreakMarker, "g"), "\n\n")
+    .replace(new RegExp(lineBreakMarker, "g"), "  \n");
 }
 
 /**
