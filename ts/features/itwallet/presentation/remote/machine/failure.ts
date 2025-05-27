@@ -6,6 +6,9 @@ const { CredentialsNotFoundError } = Credential.Presentation.Errors;
 const { isRelyingPartyResponseError, RelyingPartyResponseErrorCodes: Codes } =
   Errors;
 
+/**
+ * Error class used to wrap invalid credential types from the remote machine to the failure screen.
+ */
 export class InvalidCredentialsStatusError extends Error {
   constructor(public invalidCredentials: Array<string>) {
     super("One or more credential has an invalid status");

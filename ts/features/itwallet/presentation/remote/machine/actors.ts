@@ -143,6 +143,7 @@ export const createRemoteActorsImplementation = (
       throw new InvalidCredentialsStatusError(invalidCredentials);
     }
 
+    // Add localization to the requested claims
     const presentationDetails = enrichPresentationDetails(
       result,
       credentialsByType
