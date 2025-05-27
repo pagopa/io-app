@@ -21,13 +21,7 @@ import {
 } from "@shopify/react-native-skia";
 import { TxtLinkNode, TxtParagraphNode } from "@textlint/ast-node-types";
 import { useCallback, useRef, useState } from "react";
-import {
-  Alert,
-  FlatList,
-  ListRenderItemInfo,
-  StyleSheet,
-  View
-} from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedRef,
   useDerivedValue,
@@ -82,7 +76,9 @@ const scrollOffset: number = 12;
 // Percentage of the visible block after which the anchor link is hidden
 const intersectionRatio: number = 0.3;
 
-export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
+export const ItwPaywallComponent = ({
+  onContinuePress
+}: ItwPaywallComponentProps) => {
   const { tos_url } = useIOSelector(tosConfigSelector);
 
   const theme = useIOTheme();
@@ -132,12 +128,12 @@ export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
       hideAnchorAction={hideAnchorLink}
       actions={{
         anchor: {
-          label: "Scopri tutti i vantaggi",
+          label: I18n.t("features.itWallet.discovery.paywall.anchorAction"),
           onPress: handleScrollToHighlights
         },
         primary: {
-          label: "Ottieni IT Wallet",
-          onPress: () => Alert.alert("Ottieni IT Wallet")
+          label: I18n.t("features.itWallet.discovery.paywall.primaryAction"),
+          onPress: onContinuePress
         }
       }}
     >
