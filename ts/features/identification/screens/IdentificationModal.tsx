@@ -69,11 +69,11 @@ const onRequestCloseHandler = () => undefined;
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 export const IdentificationModal = () => {
   const [isBiometricLocked, setIsBiometricLocked] = useState(false);
-  const theme = useIOTheme();
   const showRetryText = useRef(false);
   const headerRef = useRef<View>(null);
   const errorStatusRef = useRef<View>(null);
 
+  const theme = useIOTheme();
   const { isDeviceScreenSmall } = useDetectSmallScreen();
   const { hugeFontEnabled } = useIOFontDynamicScale();
 
