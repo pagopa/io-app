@@ -162,7 +162,6 @@ export const ItwPresentationCredentialDetail = ({
   }
 
   const ctaProps = getCtaProps(credential, navigation, isL3Credential);
-  console.log("shouldRenderTrustmark", shouldRenderTrustmark);
 
   return (
     <ItwPresentationDetailsScreenBase
