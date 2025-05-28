@@ -20,7 +20,7 @@ export const itwCredentialUpgradeMachine = setup({
   id: "itwCredentialUpgradeMachine",
   context: ({ input }) => ({
     ...InitialContext,
-    credentials: input.credentials
+    credentialsToUpgrade: input.credentialTypes
   }),
   initial: "Idle",
   states: {
