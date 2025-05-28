@@ -1,6 +1,12 @@
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
-import { assign, createActor, fromPromise, StateFrom } from "xstate";
+import {
+  assign,
+  createActor,
+  createMachine,
+  fromPromise,
+  StateFrom
+} from "xstate";
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
@@ -18,6 +24,7 @@ import {
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
 import { CieWarningType } from "../../../identification/screens/ItwIdentificationCieWarningScreen.tsx";
+import { ItwCredentialUpgradeMachine } from "../../../upgrade/machine/machine.ts";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -54,17 +61,31 @@ describe("itwEidIssuanceMachine", () => {
   const getWalletAttestation = jest.fn();
   const requestEid = jest.fn();
   const startAuthFlow = jest.fn();
+  const resetWalletInstance = jest.fn();
+  const trackWalletInstanceCreation = jest.fn();
+  const trackWalletInstanceRevocation = jest.fn();
+  const revokeWalletInstance = jest.fn();
+  const storeAuthLevel = jest.fn();
 
   const issuedEidMatchesAuthenticatedUser = jest.fn();
   const isSessionExpired = jest.fn();
   const isOperationAborted = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
   const hasIntegrityKeyTag = jest.fn();
-  const resetWalletInstance = jest.fn();
-  const trackWalletInstanceCreation = jest.fn();
-  const trackWalletInstanceRevocation = jest.fn();
-  const revokeWalletInstance = jest.fn();
-  const storeAuthLevel = jest.fn();
+  const isReissuing = jest.fn();
+  const isL3 = jest.fn();
+  const hasL2Credentials = jest.fn();
+
+  const credentialUpgradeEntrySpy = jest.fn();
+  const credentialUpgradeMachine = createMachine({
+    id: "credentialUpgrade",
+    initial: "idle",
+    states: {
+      idle: {
+        entry: credentialUpgradeEntrySpy
+      }
+    }
+  });
 
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
@@ -113,14 +134,19 @@ describe("itwEidIssuanceMachine", () => {
       startAuthFlow: fromPromise<
         AuthenticationContext,
         StartAuthFlowActorParams
-      >(startAuthFlow)
+      >(startAuthFlow),
+      credentialUpgradeMachine:
+        credentialUpgradeMachine as unknown as ItwCredentialUpgradeMachine
     },
     guards: {
       issuedEidMatchesAuthenticatedUser,
       isSessionExpired,
       isOperationAborted,
       hasValidWalletInstanceAttestation,
-      hasIntegrityKeyTag
+      hasIntegrityKeyTag,
+      isReissuing,
+      isL3,
+      hasL2Credentials
     }
   });
 
@@ -1312,5 +1338,44 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should start upgrade flow if L3 and with L2 credentials", async () => {
+    isReissuing.mockImplementation(() => false);
+    isL3.mockImplementation(() => true);
+    hasL2Credentials.mockImplementation(() => true);
+
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshotInDisplayingPreview: MachineSnapshot = _.merge(
+      undefined,
+      initialSnapshot,
+      {
+        value: { Issuance: "DisplayingPreview" },
+        context: InitialContext
+      } as MachineSnapshot
+    );
+
+    const actor = createActor(mockedMachine, {
+      snapshot: snapshotInDisplayingPreview
+    });
+
+    actor.start();
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Issuance: "DisplayingPreview"
+    });
+
+    actor.send({ type: "add-to-wallet" });
+
+    // Wait for the state to change
+    await waitFor(() => {
+      expect(actor.getSnapshot().value).toStrictEqual("CredentialsUpgrade");
+    });
+
+    // Assert the entry action was called, meaning the child machine was invoked
+    expect(credentialUpgradeEntrySpy).toHaveBeenCalled();
   });
 });
