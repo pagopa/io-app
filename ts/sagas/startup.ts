@@ -11,7 +11,6 @@ import {
   fork,
   put,
   select,
-  spawn,
   take,
   takeEvery,
   takeLatest
@@ -334,6 +333,8 @@ export function* initializeApplicationSaga(
     keyInfo
   );
 
+  // TODO: delete this comments
+
   // The following functions all rely on backendClient
 
   // Watch for requests to logout
@@ -351,7 +352,7 @@ export function* initializeApplicationSaga(
   //
   // Caution: this saga handles user state cleanup during logout.
   // Any changes should be made carefully to avoid regressions in session termination flows.
-  yield* spawn(watchLogoutSaga, backendClient.logout);
+  yield* fork(watchLogoutSaga, backendClient.logout);
 
   if (zendeskEnabled) {
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
