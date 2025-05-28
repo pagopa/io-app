@@ -105,7 +105,7 @@ export const ItwPresentationCredentialDetail = ({
   const isL3Credential = isItwCredential(credential.credential);
   const isDrivingLicense =
     credential.credentialType === CredentialType.DRIVING_LICENSE;
-  const shouldRenderTrustmark = isL3Credential && !isDrivingLicense;
+  const shouldRenderTrustmark = !isL3Credential || !isDrivingLicense;
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -162,6 +162,7 @@ export const ItwPresentationCredentialDetail = ({
   }
 
   const ctaProps = getCtaProps(credential, navigation, isL3Credential);
+  console.log("shouldRenderTrustmark", shouldRenderTrustmark);
 
   return (
     <ItwPresentationDetailsScreenBase
