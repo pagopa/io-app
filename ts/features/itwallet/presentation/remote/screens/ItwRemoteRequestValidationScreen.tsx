@@ -34,7 +34,6 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
    * so the app is started and the user goes through the identification or the full authentication process.
    * Here we wait for the startup status to be authenticated to avoid inconsistencies
    * between the machine and the navigation.
-   * This also applies when the token expires and the user needs to identify again.
    */
   if (statupStatus !== StartupStatusEnum.AUTHENTICATED) {
     return (
