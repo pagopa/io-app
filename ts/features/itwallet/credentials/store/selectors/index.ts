@@ -1,4 +1,4 @@
-import { pipe } from "fp-ts/lib/function";
+import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as A from "fp-ts/lib/Array";
 import * as P from "fp-ts/Predicate";
@@ -19,7 +19,7 @@ import {
   ItwJwtCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils";
-import { isItwCredential } from "../../../common/utils/itwCredentialUtils";
+import { isL3Credential } from "../../../common/utils/itwCredentialUtils";
 
 export const itwCredentialsSelector = (state: GlobalState) =>
   state.features.itWallet.credentials;
@@ -134,14 +134,10 @@ export const itwCredentialsEidStatusSelector = createSelector(
 );
 
 /**
- * Returns all credentials that do NOT conform to an ITW credential
+ * Selects all credential types with an L2 auth level
  */
-export const itwL2CredentialsSelector = createSelector(
+export const itwL2CredentialSelector = createSelector(
   itwCredentialsSelector,
   ({ credentials }) =>
-    pipe(
-      credentials,
-      A.filterMap(O.map(c => c.credential)),
-      A.filter(P.not(isItwCredential))
-    )
+    pipe(credentials, A.filterMap(identity), A.filter(P.not(isL3Credential)))
 );

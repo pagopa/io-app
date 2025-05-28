@@ -24,8 +24,9 @@ import {
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwSetAuthLevel } from "../../common/store/actions/preferences.ts";
-import { Context } from "./context";
-import { EidIssuanceEvents } from "./events";
+import { itwL2CredentialSelector } from "../../credentials/store/selectors/index.ts";
+import { Context } from "./context.ts";
+import { EidIssuanceEvents } from "./events.ts";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -37,7 +38,7 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { isL3: context.isL3FeaturesEnabled }
+      params: { isL3: context.isL3 }
     });
   },
 
@@ -230,10 +231,12 @@ export const createEidIssuanceActionsImplementation = (
       const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(state);
       const walletInstanceAttestation =
         itwWalletInstanceAttestationSelector(state);
+      const l2Credentials = itwL2CredentialSelector(state);
 
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
-        walletInstanceAttestation
+        walletInstanceAttestation,
+        l2Credentials
       };
     }
   )

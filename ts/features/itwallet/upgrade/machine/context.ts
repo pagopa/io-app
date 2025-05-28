@@ -1,12 +1,14 @@
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
+
 export type Context = {
   /**
    * Credentials that must be upgraded to L3
    */
-  credentialsToUpgrade: ReadonlyArray<string>;
+  credentialsToUpgrade: ReadonlyArray<StoredCredential>;
   /**
    * Credentials that failed the upgrade
    */
-  failedCredentials: ReadonlyArray<string>;
+  failedCredentials: ReadonlyArray<StoredCredential>;
 };
 
 export const InitialContext: Context = {

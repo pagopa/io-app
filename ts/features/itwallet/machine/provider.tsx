@@ -3,6 +3,9 @@ import { createActorContext } from "@xstate/react";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../store/hooks";
 import { itwBypassIdentityMatch } from "../../../config";
+import { createCredentialUpgradeActorsImplementation } from "../upgrade/machine/actors";
+import { createCredentialUpgradeActionsImplementation } from "../upgrade/machine/actions";
+import { itwCredentialUpgradeMachine } from "../upgrade/machine/machine";
 import createCredentialIssuanceActionsImplementation from "./credential/actions";
 import createCredentialIssuanceActorsImplementation from "./credential/actors";
 import { itwCredentialIssuanceMachine } from "./credential/machine";
@@ -29,12 +32,20 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
   const navigation = useIONavigation();
   const toast = useIOToast();
 
+  const credentialUpgradeMachine = itwCredentialUpgradeMachine.provide({
+    actions: createCredentialUpgradeActionsImplementation(store),
+    actors: createCredentialUpgradeActorsImplementation()
+  });
+
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
     guards: createEidIssuanceGuardsImplementation(store, {
       bypassIdentityMatch: itwBypassIdentityMatch
     }),
     actions: createEidIssuanceActionsImplementation(navigation, store, toast),
-    actors: createEidIssuanceActorsImplementation(store)
+    actors: {
+      ...createEidIssuanceActorsImplementation(store),
+      credentialUpgradeMachine
+    }
   });
 
   const credentialIssuanceMachine = itwCredentialIssuanceMachine.provide({

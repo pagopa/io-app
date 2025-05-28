@@ -1,6 +1,8 @@
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
+
 export type Input = {
   /**
-   * Array of credential types that must be upgraded to L3
+   * Array of credentials that must be upgraded to L3
    */
-  credentialTypes: ReadonlyArray<string>;
+  credentials: ReadonlyArray<StoredCredential>;
 };
