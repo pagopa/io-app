@@ -4402,7 +4402,7 @@
       "identification": {
         "cieWarning": {
           "noPin": {
-            "toNoCieFAQ": {
+            "toCieFAQ": {
               "title": "Non puoi continuare senza il PIN della CIE",
               "subtitle": "Se hai registrato un contatto di recupero quando hai richiesto la CIE, puoi reimpostare il PIN con l’app CieID.\n\n In alternativa, rivolgiti al tuo Comune per recuperare il PIN della tua carta.",
               "primaryAction": "Scopri cosa puoi fare",
@@ -4416,7 +4416,7 @@
             }
           },
           "noCie": {
-            "toNoCieFAQ": {
+            "toCieFAQ": {
               "title": "Non puoi continuare senza la carta di identità elettronica (CIE)",
               "subtitle": "Per ottenere i vantaggi di IT-Wallet è necessario autenticarsi con la CIE.\n\n Richiedere la CIE è facile e veloce, scopri cosa puoi fare.",
               "primaryAction": "Scopri cosa puoi fare",

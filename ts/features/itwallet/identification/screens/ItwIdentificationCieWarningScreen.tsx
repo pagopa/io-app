@@ -28,7 +28,7 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
   const { warning } = params.route.params;
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
 
-  const sectionKey = isItwValid ? "toNoCieFAQ" : "toL2Identification";
+  const sectionKey = isItwValid ? "toCieFAQ" : "toL2Identification";
 
   const t = (key: "title" | "subtitle" | "primaryAction" | "closeAction") =>
     I18n.t(

@@ -315,6 +315,7 @@ export const itwEidIssuanceMachine = setup({
           ]
         },
         L3Identification: {
+          description: "Navigates to the L3 identification screen",
           entry: "navigateToL3IdentificationScreen",
           on: {
             "select-identification-mode": [
@@ -353,6 +354,7 @@ export const itwEidIssuanceMachine = setup({
           }
         },
         L2Identification: {
+          description: "Navigates to the L2 identification screen",
           entry: "navigateToL2IdentificationScreen",
           on: {
             "select-identification-mode": [
