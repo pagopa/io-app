@@ -16,7 +16,7 @@ const ItwOfflineWalletScreen = () => {
   });
 
   useEffect(() => {
-    // Ensures that no hader is displayed other than the one mounted by the screen
+    // Ensures that no header is displayed other than the one mounted by the screen
     navigation.setOptions({
       headerShown: false,
       header: undefined
