@@ -1307,7 +1307,7 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "start", isL3: true });
 
     expect(actor.getSnapshot().context).toMatchObject({
-      isL3FeaturesEnabled: true
+      isL3: true
     });
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());

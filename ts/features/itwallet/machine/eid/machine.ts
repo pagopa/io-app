@@ -129,7 +129,7 @@ export const itwEidIssuanceMachine = setup({
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
-          actions: assign(({ event }) => ({ isL3: event.isL3 })),
+          actions: assign(({ event }) => ({ isL3: event.isL3 ?? false })),
           target: "TosAcceptance"
         },
         close: {
