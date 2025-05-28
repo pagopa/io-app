@@ -396,6 +396,10 @@ export const itwEidIssuanceMachine = setup({
             }
           },
           on: {
+            "go-to-l2-identification": {
+              target:
+                "#itwEidIssuanceMachine.UserIdentification.L2Identification"
+            },
             close: {
               actions: ["closeIssuance"]
             }

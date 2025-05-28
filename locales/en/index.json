@@ -4399,15 +4399,33 @@
       },
       "identification": {
         "cieWarning": {
-          "primaryAction": "Scopri cosa puoi fare",
-          "closeAction": "Chiudi",
           "noPin": {
-            "title": "Non puoi continuare senza il PIN della CIE",
-            "subtitle": "Se hai registrato un contatto di recupero quando hai richiesto la CIE, puoi reimpostare il PIN con l’app CieID.\n\n In alternativa, rivolgiti al tuo Comune per recuperare il PIN della tua carta."
+            "toNoCieFAQ": {
+              "title": "Non puoi continuare senza il PIN della CIE",
+              "subtitle": "Se hai registrato un contatto di recupero quando hai richiesto la CIE, puoi reimpostare il PIN con l’app CieID.\n\n In alternativa, rivolgiti al tuo Comune per recuperare il PIN della tua carta.",
+              "primaryAction": "Scopri cosa puoi fare",
+              "closeAction": "Chiudi"
+            },
+            "toL2Identification": {
+              "title": "Continua senza i vantaggi di IT-Wallet",
+              "subtitle": "Se non hai il PIN della CIE, puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
+              "primaryAction": "Continua senza IT-Wallet",
+              "closeAction": "Torna indietro"
+            }
           },
           "noCie": {
-            "title": "Non puoi continuare senza la carta di identità elettronica (CIE)",
-            "subtitle": "Per ottenere i vantaggi di IT-Wallet è necessario autenticarsi con la CIE.\n\n Richiedere la CIE è facile e veloce, scopri cosa puoi fare."
+            "toNoCieFAQ": {
+              "title": "Non puoi continuare senza la carta di identità elettronica (CIE)",
+              "subtitle": "Per ottenere i vantaggi di IT-Wallet è necessario autenticarsi con la CIE.\n\n Richiedere la CIE è facile e veloce, scopri cosa puoi fare.",
+              "primaryAction": "Scopri cosa puoi fare",
+              "closeAction": "Chiudi"
+            },
+            "toL2Identification": {
+              "title": "Continua senza i vantaggi di IT-Wallet",
+              "subtitle": "Se non hai la CIE, puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
+              "primaryAction": "Continua senza IT-Wallet",
+              "closeAction": "Torna indietro"
+            }
           }
         },
         "l3": {
