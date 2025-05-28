@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0-rc.5](https://github.com/pagopa/io-app/compare/3.6.0-rc.4...3.6.0-rc.5) (2025-05-27)
+
+
+### Features
+
+* [[IOCOM-2146](https://pagopa.atlassian.net/browse/IOCOM-2146),[IOCOM-2149](https://pagopa.atlassian.net/browse/IOCOM-2149)] Announce archive/restore ([#7015](https://github.com/pagopa/io-app/issues/7015)) ([2374446](https://github.com/pagopa/io-app/commit/23744463854eb05d0ec22bd9339f3b2919fba046))
+* **IT Wallet:** [[SIW-2444](https://pagopa.atlassian.net/browse/SIW-2444)] Add `useOfflineToastGuard` when opening FIMS from MDL details ([#7016](https://github.com/pagopa/io-app/issues/7016)) ([851da3c](https://github.com/pagopa/io-app/commit/851da3c88843c4ab30519c7d7c6a449733b1cae6))
+
+
+### Bug Fixes
+
+* [[IOBP-1700](https://pagopa.atlassian.net/browse/IOBP-1700)] Payment webview alert flow closed ([#7025](https://github.com/pagopa/io-app/issues/7025)) ([1b26fed](https://github.com/pagopa/io-app/commit/1b26fed89af7bb19bcdf778729d89235d890db17))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2397](https://pagopa.atlassian.net/browse/SIW-2397)] Update actions in `ItwPaywallComponent` ([#7022](https://github.com/pagopa/io-app/issues/7022)) ([9dc7812](https://github.com/pagopa/io-app/commit/9dc7812c32d1eff4eeabb4ce8bfbbdeba16fbc5d))
+* **IT Wallet:** [[SIW-2435](https://pagopa.atlassian.net/browse/SIW-2435)] Update discovery info component ([#7013](https://github.com/pagopa/io-app/issues/7013)) ([0d2ba95](https://github.com/pagopa/io-app/commit/0d2ba9595f061e5d59fe3f187242045b76d9bc5c))
+* [[IOBP-1696](https://pagopa.atlassian.net/browse/IOBP-1696)] Add missing key in list render children ([#7018](https://github.com/pagopa/io-app/issues/7018)) ([acadb55](https://github.com/pagopa/io-app/commit/acadb550f6a53c7b9c6c3683570534d92f89222e))
+
 ## [3.6.0-rc.4](https://github.com/pagopa/io-app/compare/3.6.0-rc.3...3.6.0-rc.4) (2025-05-26)
 
 

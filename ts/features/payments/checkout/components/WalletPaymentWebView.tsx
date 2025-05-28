@@ -39,7 +39,7 @@ const WalletPaymentWebView = ({
         if (event.url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA)) {
           onSuccess?.(event.url);
         }
-        if (event.url === "about:blank") {
+        if (event.url === "about:blank" && event.isTopFrame) {
           onCancel?.(WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER);
         }
         return !event.url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA);
