@@ -1,20 +1,21 @@
-import { View } from "react-native";
-import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import {
-  ButtonOutline,
-  ButtonSolid,
-  ButtonSolidProps,
+  IOButton,
+  IOButtonBlockSpecificProps,
+  ContentWrapper,
   IOPictograms,
   IOSpacingScale,
-  IOStyles,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import {
   SafeAreaView,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import I18n from "../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { WithTestID } from "../../../types/WithTestID";
 import {
   addTicketCustomField,
@@ -24,14 +25,11 @@ import {
   zendeskFCICategory,
   zendeskFciId
 } from "../../../utils/supportAssistance";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../zendesk/store/actions";
 import { fciSignatureRequestIdSelector } from "../store/reducers/fciSignatureRequest";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { InfoScreenComponent } from "./InfoScreenComponent";
 
 export type Props = WithTestID<{
@@ -60,9 +58,9 @@ const ErrorComponent = (props: Props) => {
     dispatch(
       zendeskSupportStart({
         startingRoute: "n/a",
-        assistanceForPayment: false,
-        assistanceForCard: false,
-        assistanceForFci: true
+        assistanceType: {
+          fci: true
+        }
       })
     );
     dispatch(zendeskSelectedCategory(zendeskFCICategory));
@@ -76,28 +74,25 @@ const ErrorComponent = (props: Props) => {
     }
   };
 
-  const retryButtonProps: ButtonSolidProps = {
+  const retryButtonProps: Omit<IOButtonBlockSpecificProps, "variant"> = {
     testID: "FciRetryButtonTestID",
     onPress: props.onPress,
     fullWidth: true,
-    label: I18n.t("features.fci.errors.buttons.retry"),
-    accessibilityLabel: I18n.t("features.fci.errors.buttons.retry")
+    label: I18n.t("features.fci.errors.buttons.retry")
   };
 
-  const closeButtonProps: ButtonSolidProps = {
+  const closeButtonProps: Omit<IOButtonBlockSpecificProps, "variant"> = {
     testID: "FciCloseButtonTestID",
     onPress: props.onPress,
     fullWidth: true,
-    label: I18n.t("features.fci.errors.buttons.close"),
-    accessibilityLabel: I18n.t("features.fci.errors.buttons.close")
+    label: I18n.t("features.fci.errors.buttons.close")
   };
 
-  const assistanceButtonProps: ButtonSolidProps = {
+  const assistanceButtonProps: Omit<IOButtonBlockSpecificProps, "variant"> = {
     testID: "FciAssistanceButtonTestID",
     fullWidth: true,
     onPress: handleAskAssistance,
-    label: I18n.t("features.fci.errors.buttons.assistance"),
-    accessibilityLabel: I18n.t("features.fci.errors.buttons.assistance")
+    label: I18n.t("features.fci.errors.buttons.assistance")
   };
 
   /**
@@ -108,43 +103,43 @@ const ErrorComponent = (props: Props) => {
     if (props.retry && props.assistance) {
       return (
         <>
-          <ButtonSolid {...retryButtonProps} />
+          <IOButton variant="solid" {...retryButtonProps} />
           <VSpacer size={8} />
-          <ButtonOutline {...assistanceButtonProps} />
+          <IOButton variant="outline" {...assistanceButtonProps} />
         </>
       );
     }
     if (props.retry) {
       return (
         <>
-          <ButtonSolid {...retryButtonProps} />
+          <IOButton variant="solid" {...retryButtonProps} />
           <VSpacer size={8} />
-          <ButtonOutline {...closeButtonProps} />
+          <IOButton variant="outline" {...closeButtonProps} />
         </>
       );
     }
     if (props.assistance) {
       return (
         <>
-          <ButtonSolid
+          <IOButton
+            variant="solid"
             {...{
               ...closeButtonProps,
-              label: I18n.t("features.fci.errors.buttons.back"),
-              accessibilityLabel: I18n.t("features.fci.errors.buttons.back")
+              label: I18n.t("features.fci.errors.buttons.back")
             }}
           />
           <VSpacer size={8} />
-          <ButtonOutline {...assistanceButtonProps} />
+          <IOButton variant="outline" {...assistanceButtonProps} />
         </>
       );
     }
-    return <ButtonOutline {...closeButtonProps} />;
+    return <IOButton variant="outline" {...closeButtonProps} />;
   };
 
   return (
     <SafeAreaView
       edges={["top", "left", "right"]}
-      style={IOStyles.flex}
+      style={{ flex: 1 }}
       testID={props.testID}
     >
       <InfoScreenComponent
@@ -153,14 +148,14 @@ const ErrorComponent = (props: Props) => {
         body={props.subTitle}
         email={props.email}
       />
-      <View
-        style={[
-          IOStyles.horizontalContentPadding,
-          { paddingBottom: Math.max(insets.bottom, DEFAULT_BOTTOM_PADDING) }
-        ]}
+      <ContentWrapper
+        style={{
+          paddingBottom: Math.max(insets.bottom, DEFAULT_BOTTOM_PADDING)
+        }}
       >
+        {/* TODO: Add `FooterActions` component. Replace all the custom code here. */}
         {footerButtons()}
-      </View>
+      </ContentWrapper>
     </SafeAreaView>
   );
 };

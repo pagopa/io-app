@@ -3,8 +3,8 @@ import {
   BodySmall,
   H3,
   IOColors,
-  IOStyles,
   IOVisualCostants,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -23,7 +23,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { formatNumberCurrencyCents } from "../../common/utils/strings";
 import { IDPayDetailsRoutes } from "../../details/navigation";
-import { IdPayBarcodeExpireProgressBar } from "../components/BarcodeExpirationProgressBar";
+import { IdPayBarcodeExpireProgressBar } from "../components/IdPayBarcodeExpireProgressBar";
 import { IdPayBarcodeParamsList } from "../navigation/params";
 import { idPayBarcodeByInitiativeIdSelector } from "../store";
 import { idPayGenerateBarcode } from "../store/actions";
@@ -77,7 +77,7 @@ const IdPayBarcodeResultScreen = () => {
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: navigateToInitiativeDetails
           }}
-          pictogram="umbrellaNew"
+          pictogram="umbrella"
         />
       ),
       barcode => (
@@ -93,6 +93,7 @@ const IdPayBarcodeResultScreen = () => {
 // -------------------- result screens --------------------
 
 const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
+  const theme = useIOTheme();
   const trx = barcode.trxCode.toUpperCase();
   const [isBarcodeExpired, setIsBarcodeExpired] = useState(false);
   // expire check is handled by the progress bar
@@ -133,11 +134,11 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
       })}
     >
       <View style={styles.barcodeContainer}>
-        <View style={[IOStyles.row, { alignSelf: "center" }]}>
-          <BodySmall weight="Regular" color="black">
+        <View style={{ flexDirection: "row", alignSelf: "center" }}>
+          <BodySmall weight="Regular" color={theme["textBody-default"]}>
             {I18n.t("idpay.barCode.resultScreen.success.validUpTo")}
           </BodySmall>
-          <BodySmall weight="Semibold" color="black">
+          <BodySmall weight="Semibold" color={theme["textBody-default"]}>
             {formatNumberCurrencyCents(barcode.residualBudgetCents)}
           </BodySmall>
         </View>
@@ -187,7 +188,7 @@ const BarcodeExpiredContent = ({
 
 const LoadingScreen = () => (
   <SafeAreaView style={styles.loadingWrapper}>
-    <LoadingIndicator size={48} color="aqua" />
+    <LoadingIndicator />
     <VSpacer size={24} />
     <H3>{I18n.t("idpay.barCode.resultScreen.loading.body")}</H3>
     <VSpacer size={8} />
@@ -208,6 +209,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   barcodeContainer: {
+    /* TODO: Dark mode: Replace with theme values */
     borderColor: IOColors["grey-100"],
     borderWidth: 1,
     padding: 16,

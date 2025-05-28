@@ -378,15 +378,16 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                         >
                           <View>
                             <Text
-                              allowFontScaling={false}
+                              accessibilityRole="header"
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -408,15 +409,15 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -479,7 +480,8 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -488,38 +490,41 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                       [
                                         {
                                           "alignItems": "center",
-                                          "borderRadius": 4,
+                                          "borderCurve": "continuous",
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 16,
-                                          "textAlignVertical": "center",
-                                        },
-                                        {
                                           "overflow": "hidden",
-                                        },
-                                        false,
-                                        {
-                                          "height": 40,
-                                        },
-                                        {
-                                          "backgroundColor": "#0073E6",
+                                          "textAlignVertical": "center",
                                         },
                                         false,
                                         {
                                           "backgroundColor": undefined,
                                         },
+                                        {
+                                          "paddingHorizontal": 24,
+                                        },
+                                        {
+                                          "backgroundColor": "#0B3EE3",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
+                                        },
+                                        {},
                                       ]
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
                                             "alignItems": "center",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                          },
+                                          {
+                                            "columnGap": 8,
                                           },
                                           false,
                                         ]
@@ -528,25 +533,33 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                       <Text
                                         accessibilityElementsHidden={true}
                                         accessible={false}
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -577,7 +590,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
-                                      "busy": undefined,
+                                      "busy": false,
                                       "checked": undefined,
                                       "disabled": false,
                                       "expanded": undefined,
@@ -612,7 +625,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  onTouchEnd={[Function]}
                                   style={
                                     {
                                       "alignSelf": "flex-start",
@@ -624,47 +636,80 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                       [
                                         {
                                           "alignItems": "center",
+                                          "borderCurve": "continuous",
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         false,
+                                        {},
                                         {
-                                          "columnGap": 8,
+                                          "paddingHorizontal": 0,
+                                        },
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderColor": "#0B3EE3",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": undefined,
                                         },
                                         {},
-                                        false,
                                       ]
                                     }
                                   >
-                                    <Text
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      allowFontScaling={false}
-                                      ellipsizeMode="tail"
-                                      importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={1}
+                                    <View
                                       style={
                                         [
-                                          {},
                                           {
-                                            "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": undefined,
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
                                           },
                                           {
-                                            "color": undefined,
+                                            "columnGap": 8,
                                           },
+                                          false,
                                         ]
                                       }
                                     >
-                                      Secondary Action
-                                    </Text>
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
+                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
+                                          ]
+                                        }
+                                      >
+                                        Secondary Action
+                                      </Text>
+                                    </View>
                                   </View>
                                 </View>
                               </View>

@@ -3,8 +3,8 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { FeaturedService } from "../../../../../../definitions/services/FeaturedService";
 import { FeaturedServices } from "../../../../../../definitions/services/FeaturedServices";
-import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
-import { ServicesClient } from "../../../common/api/__mocks__/client";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { ServicesClient } from "../../../common/api/__mocks__/servicesClient";
 import { featuredServicesGet } from "../../store/actions";
 import { handleGetFeaturedServices } from "../handleGetFeaturedServices";
 

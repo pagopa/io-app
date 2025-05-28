@@ -1,6 +1,5 @@
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { NotificationsPreferencesPreview } from "../NotificationsPreferencesPreview";
@@ -27,11 +26,7 @@ describe("NotificationsPreferencesPreview", () => {
 
 const renderComponent = (previewOn: boolean, reminderOn: boolean) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const dsEnabledState = appReducer(
-    globalState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-  const store = createStore(appReducer, dsEnabledState as any);
+  const store = createStore(appReducer, globalState as any);
 
   return renderScreenWithNavigationStoreContext(
     () => (

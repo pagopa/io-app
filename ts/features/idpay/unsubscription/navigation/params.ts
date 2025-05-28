@@ -1,4 +1,4 @@
-import { IdPayUnsubscriptionConfirmationScreenParams } from "../screens/UnsubscriptionConfirmationScreen";
+import { IdPayUnsubscriptionConfirmationScreenParams } from "../screens/IdPayUnsubscriptionConfirmationScreen";
 import { IdPayUnsubscriptionRoutes } from "./routes";
 
 export type IdPayUnsubscriptionParamsList = {

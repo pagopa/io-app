@@ -100,3 +100,5 @@ export const generateInstallationId = () => `001${uuid().replace(/-/g, "")}`;
 
 export const openSystemNotificationSettingsScreen = () =>
   NotificationsUtils.openSettings();
+
+export const generateTokenRegistrationTime = () => new Date().getTime();

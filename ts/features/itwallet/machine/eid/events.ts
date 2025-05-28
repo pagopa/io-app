@@ -1,14 +1,12 @@
 import { ErrorActorEvent } from "xstate";
-import { LocalIdpsFallback } from "../../../../utils/idps";
+import { SpidIdp } from "../../../../utils/idps";
+import { CieWarningType } from "../../identification/screens/ItwIdentificationCieWarningScreen.tsx";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
-export type Reset = {
-  type: "reset";
-};
-
 export type Start = {
   type: "start";
+  isL3?: boolean;
 };
 
 export type AcceptTos = {
@@ -36,9 +34,14 @@ export type SelectIdentificationMode = {
   mode: IdentificationMode;
 };
 
+export type GoToCieWarning = {
+  type: "go-to-cie-warning";
+  warning: CieWarningType;
+};
+
 export type SelectSpidIdp = {
   type: "select-spid-idp";
-  idp: LocalIdpsFallback;
+  idp: SpidIdp;
 };
 
 export type CiePinEntered = {
@@ -82,8 +85,15 @@ export type ExternalErrorEvent = {
   error?: Error;
 };
 
+export type StartReissuing = {
+  type: "start-reissuing";
+};
+
+export type Reset = {
+  type: "reset";
+};
+
 export type EidIssuanceEvents =
-  | Reset
   | Start
   | AcceptTos
   | AcceptIpzsPrivacy
@@ -101,4 +111,7 @@ export type EidIssuanceEvents =
   | Abort
   | RevokeWalletInstance
   | ErrorActorEvent
-  | ExternalErrorEvent;
+  | ExternalErrorEvent
+  | StartReissuing
+  | GoToCieWarning
+  | Reset;

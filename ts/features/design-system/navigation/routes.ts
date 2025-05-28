@@ -74,6 +74,18 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "IOSCROLLVIEW_WITH_LIST_ITEMS",
       title: "IOScrollView w/ List items"
     },
+    IOLISTVIEW_LARGE_HEADER: {
+      route: "IOLISTVIEW_LARGE_HEADER",
+      title: "IOListView w/ Large header"
+    },
+    FORSCESCROLLDOWNVIEW_ACTIONS: {
+      route: "FORSCESCROLLDOWNVIEW_ACTIONS",
+      title: "ForceScrollDownView w/ Actions"
+    },
+    FORSCESCROLLDOWNVIEW_CUSTOM_SLOT: {
+      route: "FORSCESCROLLDOWNVIEW_CUSTOM_SLOT",
+      title: "ForceScrollDownView w/ Custom slot"
+    },
     BONUS_CARD_SCREEN: {
       route: "BONUS_CARD_SCREEN",
       title: "Bonus Card Screen"
@@ -141,13 +153,9 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   LEGACY: {
-    TEXT_FIELDS: {
-      route: "DESIGN_SYSTEM_LEGACY_TEXT_FIELDS",
-      title: "Text Fields"
-    },
-    LIST_ITEMS: {
-      route: "DESIGN_SYSTEM_LEGACY_LIST_ITEMS",
-      title: "List Items"
+    BUTTONS: {
+      route: "DESIGN_SYSTEM_LEGACY_BUTTONS",
+      title: "Buttons"
     },
     ADVICE: {
       route: "DESIGN_SYSTEM_LEGACY_ADVICE",

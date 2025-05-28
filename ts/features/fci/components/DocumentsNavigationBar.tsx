@@ -3,16 +3,16 @@ import {
   IOColors,
   HSpacer,
   H6,
-  IOStyles,
   IconButton,
-  WithTestID
+  WithTestID,
+  ContentWrapper
 } from "@pagopa/io-app-design-system";
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: IOColors.white,
     flexDirection: "row",
-    borderColor: IOColors.bluegreyLight,
+    borderColor: IOColors["grey-200"],
     alignItems: "center",
     paddingTop: 12,
     paddingBottom: 14
@@ -85,7 +85,9 @@ const DocumentsNavigationBar = (props: Props) => (
       <>
         {renderNavigationComponent(props, props.titleLeft)}
         <View style={{ flex: 1 }} />
-        <H6 style={IOStyles.horizontalContentPadding}>{props.titleRight}</H6>
+        <ContentWrapper>
+          <H6>{props.titleRight}</H6>
+        </ContentWrapper>
       </>
     )}
     {props.indicatorPosition === "right" && (

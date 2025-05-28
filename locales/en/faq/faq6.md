@@ -1,1 +1,0 @@
-The SPID identity is issued by the Identity Provider, private individuals accredited by AgID who, in compliance with the rules issued by the Agency, provide digital identities and manage user authentication. Your Identity Provider is the person you have chosen as the provider of your SPID identity.

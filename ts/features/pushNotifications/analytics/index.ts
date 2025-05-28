@@ -1,6 +1,10 @@
 import { PushNotificationsContentTypeEnum } from "../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../definitions/backend/ReminderStatus";
-import { mixpanelTrack } from "../../../mixpanel";
+import {
+  enqueueMixpanelEvent,
+  isMixpanelInstanceInitialized,
+  mixpanelTrack
+} from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 
 export const trackNotificationInstallationTokenNotChanged = () =>
@@ -47,11 +51,18 @@ export const trackNotificationsOptInSkipSystemPermissions = () =>
     buildEventProperties("UX", "action")
   );
 
-export const trackNewPushNotificationsTokenGenerated = () =>
-  void mixpanelTrack(
-    "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE",
-    buildEventProperties("TECH", undefined)
-  );
+export const trackNewPushNotificationsTokenGenerated = (
+  id: string,
+  userOptedIn: boolean
+) => {
+  const eventName = "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE";
+  const props = buildEventProperties("TECH", undefined);
+  if (isMixpanelInstanceInitialized()) {
+    mixpanelTrack(eventName, props);
+  } else if (userOptedIn) {
+    enqueueMixpanelEvent(eventName, id, props);
+  }
+};
 
 export const trackPushNotificationTokenUploadSucceeded = () =>
   void mixpanelTrack(

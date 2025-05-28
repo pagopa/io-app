@@ -1,30 +1,26 @@
-import { useRef, useState, useCallback } from "react";
-import {
-  Image,
-  ImageRequireSource,
-  ImageURISource,
-  StyleSheet,
-  View
-} from "react-native";
 import {
   IOColors,
-  IOIconSizeScale,
   IOSpacingScale,
   IOVisualCostants,
   Icon,
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import { useCallback, useRef, useState } from "react";
+import {
+  Image,
+  ImageSourcePropType,
+  ImageURISource,
+  StyleSheet,
+  View
+} from "react-native";
 import { addCacheTimestampToUri } from "../../../../../utils/image";
 
 type AvatarDoubleProps = {
-  backgroundLogoUri?:
-    | ImageRequireSource
-    | ImageURISource
-    | ReadonlyArray<ImageURISource>;
+  backgroundLogoUri?: ImageSourcePropType;
 };
 
-const avatarContainerSize: IOIconSizeScale = 30;
+const avatarContainerSize = 30;
 const avatarDoubleRadiusSizeSmall: number = 6;
 const internalSpaceDefaultSize: number = 3;
 const internalSpacePlaceholderDefaultSize: IOSpacingScale = 6;
@@ -54,12 +50,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const getImageState = (
-  backgroundLogoUri?:
-    | ImageRequireSource
-    | ImageURISource
-    | ReadonlyArray<ImageURISource>
-) => {
+const getImageState = (backgroundLogoUri?: ImageSourcePropType) => {
   switch (typeof backgroundLogoUri) {
     case "number":
       return backgroundLogoUri;

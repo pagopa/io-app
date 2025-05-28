@@ -12,13 +12,11 @@ import {
   NativeSwitch,
   RadioGroup,
   RadioItem,
-  SwitchLabel,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { ComponentProps, useState } from "react";
 import { Alert, Text, View } from "react-native";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
@@ -62,8 +60,6 @@ export const DSSelection = () => {
             <NativeSwitchShowroom />
             {/* ListItemSwitch */}
             <ListItemSwitchShowroom />
-            {/* SwitchLabel */}
-            {renderAnimatedSwitch()}
           </VStack>
         </VStack>
       </VStack>
@@ -308,29 +304,17 @@ const AnimatedMessageCheckboxShowroom = () => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
-    <>
-      <DSComponentViewerBox name="AnimatedMessageCheckbox">
-        <View style={[IOStyles.row, IOStyles.alignCenter]}>
-          <AnimatedMessageCheckbox checked={isEnabled} />
-          <HSpacer size={24} />
-          <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
-        </View>
-      </DSComponentViewerBox>
-    </>
+    <DSComponentViewerBox name="AnimatedMessageCheckbox">
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <AnimatedMessageCheckbox checked={isEnabled} />
+        <HSpacer size={24} />
+        <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
+      </View>
+    </DSComponentViewerBox>
   );
 };
 
 // SWITCH
-
-const renderAnimatedSwitch = () => (
-  <DSComponentViewerBox name="AnimatedSwitch, dismissed in favor of the native one">
-    <VStack space={componentInnerMargin}>
-      <SwitchLabel label="This is a test" />
-      <SwitchLabel label="This is a test with a very loooong looooooong loooooooong text" />
-    </VStack>
-  </DSComponentViewerBox>
-);
-
 const NativeSwitchShowroom = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -465,7 +449,7 @@ const ListItemSwitchShowroom = () => (
         value={false}
         badge={{
           text: "Attivo",
-          variant: "info"
+          variant: "highlight"
         }}
         description="Inquadra il codice QR mostrato dall’esercente e segui le istruzioni in app per autorizzare la spesa."
       />
@@ -476,7 +460,7 @@ const ListItemSwitchShowroom = () => (
         value={false}
         badge={{
           text: "Attivo",
-          variant: "info"
+          variant: "highlight"
         }}
       />
     </DSComponentViewerBox>

@@ -4,11 +4,14 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { startApplicationInitialization } from "../../store/actions/application";
-import { profileFirstLogin, profileUpsert } from "../../store/actions/profile";
+import {
+  profileFirstLogin,
+  profileUpsert
+} from "../../features/settings/common/store/actions";
 import {
   hasProfileEmail,
   isProfileFirstOnBoarding
-} from "../../store/reducers/profile";
+} from "../../features/settings/common/store/utils/guards";
 import { ReduxSagaEffect } from "../../types/utils";
 
 function* enableProfileInboxWebhook() {

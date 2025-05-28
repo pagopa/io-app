@@ -1,7 +1,7 @@
 import {
   Alert,
+  ContentWrapper,
   H4,
-  IOStyles,
   IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -9,7 +9,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 
 import { ReactElement } from "react";
-import { View } from "react-native";
 import { connect } from "react-redux";
 import { Card } from "../../../../../definitions/cgn/Card";
 import {
@@ -34,7 +33,7 @@ import {
   cgnMerchantVersionSelector,
   isCGNEnabledSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { profileSelector } from "../../../../store/reducers/profile";
+import { profileSelector } from "../../../settings/common/store/selectors";
 import { GlobalState } from "../../../../store/reducers/types";
 import { formatDateAsShortFormat } from "../../../../utils/dates";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
@@ -49,7 +48,6 @@ import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
-import { navigateToCgnMerchantsTabs } from "../navigation/actions";
 import { CgnDetailsParamsList } from "../navigation/params";
 import CGN_ROUTES from "../navigation/routes";
 import { cgnDetails } from "../store/actions/details";
@@ -118,7 +116,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
     // subText is a blank space to avoid default value when it is undefined
     return (
       <OperationResultScreenContent
-        pictogram="umbrellaNew"
+        pictogram="umbrella"
         title={I18n.t("wallet.methodDetails.error.title")}
         isHeaderVisible
         subtitle={I18n.t("wallet.methodDetails.error.subtitle")}
@@ -142,11 +140,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
     props.isCgnEnabled && props.cgnDetails?.status === StatusEnum.ACTIVATED;
 
   const onPressShowCgnDiscounts = () => {
-    if (props.isMerchantV2Enabled) {
-      props.navigateToMerchantsTabs();
-    } else {
-      navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES);
-    }
+    navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES);
   };
 
   const footerActions: IOScrollViewActions | undefined = (() => {
@@ -201,6 +195,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
       }
       cardFooter={
         <H4
+          color="black"
           style={{
             textAlign: "center",
             marginHorizontal: 16,
@@ -215,7 +210,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
         </H4>
       }
     >
-      <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
+      <ContentWrapper style={{ flex: 1 }}>
         {CardRevoked.is(props.cgnDetails) && (
           <Alert
             variant="error"
@@ -245,7 +240,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
         {canDisplayEycaDetails && <EycaDetailComponent />}
         <VSpacer size={24} />
         {CardActivated.is(props.cgnDetails) && <CgnUnsubscribe />}
-      </View>
+      </ContentWrapper>
       <SectionStatusComponent sectionKey={"cgn"} />
     </BonusCardScreenComponent>
   );
@@ -265,8 +260,7 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   unsubscribe: () => dispatch(cgnUnsubscribe.request()),
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
-  loadCgnDetails: () => dispatch(cgnDetails.request()),
-  navigateToMerchantsTabs: () => navigateToCgnMerchantsTabs()
+  loadCgnDetails: () => dispatch(cgnDetails.request())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);

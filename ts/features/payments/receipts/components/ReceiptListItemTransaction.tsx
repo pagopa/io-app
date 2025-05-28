@@ -16,7 +16,9 @@ type Props = {
 
 const ReceiptListItemTransaction = memo(
   ({ transaction, onPress }: Props) => {
-    const recipient = transaction.payeeName ?? "";
+    const recipient = transaction.isCart
+      ? I18n.t("features.payments.transactions.multiplePayment")
+      : transaction.payeeName ?? "";
 
     const amountText = pipe(
       transaction.amount,
@@ -41,7 +43,7 @@ const ReceiptListItemTransaction = memo(
 
     const transactionPayeeLogoUri = getTransactionLogo(transaction);
 
-    const accessibleAmountText = getAccessibleAmountText(amountText);
+    const accessibleAmountText = getAccessibleAmountText(amountText) ?? "";
     const accessibilityLabel = `${recipient}; ${accessibleDatetime}; ${accessibleAmountText}`;
 
     const TransactionEmptyIcon = useMemo(() => <Avatar size="small" />, []);
@@ -57,12 +59,13 @@ const ReceiptListItemTransaction = memo(
         <ListItemTransaction
           paymentLogoIcon={TransactionEmptyIcon}
           onPress={onPress}
-          accessible={true}
+          accessible
+          accessibilityLabel={accessibilityLabel}
           title={I18n.t("features.payments.transactions.multiplePayment")}
           subtitle={datetime}
           transaction={{
             amount: amountText,
-            amountAccessibilityLabel: accessibilityLabel
+            amountAccessibilityLabel: accessibleAmountText
           }}
         />
       );
@@ -72,12 +75,13 @@ const ReceiptListItemTransaction = memo(
       <ListItemTransaction
         paymentLogoIcon={transactionLogo}
         onPress={onPress}
-        accessible={true}
         title={recipient}
+        accessible
+        accessibilityLabel={accessibilityLabel}
         subtitle={datetime}
         transaction={{
           amount: amountText,
-          amountAccessibilityLabel: accessibilityLabel
+          amountAccessibilityLabel: accessibleAmountText
         }}
       />
     );

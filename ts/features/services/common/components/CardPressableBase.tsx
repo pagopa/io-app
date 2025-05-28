@@ -3,9 +3,10 @@ import {
   useScaleAnimation,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useCallback } from "react";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
-import { Pressable } from "react-native";
+import { GestureResponderEvent, Pressable } from "react-native";
 import Animated from "react-native-reanimated";
 
 type CardPressableBaseProps = WithTestID<PressableBaseProps>;
@@ -18,13 +19,23 @@ export const CardPressableBase = ({
 }: PropsWithChildren<CardPressableBaseProps>) => {
   const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation();
 
+  const handleOnPress = useCallback(
+    (event: GestureResponderEvent) => {
+      if (onPress) {
+        ReactNativeHapticFeedback.trigger("impactLight");
+        onPress(event);
+      }
+    },
+    [onPress]
+  );
+
   if (onPress === undefined) {
     return <>{children}</>;
   }
 
   return (
     <Pressable
-      onPress={onPress}
+      onPress={handleOnPress}
       testID={testID}
       accessible={true}
       accessibilityLabel={accessibilityLabel}

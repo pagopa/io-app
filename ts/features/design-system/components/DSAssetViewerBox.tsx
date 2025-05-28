@@ -180,13 +180,6 @@ export const DSAssetViewerBox = ({
           >
             {name}
           </Text>
-          // <H5
-          //   color={"bluegrey"}
-          //   style={{ alignSelf: "flex-start" }}
-          //   weight={"Regular"}
-          // >
-          //   {name}
-          // </H5>
         )}
       </View>
     </View>

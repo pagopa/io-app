@@ -393,6 +393,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   "justifyContent": "space-between",
                                 },
                                 {
+                                  "columnGap": 18,
+                                },
+                                {
                                   "transform": [
                                     {
                                       "scale": undefined,
@@ -402,75 +405,63 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               ]
                             }
                           >
-                            <View
+                            <RNSVGSvgView
+                              accessibilityElementsHidden={true}
+                              accessibilityLabel=""
+                              accessible={false}
+                              align="xMidYMid"
+                              bbHeight={36}
+                              bbWidth={36}
+                              color="#0B3EE3"
+                              focusable={false}
+                              height={36}
+                              importantForAccessibility="no-hide-descendants"
+                              meetOrSlice={0}
+                              minX={0}
+                              minY={0}
                               style={
-                                {
-                                  "marginRight": 12,
-                                }
+                                [
+                                  {
+                                    "backgroundColor": "transparent",
+                                    "borderWidth": 0,
+                                  },
+                                  {
+                                    "flex": 0,
+                                    "height": 36,
+                                    "width": 36,
+                                  },
+                                ]
                               }
+                              vbHeight={24}
+                              vbWidth={24}
+                              width={36}
                             >
-                              <RNSVGSvgView
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel=""
-                                accessible={false}
-                                align="xMidYMid"
-                                bbHeight={24}
-                                bbWidth={24}
-                                focusable={false}
-                                height={24}
-                                importantForAccessibility="no-hide-descendants"
-                                meetOrSlice={0}
-                                minX={0}
-                                minY={0}
-                                style={
-                                  [
-                                    {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                    },
-                                    {
-                                      "flex": 0,
-                                      "height": 24,
-                                      "width": 24,
-                                    },
-                                  ]
+                              <RNSVGGroup
+                                fill={
+                                  {
+                                    "payload": 4278190080,
+                                    "type": 0,
+                                  }
                                 }
-                                tintColor="#0B3EE3"
-                                vbHeight={24}
-                                vbWidth={24}
-                                width={24}
                               >
-                                <RNSVGGroup
-                                  color="#0B3EE3"
+                                <RNSVGPath
+                                  clipRule={0}
+                                  d="M3.5 1.50002v2.02943a11.99996 11.99996 0 0 1 17.3502.36667 11.99962 11.99962 0 0 1 3.0426 6.50368 11.99893 11.99893 0 0 1-1.2153 7.0765 11.99986 11.99986 0 0 1-5.038 5.116 12.00093 12.00093 0 0 1-7.0571 1.3237 12.0008 12.0008 0 0 1-6.54956-2.9424c-.413-.3667-.45055-.9988-.08387-1.4118.36668-.413.99873-.4505 1.41173-.0838a9.99994 9.99994 0 0 0 5.458 2.452 10.00032 10.00032 0 0 0 5.8809-1.1031 10 10 0 0 0 4.1983-4.2633 9.99951 9.99951 0 0 0 1.0128-5.8971 9.99999 9.99999 0 0 0-2.5355-5.41974 10.0002 10.0002 0 0 0-5.1759-3.00192 10.00016 10.00016 0 0 0-5.96336.49061 9.99978 9.99978 0 0 0-3.3774 2.26457H7c.55228 0 1 .44771 1 1 0 .55228-.44772 1-1 1H2.5a1 1 0 0 1-1-1v-4.5c0-.55229.44772-1 1-1s1 .44771 1 1ZM12 7c.5523 0 1 .44772 1 1v4.5858l2.7071 2.7071c.3905.3905.3905 1.0237 0 1.4142-.3905.3905-1.0237.3905-1.4142 0l-3-3A1.0001 1.0001 0 0 1 11 13V8c0-.55228.4477-1 1-1Z"
                                   fill={
                                     {
-                                      "payload": 4278190080,
-                                      "type": 0,
+                                      "type": 2,
                                     }
                                   }
-                                >
-                                  <RNSVGPath
-                                    clipRule={0}
-                                    d="M3.5 1.50002v2.02943a11.99996 11.99996 0 0 1 17.3502.36667 11.99962 11.99962 0 0 1 3.0426 6.50368 11.99893 11.99893 0 0 1-1.2153 7.0765 11.99986 11.99986 0 0 1-5.038 5.116 12.00093 12.00093 0 0 1-7.0571 1.3237 12.0008 12.0008 0 0 1-6.54956-2.9424c-.413-.3667-.45055-.9988-.08387-1.4118.36668-.413.99873-.4505 1.41173-.0838a9.99994 9.99994 0 0 0 5.458 2.452 10.00032 10.00032 0 0 0 5.8809-1.1031 10 10 0 0 0 4.1983-4.2633 9.99951 9.99951 0 0 0 1.0128-5.8971 9.99999 9.99999 0 0 0-2.5355-5.41974 10.0002 10.0002 0 0 0-5.1759-3.00192 10.00016 10.00016 0 0 0-5.96336.49061 9.99978 9.99978 0 0 0-3.3774 2.26457H7c.55228 0 1 .44771 1 1 0 .55228-.44772 1-1 1H2.5a1 1 0 0 1-1-1v-4.5c0-.55229.44772-1 1-1s1 .44771 1 1ZM12 7c.5523 0 1 .44772 1 1v4.5858l2.7071 2.7071c.3905.3905.3905 1.0237 0 1.4142-.3905.3905-1.0237.3905-1.4142 0l-3-3A1.0001 1.0001 0 0 1 11 13V8c0-.55228.4477-1 1-1Z"
-                                    fill={
-                                      {
-                                        "type": 2,
-                                      }
-                                    }
-                                    fillRule={0}
-                                    propList={
-                                      [
-                                        "fill",
-                                        "fillRule",
-                                      ]
-                                    }
-                                  />
-                                </RNSVGGroup>
-                              </RNSVGSvgView>
-                            </View>
+                                  fillRule={0}
+                                  propList={
+                                    [
+                                      "fill",
+                                      "fillRule",
+                                    ]
+                                  }
+                                />
+                              </RNSVGGroup>
+                            </RNSVGSvgView>
                             <View
                               style={
                                 {
@@ -480,14 +471,14 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               }
                             >
                               <Text
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -503,19 +494,20 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
-                        enableDismissOnClose={true}
-                        footerComponent={[Function]}
-                        handleComponent={[Function]}
-                        handleComponentAccessibility={
+                        backgroundStyle={
                           {
-                            "accessible": false,
+                            "backgroundColor": "#FFFFFF",
                           }
                         }
+                        enableDismissOnClose={true}
+                        enableDynamicSizing={false}
+                        footerComponent={[Function]}
+                        handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -533,9 +525,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -563,16 +555,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -583,9 +575,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   28
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -594,7 +586,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -618,7 +610,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -649,7 +641,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -667,16 +659,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -694,9 +686,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -705,7 +697,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -740,16 +732,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -760,9 +752,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   25
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -771,7 +763,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -795,7 +787,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -824,7 +816,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -842,16 +834,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -869,9 +861,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -880,7 +872,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -915,16 +907,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -935,9 +927,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   23
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -946,7 +938,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -970,7 +962,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -999,7 +991,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1017,16 +1009,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1044,9 +1036,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -1055,7 +1047,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1090,16 +1082,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1110,9 +1102,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   20
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -1121,7 +1113,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1145,7 +1137,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1174,7 +1166,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1192,16 +1184,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1219,9 +1211,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -1230,7 +1222,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1265,16 +1257,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1285,9 +1277,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   18
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -1296,7 +1288,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1320,7 +1312,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1349,7 +1341,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1367,16 +1359,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1394,9 +1386,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -1405,7 +1397,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1440,16 +1432,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1460,9 +1452,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   13
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -1471,7 +1463,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1495,7 +1487,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1524,7 +1516,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1542,16 +1534,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1569,9 +1561,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -1580,7 +1572,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1615,16 +1607,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1635,9 +1627,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   10
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -1646,7 +1638,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1670,7 +1662,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1699,7 +1691,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1717,16 +1709,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1744,9 +1736,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -1755,7 +1747,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1790,16 +1782,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1810,9 +1802,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   07
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -1821,7 +1813,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1845,7 +1837,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1874,7 +1866,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1892,16 +1884,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1919,9 +1911,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -1930,7 +1922,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1965,16 +1957,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1985,9 +1977,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   03
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -1996,7 +1988,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -2020,7 +2012,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -2049,7 +2041,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -2067,16 +2059,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2094,9 +2086,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -2105,7 +2097,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -2140,16 +2132,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2160,9 +2152,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   01
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -2171,7 +2163,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -2195,7 +2187,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -2224,7 +2216,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -2244,16 +2236,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2271,9 +2263,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -2282,7 +2274,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -2295,6 +2287,20 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 </Text>
                               </View>
                             </View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
                           </View>
                         </RCTScrollView>
                       </Modal>
@@ -2704,6 +2710,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   "justifyContent": "space-between",
                                 },
                                 {
+                                  "columnGap": 18,
+                                },
+                                {
                                   "transform": [
                                     {
                                       "scale": undefined,
@@ -2713,75 +2722,63 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               ]
                             }
                           >
-                            <View
+                            <RNSVGSvgView
+                              accessibilityElementsHidden={true}
+                              accessibilityLabel=""
+                              accessible={false}
+                              align="xMidYMid"
+                              bbHeight={36}
+                              bbWidth={36}
+                              color="#0B3EE3"
+                              focusable={false}
+                              height={36}
+                              importantForAccessibility="no-hide-descendants"
+                              meetOrSlice={0}
+                              minX={0}
+                              minY={0}
                               style={
-                                {
-                                  "marginRight": 12,
-                                }
+                                [
+                                  {
+                                    "backgroundColor": "transparent",
+                                    "borderWidth": 0,
+                                  },
+                                  {
+                                    "flex": 0,
+                                    "height": 36,
+                                    "width": 36,
+                                  },
+                                ]
                               }
+                              vbHeight={24}
+                              vbWidth={24}
+                              width={36}
                             >
-                              <RNSVGSvgView
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel=""
-                                accessible={false}
-                                align="xMidYMid"
-                                bbHeight={24}
-                                bbWidth={24}
-                                focusable={false}
-                                height={24}
-                                importantForAccessibility="no-hide-descendants"
-                                meetOrSlice={0}
-                                minX={0}
-                                minY={0}
-                                style={
-                                  [
-                                    {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                    },
-                                    {
-                                      "flex": 0,
-                                      "height": 24,
-                                      "width": 24,
-                                    },
-                                  ]
+                              <RNSVGGroup
+                                fill={
+                                  {
+                                    "payload": 4278190080,
+                                    "type": 0,
+                                  }
                                 }
-                                tintColor="#0B3EE3"
-                                vbHeight={24}
-                                vbWidth={24}
-                                width={24}
                               >
-                                <RNSVGGroup
-                                  color="#0B3EE3"
+                                <RNSVGPath
+                                  clipRule={0}
+                                  d="M3.5 1.50002v2.02943a11.99996 11.99996 0 0 1 17.3502.36667 11.99962 11.99962 0 0 1 3.0426 6.50368 11.99893 11.99893 0 0 1-1.2153 7.0765 11.99986 11.99986 0 0 1-5.038 5.116 12.00093 12.00093 0 0 1-7.0571 1.3237 12.0008 12.0008 0 0 1-6.54956-2.9424c-.413-.3667-.45055-.9988-.08387-1.4118.36668-.413.99873-.4505 1.41173-.0838a9.99994 9.99994 0 0 0 5.458 2.452 10.00032 10.00032 0 0 0 5.8809-1.1031 10 10 0 0 0 4.1983-4.2633 9.99951 9.99951 0 0 0 1.0128-5.8971 9.99999 9.99999 0 0 0-2.5355-5.41974 10.0002 10.0002 0 0 0-5.1759-3.00192 10.00016 10.00016 0 0 0-5.96336.49061 9.99978 9.99978 0 0 0-3.3774 2.26457H7c.55228 0 1 .44771 1 1 0 .55228-.44772 1-1 1H2.5a1 1 0 0 1-1-1v-4.5c0-.55229.44772-1 1-1s1 .44771 1 1ZM12 7c.5523 0 1 .44772 1 1v4.5858l2.7071 2.7071c.3905.3905.3905 1.0237 0 1.4142-.3905.3905-1.0237.3905-1.4142 0l-3-3A1.0001 1.0001 0 0 1 11 13V8c0-.55228.4477-1 1-1Z"
                                   fill={
                                     {
-                                      "payload": 4278190080,
-                                      "type": 0,
+                                      "type": 2,
                                     }
                                   }
-                                >
-                                  <RNSVGPath
-                                    clipRule={0}
-                                    d="M3.5 1.50002v2.02943a11.99996 11.99996 0 0 1 17.3502.36667 11.99962 11.99962 0 0 1 3.0426 6.50368 11.99893 11.99893 0 0 1-1.2153 7.0765 11.99986 11.99986 0 0 1-5.038 5.116 12.00093 12.00093 0 0 1-7.0571 1.3237 12.0008 12.0008 0 0 1-6.54956-2.9424c-.413-.3667-.45055-.9988-.08387-1.4118.36668-.413.99873-.4505 1.41173-.0838a9.99994 9.99994 0 0 0 5.458 2.452 10.00032 10.00032 0 0 0 5.8809-1.1031 10 10 0 0 0 4.1983-4.2633 9.99951 9.99951 0 0 0 1.0128-5.8971 9.99999 9.99999 0 0 0-2.5355-5.41974 10.0002 10.0002 0 0 0-5.1759-3.00192 10.00016 10.00016 0 0 0-5.96336.49061 9.99978 9.99978 0 0 0-3.3774 2.26457H7c.55228 0 1 .44771 1 1 0 .55228-.44772 1-1 1H2.5a1 1 0 0 1-1-1v-4.5c0-.55229.44772-1 1-1s1 .44771 1 1ZM12 7c.5523 0 1 .44772 1 1v4.5858l2.7071 2.7071c.3905.3905.3905 1.0237 0 1.4142-.3905.3905-1.0237.3905-1.4142 0l-3-3A1.0001 1.0001 0 0 1 11 13V8c0-.55228.4477-1 1-1Z"
-                                    fill={
-                                      {
-                                        "type": 2,
-                                      }
-                                    }
-                                    fillRule={0}
-                                    propList={
-                                      [
-                                        "fill",
-                                        "fillRule",
-                                      ]
-                                    }
-                                  />
-                                </RNSVGGroup>
-                              </RNSVGSvgView>
-                            </View>
+                                  fillRule={0}
+                                  propList={
+                                    [
+                                      "fill",
+                                      "fillRule",
+                                    ]
+                                  }
+                                />
+                              </RNSVGGroup>
+                            </RNSVGSvgView>
                             <View
                               style={
                                 {
@@ -2791,14 +2788,14 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               }
                             >
                               <Text
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2814,19 +2811,20 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
-                        enableDismissOnClose={true}
-                        footerComponent={[Function]}
-                        handleComponent={[Function]}
-                        handleComponentAccessibility={
+                        backgroundStyle={
                           {
-                            "accessible": false,
+                            "backgroundColor": "#FFFFFF",
                           }
                         }
+                        enableDismissOnClose={true}
+                        enableDynamicSizing={false}
+                        footerComponent={[Function]}
+                        handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -2844,9 +2842,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -2874,16 +2872,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2894,9 +2892,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   28
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -2905,7 +2903,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -2929,7 +2927,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -2960,7 +2958,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -2978,16 +2976,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3005,9 +3003,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -3016,7 +3014,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3051,16 +3049,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3071,9 +3069,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   25
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -3082,7 +3080,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3106,7 +3104,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3135,7 +3133,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3153,16 +3151,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3180,9 +3178,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -3191,7 +3189,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3226,16 +3224,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3246,9 +3244,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   23
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -3257,7 +3255,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3281,7 +3279,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3310,7 +3308,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3328,16 +3326,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3355,9 +3353,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -3366,7 +3364,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3401,16 +3399,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3421,9 +3419,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   20
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -3432,7 +3430,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3456,7 +3454,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3485,7 +3483,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3503,16 +3501,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3530,9 +3528,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -3541,7 +3539,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3576,16 +3574,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3596,9 +3594,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   18
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -3607,7 +3605,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3631,7 +3629,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3660,7 +3658,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3678,16 +3676,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3705,9 +3703,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -3716,7 +3714,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3751,16 +3749,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3771,9 +3769,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   13
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -3782,7 +3780,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3806,7 +3804,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3835,7 +3833,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3853,16 +3851,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3880,9 +3878,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -3891,7 +3889,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3926,16 +3924,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3946,9 +3944,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   10
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -3957,7 +3955,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3981,7 +3979,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4010,7 +4008,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4028,16 +4026,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4055,9 +4053,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -4066,7 +4064,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -4101,16 +4099,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4121,9 +4119,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   07
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -4132,7 +4130,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -4156,7 +4154,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4185,7 +4183,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4203,16 +4201,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4230,9 +4228,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -4241,7 +4239,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -4276,16 +4274,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4296,9 +4294,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   03
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -4307,7 +4305,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -4331,7 +4329,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4360,7 +4358,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4378,16 +4376,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4405,9 +4403,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -4416,7 +4414,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -4451,16 +4449,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4471,9 +4469,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   01
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -4482,7 +4480,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -4506,7 +4504,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4535,7 +4533,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4555,16 +4553,16 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4582,9 +4580,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {
@@ -4593,7 +4591,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       },
                                       {
                                         "color": "#99A3C1",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -4606,6 +4604,20 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 </Text>
                               </View>
                             </View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
                           </View>
                         </RCTScrollView>
                       </Modal>
@@ -5015,6 +5027,9 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                                   "justifyContent": "space-between",
                                 },
                                 {
+                                  "columnGap": 18,
+                                },
+                                {
                                   "transform": [
                                     {
                                       "scale": undefined,
@@ -5024,75 +5039,63 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                               ]
                             }
                           >
-                            <View
+                            <RNSVGSvgView
+                              accessibilityElementsHidden={true}
+                              accessibilityLabel=""
+                              accessible={false}
+                              align="xMidYMid"
+                              bbHeight={36}
+                              bbWidth={36}
+                              color="#0B3EE3"
+                              focusable={false}
+                              height={36}
+                              importantForAccessibility="no-hide-descendants"
+                              meetOrSlice={0}
+                              minX={0}
+                              minY={0}
                               style={
-                                {
-                                  "marginRight": 12,
-                                }
+                                [
+                                  {
+                                    "backgroundColor": "transparent",
+                                    "borderWidth": 0,
+                                  },
+                                  {
+                                    "flex": 0,
+                                    "height": 36,
+                                    "width": 36,
+                                  },
+                                ]
                               }
+                              vbHeight={24}
+                              vbWidth={24}
+                              width={36}
                             >
-                              <RNSVGSvgView
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel=""
-                                accessible={false}
-                                align="xMidYMid"
-                                bbHeight={24}
-                                bbWidth={24}
-                                focusable={false}
-                                height={24}
-                                importantForAccessibility="no-hide-descendants"
-                                meetOrSlice={0}
-                                minX={0}
-                                minY={0}
-                                style={
-                                  [
-                                    {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                    },
-                                    {
-                                      "flex": 0,
-                                      "height": 24,
-                                      "width": 24,
-                                    },
-                                  ]
+                              <RNSVGGroup
+                                fill={
+                                  {
+                                    "payload": 4278190080,
+                                    "type": 0,
+                                  }
                                 }
-                                tintColor="#0B3EE3"
-                                vbHeight={24}
-                                vbWidth={24}
-                                width={24}
                               >
-                                <RNSVGGroup
-                                  color="#0B3EE3"
+                                <RNSVGPath
+                                  clipRule={0}
+                                  d="M3.5 1.50002v2.02943a11.99996 11.99996 0 0 1 17.3502.36667 11.99962 11.99962 0 0 1 3.0426 6.50368 11.99893 11.99893 0 0 1-1.2153 7.0765 11.99986 11.99986 0 0 1-5.038 5.116 12.00093 12.00093 0 0 1-7.0571 1.3237 12.0008 12.0008 0 0 1-6.54956-2.9424c-.413-.3667-.45055-.9988-.08387-1.4118.36668-.413.99873-.4505 1.41173-.0838a9.99994 9.99994 0 0 0 5.458 2.452 10.00032 10.00032 0 0 0 5.8809-1.1031 10 10 0 0 0 4.1983-4.2633 9.99951 9.99951 0 0 0 1.0128-5.8971 9.99999 9.99999 0 0 0-2.5355-5.41974 10.0002 10.0002 0 0 0-5.1759-3.00192 10.00016 10.00016 0 0 0-5.96336.49061 9.99978 9.99978 0 0 0-3.3774 2.26457H7c.55228 0 1 .44771 1 1 0 .55228-.44772 1-1 1H2.5a1 1 0 0 1-1-1v-4.5c0-.55229.44772-1 1-1s1 .44771 1 1ZM12 7c.5523 0 1 .44772 1 1v4.5858l2.7071 2.7071c.3905.3905.3905 1.0237 0 1.4142-.3905.3905-1.0237.3905-1.4142 0l-3-3A1.0001 1.0001 0 0 1 11 13V8c0-.55228.4477-1 1-1Z"
                                   fill={
                                     {
-                                      "payload": 4278190080,
-                                      "type": 0,
+                                      "type": 2,
                                     }
                                   }
-                                >
-                                  <RNSVGPath
-                                    clipRule={0}
-                                    d="M3.5 1.50002v2.02943a11.99996 11.99996 0 0 1 17.3502.36667 11.99962 11.99962 0 0 1 3.0426 6.50368 11.99893 11.99893 0 0 1-1.2153 7.0765 11.99986 11.99986 0 0 1-5.038 5.116 12.00093 12.00093 0 0 1-7.0571 1.3237 12.0008 12.0008 0 0 1-6.54956-2.9424c-.413-.3667-.45055-.9988-.08387-1.4118.36668-.413.99873-.4505 1.41173-.0838a9.99994 9.99994 0 0 0 5.458 2.452 10.00032 10.00032 0 0 0 5.8809-1.1031 10 10 0 0 0 4.1983-4.2633 9.99951 9.99951 0 0 0 1.0128-5.8971 9.99999 9.99999 0 0 0-2.5355-5.41974 10.0002 10.0002 0 0 0-5.1759-3.00192 10.00016 10.00016 0 0 0-5.96336.49061 9.99978 9.99978 0 0 0-3.3774 2.26457H7c.55228 0 1 .44771 1 1 0 .55228-.44772 1-1 1H2.5a1 1 0 0 1-1-1v-4.5c0-.55229.44772-1 1-1s1 .44771 1 1ZM12 7c.5523 0 1 .44772 1 1v4.5858l2.7071 2.7071c.3905.3905.3905 1.0237 0 1.4142-.3905.3905-1.0237.3905-1.4142 0l-3-3A1.0001 1.0001 0 0 1 11 13V8c0-.55228.4477-1 1-1Z"
-                                    fill={
-                                      {
-                                        "type": 2,
-                                      }
-                                    }
-                                    fillRule={0}
-                                    propList={
-                                      [
-                                        "fill",
-                                        "fillRule",
-                                      ]
-                                    }
-                                  />
-                                </RNSVGGroup>
-                              </RNSVGSvgView>
-                            </View>
+                                  fillRule={0}
+                                  propList={
+                                    [
+                                      "fill",
+                                      "fillRule",
+                                    ]
+                                  }
+                                />
+                              </RNSVGGroup>
+                            </RNSVGSvgView>
                             <View
                               style={
                                 {
@@ -5102,14 +5105,14 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                               }
                             >
                               <Text
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -5125,19 +5128,20 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
-                        enableDismissOnClose={true}
-                        footerComponent={[Function]}
-                        handleComponent={[Function]}
-                        handleComponentAccessibility={
+                        backgroundStyle={
                           {
-                            "accessible": false,
+                            "backgroundColor": "#FFFFFF",
                           }
                         }
+                        enableDismissOnClose={true}
+                        enableDynamicSizing={false}
+                        footerComponent={[Function]}
+                        handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -5155,14 +5159,29 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
                         >
-                          <View />
+                          <View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                          </View>
                         </RCTScrollView>
                       </Modal>
                     </View>
@@ -5571,6 +5590,9 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                                   "justifyContent": "space-between",
                                 },
                                 {
+                                  "columnGap": 18,
+                                },
+                                {
                                   "transform": [
                                     {
                                       "scale": undefined,
@@ -5580,75 +5602,63 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                               ]
                             }
                           >
-                            <View
+                            <RNSVGSvgView
+                              accessibilityElementsHidden={true}
+                              accessibilityLabel=""
+                              accessible={false}
+                              align="xMidYMid"
+                              bbHeight={36}
+                              bbWidth={36}
+                              color="#0B3EE3"
+                              focusable={false}
+                              height={36}
+                              importantForAccessibility="no-hide-descendants"
+                              meetOrSlice={0}
+                              minX={0}
+                              minY={0}
                               style={
-                                {
-                                  "marginRight": 12,
-                                }
+                                [
+                                  {
+                                    "backgroundColor": "transparent",
+                                    "borderWidth": 0,
+                                  },
+                                  {
+                                    "flex": 0,
+                                    "height": 36,
+                                    "width": 36,
+                                  },
+                                ]
                               }
+                              vbHeight={24}
+                              vbWidth={24}
+                              width={36}
                             >
-                              <RNSVGSvgView
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel=""
-                                accessible={false}
-                                align="xMidYMid"
-                                bbHeight={24}
-                                bbWidth={24}
-                                focusable={false}
-                                height={24}
-                                importantForAccessibility="no-hide-descendants"
-                                meetOrSlice={0}
-                                minX={0}
-                                minY={0}
-                                style={
-                                  [
-                                    {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                    },
-                                    {
-                                      "flex": 0,
-                                      "height": 24,
-                                      "width": 24,
-                                    },
-                                  ]
+                              <RNSVGGroup
+                                fill={
+                                  {
+                                    "payload": 4278190080,
+                                    "type": 0,
+                                  }
                                 }
-                                tintColor="#0B3EE3"
-                                vbHeight={24}
-                                vbWidth={24}
-                                width={24}
                               >
-                                <RNSVGGroup
-                                  color="#0B3EE3"
+                                <RNSVGPath
+                                  clipRule={0}
+                                  d="M3.5 1.50002v2.02943a11.99996 11.99996 0 0 1 17.3502.36667 11.99962 11.99962 0 0 1 3.0426 6.50368 11.99893 11.99893 0 0 1-1.2153 7.0765 11.99986 11.99986 0 0 1-5.038 5.116 12.00093 12.00093 0 0 1-7.0571 1.3237 12.0008 12.0008 0 0 1-6.54956-2.9424c-.413-.3667-.45055-.9988-.08387-1.4118.36668-.413.99873-.4505 1.41173-.0838a9.99994 9.99994 0 0 0 5.458 2.452 10.00032 10.00032 0 0 0 5.8809-1.1031 10 10 0 0 0 4.1983-4.2633 9.99951 9.99951 0 0 0 1.0128-5.8971 9.99999 9.99999 0 0 0-2.5355-5.41974 10.0002 10.0002 0 0 0-5.1759-3.00192 10.00016 10.00016 0 0 0-5.96336.49061 9.99978 9.99978 0 0 0-3.3774 2.26457H7c.55228 0 1 .44771 1 1 0 .55228-.44772 1-1 1H2.5a1 1 0 0 1-1-1v-4.5c0-.55229.44772-1 1-1s1 .44771 1 1ZM12 7c.5523 0 1 .44772 1 1v4.5858l2.7071 2.7071c.3905.3905.3905 1.0237 0 1.4142-.3905.3905-1.0237.3905-1.4142 0l-3-3A1.0001 1.0001 0 0 1 11 13V8c0-.55228.4477-1 1-1Z"
                                   fill={
                                     {
-                                      "payload": 4278190080,
-                                      "type": 0,
+                                      "type": 2,
                                     }
                                   }
-                                >
-                                  <RNSVGPath
-                                    clipRule={0}
-                                    d="M3.5 1.50002v2.02943a11.99996 11.99996 0 0 1 17.3502.36667 11.99962 11.99962 0 0 1 3.0426 6.50368 11.99893 11.99893 0 0 1-1.2153 7.0765 11.99986 11.99986 0 0 1-5.038 5.116 12.00093 12.00093 0 0 1-7.0571 1.3237 12.0008 12.0008 0 0 1-6.54956-2.9424c-.413-.3667-.45055-.9988-.08387-1.4118.36668-.413.99873-.4505 1.41173-.0838a9.99994 9.99994 0 0 0 5.458 2.452 10.00032 10.00032 0 0 0 5.8809-1.1031 10 10 0 0 0 4.1983-4.2633 9.99951 9.99951 0 0 0 1.0128-5.8971 9.99999 9.99999 0 0 0-2.5355-5.41974 10.0002 10.0002 0 0 0-5.1759-3.00192 10.00016 10.00016 0 0 0-5.96336.49061 9.99978 9.99978 0 0 0-3.3774 2.26457H7c.55228 0 1 .44771 1 1 0 .55228-.44772 1-1 1H2.5a1 1 0 0 1-1-1v-4.5c0-.55229.44772-1 1-1s1 .44771 1 1ZM12 7c.5523 0 1 .44772 1 1v4.5858l2.7071 2.7071c.3905.3905.3905 1.0237 0 1.4142-.3905.3905-1.0237.3905-1.4142 0l-3-3A1.0001 1.0001 0 0 1 11 13V8c0-.55228.4477-1 1-1Z"
-                                    fill={
-                                      {
-                                        "type": 2,
-                                      }
-                                    }
-                                    fillRule={0}
-                                    propList={
-                                      [
-                                        "fill",
-                                        "fillRule",
-                                      ]
-                                    }
-                                  />
-                                </RNSVGGroup>
-                              </RNSVGSvgView>
-                            </View>
+                                  fillRule={0}
+                                  propList={
+                                    [
+                                      "fill",
+                                      "fillRule",
+                                    ]
+                                  }
+                                />
+                              </RNSVGGroup>
+                            </RNSVGSvgView>
                             <View
                               style={
                                 {
@@ -5658,14 +5668,14 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                               }
                             >
                               <Text
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -5681,19 +5691,20 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
-                        enableDismissOnClose={true}
-                        footerComponent={[Function]}
-                        handleComponent={[Function]}
-                        handleComponentAccessibility={
+                        backgroundStyle={
                           {
-                            "accessible": false,
+                            "backgroundColor": "#FFFFFF",
                           }
                         }
+                        enableDismissOnClose={true}
+                        enableDynamicSizing={false}
+                        footerComponent={[Function]}
+                        handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -5711,14 +5722,29 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
                         >
-                          <View />
+                          <View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                          </View>
                         </RCTScrollView>
                       </Modal>
                     </View>

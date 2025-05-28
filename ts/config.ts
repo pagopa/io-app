@@ -105,6 +105,27 @@ export const cieLoginFlowWithDevServerEnabled =
 // Native Login Feature Flag
 export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 
+// #region Help Center URLs
+
+/**
+ * Help Center URL for the "What to do when the session is expired" article
+ * hard-coded for now [by design]( https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33508#1129981819)
+ */
+export const helpCenterHowToDoWhenSessionIsExpiredUrl =
+  "https://assistenza.ioapp.it/hc/it/articles/32616176301713" as NonEmptyString;
+/**
+ * Help Center URL for the "How to login with SPID" article
+ */
+export const helpCenterHowToLoginWithSpidUrl =
+  "https://assistenza.ioapp.it/hc/it/sections/30616637679505" as NonEmptyString;
+/**
+ * Help Center URL for the "How to login with EIC" article
+ */
+export const helpCenterHowToLoginWithEicUrl =
+  "https://assistenza.ioapp.it/hc/it/articles/30724124984593#h_01JF0DQRRPJWY61RAFNG2AKF3R" as NonEmptyString;
+
+// #endregion
+
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),
   t.Integer.decode,

@@ -7,6 +7,7 @@ import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import {
   RequestGetMessageDataActionType,
   cancelGetMessageDataAction,
@@ -18,13 +19,13 @@ import {
 } from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
 import { UIMessage, UIMessageDetails, UIMessageId } from "../types";
-import { serviceByIdPotSelector } from "../../services/details/store/reducers";
+import { serviceDetailsByIdPotSelector } from "../../services/details/store/reducers";
 import { loadServiceDetail } from "../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";
 import { isLoadingOrUpdatingInbox } from "../store/reducers/allPaginated";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
-import { isPnEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { trackPNPushOpened } from "../../pn/analytics";
 import { isTestEnv } from "../../../utils/environment";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
@@ -37,7 +38,13 @@ import {
 } from "../analytics";
 import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
 import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
-import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
+
+import { extractContentFromMessageSources } from "../utils";
+import { isFIMSLink } from "../../fims/singleSignOn/utils";
+import {
+  ctasFromLocalizedCTAs,
+  localizedCTAsFromFrontMatter
+} from "../utils/ctas";
 
 export function* handleLoadMessageData(
   action: ActionType<typeof getMessageDataAction.request>
@@ -185,7 +192,10 @@ function* getPaginatedMessage(messageId: UIMessageId) {
 }
 
 function* getServiceDetails(serviceId: ServiceId) {
-  const initialServicePot = yield* select(serviceByIdPotSelector, serviceId);
+  const initialServicePot = yield* select(
+    serviceDetailsByIdPotSelector,
+    serviceId
+  );
   if (!pot.isSome(initialServicePot) || pot.isError(initialServicePot)) {
     yield* put(loadServiceDetail.request(serviceId));
 
@@ -197,7 +207,10 @@ function* getServiceDetails(serviceId: ServiceId) {
       return undefined;
     }
 
-    const finalServicePot = yield* select(serviceByIdPotSelector, serviceId);
+    const finalServicePot = yield* select(
+      serviceDetailsByIdPotSelector,
+      serviceId
+    );
     return pot.toUndefined(finalServicePot);
   }
 
@@ -236,7 +249,7 @@ function* getMessageDetails(messageId: UIMessageId) {
 function* getThirdPartyDataMessage(
   messageId: UIMessageId,
   isPNMessage: boolean,
-  service: ServicePublic,
+  service: ServiceDetails,
   tag: string
 ) {
   // Third party data may change anytime, so we must retrieve them on every request
@@ -244,7 +257,7 @@ function* getThirdPartyDataMessage(
   yield* put(
     loadThirdPartyMessage.request({
       id: messageId,
-      serviceId: service.service_id,
+      serviceId: service.id,
       tag
     })
   );
@@ -312,13 +325,22 @@ function* dispatchSuccessAction(
   const attachmentCount =
     thirdPartyMessage?.third_party_message.attachments?.length ?? 0;
 
-  const isPnEnabled = yield* select(isPnEnabledSelector);
+  const isPnEnabled = yield* select(isPnRemoteEnabledSelector);
+
+  const serviceId = paginatedMessage.serviceId;
+  const hasFIMSCTA = computeHasFIMSCTA(
+    messageDetails,
+    serviceId,
+    thirdPartyMessage
+  );
 
   yield* put(
     getMessageDataAction.success({
       containsAttachments: attachmentCount > 0,
       containsPayment,
+      createdAt: paginatedMessage.createdAt,
       firstTimeOpening: !paginatedMessage.isRead,
+      hasFIMSCTA,
       hasRemoteContent: !!thirdPartyMessage,
       isLegacyGreenPass: !!messageDetails.euCovidCertificate?.authCode,
       isPNMessage: isPnEnabled && isPNMessageCategory,
@@ -349,7 +371,7 @@ function* commonFailureHandling(
 const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
   isPNMessage: boolean,
   thirdPartyMessageOrUndefined: ThirdPartyMessageWithContent | undefined,
-  service: ServicePublic,
+  service: ServiceDetails,
   tag: string
 ) =>
   pipe(
@@ -366,10 +388,10 @@ const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
         E.mapLeft(errors =>
           pipe(errors, readableReport, reason =>
             trackRemoteContentMessageDecodingWarning(
-              service.service_id,
-              service.service_name,
-              service.organization_name,
-              service.organization_fiscal_code,
+              service.id,
+              service.name,
+              service.organization.name,
+              service.organization.fiscal_code,
               tag,
               reason
             )
@@ -379,16 +401,42 @@ const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
     )
   );
 
+const computeHasFIMSCTA = (
+  messageDetails: UIMessageDetails,
+  serviceId: ServiceId,
+  thirdPartyMessage: ThirdPartyMessageWithContent | undefined
+) => {
+  const markdownWithCTAs = extractContentFromMessageSources(
+    (messageContent: RemoteContentDetails | UIMessageDetails) =>
+      messageContent.markdown,
+    messageDetails,
+    thirdPartyMessage
+  );
+  const localizedCTAs = localizedCTAsFromFrontMatter(
+    markdownWithCTAs,
+    serviceId
+  );
+  const ctas = ctasFromLocalizedCTAs(localizedCTAs, serviceId);
+  if (ctas != null && isFIMSLink(ctas.cta_1.action)) {
+    return true;
+  }
+  if (ctas?.cta_2 != null && isFIMSLink(ctas.cta_2.action)) {
+    return true;
+  }
+  return false;
+};
+
 export const testable = isTestEnv
   ? {
       commonFailureHandling,
-      loadMessageData,
+      computeHasFIMSCTA,
       decodeAndTrackThirdPartyMessageDetailsIfNeeded,
       dispatchSuccessAction,
-      setMessageReadIfNeeded,
+      getMessageDetails,
       getPaginatedMessage,
       getServiceDetails,
-      getMessageDetails,
-      getThirdPartyDataMessage
+      getThirdPartyDataMessage,
+      loadMessageData,
+      setMessageReadIfNeeded
     }
   : undefined;

@@ -11,8 +11,9 @@ import {
   H6,
   HSpacer,
   IOPictogramsBleed,
-  IOStyles,
+  IOSpacer,
   IOToast,
+  IOVisualCostants,
   Nullable,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -35,10 +36,22 @@ import {
   TxtStrNode,
   TxtStrongNode
 } from "@textlint/ast-node-types";
-import { Fragment, useLayoutEffect, useState } from "react";
-import { Dimensions, Image, Text, View } from "react-native";
+import {
+  ExoticComponent,
+  Fragment,
+  ReactNode,
+  useLayoutEffect,
+  useState
+} from "react";
+import { Dimensions, Image, Pressable, Text, View } from "react-native";
 import I18n from "../../i18n";
+import { isAndroid } from "../../utils/platform";
 import { openWebUrl } from "../../utils/url";
+import {
+  extractAllLinksFromRootNode,
+  isParagraphNodeInHierarchy,
+  LinkData
+} from "./markdownRenderer";
 import { IOMarkdownRenderRules, Renderer } from "./types";
 
 const BULLET_ITEM_FULL = "\u2022";
@@ -109,6 +122,35 @@ export function getTxtNodeKey(txtNode: AnyTxtNode): string {
   return `${txtNode.type}_${encoded}`;
 }
 
+export const generateAccesibilityLinkViewsIfNeeded = (
+  allLinkData: ReadonlyArray<LinkData>,
+  nodeKey: string,
+  onPress: (url: string) => void,
+  screenReaderEnabled: boolean
+) => {
+  if (allLinkData.length === 0 || isAndroid || !screenReaderEnabled) {
+    return undefined;
+  }
+  return allLinkData.map((link, index) => (
+    <Pressable
+      accessible={true}
+      accessibilityLabel={link.text}
+      accessibilityRole="link"
+      collapsable={false}
+      collapsableChildren={false}
+      style={{ height: 1 }}
+      key={`${nodeKey}_${index}`}
+      onPress={() => onPress(link.url)}
+    />
+  ));
+};
+
+export const handleOpenLink = (url: string) => {
+  openWebUrl(url, () => {
+    IOToast.error(I18n.t("global.jserror.title"));
+  });
+};
+
 /**
  * This object has as key a`TxtNodeType` and as value a render function related to the `TxtNode` element to display.
  */
@@ -119,13 +161,17 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @param render The renderer function.
    * @returns A component ranging from `H1` to `H6`, inclusive, depending on the `header.depth` value..
    */
-  Header(header: TxtHeaderNode, render: Renderer) {
-    const Heading = HEADINGS_MAP[header.depth];
-
-    return (
-      <Heading key={getTxtNodeKey(header)}>
-        {header.children.map(render)}
-      </Heading>
+  Header(
+    header: TxtHeaderNode,
+    render: Renderer,
+    screenReaderEnabled: boolean
+  ) {
+    return headerNodeToReactNative(
+      header,
+      HEADINGS_MAP,
+      handleOpenLink,
+      render,
+      screenReaderEnabled
     );
   },
   /**
@@ -133,11 +179,38 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @param render The renderer function.
    * @returns The rendered component.
    */
-  Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
+  Paragraph(
+    paragraph: TxtParagraphNode,
+    render: Renderer,
+    screenReaderEnabled: boolean
+  ) {
+    if (
+      paragraph.children.length > 0 &&
+      paragraph.children[0].type === "Image"
+    ) {
+      return (
+        <View key={getTxtNodeKey(paragraph)} style={{ marginVertical: 16 }}>
+          {paragraph.children.map(render)}
+        </View>
+      );
+    }
+
+    const allLinkData = extractAllLinksFromRootNode(
+      paragraph,
+      screenReaderEnabled
+    );
+    const nodeKey = getTxtNodeKey(paragraph);
+
     return (
-      <Body key={getTxtNodeKey(paragraph)}>
-        {paragraph.children.map(render)}
-      </Body>
+      <Fragment key={nodeKey}>
+        <Body>{paragraph.children.map(render)}</Body>
+        {generateAccesibilityLinkViewsIfNeeded(
+          allLinkData,
+          nodeKey,
+          handleOpenLink,
+          screenReaderEnabled
+        )}
+      </Fragment>
     );
   },
   /**
@@ -170,7 +243,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns The rendered component.
    */
   Str(str: TxtStrNode) {
-    return <Fragment key={getTxtNodeKey(str)}>{str.value}</Fragment>;
+    return strNodeToReactNative(str.value, str);
   },
   /**
    * @param link The `Link` node.
@@ -178,22 +251,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns The rendered component.
    */
   Link(link: TxtLinkNode, render: Renderer) {
-    const handleOpenLink = () => {
-      openWebUrl(link.url, () => {
-        IOToast.error(I18n.t("global.jserror.title"));
-      });
-    };
-
-    return (
-      <Body
-        weight="Semibold"
-        asLink
-        key={getTxtNodeKey(link)}
-        onPress={handleOpenLink}
-      >
-        {link.children.map(render)}
-      </Body>
-    );
+    return linkNodeToReactNative(link, () => handleOpenLink(link.url), render);
   },
   /**
    * @param image The `Image` node.
@@ -205,8 +263,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
       aspectRatio: 1
     });
     const screenWidth =
-      Dimensions.get("screen").width -
-      IOStyles.horizontalContentPadding.paddingHorizontal * 2;
+      Dimensions.get("screen").width - IOVisualCostants.appMarginDefault * 2;
 
     useLayoutEffect(() => {
       Image.getSize(image.url, (width, height) => {
@@ -216,6 +273,10 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
         setImageSize({ width: maxScreenWidth, aspectRatio });
       });
     }, [screenWidth, image.url]);
+
+    if (image.parent?.type !== "Paragraph") {
+      return null;
+    }
 
     return (
       <Image
@@ -235,7 +296,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @param render The renderer function.
    * @returns The rendered component.
    */
-  List(list: TxtListNode, render: Renderer) {
+  List(list: TxtListNode, render: Renderer, screenReaderEnabled: boolean) {
     const isOrdered = list.ordered;
     const nestingLevel = getNodeNestingLevel(list, "List");
     const bulletItem =
@@ -250,27 +311,42 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
       return <Body>{bulletItem}</Body>;
     }
 
+    const allLinkData = extractAllLinksFromRootNode(list, screenReaderEnabled);
+    const nodeKey = getTxtNodeKey(list);
+
     return (
-      <View key={getTxtNodeKey(list)}>
-        {isFirstList && <VSpacer size={8} />}
-        <View style={IOStyles.row}>
-          {isFirstList && <HSpacer size={12} />}
-          <View
-            style={[IOStyles.flex, { flexGrow: 1 }]}
-            accessible={true}
-            accessibilityRole="list"
-          >
-            {list.children.map((child, i) => (
-              <View accessible key={`${child.type}_${i}`} style={IOStyles.row}>
-                {getLeftAdornment(i)}
-                <HSpacer size={8} />
-                {render(child)}
-              </View>
-            ))}
+      <Fragment key={nodeKey}>
+        <View>
+          {isFirstList && <VSpacer size={8} />}
+          <View style={{ flexDirection: "row" }}>
+            {isFirstList && <HSpacer size={12} />}
+            <View
+              style={{ flex: 1, flexGrow: 1 }}
+              accessible={true}
+              accessibilityRole="list"
+            >
+              {list.children.map((child, i) => (
+                <View
+                  accessible
+                  key={`${child.type}_${i}`}
+                  style={{ flexDirection: "row" }}
+                >
+                  {getLeftAdornment(i)}
+                  <HSpacer size={8} />
+                  {render(child)}
+                </View>
+              ))}
+            </View>
           </View>
+          {isFirstList && <VSpacer size={8} />}
         </View>
-        {isFirstList && <VSpacer size={8} />}
-      </View>
+        {generateAccesibilityLinkViewsIfNeeded(
+          allLinkData,
+          nodeKey,
+          handleOpenLink,
+          screenReaderEnabled
+        )}
+      </Fragment>
     );
   },
   /**
@@ -282,7 +358,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     return (
       <View
         accessible={false}
-        style={[IOStyles.flex, { flexShrink: 1 }]}
+        style={{ flex: 1, flexShrink: 1 }}
         key={getTxtNodeKey(listItem)}
       >
         {listItem.children.map(render)}
@@ -318,7 +394,6 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
         key={getTxtNodeKey(blockQuote)}
         pictogramName={getPictogramName(pictogramName?.[1])}
         color="neutral"
-        size="big"
         title={title?.[1]}
         content={content}
       />
@@ -354,7 +429,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     const [, value] = val;
 
     if (value === "br") {
-      return <Fragment key={getTxtNodeKey(html)}>{"\n"}</Fragment>;
+      htmlNodeToReactNative("\n", html, html.parent);
     }
 
     return null;
@@ -367,3 +442,65 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     <Divider key={getTxtNodeKey(horizontalRule)} />
   )
 };
+
+export const headerNodeToReactNative = (
+  header: TxtHeaderNode,
+  headingsMap: Record<
+    number,
+    ExoticComponent<{ children?: ReactNode | undefined }>
+  >,
+  onPress: (url: string) => void,
+  render: Renderer,
+  screenReaderEnabled: boolean,
+  marginStart: IOSpacer | undefined = undefined,
+  marginEnd: IOSpacer | undefined = undefined
+) => {
+  const Heading = headingsMap[header.depth];
+
+  const allLinkData = extractAllLinksFromRootNode(header, screenReaderEnabled);
+  const nodeKey = getTxtNodeKey(header);
+
+  return (
+    <Fragment key={nodeKey}>
+      {marginStart != null && <VSpacer size={marginStart} />}
+      <Heading>{header.children.map(render)}</Heading>
+      {marginEnd != null && <VSpacer size={marginEnd} />}
+      {generateAccesibilityLinkViewsIfNeeded(
+        allLinkData,
+        nodeKey,
+        onPress,
+        screenReaderEnabled
+      )}
+    </Fragment>
+  );
+};
+
+export const htmlNodeToReactNative = (
+  content: string,
+  node: AnyTxtNode,
+  parent?: TxtParentNode
+) => {
+  const hasAParentParagraphNode = isParagraphNodeInHierarchy(parent);
+  const nodeKey = getTxtNodeKey(node);
+  return hasAParentParagraphNode ? (
+    <Fragment key={nodeKey}>{content}</Fragment>
+  ) : (
+    <Body key={nodeKey}>
+      <Fragment>{content}</Fragment>
+    </Body>
+  );
+};
+
+export const linkNodeToReactNative = (
+  link: TxtLinkNode,
+  onPress: () => void,
+  render: Renderer
+) => (
+  <Body weight="Semibold" asLink key={getTxtNodeKey(link)} onPress={onPress}>
+    {link.children.map(render)}
+  </Body>
+);
+
+export const strNodeToReactNative = (content: string, node: AnyTxtNode) => (
+  <Fragment key={getTxtNodeKey(node)}>{content}</Fragment>
+);

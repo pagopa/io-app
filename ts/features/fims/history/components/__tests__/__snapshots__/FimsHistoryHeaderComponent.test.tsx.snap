@@ -336,16 +336,17 @@ exports[`FimsHistoryHeaderComponent should match snapshot 1`] = `
                     >
                       <View>
                         <Text
-                          allowFontScaling={false}
+                          accessibilityRole="header"
+                          allowFontScaling={true}
                           dynamicTypeRamp="title1"
-                          maxFontSizeMultiplier={1.25}
+                          maxFontSizeMultiplier={1.5}
                           style={
                             [
                               {},
                               {
                                 "color": "#0E0F13",
-                                "fontFamily": "Titillium Sans Pro",
-                                "fontSize": 28,
+                                "fontFamily": "Titillio",
+                                "fontSize": 26,
                                 "fontStyle": "normal",
                                 "fontWeight": "600",
                                 "lineHeight": 34,
@@ -363,15 +364,15 @@ exports[`FimsHistoryHeaderComponent should match snapshot 1`] = `
                           }
                         />
                         <Text
-                          allowFontScaling={false}
+                          allowFontScaling={true}
                           dynamicTypeRamp="body"
-                          maxFontSizeMultiplier={1.25}
+                          maxFontSizeMultiplier={1.5}
                           style={
                             [
                               {},
                               {
                                 "color": "#555C70",
-                                "fontFamily": "Titillium Sans Pro",
+                                "fontFamily": "Titillio",
                                 "fontSize": 16,
                                 "fontStyle": "normal",
                                 "fontWeight": "400",

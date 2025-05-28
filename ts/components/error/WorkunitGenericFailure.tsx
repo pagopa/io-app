@@ -7,7 +7,6 @@ import { Dispatch } from "redux";
 import image from "../../../img/servicesStatus/error-detail-icon.png";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
-import { IOStyles } from "../core/variables/IOStyles";
 import { InfoScreenComponent } from "../infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../infoScreen/imageRendering";
 import BaseScreenComponent from "../screens/BaseScreenComponent";
@@ -30,7 +29,7 @@ const WorkunitGenericFailure = (props: Props): ReactElement => {
   const { headerTitle, title, close } = loadLocales();
   return (
     <BaseScreenComponent headerTitle={headerTitle} goBack={true}>
-      <SafeAreaView style={IOStyles.flex} testID={"WorkunitGenericFailure"}>
+      <SafeAreaView style={{ flex: 1 }} testID={"WorkunitGenericFailure"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
           title={title}

@@ -1,141 +1,152 @@
-import * as O from "fp-ts/lib/Option";
-import _ from "lodash";
 import configureMockStore from "redux-mock-store";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { appReducer } from "../../../../../store/reducers";
+import { createActor } from "xstate";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { ItwIdentificationModeSelectionScreen } from "../ItwIdentificationModeSelectionScreen";
-import { RemoteConfigState } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { Config } from "../../../../../../definitions/content/Config";
-import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import * as remoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
-import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
+import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { ITW_ROUTES } from "../../../navigation/routes";
+import {
+  ItwIdentificationModeSelectionScreen,
+  ItwIdentificationModeSelectionScreenProps
+} from "../ItwIdentificationModeSelectionScreen";
 
 jest.mock("../../../../../config", () => ({
   itwEnabled: true
 }));
 
-jest.mock("../../../machine/eid/selectors", () => ({
-  isCIEAuthenticationSupportedSelector: () => true
-}));
-
 describe("ItwIdentificationModeSelectionScreen", () => {
-  it("it should render the screen correctly", () => {
-    const component = renderComponent({});
+  beforeEach(() => {
+    // Default mock for no disabled methods
+    jest
+      .spyOn(remoteConfigSelectors, "itwDisabledIdentificationMethodsSelector")
+      .mockReturnValue([]);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should render the screen correctly", () => {
+    const component = renderComponent();
     expect(component).toBeTruthy();
   });
 
-  it("should show all authentication methods when none are disabled", () => {
-    const component = renderComponent({});
+  describe("DefaultIdentificationView (L3 disabled)", () => {
+    it("should show all authentication methods when none are disabled", () => {
+      const component = renderComponent();
 
-    expect(component.queryByTestId("Spid")).not.toBeNull();
-    expect(component.queryByTestId("CiePin")).not.toBeNull();
-    expect(component.queryByTestId("CieID")).not.toBeNull();
-  });
-
-  it("should not show CiePin method when it is disabled", () => {
-    const component = renderComponent({
-      disabledIdentificationMethods: ["CiePin"]
+      expect(component.queryByTestId("Spid")).not.toBeNull();
+      expect(component.queryByTestId("CiePin")).not.toBeNull();
+      expect(component.queryByTestId("CieID")).not.toBeNull();
     });
 
-    expect(component.queryByTestId("Spid")).not.toBeNull();
-    expect(component.queryByTestId("CiePin")).toBeNull();
-    expect(component.queryByTestId("CieID")).not.toBeNull();
-  });
+    it("should not show CiePin method when it is disabled", () => {
+      jest
+        .spyOn(
+          remoteConfigSelectors,
+          "itwDisabledIdentificationMethodsSelector"
+        )
+        .mockReturnValue(["CiePin"]);
 
-  it("should not show SPID method when it is disabled", () => {
-    const component = renderComponent({
-      disabledIdentificationMethods: ["SPID"]
+      const component = renderComponent();
+
+      expect(component.queryByTestId("Spid")).not.toBeNull();
+      expect(component.queryByTestId("CiePin")).toBeNull();
+      expect(component.queryByTestId("CieID")).not.toBeNull();
     });
 
-    expect(component.queryByTestId("Spid")).toBeNull();
-    expect(component.queryByTestId("CiePin")).not.toBeNull();
-    expect(component.queryByTestId("CieID")).not.toBeNull();
-  });
+    it("should not show SPID method when it is disabled", () => {
+      jest
+        .spyOn(
+          remoteConfigSelectors,
+          "itwDisabledIdentificationMethodsSelector"
+        )
+        .mockReturnValue(["SPID"]);
 
-  it("should not show CieId method when it is disabled", () => {
-    const component = renderComponent({
-      disabledIdentificationMethods: ["CieID"]
+      const component = renderComponent();
+
+      expect(component.queryByTestId("Spid")).toBeNull();
+      expect(component.queryByTestId("CiePin")).not.toBeNull();
+      expect(component.queryByTestId("CieID")).not.toBeNull();
     });
 
-    expect(component.queryByTestId("Spid")).not.toBeNull();
-    expect(component.queryByTestId("CiePin")).not.toBeNull();
-    expect(component.queryByTestId("CieID")).toBeNull();
+    it("should not show CieId method when it is disabled", () => {
+      jest
+        .spyOn(
+          remoteConfigSelectors,
+          "itwDisabledIdentificationMethodsSelector"
+        )
+        .mockReturnValue(["CieID"]);
+
+      const component = renderComponent();
+
+      expect(component.queryByTestId("Spid")).not.toBeNull();
+      expect(component.queryByTestId("CiePin")).not.toBeNull();
+      expect(component.queryByTestId("CieID")).toBeNull();
+    });
   });
 
-  type RenderOptions = {
-    isIdPayEnabled?: boolean;
-    isItwEnabled?: boolean;
-    isItwTestEnabled?: boolean;
-    itwLifecycle?: ItwLifecycleState;
-    disabledIdentificationMethods?: Array<string>;
-    isCieSupported?: pot.Pot<boolean, Error>;
-  };
+  describe("L3IdentificationView (L3 enabled)", () => {
+    it("should render L3 view with appropriate elements", () => {
+      const component = renderComponent(true);
 
-  const renderComponent = ({
-    isItwEnabled = true,
-    itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID,
-    disabledIdentificationMethods,
-    isCieSupported = pot.some(true)
-  }: RenderOptions) => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
+      expect(component.queryByTestId("l3-identification-view")).not.toBeNull();
+      expect(component.queryByTestId("l3-primary-action")).not.toBeNull();
+      expect(component.queryByTestId("l3-cie-pin-header")).not.toBeNull();
+      expect(component.queryByTestId("l3-cie-id-header")).not.toBeNull();
+      expect(component.queryByTestId("l3-cie-id-nav")).not.toBeNull();
+      expect(component.queryByTestId("Spid")).toBeNull();
+    });
+  });
+});
 
-    const mockStore = configureMockStore<GlobalState>();
-    const store: ReturnType<typeof mockStore> = mockStore(
-      _.merge(undefined, globalState, {
-        features: {
-          itWallet: {
-            lifecycle: itwLifecycle,
-            ...(itwLifecycle === ItwLifecycleState.ITW_LIFECYCLE_VALID && {
-              credentials: { eid: O.some({}) },
-              issuance: { integrityKeyTag: O.some("key-tag") },
-              identification: {
-                isCieSupported
-              }
-            })
-          }
-        },
-        remoteConfig: O.some({
-          itw: {
-            enabled: isItwEnabled,
-            min_app_version: {
-              android: "0.0.0.0",
-              ios: "0.0.0.0"
-            },
-            disabled_identification_methods: disabledIdentificationMethods
-          },
-          assistanceTool: { tool: ToolEnum.none },
-          cgn: { enabled: true },
-          newPaymentSection: {
-            enabled: false,
-            min_app_version: {
-              android: "0.0.0.0",
-              ios: "0.0.0.0"
-            }
-          }
-        } as Config) as RemoteConfigState
-      } as GlobalState)
-    );
+const renderComponent = (isL3FeaturesEnabled = false, eidReissuing = false) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
 
+  const mockStore = configureMockStore<GlobalState>();
+  const store: ReturnType<typeof mockStore> = mockStore(globalState);
+
+  const WrappedComponent = (
+    props: ItwIdentificationModeSelectionScreenProps
+  ) => {
     const logic = itwEidIssuanceMachine.provide({
       actions: {
-        onInit: jest.fn()
+        onInit: jest.fn(),
+        navigateToIdentificationModeScreen: () => undefined
       }
     });
 
-    return renderScreenWithNavigationStoreContext<GlobalState>(
-      () => (
-        <ItwEidIssuanceMachineContext.Provider logic={logic}>
-          <ItwIdentificationModeSelectionScreen />
-        </ItwEidIssuanceMachineContext.Provider>
-      ),
-      ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
-      {},
-      store
+    const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+    const snapshot: typeof initialSnapshot = {
+      ...initialSnapshot,
+      value: { UserIdentification: "ModeSelection" },
+      context: {
+        ...initialSnapshot.context,
+        isL3FeaturesEnabled,
+        cieContext: {
+          isNFCEnabled: true,
+          isCIEAuthenticationSupported: true
+        }
+      }
+    };
+
+    return (
+      <ItwEidIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ snapshot }}
+      >
+        <ItwIdentificationModeSelectionScreen {...props} />
+      </ItwEidIssuanceMachineContext.Provider>
     );
   };
-});
+
+  return renderScreenWithNavigationStoreContext<GlobalState>(
+    WrappedComponent,
+    ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+    { eidReissuing },
+    store
+  );
+};

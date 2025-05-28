@@ -8,7 +8,7 @@ import {
   TransactionErrorDTO
 } from "../../../../../definitions/idpay/TransactionErrorDTO";
 import { SagaCallReturnType } from "../../../../types/utils";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
 import { idPayGenerateBarcode } from "../store/actions";
 import { getNetworkError } from "../../../../utils/errors";

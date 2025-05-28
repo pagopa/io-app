@@ -2,7 +2,7 @@
  * Action types and action creator related to Organizations.
  */
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ServiceDetails } from "../../../definitions/services/ServiceDetails";
 
 export const setSelectedOrganizations = createStandardAction(
   "SET_SELECTED_ORGANIZATIONS"
@@ -10,7 +10,7 @@ export const setSelectedOrganizations = createStandardAction(
 
 export const updateOrganizations = createStandardAction(
   "UPDATE_ORGANIZATIONS"
-)<ServicePublic>();
+)<ServiceDetails>();
 
 export type OrganizationsActions =
   | ActionType<typeof setSelectedOrganizations>

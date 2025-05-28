@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
-import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
+import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayOnboardingRoutes } from "../navigation/routes";
 import * as Context from "./context";
@@ -27,6 +27,11 @@ export const createActionsImplementation = (
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS
     });
+  const navigateToInputFormScreen = () =>
+    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM
+    });
+
   const navigateToCompletionScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION
@@ -76,6 +81,7 @@ export const createActionsImplementation = (
     navigateToCompletionScreen,
     navigateToFailureScreen,
     navigateToInitiativeMonitoringScreen,
+    navigateToInputFormScreen,
     closeOnboarding,
     handleSessionExpired
   };

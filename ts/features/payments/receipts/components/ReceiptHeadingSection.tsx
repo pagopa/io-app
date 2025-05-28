@@ -1,11 +1,10 @@
 import {
+  ContentWrapper,
   IOColors,
-  IOStyles,
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { View } from "react-native";
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import { Psp } from "../../../../types/pagopa";
@@ -44,7 +43,7 @@ export const ReceiptHeadingSection = ({ transaction, isLoading }: Props) => {
   const totalAmount = calculateTotalAmount(transactionInfo);
 
   return (
-    <View style={[IOStyles.horizontalContentPadding, { backgroundColor }]}>
+    <ContentWrapper style={{ backgroundColor }}>
       <VStack space={8}>
         <ReceiptCartList
           carts={transaction?.carts}
@@ -59,6 +58,6 @@ export const ReceiptHeadingSection = ({ transaction, isLoading }: Props) => {
           transactionInfo={transactionInfo}
         />
       </VStack>
-    </View>
+    </ContentWrapper>
   );
 };

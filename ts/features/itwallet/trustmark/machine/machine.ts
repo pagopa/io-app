@@ -2,6 +2,10 @@ import { addSeconds, differenceInSeconds, isPast } from "date-fns";
 import { assign, fromPromise, not, setup } from "xstate";
 import { ItwTags } from "../../machine/tags";
 import {
+  CREDENTIALS_MAP,
+  trackItwTrustmarkRenewFailure
+} from "../../analytics";
+import {
   GetCredentialTrustmarkUrlActorInput,
   GetCredentialTrustmarkUrlActorOutput,
   GetWalletAttestationActorOutput
@@ -55,7 +59,10 @@ export const itwTrustmarkMachine = setup({
     setFailure: assign({
       failure: ({ event }) => mapEventToFailure(event)
     }),
-    showRetryFailureToast: notImplemented
+    showRetryFailureToast: notImplemented,
+    trackTrustmarkFailure: ({ context }) => {
+      trackItwTrustmarkRenewFailure(CREDENTIALS_MAP[context.credentialType]);
+    }
   },
   actors: {
     getWalletAttestationActor:
@@ -174,7 +181,7 @@ export const itwTrustmarkMachine = setup({
     },
     Failure: {
       description: "This state is reached when an error occurs",
-      entry: "incrementAttempts",
+      entry: ["incrementAttempts", "trackTrustmarkFailure"],
       on: {
         retry: [
           {

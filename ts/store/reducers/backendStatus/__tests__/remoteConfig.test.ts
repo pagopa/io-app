@@ -5,14 +5,24 @@ import { GlobalState } from "../../types";
 import {
   absolutePortalLinksSelector,
   barcodesScannerConfigSelector,
+  fimsServiceConfiguration,
   generateDynamicUrlSelector,
+  isIOMarkdownEnabledForMessagesAndServicesSelector,
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
-  landingScreenBannerOrderSelector
+  landingScreenBannerOrderSelector,
+  pnMessagingServiceIdSelector,
+  pnPrivacyUrlsSelector
 } from "../remoteConfig";
 import * as appVersion from "../../../../utils/appVersion";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
-describe("test selectors", () => {
+describe("remoteConfig", () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+    jest.clearAllMocks();
+  });
+
   // smoke tests: valid / invalid
   const noneStore = {
     remoteConfig: O.none
@@ -136,115 +146,441 @@ describe("test selectors", () => {
       expect(output).toBe("https://ioapp.it/path");
     });
   });
-});
 
-describe("isPnAppVersionSupportedSelector", () => {
-  it("should return false, when 'backendStatus' is O.none", () => {
-    const state = {
+  describe("isPnAppVersionSupportedSelector", () => {
+    it("should return false, when 'backendStatus' is O.none", () => {
+      const state = {
+        remoteConfig: O.none
+      } as GlobalState;
+      const isSupported = isPnAppVersionSupportedSelector(state);
+      expect(isSupported).toBe(false);
+    });
+    it("should return false, when min_app_version is greater than `getAppVersion`", () => {
+      const state = {
+        remoteConfig: O.some({
+          pn: {
+            min_app_version: {
+              android: "2.0.0.0",
+              ios: "2.0.0.0"
+            }
+          }
+        })
+      } as GlobalState;
+      jest
+        .spyOn(appVersion, "getAppVersion")
+        .mockImplementation(() => "1.0.0.0");
+      const isSupported = isPnAppVersionSupportedSelector(state);
+      expect(isSupported).toBe(false);
+    });
+    it("should return true, when min_app_version is equal to `getAppVersion`", () => {
+      const state = {
+        remoteConfig: O.some({
+          pn: {
+            min_app_version: {
+              android: "2.0.0.0",
+              ios: "2.0.0.0"
+            }
+          }
+        })
+      } as GlobalState;
+      jest
+        .spyOn(appVersion, "getAppVersion")
+        .mockImplementation(() => "2.0.0.0");
+      const isSupported = isPnAppVersionSupportedSelector(state);
+      expect(isSupported).toBe(true);
+    });
+    it("should return true, when min_app_version is less than `getAppVersion`", () => {
+      const state = {
+        remoteConfig: O.some({
+          pn: {
+            min_app_version: {
+              android: "2.0.0.0",
+              ios: "2.0.0.0"
+            }
+          }
+        })
+      } as GlobalState;
+      jest
+        .spyOn(appVersion, "getAppVersion")
+        .mockImplementation(() => "3.0.0.0");
+      const isSupported = isPnAppVersionSupportedSelector(state);
+      expect(isSupported).toBe(true);
+    });
+  });
+  describe("landingScreenBannerOrderSelector", () => {
+    const getMock = (priority_order: Array<string> | undefined) =>
+      ({
+        remoteConfig: O.some({
+          landing_banners: {
+            priority_order
+          }
+        })
+      } as GlobalState);
+
+    const some_priorityOrder = ["id1", "id2", "id3"];
+    const customNoneStore = {
       remoteConfig: O.none
     } as GlobalState;
-    const isSupported = isPnAppVersionSupportedSelector(state);
-    expect(isSupported).toBe(false);
-  });
-  it("should return false, when min_app_version is greater than `getAppVersion`", () => {
-    const state = {
-      remoteConfig: O.some({
-        pn: {
-          min_app_version: {
-            android: "2.0.0.0",
-            ios: "2.0.0.0"
-          }
-        }
-      })
+    const undefinedLandingBannersStore = {
+      remoteConfig: O.some({})
     } as GlobalState;
-    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "1.0.0.0");
-    const isSupported = isPnAppVersionSupportedSelector(state);
-    expect(isSupported).toBe(false);
+    const testCases = [
+      {
+        selectorInput: getMock(some_priorityOrder),
+        expected: some_priorityOrder
+      },
+      {
+        selectorInput: getMock(undefined),
+        expected: []
+      },
+      {
+        selectorInput: getMock([]),
+        expected: []
+      },
+      {
+        selectorInput: customNoneStore,
+        expected: []
+      },
+      {
+        selectorInput: undefinedLandingBannersStore,
+        expected: []
+      }
+    ];
+
+    for (const testCase of testCases) {
+      it(`should return [${testCase.expected}] for ${JSON.stringify(
+        pipe(
+          testCase.selectorInput.remoteConfig,
+          O.fold(
+            // eslint-disable-next-line no-underscore-dangle
+            () => testCase.selectorInput.remoteConfig._tag,
+            identity
+          )
+        )
+      )}`, () => {
+        const output = landingScreenBannerOrderSelector(testCase.selectorInput);
+        expect(output).toStrictEqual(testCase.expected);
+      });
+    }
   });
-  it("should return true, when min_app_version is equal to `getAppVersion`", () => {
-    const state = {
-      remoteConfig: O.some({
-        pn: {
-          min_app_version: {
-            android: "2.0.0.0",
-            ios: "2.0.0.0"
+
+  describe("fimsServiceConfiguration", () => {
+    it("should retrieve configuration for matching id", () => {
+      const configurationId = "aConfId";
+      const organizationFiscalCode = "12345678901";
+      const organizationName = "Organization name";
+      const serviceId = "01JMHVSD7JGCNJF36TX0JM0JF3" as ServiceId;
+      const serviceName = "Service name";
+      const state = {
+        remoteConfig: O.some({
+          fims: {
+            services: [
+              {
+                configuration_id: configurationId,
+                service_id: serviceId,
+                organization_fiscal_code: organizationFiscalCode,
+                organization_name: "Organization name",
+                service_name: "Service name"
+              }
+            ]
           }
-        }
-      })
-    } as GlobalState;
-    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "2.0.0.0");
-    const isSupported = isPnAppVersionSupportedSelector(state);
-    expect(isSupported).toBe(true);
-  });
-  it("should return true, when min_app_version is less than `getAppVersion`", () => {
-    const state = {
-      remoteConfig: O.some({
-        pn: {
-          min_app_version: {
-            android: "2.0.0.0",
-            ios: "2.0.0.0"
+        })
+      } as GlobalState;
+      const serviceConfiguration = fimsServiceConfiguration(
+        state,
+        configurationId
+      );
+      expect(serviceConfiguration).toEqual({
+        configuration_id: configurationId,
+        service_id: serviceId,
+        organization_fiscal_code: organizationFiscalCode,
+        organization_name: organizationName,
+        service_name: serviceName
+      });
+    });
+    it("should return 'undefined' for unmatching id", () => {
+      const state = {
+        remoteConfig: O.some({
+          fims: {
+            services: [
+              {
+                configuration_id: "aConfId",
+                service_id: "01JMHVSD7JGCNJF36TX0JM0JF3",
+                organization_fiscal_code: "12345678901",
+                organization_name: "Organization name",
+                service_name: "Service name"
+              }
+            ]
           }
-        }
-      })
-    } as GlobalState;
-    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "3.0.0.0");
-    const isSupported = isPnAppVersionSupportedSelector(state);
-    expect(isSupported).toBe(true);
+        })
+      } as GlobalState;
+      const serviceConfiguration = fimsServiceConfiguration(
+        state,
+        "unmatchingConfId"
+      );
+      expect(serviceConfiguration).toBeUndefined();
+    });
   });
 });
-describe("landingScreenBannerOrderSelector", () => {
-  const getMock = (priority_order: Array<string> | undefined) =>
-    ({
-      remoteConfig: O.some({
-        landing_banners: {
-          priority_order
-        }
-      })
-    } as GlobalState);
+describe("isIOMarkdownEnabledForMessagesAndServicesSelector", () => {
+  (
+    [
+      [
+        {
+          remoteConfig: O.none
+        } as GlobalState,
+        false
+      ],
+      [
+        {
+          remoteConfig: O.some({})
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {}
+          })
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {}
+            }
+          })
+        },
+        false
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {
+                android: "0.0.0.0",
+                ios: "0.0.0.0"
+              }
+            }
+          })
+        },
+        false
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {
+                android: "1.0.0.0",
+                ios: "1.0.0.0"
+              }
+            }
+          })
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {
+                android: "2.0.0.0",
+                ios: "2.0.0.0"
+              }
+            }
+          })
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {
+                android: "2.0.0.1",
+                ios: "2.0.0.1"
+              }
+            }
+          })
+        },
+        false
+      ]
+    ] as ReadonlyArray<[GlobalState, boolean]>
+  ).forEach(testData =>
+    it(`should return '${testData[1]}' for '${JSON.stringify(
+      testData[0]
+    )}'`, () => {
+      jest
+        .spyOn(appVersion, "getAppVersion")
+        .mockImplementation(() => "2.0.0.0");
+      const output = isIOMarkdownEnabledForMessagesAndServicesSelector(
+        testData[0]
+      );
+      expect(output).toBe(testData[1]);
+    })
+  );
+});
 
-  const some_priorityOrder = ["id1", "id2", "id3"];
-  const customNoneStore = {
+describe("pnMessageServiceIdSelector", () => {
+  const someState = {
+    remoteConfig: O.some({
+      pn: {
+        notificationServiceId: "NOTIF_SID"
+      }
+    })
+  } as GlobalState;
+  const emptyObjectState = {
+    remoteConfig: O.some({
+      pn: {}
+    })
+  } as GlobalState;
+  const noneState = {
     remoteConfig: O.none
   } as GlobalState;
-  const undefinedLandingBannersStore = {
-    remoteConfig: O.some({})
+  const emptyStringState = {
+    remoteConfig: O.some({
+      pn: { notificationServiceId: "" }
+    })
   } as GlobalState;
+  const undefinedState = {
+    remoteConfig: O.some({
+      pn: { notificationServiceId: undefined }
+    })
+  } as GlobalState;
+
   const testCases = [
     {
-      selectorInput: getMock(some_priorityOrder),
-      expected: some_priorityOrder
+      result: "NOTIF_SID",
+      input: someState
     },
     {
-      selectorInput: getMock(undefined),
-      expected: []
+      result: undefined,
+      input: emptyObjectState
     },
     {
-      selectorInput: getMock([]),
-      expected: []
+      result: "",
+      input: emptyStringState
     },
     {
-      selectorInput: customNoneStore,
-      expected: []
+      result: undefined,
+      input: noneState
     },
     {
-      selectorInput: undefinedLandingBannersStore,
-      expected: []
+      result: undefined,
+      input: undefinedState
+    }
+  ];
+  for (const { result, input } of testCases) {
+    it(`should return the correct result for input : ${JSON.stringify(
+      input
+    )}`, () => {
+      const output = pnMessagingServiceIdSelector(input);
+      expect(output).toBe(result);
+    });
+  }
+});
+
+describe("pnPrivacyUrlsSelector", () => {
+  const someTos = "someTos";
+  const somePrivacy = "somePrivacy";
+  const fallbackSendPrivacyUrls = {
+    tos: "https://cittadini.notifichedigitali.it/termini-di-servizio",
+    privacy: "https://cittadini.notifichedigitali.it/informativa-privacy"
+  };
+
+  const someState = {
+    remoteConfig: O.some({
+      pn: {
+        privacy_url: somePrivacy,
+        tos_url: someTos
+      }
+    })
+  } as GlobalState;
+
+  const emptyObjectState = {
+    remoteConfig: O.some({
+      pn: {}
+    })
+  } as GlobalState;
+
+  const noneState = {
+    remoteConfig: O.none
+  } as GlobalState;
+
+  const emptyStringState = {
+    remoteConfig: O.some({
+      pn: {
+        privacy_url: "",
+        tos_url: ""
+      }
+    })
+  } as GlobalState;
+
+  const missingTosState = {
+    remoteConfig: O.some({
+      pn: {
+        privacy_url: somePrivacy
+      }
+    })
+  } as GlobalState;
+  const missingPrivacyState = {
+    remoteConfig: O.some({
+      pn: {
+        tos_url: someTos
+      }
+    })
+  } as GlobalState;
+
+  const testCases = [
+    {
+      result: { privacy: somePrivacy, tos: someTos },
+      input: someState
+    },
+    {
+      result: {
+        privacy: fallbackSendPrivacyUrls.privacy,
+        tos: fallbackSendPrivacyUrls.tos
+      },
+      input: emptyObjectState
+    },
+    {
+      result: {
+        privacy: "",
+        tos: ""
+      },
+      input: emptyStringState
+    },
+    {
+      result: {
+        privacy: fallbackSendPrivacyUrls.privacy,
+        tos: fallbackSendPrivacyUrls.tos
+      },
+      input: noneState
+    },
+    {
+      result: {
+        privacy: somePrivacy,
+        tos: fallbackSendPrivacyUrls.tos
+      },
+      input: missingTosState
+    },
+    {
+      result: {
+        privacy: fallbackSendPrivacyUrls.privacy,
+        tos: someTos
+      },
+      input: missingPrivacyState
     }
   ];
 
-  for (const testCase of testCases) {
-    it(`should return [${testCase.expected}] for ${JSON.stringify(
-      pipe(
-        testCase.selectorInput.remoteConfig,
-        O.fold(
-          // eslint-disable-next-line no-underscore-dangle
-          () => testCase.selectorInput.remoteConfig._tag,
-          identity
-        )
-      )
+  for (const { result, input } of testCases) {
+    it(`should return the correct result for input remoteConfig : ${JSON.stringify(
+      input.remoteConfig
     )}`, () => {
-      const output = landingScreenBannerOrderSelector(testCase.selectorInput);
-      expect(output).toStrictEqual(testCase.expected);
+      const output = pnPrivacyUrlsSelector(input);
+      expect(output).toEqual(result);
     });
   }
 });

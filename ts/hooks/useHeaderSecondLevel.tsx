@@ -13,9 +13,11 @@ import I18n from "../i18n";
 import { FAQsCategoriesType } from "../utils/faq";
 import { useStartSupportRequest } from "./useStartSupportRequest";
 import { useStatusAlertProps } from "./useStatusAlertProps";
+import { useOfflineToastGuard } from "./useOfflineToastGuard.ts";
 
 type SpecificHookProps = {
   canGoBack?: boolean;
+  ignoreAccessibilityCheck?: boolean;
   /* On the surface, this prop seems useless, but it's used
   to programmatically hide the header.
   See PR#5795 for more details. */
@@ -104,14 +106,17 @@ export const useHeaderSecondLevel = ({
   variant,
   backgroundColor,
   enableDiscreteTransition,
+  ignoreAccessibilityCheck,
   animatedRef
 }: HeaderSecondLevelHookProps) => {
   const alertProps = useStatusAlertProps();
-  const startSupportRequest = useStartSupportRequest({
-    faqCategories,
-    contextualHelpMarkdown,
-    contextualHelp
-  });
+  const startSupportRequest = useOfflineToastGuard(
+    useStartSupportRequest({
+      faqCategories,
+      contextualHelpMarkdown,
+      contextualHelp
+    })
+  );
 
   const navigation = useNavigation();
 
@@ -197,11 +202,12 @@ export const useHeaderSecondLevel = ({
   const headerComponentProps = useMemo(
     () => ({
       title,
+      ignoreAccessibilityCheck,
       ...graphicProps,
       ...backProps,
       ...helpProps
     }),
-    [title, graphicProps, backProps, helpProps]
+    [title, ignoreAccessibilityCheck, graphicProps, backProps, helpProps]
   ) as HeaderProps;
 
   useLayoutEffect(() => {
@@ -209,6 +215,7 @@ export const useHeaderSecondLevel = ({
       header: () => (
         <HeaderSecondLevel
           {...headerComponentProps}
+          ignoreAccessibilityCheck
           transparent={transparent}
         />
       ),

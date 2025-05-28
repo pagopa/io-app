@@ -18,7 +18,7 @@ import {
 } from "../store/actions";
 import { SagaCallReturnType } from "../../../types/utils";
 import { getError } from "../../../utils/errors";
-import { withRefreshApiCall } from "../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
 import {
   trackArchivedRestoredMessages,

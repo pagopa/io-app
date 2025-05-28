@@ -2,35 +2,36 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { PureComponent } from "react";
 import {
+  AccessibilityInfo,
   AppState,
   AppStateStatus,
+  EmitterSubscription,
   NativeEventSubscription,
   StatusBar
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
-import configurePushNotifications from "./features/pushNotifications/utils/configurePushNotification";
 import DebugInfoOverlay from "./components/DebugInfoOverlay";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
+import { configurePushNotifications } from "./features/pushNotifications/utils/configurePushNotification";
 import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
 import { applicationChangeState } from "./store/actions/application";
 import { setDebugCurrentRouteName } from "./store/actions/debug";
 import { navigateBack } from "./store/actions/navigation";
+import { setScreenReaderEnabled } from "./store/actions/preferences";
 import { isDebugModeEnabledSelector } from "./store/reducers/debug";
 import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
-import { ReactNavigationInstrumentation } from "./App";
+import { Store } from "./store/actions/types";
 
 type Props = ReturnType<typeof mapStateToProps> &
-  typeof mapDispatchToProps & {
-    routingInstumentation: ReactNavigationInstrumentation;
-  };
+  typeof mapDispatchToProps & { store: Store };
 
 /**
  * The main container of the application with:
@@ -42,14 +43,20 @@ type Props = ReturnType<typeof mapStateToProps> &
  */
 class RootContainer extends PureComponent<Props> {
   private subscription: NativeEventSubscription | undefined;
+  private accessibilitySubscription: EmitterSubscription | undefined;
   constructor(props: Props) {
     super(props);
     /* Configure the application to receive push notifications */
-    configurePushNotifications();
+    configurePushNotifications(props.store);
   }
 
   private handleApplicationActivity = (activity: AppStateStatus) =>
     this.props.applicationChangeState(activity);
+
+  private handleScreenReaderEnabled = (isScreenReaderEnabled: boolean) =>
+    this.props.setScreenReaderEnabled({
+      screenReaderEnabled: isScreenReaderEnabled
+    });
 
   public componentDidMount() {
     // boot: send the status of the application
@@ -59,6 +66,14 @@ class RootContainer extends PureComponent<Props> {
       "change",
       this.handleApplicationActivity
     );
+    // eslint-disable-next-line functional/immutable-data
+    this.accessibilitySubscription = AccessibilityInfo.addEventListener(
+      "screenReaderChanged",
+      this.handleScreenReaderEnabled
+    );
+    AccessibilityInfo.isScreenReaderEnabled()
+      .then(this.handleScreenReaderEnabled)
+      .catch(() => undefined);
 
     this.updateLocale();
     // Hide splash screen
@@ -79,6 +94,7 @@ class RootContainer extends PureComponent<Props> {
 
   public componentWillUnmount() {
     this.subscription?.remove();
+    this.accessibilitySubscription?.remove();
   }
 
   public componentDidUpdate() {
@@ -99,10 +115,7 @@ class RootContainer extends PureComponent<Props> {
           barStyle={"dark-content"}
           backgroundColor={"transparent"}
         />
-
-        <IONavigationContainer
-          routingInstrumentation={this.props.routingInstumentation}
-        />
+        <IONavigationContainer />
 
         {/* When debug mode is enabled, the following information
         is displayed:
@@ -134,7 +147,8 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = {
   applicationChangeState,
   navigateBack,
-  setDebugCurrentRouteName
+  setDebugCurrentRouteName,
+  setScreenReaderEnabled
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);

@@ -28,6 +28,7 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToCredentialPreviewScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
+    navigateToEidVerificationExpiredScreen: notImplemented,
     closeIssuance: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
     storeCredential: notImplemented,
@@ -36,7 +37,9 @@ export const itwCredentialIssuanceMachine = setup({
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     handleSessionExpired: notImplemented,
     trackStartAddCredential: notImplemented,
-    trackAddCredential: notImplemented
+    trackAddCredential: notImplemented,
+    trackCredentialIssuingDataShare: notImplemented,
+    trackCredentialIssuingDataShareAccepted: notImplemented
   },
   actors: {
     getWalletAttestation:
@@ -58,7 +61,9 @@ export const itwCredentialIssuanceMachine = setup({
     isSessionExpired: notImplemented,
     isDeferredIssuance: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
-    isStatusError: notImplemented
+    isStatusError: notImplemented,
+    isEidExpired: notImplemented,
+    isSkipNavigation: notImplemented
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
@@ -69,14 +74,21 @@ export const itwCredentialIssuanceMachine = setup({
     Idle: {
       description:
         "Waits for a credential selection in order to proceed with the issuance",
+      tags: [ItwTags.Loading],
       on: {
         "select-credential": [
           {
-            guard: ({ event }) => event.skipNavigation === true,
+            guard: "isEidExpired",
+            actions: "navigateToEidVerificationExpiredScreen",
+            target: "Idle"
+          },
+          {
+            guard: "isSkipNavigation",
             target: "CheckingWalletInstanceAttestation",
             actions: [
               assign(({ event }) => ({
-                credentialType: event.credentialType
+                credentialType: event.credentialType,
+                isAsyncContinuation: event.asyncContinuation
               })),
               "trackStartAddCredential"
             ]
@@ -85,7 +97,8 @@ export const itwCredentialIssuanceMachine = setup({
             target: "CheckingWalletInstanceAttestation",
             actions: [
               assign(({ event }) => ({
-                credentialType: event.credentialType
+                credentialType: event.credentialType,
+                isAsyncContinuation: event.asyncContinuation
               })),
               "navigateToTrustIssuerScreen",
               "trackStartAddCredential"
@@ -97,6 +110,7 @@ export const itwCredentialIssuanceMachine = setup({
     CheckingWalletInstanceAttestation: {
       description:
         "This is a state with the only purpose of checking the WIA and decide weather to get a new one or not",
+      tags: [ItwTags.Loading],
       always: [
         {
           guard: not("hasValidWalletInstanceAttestation"),
@@ -160,13 +174,21 @@ export const itwCredentialIssuanceMachine = setup({
       }
     },
     DisplayingTrustIssuer: {
-      entry: "navigateToTrustIssuerScreen",
+      entry: ["trackCredentialIssuingDataShare"],
+      always: {
+        // If we are in the async continuation flow means we are already showing the trust issuer screen
+        // but on a different route. We need to avoid a navigation to show a "double" navigation animation.
+        guard: ({ context }) => !context.isAsyncContinuation,
+        actions: "navigateToTrustIssuerScreen"
+      },
       on: {
         "confirm-trust-data": {
+          actions: "trackCredentialIssuingDataShareAccepted",
           target: "Issuance"
         },
         close: {
-          actions: ["closeIssuance"]
+          target: "Completed",
+          actions: "closeIssuance"
         }
       }
     },
@@ -240,9 +262,13 @@ export const itwCredentialIssuanceMachine = setup({
           ]
         },
         close: {
-          actions: ["closeIssuance"]
+          target: "Completed",
+          actions: "closeIssuance"
         }
       }
+    },
+    Completed: {
+      type: "final"
     },
     Failure: {
       entry: ["navigateToFailureScreen"],
@@ -258,10 +284,7 @@ export const itwCredentialIssuanceMachine = setup({
       ],
       on: {
         close: {
-          actions: ["closeIssuance"]
-        },
-        reset: {
-          target: "Idle"
+          actions: "closeIssuance"
         },
         retry: {
           target: "#itwCredentialIssuanceMachine.RequestingCredential"

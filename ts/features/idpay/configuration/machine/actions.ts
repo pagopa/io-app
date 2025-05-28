@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
-import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
+import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayConfigurationRoutes } from "../navigation/routes";
 import { InitiativeFailure } from "../types/failure";

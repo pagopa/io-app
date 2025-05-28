@@ -70,6 +70,16 @@ export const trackPaymentsSaveAndShareReceipt = (
     })
   );
 };
+export const trackPaymentsDownloadReceiptSuccess = (
+  props: Partial<PaymentReceiptAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "DOWNLOAD_RECEIPT_SUCCESS",
+    buildEventProperties("UX", "screen_view", {
+      ...props
+    })
+  );
+};
 
 export const trackPaymentsDownloadReceiptError = (
   props: Partial<PaymentReceiptAnalyticsProps>

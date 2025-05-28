@@ -4,7 +4,10 @@
 
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
-import { logoutSuccess, sessionExpired } from "../../../actions/authentication";
+import {
+  logoutSuccess,
+  sessionExpired
+} from "../../../../features/authentication/common/store/actions";
 
 import { updateOrganizations } from "../../../actions/organizations";
 import { Action } from "../../../actions/types";
@@ -27,8 +30,8 @@ const reducer = (
     case getType(updateOrganizations):
       return {
         ...state,
-        [action.payload.organization_fiscal_code]:
-          action.payload.organization_name
+        [action.payload.organization.fiscal_code]:
+          action.payload.organization.name
       };
 
     case getType(logoutSuccess):

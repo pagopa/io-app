@@ -23,7 +23,8 @@ import { ReactNode, ComponentProps } from "react";
 export type Renderer = (txtNode: AnyTxtNodeWithSpacer) => ReactNode;
 export type RuleRenderer<P, F extends Renderer | void = void> = (
   param: P,
-  renderer: F
+  renderer: F,
+  screenReaderEnabled: boolean
 ) => ReactNode;
 export type AnyTxtNodeWithSpacer =
   | AnyTxtNode

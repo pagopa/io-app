@@ -8,7 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
-import { clearCache } from "../../../../../store/actions/profile";
+import { clearCache } from "../../../../settings/common/store/actions";
 import { Action } from "../../../../../store/actions/types";
 import { getLookUpId } from "../../../../../utils/pmLookUpId";
 import {
@@ -27,7 +27,9 @@ import { WalletPaymentFailure } from "../../../checkout/types/WalletPaymentFailu
 import { PaymentHistory } from "../../types";
 import {
   storeNewPaymentAttemptAction,
-  storePaymentOutcomeToHistory
+  storePaymentOutcomeToHistory,
+  storePaymentsBrowserTypeAction,
+  removeExpiredPaymentsOngoingFailedAction
 } from "../actions";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { getPaymentsWalletUserMethods } from "../../../wallet/store/actions";
@@ -42,21 +44,32 @@ import {
 } from "../../../common/types/PaymentAnalytics";
 import {
   getPaymentsReceiptDetailsAction,
-  getPaymentsLatestReceiptAction
+  getPaymentsLatestReceiptAction,
+  getPaymentsReceiptDownloadAction
 } from "../../../receipts/store/actions";
 import * as receiptsAnalytics from "../../../receipts/analytics";
 import { createSetTransform } from "../../../../../store/transforms/setTransform";
+import * as analytics from "../../../checkout/analytics";
+
+export type PaymentsOngoingFailedClockTime = {
+  wallClock: number;
+  appClock: number;
+};
 
 export type PaymentsHistoryState = {
   analyticsData?: PaymentAnalyticsData;
   ongoingPayment?: PaymentHistory;
   archive: ReadonlyArray<PaymentHistory>;
   receiptsOpened: Set<string>;
+  PDFsOpened: Set<string>;
+  paymentsOngoingFailed?: Record<RptId, PaymentsOngoingFailedClockTime>;
 };
 
 const INITIAL_STATE: PaymentsHistoryState = {
   archive: [],
-  receiptsOpened: new Set()
+  receiptsOpened: new Set(),
+  PDFsOpened: new Set(),
+  paymentsOngoingFailed: {}
 };
 
 export const ARCHIVE_SIZE = 15;
@@ -96,6 +109,10 @@ const reducer = (
     case getType(paymentsGetPaymentDetailsAction.success):
       return {
         ...state,
+        paymentsOngoingFailed: {
+          ...state.paymentsOngoingFailed,
+          [action.payload.rptId]: undefined
+        },
         analyticsData: {
           ...state.analyticsData,
           verifiedData: action.payload,
@@ -123,7 +140,38 @@ const reducer = (
         ...(action.payload === "0" ? { success: true } : {})
       });
     case getType(paymentsGetPaymentDetailsAction.failure):
-    case getType(paymentsCreateTransactionAction.failure):
+    case getType(paymentsCreateTransactionAction.failure): {
+      const failure = pipe(
+        WalletPaymentFailure.decode(action.payload),
+        O.fromEither,
+        O.toUndefined
+      );
+
+      const rptId = state.ongoingPayment?.rptId;
+      const isPaymentPptInProgress =
+        failure?.faultCodeDetail === "PPT_PAGAMENTO_IN_CORSO";
+
+      const failureDateEntry = {
+        wallClock: Date.now(),
+        appClock: performance.now()
+      };
+
+      const ongoingFailedUpdate =
+        rptId && isPaymentPptInProgress && !state.paymentsOngoingFailed?.[rptId]
+          ? { [rptId]: failureDateEntry }
+          : {};
+
+      return updatePaymentHistory(
+        {
+          ...state,
+          paymentsOngoingFailed: {
+            ...state.paymentsOngoingFailed,
+            ...ongoingFailedUpdate
+          }
+        },
+        { failure }
+      );
+    }
     case getType(paymentsGetPaymentTransactionInfoAction.failure):
       return updatePaymentHistory(state, {
         failure: pipe(
@@ -200,7 +248,7 @@ const reducer = (
           )
         }
       };
-    case getType(getPaymentsReceiptDetailsAction.request):
+    case getType(getPaymentsReceiptDetailsAction.request): {
       const isFirstTimeOpening = !state.receiptsOpened.has(
         action.payload.transactionId
       );
@@ -215,12 +263,11 @@ const reducer = (
           action.payload.transactionId
         )
       };
+    }
     case getType(getPaymentsReceiptDetailsAction.success):
       receiptsAnalytics.trackPaymentsOpenReceipt({
         organization_name: action.payload.carts?.[0]?.payee?.name,
-        organization_fiscal_code:
-          state.analyticsData?.verifiedData?.paFiscalCode,
-        payment_status: "paid",
+        organization_fiscal_code: action.payload.carts?.[0]?.payee?.taxCode,
         first_time_opening: state.analyticsData?.receiptFirstTimeOpening,
         user: state.analyticsData?.receiptUser
       });
@@ -228,9 +275,47 @@ const reducer = (
         ...state,
         analyticsData: {
           ...state.analyticsData,
+          receiptOrganizationFiscalCode:
+            action.payload.carts?.[0]?.payee?.taxCode,
           receiptOrganizationName: action.payload.carts?.[0]?.payee?.name,
           receiptPayerFiscalCode: action.payload.infoNotice?.payer?.taxCode
         }
+      };
+    case getType(getPaymentsReceiptDownloadAction.request): {
+      const isFirstTimePDFOpening = !state.PDFsOpened.has(
+        action.payload.transactionId
+      );
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          receiptFirstTimeOpeningPDF: isFirstTimePDFOpening
+        },
+        PDFsOpened: new Set(state.PDFsOpened).add(action.payload.transactionId)
+      };
+    }
+    case getType(storePaymentsBrowserTypeAction):
+      analytics.trackPaymentBrowserLanding({
+        browser_type: action.payload
+      });
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          browserType: action.payload
+        }
+      };
+    case getType(removeExpiredPaymentsOngoingFailedAction):
+      if (!state.paymentsOngoingFailed) {
+        return state;
+      }
+      return {
+        ...state,
+        paymentsOngoingFailed: Object.fromEntries(
+          Object.entries(state.paymentsOngoingFailed).filter(
+            ([rptId]) => !action.payload.includes(rptId as RptId)
+          )
+        )
       };
     case getType(differentProfileLoggedIn):
     case getType(clearCache):
@@ -294,7 +379,9 @@ const updatePaymentHistory = (
       analyticsData: state.analyticsData,
       ongoingPayment: updatedOngoingPaymentHistory,
       archive: appendItemToArchive(state.archive, updatedOngoingPaymentHistory),
-      receiptsOpened: state.receiptsOpened
+      receiptsOpened: state.receiptsOpened,
+      PDFsOpened: state.PDFsOpened,
+      paymentsOngoingFailed: state.paymentsOngoingFailed
     };
   }
 
@@ -302,7 +389,9 @@ const updatePaymentHistory = (
     analyticsData: state.analyticsData,
     ongoingPayment: updatedOngoingPaymentHistory,
     archive: [..._.dropRight(state.archive), updatedOngoingPaymentHistory],
-    receiptsOpened: state.receiptsOpened
+    receiptsOpened: state.receiptsOpened,
+    PDFsOpened: state.PDFsOpened,
+    paymentsOngoingFailed: state.paymentsOngoingFailed
   };
 };
 
@@ -312,7 +401,7 @@ const persistConfig: PersistConfig = {
   key: "paymentHistory",
   storage: AsyncStorage,
   version: CURRENT_REDUX_PAYMENT_HISTORY_STORE_VERSION,
-  whitelist: ["archive", "receiptsOpened"],
+  whitelist: ["archive", "receiptsOpened", "paymentsOngoingFailed"],
   transforms: [createSetTransform(["receiptsOpened"])]
 };
 

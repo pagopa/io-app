@@ -241,7 +241,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                 accessibilityLabel="Loading"
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 48,
@@ -418,15 +417,15 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                             </View>
                             <Text
                               accessibilityLabel="Loading message details"
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#2B2E38",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -457,15 +456,15 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -565,14 +564,12 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -588,10 +585,11 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                       "color": undefined,
                                     }
                                   }
-                                  bbHeight={24}
-                                  bbWidth={24}
+                                  bbHeight={36}
+                                  bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
-                                  height={24}
+                                  height={36}
                                   importantForAccessibility="no-hide-descendants"
                                   meetOrSlice={0}
                                   minX={0}
@@ -603,22 +601,17 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
-                                  width={24}
+                                  width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -651,7 +644,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -662,15 +655,15 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -691,14 +684,12 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -739,14 +730,12 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -762,10 +751,11 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -777,22 +767,17 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -801,15 +786,18 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                       }
                                     >
                                       <RNSVGPath
+                                        clipRule={0}
                                         d="M6 8c0-3.31371 2.68629-6 6-6 3.3137 0 6 2.68629 6 6 0 2.7248-1.8172 5.0278-4.3079 5.7583C12.3754 14.1446 11 15.2973 11 17v1c0 .5523.4477 1 1 1s1-.4477 1-1v-1c0-.5064.452-1.087 1.255-1.3225C17.5744 14.7039 20 11.6365 20 8c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 .55228.44772 1 1 1s1-.44772 1-1Zm7.5 14.5c0 .8284-.6716 1.5-1.5 1.5s-1.5-.6716-1.5-1.5.6716-1.5 1.5-1.5 1.5.6716 1.5 1.5Z"
                                         fill={
                                           {
                                             "type": 2,
                                           }
                                         }
+                                        fillRule={0}
                                         propList={
                                           [
                                             "fill",
+                                            "fillRule",
                                           ]
                                         }
                                       />
@@ -1089,7 +1077,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                 accessibilityLabel="Loading"
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 48,
@@ -1266,15 +1253,15 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                             </View>
                             <Text
                               accessibilityLabel="Loading message details"
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#2B2E38",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -1305,15 +1292,15 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1413,14 +1400,12 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -1436,10 +1421,11 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                       "color": undefined,
                                     }
                                   }
-                                  bbHeight={24}
-                                  bbWidth={24}
+                                  bbHeight={36}
+                                  bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
-                                  height={24}
+                                  height={36}
                                   importantForAccessibility="no-hide-descendants"
                                   meetOrSlice={0}
                                   minX={0}
@@ -1451,22 +1437,17 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
-                                  width={24}
+                                  width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1499,7 +1480,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -1510,15 +1491,15 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1539,14 +1520,12 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -1587,14 +1566,12 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -1610,10 +1587,11 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -1625,22 +1603,17 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1649,15 +1622,18 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                       }
                                     >
                                       <RNSVGPath
+                                        clipRule={0}
                                         d="M6 8c0-3.31371 2.68629-6 6-6 3.3137 0 6 2.68629 6 6 0 2.7248-1.8172 5.0278-4.3079 5.7583C12.3754 14.1446 11 15.2973 11 17v1c0 .5523.4477 1 1 1s1-.4477 1-1v-1c0-.5064.452-1.087 1.255-1.3225C17.5744 14.7039 20 11.6365 20 8c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 .55228.44772 1 1 1s1-.44772 1-1Zm7.5 14.5c0 .8284-.6716 1.5-1.5 1.5s-1.5-.6716-1.5-1.5.6716-1.5 1.5-1.5 1.5.6716 1.5 1.5Z"
                                         fill={
                                           {
                                             "type": 2,
                                           }
                                         }
+                                        fillRule={0}
                                         propList={
                                           [
                                             "fill",
+                                            "fillRule",
                                           ]
                                         }
                                       />
@@ -1943,7 +1919,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -1962,7 +1937,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -2118,15 +2092,16 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              accessibilityRole="header"
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -2189,7 +2164,8 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -2198,38 +2174,41 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                       [
                                         {
                                           "alignItems": "center",
-                                          "borderRadius": 4,
+                                          "borderCurve": "continuous",
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 16,
-                                          "textAlignVertical": "center",
-                                        },
-                                        {
                                           "overflow": "hidden",
-                                        },
-                                        false,
-                                        {
-                                          "height": 40,
-                                        },
-                                        {
-                                          "backgroundColor": "#0073E6",
+                                          "textAlignVertical": "center",
                                         },
                                         false,
                                         {
                                           "backgroundColor": undefined,
                                         },
+                                        {
+                                          "paddingHorizontal": 24,
+                                        },
+                                        {
+                                          "backgroundColor": "#0B3EE3",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
+                                        },
+                                        {},
                                       ]
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
                                             "alignItems": "center",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                          },
+                                          {
+                                            "columnGap": 8,
                                           },
                                           false,
                                         ]
@@ -2238,25 +2217,33 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                       <Text
                                         accessibilityElementsHidden={true}
                                         accessible={false}
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -2287,7 +2274,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
-                                      "busy": undefined,
+                                      "busy": false,
                                       "checked": undefined,
                                       "disabled": false,
                                       "expanded": undefined,
@@ -2322,7 +2309,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  onTouchEnd={[Function]}
                                   style={
                                     {
                                       "alignSelf": "flex-start",
@@ -2334,47 +2320,80 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                       [
                                         {
                                           "alignItems": "center",
+                                          "borderCurve": "continuous",
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         false,
+                                        {},
                                         {
-                                          "columnGap": 8,
+                                          "paddingHorizontal": 0,
+                                        },
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderColor": "#0B3EE3",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": undefined,
                                         },
                                         {},
-                                        false,
                                       ]
                                     }
                                   >
-                                    <Text
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      allowFontScaling={false}
-                                      ellipsizeMode="tail"
-                                      importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={1}
+                                    <View
                                       style={
                                         [
-                                          {},
                                           {
-                                            "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": undefined,
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
                                           },
                                           {
-                                            "color": undefined,
+                                            "columnGap": 8,
                                           },
+                                          false,
                                         ]
                                       }
                                     >
-                                      Cancel
-                                    </Text>
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
+                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
+                                          ]
+                                        }
+                                      >
+                                        Cancel
+                                      </Text>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -2469,14 +2488,12 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -2492,10 +2509,11 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                       "color": undefined,
                                     }
                                   }
-                                  bbHeight={24}
-                                  bbWidth={24}
+                                  bbHeight={36}
+                                  bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
-                                  height={24}
+                                  height={36}
                                   importantForAccessibility="no-hide-descendants"
                                   meetOrSlice={0}
                                   minX={0}
@@ -2507,22 +2525,17 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
-                                  width={24}
+                                  width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2555,7 +2568,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -2566,15 +2579,15 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2595,14 +2608,12 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -2643,14 +2654,12 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -2666,10 +2675,11 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -2681,22 +2691,17 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -2705,15 +2710,18 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                       }
                                     >
                                       <RNSVGPath
+                                        clipRule={0}
                                         d="M6 8c0-3.31371 2.68629-6 6-6 3.3137 0 6 2.68629 6 6 0 2.7248-1.8172 5.0278-4.3079 5.7583C12.3754 14.1446 11 15.2973 11 17v1c0 .5523.4477 1 1 1s1-.4477 1-1v-1c0-.5064.452-1.087 1.255-1.3225C17.5744 14.7039 20 11.6365 20 8c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 .55228.44772 1 1 1s1-.44772 1-1Zm7.5 14.5c0 .8284-.6716 1.5-1.5 1.5s-1.5-.6716-1.5-1.5.6716-1.5 1.5-1.5 1.5.6716 1.5 1.5Z"
                                         fill={
                                           {
                                             "type": 2,
                                           }
                                         }
+                                        fillRule={0}
                                         propList={
                                           [
                                             "fill",
+                                            "fillRule",
                                           ]
                                         }
                                       />
@@ -2993,7 +3001,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                 accessibilityLabel="Loading"
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 48,
@@ -3170,15 +3177,15 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                             </View>
                             <Text
                               accessibilityLabel="Loading message details"
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#2B2E38",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -3209,15 +3216,15 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -3317,14 +3324,12 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -3340,10 +3345,11 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                       "color": undefined,
                                     }
                                   }
-                                  bbHeight={24}
-                                  bbWidth={24}
+                                  bbHeight={36}
+                                  bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
-                                  height={24}
+                                  height={36}
                                   importantForAccessibility="no-hide-descendants"
                                   meetOrSlice={0}
                                   minX={0}
@@ -3355,22 +3361,17 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
-                                  width={24}
+                                  width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3403,7 +3404,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -3414,15 +3415,15 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -3443,14 +3444,12 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -3491,14 +3490,12 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -3514,10 +3511,11 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -3529,22 +3527,17 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -3553,15 +3546,18 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                       }
                                     >
                                       <RNSVGPath
+                                        clipRule={0}
                                         d="M6 8c0-3.31371 2.68629-6 6-6 3.3137 0 6 2.68629 6 6 0 2.7248-1.8172 5.0278-4.3079 5.7583C12.3754 14.1446 11 15.2973 11 17v1c0 .5523.4477 1 1 1s1-.4477 1-1v-1c0-.5064.452-1.087 1.255-1.3225C17.5744 14.7039 20 11.6365 20 8c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 .55228.44772 1 1 1s1-.44772 1-1Zm7.5 14.5c0 .8284-.6716 1.5-1.5 1.5s-1.5-.6716-1.5-1.5.6716-1.5 1.5-1.5 1.5.6716 1.5 1.5Z"
                                         fill={
                                           {
                                             "type": 2,
                                           }
                                         }
+                                        fillRule={0}
                                         propList={
                                           [
                                             "fill",
+                                            "fillRule",
                                           ]
                                         }
                                       />
@@ -3841,7 +3837,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                 accessibilityLabel="Loading"
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 48,
@@ -4018,15 +4013,15 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                             </View>
                             <Text
                               accessibilityLabel="Loading message details"
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#2B2E38",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -4057,15 +4052,15 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -4165,14 +4160,12 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -4188,10 +4181,11 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                       "color": undefined,
                                     }
                                   }
-                                  bbHeight={24}
-                                  bbWidth={24}
+                                  bbHeight={36}
+                                  bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
-                                  height={24}
+                                  height={36}
                                   importantForAccessibility="no-hide-descendants"
                                   meetOrSlice={0}
                                   minX={0}
@@ -4203,22 +4197,17 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
-                                  width={24}
+                                  width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4251,7 +4240,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -4262,15 +4251,15 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -4291,14 +4280,12 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -4339,14 +4326,12 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -4362,10 +4347,11 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -4377,22 +4363,17 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -4401,15 +4382,18 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                       }
                                     >
                                       <RNSVGPath
+                                        clipRule={0}
                                         d="M6 8c0-3.31371 2.68629-6 6-6 3.3137 0 6 2.68629 6 6 0 2.7248-1.8172 5.0278-4.3079 5.7583C12.3754 14.1446 11 15.2973 11 17v1c0 .5523.4477 1 1 1s1-.4477 1-1v-1c0-.5064.452-1.087 1.255-1.3225C17.5744 14.7039 20 11.6365 20 8c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 .55228.44772 1 1 1s1-.44772 1-1Zm7.5 14.5c0 .8284-.6716 1.5-1.5 1.5s-1.5-.6716-1.5-1.5.6716-1.5 1.5-1.5 1.5.6716 1.5 1.5Z"
                                         fill={
                                           {
                                             "type": 2,
                                           }
                                         }
+                                        fillRule={0}
                                         propList={
                                           [
                                             "fill",
+                                            "fillRule",
                                           ]
                                         }
                                       />

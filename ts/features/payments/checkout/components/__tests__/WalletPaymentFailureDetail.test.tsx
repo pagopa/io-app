@@ -3,7 +3,10 @@ import configureMockStore from "redux-mock-store";
 import { fireEvent } from "@testing-library/react-native";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import { usePaymentFailureSupportModal } from "../../hooks/usePaymentFailureSupportModal";
-import { WalletPaymentFailureDetail } from "../WalletPaymentFailureDetail";
+import {
+  HC_PAYMENT_CANCELED_ERROR_ID,
+  WalletPaymentFailureDetail
+} from "../WalletPaymentFailureDetail";
 import * as analytics from "../../analytics";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -12,12 +15,18 @@ import { PaymentsCheckoutRoutes } from "../../navigation/routes";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
+import { openWebUrl } from "../../../../../utils/url";
+import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
+import { CHECKOUT_ASSISTANCE_ARTICLE } from "../../utils";
 
 jest.mock("../../hooks/usePaymentFailureSupportModal", () => ({
   usePaymentFailureSupportModal: jest.fn()
 }));
 
 jest.mock("../../analytics");
+jest.mock("../../../../../utils/analytics");
+
+jest.mock("../../../../../utils/url");
 
 const mockNavigation = {
   pop: jest.fn(),
@@ -56,11 +65,12 @@ const state = mockStore({
 
 describe("WalletPaymentFailureDetail", () => {
   const renderComponent = (
-    faultCodeCategory: WalletPaymentFailure["faultCodeCategory"]
+    faultCodeCategory: WalletPaymentFailure["faultCodeCategory"],
+    faultCodeDetail?: string
   ) => {
     const failure: any = {
       faultCodeCategory,
-      faultCodeDetail: ""
+      faultCodeDetail: faultCodeDetail ?? ""
     };
 
     const store = createStore(appReducer, state as any);
@@ -77,7 +87,6 @@ describe("WalletPaymentFailureDetail", () => {
     "PAYMENT_UNAVAILABLE",
     "PAYMENT_DATA_ERROR",
     "DOMAIN_UNKNOWN",
-    "PAYMENT_ONGOING",
     "PAYMENT_EXPIRED",
     "PAYMENT_CANCELED",
     "PAYMENT_DUPLICATED",
@@ -102,6 +111,34 @@ describe("WalletPaymentFailureDetail", () => {
     }
   );
 
+  it("renders the right screen when faultCodeCategory is PAYMENT_ONGOING and faultCodeDetails is PAA_PAGAMENTO_IN_CORSO", () => {
+    const { getByText } = renderComponent(
+      "PAYMENT_ONGOING" as WalletPaymentFailure["faultCodeCategory"],
+      "PAA_PAGAMENTO_IN_CORSO"
+    );
+    expect(
+      getByText(
+        I18n.t(
+          `wallet.payment.failure.PAYMENT_ONGOING.PAA_PAGAMENTO_IN_CORSO.title`
+        )
+      )
+    ).toBeTruthy();
+  });
+
+  it("renders the right screen when faultCodeCategory is PAYMENT_ONGOING and faultCodeDetails is PPT_PAGAMENTO_IN_CORSO", () => {
+    const { getByText } = renderComponent(
+      "PAYMENT_ONGOING" as WalletPaymentFailure["faultCodeCategory"],
+      "PPT_PAGAMENTO_IN_CORSO"
+    );
+    expect(
+      getByText(
+        I18n.t(
+          `wallet.payment.failure.PAYMENT_ONGOING.PPT_PAGAMENTO_IN_CORSO.countdownExpiredTitle`
+        )
+      )
+    ).toBeTruthy();
+  });
+
   it("renders with GENERIC_ERROR fallback props if no specific error code is matched", () => {
     const { getByText } = renderComponent(
       "UNKNOWN_ERROR" as WalletPaymentFailure["faultCodeCategory"]
@@ -125,7 +162,6 @@ describe("WalletPaymentFailureDetail", () => {
     "PAYMENT_DATA_ERROR",
     "DOMAIN_UNKNOWN",
     "PAYMENT_ONGOING",
-    "PAYMENT_CANCELED",
     "PAYMENT_VERIFY_GENERIC_ERROR",
     "GENERIC_ERROR"
   ] as ReadonlyArray<WalletPaymentFailure["faultCodeCategory"]>)(
@@ -135,6 +171,18 @@ describe("WalletPaymentFailureDetail", () => {
       expect(getByTestId("wallet-payment-failure-support-button")).toBeTruthy();
     }
   );
+
+  it("renders the contact support button when faultCodeCategory is PAYMENT_CANCELED", () => {
+    const { getByTestId } = renderComponent(
+      "PAYMENT_CANCELED" as WalletPaymentFailure["faultCodeCategory"]
+    );
+    expect(
+      getByTestId("wallet-payment-failure-discover-more-button")
+    ).toBeTruthy();
+
+    fireEvent.press(getByTestId("wallet-payment-failure-discover-more-button"));
+    expect(openWebUrl).toHaveBeenCalled();
+  });
 
   it("calls navigation.pop on press close button when present", () => {
     const { getByTestId } = renderComponent(
@@ -164,6 +212,23 @@ describe("WalletPaymentFailureDetail", () => {
       expect.objectContaining({
         error: "PAYMENT_UNAVAILABLE"
       })
+    );
+  });
+
+  it("tracks help center analytics when status faultCodeCategory is PAYMENT_CANCELED_ERROR", () => {
+    const { getByTestId } = renderComponent(
+      "PAYMENT_CANCELED" as WalletPaymentFailure["faultCodeCategory"]
+    );
+    const discoverMoreBtn = getByTestId(
+      "wallet-payment-failure-discover-more-button"
+    );
+    expect(discoverMoreBtn).toBeTruthy();
+
+    fireEvent.press(discoverMoreBtn);
+    expect(trackHelpCenterCtaTapped).toHaveBeenCalledWith(
+      HC_PAYMENT_CANCELED_ERROR_ID,
+      CHECKOUT_ASSISTANCE_ARTICLE,
+      expect.anything()
     );
   });
 

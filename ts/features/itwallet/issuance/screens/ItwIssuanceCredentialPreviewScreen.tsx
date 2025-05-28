@@ -1,7 +1,7 @@
 import {
+  ContentWrapper,
   ForceScrollDownView,
   H2,
-  IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
@@ -9,14 +9,13 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useMemo } from "react";
-import { StyleSheet, View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
-import { identificationRequest } from "../../../../store/actions/identification";
+import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
   CREDENTIALS_MAP,
@@ -33,10 +32,9 @@ import {
   selectCredentialOption,
   selectCredentialTypeOption
 } from "../../machine/credential/selectors";
-import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -81,7 +79,9 @@ type ContentViewProps = {
  */
 const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const dispatch = useIODispatch();
   const route = useRoute();
+
   const mixPanelCredential = useMemo(
     () => CREDENTIALS_MAP[credentialType],
     [credentialType]
@@ -90,11 +90,11 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   useFocusEffect(() => {
     trackCredentialPreview(mixPanelCredential);
   });
-
-  const dispatch = useIODispatch();
-  const dismissDialog = useItwDismissalDialog(() => {
-    machineRef.send({ type: "close" });
-    trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+  const dismissDialog = useItwDismissalDialog({
+    handleDismiss: () => {
+      machineRef.send({ type: "close" });
+      trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+    }
   });
 
   const handleSaveToWallet = () => {
@@ -135,21 +135,10 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
 
   return (
     <ForceScrollDownView
-      contentContainerStyle={styles.scrollView}
+      contentContainerStyle={{ flexGrow: 1 }}
       onThresholdCrossed={trackScrollToBottom}
-    >
-      <View style={styles.container}>
-        <H2>
-          {I18n.t("features.itWallet.issuance.credentialPreview.title", {
-            credential: getCredentialNameFromType(credentialType)
-          })}
-        </H2>
-        <VSpacer size={24} />
-        <ItwCredentialPreviewClaimsList data={credential} />
-      </View>
-      <FooterActions
-        fixed={false}
-        actions={{
+      footerActions={{
+        actions: {
           type: "TwoButtons",
           primary: {
             icon: "add",
@@ -165,18 +154,18 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
             ),
             onPress: dismissDialog.show
           }
-        }}
-      />
+        }
+      }}
+    >
+      <ContentWrapper style={{ flexGrow: 1 }}>
+        <H2>
+          {I18n.t("features.itWallet.issuance.credentialPreview.title", {
+            credential: getCredentialNameFromType(credentialType)
+          })}
+        </H2>
+        <VSpacer size={24} />
+        <ItwCredentialPreviewClaimsList data={credential} />
+      </ContentWrapper>
     </ForceScrollDownView>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    flexGrow: 1
-  },
-  container: {
-    flex: 1,
-    marginHorizontal: IOVisualCostants.appMarginDefault
-  }
-});

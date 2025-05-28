@@ -1,2 +1,0 @@
-**This email is the one you confirmed during the registration.**  
-You can modify this email at any time, according to your preferences. By changing this email, all the payment confirmations will then be delivered to the new address, as well as all the forwarded messages. We kindly remind you that your pagoPA account is now associated with the email you first entered during the initial registration: if you change your email, you may no longer be able to see the archive of all the previous transactions managed within the IO app.

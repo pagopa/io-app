@@ -1,1 +1,0 @@
-You can request to delete your account and all the personal data associated with the IO app. When the deletion is completed, you will receive a confirmation message to your email address associated with the app. This does not mean that you will no longer be able to use IO: you will be able to access the app again, as if you were a new user.

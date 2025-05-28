@@ -388,7 +388,6 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -407,7 +406,6 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -515,15 +513,16 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              accessibilityRole="header"
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -545,15 +544,15 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -616,7 +615,8 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                   testID="primary-update-app"
@@ -626,38 +626,41 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                       [
                                         {
                                           "alignItems": "center",
-                                          "borderRadius": 4,
+                                          "borderCurve": "continuous",
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 16,
-                                          "textAlignVertical": "center",
-                                        },
-                                        {
                                           "overflow": "hidden",
-                                        },
-                                        false,
-                                        {
-                                          "height": 40,
-                                        },
-                                        {
-                                          "backgroundColor": "#0073E6",
+                                          "textAlignVertical": "center",
                                         },
                                         false,
                                         {
                                           "backgroundColor": undefined,
                                         },
+                                        {
+                                          "paddingHorizontal": 24,
+                                        },
+                                        {
+                                          "backgroundColor": "#0B3EE3",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
+                                        },
+                                        {},
                                       ]
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
                                             "alignItems": "center",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                          },
+                                          {
+                                            "columnGap": 8,
                                           },
                                           false,
                                         ]
@@ -666,25 +669,33 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                       <Text
                                         accessibilityElementsHidden={true}
                                         accessible={false}
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -715,7 +726,7 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
-                                      "busy": undefined,
+                                      "busy": false,
                                       "checked": undefined,
                                       "disabled": false,
                                       "expanded": undefined,
@@ -750,7 +761,6 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  onTouchEnd={[Function]}
                                   style={
                                     {
                                       "alignSelf": "flex-start",
@@ -763,47 +773,80 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                       [
                                         {
                                           "alignItems": "center",
+                                          "borderCurve": "continuous",
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         false,
+                                        {},
                                         {
-                                          "columnGap": 8,
+                                          "paddingHorizontal": 0,
+                                        },
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderColor": "#0B3EE3",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": undefined,
                                         },
                                         {},
-                                        false,
                                       ]
                                     }
                                   >
-                                    <Text
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      allowFontScaling={false}
-                                      ellipsizeMode="tail"
-                                      importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={1}
+                                    <View
                                       style={
                                         [
-                                          {},
                                           {
-                                            "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": undefined,
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
                                           },
                                           {
-                                            "color": undefined,
+                                            "columnGap": 8,
                                           },
+                                          false,
                                         ]
                                       }
                                     >
-                                      Close
-                                    </Text>
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
+                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
+                                          ]
+                                        }
+                                      >
+                                        Close
+                                      </Text>
+                                    </View>
                                   </View>
                                 </View>
                               </View>

@@ -5,7 +5,6 @@ import { MessageList } from "../MessageList";
 import { MessageListCategory } from "../../../types/messageListCategory";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import * as homeUtils from "../homeUtils";
@@ -173,11 +172,7 @@ describe("MessageList", () => {
 
 const renderComponent = (category: MessageListCategory) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-  const store = createStore(appReducer, designSystemState as any);
+  const store = createStore(appReducer, initialState as any);
 
   return renderScreenWithNavigationStoreContext(
     () => <MessageList category={category} />,

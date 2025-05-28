@@ -1,6 +1,5 @@
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../../store/reducers";
 import { downloadAttachment } from "../../../store/actions";
 import { UIMessageId } from "../../../types";
@@ -86,12 +85,8 @@ const renderScreen = (
   disabled?: boolean
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
   const finalState = appReducer(
-    designSystemState,
+    initialState,
     isFetching
       ? downloadAttachment.request({
           attachment,

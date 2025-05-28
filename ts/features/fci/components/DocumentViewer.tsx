@@ -1,5 +1,4 @@
 import {
-  ButtonSolidProps,
   FooterActions,
   FooterActionsInline,
   IOColors,
@@ -7,7 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as S from "fp-ts/lib/string";
-import { ReactElement, useEffect, useState } from "react";
+import { ComponentProps, ReactElement, useEffect, useState } from "react";
 
 import { StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
@@ -27,7 +26,7 @@ import LoadingComponent from "./LoadingComponent";
 const styles = StyleSheet.create({
   pdf: {
     flex: 1,
-    backgroundColor: IOColors.bluegrey
+    backgroundColor: IOColors["grey-700"]
   }
 });
 
@@ -35,13 +34,10 @@ export const getFileNameFromUrl = (url: string) =>
   url.substring(url.lastIndexOf("/") + 1).split("?")[0] + ".pdf";
 
 const renderFooter = (url: string, filePath: string) => {
-  const confirmButtonProps: ButtonSolidProps = {
-    onPress: () => ReactNativeBlobUtil.ios.presentOptionsMenu(filePath),
-    label: I18n.t("messagePDFPreview.open"),
-    accessibilityLabel: I18n.t("messagePDFPreview.open")
-  };
-
-  const shareButtonProps: ButtonSolidProps = {
+  const shareButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] = {
+    label: I18n.t("global.buttons.share"),
     onPress: () => {
       share(
         `file://${
@@ -52,12 +48,13 @@ const renderFooter = (url: string, filePath: string) => {
       )().catch(_ => {
         IOToast.error(I18n.t("messagePDFPreview.errors.sharing"));
       });
-    },
-    label: I18n.t("global.buttons.share"),
-    accessibilityLabel: I18n.t("global.buttons.share")
+    }
   };
 
-  const saveButtonProps: ButtonSolidProps = {
+  const saveButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["startAction"] = {
+    label: I18n.t("messagePDFPreview.save"),
     onPress: () => {
       ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
         {
@@ -78,16 +75,17 @@ const renderFooter = (url: string, filePath: string) => {
         .catch(_ => {
           IOToast.error(I18n.t("messagePDFPreview.errors.saving"));
         });
-    },
-    label: I18n.t("messagePDFPreview.save"),
-    accessibilityLabel: I18n.t("messagePDFPreview.save")
+    }
   };
 
   return isIos ? (
     <FooterActions
       actions={{
         type: "SingleButton",
-        primary: confirmButtonProps
+        primary: {
+          label: I18n.t("messagePDFPreview.open"),
+          onPress: () => ReactNativeBlobUtil.ios.presentOptionsMenu(filePath)
+        }
       }}
     />
   ) : (

@@ -1,5 +1,5 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import I18n from "../../../../i18n";
 import { WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL } from "../utils";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -31,7 +31,7 @@ export const usePaymentReversedInfoBottomSheet = () => {
     </>
   );
 
-  const modal = useIOBottomSheetAutoresizableModal({
+  const modal = useIOBottomSheetModal({
     component: getModalContent(),
     title: I18n.t(
       "features.payments.checkout.bottomSheet.PAYMENT_REVERSED.title"

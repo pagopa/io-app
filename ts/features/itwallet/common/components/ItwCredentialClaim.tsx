@@ -5,7 +5,7 @@ import { pipe } from "fp-ts/lib/function";
 import { Fragment, useMemo } from "react";
 import { Image } from "react-native";
 import I18n from "../../../../i18n";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
   BoolClaim,
   ClaimDisplayFormat,
@@ -26,8 +26,9 @@ import {
   StringClaim
 } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
-
-const HIDDEN_CLAIM = "******";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
+import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
+import { CREDENTIALS_MAP, trackCopyListItem } from "../../analytics";
 
 /**
  * Component which renders a place of birth type claim.
@@ -70,22 +71,39 @@ const BoolClaimItem = ({ label, claim }: { label: string; claim: boolean }) => {
  * Component which renders a generic text type claim.
  * @param label - the label of the claim
  * @param claim - the claim value
+ * @param isCopyable - a flag to enable the copy of the claim value
  */
 const PlainTextClaimItem = ({
   label,
-  claim
+  claim,
+  isCopyable,
+  credentialType
 }: {
   label: string;
   claim: string;
+  isCopyable?: boolean;
+  credentialType?: string;
 }) => {
   const safeValue = getSafeText(claim);
+
+  const handleLongPress = () => {
+    clipboardSetStringWithFeedback(safeValue);
+    if (credentialType) {
+      trackCopyListItem({
+        credential: CREDENTIALS_MAP[credentialType],
+        item_copied: label
+      });
+    }
+  };
+
   return (
     <ListItemInfo
       numberOfLines={2}
       label={label}
       value={safeValue}
+      onLongPress={isCopyable ? handleLongPress : undefined}
       accessibilityLabel={`${label} ${
-        claim === HIDDEN_CLAIM
+        claim === HIDDEN_CLAIM_TEXT
           ? I18n.t(
               "features.itWallet.presentation.credentialDetails.hiddenClaim"
             )
@@ -225,7 +243,7 @@ const DrivingPrivilegesClaimItem = ({
 }) => {
   const localExpiryDate = claim.expiry_date.toString("DD/MM/YYYY");
   const localIssueDate = claim.issue_date.toString("DD/MM/YYYY");
-  const privilegeBottomSheet = useIOBottomSheetAutoresizableModal({
+  const privilegeBottomSheet = useIOBottomSheetModal({
     title: I18n.t(
       "features.itWallet.verifiableCredentials.claims.mdl.category",
       { category: claim.driving_privilege }
@@ -301,12 +319,14 @@ export const ItwCredentialClaim = ({
   claim,
   hidden,
   isPreview,
-  credentialStatus
+  credentialStatus,
+  credentialType
 }: {
   claim: ClaimDisplayFormat;
   hidden?: boolean;
   isPreview?: boolean;
   credentialStatus?: ItwCredentialStatus;
+  credentialType?: string;
 }) =>
   pipe(
     claim.value,
@@ -315,7 +335,7 @@ export const ItwCredentialClaim = ({
       () => <UnknownClaimItem label={claim.label} />,
       // eslint-disable-next-line sonarjs/cognitive-complexity
       _decoded => {
-        const decoded = hidden ? HIDDEN_CLAIM : _decoded;
+        const decoded = hidden ? HIDDEN_CLAIM_TEXT : _decoded;
         if (PlaceOfBirthClaim.is(decoded)) {
           return <PlaceOfBirthClaimItem label={claim.label} claim={decoded} />;
         } else if (SimpleDateClaim.is(decoded)) {
@@ -358,11 +378,18 @@ export const ItwCredentialClaim = ({
           return null; // We want to hide the claim if it's empty
         }
         if (StringClaim.is(decoded)) {
-          // This is needed because otherwise empty string will be rendered as a claim due to the decoded value being HIDDEN_CLAIM
+          // This is needed because otherwise empty string will be rendered as a claim due to the decoded value being HIDDEN_CLAIM_TEXT
           if (hidden && EmptyStringClaim.is(_decoded)) {
             return null;
           }
-          return <PlainTextClaimItem label={claim.label} claim={decoded} />; // must be the last one to be checked due to overlap with IPatternStringTag
+          return (
+            <PlainTextClaimItem
+              label={claim.label}
+              claim={decoded}
+              isCopyable={!isPreview}
+              credentialType={credentialType}
+            />
+          ); // must be the last one to be checked due to overlap with IPatternStringTag
         } else {
           return <UnknownClaimItem label={claim.label} _claim={decoded} />;
         }

@@ -1,1 +1,0 @@
-Here you can read the details of the communication sent by one of the Administrations integrated into the IO app. If you have any doubts or questions about the specific content of the message, please contact the specific institutions or office by checking the contact details in the footer of the message, or in the “Services” section.

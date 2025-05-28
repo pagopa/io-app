@@ -1,6 +1,7 @@
 import { GlobalState } from "../../../../store/reducers/types";
 import { type CredentialIssuanceFailure } from "../../machine/credential/failure";
 import { type IssuanceFailure } from "../../machine/eid/failure";
+import { RemoteFailure } from "../../presentation/remote/machine/failure.ts";
 
 interface PollForStoreValueOptions<T> {
   getState: () => GlobalState;
@@ -54,9 +55,25 @@ export const pollForStoreValue = <T>({
  * Serialize failure reasons that are instances of {@link Error}, to be safely stored and displayed.
  */
 export const serializeFailureReason = (
-  failure: IssuanceFailure | CredentialIssuanceFailure
-) => ({
-  ...failure,
-  reason:
-    failure.reason instanceof Error ? failure.reason.message : failure.reason
+  failure: IssuanceFailure | CredentialIssuanceFailure | RemoteFailure
+) => {
+  const reason = !failure.reason
+    ? "Reason not provided"
+    : failure.reason instanceof Error
+    ? createReasonObject(failure.reason.message)
+    : failure.reason;
+
+  return {
+    ...failure,
+    reason
+  };
+};
+
+/**
+ * This logic was agreed upon with the Mixpanel team to allow them to filter these specific error cases.
+ * Instead of sending a plain string, we return a structured object with a code and errorDescription
+ */
+const createReasonObject = (message: string) => ({
+  code: "UNEXPECTED",
+  errorDescription: message
 });

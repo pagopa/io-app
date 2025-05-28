@@ -1,8 +1,6 @@
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
 import { Circle, ClipPath, Defs, Path, Rect, Svg } from "react-native-svg";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { useIOSelector } from "../../store/hooks";
 
 const CIRCLE_MASK_SIZE = 32;
 
@@ -11,7 +9,6 @@ type Props = {
 };
 
 const BonusCardShape = (props: Props) => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const theme = useIOTheme();
 
   switch (props.mode) {
@@ -29,9 +26,7 @@ const BonusCardShape = (props: Props) => {
             <Rect
               width="100%"
               height="100%"
-              fill={
-                IOColors[isDesignSystemEnabled ? "blueItalia-50" : "blueIO-50"]
-              }
+              fill={IOColors["blueItalia-50"]}
               clipPath="url(#clip)"
               rx={24}
               ry={24}

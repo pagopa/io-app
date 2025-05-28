@@ -1,28 +1,21 @@
-import { FunctionComponent, useCallback, useMemo } from "react";
-import { FlatList, RefreshControl, SafeAreaView } from "react-native";
-import { connect } from "react-redux";
-import {
-  ContentWrapper,
-  Divider,
-  ListItemHeader
-} from "@pagopa/io-app-design-system";
+import { Badge, H6, HSpacer, ListItemNav } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useMemo } from "react";
+import { View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import I18n from "../../../../../i18n";
-import { Dispatch } from "../../../../../store/actions/types";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import {
   getValueOrElse,
-  isError,
-  isLoading,
-  isReady
+  isLoading
 } from "../../../../../common/model/RemoteValue";
-import { CgnMerchantListViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
-import { navigateToCgnMerchantDetail } from "../../navigation/actions";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import I18n from "../../../../../i18n";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
+import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
+import CGN_ROUTES from "../../navigation/routes";
 import {
   cgnOfflineMerchants,
   cgnOnlineMerchants
@@ -33,102 +26,109 @@ import {
 } from "../../store/reducers/merchants";
 import { mixAndSortMerchants } from "../../utils/merchants";
 
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
-
 export type MerchantsAll = OfflineMerchant | OnlineMerchant;
-/**
- * Screen that renders the list of the merchants which have an active discount for CGN
- * @param props
- * @constructor
- */
-const CgnMerchantsListScreen: FunctionComponent<Props> = (props: Props) => {
-  const { navigateToMerchantDetail } = props;
 
-  // Mixes online and offline merchants to render on the same list
-  // merchants are sorted by name
-  const merchantsAll = useMemo(
+export const CgnMerchantsListScreen = () => {
+  const navigator = useIONavigation();
+  const dispatch = useDispatch();
+
+  const onlineMerchants = useSelector(cgnOnlineMerchantsSelector);
+  const offlineMerchants = useSelector(cgnOfflineMerchantsSelector);
+
+  const data = useMemo(
     () =>
       mixAndSortMerchants(
-        getValueOrElse(props.onlineMerchants, []),
-        getValueOrElse(props.offlineMerchants, [])
+        getValueOrElse(onlineMerchants, []),
+        getValueOrElse(offlineMerchants, [])
       ),
-    [props.onlineMerchants, props.offlineMerchants]
+    [onlineMerchants, offlineMerchants]
   );
 
-  const { requestOfflineMerchants, requestOnlineMerchants } = props;
-
   const initLoadingLists = useCallback(() => {
-    requestOfflineMerchants();
-    requestOnlineMerchants();
-  }, [requestOfflineMerchants, requestOnlineMerchants]);
+    dispatch(cgnOfflineMerchants.request({}));
+    dispatch(cgnOnlineMerchants.request({}));
+  }, [dispatch]);
 
   useFocusEffect(initLoadingLists);
 
   const onItemPress = useCallback(
-    (id: Merchant["id"]) => {
-      navigateToMerchantDetail(id);
+    (merchantID: Merchant["id"]) => {
+      navigator.navigate(CGN_ROUTES.DETAILS.MAIN, {
+        screen: CGN_ROUTES.DETAILS.MERCHANTS.DETAIL,
+        params: { merchantID }
+      });
     },
-    [navigateToMerchantDetail]
+    [navigator]
   );
 
-  const renderItem = useMemo(
-    () => CgnMerchantListViewRenderItem({ onItemPress }),
-    [onItemPress]
+  const renderItem = (item: MerchantsAll, index: number) => {
+    const accessibilityLabel =
+      (item?.numberOfNewDiscounts
+        ? I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
+            name: item.name,
+            count: item.numberOfNewDiscounts
+          })
+        : item.newDiscounts
+        ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
+        : item.name) + getListItemAccessibilityLabelCount(data.length, index);
+    return (
+      <ListItemNav
+        key={item.id}
+        onPress={() => onItemPress(item.id)}
+        accessibilityLabel={accessibilityLabel}
+        value={
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <H6 style={{ flexGrow: 1, flexShrink: 1 }}>{item.name}</H6>
+            <HSpacer />
+            {item.newDiscounts && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center"
+                }}
+              >
+                <Badge
+                  accessible={false}
+                  variant="cgn"
+                  text={
+                    item?.numberOfNewDiscounts
+                      ? item.numberOfNewDiscounts.toString()
+                      : I18n.t("bonus.cgn.merchantsList.news")
+                  }
+                />
+              </View>
+            )}
+          </View>
+        }
+      />
+    );
+  };
+
+  const refreshControlProps = {
+    refreshing: isLoading(onlineMerchants) || isLoading(offlineMerchants),
+    onRefresh: initLoadingLists
+  };
+
+  const ListEmptyComponent = (
+    <OperationResultScreenContent
+      title={I18n.t("wallet.payment.outcome.GENERIC_ERROR.title")}
+      pictogram="umbrella"
+      action={{
+        label: I18n.t("global.buttons.retry"),
+        onPress: initLoadingLists
+      }}
+    />
   );
 
-  return (
-    <SafeAreaView style={IOStyles.flex}>
-      {!(isError(props.onlineMerchants) || isError(props.offlineMerchants)) && (
-        <ContentWrapper>
-          <ListItemHeader
-            label={I18n.t("bonus.cgn.merchantsList.merchantsAll")}
-          />
-        </ContentWrapper>
-      )}
-      {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
-        <FlatList
-          data={merchantsAll}
-          keyExtractor={item => item.id}
-          renderItem={renderItem}
-          ItemSeparatorComponent={() => <Divider />}
-          refreshControl={
-            <RefreshControl
-              refreshing={
-                isLoading(props.onlineMerchants) ||
-                isLoading(props.offlineMerchants)
-              }
-              onRefresh={initLoadingLists}
-            />
-          }
-        />
-      ) : (
-        <LoadingErrorComponent
-          isLoading={
-            isLoading(props.offlineMerchants) ||
-            isLoading(props.onlineMerchants)
-          }
-          loadingCaption={I18n.t("global.remoteStates.loading")}
-          onRetry={initLoadingLists}
-        />
-      )}
-    </SafeAreaView>
-  );
+  return {
+    data,
+    renderItem,
+    refreshControlProps,
+    ListFooterComponent: <></>,
+    ListEmptyComponent,
+    skeleton: <CgnMerchantListSkeleton hasIcons count={10} />
+  };
 };
-
-const mapStateToProps = (state: GlobalState) => ({
-  onlineMerchants: cgnOnlineMerchantsSelector(state),
-  offlineMerchants: cgnOfflineMerchantsSelector(state)
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  requestOnlineMerchants: () => dispatch(cgnOnlineMerchants.request({})),
-  requestOfflineMerchants: () => dispatch(cgnOfflineMerchants.request({})),
-  navigateToMerchantDetail: (id: Merchant["id"]) =>
-    navigateToCgnMerchantDetail({ merchantID: id })
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CgnMerchantsListScreen);

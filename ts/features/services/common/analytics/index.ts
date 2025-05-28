@@ -1,5 +1,5 @@
 import { getType } from "typesafe-actions";
-import { mixpanel, mixpanelTrack } from "../../../../mixpanel";
+import { mixpanelTrack } from "../../../../mixpanel";
 import { Action } from "../../../../store/actions/types";
 import { buildEventProperties } from "../../../../utils/analytics";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
@@ -161,6 +161,22 @@ export const trackInstitutionDetailsError = (
     buildEventProperties("KO", undefined, { organization_fiscal_code, reason })
   );
 
+export const trackServicesPreferences = () =>
+  void mixpanelTrack(
+    "SERVICES_PREFERENCES",
+    buildEventProperties("UX", "action")
+  );
+
+export const trackServicesPreferencesSelected = (
+  landing_page: "preferences_services" | "profile_main"
+) =>
+  void mixpanelTrack(
+    "SERVICES_PREFERENCES_SELECTED",
+    buildEventProperties("UX", "action", {
+      landing_page
+    })
+  );
+
 export const trackSearchPage = () =>
   void mixpanelTrack(
     "SERVICES_SEARCH_PAGE",
@@ -256,42 +272,40 @@ export const trackServiceDetailsCtaTapped = (
 /**
  * Isolated tracker for services actions
  */
-export const trackServicesAction =
-  (_: NonNullable<typeof mixpanel>) =>
-  (action: Action): void => {
-    switch (action.type) {
-      // Services home
-      case getType(paginatedInstitutionsGet.failure):
-        return trackServicesHomeError(
-          getNetworkErrorMessage(action.payload),
-          "main_list"
-        );
-      case getType(featuredServicesGet.failure):
-        return trackServicesHomeError(
-          getNetworkErrorMessage(action.payload),
-          "featured_services"
-        );
-      case getType(featuredInstitutionsGet.failure):
-        return trackServicesHomeError(
-          getNetworkErrorMessage(action.payload),
-          "featured_organizations"
-        );
-      // Search results
-      case getType(searchPaginatedInstitutionsGet.success):
-        return trackSearchResult(action.payload.count);
-      case getType(searchPaginatedInstitutionsGet.failure):
-        return trackSearchError(getNetworkErrorMessage(action.payload));
-      // Institution details
-      case getType(paginatedServicesGet.failure):
-        return trackInstitutionDetailsError(
-          action.payload.id,
-          getNetworkErrorMessage(action.payload)
-        );
-      // Service details
-      case getType(loadServicePreference.failure):
-        return trackServiceDetailsError(
-          action.payload.id,
-          getNetworkErrorMessage(action.payload)
-        );
-    }
-  };
+export const trackServicesAction = (action: Action): void => {
+  switch (action.type) {
+    // Services home
+    case getType(paginatedInstitutionsGet.failure):
+      return trackServicesHomeError(
+        getNetworkErrorMessage(action.payload),
+        "main_list"
+      );
+    case getType(featuredServicesGet.failure):
+      return trackServicesHomeError(
+        getNetworkErrorMessage(action.payload),
+        "featured_services"
+      );
+    case getType(featuredInstitutionsGet.failure):
+      return trackServicesHomeError(
+        getNetworkErrorMessage(action.payload),
+        "featured_organizations"
+      );
+    // Search results
+    case getType(searchPaginatedInstitutionsGet.success):
+      return trackSearchResult(action.payload.count);
+    case getType(searchPaginatedInstitutionsGet.failure):
+      return trackSearchError(getNetworkErrorMessage(action.payload));
+    // Institution details
+    case getType(paginatedServicesGet.failure):
+      return trackInstitutionDetailsError(
+        action.payload.id,
+        getNetworkErrorMessage(action.payload)
+      );
+    // Service details
+    case getType(loadServicePreference.failure):
+      return trackServiceDetailsError(
+        action.payload.id,
+        getNetworkErrorMessage(action.payload)
+      );
+  }
+};

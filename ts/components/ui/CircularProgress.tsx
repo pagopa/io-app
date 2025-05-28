@@ -42,7 +42,10 @@ export const CircularProgress = ({
   }));
 
   return (
-    <View style={styles.circularProgressWrapper}>
+    <View
+      style={styles.circularProgressWrapper}
+      testID={`circular-progress-${Math.round(progress)}`}
+    >
       <Svg
         width={size}
         height={size}

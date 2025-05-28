@@ -1,2 +1,0 @@
-Yes. Once you have requested and activated the Holiday Bonus through the IO app from July 1st, you can freely choose to use it for a holiday in which all or just a few members of your family are present; it is not necessary that you personally spend it, nor that you are present.
-Please note that the holder of the invoice (or commercial document or receipt/tax receipt) issued by the tourist service provider will also be able to benefit from the tax deduction provided by the Holiday Bonus in next year's tax return.

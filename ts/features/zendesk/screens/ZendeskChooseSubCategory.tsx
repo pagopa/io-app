@@ -1,7 +1,11 @@
 import {
+  Banner,
+  ContentWrapper,
   Divider,
   IOVisualCostants,
-  ListItemNav
+  ListItemNav,
+  useIOToast,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
@@ -16,15 +20,17 @@ import {
 } from "../../../utils/supportAssistance";
 import { ZendeskParamsList } from "../navigation/params";
 import {
+  ZendeskAssistanceType,
   zendeskSelectedSubcategory,
   zendeskSupportFailure
 } from "../store/actions";
 import { zendeskSelectedCategorySelector } from "../store/reducers";
+import { openWebUrl } from "../../../utils/url";
+import { trackHelpCenterCtaTapped } from "../../../utils/analytics";
+import { getOrFallback } from "../../../utils/object";
 
 export type ZendeskChooseSubCategoryNavigationParams = {
-  assistanceForPayment: boolean;
-  assistanceForCard: boolean;
-  assistanceForFci: boolean;
+  assistanceType: ZendeskAssistanceType;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -37,10 +43,13 @@ type Props = IOStackNavigationRouteProps<
  * see {@link ZendeskChooseCategory} to check the previous category screen
  */
 const ZendeskChooseSubCategory = (props: Props) => {
+  const { error } = useIOToast();
   const selectedCategory = useIOSelector(zendeskSelectedCategorySelector);
   const dispatch = useIODispatch();
-  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
-    props.route.params;
+  const {
+    params: { assistanceType },
+    name: routeName
+  } = props.route;
   const selectedSubcategory = (subcategory: ZendeskSubCategory) =>
     dispatch(zendeskSelectedSubcategory(subcategory));
   const zendeskWorkUnitFailure = (reason: string) =>
@@ -63,6 +72,8 @@ const ZendeskChooseSubCategory = (props: Props) => {
     selectedCategory.zendeskSubCategories?.subCategories ?? [];
   const subCategoriesId: string =
     selectedCategory.zendeskSubCategories?.id ?? "";
+  const bannerEducational =
+    selectedCategory.zendeskSubCategories?.bannerEducational;
 
   const locale = getFullLocale();
 
@@ -77,9 +88,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
         // Set sub-category as custom field
         addTicketCustomField(subCategoriesId, subCategory.value);
         props.navigation.navigate("ZENDESK_ASK_PERMISSIONS", {
-          assistanceForPayment,
-          assistanceForCard,
-          assistanceForFci
+          assistanceType
         });
       }}
     />
@@ -94,6 +103,34 @@ const ZendeskChooseSubCategory = (props: Props) => {
       ignoreSafeAreaMargin={true}
       testID={"ZendeskChooseCategory"}
     >
+      {bannerEducational && (
+        <ContentWrapper>
+          <Banner
+            pictogramName="help"
+            color="neutral"
+            title={getOrFallback(bannerEducational.title, locale, "it-IT")}
+            content={getOrFallback(bannerEducational.content, locale, "it-IT")}
+            action={getOrFallback(
+              bannerEducational.action.label,
+              locale,
+              "it-IT"
+            )}
+            onPress={() => {
+              const url = getOrFallback(
+                bannerEducational.action.href,
+                locale,
+                "it-IT"
+              );
+
+              trackHelpCenterCtaTapped(selectedCategory.value, url, routeName);
+              openWebUrl(url, () => {
+                error(I18n.t("global.jserror.title"));
+              });
+            }}
+          />
+          <VSpacer size={8} />
+        </ContentWrapper>
+      )}
       <FlatList
         scrollEnabled={false}
         contentContainerStyle={{
@@ -102,7 +139,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
         data={subCategories}
         keyExtractor={c => c.value}
         renderItem={renderItem}
-        ItemSeparatorComponent={() => <Divider />}
+        ItemSeparatorComponent={Divider}
       />
     </IOScrollViewWithLargeHeader>
   );

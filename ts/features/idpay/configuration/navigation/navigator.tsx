@@ -4,13 +4,13 @@ import {
   IdPayConfigurationMachineContext,
   IDPayConfigurationMachineProvider
 } from "../machine/provider";
-import { ConfigurationSuccessScreen } from "../screens/ConfigurationSuccessScreen";
-import { IbanConfigurationLanding } from "../screens/IbanConfigurationLandingScreen";
-import { IbanEnrollmentScreen } from "../screens/IbanEnrollmentScreen";
-import { IbanOnboardingScreen } from "../screens/IbanOnboardingScreen";
+import { IdPayConfigurationSuccessScreen } from "../screens/IdPayConfigurationSuccessScreen";
+import { IdPayIbanConfigurationLandingScreen } from "../screens/IdPayIbanConfigurationLandingScreen";
+import { IdPayIbanEnrollmentScreen } from "../screens/IdPayIbanEnrollmentScreen";
+import { IdPayIbanOnboardingScreen } from "../screens/IdPayIbanOnboardingScreen";
 import { IdPayDiscountInstrumentsScreen } from "../screens/IdPayDiscountInstrumentsScreen";
-import { InitiativeConfigurationIntroScreen } from "../screens/InitiativeConfigurationIntroScreen";
-import { InstrumentsEnrollmentScreen } from "../screens/InstrumentsEnrollmentScreen";
+import { IdPayInitiativeConfigurationIntroScreen } from "../screens/IdPayInitiativeConfigurationIntroScreen";
+import { IdPayInstrumentsEnrollmentScreen } from "../screens/IdPayInstrumentsEnrollmentScreen";
 import { IdPayConfigurationParamsList } from "./params";
 import { IdPayConfigurationRoutes } from "./routes";
 
@@ -41,34 +41,34 @@ const InnerNavigator = () => {
     >
       <Stack.Screen
         name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO}
-        component={InitiativeConfigurationIntroScreen}
+        component={IdPayInitiativeConfigurationIntroScreen}
       />
 
       <Stack.Screen
         name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT}
-        component={IbanEnrollmentScreen}
+        component={IdPayIbanEnrollmentScreen}
       />
 
       <Stack.Screen
         name={
           IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT
         }
-        component={InstrumentsEnrollmentScreen}
+        component={IdPayInstrumentsEnrollmentScreen}
       />
 
       <Stack.Screen
         name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING}
-        component={IbanConfigurationLanding}
+        component={IdPayIbanConfigurationLandingScreen}
       />
 
       <Stack.Screen
         name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING}
-        component={IbanOnboardingScreen}
+        component={IdPayIbanOnboardingScreen}
       />
 
       <Stack.Screen
         name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS}
-        component={ConfigurationSuccessScreen}
+        component={IdPayConfigurationSuccessScreen}
       />
 
       <Stack.Screen

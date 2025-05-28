@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../types/utils";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { FimsHistoryClient } from "../api/client";
 import { fimsHistoryGet } from "../store/actions";
 import { trackHistoryFailure } from "../../common/analytics";

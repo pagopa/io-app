@@ -392,6 +392,7 @@ const ItwCards = () => (
           <ItwSkeumorphicCardPreview
             credential={ItwStoredCredentialsMocks.mdl}
             status="valid"
+            valuesHidden={false}
           />
         </DSComponentViewerBox>
       </VStack>
@@ -429,6 +430,7 @@ const ItwCards = () => (
           <ItwSkeumorphicCardPreview
             credential={ItwStoredCredentialsMocks.dc}
             status="valid"
+            valuesHidden={false}
           />
         </DSComponentViewerBox>
       </VStack>

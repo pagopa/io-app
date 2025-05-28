@@ -2,7 +2,6 @@ import { ComponentProps } from "react";
 import { Text } from "react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
@@ -41,14 +40,10 @@ describe("LoadingScreenContent", () => {
 
 function renderComponent(props: ComponentProps<typeof LoadingScreenContent>) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemEnabledState = appReducer(
-    globalState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <LoadingScreenContent {...props} />,
     "DUMMY ROUTE",
     {},
-    createStore(appReducer, designSystemEnabledState as any)
+    createStore(appReducer, globalState as any)
   );
 }

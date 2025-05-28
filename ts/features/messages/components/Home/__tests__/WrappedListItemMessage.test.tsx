@@ -1,22 +1,24 @@
+import { AccessibilityInfo } from "react-native";
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { UIMessage } from "../../../types";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import { TagEnum as SENDTagEnum } from "../../../../../../definitions/backend/MessageCategoryPN";
-import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/backend/MessageCategoryPayment";
 import { WrappedListItemMessage } from "../WrappedListItemMessage";
-import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   scheduledPreconditionStatusAction,
   toScheduledPayload
 } from "../../../store/actions/preconditions";
-import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
+import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
+import { toggleScheduledMessageArchivingAction } from "../../../store/actions/archiving";
+import * as homeUtils from "../homeUtils";
+
+jest.mock("rn-qr-generator", () => ({}));
+jest.mock("react-native-screenshot-prevent", () => ({}));
 
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
@@ -33,67 +35,81 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch
 }));
 
+jest.mock("./../DS/ListItemMessage");
+
+// eslint-disable-next-line functional/no-let
+let mockIsAndroid = true;
+jest.mock("../../../../../utils/platform", () => ({
+  get isAndroid() {
+    return mockIsAndroid;
+  }
+}));
+
 describe("WrappedListItemMessage", () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
+  afterEach(() => {
     jest.clearAllMocks();
-    mockAccessibilityInfo(false);
+    jest.resetAllMocks();
+    jest.restoreAllMocks();
   });
-  it("should match snapshot, not from SEND, not a payment, unread message", () => {
-    const message = messageGenerator(false, false, false);
-    const component = renderComponent(message);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, not from SEND, not a payment, read message", () => {
-    const message = messageGenerator(false, false, true);
-    const component = renderComponent(message);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, not from SEND, contains unpaid payment, unread message", () => {
-    const message = messageGenerator(
-      true,
-      false,
-      false,
-      "00123456789001122334455667788"
-    );
-    const component = renderComponent(message, "00987654321009922994499667799");
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, not from SEND, contains unpaid payment, read message", () => {
-    const message = messageGenerator(
-      true,
-      false,
-      true,
-      "00123456789001122334455667788"
-    );
-    const component = renderComponent(message, "00987654321009922994499667799");
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, not from SEND, contains paid payment, unread message", () => {
-    const paymentId = "00123456789001122334455667788";
-    const message = messageGenerator(true, false, false, paymentId);
-    const component = renderComponent(message, paymentId);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, not from SEND, contains paid payment, read message", () => {
-    const paymentId = "00123456789001122334455667788";
-    const message = messageGenerator(true, false, true, paymentId);
-    const component = renderComponent(message, paymentId);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, from SEND, unread message", () => {
-    const message = messageGenerator(false, true, false);
-    const component = renderComponent(message);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, from SEND, read message", () => {
-    const message = messageGenerator(false, true, true);
-    const component = renderComponent(message);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+  const mockedAnnounceForAccessibility = jest
+    .spyOn(AccessibilityInfo, "announceForAccessibility")
+    .mockImplementation(jest.fn());
+  [0, 1].forEach(index =>
+    (["INBOX", "ARCHIVE", "SEARCH"] as const).forEach(source =>
+      (
+        [
+          {
+            tag: "PAYMENT",
+            rptId: "00112233445566778899001122334"
+          },
+          {
+            tag: "PAYMENT",
+            rptId: "00112233445500000000000000000"
+          },
+          {
+            tag: "LEGAL_MESSAGE"
+          },
+          {
+            tag: "EU_COVID_CERT"
+          },
+          {
+            tag: "GENERIC"
+          },
+          {
+            tag: "PN"
+          }
+        ] as Array<MessageCategory>
+      ).forEach(category =>
+        [false, true].forEach(isRead =>
+          [false, true].forEach(selectedForArchiviation =>
+            it(`should match snapshot for message in ${source}, category ${JSON.stringify(
+              category
+            )}, read ${isRead}, selected for archiviation/unarchiviation ${selectedForArchiviation}`, () => {
+              const message = generateMessage(
+                category,
+                category.tag === "PN",
+                isRead
+              );
+              const component = renderComponent(
+                index,
+                message,
+                selectedForArchiviation,
+                source
+              );
+              expect(component.toJSON()).toMatchSnapshot();
+            })
+          )
+        )
+      )
+    )
+  );
   it("should trigger navigation to Message Routing when the component is pressed and the message has no preconditions", () => {
-    const message = messageGenerator(false, false, true);
-    const component = renderComponent(message);
+    const message = generateMessage(
+      { tag: "GENERIC" } as MessageCategory,
+      false,
+      true
+    );
+    const component = renderComponent(0, message, false, "INBOX");
     const pressable = component.getByTestId("wrapped_message_list_item_0");
     expect(pressable).toBeDefined();
     fireEvent.press(pressable);
@@ -108,8 +124,12 @@ describe("WrappedListItemMessage", () => {
     expect(mockDispatch.mock.calls.length).toBe(0);
   });
   it("should dispatch 'scheduledPreconditionStatusAction' when the message has preconditions", () => {
-    const message = messageGenerator(false, true, true);
-    const component = renderComponent(message);
+    const message = generateMessage(
+      { tag: "PN" } as MessageCategory,
+      true,
+      true
+    );
+    const component = renderComponent(0, message, false, "INBOX");
     const pressable = component.getByTestId("wrapped_message_list_item_0");
     expect(pressable).toBeDefined();
     fireEvent.press(pressable);
@@ -121,13 +141,99 @@ describe("WrappedListItemMessage", () => {
       )
     );
   });
+  const commonAccessibilityTestCode = (
+    isAndroid: boolean,
+    screenReaderEnabled: boolean | undefined,
+    shouldAnnounce: boolean,
+    isLongTap: boolean
+  ) => {
+    mockIsAndroid = isAndroid;
+    const mockAccessibilityLabelForMessageItem = jest
+      .spyOn(homeUtils, "accessibilityLabelForMessageItem")
+      .mockImplementation(() => "Mock announcement");
+    const message = generateMessage(
+      { tag: "GENERIC" } as MessageCategory,
+      false,
+      false
+    );
+    const component = renderComponent(
+      0,
+      message,
+      true,
+      "INBOX",
+      screenReaderEnabled
+    );
+
+    const pressable = component.getByTestId("wrapped_message_list_item_0");
+    if (isLongTap) {
+      fireEvent(pressable, "onLongPress");
+    } else {
+      fireEvent.press(pressable);
+    }
+
+    if (shouldAnnounce) {
+      expect(mockAccessibilityLabelForMessageItem.mock.calls.length).toBe(2);
+      expect(mockAccessibilityLabelForMessageItem.mock.calls[0].length).toBe(3);
+      expect(mockAccessibilityLabelForMessageItem.mock.calls[1][0]).toEqual(
+        message
+      );
+      expect(mockAccessibilityLabelForMessageItem.mock.calls[1][1]).toBe(
+        "INBOX"
+      );
+      expect(mockAccessibilityLabelForMessageItem.mock.calls[1][2]).toBe(false);
+
+      expect(mockedAnnounceForAccessibility.mock.calls.length).toBe(1);
+      expect(mockedAnnounceForAccessibility.mock.calls[0].length).toBe(1);
+      expect(mockedAnnounceForAccessibility.mock.calls[0][0]).toBe(
+        "Mock announcement"
+      );
+    } else {
+      expect(mockAccessibilityLabelForMessageItem.mock.calls.length).toBe(1);
+
+      expect(mockedAnnounceForAccessibility.mock.calls.length).toBe(0);
+    }
+
+    expect(mockDispatch.mock.calls.length).toBe(1);
+    expect(mockDispatch.mock.calls[0].length).toBe(1);
+    expect(mockDispatch.mock.calls[0][0]).toEqual(
+      toggleScheduledMessageArchivingAction({
+        messageId: message.id,
+        fromInboxToArchive: true
+      })
+    );
+  };
+  [false, true].forEach(isAndroid =>
+    [undefined, false, true].forEach(screenReaderEnabled => {
+      it(`should ${
+        screenReaderEnabled ? "" : "not "
+      }announce accessibility and dispatch a toggle action, when long pressing a message on ${
+        isAndroid ? "Android" : "iOS"
+      }`, () =>
+        commonAccessibilityTestCode(
+          isAndroid,
+          screenReaderEnabled,
+          !!screenReaderEnabled,
+          true
+        ));
+      it(`should ${
+        screenReaderEnabled && isAndroid ? "" : "not "
+      }announce accessibility and dispatch a toggle action, when tapping a message on ${
+        isAndroid ? "Android" : "iOS"
+      }`, () =>
+        commonAccessibilityTestCode(
+          isAndroid,
+          screenReaderEnabled,
+          !!screenReaderEnabled && isAndroid,
+          false
+        ));
+    })
+  );
 });
 
-const messageGenerator = (
-  hasPayment: boolean,
-  isFromSend: boolean,
-  isRead: boolean,
-  rptId: string | undefined = undefined
+const generateMessage = (
+  category: MessageCategory,
+  hasPrecondition: boolean,
+  isRead: boolean
 ): UIMessage =>
   ({
     createdAt: new Date(1990, 0, 2, 3, 4),
@@ -137,41 +243,49 @@ const messageGenerator = (
     serviceId: "01HYFJYTXYHPJTNKP60MRCYRMV" as ServiceId,
     serviceName: "Service name",
     title: "Message title",
-    category: {
-      tag: isFromSend
-        ? SENDTagEnum.PN
-        : hasPayment
-        ? PaymentTagEnum.PAYMENT
-        : TagEnum.GENERIC,
-      rptId
-    },
-    hasPrecondition: isFromSend
+    category,
+    hasPrecondition
   } as UIMessage);
 
 const renderComponent = (
+  index: number,
   message: UIMessage,
-  paymentId: string = "09173824650012345678991378264"
+  isArchiving: boolean,
+  source: "INBOX" | "ARCHIVE" | "SEARCH",
+  screenReaderEnabled: boolean = false
 ) => {
+  const paymentId: string = "00112233445566778899001122334";
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
   const stateWithPayment = {
-    ...designSystemState,
+    ...initialState,
     entities: {
-      ...designSystemState.entities,
+      ...initialState.entities,
+      messages: {
+        ...initialState.entities.messages,
+        archiving: {
+          ...initialState.entities.messages.archiving,
+          status: isArchiving ? "enabled" : "disabled",
+          fromInboxToArchive: new Set([message.id]),
+          fromArchiveToInbox: new Set()
+        }
+      },
       paymentByRptId: {
-        ...designSystemState.entities.paymentByRptId,
+        ...initialState.entities.paymentByRptId,
         [paymentId]: {
           kind: "COMPLETED"
         }
       }
+    },
+    preferences: {
+      ...initialState.preferences,
+      screenReaderEnabled
     }
   } as GlobalState;
   const store = createStore(appReducer, stateWithPayment as any);
   return renderScreenWithNavigationStoreContext(
-    () => <WrappedListItemMessage index={0} message={message} source="INBOX" />,
+    () => (
+      <WrappedListItemMessage index={index} message={message} source={source} />
+    ),
     MESSAGES_ROUTES.MESSAGES_HOME,
     {},
     store

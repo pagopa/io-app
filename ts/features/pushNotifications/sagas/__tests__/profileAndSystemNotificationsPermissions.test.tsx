@@ -7,7 +7,7 @@ import { notificationsInfoScreenConsent } from "../../store/actions/profileNotif
 import { profileAndSystemNotificationsPermissions } from "../profileAndSystemNotificationsPermissions";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
-import { profileUpsert } from "../../../../store/actions/profile";
+import { profileUpsert } from "../../../settings/common/store/actions";
 import { PushNotificationsContentTypeEnum } from "../../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../../definitions/backend/ReminderStatus";
 import {
@@ -193,6 +193,14 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next()
       .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(true)
+      .call(performance.now)
+      .next(0)
+      .call(requestNotificationPermissions)
+      .next(true)
+      .call(performance.now)
+      .next(1000)
+      .put(setPushPermissionsRequestDuration(1000))
+      .next()
       .select()
       .next(globalState)
       .call(updateMixpanelSuperProperties, globalState)
@@ -266,6 +274,14 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next()
       .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(true)
+      .call(performance.now)
+      .next(0)
+      .call(requestNotificationPermissions)
+      .next(true)
+      .call(performance.now)
+      .next(1000)
+      .put(setPushPermissionsRequestDuration(1000))
+      .next()
       .select()
       .next(globalState)
       .call(updateMixpanelSuperProperties, globalState)
@@ -415,6 +431,14 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next()
       .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(true)
+      .call(performance.now)
+      .next(0)
+      .call(requestNotificationPermissions)
+      .next(true)
+      .call(performance.now)
+      .next(1000)
+      .put(setPushPermissionsRequestDuration(1000))
+      .next()
       .select()
       .next(globalState)
       .call(updateMixpanelSuperProperties, globalState)
@@ -488,6 +512,14 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next()
       .call(checkAndUpdateNotificationPermissionsIfNeeded)
       .next(true)
+      .call(performance.now)
+      .next(0)
+      .call(requestNotificationPermissions)
+      .next(true)
+      .call(performance.now)
+      .next(1000)
+      .put(setPushPermissionsRequestDuration(1000))
+      .next()
       .select()
       .next(globalState)
       .call(updateMixpanelSuperProperties, globalState)

@@ -24,7 +24,6 @@ const PaymentsMethodPspPayPalBanner = () => {
           color="neutral"
           pictogramName="help"
           title={I18n.t("features.payments.details.payPal.banner.title")}
-          size="big"
           content={I18n.t("features.payments.details.payPal.banner.content")}
           onClose={handleOnCloseBanner}
           labelClose={I18n.t(

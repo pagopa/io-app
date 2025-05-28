@@ -1,6 +1,5 @@
 import {
   FooterActions,
-  IOStyles,
   ModalBSHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -102,7 +101,7 @@ export const MessageCalendarScreen = () => {
       <>
         <MessageCalendarHeaderComponent />
         <OperationResultScreenContent
-          pictogram={"umbrellaNew"}
+          pictogram={"umbrella"}
           title={I18n.t("messages.cta.errors.fetchCalendars")}
           action={{
             label: I18n.t("global.buttons.retry"),
@@ -119,7 +118,7 @@ export const MessageCalendarScreen = () => {
       <MessageCalendarHeaderComponent />
       <ScrollView>
         <VSpacer size={16} />
-        <View style={IOStyles.flex}>
+        <View style={{ flex: 1 }}>
           <CalendarList
             calendars={pipe(
               calendarsByAccount,

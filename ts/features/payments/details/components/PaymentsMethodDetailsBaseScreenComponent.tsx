@@ -8,7 +8,13 @@ import {
 } from "@pagopa/io-app-design-system";
 
 import { PropsWithChildren, useState } from "react";
-import { LayoutChangeEvent, StyleSheet, View } from "react-native";
+import {
+  AccessibilityInfo,
+  ColorValue,
+  LayoutChangeEvent,
+  StyleSheet,
+  View
+} from "react-native";
 import Animated, {
   useAnimatedRef,
   useAnimatedScrollHandler,
@@ -17,12 +23,12 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useIOSelector } from "../../../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import {
   PaymentCard,
   PaymentCardComponentProps
 } from "../../common/components/PaymentCard";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import I18n from "../../../../i18n";
 
 type Props = {
   card: PaymentCardComponentProps;
@@ -37,14 +43,13 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
   headerTitle = "",
   children
 }: PropsWithChildren<Props>) => {
-  const isDSenabled = useIOSelector(isDesignSystemEnabledSelector);
   const insets = useSafeAreaInsets();
   const translationY = useSharedValue(0);
   const [titleHeight, setTitleHeight] = useState(0);
 
   const theme = useIOTheme();
   const backgroundColor = IOColors[theme["appBackground-primary"]];
-  const blueHeaderColor = isDSenabled ? IOColors["blueIO-600"] : IOColors.blue;
+  const blueHeaderColor: ColorValue = IOColors["blueIO-600"];
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderSecondLevel({
@@ -53,11 +58,11 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
     variant: "contrast",
     faqCategories: ["wallet_methods"],
     supportRequest: true,
-    transparent: true,
     scrollValues: {
       contentOffsetY: translationY,
       triggerOffset: titleHeight
     },
+    ignoreAccessibilityCheck: true,
     enableDiscreteTransition: true,
     animatedRef: animatedScrollViewRef
   });
@@ -74,12 +79,19 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
     }
   };
 
+  useOnFirstRender(() => {
+    AccessibilityInfo.announceForAccessibility(
+      I18n.t("features.payments.details.a11y.announce")
+    );
+  });
+
   return (
     <Animated.ScrollView
       onScroll={scrollHandler}
       scrollEventThrottle={8}
       snapToOffsets={[0, titleHeight]}
       snapToEnd={false}
+      importantForAccessibility="no"
       contentContainerStyle={{
         flexGrow: 1,
         paddingBottom: 48,
@@ -93,7 +105,9 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
       />
       <View style={[styles.blueHeader, { backgroundColor: blueHeaderColor }]}>
         <View style={styles.cardContainer} onLayout={getTitleHeight}>
-          <PaymentCard {...card} />
+          <View accessible accessibilityRole="summary">
+            <PaymentCard {...card} />
+          </View>
         </View>
       </View>
       <VSpacer size={24} />
@@ -114,8 +128,8 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   blueHeader: {
-    paddingTop: "105%",
-    marginTop: "-75%",
+    marginTop: -300,
+    paddingTop: 300,
     marginBottom: "15%"
   }
 });

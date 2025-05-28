@@ -15,13 +15,14 @@ const Stack = createStackNavigator<PaymentsBarcodeParamsList>();
 export const WalletBarcodeNavigator = () => (
   <Stack.Navigator
     initialRouteName={PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN}
-    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <Stack.Screen
       name={PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN}
       component={PaymentsBarcodeScanScreen}
       options={{
         ...TransitionPresets.ModalSlideFromBottomIOS,
+        headerShown: false,
         gestureEnabled: isGestureEnabled
       }}
     />

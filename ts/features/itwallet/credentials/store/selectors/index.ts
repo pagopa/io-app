@@ -42,9 +42,8 @@ export const itwCredentialsByTypeSelector = createSelector(
 );
 
 export const itwCredentialByTypeSelector = (type: string) =>
-  createSelector(
-    itwCredentialsByTypeSelector,
-    credentials => credentials[type] || O.none
+  createSelector(itwCredentialsByTypeSelector, credentials =>
+    pipe(credentials[type], O.fromNullable, O.flatten)
   );
 
 export const itwCredentialsTypesSelector = createSelector(
@@ -107,7 +106,7 @@ export const itwIsWalletEmptySelector = createSelector(
  */
 export const itwCredentialStatusSelector = createSelector(
   itwCredentialsByTypeSelector,
-  (_: GlobalState, type: string) => type,
+  (_state: GlobalState, type: string) => type,
   (credentials, type) => {
     const credentialOption = credentials[type] || O.none;
 

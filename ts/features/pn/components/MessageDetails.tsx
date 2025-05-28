@@ -1,16 +1,15 @@
 import { useRef } from "react";
 import { ScrollView } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as SEP from "fp-ts/lib/Separated";
 import {
   ContentWrapper,
-  IOStyles,
   Icon,
   Tag,
-  VSpacer
+  VSpacer,
+  useFooterActionsMeasurements
 } from "@pagopa/io-app-design-system";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
@@ -48,13 +47,15 @@ export const MessageDetails = ({
   serviceId
 }: MessageDetailsProps) => {
   const presentPaymentsBottomSheetRef = useRef<() => void>();
-  const safeAreaInsets = useSafeAreaInsets();
   const partitionedAttachments = pipe(
     message.attachments,
     O.fromNullable,
     O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => []),
     RA.partition(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
   );
+
+  const { footerActionsMeasurements, handleFooterActionsMeasurements } =
+    useFooterActionsMeasurements();
 
   const attachmentList = SEP.left(partitionedAttachments);
   const maxVisiblePaymentCount = maxVisiblePaymentCountGenerator();
@@ -68,7 +69,7 @@ export const MessageDetails = ({
     <>
       <ScrollView
         contentContainerStyle={{
-          paddingBottom: IOStyles.footer.paddingBottom + safeAreaInsets.bottom
+          paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
         }}
       >
         <ContentWrapper>
@@ -145,6 +146,7 @@ export const MessageDetails = ({
         maxVisiblePaymentCount={maxVisiblePaymentCount}
         isCancelled={isCancelled}
         presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+        onMeasure={handleFooterActionsMeasurements}
       />
       {shouldUseBottomSheetForPayments(isCancelled, payments) && (
         <MessagePaymentBottomSheet

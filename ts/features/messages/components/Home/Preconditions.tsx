@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Keyboard } from "react-native";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
@@ -28,6 +28,7 @@ import { PreconditionsContent } from "./PreconditionsContent";
 import { PreconditionsFooter } from "./PreconditionsFooter";
 
 export const Preconditions = () => {
+  const [footerHeight, setFooterHeight] = useState<number>(0);
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const store = useIOStore();
@@ -47,13 +48,14 @@ export const Preconditions = () => {
     [navigation]
   );
   const modal = useIOBottomSheetModal({
-    snapPoint: [500],
+    snapPoint: [550],
     title: <PreconditionsTitle />,
-    component: <PreconditionsContent />,
+    component: <PreconditionsContent footerHeight={footerHeight} />,
     footer: (
       <PreconditionsFooter
         onDismiss={() => modal.dismiss()}
         onNavigation={onNavigationCallback}
+        onFooterHeightAvailable={setFooterHeight}
       />
     ),
     onDismiss: onDismissCallback

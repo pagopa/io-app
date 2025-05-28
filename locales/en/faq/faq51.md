@@ -1,1 +1,0 @@
-Push notifications inform you that a new message has arrived on IO, and invite you to read it. If you prefer to keep the messages related to a specific service private, you can disable push notifications for that specific service. Once push notifications are turned off, you will be informed about new messages by the badge on the app icon, and by the blue dot in the Messages list.

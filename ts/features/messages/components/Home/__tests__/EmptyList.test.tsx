@@ -6,7 +6,6 @@ import { MessageListCategory } from "../../../types/messageListCategory";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
@@ -229,32 +228,28 @@ const renderComponent = (
   messagePagePot: MessagePagePot
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
   const finalState = {
-    ...designSystemState,
+    ...initialState,
     entities: {
-      ...designSystemState.entities,
+      ...initialState.entities,
       messages: {
-        ...designSystemState.entities.messages,
+        ...initialState.entities.messages,
         allPaginated: {
-          ...designSystemState.entities.messages.allPaginated,
+          ...initialState.entities.messages.allPaginated,
           shownCategory: category,
           archive: {
-            ...designSystemState.entities.messages.allPaginated.archive,
+            ...initialState.entities.messages.allPaginated.archive,
             data:
               category === "ARCHIVE"
                 ? messagePagePot
-                : designSystemState.entities.messages.allPaginated.archive.data
+                : initialState.entities.messages.allPaginated.archive.data
           },
           inbox: {
-            ...designSystemState.entities.messages.allPaginated.inbox,
+            ...initialState.entities.messages.allPaginated.inbox,
             data:
               category === "INBOX"
                 ? messagePagePot
-                : designSystemState.entities.messages.allPaginated.inbox.data
+                : initialState.entities.messages.allPaginated.inbox.data
           }
         }
       }

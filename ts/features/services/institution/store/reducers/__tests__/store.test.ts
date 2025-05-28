@@ -14,22 +14,23 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";
 import { WithInstitutionID, paginatedServicesGet } from "../../actions";
+import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
 
 const MOCK_INSTITUTION_ID = "1";
 
 const MOCK_SERVICES: InstitutionServicesResource["services"] = [
   {
-    id: "1",
+    id: "1" as ServiceId,
     name: "Service 1",
     version: 1
   },
   {
-    id: "2",
+    id: "2" as ServiceId,
     name: "Service 2",
     version: 1
   },
   {
-    id: "3",
+    id: "3" as ServiceId,
     name: "Service 3",
     version: 1
   }

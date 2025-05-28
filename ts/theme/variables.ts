@@ -5,11 +5,10 @@
  * directory).
  */
 
+import { IOColors } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { Platform } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
 import { FontWeight, makeFontStyleObject } from "./fonts";
-import { ThemeSimpleValue } from "./types";
 
 export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
 
@@ -38,10 +37,6 @@ const customVariables = {
 
   btnBorderRadius: 4,
 
-  get btnLightTextColor(): ThemeSimpleValue {
-    return this.textColor;
-  },
-
   // Inputs (after removing `native-base` dependency)
   // Source: https://docs-v2.nativebase.io/docs/ThemeVariables.html
   inputHeightBase: 50,
@@ -51,19 +46,11 @@ const customVariables = {
   /* Don't put hardcoded color values here.
     Add them to IOColors object, instead.
   */
-  brandPrimary: IOColors.blue,
-  brandDanger: IOColors.red,
-  colorHighlight: IOColors.aqua,
-
-  btnLightBorderColor: IOColors.grey,
+  brandPrimary: IOColors["blueIO-500"],
 
   cardShadow: IOColors.black,
 
-  calendarExpirableColor: IOColors.red,
-
-  itemSeparator: IOColors.bluegreyLight,
-
-  toastColor: IOColors.aquaUltraLight,
+  itemSeparator: IOColors["grey-200"],
 
   // Font
   ...makeFontStyleObject(Platform.select),
@@ -80,7 +67,6 @@ const customVariables = {
   contentPadding: 24,
   contentPaddingLarge: 48,
   contentBackground: IOColors.white,
-  contentPrimaryBackground: IOColors.blue,
 
   // Footer
   footerBackground: IOColors.white,
@@ -107,24 +93,14 @@ const customVariables = {
   headerBodyFontSize: 14,
   headerBodyFontWeight: "600" as FontWeight,
 
-  get toolbarTextColor(): ThemeSimpleValue {
-    return this.textColor;
-  },
-  androidStatusBarColor: IOColors.white,
-
   // Text
-  textColor: IOColors.bluegrey,
-  textColorDark: IOColors.bluegreyDark,
-  textLinkColor: IOColors.blue,
+  textColor: IOColors["grey-700"],
   textMessageDetailLinkColor: "#0073E6",
   // TODO: Delete the following variables after refactor using
   // the new Text component (not from NativeBase)
   textNormalWeight: "400" as FontWeight,
   textBoldWeight: "700" as FontWeight,
   textLinkWeight: "600" as FontWeight,
-
-  // Skeleton/Placeholder
-  colorSkeleton: IOColors.bluegreyLight,
 
   // Label
   // TODO: Delete the following line after refactor using
@@ -148,10 +124,6 @@ const customVariables = {
 
   // Border radius
   borderRadiusBase: 4,
-
-  // Tabs
-  tabUnderlineColor: IOColors.greyUltraLight,
-  tabUnderlineHeight: 2,
 
   // Animations
   activeOpacity: 0.25,

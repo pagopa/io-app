@@ -1,8 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import { ItwLifecycleState } from "../../reducers";
-import { itwLifecycleStateUpdated } from "../../actions";
 import { itwStoreIntegrityKeyTag } from "../../../../issuance/store/actions";
 import {
   itwLifecycleIsInstalledSelector,
@@ -32,9 +30,6 @@ describe("IT Wallet lifecycle selectors", () => {
       undefined,
       curriedAppReducer(applicationChangeState("active")),
       curriedAppReducer(
-        itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL)
-      ),
-      curriedAppReducer(
         itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3")
       )
     );
@@ -48,9 +43,6 @@ describe("IT Wallet lifecycle selectors", () => {
     const globalState = pipe(
       undefined,
       curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(
-        itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_VALID)
-      ),
       curriedAppReducer(
         itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3")
       ),

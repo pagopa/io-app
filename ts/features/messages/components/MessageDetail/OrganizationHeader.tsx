@@ -2,12 +2,10 @@ import {
   Avatar,
   Body,
   IOSpacingScale,
-  IOStyles,
-  BodySmall,
-  useIOTheme
+  BodySmall
 } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
-import { ImageURISource, StyleSheet, View } from "react-native";
+import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -21,7 +19,7 @@ export type OrganizationHeaderProps = {
   organizationName: string;
   serviceId: ServiceId;
   serviceName: string;
-  logoUri?: ReadonlyArray<ImageURISource>;
+  logoUri?: ImageSourcePropType;
 };
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
@@ -46,7 +44,6 @@ export const OrganizationHeader = ({
   organizationName,
   serviceName
 }: OrganizationHeaderProps) => {
-  const theme = useIOTheme();
   const navigation = useIONavigation();
   const paymentData = useIOSelector(state =>
     messagePaymentDataSelector(state, messageId)
@@ -63,13 +60,15 @@ export const OrganizationHeader = ({
   );
   return (
     <View style={styles.item}>
-      <View style={IOStyles.flex}>
+      <View style={{ flex: 1 }}>
         <Body weight="Semibold" color="grey-700">
           {organizationName}
         </Body>
         <BodySmall
-          color={theme["interactiveElem-default"]}
+          asLink
+          accessibilityRole="button"
           onPress={navigateToServiceDetails}
+          textStyle={{ textDecorationLine: "none" }}
           weight="Semibold"
         >
           {serviceName}

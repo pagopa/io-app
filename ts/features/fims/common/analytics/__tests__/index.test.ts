@@ -13,9 +13,10 @@ import {
   trackInAppBrowserOpening
 } from "..";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
+import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import * as mixpanel from "../../../../../mixpanel";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import * as serviceSelectors from "../../../../services/details/store/reducers";
 import * as fimsAuthenticationSelectors from "../../../singleSignOn/store/selectors";
 
@@ -26,10 +27,6 @@ const organizationNames = [undefined, "organization name"];
 const referenceReason = "The reason";
 const referenceServiceId = "01J9RSWBB4VSHVRJSY33XGA6YH" as ServiceId;
 const serviceNames = [undefined, "service name"];
-const sources: ReadonlyArray<"message_detail" | "service_detail"> = [
-  "message_detail",
-  "service_detail"
-];
 
 describe("trackAuthenticationStart", () => {
   beforeEach(() => {
@@ -39,38 +36,37 @@ describe("trackAuthenticationStart", () => {
   organizationFiscalCodes.forEach(organizationFiscalCode =>
     organizationNames.forEach(organizationName =>
       serviceNames.forEach(serviceName =>
-        sources.forEach(source =>
-          it(`should match event name, and expected parameters for ${
-            organizationFiscalCode ? "defined   " : "undefined "
-          } organization fiscal code, ${
-            organizationName ? "defined   " : "undefined "
-          } organization name, ${
-            serviceName ? "defined   " : "undefined "
-          } service name, ${source} source, `, () => {
-            const mixpanelTrackMock = generateMixpanelTrackMock();
-            void trackAuthenticationStart(
-              referenceServiceId,
-              serviceName,
-              organizationName,
-              organizationFiscalCode,
-              referenceCtaLabel,
-              source
-            );
-            expect(mixpanelTrackMock.mock.calls.length).toBe(1);
-            expect(mixpanelTrackMock.mock.calls[0].length).toBe(2);
-            expect(mixpanelTrackMock.mock.calls[0][0]).toBe("FIMS_START");
-            expect(mixpanelTrackMock.mock.calls[0][1]).toEqual({
-              event_category: "UX",
-              event_type: "action",
-              fims_label: referenceCtaLabel,
-              organization_fiscal_code: organizationFiscalCode,
-              organization_name: organizationName,
-              service_id: referenceServiceId,
-              service_name: serviceName,
-              source
-            });
-          })
-        )
+        it(`should match event name, and expected parameters for ${
+          organizationFiscalCode ? "defined   " : "undefined "
+        } organization fiscal code, ${
+          organizationName ? "defined   " : "undefined "
+        } organization name, ${
+          serviceName ? "defined   " : "undefined "
+        } service name`, () => {
+          const source = MESSAGES_ROUTES.MESSAGE_DETAIL;
+          const mixpanelTrackMock = generateMixpanelTrackMock();
+          void trackAuthenticationStart(
+            referenceServiceId,
+            serviceName,
+            organizationName,
+            organizationFiscalCode,
+            referenceCtaLabel,
+            source
+          );
+          expect(mixpanelTrackMock.mock.calls.length).toBe(1);
+          expect(mixpanelTrackMock.mock.calls[0].length).toBe(2);
+          expect(mixpanelTrackMock.mock.calls[0][0]).toBe("FIMS_START");
+          expect(mixpanelTrackMock.mock.calls[0][1]).toEqual({
+            event_category: "UX",
+            event_type: "action",
+            fims_label: referenceCtaLabel,
+            organization_fiscal_code: organizationFiscalCode,
+            organization_name: organizationName,
+            service_id: referenceServiceId,
+            service_name: serviceName,
+            source
+          });
+        })
       )
     )
   );
@@ -372,11 +368,13 @@ describe("computeAndTrackDataShare", () => {
               .mockImplementation(_ => ctaLabel);
             const mixpanelTrackMock = generateMixpanelTrackMock();
             const service = {
-              organization_fiscal_code: organizationFiscalCode,
-              organization_name: organizationName,
-              service_id: referenceServiceId,
-              service_name: serviceName
-            } as ServicePublic;
+              id: referenceServiceId,
+              name: serviceName,
+              organization: {
+                fiscal_code: organizationFiscalCode,
+                name: organizationName
+              }
+            } as ServiceDetails;
             const globalState = {} as GlobalState;
 
             void computeAndTrackDataShare(service, globalState);
@@ -390,7 +388,7 @@ describe("computeAndTrackDataShare", () => {
               fims_label: ctaLabel,
               organization_fiscal_code: organizationFiscalCode,
               organization_name: organizationName,
-              service_id: service.service_id,
+              service_id: service.id,
               service_name: serviceName
             });
           });
@@ -419,15 +417,17 @@ describe("computeAndTrackDataShareAccepted", () => {
             ctaLabel ? "defined   " : "undefined "
           } cta label`, () => {
             const service = {
-              organization_fiscal_code: organizationFiscalCode,
-              organization_name: organizationName,
-              service_id: referenceServiceId,
-              service_name: serviceName
-            } as ServicePublic;
+              id: referenceServiceId,
+              name: serviceName,
+              organization: {
+                fiscal_code: organizationFiscalCode,
+                name: organizationName
+              }
+            } as ServiceDetails;
             jest
-              .spyOn(serviceSelectors, "serviceByIdSelector")
+              .spyOn(serviceSelectors, "serviceDetailsByIdSelector")
               .mockImplementation((_state, innerServiceId) =>
-                innerServiceId === service.service_id ? service : undefined
+                innerServiceId === service.id ? service : undefined
               );
             jest
               .spyOn(fimsAuthenticationSelectors, "fimsCtaTextSelector")
@@ -451,7 +451,7 @@ describe("computeAndTrackDataShareAccepted", () => {
               fims_label: ctaLabel,
               organization_fiscal_code: organizationFiscalCode,
               organization_name: organizationName,
-              service_id: service.service_id,
+              service_id: service.id,
               service_name: serviceName
             });
           });

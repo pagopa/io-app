@@ -2,7 +2,6 @@ import { createStore } from "redux";
 import PagerView from "react-native-pager-view";
 import { fireEvent } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
@@ -68,12 +67,8 @@ const renderScreen = (
   setPageMock: jest.Mock<any, any> = jest.fn()
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
   const finalState = appReducer(
-    designSystemState,
+    initialState,
     setShownMessageCategoryAction(shownCategory)
   );
   const store = createStore(appReducer, finalState as any);

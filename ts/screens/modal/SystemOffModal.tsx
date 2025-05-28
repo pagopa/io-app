@@ -24,7 +24,7 @@ const SystemOffModal = () => {
   return (
     <Modal>
       <OperationResultScreenContent
-        pictogram="umbrellaNew"
+        pictogram="umbrella"
         title={I18n.t("systemsOff.title")}
         subtitle={subtitle}
       />

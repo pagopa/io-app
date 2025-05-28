@@ -4,7 +4,6 @@ import { Text } from "react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import BoxedRefreshIndicator from "../BoxedRefreshIndicator";
@@ -24,12 +23,8 @@ describe("BoxedRefreshIndicator", () => {
 
 const renderComponent = (action?: ReactNode, caption?: ReactNode) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const dsState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
   const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore(dsState);
+  const store: ReturnType<typeof mockStore> = mockStore(initialState);
   return render(
     <Provider store={store}>
       <BoxedRefreshIndicator action={action} caption={caption} />

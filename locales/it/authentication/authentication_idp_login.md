@@ -1,3 +1,0 @@
-La password è il codice alfanumerico che hai scelto al momento della creazione della tua Identità Digitale SPID.
-Se non la ricordi, puoi recuperarla o impostare una nuova password seguendo le indicazioni del tuo Identity Provider.  
-Una volta inseriti i dati richiesti, riceverai un codice OTP dal tuo Identity Provider. Conferma la richiesta di accesso e torna sull'app IO per completare l’accesso. Troverai a questo punto una schermata che autorizza l'Identity Provider a trasmettere a IO una serie di informazioni necessarie per abilitarti all'utilizzo dell'app e dei vari servizi offerti dagli enti pubblici tramite IO. Premi "acconsento" per dare il tuo consenso e procedere con l’autenticazione.

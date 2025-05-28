@@ -84,7 +84,6 @@ const T_CREDENTIAL_DEFINITION: AuthorizationDetail = {
 };
 const T_REQUESTED_CREDENTIAL: RequestObject = {
   client_id: T_CLIENT_ID,
-  client_id_scheme: "entity_id",
   exp: 0,
   iat: 0,
   iss: "",
@@ -116,6 +115,8 @@ describe("itwCredentialIssuanceMachine", () => {
   const handleSessionExpired = jest.fn();
   const trackStartAddCredential = jest.fn();
   const trackAddCredential = jest.fn();
+  const trackCredentialIssuingDataShare = jest.fn();
+  const trackCredentialIssuingDataShareAccepted = jest.fn();
 
   const getWalletAttestation = jest.fn();
   const requestCredential = jest.fn();
@@ -126,6 +127,8 @@ describe("itwCredentialIssuanceMachine", () => {
   const isDeferredIssuance = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
   const isStatusError = jest.fn();
+  const isSkipNavigation = jest.fn();
+  const isEidExpired = jest.fn();
 
   const mockedMachine = itwCredentialIssuanceMachine.provide({
     actions: {
@@ -141,7 +144,9 @@ describe("itwCredentialIssuanceMachine", () => {
       unflagCredentialAsRequested,
       handleSessionExpired,
       trackStartAddCredential,
-      trackAddCredential
+      trackAddCredential,
+      trackCredentialIssuingDataShare,
+      trackCredentialIssuingDataShareAccepted
     },
     actors: {
       getWalletAttestation:
@@ -163,13 +168,17 @@ describe("itwCredentialIssuanceMachine", () => {
       isSessionExpired,
       isDeferredIssuance,
       hasValidWalletInstanceAttestation,
-      isStatusError
+      isStatusError,
+      isSkipNavigation,
+      isEidExpired
     }
   });
 
   beforeEach(() => {
     onInit.mockImplementation(() => ({ walletInstanceAttestation: undefined }));
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
+    isEidExpired.mockImplementation(() => false);
+    isSkipNavigation.mockImplementation(() => true);
   });
 
   afterEach(() => {
@@ -200,7 +209,7 @@ describe("itwCredentialIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
     actor.send({
       type: "select-credential",
@@ -344,7 +353,7 @@ describe("itwCredentialIssuanceMachine", () => {
       ...InitialContext,
       walletInstanceAttestation: T_WIA
     });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
     actor.send({
       type: "select-credential",
@@ -406,9 +415,7 @@ describe("itwCredentialIssuanceMachine", () => {
       type: "close"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "DisplayingCredentialPreview"
-    );
+    expect(actor.getSnapshot().value).toStrictEqual("Completed");
     expect(storeCredential).toHaveBeenCalledTimes(0);
     expect(navigateToWallet).toHaveBeenCalledTimes(0);
     expect(closeIssuance).toHaveBeenCalledTimes(1);
@@ -421,7 +428,7 @@ describe("itwCredentialIssuanceMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
     /**
      * Initialize wallet and start credential issuance
@@ -476,7 +483,7 @@ describe("itwCredentialIssuanceMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
     /**
      * Initialize wallet and start credential issuance
@@ -538,7 +545,7 @@ describe("itwCredentialIssuanceMachine", () => {
       type: "close"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("DisplayingTrustIssuer");
+    expect(actor.getSnapshot().value).toStrictEqual("Completed");
     expect(closeIssuance).toHaveBeenCalledTimes(1);
   });
 
@@ -595,6 +602,7 @@ describe("itwCredentialIssuanceMachine", () => {
     actor.start();
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+    isSkipNavigation.mockImplementation(() => false);
 
     requestCredential.mockImplementation(() =>
       Promise.resolve({

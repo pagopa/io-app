@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { ButtonOutline, ButtonSolid } from "@pagopa/io-app-design-system";
+import { IOButton } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   useIODispatch,
@@ -86,26 +86,27 @@ const ArchiveRestoreCTAs = ({ category }: ArchiveRestoreCTAsProps) => {
   );
   const isProcessing = useIOSelector(isArchivingInProcessingModeSelector);
 
-  const rightButtonLabel = I18n.t(
-    `messages.cta.${category === "ARCHIVE" ? "unarchive" : "archive"}`
-  );
   return (
     <View
       style={[styles.container, { paddingBottom: 8 + safeAreaInsets.bottom }]}
     >
       <View style={styles.startButtonContainer}>
-        <ButtonOutline
-          label="Annulla"
+        <IOButton
           fullWidth
+          variant="outline"
+          label={I18n.t("global.buttons.cancel")}
           onPress={() => dispatch(resetMessageArchivingAction(undefined))}
         />
       </View>
       <View style={styles.endButtonContainer}>
-        <ButtonSolid
-          disabled={!archiveRestoreCTAEnabled}
-          label={rightButtonLabel}
-          loading={isProcessing}
+        <IOButton
           fullWidth
+          variant="solid"
+          disabled={!archiveRestoreCTAEnabled}
+          label={I18n.t(
+            `messages.cta.${category === "ARCHIVE" ? "unarchive" : "archive"}`
+          )}
+          loading={isProcessing}
           onPress={() => dispatch(startProcessingMessageArchivingAction())}
         />
       </View>

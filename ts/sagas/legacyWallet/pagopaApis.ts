@@ -11,7 +11,7 @@ import { getWalletError } from "../../utils/errors";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../definitions/backend/PaymentProblemJson";
-import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../features/authentication/fastLogin/saga/utils";
 
 export function* commonPaymentVerificationProcedure<A extends Action>(
   getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"],

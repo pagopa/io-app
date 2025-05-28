@@ -1,4 +1,9 @@
-import { Divider, FooterActions, IOToast } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  FooterActions,
+  IOToast,
+  IOVisualCostants
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 
@@ -12,10 +17,9 @@ import {
   ScrollView
 } from "react-native";
 import { connect } from "react-redux";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../../components/screens/BaseScreenComponent";
@@ -28,7 +32,7 @@ import {
 import { Dispatch } from "../../../../store/actions/types";
 import {
   isCGNEnabledSelector,
-  isCdcEnabledSelector
+  isCdcAppVersionSupportedSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 import { storeUrl } from "../../../../utils/appVersion";
@@ -110,7 +114,7 @@ class AvailableBonusScreen extends PureComponent<Props> {
             },
             s => () =>
               this.props.navigateToServiceDetailsScreen({
-                serviceId: s.service_id
+                serviceId: s.id
               })
           )
         );
@@ -190,8 +194,12 @@ class AvailableBonusScreen extends PureComponent<Props> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["bonus_available_list"]}
       >
-        <SafeAreaView style={IOStyles.flex}>
-          <ScrollView contentContainerStyle={IOStyles.horizontalContentPadding}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <ScrollView
+            contentContainerStyle={{
+              paddingHorizontal: IOVisualCostants.appMarginDefault
+            }}
+          >
             <FlatList
               scrollEnabled={false}
               data={availableBonusesList.filter(experimentalAndVisibleBonus)}
@@ -221,7 +229,7 @@ const mapStateToProps = (state: GlobalState) => ({
   // show error only when we have an error and no data to show
   isError: isAvailableBonusNoneErrorSelector(state),
   isCgnEnabled: isCGNEnabledSelector(state),
-  isCdcEnabled: isCdcEnabledSelector(state),
+  isCdcEnabled: isCdcAppVersionSupportedSelector(state),
   cdcService: () => serviceFromAvailableBonusSelector(ID_CDC_TYPE)(state)
 });
 

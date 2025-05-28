@@ -1,15 +1,20 @@
 import * as t from "io-ts";
-import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import { pipe } from "fp-ts/lib/function";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
-import { mixpanelTrack } from "../../../mixpanel";
+import {
+  enqueueMixpanelEvent,
+  isMixpanelInstanceInitialized,
+  mixpanelTrack
+} from "../../../mixpanel";
 import { readablePrivacyReport } from "../../../utils/reporters";
 import { UIMessageId } from "../types";
-import { booleanToYesNo, buildEventProperties } from "../../../utils/analytics";
+import {
+  booleanToYesNo,
+  buildEventProperties,
+  dateToUTCISOString
+} from "../../../utils/analytics";
 import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
 import { MessageListCategory } from "../types/messageListCategory";
 import { Action } from "../../../store/actions/types";
@@ -57,7 +62,9 @@ export const trackOpenMessage = (
   containsPayment: boolean | undefined,
   hasRemoteContent: boolean,
   containsAttachments: boolean,
-  fromPushNotification: boolean
+  fromPushNotification: boolean,
+  hasFIMSCTA: boolean,
+  createdAt: Date
 ) => {
   const eventName = "OPEN_MESSAGE";
   const props = buildEventProperties("UX", "screen_view", {
@@ -65,41 +72,56 @@ export const trackOpenMessage = (
     service_name: serviceName,
     organization_name: organizationName,
     organization_fiscal_code: organizationFiscalCode,
-    contains_payment: pipe(
-      containsPayment,
-      O.fromNullable,
-      O.fold(() => "unknown" as const, booleanToYesNo)
-    ),
+    contains_payment:
+      containsPayment != null ? booleanToYesNo(containsPayment) : "unknown",
     remote_content: booleanToYesNo(hasRemoteContent),
     contains_attachment: booleanToYesNo(containsAttachments),
     first_time_opening: booleanToYesNo(firstTimeOpening),
-    fromPushNotification: booleanToYesNo(fromPushNotification)
+    fromPushNotification: booleanToYesNo(fromPushNotification),
+    has_fims_callback: booleanToYesNo(hasFIMSCTA),
+    date_sent: dateToUTCISOString(createdAt)
   });
   void mixpanelTrack(eventName, props);
 };
 
-export const trackMessageCTAFrontMatterDecodingError = (
-  serviceId?: ServiceId
+export const trackCTAFrontMatterDecodingError = (
+  reason: string,
+  serviceId: ServiceId
 ) => {
   const eventName = "CTA_FRONT_MATTER_DECODING_ERROR";
-  const props = buildEventProperties("KO", undefined, { serviceId });
+  const props = buildEventProperties("KO", undefined, { reason, serviceId });
   void mixpanelTrack(eventName, props);
 };
 
-export const trackMessageNotificationTap = (messageId: NonEmptyString) => {
+export const trackMessageNotificationParsingFailure = (
+  id: string,
+  reason: t.Errors | string,
+  userOptedIn: boolean
+) => {
+  const eventName = "NOTIFICATION_PARSING_FAILURE";
+  const props = buildEventProperties("KO", undefined, {
+    reason: typeof reason !== "string" ? readablePrivacyReport(reason) : reason
+  });
+  if (isMixpanelInstanceInitialized()) {
+    mixpanelTrack(eventName, props);
+  } else if (userOptedIn) {
+    enqueueMixpanelEvent(eventName, id, props);
+  }
+};
+
+export const trackMessageNotificationTap = (
+  messageId: string,
+  userOptedIn: boolean
+) => {
   const eventName = "NOTIFICATIONS_MESSAGE_TAP";
   const props = buildEventProperties("UX", "action", {
     messageId
   });
-  return mixpanelTrack(eventName, props);
-};
-
-export const trackMessageNotificationParsingFailure = (errors: t.Errors) => {
-  const eventName = "NOTIFICATION_PARSING_FAILURE";
-  const props = buildEventProperties("KO", undefined, {
-    reason: readablePrivacyReport(errors)
-  });
-  void mixpanelTrack(eventName, props);
+  if (isMixpanelInstanceInitialized()) {
+    mixpanelTrack(eventName, props);
+  } else if (userOptedIn) {
+    enqueueMixpanelEvent(eventName, messageId, props);
+  }
 };
 
 export const trackThirdPartyMessageAttachmentCount = (

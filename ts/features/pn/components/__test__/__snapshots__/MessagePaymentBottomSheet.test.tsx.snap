@@ -335,19 +335,20 @@ exports[`MessagePaymentBottomSheet should match snapshot, no payments 1`] = `
                       }
                     >
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
-                        enableDismissOnClose={true}
-                        footerComponent={[Function]}
-                        handleComponent={[Function]}
-                        handleComponentAccessibility={
+                        backgroundStyle={
                           {
-                            "accessible": false,
+                            "backgroundColor": "#FFFFFF",
                           }
                         }
+                        enableDismissOnClose={true}
+                        enableDynamicSizing={false}
+                        footerComponent={[Function]}
+                        handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -365,14 +366,22 @@ exports[`MessagePaymentBottomSheet should match snapshot, no payments 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
                         >
-                          <View />
+                          <View>
+                            <View
+                              style={
+                                {
+                                  "height": 0,
+                                }
+                              }
+                            />
+                          </View>
                         </RCTScrollView>
                       </Modal>
                     </View>
@@ -723,19 +732,20 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                       }
                     >
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
-                        enableDismissOnClose={true}
-                        footerComponent={[Function]}
-                        handleComponent={[Function]}
-                        handleComponentAccessibility={
+                        backgroundStyle={
                           {
-                            "accessible": false,
+                            "backgroundColor": "#FFFFFF",
                           }
                         }
+                        enableDismissOnClose={true}
+                        enableDynamicSizing={false}
+                        footerComponent={[Function]}
+                        handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -753,9 +763,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -841,16 +851,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
@@ -862,16 +872,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         Due date 01/01/2024
                                       </Text>
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={2}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -894,17 +904,17 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     >
                                       <Text
                                         accessibilityLabel="1.99 €"
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="headline"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 17,
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                               "lineHeight": 24,
@@ -921,6 +931,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -934,22 +945,17 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1067,16 +1073,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
@@ -1088,16 +1094,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         Notice code
                                       </Text>
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={2}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -1125,29 +1131,31 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             {
                                               "alignItems": "center",
                                               "borderCurve": "continuous",
-                                              "borderRadius": 24,
                                               "flexDirection": "row",
                                               "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
                                             },
                                             {
-                                              "backgroundColor": "#F4F5F8",
+                                              "borderRadius": 36,
+                                              "paddingHorizontal": 12,
+                                              "paddingVertical": 6,
+                                            },
+                                            {
+                                              "backgroundColor": "#E7ECFC",
                                             },
                                           ]
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={1}
                                           style={
                                             [
                                               {},
                                               {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "color": "#031344",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 12,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -1172,6 +1180,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -1185,22 +1194,17 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1318,16 +1322,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
@@ -1339,16 +1343,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         Notice code
                                       </Text>
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={2}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -1376,29 +1380,31 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             {
                                               "alignItems": "center",
                                               "borderCurve": "continuous",
-                                              "borderRadius": 24,
                                               "flexDirection": "row",
                                               "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
                                             },
                                             {
-                                              "backgroundColor": "#F4F5F8",
+                                              "borderRadius": 36,
+                                              "paddingHorizontal": 12,
+                                              "paddingVertical": 6,
+                                            },
+                                            {
+                                              "backgroundColor": "#E7ECFC",
                                             },
                                           ]
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={1}
                                           style={
                                             [
                                               {},
                                               {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "color": "#031344",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 12,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -1423,6 +1429,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -1436,22 +1443,17 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1569,16 +1571,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
@@ -1590,16 +1592,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         Notice code
                                       </Text>
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={2}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -1627,29 +1629,31 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             {
                                               "alignItems": "center",
                                               "borderCurve": "continuous",
-                                              "borderRadius": 24,
                                               "flexDirection": "row",
                                               "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
                                             },
                                             {
-                                              "backgroundColor": "#E1F5FE",
+                                              "borderRadius": 36,
+                                              "paddingHorizontal": 12,
+                                              "paddingVertical": 6,
+                                            },
+                                            {
+                                              "backgroundColor": "#E7ECFC",
                                             },
                                           ]
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={1}
                                           style={
                                             [
                                               {},
                                               {
-                                                "color": "#215C76",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "color": "#031344",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 12,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -1674,6 +1678,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -1687,22 +1692,17 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1820,16 +1820,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
@@ -1841,16 +1841,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         Notice code
                                       </Text>
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={2}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -1878,11 +1878,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             {
                                               "alignItems": "center",
                                               "borderCurve": "continuous",
-                                              "borderRadius": 24,
                                               "flexDirection": "row",
                                               "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "borderRadius": 36,
+                                              "paddingHorizontal": 12,
+                                              "paddingVertical": 6,
                                             },
                                             {
                                               "backgroundColor": "#E1F4E1",
@@ -1891,16 +1893,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={1}
                                           style={
                                             [
                                               {},
                                               {
                                                 "color": "#224021",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 12,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -1925,6 +1927,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -1938,22 +1941,17 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2071,16 +2069,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
@@ -2092,16 +2090,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         Notice code
                                       </Text>
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={2}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -2129,11 +2127,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             {
                                               "alignItems": "center",
                                               "borderCurve": "continuous",
-                                              "borderRadius": 24,
                                               "flexDirection": "row",
                                               "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "borderRadius": 36,
+                                              "paddingHorizontal": 12,
+                                              "paddingVertical": 6,
                                             },
                                             {
                                               "backgroundColor": "#FFD9D9",
@@ -2142,16 +2142,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={1}
                                           style={
                                             [
                                               {},
                                               {
                                                 "color": "#5D1313",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 12,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -2176,6 +2176,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -2189,22 +2190,17 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2322,16 +2318,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
@@ -2343,16 +2339,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         Notice code
                                       </Text>
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={2}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -2380,11 +2376,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             {
                                               "alignItems": "center",
                                               "borderCurve": "continuous",
-                                              "borderRadius": 24,
                                               "flexDirection": "row",
                                               "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "borderRadius": 36,
+                                              "paddingHorizontal": 12,
+                                              "paddingVertical": 6,
                                             },
                                             {
                                               "backgroundColor": "#FFD9D9",
@@ -2393,16 +2391,16 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={1}
                                           style={
                                             [
                                               {},
                                               {
                                                 "color": "#5D1313",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 12,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -2427,6 +2425,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -2440,22 +2439,17 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2486,6 +2480,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                 </View>
                               </View>
                             </View>
+                            <View
+                              style={
+                                {
+                                  "height": 0,
+                                }
+                              }
+                            />
                           </View>
                         </RCTScrollView>
                       </Modal>

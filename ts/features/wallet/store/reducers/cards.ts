@@ -5,6 +5,7 @@ import {
   walletAddCards,
   walletHideCards,
   walletRemoveCards,
+  walletRemoveCardsByCategory,
   walletRemoveCardsByType,
   walletRestoreCards,
   walletUpsertCard
@@ -53,6 +54,13 @@ const reducer = (
     case getType(walletRemoveCardsByType):
       return Object.fromEntries(
         Object.entries(state).filter(([, { type }]) => type !== action.payload)
+      );
+
+    case getType(walletRemoveCardsByCategory):
+      return Object.fromEntries(
+        Object.entries(state).filter(
+          ([, { category }]) => category !== action.payload
+        )
       );
 
     case getType(walletHideCards):

@@ -5,7 +5,7 @@ import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../../api/backend";
 import { convertUnknownToError } from "../../../utils/errors";
 import { isTestEnv } from "../../../utils/environment";
-import { withRefreshApiCall } from "../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
 import { trackDisclaimerLoadError } from "../analytics";
 import {
@@ -22,6 +22,7 @@ import {
   preconditionsCategoryTagSelector,
   preconditionsMessageIdSelector
 } from "../store/reducers/messagePrecondition";
+import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 
 export function* handleMessagePrecondition(
   getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"],
@@ -62,9 +63,12 @@ function* messagePreconditionWorker(
     if (E.isRight(result)) {
       if (result.right.status === 200) {
         const content = result.right.value;
+        const isIOMarkdownEnabled = yield* select(
+          isIOMarkdownEnabledForMessagesAndServicesSelector
+        );
         yield* put(
           loadingContentPreconditionStatusAction(
-            toLoadingContentPayload(content)
+            toLoadingContentPayload(content, isIOMarkdownEnabled)
           )
         );
         return;
@@ -102,5 +106,5 @@ export function* getMessageIdAndCategoryTag(): Generator<
 }
 
 export const testMessagePreconditionWorker = isTestEnv
-  ? messagePreconditionWorker
+  ? { messagePreconditionWorker }
   : undefined;

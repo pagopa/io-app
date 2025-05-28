@@ -20,6 +20,8 @@ import { walletPaymentPspListSelector } from "../store/selectors/psps";
 import { WalletPaymentStepEnum } from "../types";
 import { WalletPaymentStepScreenNames } from "../utils";
 import * as analytics from "../analytics";
+import { walletPaymentWebViewPayloadSelector } from "../store/selectors";
+import { isPaymentsWebViewFlowEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 type WalletPaymentHeaderProps = {
   currentStep: number;
@@ -29,6 +31,10 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const goBackHandler = useWalletPaymentGoBackHandler();
+  const webViewPaymentPayload = useIOSelector(
+    walletPaymentWebViewPayloadSelector
+  );
+  const isWebViewEnabled = useIOSelector(isPaymentsWebViewFlowEnabledSelector);
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const pspList = pot.getOrElse(pspListPot, []);
@@ -67,8 +73,14 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
   }, [navigation, dispatch, goBackHandler, currentStep, pspList]);
 
   useHardwareBackButton(() => {
-    handleGoBack();
-    return true;
+    // If the webViewPaymentPayload is defined and the webView is enabled
+    // we handle the back behavior in the webView component
+    if (webViewPaymentPayload && isWebViewEnabled) {
+      return false;
+    } else {
+      handleGoBack();
+      return true;
+    }
   });
 
   return (

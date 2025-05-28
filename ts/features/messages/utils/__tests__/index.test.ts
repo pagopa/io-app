@@ -3,14 +3,17 @@ import {
   duplicateSetAndAdd,
   duplicateSetAndRemove,
   emptyMessageArray,
+  extractContentFromMessageSources,
   getRptIdStringFromPaymentData,
   initializeAndNavigateToWalletForPayment
 } from "..";
-import { PaymentData } from "../../types";
+import { PaymentData, UIMessageDetails } from "../../types";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { addUserSelectedPaymentRptId } from "../../store/actions";
 import { startPaymentFlowWithRptIdWorkaround } from "../../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
 
 jest.mock(
   "../../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround",
@@ -258,61 +261,141 @@ describe("intializeAndNavigateToWalletForPayment", () => {
       { startOrigin: "message" }
     );
   });
+});
 
-  describe("duplicateSetAndAdd", () => {
-    it("should duplicate input set and add new item", () => {
-      const inputSet = new Set<string>();
-      const newItem = "newItem";
-      const outputSet = duplicateSetAndAdd(inputSet, newItem);
-      expect(inputSet).not.toBe(outputSet);
-      expect(inputSet.size).toBe(outputSet.size - 1);
-      expect(inputSet.has(newItem)).toBe(false);
-      expect(outputSet.has(newItem)).toBe(true);
-    });
-    it("should duplicate input set but not add an existing item", () => {
-      const inputSet = new Set<string>();
-      const existingItem = "existingItem";
-      inputSet.add(existingItem);
-      const duplicatedItem = "existingItem";
-      const outputSet = duplicateSetAndAdd(inputSet, duplicatedItem);
-      expect(inputSet).not.toBe(outputSet);
-      expect(inputSet.size).toBe(outputSet.size);
-      expect(inputSet.has(existingItem)).toBe(true);
-      expect(outputSet.has(existingItem)).toBe(true);
-      expect(inputSet.has(duplicatedItem)).toBe(true);
-      expect(outputSet.has(duplicatedItem)).toBe(true);
-    });
+describe("duplicateSetAndAdd", () => {
+  it("should duplicate input set and add new item", () => {
+    const inputSet = new Set<string>();
+    const newItem = "newItem";
+    const outputSet = duplicateSetAndAdd(inputSet, newItem);
+    expect(inputSet).not.toBe(outputSet);
+    expect(inputSet.size).toBe(outputSet.size - 1);
+    expect(inputSet.has(newItem)).toBe(false);
+    expect(outputSet.has(newItem)).toBe(true);
   });
-
-  describe("duplicateSetAndRemove", () => {
-    it("should duplicate input set and remove existing item", () => {
-      const inputSet = new Set<string>();
-      const existingItem = "newItem";
-      inputSet.add(existingItem);
-      const outputSet = duplicateSetAndRemove(inputSet, existingItem);
-      expect(inputSet).not.toBe(outputSet);
-      expect(inputSet.size).toBe(outputSet.size + 1);
-      expect(inputSet.has(existingItem)).toBe(true);
-      expect(outputSet.has(existingItem)).toBe(false);
-    });
-    it("should duplicate input set and do nothing it the item does not exist", () => {
-      const inputSet = new Set<string>();
-      const existingItem = "existingItem";
-      inputSet.add(existingItem);
-      const unmatchingItem = "unmathingItem";
-      const outputSet = duplicateSetAndRemove(inputSet, unmatchingItem);
-      expect(inputSet).not.toBe(outputSet);
-      expect(inputSet.size).toBe(outputSet.size);
-      expect(inputSet.has(existingItem)).toBe(true);
-      expect(outputSet.has(existingItem)).toBe(true);
-      expect(inputSet.has(unmatchingItem)).toBe(false);
-      expect(outputSet.has(unmatchingItem)).toBe(false);
-    });
+  it("should duplicate input set but not add an existing item", () => {
+    const inputSet = new Set<string>();
+    const existingItem = "existingItem";
+    inputSet.add(existingItem);
+    const duplicatedItem = "existingItem";
+    const outputSet = duplicateSetAndAdd(inputSet, duplicatedItem);
+    expect(inputSet).not.toBe(outputSet);
+    expect(inputSet.size).toBe(outputSet.size);
+    expect(inputSet.has(existingItem)).toBe(true);
+    expect(outputSet.has(existingItem)).toBe(true);
+    expect(inputSet.has(duplicatedItem)).toBe(true);
+    expect(outputSet.has(duplicatedItem)).toBe(true);
   });
+});
 
-  describe("emptyMessageArray", () => {
-    it("should return an empty array", () => {
-      expect(emptyMessageArray).toStrictEqual([]);
-    });
+describe("duplicateSetAndRemove", () => {
+  it("should duplicate input set and remove existing item", () => {
+    const inputSet = new Set<string>();
+    const existingItem = "newItem";
+    inputSet.add(existingItem);
+    const outputSet = duplicateSetAndRemove(inputSet, existingItem);
+    expect(inputSet).not.toBe(outputSet);
+    expect(inputSet.size).toBe(outputSet.size + 1);
+    expect(inputSet.has(existingItem)).toBe(true);
+    expect(outputSet.has(existingItem)).toBe(false);
+  });
+  it("should duplicate input set and do nothing it the item does not exist", () => {
+    const inputSet = new Set<string>();
+    const existingItem = "existingItem";
+    inputSet.add(existingItem);
+    const unmatchingItem = "unmathingItem";
+    const outputSet = duplicateSetAndRemove(inputSet, unmatchingItem);
+    expect(inputSet).not.toBe(outputSet);
+    expect(inputSet.size).toBe(outputSet.size);
+    expect(inputSet.has(existingItem)).toBe(true);
+    expect(outputSet.has(existingItem)).toBe(true);
+    expect(inputSet.has(unmatchingItem)).toBe(false);
+    expect(outputSet.has(unmatchingItem)).toBe(false);
+  });
+});
+
+describe("emptyMessageArray", () => {
+  it("should return an empty array", () => {
+    expect(emptyMessageArray).toStrictEqual([]);
+  });
+});
+
+describe("extractContentFromMessageSources", () => {
+  it("should return undefined if both input messages are undefined", () => {
+    const content = extractContentFromMessageSources(
+      data => data.markdown,
+      undefined,
+      undefined
+    );
+    expect(content).toBeUndefined();
+  });
+  it("should return standard message content if third party message is undefined", () => {
+    const standardMessage = {
+      markdown:
+        "This is the standard message markdown which must be longer than eighty characters in order to be properly recognised"
+    } as UIMessageDetails;
+    const content = extractContentFromMessageSources(
+      data => data.markdown,
+      standardMessage,
+      undefined
+    );
+    expect(content).toBe(standardMessage.markdown);
+  });
+  it("should return standard message content if third party message's details are undefined", () => {
+    const standardMessage = {
+      markdown:
+        "This is the standard message markdown which must be longer than eighty characters in order to be properly recognised"
+    } as UIMessageDetails;
+    const remoteMessage = {
+      third_party_message: {}
+    } as ThirdPartyMessageWithContent;
+    const content = extractContentFromMessageSources(
+      data => data.markdown,
+      standardMessage,
+      remoteMessage
+    );
+    expect(content).toBe(standardMessage.markdown);
+  });
+  it("should return standard message content if third party message's details are not valid", () => {
+    const standardMessage = {
+      markdown:
+        "This is the standard message markdown which must be longer than eighty characters in order to be properly recognised"
+    } as UIMessageDetails;
+    const remoteMessage = {
+      third_party_message: {
+        details: {
+          markdown:
+            "This is the remote markdown, which is longer than eighty characters but the sibling subject property is missing"
+        }
+      } as ThirdPartyMessage
+    } as ThirdPartyMessageWithContent;
+    const content = extractContentFromMessageSources(
+      data => data.markdown,
+      standardMessage,
+      remoteMessage
+    );
+    expect(content).toBe(standardMessage.markdown);
+  });
+  it("should return third party message content if it is properly defined and formatted", () => {
+    const standardMessage = {
+      markdown:
+        "This is the standard message markdown which must be longer than eighty characters in order to be properly recognised"
+    } as UIMessageDetails;
+    const remoteMessageMarkdown =
+      "This is the remote markdown, which is longer than eighty characters and the sibling subject property is defined";
+    const remoteMessage = {
+      third_party_message: {
+        details: {
+          markdown: remoteMessageMarkdown,
+          subject: "This is the subject which must be a bit long"
+        }
+      } as ThirdPartyMessage
+    } as ThirdPartyMessageWithContent;
+    const content = extractContentFromMessageSources(
+      data => data.markdown,
+      standardMessage,
+      remoteMessage
+    );
+    expect(content).toBe(remoteMessageMarkdown);
   });
 });

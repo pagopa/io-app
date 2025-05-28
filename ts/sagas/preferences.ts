@@ -4,7 +4,7 @@ import { call, put, select } from "typed-redux-saga/macro";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { preferencesLanguagesLoadSuccess } from "../store/actions/preferences";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
-import { profileSelector } from "../store/reducers/profile";
+import { profileSelector } from "../features/settings/common/store/selectors";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { fromPreferredLanguageToLocale } from "../utils/locale";
 import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";

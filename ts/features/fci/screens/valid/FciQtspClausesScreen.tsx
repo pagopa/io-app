@@ -3,21 +3,20 @@ import {
   Divider,
   FooterActionsInline,
   H2,
-  IOStyles,
+  IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useState, useEffect, ComponentProps } from "react";
 import { FlatList, ScrollView, View } from "react-native";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
-import { servicePreferencePotSelector } from "../../../services/details/store/reducers";
+import { servicePreferencePotByIdSelector } from "../../../services/details/store/reducers";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
 import { trackFciUxConversion } from "../../analytics";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
@@ -44,7 +43,10 @@ const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const [clausesChecked, setClausesChecked] = useState(0);
-  const servicePreferencePot = useIOSelector(servicePreferencePotSelector);
+  const fciServiceId = useIOSelector(fciMetadataServiceIdSelector);
+  const servicePreferencePot = useIOSelector(state =>
+    servicePreferencePotByIdSelector(state, fciServiceId)
+  );
   const qtspClausesSelector = useIOSelector(fciQtspClausesSelector);
   const qtspPrivacyTextSelector = useIOSelector(fciQtspPrivacyTextSelector);
   const qtspPrivacyUrlSelector = useIOSelector(fciQtspPrivacyUrlSelector);
@@ -54,7 +56,6 @@ const FciQtspClausesScreen = () => {
   const fciPollFilledDocumentError = useIOSelector(
     fciPollFilledDocumentErrorSelector
   );
-  const fciServiceId = useIOSelector(fciMetadataServiceIdSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
 
   const servicePreferenceValue = pot.getOrElse(servicePreferencePot, undefined);
@@ -108,10 +109,10 @@ const FciQtspClausesScreen = () => {
   const renderClausesFields = () => (
     <View style={{ flex: 1 }}>
       <View
-        style={[
-          IOStyles.flex,
-          { paddingBottom: customVariables.contentPadding }
-        ]}
+        style={{
+          flex: 1,
+          paddingBottom: IOVisualCostants.appMarginDefault
+        }}
       >
         <FlatList
           data={qtspClausesSelector}
@@ -172,8 +173,13 @@ const FciQtspClausesScreen = () => {
 
   return (
     <>
-      <View style={IOStyles.flex} testID={"FciQtspClausesTestID"}>
-        <ScrollView style={IOStyles.horizontalContentPadding}>
+      <View style={{ flex: 1 }} testID={"FciQtspClausesTestID"}>
+        {/* TODO: Replace with `IOScrollView` and `FooterActions` component. */}
+        <ScrollView
+          contentContainerStyle={{
+            paddingHorizontal: IOVisualCostants.appMarginDefault
+          }}
+        >
           <H2>{I18n.t("features.fci.qtspTos.title")}</H2>
           <VSpacer size={16} />
           <Body>{I18n.t("features.fci.qtspTos.subTitle")}</Body>

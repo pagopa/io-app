@@ -1,4 +1,4 @@
-import { HeaderActionProps, IOStyles } from "@pagopa/io-app-design-system";
+import { HeaderActionProps } from "@pagopa/io-app-design-system";
 import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
@@ -90,15 +90,14 @@ export const MessagesHomeScreen = () => {
     currentRoute: MESSAGES_ROUTES.MESSAGES_HOME,
     headerProps: {
       title: I18n.t("messages.contentTitle"),
-      secondAction: settingsActionInMessageSection,
-      thirdAction: searchMessageAction
+      actions: [searchMessageAction, settingsActionInMessageSection]
     }
   });
 
   /* CODE RELATED TO THE HEADER -- END */
 
   return (
-    <View style={IOStyles.flex}>
+    <View style={{ flex: 1 }}>
       <Toasts />
       <TabNavigationContainer pagerViewRef={pagerViewRef} />
       <PagerViewContainer ref={pagerViewRef} />

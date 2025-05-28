@@ -1,16 +1,18 @@
 import {
   Avatar,
   Body,
-  ButtonLink,
+  ContentWrapper,
   ForceScrollDownView,
   H2,
   H6,
   hexToRgba,
-  HSpacer,
+  HStack,
   Icon,
+  IOButton,
   IOColors,
-  IOStyles,
+  IOVisualCostants,
   ListItemHeader,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -20,8 +22,7 @@ import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { Consent } from "../../../../../definitions/fims_sso/Consent";
-import { FooterActions } from "../../../../components/ui/FooterActions";
-import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
+import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -43,13 +44,14 @@ export const FimsFlowSuccessBody = ({
   consents,
   onAbort
 }: FimsSuccessBodyProps) => {
+  const theme = useIOTheme();
   const dispatch = useIODispatch();
   const store = useIOStore();
   const serviceId = consents.service_id as ServiceId;
 
   const servicePot = useAutoFetchingServiceByIdPot(serviceId);
   const serviceData = pot.toUndefined(servicePot);
-  const privacyUrl = serviceData?.service_metadata?.privacy_url;
+  const privacyUrl = serviceData?.metadata?.privacy_url;
   const isPrivacyUrlMissing =
     pot.isSome(servicePot) && privacyUrl === undefined;
 
@@ -77,8 +79,7 @@ export const FimsFlowSuccessBody = ({
     O.fromNullable,
     O.fold(
       () => undefined,
-      service =>
-        logoForService(service.service_id, service.organization_fiscal_code)
+      service => logoForService(service.id, service.organization.fiscal_code)
     )
   );
 
@@ -86,7 +87,7 @@ export const FimsFlowSuccessBody = ({
     serviceData !== undefined ? (
       <Body>
         <Body weight="Regular">{I18n.t("FIMS.consentsScreen.subtitle")}</Body>
-        <Body weight="Semibold">{serviceData.organization_name}</Body>
+        <Body weight="Semibold">{serviceData.organization.name}</Body>
         <Body weight="Regular">{I18n.t("FIMS.consentsScreen.subtitle2")}</Body>
         <Body weight="Semibold">{consents.redirect.display_name ?? ""}.</Body>
       </Body>
@@ -96,53 +97,10 @@ export const FimsFlowSuccessBody = ({
 
   return (
     <ForceScrollDownView
+      contentContainerStyle={{ flexGrow: 1 }}
       scrollEnabled
-      threshold={150}
-      contentContainerStyle={{
-        minHeight: "100%"
-      }}
-    >
-      <View
-        style={[
-          IOStyles.horizontalContentPadding,
-          {
-            flexGrow: 1
-          }
-        ]}
-      >
-        <VSpacer size={24} />
-        <View style={styles.rowAlignCenter}>
-          <View style={styles.outlineContainer}>
-            <Icon name="productIOApp" size={30} color="blueIO-500" />
-          </View>
-          <HSpacer size={8} />
-          <Icon name="transactions" color="grey-450" />
-          <HSpacer size={8} />
-          <Avatar logoUri={serviceLogo} size={"small"} />
-        </View>
-
-        <VSpacer size={24} />
-        <H2>{I18n.t("FIMS.consentsScreen.title")}</H2>
-        <VSpacer size={16} />
-        <Subtitle />
-
-        <VSpacer size={24} />
-        <ButtonLink
-          label={I18n.t("global.why")}
-          onPress={BottomSheet.present}
-        />
-        <VSpacer size={24} />
-        <ListItemHeader label="Dati richiesti" iconName="security" />
-        <FimsClaimsList claims={consents.user_metadata} />
-        <VSpacer size={24} />
-
-        <FimsPrivacyInfo privacyUrl={privacyUrl} />
-
-        <VSpacer size={32} />
-      </View>
-      <FooterActions
-        fixed={false}
-        actions={{
+      footerActions={{
+        actions: {
           type: "TwoButtons",
           primary: {
             label: I18n.t("global.buttons.consent"),
@@ -163,8 +121,47 @@ export const FimsFlowSuccessBody = ({
             label: I18n.t("global.buttons.cancel"),
             onPress: onAbort
           }
-        }}
-      />
+        }
+      }}
+    >
+      <ContentWrapper>
+        <VSpacer size={24} />
+        <HStack space={8} style={{ alignItems: "center" }}>
+          {/* TODO: We need to add a variant of `Avatar` that
+          lets you set a custom icon with a custom colour. */}
+          <View style={styles.outlineContainer}>
+            <Icon
+              name="productIOApp"
+              size={"100%"}
+              color={theme["interactiveElem-default"]}
+            />
+          </View>
+          <Icon name="transactions" color="grey-450" />
+          <Avatar logoUri={serviceLogo} size={"small"} />
+        </HStack>
+
+        <VSpacer size={24} />
+        <H2 accessibilityRole="header">
+          {I18n.t("FIMS.consentsScreen.title")}
+        </H2>
+        <VSpacer size={16} />
+        <Subtitle />
+
+        <VSpacer size={24} />
+        <IOButton
+          variant="link"
+          label={I18n.t("global.why")}
+          onPress={BottomSheet.present}
+        />
+        <VSpacer size={24} />
+        <ListItemHeader label="Dati richiesti" iconName="security" />
+        <FimsClaimsList claims={consents.user_metadata} />
+        <VSpacer size={24} />
+
+        <FimsPrivacyInfo privacyUrl={privacyUrl} />
+
+        <VSpacer size={32} />
+      </ContentWrapper>
       {BottomSheet.bottomSheet}
     </ForceScrollDownView>
   );
@@ -195,10 +192,14 @@ const generateBottomSheetProps = (
 
 const styles = StyleSheet.create({
   outlineContainer: {
-    padding: 6,
     borderWidth: 1,
+    padding: 8,
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 8,
-    borderColor: hexToRgba(IOColors.black, 0.1)
-  },
-  rowAlignCenter: { flexDirection: "row", alignItems: "center" }
+    borderColor: hexToRgba(IOColors.black, 0.1),
+    borderCurve: "continuous",
+    width: IOVisualCostants.avatarSizeSmall,
+    height: IOVisualCostants.avatarSizeSmall
+  }
 });

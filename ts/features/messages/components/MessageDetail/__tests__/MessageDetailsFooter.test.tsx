@@ -1,5 +1,4 @@
 import { ComponentProps } from "react";
-
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { fireEvent } from "@testing-library/react-native";
@@ -11,21 +10,20 @@ import { loadServiceDetail } from "../../../../services/details/store/actions/de
 import { messageId_1, service_1 } from "../../../__mocks__/messages";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { MessageDetailsFooter } from "../MessageDetailsFooter";
-import { ServiceMetadata } from "../../../../../../definitions/backend/ServiceMetadata";
-import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
+import { ServiceMetadata } from "../../../../../../definitions/services/ServiceMetadata";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 
 const mockPresentBottomSheet = jest.fn();
 
 jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
-  useIOBottomSheetAutoresizableModal: () => ({
+  useIOBottomSheetModal: () => ({
     present: mockPresentBottomSheet
   })
 }));
 
 const defaultProps: ComponentProps<typeof MessageDetailsFooter> = {
   messageId: messageId_1,
-  serviceId: service_1.service_id
+  serviceId: service_1.id
 };
 
 const noticeNumber = "111122223333444455";
@@ -39,10 +37,9 @@ describe("MessageDetailsFooter component", () => {
   it("should match the snapshot, with service's contact details, no notice number, no payee fiscal code", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
-      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
       loadServiceDetail.success({
         ...service_1,
-        service_metadata: {
+        metadata: {
           email: "test@test.com",
           phone: "+393331234567"
         } as ServiceMetadata
@@ -62,10 +59,9 @@ describe("MessageDetailsFooter component", () => {
   it("should match the snapshot, with service's contact details, with notice number, no payee fiscal code", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
-      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
       loadServiceDetail.success({
         ...service_1,
-        service_metadata: {
+        metadata: {
           email: "test@test.com",
           phone: "+393331234567"
         } as ServiceMetadata
@@ -88,10 +84,9 @@ describe("MessageDetailsFooter component", () => {
   it("should match the snapshot, with service's contact details, no notice number, with payee fiscal code", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
-      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
       loadServiceDetail.success({
         ...service_1,
-        service_metadata: {
+        metadata: {
           email: "test@test.com",
           phone: "+393331234567"
         } as ServiceMetadata
@@ -114,10 +109,9 @@ describe("MessageDetailsFooter component", () => {
   it("should match the snapshot, with service's contact details, with notice number, with payee fiscal code", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
-      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
       loadServiceDetail.success({
         ...service_1,
-        service_metadata: {
+        metadata: {
           email: "test@test.com",
           phone: "+393331234567"
         } as ServiceMetadata
@@ -141,7 +135,6 @@ describe("MessageDetailsFooter component", () => {
   it("should match the snapshot, no service's contact details, no notice number, no payee fiscal code", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
-      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
       loadServiceDetail.success(service_1)
     ];
 
@@ -158,7 +151,6 @@ describe("MessageDetailsFooter component", () => {
   it("should match the snapshot, no service's contact details, with notice number, no payee fiscal code", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
-      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
       loadServiceDetail.success(service_1)
     ];
 
@@ -178,7 +170,6 @@ describe("MessageDetailsFooter component", () => {
   it("should match the snapshot, no service's contact details, no notice number, with payee fiscal code", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
-      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
       loadServiceDetail.success(service_1)
     ];
 
@@ -198,7 +189,6 @@ describe("MessageDetailsFooter component", () => {
   it("should match the snapshot, no service's contact details, with notice number, with payee fiscal code", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
-      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true }),
       loadServiceDetail.success(service_1)
     ];
 
@@ -240,7 +230,7 @@ describe("MessageDetailsFooter component", () => {
       applicationChangeState("active"),
       loadServiceDetail.success({
         ...service_1,
-        service_metadata: {
+        metadata: {
           email: "test@test.com",
           phone: "+393331234567"
         } as ServiceMetadata

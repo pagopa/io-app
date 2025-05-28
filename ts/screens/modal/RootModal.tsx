@@ -7,12 +7,12 @@ import {
 import {
   trackLoginSessionTimeoutPostPin,
   trackLoginSessionTimeoutPrePin
-} from "../../features/fastLogin/analytics";
-import FastLoginModals from "../../features/fastLogin/screens/FastLoginModals";
+} from "../../features/authentication/fastLogin/analytics";
+import FastLoginModals from "../../features/authentication/fastLogin/screens/FastLoginModals";
 import {
   isFastLoginUserInteractionNeededForSessionExpiredSelector,
   tokenRefreshSelector
-} from "../../features/fastLogin/store/selectors";
+} from "../../features/authentication/fastLogin/store/selectors";
 import UnsupportedDeviceScreen from "../../features/lollipop/screens/UnsupportedDeviceScreen";
 import { isDeviceSupportedSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { GetProfileEndpointTransientError } from "../../features/startup/screens/errors/GetProfileEndpointTransientError";
@@ -21,7 +21,7 @@ import { mixpanelTrack } from "../../mixpanel";
 import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus/backendInfo";
 import { startupTransientErrorSelector } from "../../store/reducers/startup";
 import { GlobalState } from "../../store/reducers/types";
-import IdentificationModal from "./IdentificationModal";
+import { IdentificationModal } from "../../features/identification/screens/IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
 

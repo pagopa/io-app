@@ -13,7 +13,7 @@ import { OperationResultScreenContent } from "../../../components/screens/Operat
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
-import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
+import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isStrictSome } from "../../../utils/pot";
 import {
@@ -122,7 +122,7 @@ export const MessageDetailsScreen = () => {
         O.fold(
           () => (
             <OperationResultScreenContent
-              pictogram="umbrellaNew"
+              pictogram="umbrella"
               title={I18n.t("features.pn.details.loadError.title")}
               subtitle={I18n.t("features.pn.details.loadError.body")}
             />

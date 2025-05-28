@@ -23,51 +23,54 @@ import {
   logoutFailure,
   logoutSuccess,
   sessionExpired
-} from "../actions/authentication";
+} from "../../features/authentication/common/store/actions";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
-import { fastLoginOptInInitialState } from "../../features/fastLogin/store/reducers/optInReducer";
+import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
 import { isDevEnv } from "../../utils/environment";
 import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
 import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
-import { cieLoginInitialState } from "../../features/cieLogin/store/reducers";
-import appStateReducer from "./appState";
-import assistanceToolsReducer from "./assistanceTools";
+import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
+import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
+import { appFeedbackInitialState } from "../../features/appReviews/store/reducers";
 import authenticationReducer, {
   AuthenticationState,
   INITIAL_STATE as authenticationInitialState
-} from "./authentication";
-import cieReducer from "./cie";
+} from "../../features/authentication/common/store/reducers";
+import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
+import profileReducer from "../../features/settings/common/store/reducers";
+import userDataProcessingReducer from "../../features/settings/common/store/reducers/userDataProcessing";
+import emailValidationReducer from "../../features/mailCheck/store/reducers/emailValidation";
+import {
+  IdentificationState,
+  fillShowLockModal,
+  INITIAL_STATE as identificationInitialState,
+  identificationReducer
+} from "../../features/identification/store/reducers";
+import onboardingReducer from "../../features/onboarding/store/reducers";
+import appStateReducer from "./appState";
+import assistanceToolsReducer from "./assistanceTools";
 import contentReducer, {
   initialContentState as contentInitialContentState
 } from "./content";
 import crossSessionsReducer from "./crossSessions";
 import { debugPersistor } from "./debug";
-import emailValidationReducer from "./emailValidation";
 import entitiesReducer, {
   entitiesPersistConfig,
   EntitiesState
 } from "./entities";
-import identificationReducer, {
-  IdentificationState,
-  fillShowLockModal,
-  INITIAL_STATE as identificationInitialState
-} from "./identification";
 import installationReducer from "./installation";
 import { navigationReducer } from "./navigation";
-import onboardingReducer from "./onboarding";
 import persistedPreferencesReducer, {
   initialPreferencesState
 } from "./persistedPreferences";
 import preferencesReducer from "./preferences";
-import profileReducer from "./profile";
 import searchReducer from "./search";
 import startupReducer from "./startup";
 import { GlobalState } from "./types";
-import userDataProcessingReducer from "./userDataProcessing";
 import remoteConfigReducer from "./backendStatus/remoteConfig";
 import statusMessagesReducer from "./backendStatus/statusMessages";
 import sectionStatusReducer from "./backendStatus/sectionStatus";
@@ -200,6 +203,10 @@ export function createRootReducer(
 
               _persist: state.authentication._persist
             },
+            // cie status must be kept
+            cie: {
+              ...state.cie
+            },
             // backend status must be kept
             backendInfo: state.backendInfo,
             remoteConfig: state.remoteConfig,
@@ -220,6 +227,14 @@ export function createRootReducer(
               _persist: state.entities._persist
             },
             features: {
+              // connectivityStatus must be kept
+              connectivityStatus: {
+                ...state.features.connectivityStatus
+              },
+              appFeedback: {
+                ...appFeedbackInitialState,
+                _persist: state.features.appFeedback._persist
+              },
               whatsNew: {
                 ...whatsNewInitialState,
                 _persist: state.features.whatsNew._persist
@@ -242,32 +257,42 @@ export function createRootReducer(
                 },
                 cieLogin: {
                   ...cieLoginInitialState,
-                  isCieIDFeatureEnabled:
-                    state.features.loginFeatures.cieLogin.isCieIDFeatureEnabled,
                   isCieIDTourGuideEnabled:
                     state.features.loginFeatures.cieLogin
                       .isCieIDTourGuideEnabled,
                   _persist: state.features.loginFeatures.cieLogin._persist
+                },
+                loginPreferences: {
+                  ...state.features.loginFeatures.loginPreferences
                 }
               },
               profileSettings: {
                 ...profileSettingsReducerInitialState,
-                showProfileBanner:
-                  state.features.profileSettings.showProfileBanner,
-                hasUserAcknowledgedSettingsBanner:
-                  state.features.profileSettings
-                    .hasUserAcknowledgedSettingsBanner,
                 _persist: state.features.profileSettings._persist
               },
-              _persist: state.features._persist,
-              // IT Wallet must be kept
+              appearanceSettings: {
+                ...appearanceSettingsReducerInitialState,
+                showAppearanceBanner:
+                  state.features.appearanceSettings.showAppearanceBanner,
+                _persist: state.features.appearanceSettings._persist
+              },
+              /**
+               * IT Wallet state persists across sessions and is explicitly reset on session changes
+               * via the itwLifecycleStoresReset action to ensure proper cleanup.
+               * We can avoid to replicate the _persist property because itWallet already is a persisted
+               * reducer.
+               */
               itWallet: {
-                issuance: state.features.itWallet.issuance,
-                lifecycle: state.features.itWallet.lifecycle,
-                credentials: state.features.itWallet.credentials,
-
-                _persist: state.features.itWallet._persist
-              }
+                ...state.features.itWallet
+              },
+              pn: {
+                // Logout changes are already handled in PN's reducer.
+                // This way, we make sure that if the user leaves the application
+                // before the persistance is updated, we do not find ourselves
+                // with a dirty state.
+                ...state.features.pn
+              },
+              _persist: state.features._persist
             },
             identification: {
               ...identificationInitialState,
@@ -276,6 +301,13 @@ export function createRootReducer(
             // notifications must be kept
             notifications: {
               ...state.notifications,
+              installation: {
+                ...state.notifications.installation,
+                // Make sure to register the token again upon login, since
+                // such process deletes the token from the notification hub
+                registeredToken: undefined,
+                tokenStatus: { status: "unsent" }
+              },
               _persist: state.notifications._persist
             },
             // isMixpanelEnabled must be kept

@@ -3,15 +3,21 @@
  */
 import { isActionOf } from "typesafe-actions";
 
-import { preferencesLanguagesLoadSuccess } from "../actions/preferences";
+import {
+  preferencesLanguagesLoadSuccess,
+  setScreenReaderEnabled
+} from "../actions/preferences";
 import { Action } from "../actions/types";
+import { GlobalState } from "./types";
 
 export type PreferencesState = Readonly<{
   languages?: ReadonlyArray<string>;
+  screenReaderEnabled: boolean | undefined;
 }>;
 
 const initialPreferencesState: PreferencesState = {
-  languages: undefined
+  languages: undefined,
+  screenReaderEnabled: undefined
 };
 
 export default function preferencesReducer(
@@ -24,6 +30,15 @@ export default function preferencesReducer(
       languages: action.payload
     };
   }
+  if (isActionOf(setScreenReaderEnabled, action)) {
+    return {
+      ...state,
+      screenReaderEnabled: action.payload.screenReaderEnabled
+    };
+  }
 
   return state;
 }
+
+export const isScreenReaderEnabledSelector = (state: GlobalState): boolean =>
+  !!state.preferences.screenReaderEnabled;

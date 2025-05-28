@@ -1,1 +1,0 @@
-Once the authentication flow is finished you will find yourself inside the IO app. In the profile section, under the heading privacy, you can consult at any time the information on the processing of personal data of users of the IO app (art.13 of EU Regulation n.2016 / 679).

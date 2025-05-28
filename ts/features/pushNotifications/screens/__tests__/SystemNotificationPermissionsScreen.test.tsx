@@ -4,7 +4,6 @@ import { createStore } from "redux";
 
 import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../store/reducers";
 import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
@@ -144,11 +143,7 @@ describe("SystemNotificationPermissionsScreen", () => {
 
 const renderScreen = () => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-  const store = createStore(appReducer, designSystemState as any);
+  const store = createStore(appReducer, initialState as any);
 
   return renderScreenWithNavigationStoreContext(
     () => <SystemNotificationPermissionsScreen />,

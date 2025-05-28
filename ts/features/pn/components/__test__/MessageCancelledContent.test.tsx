@@ -1,7 +1,6 @@
 import { createStore } from "redux";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import PN_ROUTES from "../../navigation/routes";
@@ -193,11 +192,7 @@ const renderComponent = (
   payments?: ReadonlyArray<NotificationPaymentInfo>
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const dsEnabledState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-  const store = createStore(appReducer, dsEnabledState as any);
+  const store = createStore(appReducer, initialState as any);
   return renderScreenWithNavigationStoreContext(
     () => (
       <MessageCancelledContent

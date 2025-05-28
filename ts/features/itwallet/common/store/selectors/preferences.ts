@@ -49,3 +49,59 @@ export const itwRequestedCredentialsSelector = createSelector(
       .filter(([_, requestedAt]) => isFuture(addHours(requestedAt, 24)))
       .map(([credentialType]) => credentialType)
 );
+
+/**
+ * Returns whether the app review modal should be shown.
+ */
+export const itwIsPendingReviewSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isPendingReview;
+
+/**
+ * Returns the authentication level used to obtain the eID.
+ */
+export const itwAuthLevelSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.authLevel;
+
+/**
+ * Returns whether claim values are hidden in credentials detail. Defaults to false.
+ */
+export const itwIsClaimValueHiddenSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.claimValuesHidden ?? false;
+
+/**
+ * Returns whether the user has an already active wallet instance but the actual local wallet is not active.
+ * @param state the application global state
+ */
+export const itwIsWalletInstanceRemotelyActiveSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isWalletInstanceRemotelyActive;
+
+/**
+ * TEMPORARY LOCAL FF - TO BE REPLACED WITH REMOTE FF (SIW-2195)
+ * Returns whether the L3 is enabled locally, which allows to use the new IT Wallet
+ * features for users with L3 authentication level
+ */
+export const itwIsL3LocallyEnabledSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isL3Enabled ?? false;
+
+/**
+ * Returns whether the fiscal code is whitelisted for L3 features.
+ * @param state the application global state
+ */
+export const itwIsFiscalCodeWhitelistedSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isFiscalCodeWhitelisted ?? false;
+
+/**
+ * Selector to determine if both L3 features are enabled and the fiscal code is whitelisted.
+ * @param state - The global state of the application.
+ * @returns A boolean indicating whether L3 is enabled and the fiscal code is whitelisted.
+ */
+export const itwIsL3EnabledSelector = (state: GlobalState) =>
+  (state.features.itWallet.preferences.isL3Enabled ||
+    state.features.itWallet.preferences.isFiscalCodeWhitelisted) ??
+  false;
+
+/**
+ * Returns whether offline banner is hidden. Defaults to false.
+ */
+export const itwIsOfflineBannerHiddenSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.offlineBannerHidden ?? false;

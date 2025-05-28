@@ -1,5 +1,5 @@
 import {
-  ButtonOutline,
+  IOButton,
   H3,
   IOColors,
   hexToRgba,
@@ -9,7 +9,6 @@ import {
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../i18n";
-import { IOStyles } from "./core/variables/IOStyles";
 import BoxedRefreshIndicator from "./ui/BoxedRefreshIndicator";
 import { Overlay } from "./ui/Overlay";
 
@@ -61,12 +60,12 @@ const LoadingSpinnerOverlay = ({
             }
             action={
               onCancel && (
-                <View style={IOStyles.selfCenter}>
-                  <ButtonOutline
-                    accessibilityLabel={I18n.t("global.buttons.cancel")}
+                <View style={{ alignSelf: "center" }}>
+                  <IOButton
+                    variant="outline"
+                    label={I18n.t("global.buttons.cancel")}
                     onPress={onCancel}
                     testID="loadingSpinnerOverlayCancelButton"
-                    label={I18n.t("global.buttons.cancel")}
                   />
                 </View>
               )

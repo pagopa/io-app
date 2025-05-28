@@ -1,1 +1,0 @@
-È stato rilevato che non c'è un accesso biometrico attivato. Se vuoi attivarlo puoi impostarlo sul tuo dispositivo e poi attivarlo nelle preferenze di sicurezza dell'app. 

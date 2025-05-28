@@ -20,7 +20,7 @@ export const setDebugCurrentRouteName = createStandardAction(
  * Adds debug data to be displayed in the DebugInfoOverlay
  */
 export const setDebugData =
-  createStandardAction("DEBUG_SET_DATA")<Record<string, any>>();
+  createStandardAction("DEBUG_SET_DATA")<Record<string, unknown>>();
 
 /**
  * Removes all the debug data stored

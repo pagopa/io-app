@@ -4,9 +4,18 @@ import { Action } from "../../../../../store/actions/types";
 import {
   itwCloseDiscoveryBanner,
   itwCloseFeedbackBanner,
+  itwSetOfflineBannerHidden,
   itwFlagCredentialAsRequested,
-  itwUnflagCredentialAsRequested
+  itwSetAuthLevel,
+  itwSetClaimValuesHidden,
+  itwSetFiscalCodeWhitelisted,
+  itwSetReviewPending,
+  itwSetWalletInstanceRemotelyActive,
+  itwUnflagCredentialAsRequested,
+  itwSetL3LocallyEnabled
 } from "../actions/preferences";
+import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
+import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
 export type ItwPreferencesState = {
   // Date until which the feedback banner should be hidden
@@ -17,14 +26,31 @@ export type ItwPreferencesState = {
   // Each credential type is associated with a date (ISO string) which represents
   // the date of the last issuance request.
   requestedCredentials: { [credentialType: string]: string };
+  // Indicates whether the user should see the modal to review the app.
+  isPendingReview?: boolean;
+  // Indicates the SPID/CIE authentication level used to obtain the eid
+  authLevel?: ItwAuthLevel;
+  // Indicates whether the claim values should be hidden in credential details
+  claimValuesHidden?: boolean;
+  // Indicates whether the user has an already active wallet instance
+  // but the actual local wallet is not active
+  isWalletInstanceRemotelyActive?: boolean;
+  // TEMPORARY LOCAL FF - TO BE REPLACED WITH REMOTE FF (SIW-2195)
+  // Indicates whether the L3 is enabled, which allows to use the new IT Wallet
+  // features for users with L3 authentication level
+  isL3Enabled?: boolean;
+  // Indicates whether the fiscal code is whitelisted for L3 features
+  isFiscalCodeWhitelisted?: boolean;
+  // Indicates whether the offline banner should be hidden
+  offlineBannerHidden?: boolean;
 };
 
-const INITIAL_STATE: ItwPreferencesState = {
+export const itwPreferencesInitialState: ItwPreferencesState = {
   requestedCredentials: {}
 };
 
 const reducer = (
-  state: ItwPreferencesState = INITIAL_STATE,
+  state: ItwPreferencesState = itwPreferencesInitialState,
   action: Action
 ): ItwPreferencesState => {
   switch (action.type) {
@@ -63,6 +89,68 @@ const reducer = (
         };
       }
       return state;
+    }
+
+    case getType(itwSetReviewPending): {
+      return {
+        ...state,
+        isPendingReview: action.payload
+      };
+    }
+
+    case getType(itwSetAuthLevel): {
+      return {
+        ...state,
+        authLevel: action.payload
+      };
+    }
+
+    case getType(itwSetClaimValuesHidden): {
+      return {
+        ...state,
+        claimValuesHidden: action.payload
+      };
+    }
+
+    case getType(itwSetWalletInstanceRemotelyActive): {
+      return {
+        ...state,
+        isWalletInstanceRemotelyActive: action.payload
+      };
+    }
+
+    case getType(itwSetL3LocallyEnabled): {
+      return {
+        ...state,
+        isL3Enabled: action.payload
+      };
+    }
+    case getType(itwLifecycleStoresReset):
+      // When the wallet is being reset, we need to persist only the preferences:
+      // - claimValuesHidden
+      // - isL3Enabled
+      // - isWalletInstanceRemotelyActive ->
+      //  (the correct value will be set in the saga related to the wallet deactivation, but we should avoid to have this value undefined)
+      const { claimValuesHidden, isL3Enabled, isWalletInstanceRemotelyActive } =
+        state;
+      return {
+        ...itwPreferencesInitialState,
+        claimValuesHidden,
+        isL3Enabled,
+        isWalletInstanceRemotelyActive
+      };
+
+    case getType(itwSetFiscalCodeWhitelisted): {
+      return {
+        ...state,
+        isFiscalCodeWhitelisted: action.payload
+      };
+    }
+    case getType(itwSetOfflineBannerHidden): {
+      return {
+        ...state,
+        offlineBannerHidden: action.payload
+      };
     }
 
     default:

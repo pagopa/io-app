@@ -4,7 +4,6 @@ import I18n from "../../../../i18n";
 import { NotificationPreviewSample } from "../NotificationPreviewSample";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import ROUTES from "../../../../navigation/routes";
 
@@ -102,11 +101,7 @@ const renderNotificationPreviewSample = (
 
 const renderComponent = (previewOn: boolean, reminderOn: boolean) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const dsEnabledState = appReducer(
-    globalState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-  const store = createStore(appReducer, dsEnabledState as any);
+  const store = createStore(appReducer, globalState as any);
 
   return renderScreenWithNavigationStoreContext(
     () => (

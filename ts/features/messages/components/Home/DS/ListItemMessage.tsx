@@ -3,18 +3,25 @@ import {
   Avatar,
   BodySmall,
   H6,
+  hexToRgba,
   HStack,
   IOColors,
   IOListItemStyles,
-  IOStyles,
   IOVisualCostants,
   Tag,
   useIOTheme,
+  useIOThemeContext,
   useListItemAnimation,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { ComponentProps } from "react";
-import { ImageURISource, Pressable, StyleSheet, View } from "react-native";
+import {
+  ColorValue,
+  ImageSourcePropType,
+  Pressable,
+  StyleSheet,
+  View
+} from "react-native";
 import Animated from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 import I18n from "../../../../../i18n";
@@ -47,7 +54,7 @@ const styles = StyleSheet.create({
     height: IOVisualCostants.avatarSizeSmall,
     width: IOVisualCostants.avatarSizeSmall
   },
-  textContainer: { ...IOStyles.flex, marginLeft: 8 }
+  textContainer: { flex: 1, marginLeft: 8 }
 });
 
 type ListItemMessageTag = {
@@ -55,43 +62,30 @@ type ListItemMessageTag = {
   variant: Extract<Tag["variant"], "legalMessage" | "success">;
 };
 
-export type ListItemMessage = WithTestID<{
-  accessibilityLabel: string;
+export type ListItemMessageProps = WithTestID<{
   tag?: ListItemMessageTag;
   avatarDouble?: boolean;
   formattedDate: string;
   isRead: boolean;
   messageTitle: string;
-  onLongPress: () => void;
-  onPress: () => void;
   organizationName: string;
   selected?: boolean;
-  serviceLogos?: ReadonlyArray<ImageURISource>;
+  serviceLogos?: ImageSourcePropType;
   serviceName: string;
 }> &
   Pick<
     ComponentProps<typeof Pressable>,
-    | "onPress"
-    | "onLongPress"
-    | "accessibilityLabel"
-    | "accessibilityHint"
-    | "accessibilityState"
-    | "accessibilityRole"
+    "onPress" | "onLongPress" | "accessibilityLabel" | "accessibilityRole"
   >;
 
 type UnreadBadgeProps = {
-  color?: IOColors;
+  color: ColorValue;
   width?: number;
 };
 
 const UnreadBadge = ({ color, width = 14 }: UnreadBadgeProps) => (
   <Svg width={width} height={width}>
-    <Circle
-      cx={"50%"}
-      cy={"50%"}
-      r={width / 2}
-      fill={color ?? IOColors["blueIO-500"]}
-    />
+    <Circle cx={"50%"} cy={"50%"} r={width / 2} fill={color} />
   </Svg>
 );
 
@@ -110,11 +104,19 @@ export const ListItemMessage = ({
   selected,
   serviceLogos,
   testID
-}: ListItemMessage) => {
+}: ListItemMessageProps) => {
   const theme = useIOTheme();
+  const { themeType } = useIOThemeContext();
 
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
+
+  // Component colors
+  const unreadBadgeColor = IOColors[theme["interactiveElem-default"]];
+  const selectedBgColor =
+    themeType === "dark"
+      ? hexToRgba(IOColors["blueIO-300"], 0.1)
+      : IOColors["blueIO-50"];
 
   return (
     <Pressable
@@ -128,7 +130,7 @@ export const ListItemMessage = ({
       accessibilityRole={accessibilityRole || "button"}
       accessibilityLabel={accessibilityLabel}
       style={{
-        backgroundColor: selected ? IOColors["blueIO-50"] : undefined,
+        backgroundColor: selected ? selectedBgColor : undefined,
         minHeight: tag
           ? ListItemMessageEnhancedHeight
           : ListItemMessageStandardHeight
@@ -164,7 +166,10 @@ export const ListItemMessage = ({
                     }
                   ]}
                 >
-                  <AnimatedMessageCheckbox checked={selected} />
+                  <AnimatedMessageCheckbox
+                    accessible={false}
+                    checked={selected}
+                  />
                 </View>
               </View>
             </View>
@@ -190,13 +195,13 @@ export const ListItemMessage = ({
                 </BodySmall>
               </View>
               <View style={styles.serviceNameAndMessageTitleContainer}>
-                <BodySmall numberOfLines={2} style={IOStyles.flex}>
+                <BodySmall numberOfLines={2} style={{ flex: 1 }}>
                   <BodySmall weight="Semibold">{`${serviceName} · `}</BodySmall>
                   <BodySmall weight="Regular">{messageTitle}</BodySmall>
                 </BodySmall>
                 {!isRead && (
                   <View style={styles.messageReadContainer}>
-                    <UnreadBadge />
+                    <UnreadBadge color={unreadBadgeColor} />
                   </View>
                 )}
               </View>

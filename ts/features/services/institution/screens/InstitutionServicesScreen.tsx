@@ -1,12 +1,12 @@
 import {
   Divider,
-  IOStyles,
+  IOColors,
   IOToast,
   IOVisualCostants,
   ListItemNav,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect } from "react";
 import { ListRenderItemInfo, RefreshControl, StyleSheet } from "react-native";
@@ -14,7 +14,7 @@ import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServiceMinified } from "../../../../../definitions/services/ServiceMinified";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -22,12 +22,12 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
+import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { ServicesParamsList } from "../../common/navigation/params";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { getLogoForInstitution } from "../../common/utils";
 import { InstitutionServicesFailure } from "../components/InstitutionServicesFailure";
-import { ServiceListSkeleton } from "../components/ServiceListSkeleton";
 import { useServicesFetcher } from "../hooks/useServicesFetcher";
 import { paginatedServicesGet } from "../store/actions";
 import * as analytics from "../../common/analytics";
@@ -45,9 +45,6 @@ type InstitutionServicesScreen = IOStackNavigationRouteProps<
 const scrollTriggerOffsetValue: number = 88;
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    flexGrow: 1
-  },
   refreshControlContainer: {
     zIndex: 1
   }
@@ -59,10 +56,10 @@ export const InstitutionServicesScreen = ({
 }: InstitutionServicesScreen) => {
   const { institutionId, institutionName } = route.params;
 
+  const theme = useIOTheme();
   const dispatch = useIODispatch();
   const isFirstRender = useFirstRender();
 
-  const headerHeight = useHeaderHeight();
   const scrollTranslationY = useSharedValue(0);
 
   const {
@@ -103,15 +100,15 @@ export const InstitutionServicesScreen = ({
   }, [dispatch, navigation]);
 
   useHeaderSecondLevel({
+    backgroundColor: IOColors[theme["appBackground-secondary"]],
     goBack,
-    title: institutionName,
-    supportRequest: true,
-    transparent: true,
+    headerShown: !!data || !isError,
     scrollValues: {
       triggerOffset: scrollTriggerOffsetValue,
       contentOffsetY: scrollTranslationY
     },
-    headerShown: !!data || !isError
+    supportRequest: true,
+    title: institutionName
   });
 
   const scrollHandler = useAnimatedScrollHandler(event => {
@@ -138,17 +135,9 @@ export const InstitutionServicesScreen = ({
     [institutionName, navigation]
   );
 
-  const handleEndReached = useCallback(
-    ({ distanceFromEnd }: { distanceFromEnd: number }) => {
-      // guard needed to avoid endless loop
-      if (distanceFromEnd === 0) {
-        return;
-      }
-
-      fetchNextPage(currentPage + 1);
-    },
-    [currentPage, fetchNextPage]
-  );
+  const handleEndReached = useCallback(() => {
+    fetchNextPage(currentPage + 1);
+  }, [currentPage, fetchNextPage]);
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<ServiceMinified>) => (
@@ -165,7 +154,7 @@ export const InstitutionServicesScreen = ({
     if (isFirstRender || isLoading) {
       return (
         <>
-          <ServiceListSkeleton size={5} />
+          <ServiceListSkeleton avatarShown={false} size={5} />
           <VSpacer size={16} />
         </>
       );
@@ -206,7 +195,7 @@ export const InstitutionServicesScreen = ({
     if (isUpdating && !isRefreshing) {
       return (
         <>
-          <ServiceListSkeleton />
+          <ServiceListSkeleton avatarShown={false} />
           <VSpacer size={16} />
         </>
       );
@@ -218,10 +207,9 @@ export const InstitutionServicesScreen = ({
     return <InstitutionServicesFailure onRetry={() => fetchPage(0)} />;
   }
 
-  const refreshControl = (
+  const refreshControlComponent = (
     <RefreshControl
       onRefresh={refresh}
-      progressViewOffset={headerHeight}
       refreshing={isRefreshing}
       style={styles.refreshControlContainer}
     />
@@ -229,7 +217,6 @@ export const InstitutionServicesScreen = ({
 
   return (
     <Animated.FlatList
-      onScroll={scrollHandler}
       ItemSeparatorComponent={() => <Divider />}
       ListEmptyComponent={renderListEmptyComponent}
       ListHeaderComponent={renderListHeaderComponent}
@@ -237,16 +224,16 @@ export const InstitutionServicesScreen = ({
         marginHorizontal: -IOVisualCostants.appMarginDefault
       }}
       ListFooterComponent={renderListFooterComponent}
-      contentContainerStyle={[
-        styles.contentContainer,
-        IOStyles.horizontalContentPadding
-      ]}
-      data={data?.services || []}
-      keyExtractor={(item, index) => `service-${item.id}-${index}`}
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
+      data={data?.services}
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.1}
+      onScroll={scrollHandler}
+      refreshControl={refreshControlComponent}
       renderItem={renderItem}
-      refreshControl={refreshControl}
       testID="intitution-services-list"
     />
   );

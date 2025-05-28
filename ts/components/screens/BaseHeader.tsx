@@ -9,8 +9,7 @@ import {
   IconButton,
   IOColors,
   IOIcons,
-  IOSpacer,
-  IOStyles
+  IOSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import {
@@ -41,7 +40,6 @@ import variables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { maybeNotNullyString } from "../../utils/strings";
 import GoBackButton from "../GoBackButton";
-import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 
 type HelpButtonProps = {
@@ -96,11 +94,6 @@ interface OwnProps {
   onShowHelp?: () => void;
   // A property to set a custom AppHeader body
   body?: ReactNode;
-  isSearchAvailable?: {
-    enabled: true;
-    searchType?: SearchType;
-    onSearchTap?: () => void;
-  };
   showChat?: boolean;
   customRightIcon?: {
     iconName: IOIcons;
@@ -213,10 +206,10 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
               numberOfLines={1}
               accessible={true}
               accessibilityRole={"header"}
-              color={titleColor === "white" ? "white" : "bluegrey"}
+              color={titleColor === "white" ? "white" : "grey-700"}
             >
               {/* TODO: titleColor prop is pretty useless because
-              we have two colors: dark (bluegrey) and light (white).
+              we have two colors: dark (grey-700) and light (white).
               We don't have any color values other than these two. */}
               {l}
             </Body>
@@ -225,7 +218,6 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
       )
     );
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   public render() {
     const {
       goBack,
@@ -233,8 +225,6 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
       headerTitle,
       backgroundColor,
       body,
-      isSearchEnabled,
-      isSearchAvailable,
       dark,
       primary,
       accessibilityLabel,
@@ -249,59 +239,46 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
           backgroundColor
             ? backgroundColor
             : dark
-            ? IOColors.bluegrey
+            ? IOColors["grey-700"]
             : primary
-            ? IOColors.blue
+            ? IOColors["blueIO-500"]
             : IOColors.white
         }
       >
-        {!isSearchEnabled && this.renderLeft()}
+        {this.renderLeft()}
 
         {/* if screen reader is active and the accessibility label is defined, render the accessibility label
           as placeholder where force focus
         */}
-        {!isSearchEnabled && (
-          <View style={goBack || customGoBack ? styles.body : styles.noLeft}>
-            {this.state.isScreenReaderActive &&
-            O.isSome(maybeAccessibilityLabel) ? (
-              this.renderBodyLabel(
-                maybeAccessibilityLabel.value,
-                this.firstElementRef
-              )
-            ) : (
-              <View ref={this.firstElementRef} accessible={true}>
-                {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
-              </View>
-            )}
-          </View>
-        )}
 
-        {!isSearchEnabled && this.renderRight()}
-        {isSearchAvailable?.enabled && (
-          <SearchButton
-            searchType={isSearchAvailable.searchType}
-            onSearchTap={isSearchAvailable.onSearchTap}
-          />
-        )}
+        <View style={goBack || customGoBack ? styles.body : styles.noLeft}>
+          {this.state.isScreenReaderActive &&
+          O.isSome(maybeAccessibilityLabel) ? (
+            this.renderBodyLabel(
+              maybeAccessibilityLabel.value,
+              this.firstElementRef
+            )
+          ) : (
+            <View ref={this.firstElementRef} accessible={true}>
+              {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
+            </View>
+          )}
+        </View>
+
+        {this.renderRight()}
       </AppHeader>
     );
   }
 
   private renderRight = () => {
-    const {
-      isSearchEnabled,
-      onShowHelp,
-      isSearchAvailable,
-      showChat,
-      customRightIcon,
-      dark
-    } = this.props;
+    const { isSearchEnabled, onShowHelp, showChat, customRightIcon, dark } =
+      this.props;
 
     return (
       <View
         style={{
-          ...IOStyles.flex,
-          ...IOStyles.row,
+          flex: 1,
+          flexDirection: "row",
           justifyContent: "flex-end"
         }}
       >
@@ -322,7 +299,7 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
         )}
 
         {/* if no right button has been added, add a hidden one in order to make the body always centered on screen */}
-        {!customRightIcon && !isSearchAvailable && !onShowHelp && !showChat && (
+        {!customRightIcon && !onShowHelp && !showChat && (
           <HSpacer size={ICON_BUTTON_MARGIN} />
         )}
 
@@ -341,12 +318,10 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
   private renderGoBack = () => {
     const { goBack, dark, customGoBack, backButtonTestID } = this.props;
     return customGoBack ? (
-      <View style={{ ...IOStyles.flex, alignSelf: "center" }}>
-        {customGoBack}
-      </View>
+      <View style={{ flex: 1, alignSelf: "center" }}>{customGoBack}</View>
     ) : (
       goBack && (
-        <View style={{ ...IOStyles.flex, alignSelf: "center" }}>
+        <View style={{ flex: 1, alignSelf: "center" }}>
           <GoBackButton
             testID={backButtonTestID ?? "back-button"}
             onPress={goBack}
@@ -360,13 +335,13 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
   private renderAppLogo = () => {
     const { primary, dark } = this.props;
 
-    const iconColor: IOColors = primary || dark ? "white" : "blue";
+    const iconColor: IOColors = primary || dark ? "white" : "blueIO-500";
     return (
       <View
         accessible={true}
         accessibilityElementsHidden={true}
         importantForAccessibility="no-hide-descendants"
-        style={{ ...IOStyles.flex, alignSelf: "flex-start" }}
+        style={{ flex: 1, alignSelf: "flex-start" }}
       >
         <Icon name="productIOApp" color={iconColor} accessible={false} />
       </View>

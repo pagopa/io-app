@@ -4,9 +4,9 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import { Alert } from "react-native";
-import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import IOMarkdown from "../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { trackFciUserExit } from "../analytics";
 import { fciEndRequest } from "../store/actions";
@@ -39,9 +39,9 @@ export const useFciAbortSignatureFlow = () => {
   } = useIOBottomSheetModal({
     title: I18n.t("features.fci.abort.title"),
     component: (
-      <LegacyMarkdown>
-        {I18n.t("features.fci.abort.content", { dossierTitle })}
-      </LegacyMarkdown>
+      <IOMarkdown
+        content={I18n.t("features.fci.abort.content", { dossierTitle })}
+      />
     ),
     snapPoint: [280],
     footer: (

@@ -1,9 +1,9 @@
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { serviceByIdSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
 import { fimsCtaTextSelector } from "../../singleSignOn/store/selectors";
 
 export const trackAuthenticationStart = (
@@ -12,7 +12,7 @@ export const trackAuthenticationStart = (
   organizationName: string | undefined,
   organizationFiscalCode: string | undefined,
   ctaLabel: string,
-  source: "message_detail" | "service_detail"
+  source: string
 ) => {
   const eventName = `FIMS_START`;
   const props = buildEventProperties("UX", "action", {
@@ -123,15 +123,15 @@ export const trackHistoryFailure = (reason: string) => {
 };
 
 export const computeAndTrackDataShare = (
-  service: ServicePublic,
+  service: ServiceDetails,
   state: GlobalState
 ) => {
   const ctaText = fimsCtaTextSelector(state);
   trackDataShare(
-    service.service_id,
-    service.service_name,
-    service.organization_name,
-    service.organization_fiscal_code,
+    service.id,
+    service.name,
+    service.organization.name,
+    service.organization.fiscal_code,
     ctaText
   );
 };
@@ -140,13 +140,13 @@ export const computeAndTrackDataShareAccepted = (
   serviceId: ServiceId,
   state: GlobalState
 ) => {
-  const service = serviceByIdSelector(state, serviceId);
+  const service = serviceDetailsByIdSelector(state, serviceId);
   const ctaText = fimsCtaTextSelector(state);
   trackDataShareAccepted(
     serviceId,
-    service?.service_name,
-    service?.organization_name,
-    service?.organization_fiscal_code,
+    service?.name,
+    service?.organization.name,
+    service?.organization.fiscal_code,
     ctaText
   );
 };

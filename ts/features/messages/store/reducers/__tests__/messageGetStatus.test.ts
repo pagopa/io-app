@@ -57,7 +57,9 @@ describe("messageGetStatusReducer", () => {
       organizationName: "orgName",
       organizationFiscalCode: "orgFisCod",
       containsAttachments: false,
-      hasRemoteContent: false
+      hasRemoteContent: false,
+      hasFIMSCTA: false,
+      createdAt: new Date()
     };
     const expectedSuccessState = {
       status: "success",
@@ -168,7 +170,9 @@ describe("showSpinnerFromMessageGetStatusSelector", () => {
         organizationName: "orgName",
         organizationFiscalCode: "orgFisCod",
         containsAttachments: false,
-        hasRemoteContent: false
+        hasRemoteContent: false,
+        hasFIMSCTA: false,
+        createdAt: new Date()
       })
     );
     const showSpinner = showSpinnerFromMessageGetStatusSelector(globalState);
@@ -229,7 +233,9 @@ describe("messageSuccessDataSelector", () => {
       organizationFiscalCode: "orgFisCod",
       organizationName: "orgName",
       containsAttachments: false,
-      hasRemoteContent: false
+      hasRemoteContent: false,
+      hasFIMSCTA: false,
+      createdAt: new Date()
     };
     const globalState = appReducer(
       undefined,
@@ -268,7 +274,9 @@ describe("blockedFromPushNotificationSelector", () => {
         organizationName: "orgName",
         organizationFiscalCode: "orgFisCod",
         containsAttachments: false,
-        hasRemoteContent: false
+        hasRemoteContent: false,
+        hasFIMSCTA: false,
+        createdAt: new Date()
       })
     );
     const blockedFromPush = blockedFromPushNotificationSelector(globalState);

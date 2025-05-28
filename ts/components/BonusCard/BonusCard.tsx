@@ -4,19 +4,24 @@ import {
   H2,
   HSpacer,
   IOColors,
+  IOSkeleton,
   VSpacer
 } from "@pagopa/io-app-design-system";
 
-import { Fragment, ReactNode, useMemo } from "react";
+import {
+  createRef,
+  Fragment,
+  ReactNode,
+  useLayoutEffect,
+  useMemo
+} from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import {
   heightPercentageToDP,
   widthPercentageToDP
 } from "react-native-responsive-screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Placeholder from "rn-placeholder";
-import { useIOSelector } from "../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 import { BonusCardCounter } from "./BonusCardCounter";
 import { BonusCardShape } from "./BonusCardShape";
 import { BonusCardStatus } from "./BonusCardStatus";
@@ -43,6 +48,12 @@ type LoadingStateProps =
 export type BonusCard = LoadingStateProps & BaseProps;
 
 const BonusCardContent = (props: BonusCard) => {
+  const bonusNameHeadingRef = createRef<View>();
+
+  useLayoutEffect(() => {
+    setAccessibilityFocus(bonusNameHeadingRef);
+  }, [bonusNameHeadingRef]);
+
   if (props.isLoading) {
     return <BonusCardSkeleton {...props} />;
   }
@@ -69,12 +80,18 @@ const BonusCardContent = (props: BonusCard) => {
           <VSpacer size={16} />
         </>
       )}
-      <H2 color="blueItalia-850" style={{ textAlign: "center" }}>
+      <H2
+        ref={bonusNameHeadingRef}
+        role="heading"
+        color="blueItalia-850"
+        style={{ textAlign: "center" }}
+      >
         {name}
       </H2>
       <VSpacer size={4} />
       <BodySmall
         weight="Regular"
+        color="blueItalia-850"
         style={{ textAlign: "center", marginHorizontal: 16 }}
       >
         {organizationName}
@@ -132,39 +149,34 @@ export const BonusCard = (props: BonusCard) => {
 };
 
 const BonusCardSkeleton = (props: BaseProps) => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-
-  const placeholderColor = isDesignSystemEnabled
-    ? IOColors["blueItalia-100"]
-    : IOColors["blueIO-100"];
+  const placeholderColor = IOColors["blueItalia-100"];
 
   return (
     <View style={styles.content} testID="BonusCardSkeletonTestID">
       {!props.hideLogo && (
         <>
-          <Placeholder.Box
-            height={66}
-            width={66}
+          <IOSkeleton
             color={placeholderColor}
-            animate="fade"
+            shape="square"
+            size={66}
             radius={8}
           />
           <VSpacer size={24} />
         </>
       )}
-      <Placeholder.Box
+      <IOSkeleton
+        color={placeholderColor}
+        shape="rectangle"
         height={28}
         width={198}
-        color={placeholderColor}
-        animate="fade"
         radius={28}
       />
       <VSpacer size={8} />
-      <Placeholder.Box
+      <IOSkeleton
+        color={placeholderColor}
+        shape="rectangle"
         height={28}
         width={108}
-        color={placeholderColor}
-        animate="fade"
         radius={28}
       />
       <VSpacer size={16} />

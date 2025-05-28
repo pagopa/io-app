@@ -1,5 +1,5 @@
-import { IOStyles, ListItemAction } from "@pagopa/io-app-design-system";
-import { Alert, View } from "react-native";
+import { ContentWrapper, ListItemAction } from "@pagopa/io-app-design-system";
+import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -24,8 +24,7 @@ const HideReceiptButton = (props: Props) => {
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
       user: paymentAnalyticsData?.receiptUser,
       organization_fiscal_code:
-        paymentAnalyticsData?.verifiedData?.paFiscalCode,
-      payment_status: "paid"
+        paymentAnalyticsData?.receiptOrganizationFiscalCode
     });
   };
 
@@ -35,8 +34,7 @@ const HideReceiptButton = (props: Props) => {
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
       user: paymentAnalyticsData?.receiptUser,
       organization_fiscal_code:
-        paymentAnalyticsData?.verifiedData?.paFiscalCode,
-      payment_status: "paid"
+        paymentAnalyticsData?.receiptOrganizationFiscalCode
     });
   };
 
@@ -76,7 +74,7 @@ const HideReceiptButton = (props: Props) => {
   };
 
   return (
-    <View style={IOStyles.horizontalContentPadding}>
+    <ContentWrapper>
       <ListItemAction
         label={I18n.t("features.payments.transactions.receipt.hideFromList")}
         onPress={handleHideFromList}
@@ -84,9 +82,9 @@ const HideReceiptButton = (props: Props) => {
           "features.payments.transactions.receipt.hideFromList"
         )}
         icon="eyeHide"
-        variant="primary"
+        variant="danger"
       />
-    </View>
+    </ContentWrapper>
   );
 };
 export default HideReceiptButton;

@@ -21,7 +21,7 @@ export const GetSessionEndpointTransientError = () => {
   return (
     <Modal>
       <OperationResultScreenContent
-        pictogram="umbrellaNew"
+        pictogram="umbrella"
         title={I18n.t(
           "fastLogin.userInteraction.sessionExpired.transientError.title"
         )}

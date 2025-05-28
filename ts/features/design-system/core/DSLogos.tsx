@@ -91,35 +91,35 @@ const organizationsURIs = [
     name: "Placeholder"
   },
   {
-    imageSource: `${cdnPath}1199250158.png`,
+    imageSource: { uri: `${cdnPath}1199250158.png` },
     name: "Comune di Milano"
   },
   {
-    imageSource: `${cdnPath}82003830161.png`,
+    imageSource: { uri: `${cdnPath}82003830161.png` },
     name: "Comune di Sotto il Monte Giovanni XXIII"
   },
   {
-    imageSource: `${cdnPath}82001760675.png`,
+    imageSource: { uri: `${cdnPath}82001760675.png` },
     name: "Comune di Controguerra"
   },
   {
-    imageSource: `${cdnPath}80078750587.png`,
+    imageSource: { uri: `${cdnPath}80078750587.png` },
     name: "INPS"
   },
   {
-    imageSource: `${cdnPath}5779711000.png`,
+    imageSource: { uri: `${cdnPath}5779711000.png` },
     name: "e-distribuzione"
   },
   {
-    imageSource: `${cdnPath}97254170588.png`,
+    imageSource: { uri: `${cdnPath}97254170588.png` },
     name: "Agenzia della Difesa"
   },
   {
-    imageSource: `${cdnPath}80215430580.png`,
+    imageSource: { uri: `${cdnPath}80215430580.png` },
     name: "Ministero dell'Interno"
   },
   {
-    imageSource: `${cdnPath}wrongUri.png`,
+    imageSource: { uri: `${cdnPath}wrongUri.png`, width: 180, height: 180 },
     name: "Wrong URI"
   }
 ];
@@ -134,17 +134,7 @@ const renderAvatar = () => (
       >
         <HStack space={8}>
           {organizationsURIs.map(({ imageSource }, i) => (
-            <Avatar
-              key={i}
-              size="small"
-              logoUri={
-                imageSource
-                  ? {
-                      uri: imageSource
-                    }
-                  : undefined
-              }
-            />
+            <Avatar key={i} size="small" logoUri={imageSource} />
           ))}
           <HSpacer size={32} />
         </HStack>
@@ -159,17 +149,7 @@ const renderAvatar = () => (
       >
         <HStack space={8}>
           {organizationsURIs.map(({ imageSource }, i) => (
-            <Avatar
-              key={i}
-              size="medium"
-              logoUri={
-                imageSource
-                  ? {
-                      uri: imageSource
-                    }
-                  : undefined
-              }
-            />
+            <Avatar key={i} size="medium" logoUri={imageSource} />
           ))}
           <HSpacer size={32} />
         </HStack>
@@ -184,16 +164,7 @@ const renderAvatar = () => (
       >
         <HStack space={8}>
           {organizationsURIs.map(({ imageSource }, i) => (
-            <AvatarSearch
-              key={i}
-              source={
-                imageSource
-                  ? Array.isArray(imageSource)
-                    ? imageSource.map(s => ({ uri: s }))
-                    : [{ uri: imageSource }]
-                  : []
-              }
-            />
+            <AvatarSearch key={i} source={imageSource} />
           ))}
           <HSpacer size={32} />
         </HStack>
@@ -201,9 +172,7 @@ const renderAvatar = () => (
     </DSComponentViewerBox>
 
     <DSComponentViewerBox name={`AvatarDouble`}>
-      <AvatarDouble
-        backgroundLogoUri={{ uri: organizationsURIs[1].imageSource }}
-      />
+      <AvatarDouble backgroundLogoUri={organizationsURIs[1].imageSource} />
     </DSComponentViewerBox>
   </VStack>
 );

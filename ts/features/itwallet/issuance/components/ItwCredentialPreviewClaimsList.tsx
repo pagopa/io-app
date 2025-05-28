@@ -25,7 +25,7 @@ const ItwCredentialPreviewClaimsList = ({
   });
 
   return (
-    <>
+    <View>
       {claims.map((elem, index) => (
         <View key={index}>
           <ItwCredentialClaim claim={elem} isPreview={true} hidden={false} />
@@ -38,7 +38,7 @@ const ItwCredentialPreviewClaimsList = ({
           <ItwIssuanceMetadata credential={data} isPreview={true} />
         </>
       )}
-    </>
+    </View>
   );
 };
 

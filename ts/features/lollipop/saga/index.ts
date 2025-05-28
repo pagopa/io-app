@@ -26,7 +26,7 @@ import {
   toCryptoError
 } from "../utils/crypto";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
-import { sessionInvalid } from "../../../store/actions/authentication";
+import { sessionInvalid } from "../../authentication/common/store/actions";
 import { restartCleanApplication } from "../../../sagas/commons";
 
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
@@ -181,12 +181,12 @@ function* generateCryptoKeyPair(keyTag: string) {
     const publicKey = yield* call(generate, keyTag);
     yield* put(lollipopSetPublicKey({ publicKey }));
     const mixPanelEnabled = yield* select(isMixpanelEnabled);
-    if (mixPanelEnabled) {
+    if (mixPanelEnabled !== false) {
       yield* call(trackLollipopKeyGenerationSuccess, publicKey.kty);
     }
   } catch (e) {
     const mixPanelEnabled = yield* select(isMixpanelEnabled);
-    if (mixPanelEnabled) {
+    if (mixPanelEnabled !== false) {
       const { message } = toCryptoError(e);
       yield* call(trackLollipopKeyGenerationFailure, message);
     }

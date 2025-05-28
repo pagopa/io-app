@@ -16,13 +16,13 @@ import {
   trackRemoteContentLoadSuccess,
   trackThirdPartyMessageAttachmentCount
 } from "../analytics";
-import { withRefreshApiCall } from "../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../types/utils";
 import { unknownToReason } from "../utils";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
-import { serviceByIdSelector } from "../../services/details/store/reducers";
-import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
+import { serviceDetailsByIdSelector } from "../../services/details/store/reducers";
+import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 
 export function* handleThirdPartyMessage(
   getThirdPartyMessage: BackendClient["getThirdPartyMessage"],
@@ -33,12 +33,12 @@ export function* handleThirdPartyMessage(
   // This method is called by `handleLoadMessageData` saga, which makes
   // sure that the service details are properly retrieved and loaded
   // into the redux store before requesting a third-party-message
-  const serviceDetails = yield* select(serviceByIdSelector, serviceId);
+  const serviceDetails = yield* select(serviceDetailsByIdSelector, serviceId);
   trackRemoteContentLoadRequest(
     serviceId,
-    serviceDetails?.service_name,
-    serviceDetails?.organization_name,
-    serviceDetails?.organization_fiscal_code,
+    serviceDetails?.name,
+    serviceDetails?.organization.name,
+    serviceDetails?.organization.fiscal_code,
     tag
   );
 
@@ -74,14 +74,14 @@ export function* handleThirdPartyMessage(
 
 const trackSuccess = (
   messageFromApi: ThirdPartyMessageWithContent,
-  serviceDetails: ServicePublic | undefined,
+  serviceDetails: ServiceDetails | undefined,
   tag: string
 ) => {
   trackRemoteContentLoadSuccess(
-    serviceDetails?.service_id,
-    serviceDetails?.service_name,
-    serviceDetails?.organization_name,
-    serviceDetails?.organization_fiscal_code,
+    serviceDetails?.id,
+    serviceDetails?.name,
+    serviceDetails?.organization.name,
+    serviceDetails?.organization.fiscal_code,
     tag
   );
   if (tag === TagEnum.PN) {
@@ -102,14 +102,14 @@ const trackSuccess = (
 
 const trackFailure = (
   reason: string,
-  serviceDetails: ServicePublic | undefined,
+  serviceDetails: ServiceDetails | undefined,
   tag: string
 ) => {
   trackRemoteContentLoadFailure(
-    serviceDetails?.service_id,
-    serviceDetails?.service_name,
-    serviceDetails?.organization_name,
-    serviceDetails?.organization_fiscal_code,
+    serviceDetails?.id,
+    serviceDetails?.name,
+    serviceDetails?.organization.name,
+    serviceDetails?.organization.fiscal_code,
     tag,
     reason
   );

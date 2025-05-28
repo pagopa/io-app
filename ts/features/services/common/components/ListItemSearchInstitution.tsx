@@ -5,10 +5,8 @@ import {
   H6,
   IOListItemStyles,
   IOListItemVisualParams,
-  IOStyles,
   Icon,
   WithTestID,
-  useIOExperimentalDesign,
   useIOTheme,
   useListItemAnimation
 } from "@pagopa/io-app-design-system";
@@ -44,7 +42,6 @@ export const ListItemSearchInstitution = memo(
     testID,
     numberOfLines
   }: ListItemSearchInstitution) => {
-    const { isExperimental } = useIOExperimentalDesign();
     const theme = useIOTheme();
 
     const {
@@ -78,10 +75,6 @@ export const ListItemSearchInstitution = memo(
       </>
     );
 
-    const navIconColor = isExperimental
-      ? theme["interactiveElem-default"]
-      : "blue";
-
     const handleOnPress = useCallback(
       (event: GestureResponderEvent) => onPress(event),
       [onPress]
@@ -108,12 +101,10 @@ export const ListItemSearchInstitution = memo(
             <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
               <AvatarSearch {...avatar} />
             </View>
-            <View style={IOStyles.flex}>
-              {listItemSearchInstitutionContent}
-            </View>
+            <View style={{ flex: 1 }}>{listItemSearchInstitutionContent}</View>
             <Icon
               name="chevronRightListItem"
-              color={navIconColor}
+              color={theme["interactiveElem-default"]}
               size={IOListItemVisualParams.chevronSize}
             />
           </Animated.View>

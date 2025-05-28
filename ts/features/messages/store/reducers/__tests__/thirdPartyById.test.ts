@@ -8,6 +8,8 @@ import {
   hasAttachmentsSelector,
   messageMarkdownSelector,
   messageTitleSelector,
+  testable,
+  ThirdPartyById,
   thirdPartyFromIdSelector,
   thirdPartyMessageAttachments
 } from "../thirdPartyById";
@@ -20,6 +22,7 @@ import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../utils/tests";
+import { DetailsById } from "../detailsById";
 
 describe("thirdPartyFromIdSelector", () => {
   it("Should return pot none for an unmatching message id", () => {
@@ -446,5 +449,101 @@ describe("hasAttachmentsSelector", () => {
       messageId
     );
     expect(hasAttachments).toBe(true);
+  });
+});
+
+describe("messageContentSelector", () => {
+  const messageId = "01JKAPT00J32WEJ44NTRH05FVV" as UIMessageId;
+  const remoteContentMarkdown =
+    "A remote markdown which must be longer than eighty characters in order to be parsed properly";
+  const remoteContentMessage = {
+    id: messageId as string,
+    third_party_message: {
+      details: {
+        subject: "The subject which must be longer than 10 characters",
+        markdown: remoteContentMarkdown
+      }
+    } as ThirdPartyMessage
+  } as ThirdPartyMessageWithContent;
+  const standardMessageMarkdown = "A standard markdown";
+  const standardMessage = {
+    id: messageId,
+    markdown: standardMessageMarkdown
+  } as UIMessageDetails;
+  it("should return data from third party message when both are defined", () => {
+    const state = {
+      entities: {
+        messages: {
+          detailsById: {
+            [messageId]: pot.some(standardMessage)
+          } as DetailsById,
+          thirdPartyById: {
+            [messageId]: pot.some(remoteContentMessage)
+          } as ThirdPartyById
+        }
+      }
+    } as GlobalState;
+
+    const messageContent = testable!.messageContentSelector(
+      state,
+      messageId,
+      input => input.markdown
+    );
+    expect(messageContent).toBe(remoteContentMarkdown);
+  });
+  it("should return data from third party message when only the third party message is defined", () => {
+    const state = {
+      entities: {
+        messages: {
+          detailsById: {},
+          thirdPartyById: {
+            [messageId]: pot.some(remoteContentMessage)
+          } as ThirdPartyById
+        }
+      }
+    } as GlobalState;
+
+    const messageContent = testable!.messageContentSelector(
+      state,
+      messageId,
+      input => input.markdown
+    );
+    expect(messageContent).toBe(remoteContentMarkdown);
+  });
+  it("should return data from standard message when only the standard message is defined", () => {
+    const state = {
+      entities: {
+        messages: {
+          detailsById: {
+            [messageId]: pot.some(standardMessage)
+          } as DetailsById,
+          thirdPartyById: {}
+        }
+      }
+    } as GlobalState;
+
+    const messageContent = testable!.messageContentSelector(
+      state,
+      messageId,
+      input => input.markdown
+    );
+    expect(messageContent).toBe(standardMessageMarkdown);
+  });
+  it("should return undefined when no message is defined", () => {
+    const state = {
+      entities: {
+        messages: {
+          detailsById: {},
+          thirdPartyById: {}
+        }
+      }
+    } as GlobalState;
+
+    const messageContent = testable!.messageContentSelector(
+      state,
+      messageId,
+      input => input.markdown
+    );
+    expect(messageContent).toBeUndefined();
   });
 });

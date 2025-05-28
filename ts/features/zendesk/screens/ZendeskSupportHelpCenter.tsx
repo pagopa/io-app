@@ -1,16 +1,16 @@
 import {
   AccordionItem,
   Body,
-  ButtonLink,
   ContentWrapper,
   FeatureInfo,
   FooterActions,
   H4,
   H6,
   HeaderSecondLevel,
+  IOButton,
   IOToast,
-  VSpacer,
-  useIOTheme
+  useIOTheme,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -52,7 +52,7 @@ import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/
 import {
   isProfileEmailValidatedSelector,
   profileSelector
-} from "../../../store/reducers/profile";
+} from "../../settings/common/store/selectors";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 import {
@@ -64,10 +64,10 @@ import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSigna
 import { ZendeskParamsList } from "../navigation/params";
 import ZENDESK_ROUTES from "../navigation/routes";
 import {
-  ZendeskStartPayload,
   getZendeskConfig,
   getZendeskPaymentConfig,
   getZendeskToken,
+  ZendeskStartPayload,
   zendeskSupportCancel
 } from "../store/actions";
 import {
@@ -77,7 +77,7 @@ import {
 } from "../store/reducers";
 import { handleContactSupport } from "../utils";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
-import { isLoggedIn } from "../../../store/reducers/authentication";
+import { isLoggedIn } from "../../authentication/common/store/utils/guards";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -227,9 +227,7 @@ const ZendeskSupportHelpCenter = () => {
     contextualHelp,
     contextualHelpMarkdown,
     startingRoute,
-    assistanceForPayment,
-    assistanceForCard,
-    assistanceForFci
+    assistanceType
   } = route.params || {};
   //   !contextualHelpMarkdown
   // );
@@ -248,46 +246,19 @@ const ZendeskSupportHelpCenter = () => {
     if (O.isNone(maybeProfile)) {
       navigation.navigate(ZENDESK_ROUTES.MAIN, {
         screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
-        params: {
-          assistanceForPayment,
-          assistanceForCard,
-          assistanceForFci
-        }
+        params: { assistanceType }
       });
     } else {
       navigation.navigate(ZENDESK_ROUTES.MAIN, {
         screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
-        params: {
-          assistanceForPayment,
-          assistanceForCard,
-          assistanceForFci
-        }
+        params: { assistanceType }
       });
     }
-  }, [
-    assistanceForCard,
-    assistanceForFci,
-    assistanceForPayment,
-    maybeProfile,
-    navigation
-  ]);
+  }, [assistanceType, maybeProfile, navigation]);
 
   const handleContactSupportPress = useCallback(
-    () =>
-      handleContactSupport(
-        navigation,
-        assistanceForPayment,
-        assistanceForCard,
-        assistanceForFci,
-        zendeskRemoteConfig
-      ),
-    [
-      navigation,
-      assistanceForPayment,
-      assistanceForCard,
-      assistanceForFci,
-      zendeskRemoteConfig
-    ]
+    () => handleContactSupport(navigation, assistanceType, zendeskRemoteConfig),
+    [navigation, assistanceType, zendeskRemoteConfig]
   );
 
   const handleButtonPress = useCallback(
@@ -330,7 +301,7 @@ const ZendeskSupportHelpCenter = () => {
 
   /**
    * as first step request the config (categories + panicmode) that could
-     be used in the next steps (possible network error are handled in {@link ZendeskAskPermissions})
+   be used in the next steps (possible network error are handled in {@link ZendeskAskPermissions})
    */
   useEffect(() => {
     dispatch(getZendeskConfig.request());
@@ -417,7 +388,9 @@ const ZendeskSupportHelpCenter = () => {
               {I18n.t("support.helpCenter.supportComponent.subtitle")}
             </Body>
             <VSpacer size={16} />
-            <ButtonLink
+            <IOButton
+              variant="link"
+              accessibilityRole="link"
               label={I18n.t("support.askPermissions.privacyLink")}
               onPress={() => {
                 openWebUrl(zendeskPrivacyUrl, () =>

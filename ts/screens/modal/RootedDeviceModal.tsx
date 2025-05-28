@@ -1,9 +1,8 @@
 import {
-  ButtonLink,
-  ButtonOutline,
+  BodySmall,
   ContentWrapper,
   H3,
-  BodySmall,
+  IOButton,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -12,12 +11,11 @@ import { Platform, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
+import IOMarkdown from "../../components/IOMarkdown";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
-import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 import { trackLoginRootedScreen } from "./analytics";
 
 const RootedDeviceModal = () => {
@@ -39,26 +37,26 @@ const RootedDeviceModal = () => {
   const {
     present: presentLearnMoreBottomSheet,
     bottomSheet: learnMoreBottomSheet
-  } = useIOBottomSheetAutoresizableModal({
+  } = useIOBottomSheetModal({
     title: I18n.t("rooted.learnMoreBottomsheet.title"),
-    component: <LegacyMarkdown>{body}</LegacyMarkdown>
+    component: <IOMarkdown content={body} />
   });
 
   return (
-    <SafeAreaView style={styles.flex}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.scrollViewContentContainer}>
         <ContentWrapper>
-          <View style={IOStyles.alignCenter}>
+          <View style={{ alignItems: "center" }}>
             <Pictogram name="attention" size={120} />
           </View>
           <VSpacer size={24} />
-          <View accessible style={IOStyles.alignCenter}>
-            <H3 style={styles.textCenter}>{I18n.t("rooted.title")}</H3>
+          <View accessible style={{ alignItems: "center" }}>
+            <H3 style={{ textAlign: "center" }}>{I18n.t("rooted.title")}</H3>
           </View>
           <VSpacer size={8} />
-          <View accessible style={IOStyles.alignCenter}>
+          <View accessible style={{ alignItems: "center" }}>
             <BodySmall
-              style={styles.textCenter}
+              style={{ textAlign: "center" }}
               color="grey-650"
               weight="Regular"
             >
@@ -66,19 +64,19 @@ const RootedDeviceModal = () => {
             </BodySmall>
           </View>
           <VSpacer size={24} />
-          <View style={IOStyles.selfCenter}>
-            <ButtonLink
+          <View style={{ alignSelf: "center" }}>
+            <IOButton
+              variant="link"
               label={I18n.t("rooted.learnMoreButton.title")}
-              accessibilityLabel={I18n.t("rooted.learnMoreButton.title")}
               onPress={presentLearnMoreBottomSheet}
             />
           </View>
           <VSpacer size={24} />
-          <View style={IOStyles.selfCenter}>
-            <ButtonOutline
+          <View style={{ alignSelf: "center" }}>
+            <IOButton
+              variant="solid"
               color="danger"
               label={I18n.t("global.buttons.continue")}
-              accessibilityLabel={I18n.t("global.buttons.continue")}
               onPress={handleContinueWithRootOrJailbreak}
             />
           </View>
@@ -92,12 +90,6 @@ const RootedDeviceModal = () => {
 export default RootedDeviceModal;
 
 const styles = StyleSheet.create({
-  flex: {
-    flex: 1
-  },
-  textCenter: {
-    textAlign: "center"
-  },
   scrollViewContentContainer: {
     justifyContent: "center",
     alignItems: "center",

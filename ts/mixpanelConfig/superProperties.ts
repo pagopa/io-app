@@ -1,5 +1,9 @@
 import { Appearance, ColorSchemeName } from "react-native";
 import * as O from "fp-ts/Option";
+import {
+  isMixpanelInstanceInitialized,
+  registerSuperProperties
+} from "../mixpanel.ts";
 import { isScreenReaderEnabled } from "../utils/accessibility";
 import { getAppVersion } from "../utils/appVersion";
 import {
@@ -12,12 +16,9 @@ import {
   NotificationPermissionType,
   NotificationPreferenceConfiguration,
   ServiceConfigurationTrackingType
-} from "../screens/profile/analytics";
-
+} from "../features/settings/common/analytics";
 import { GlobalState } from "../store/reducers/types";
-
-import { mixpanel } from "../mixpanel";
-import { LoginSessionDuration } from "../features/fastLogin/analytics/optinAnalytics";
+import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
   ItwCed,
@@ -31,6 +32,11 @@ import {
   itwCredentialsSelector
 } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
+import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
+import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
+import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
+import { isConnectedSelector } from "../features/connectivity/store/selectors";
+import { sendExceptionToSentry } from "../utils/sentryUtils.ts";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -41,6 +47,8 @@ import {
   serviceConfigHandler,
   welfareStatusHandler
 } from "./mixpanelPropertyUtils";
+
+type ConnectivityStatus = "online" | "offline";
 
 type SuperProperties = {
   isScreenReaderEnabled: boolean;
@@ -61,59 +69,69 @@ type SuperProperties = {
   SAVED_PAYMENT_METHOD?: number;
   CGN_STATUS: TrackCgnStatus;
   WELFARE_STATUS: ReadonlyArray<string>;
+  OFFLINE_ACCESS_REASON: string;
+  CONNECTION_STATUS: ConnectivityStatus;
 };
 
 export const updateMixpanelSuperProperties = async (
   state: GlobalState,
   forceUpdateFor?: PropertyToUpdate<SuperProperties>
 ) => {
-  if (!mixpanel) {
-    return;
+  try {
+    if (!isMixpanelInstanceInitialized()) {
+      return;
+    }
+    const screenReaderEnabled: boolean = await isScreenReaderEnabled();
+    const fontScale = await getFontScale();
+    const biometricTechnology = await getBiometricsType();
+    const isScreenLockSet = await isScreenLockSetFunc();
+    const LOGIN_SESSION = loginSessionConfigHandler(state);
+    const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
+    const notificationsEnabled = await checkNotificationPermissions();
+    const SERVICE_CONFIGURATION = serviceConfigHandler(state);
+    const ITW_STATUS_V2 = walletStatusHandler(state);
+    const ITW_ID_V2 = idStatusHandler(state);
+    const ITW_PG_V2 = pgStatusHandler(state);
+    const ITW_TS_V2 = tsStatusHandler(state);
+    const ITW_CED_V2 = cedStatusHandler(state);
+    const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
+    const CGN_STATUS = cgnStatusHandler(state);
+    const WELFARE_STATUS = welfareStatusHandler(state);
+    const OFFLINE_ACCESS_REASON = offlineReasonHandler(state);
+    const CONNECTION_STATUS = offlineStatusHandler(state);
+
+    const superPropertiesObject: SuperProperties = {
+      isScreenReaderEnabled: screenReaderEnabled,
+      fontScale,
+      appReadableVersion: getAppVersion(),
+      colorScheme: Appearance.getColorScheme(),
+      biometricTechnology,
+      isScreenLockSet,
+      LOGIN_SESSION,
+      NOTIFICATION_CONFIGURATION,
+      NOTIFICATION_PERMISSION:
+        getNotificationPermissionType(notificationsEnabled),
+      SERVICE_CONFIGURATION,
+      ITW_STATUS_V2,
+      ITW_ID_V2,
+      ITW_PG_V2,
+      ITW_TS_V2,
+      ITW_CED_V2,
+      SAVED_PAYMENT_METHOD,
+      CGN_STATUS,
+      WELFARE_STATUS,
+      OFFLINE_ACCESS_REASON,
+      CONNECTION_STATUS
+    };
+
+    if (forceUpdateFor) {
+      forceUpdate<keyof SuperProperties>(superPropertiesObject, forceUpdateFor);
+    }
+
+    registerSuperProperties(superPropertiesObject);
+  } catch (e) {
+    sendExceptionToSentry(e, "updateMixpanelSuperProperties");
   }
-  const screenReaderEnabled: boolean = await isScreenReaderEnabled();
-  const fontScale = await getFontScale();
-  const biometricTechnology = await getBiometricsType();
-  const isScreenLockSet = await isScreenLockSetFunc();
-  const LOGIN_SESSION = loginSessionConfigHandler(state);
-  const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
-  const notificationsEnabled = await checkNotificationPermissions();
-  const SERVICE_CONFIGURATION = serviceConfigHandler(state);
-  const ITW_STATUS_V2 = walletStatusHandler(state);
-  const ITW_ID_V2 = idStatusHandler(state);
-  const ITW_PG_V2 = pgStatusHandler(state);
-  const ITW_TS_V2 = tsStatusHandler(state);
-  const ITW_CED_V2 = cedStatusHandler(state);
-  const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
-  const CGN_STATUS = cgnStatusHandler(state);
-  const WELFARE_STATUS = welfareStatusHandler(state);
-
-  const superPropertiesObject: SuperProperties = {
-    isScreenReaderEnabled: screenReaderEnabled,
-    fontScale,
-    appReadableVersion: getAppVersion(),
-    colorScheme: Appearance.getColorScheme(),
-    biometricTechnology,
-    isScreenLockSet,
-    LOGIN_SESSION,
-    NOTIFICATION_CONFIGURATION,
-    NOTIFICATION_PERMISSION:
-      getNotificationPermissionType(notificationsEnabled),
-    SERVICE_CONFIGURATION,
-    ITW_STATUS_V2,
-    ITW_ID_V2,
-    ITW_PG_V2,
-    ITW_TS_V2,
-    ITW_CED_V2,
-    SAVED_PAYMENT_METHOD,
-    CGN_STATUS,
-    WELFARE_STATUS
-  };
-
-  if (forceUpdateFor) {
-    forceUpdate<keyof SuperProperties>(superPropertiesObject, forceUpdateFor);
-  }
-
-  mixpanel.registerSuperProperties(superPropertiesObject);
 };
 
 const forceUpdate = <T extends keyof SuperProperties>(
@@ -125,8 +143,8 @@ const forceUpdate = <T extends keyof SuperProperties>(
 };
 
 const walletStatusHandler = (state: GlobalState): ItwStatus => {
-  const credentialsState = itwCredentialsSelector(state);
-  return O.isSome(credentialsState.eid) ? "L2" : "not_active";
+  const authLevel = itwAuthLevelSelector(state);
+  return authLevel ? authLevel : "not_active";
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {
@@ -146,4 +164,15 @@ const tsStatusHandler = (state: GlobalState): ItwTs => {
 const cedStatusHandler = (state: GlobalState): ItwCed => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
   return credentialsByType.EuropeanDisabilityCard ? "valid" : "not_available";
+};
+const offlineStatusHandler = (state: GlobalState): ConnectivityStatus => {
+  const isConnected = isConnectedSelector(state);
+  return isConnected ? "online" : "offline";
+};
+
+const offlineReasonHandler = (
+  state: GlobalState
+): OfflineAccessReasonEnum | "not_available" => {
+  const offlineAccessReason = offlineAccessReasonSelector(state);
+  return offlineAccessReason ? offlineAccessReason : "not_available";
 };

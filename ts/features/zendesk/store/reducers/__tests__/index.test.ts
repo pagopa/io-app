@@ -144,10 +144,13 @@ describe("Zendesk reducer", () => {
     store.dispatch(zendeskSelectedCategory(mockCategory));
     store.dispatch(
       zendeskSupportStart({
-        assistanceForPayment: false,
-        assistanceForCard: false,
-        assistanceForFci: false,
-        startingRoute: "n/a"
+        startingRoute: "n/a",
+        assistanceType: {
+          payment: false,
+          card: false,
+          fci: false,
+          itWallet: false
+        }
       })
     );
     expect(

@@ -62,9 +62,12 @@ describe("the ZendeskSupportComponent", () => {
         expect(mockedNavigation).toHaveBeenCalledTimes(1);
         expect(mockedNavigation).toHaveBeenCalledWith("ZENDESK_MAIN", {
           params: {
-            assistanceForPayment: true,
-            assistanceForCard: undefined,
-            assistanceForFci: undefined
+            assistanceType: {
+              payment: true,
+              card: undefined,
+              fci: undefined,
+              itWallet: undefined
+            }
           },
           screen: ZENDESK_ROUTES.ASK_PERMISSIONS
         });
@@ -78,9 +81,12 @@ describe("the ZendeskSupportComponent", () => {
         expect(mockedNavigation).toHaveBeenCalledTimes(1);
         expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
           params: {
-            assistanceForPayment: false,
-            assistanceForCard: undefined,
-            assistanceForFci: undefined
+            assistanceType: {
+              payment: false,
+              card: undefined,
+              fci: undefined,
+              itWallet: undefined
+            }
           },
           screen: ZENDESK_ROUTES.ASK_PERMISSIONS
         });
@@ -89,9 +95,12 @@ describe("the ZendeskSupportComponent", () => {
         expect(mockedNavigation).toHaveBeenCalledTimes(2);
         expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
           params: {
-            assistanceForPayment: false,
-            assistanceForCard: undefined,
-            assistanceForFci: undefined
+            assistanceType: {
+              payment: false,
+              card: undefined,
+              fci: undefined,
+              itWallet: undefined
+            }
           },
           screen: ZENDESK_ROUTES.ASK_PERMISSIONS
         });
@@ -102,9 +111,12 @@ describe("the ZendeskSupportComponent", () => {
         expect(mockedNavigation).toHaveBeenCalledTimes(3);
         expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
           params: {
-            assistanceForPayment: false,
-            assistanceForCard: undefined,
-            assistanceForFci: undefined
+            assistanceType: {
+              payment: false,
+              card: undefined,
+              fci: undefined,
+              itWallet: undefined
+            }
           },
           screen: ZENDESK_ROUTES.ASK_PERMISSIONS
         });
@@ -120,9 +132,12 @@ describe("the ZendeskSupportComponent", () => {
             expect(mockedNavigation).toHaveBeenCalledTimes(1);
             expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
               params: {
-                assistanceForPayment: false,
-                assistanceForCard: undefined,
-                assistanceForFci: undefined
+                assistanceType: {
+                  payment: false,
+                  card: undefined,
+                  fci: undefined,
+                  itWallet: undefined
+                }
               },
               screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS
             });
@@ -140,9 +155,12 @@ describe("the ZendeskSupportComponent", () => {
         expect(mockedNavigation).toHaveBeenCalledTimes(1);
         expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
           params: {
-            assistanceForPayment: false,
-            assistanceForCard: undefined,
-            assistanceForFci: undefined
+            assistanceType: {
+              payment: false,
+              card: undefined,
+              fci: undefined,
+              itWallet: undefined
+            }
           },
           screen: ZENDESK_ROUTES.CHOOSE_CATEGORY
         });
@@ -171,7 +189,7 @@ function renderComponent(
   return renderScreenWithNavigationStoreContext<GlobalState>(
     ZendeskSupportHelpCenter,
     ROUTES.MAIN,
-    { assistanceForPayment },
+    { assistanceType: { payment: assistanceForPayment } },
     store
   );
 }

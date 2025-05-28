@@ -1,1 +1,0 @@
-No. There is currently no provision for the Bike Bonus to be paid through the IO app.

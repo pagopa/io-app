@@ -347,10 +347,11 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                           contentContainerStyle={
                             [
                               {
-                                "flexGrow": 1,
                                 "paddingHorizontal": 24,
                               },
                               {
+                                "flexGrow": 1,
+                                "gap": 8,
                                 "justifyContent": "flex-start",
                               },
                             ]
@@ -380,23 +381,20 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     "flexGrow": 0,
                                     "flexShrink": 1,
                                   },
-                                  {
-                                    "marginEnd": 8,
-                                  },
                                   false,
                                 ]
                               }
                             >
                               <View
                                 accessibilityLabel="Inbox"
-                                accessibilityRole="button"
+                                accessibilityRole="tab"
                                 accessibilityState={
                                   {
                                     "busy": undefined,
-                                    "checked": undefined,
+                                    "checked": false,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": false,
+                                    "selected": undefined,
                                   }
                                 }
                                 accessibilityValue={
@@ -441,9 +439,8 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                       false,
                                       {
                                         "backgroundColor": undefined,
-                                        "borderColor": "#BBC2D6",
+                                        "borderColor": undefined,
                                       },
-                                      false,
                                       false,
                                     ]
                                   }
@@ -455,6 +452,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     align="xMidYMid"
                                     bbHeight={16}
                                     bbWidth={16}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={16}
                                     importantForAccessibility="no-hide-descendants"
@@ -468,22 +466,17 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 16,
                                           "width": 16,
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={16}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -523,19 +516,18 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
                                   <Text
-                                    allowFontScaling={false}
-                                    dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    allowFontScaling={true}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 21,
+                                          "lineHeight": undefined,
                                         },
                                       ]
                                     }
@@ -555,23 +547,20 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     "flexGrow": 0,
                                     "flexShrink": 1,
                                   },
-                                  {
-                                    "marginEnd": 0,
-                                  },
                                   false,
                                 ]
                               }
                             >
                               <View
                                 accessibilityLabel="Archived"
-                                accessibilityRole="button"
+                                accessibilityRole="tab"
                                 accessibilityState={
                                   {
                                     "busy": undefined,
-                                    "checked": undefined,
+                                    "checked": true,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": true,
+                                    "selected": undefined,
                                   }
                                 }
                                 accessibilityValue={
@@ -619,7 +608,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         "borderColor": undefined,
                                       },
                                       false,
-                                      false,
                                     ]
                                   }
                                 >
@@ -630,6 +618,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     align="xMidYMid"
                                     bbHeight={16}
                                     bbWidth={16}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={16}
                                     importantForAccessibility="no-hide-descendants"
@@ -643,22 +632,17 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0073E6",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 16,
                                           "width": 16,
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={16}
                                   >
                                     <RNSVGGroup
-                                      color="#0073E6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -685,19 +669,18 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
                                   <Text
-                                    allowFontScaling={false}
-                                    dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    allowFontScaling={true}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
-                                          "color": "#0073E6",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 21,
+                                          "lineHeight": undefined,
                                         },
                                       ]
                                     }
@@ -1070,10 +1053,11 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                           contentContainerStyle={
                             [
                               {
-                                "flexGrow": 1,
                                 "paddingHorizontal": 24,
                               },
                               {
+                                "flexGrow": 1,
+                                "gap": 8,
                                 "justifyContent": "flex-start",
                               },
                             ]
@@ -1103,23 +1087,20 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     "flexGrow": 0,
                                     "flexShrink": 1,
                                   },
-                                  {
-                                    "marginEnd": 8,
-                                  },
                                   false,
                                 ]
                               }
                             >
                               <View
                                 accessibilityLabel="Inbox"
-                                accessibilityRole="button"
+                                accessibilityRole="tab"
                                 accessibilityState={
                                   {
                                     "busy": undefined,
-                                    "checked": undefined,
+                                    "checked": true,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": true,
+                                    "selected": undefined,
                                   }
                                 }
                                 accessibilityValue={
@@ -1167,7 +1148,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         "borderColor": undefined,
                                       },
                                       false,
-                                      false,
                                     ]
                                   }
                                 >
@@ -1178,6 +1158,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     align="xMidYMid"
                                     bbHeight={16}
                                     bbWidth={16}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={16}
                                     importantForAccessibility="no-hide-descendants"
@@ -1191,22 +1172,17 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0073E6",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 16,
                                           "width": 16,
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={16}
                                   >
                                     <RNSVGGroup
-                                      color="#0073E6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1259,19 +1235,18 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
                                   <Text
-                                    allowFontScaling={false}
-                                    dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    allowFontScaling={true}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
-                                          "color": "#0073E6",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 21,
+                                          "lineHeight": undefined,
                                         },
                                       ]
                                     }
@@ -1291,23 +1266,20 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     "flexGrow": 0,
                                     "flexShrink": 1,
                                   },
-                                  {
-                                    "marginEnd": 0,
-                                  },
                                   false,
                                 ]
                               }
                             >
                               <View
                                 accessibilityLabel="Archived"
-                                accessibilityRole="button"
+                                accessibilityRole="tab"
                                 accessibilityState={
                                   {
                                     "busy": undefined,
-                                    "checked": undefined,
+                                    "checked": false,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": false,
+                                    "selected": undefined,
                                   }
                                 }
                                 accessibilityValue={
@@ -1352,9 +1324,8 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                       false,
                                       {
                                         "backgroundColor": undefined,
-                                        "borderColor": "#BBC2D6",
+                                        "borderColor": undefined,
                                       },
-                                      false,
                                       false,
                                     ]
                                   }
@@ -1366,6 +1337,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     align="xMidYMid"
                                     bbHeight={16}
                                     bbWidth={16}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={16}
                                     importantForAccessibility="no-hide-descendants"
@@ -1379,22 +1351,17 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 16,
                                           "width": 16,
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={16}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1421,19 +1388,18 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
                                   <Text
-                                    allowFontScaling={false}
-                                    dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    allowFontScaling={true}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 21,
+                                          "lineHeight": undefined,
                                         },
                                       ]
                                     }

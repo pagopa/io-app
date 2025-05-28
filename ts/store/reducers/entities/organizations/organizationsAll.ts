@@ -2,7 +2,10 @@
  * A reducer to store the organization names and fiscal codes
  */
 import { getType } from "typesafe-actions";
-import { logoutSuccess, sessionExpired } from "../../../actions/authentication";
+import {
+  logoutSuccess,
+  sessionExpired
+} from "../../../../features/authentication/common/store/actions";
 import { loadServiceDetail } from "../../../../features/services/details/store/actions/details";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -28,15 +31,15 @@ const reducer = (
   switch (action.type) {
     case getType(loadServiceDetail.success):
       const organization = state.find(
-        _ => _.fiscalCode === action.payload.organization_fiscal_code
+        _ => _.fiscalCode === action.payload.organization.fiscal_code
       );
       // add only if it is not already present
       if (organization === undefined) {
         return [
           ...state,
           {
-            name: action.payload.organization_name,
-            fiscalCode: action.payload.organization_fiscal_code
+            name: action.payload.organization.name,
+            fiscalCode: action.payload.organization.fiscal_code
           }
         ];
       }

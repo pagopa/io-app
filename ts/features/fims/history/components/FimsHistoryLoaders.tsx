@@ -1,6 +1,5 @@
-import { Divider, VSpacer } from "@pagopa/io-app-design-system";
+import { Divider, IOSkeleton, VSpacer } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import Placeholder from "rn-placeholder";
 import { FimsHistorySharedStyles } from "../utils/styles";
 
 export const LoadingFimsHistoryItemsFooter = ({
@@ -18,10 +17,10 @@ export const LoadingFimsHistoryItemsFooter = ({
 
 export const LoadingFimsHistoryListItem = () => (
   <View style={FimsHistorySharedStyles.fixedHeightListItem}>
-    <Placeholder.Box height={8} width={84} radius={8} animate="fade" />
+    <IOSkeleton shape="rectangle" width={"25%"} height={8} radius={8} />
     <VSpacer size={16} />
-    <Placeholder.Box height={16} width={248} radius={8} animate="fade" />
+    <IOSkeleton shape="rectangle" width={"70%"} height={16} radius={8} />
     <VSpacer size={8} />
-    <Placeholder.Box height={16} width={178} radius={8} animate="fade" />
+    <IOSkeleton shape="rectangle" width={"50%"} height={16} radius={8} />
   </View>
 );

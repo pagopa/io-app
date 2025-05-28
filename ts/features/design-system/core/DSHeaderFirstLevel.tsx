@@ -13,20 +13,22 @@ export const DSHeaderFirstLevel = () => {
     headerProps: {
       title: "Portafoglio",
       animatedRef: scrollViewContentRef,
-      secondAction: {
-        icon: "coggle",
-        accessibilityLabel: "Tap to trigger test alert",
-        onPress: () => {
-          Alert.alert("Settings");
+      actions: [
+        {
+          icon: "search",
+          accessibilityLabel: "Tap to trigger test alert",
+          onPress: () => {
+            Alert.alert("Search");
+          }
+        },
+        {
+          icon: "coggle",
+          accessibilityLabel: "Tap to trigger test alert",
+          onPress: () => {
+            Alert.alert("Settings");
+          }
         }
-      },
-      thirdAction: {
-        icon: "search",
-        accessibilityLabel: "Tap to trigger test alert",
-        onPress: () => {
-          Alert.alert("Search");
-        }
-      }
+      ]
     }
   });
 

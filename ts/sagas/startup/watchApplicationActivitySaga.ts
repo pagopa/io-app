@@ -4,15 +4,15 @@ import { ActionType, getType } from "typesafe-actions";
 import { backgroundActivityTimeout } from "../../config";
 import NavigationService from "../../navigation/NavigationService";
 import { applicationChangeState } from "../../store/actions/application";
-import { identificationRequest } from "../../store/actions/identification";
+import { identificationRequest } from "../../features/identification/store/actions";
 import { ReduxSagaEffect } from "../../types/utils";
 import {
   StartupStatusEnum,
   isStartupLoaded
 } from "../../store/reducers/startup";
 import { handlePendingMessageStateIfAllowed } from "../../features/pushNotifications/sagas/common";
-import { areTwoMinElapsedFromLastActivity } from "../../features/fastLogin/store/actions/sessionRefreshActions";
-import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { areTwoMinElapsedFromLastActivity } from "../../features/authentication/fastLogin/store/actions/sessionRefreshActions";
+import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and:

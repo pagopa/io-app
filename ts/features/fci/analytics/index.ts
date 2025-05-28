@@ -1,5 +1,5 @@
 import { getType } from "typesafe-actions";
-import { mixpanel, mixpanelTrack } from "../../../mixpanel";
+import { mixpanelTrack } from "../../../mixpanel";
 import { Action } from "../../../store/actions/types";
 import {
   fciLoadQtspClauses,
@@ -108,7 +108,7 @@ export const trackFciStartSignature = (environment: string) =>
   );
 
 const trackFciAction =
-  (mp: NonNullable<typeof mixpanel>, environment: string) =>
+  (environment: string) =>
   (action: Action): void => {
     switch (action.type) {
       case getType(fciStartRequest):
@@ -124,12 +124,12 @@ const trackFciAction =
       case getType(fciPollFilledDocument.request):
       case getType(fciPollFilledDocument.success):
       case getType(fciPollFilledDocument.cancel):
-        return mp.track(
+        return mixpanelTrack(
           action.type,
           buildEventProperties("TECH", undefined, { environment })
         );
       case getType(fciSigningRequest.success):
-        return mp.track(
+        return mixpanelTrack(
           action.type,
           buildEventProperties("TECH", "control", { environment })
         );
@@ -138,7 +138,7 @@ const trackFciAction =
       case getType(fciLoadQtspFilledDocument.failure):
       case getType(fciSigningRequest.failure):
       case getType(fciPollFilledDocument.failure):
-        return mp.track(
+        return mixpanelTrack(
           action.type,
           buildEventProperties("KO", undefined, {
             reason: getNetworkErrorMessage(action.payload),

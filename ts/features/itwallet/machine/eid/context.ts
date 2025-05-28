@@ -5,12 +5,10 @@ import {
 import { type StoredCredential } from "../../common/utils/itwTypesUtils";
 import { IssuanceFailure } from "./failure";
 
-type WithAbortController<T> = T & { abortController?: AbortController };
-
 export type IdentificationContext =
-  | WithAbortController<{ mode: "cieId" }>
-  | WithAbortController<{ mode: "ciePin"; pin: string }>
-  | WithAbortController<{ mode: "spid"; idpId: string }>;
+  | { mode: "cieId"; level: "L2" | "L3" }
+  | { mode: "ciePin"; level: "L3"; pin: string }
+  | { mode: "spid"; level: "L2"; idpId: string };
 
 /**
  * When authenticating with CIE + PIN the flow is interrupted
@@ -41,6 +39,10 @@ export type Context = {
   authenticationContext: AuthenticationContext | undefined;
   eid: StoredCredential | undefined;
   failure: IssuanceFailure | undefined;
+  isReissuing: boolean;
+  // Flag to check if IT Wallet L3 features are enabled and thus we should allow to request
+  // a PID credential and upgrade the existing credentials to L3
+  isL3FeaturesEnabled: boolean | undefined;
 };
 
 export const InitialContext: Context = {
@@ -50,5 +52,7 @@ export const InitialContext: Context = {
   identification: undefined,
   authenticationContext: undefined,
   eid: undefined,
-  failure: undefined
+  failure: undefined,
+  isReissuing: false,
+  isL3FeaturesEnabled: undefined
 };

@@ -1,6 +1,8 @@
 import {
+  Badge,
   Divider,
   H4,
+  H6,
   Icon,
   ListItemAction,
   ListItemHeader,
@@ -14,12 +16,13 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { Fragment } from "react";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 import I18n from "../../../i18n";
-
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-
-import { ListItemMessage } from "../../messages/components/Home/DS/ListItemMessage";
+import {
+  ListItemMessage,
+  ListItemMessageProps
+} from "../../messages/components/Home/DS/ListItemMessage";
 import { ListItemMessageSkeleton } from "../../messages/components/Home/DS/ListItemMessageSkeleton";
 import { getBadgePropsByTransactionStatus } from "../../payments/common/utils";
 import { ListItemTransactionStatus } from "../../payments/common/utils/types";
@@ -104,9 +107,37 @@ const renderListItemNav = () => (
       />
       <Divider />
       <ListItemNav
-        value="A looong looooong looooooooong looooooooooong title"
+        value="A looong looooong looooooooooong loooooooooooooong title"
         description="Description"
         onPress={onButtonPress}
+      />
+      <Divider />
+      <ListItemNav
+        icon={"categLearning"}
+        value={
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center"
+            }}
+          >
+            <H6>Nome del valoreeeeee eeeeeeeeee</H6>
+            <Badge text={"3"} variant="cgn" />
+          </View>
+        }
+        onPress={onButtonPress}
+      />
+      <Divider />
+      <ListItemNav
+        avatarProps={{
+          logoUri: {
+            uri: "https://assets.cdn.io.italia.it/logos/organizations/82003830161.png"
+          }
+        }}
+        description="Description"
+        onPress={onButtonPress}
+        value={"Value"}
       />
       <Divider />
       <ListItemNav value={"Value"} icon="gallery" onPress={onButtonPress} />
@@ -125,7 +156,7 @@ const renderListItemNav = () => (
         topElement={{
           badgeProps: {
             text: "Novità",
-            variant: "blue"
+            variant: "default"
           }
         }}
       />
@@ -145,7 +176,7 @@ const renderListItemNav = () => (
         topElement={{
           badgeProps: {
             text: "Novità",
-            variant: "blue"
+            variant: "default"
           }
         }}
         hideChevron
@@ -186,7 +217,7 @@ const renderListItemNav = () => (
   </VStack>
 );
 
-const listItemMessageSample: ListItemMessage = {
+const listItemMessageSample: ListItemMessageProps = {
   formattedDate: "09 dic",
   isRead: false,
   messageTitle: "Il tuo appuntamento",
@@ -620,7 +651,7 @@ const renderListItemTransaction = () => (
         transaction={{
           badge: getBadgePropsByTransactionStatus("refunded")
         }}
-        paymentLogoIcon={<Icon name="refund" color="bluegrey" />}
+        paymentLogoIcon={<Icon name="refund" />}
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>
@@ -657,7 +688,7 @@ const renderListItemTransaction = () => (
           amount: "",
           amountAccessibilityLabel: ""
         }}
-        paymentLogoIcon={<Icon name="notice" color="red" />}
+        paymentLogoIcon={<Icon name="notice" color="error-500" />}
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>

@@ -17,7 +17,7 @@ export type StartIssuanceFlow = Awaited<
  * Consider add the type into the package public interface
  */
 export type RequestObject = Awaited<
-  ReturnType<Credential.Presentation.GetRequestObject>
+  ReturnType<Credential.Presentation.VerifyRequestObject>
 >["requestObject"];
 
 /**
@@ -103,3 +103,5 @@ export type ItwCredentialStatus =
   | "expiring"
   | "expired"
   | ItwJwtCredentialStatus;
+
+export type ItwAuthLevel = "L2" | "L3";

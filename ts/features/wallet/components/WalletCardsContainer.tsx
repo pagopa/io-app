@@ -1,41 +1,28 @@
-import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useMemo } from "react";
+import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import { useMemo } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import I18n from "../../../i18n";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import {
-  ItwEidInfoBottomSheetContent,
-  ItwEidInfoBottomSheetTitle
-} from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
-import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
-import { ItwFeedbackBanner } from "../../itwallet/common/components/ItwFeedbackBanner";
-import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
+import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
-import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
+import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import {
   isWalletEmptySelector,
   selectIsWalletLoading,
-  selectWalletCardsByCategory,
   selectWalletCategories,
   selectWalletOtherCards,
   shouldRenderItwCardsContainerSelector,
   shouldRenderWalletEmptyStateSelector
 } from "../store/selectors";
-import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { withWalletCategoryFilter } from "../utils";
+import { ItwUpgradeBanner } from "../../itwallet/common/components/ItwUpgradeBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
-
-const EID_INFO_BOTTOM_PADDING = 128;
 
 /**
  * A component which renders the wallet cards container
@@ -67,7 +54,7 @@ const WalletCardsContainer = () => {
       return <WalletEmptyScreenContent />;
     }
     return (
-      <View testID="walletCardsContainerTestID" style={IOStyles.flex}>
+      <View testID="walletCardsContainerTestID" style={{ flex: 1 }}>
         {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
         <OtherWalletCardsContainer />
       </View>
@@ -80,15 +67,27 @@ const WalletCardsContainer = () => {
 
   return (
     <Animated.View
-      style={IOStyles.flex}
+      style={{ flex: 1, paddingTop: 16 }}
       layout={LinearTransition.duration(200)}
     >
-      <ItwWalletNotAvailableBanner />
-      <ItwDiscoveryBannerStandalone />
+      <WalletBannersContainer />
       {walletContent}
     </Animated.View>
   );
 };
+
+/**
+ * Renders the banners that are displayed at the top of the wallet screen
+ */
+const WalletBannersContainer = () => (
+  <VStack>
+    <ItwUpgradeBanner />
+    <ItwWalletNotAvailableBanner />
+    <ItwDiscoveryBannerStandalone />
+    {/* Dummy view wich adds a spacer in case one of the above banners is rendered */}
+    <View />
+  </VStack>
+);
 
 /**
  * Skeleton for the wallet cards container
@@ -100,91 +99,6 @@ const WalletCardsContainerSkeleton = () => (
     <WalletCardSkeleton testID="walletCardSkeletonTestID_3" cardProps={{}} />
   </>
 );
-
-/**
- * Card container for the ITW credentials
- */
-const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
-  const navigation = useIONavigation();
-  const cards = useIOSelector(state =>
-    selectWalletCardsByCategory(state, "itw")
-  );
-  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
-  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
-
-  const isEidExpired = eidStatus === "jwtExpired";
-
-  useDebugInfo({
-    itw: {
-      isItwValid,
-      eidStatus,
-      cards
-    }
-  });
-
-  const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
-    {
-      title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
-      // Navigation does not seem to work when the bottom sheet's component is not inline
-      component: <ItwEidInfoBottomSheetContent navigation={navigation} />
-    },
-    EID_INFO_BOTTOM_PADDING
-  );
-
-  useFocusEffect(
-    useCallback(
-      // Automatically dismiss the bottom sheet when focus is lost
-      () => eidInfoBottomSheet.dismiss,
-      [eidInfoBottomSheet.dismiss]
-    )
-  );
-
-  const sectionHeader = useMemo((): ListItemHeader | undefined => {
-    if (!isItwValid) {
-      return undefined;
-    }
-    return {
-      testID: "walletCardsCategoryItwHeaderTestID",
-      iconName: "legalValue",
-      iconColor: isEidExpired ? "grey-300" : "blueIO-500",
-      label: I18n.t("features.wallet.cards.categories.itw"),
-      endElement: {
-        type: "buttonLink",
-        componentProps: {
-          accessibilityLabel: I18n.t(
-            "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
-          ),
-          label: I18n.t(
-            "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
-          ),
-          onPress: eidInfoBottomSheet.present,
-          testID: "walletCardsCategoryItwActiveBadgeTestID"
-        }
-      }
-    };
-  }, [isItwValid, isEidExpired, eidInfoBottomSheet.present]);
-
-  return (
-    <>
-      <WalletCardsCategoryContainer
-        key={`cards_category_itw`}
-        testID={`itwWalletCardsContainerTestID`}
-        cards={cards}
-        header={sectionHeader}
-        topElement={
-          <>
-            <ItwWalletReadyBanner />
-            <ItwEidLifecycleAlert
-              lifecycleStatus={["jwtExpiring", "jwtExpired"]}
-            />
-          </>
-        }
-        bottomElement={<ItwFeedbackBanner />}
-      />
-      {isItwValid && eidInfoBottomSheet.bottomSheet}
-    </>
-  );
-});
 
 /**
  * Card container for the other cards (payments, bonus, etc.)

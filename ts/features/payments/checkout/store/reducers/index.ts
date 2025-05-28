@@ -31,7 +31,10 @@ import {
 } from "../actions/networking";
 import {
   OnPaymentSuccessAction,
+  PaymentStartWebViewPayload,
   initPaymentStateAction,
+  paymentMethodPspBannerClose,
+  paymentStartWebViewFlow,
   selectPaymentMethodAction,
   selectPaymentPspAction,
   walletPaymentSetCurrentStep
@@ -55,6 +58,8 @@ export type PaymentsCheckoutState = {
   transaction: pot.Pot<TransactionInfo, NetworkError | WalletPaymentFailure>;
   authorizationUrl: pot.Pot<string, NetworkError>;
   onSuccess?: OnPaymentSuccessAction;
+  pspBannerClosed: Set<string>;
+  webViewPayload?: PaymentStartWebViewPayload;
 };
 
 const INITIAL_STATE: PaymentsCheckoutState = {
@@ -68,7 +73,9 @@ const INITIAL_STATE: PaymentsCheckoutState = {
   selectedPaymentMethod: O.none,
   selectedPsp: O.none,
   transaction: pot.none,
-  authorizationUrl: pot.none
+  authorizationUrl: pot.none,
+  pspBannerClosed: new Set(),
+  webViewPayload: undefined
 };
 
 // eslint-disable-next-line complexity
@@ -87,6 +94,12 @@ const reducer = (
       return {
         ...state,
         currentStep: _.clamp(action.payload, 1, WALLET_PAYMENT_STEP_MAX)
+      };
+
+    case getType(paymentMethodPspBannerClose):
+      return {
+        ...state,
+        pspBannerClosed: new Set([...state.pspBannerClosed, action.payload])
       };
 
     // Payment verification and details
@@ -286,6 +299,11 @@ const reducer = (
       return {
         ...state,
         authorizationUrl: pot.none
+      };
+    case getType(paymentStartWebViewFlow):
+      return {
+        ...state,
+        webViewPayload: action.payload
       };
   }
   return state;

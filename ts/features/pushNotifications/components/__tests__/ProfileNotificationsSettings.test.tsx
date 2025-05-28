@@ -3,9 +3,8 @@ import { createStore } from "redux";
 import { ProfileNotificationSettings } from "../ProfileNotificationsSettings";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import ROUTES from "../../../../navigation/routes";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 
 describe("ProfileNotificationSettings", () => {
   [...Array(128).keys()].forEach(index => {
@@ -51,11 +50,7 @@ const renderComponent = (
   showSettingsPath: boolean
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const dsEnabledState = appReducer(
-    globalState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-  const store = createStore(appReducer, dsEnabledState as any);
+  const store = createStore(appReducer, globalState as any);
 
   return renderScreenWithNavigationStoreContext(
     () => (
@@ -69,7 +64,7 @@ const renderComponent = (
         showSettingsPath={showSettingsPath}
       />
     ),
-    ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS,
+    SETTINGS_ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS,
     {},
     store
   );

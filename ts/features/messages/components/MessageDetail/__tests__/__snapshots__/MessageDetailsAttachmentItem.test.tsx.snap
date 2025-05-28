@@ -379,16 +379,16 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               numberOfLines={2}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -406,29 +406,31 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 24,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 8,
-                                    "paddingVertical": 4,
                                   },
                                   {
-                                    "backgroundColor": "#F4F5F8",
+                                    "borderRadius": 36,
+                                    "paddingHorizontal": 12,
+                                    "paddingVertical": 6,
+                                  },
+                                  {
+                                    "backgroundColor": "#E7ECFC",
                                   },
                                 ]
                               }
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "color": "#031344",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -450,7 +452,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                           <View
                             accessibilityRole="progressbar"
                             accessible={true}
-                            importantForAccessibility="no-hide-descendants"
                             style={
                               {
                                 "height": 24,
@@ -1059,16 +1060,16 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               }
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={2}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1086,29 +1087,31 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                      "paddingHorizontal": 8,
-                                      "paddingVertical": 4,
                                     },
                                     {
-                                      "backgroundColor": "#F4F5F8",
+                                      "borderRadius": 36,
+                                      "paddingHorizontal": 12,
+                                      "paddingVertical": 6,
+                                    },
+                                    {
+                                      "backgroundColor": "#E7ECFC",
                                     },
                                   ]
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "color": "#031344",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1134,6 +1137,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               align="xMidYMid"
                               bbHeight={24}
                               bbWidth={24}
+                              color="#0B3EE3"
                               focusable={false}
                               height={24}
                               importantForAccessibility="no-hide-descendants"
@@ -1147,22 +1151,17 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={24}
                             >
                               <RNSVGGroup
-                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -1583,16 +1582,16 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               numberOfLines={2}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -1610,29 +1609,31 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 24,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 8,
-                                    "paddingVertical": 4,
                                   },
                                   {
-                                    "backgroundColor": "#F4F5F8",
+                                    "borderRadius": 36,
+                                    "paddingHorizontal": 12,
+                                    "paddingVertical": 6,
+                                  },
+                                  {
+                                    "backgroundColor": "#E7ECFC",
                                   },
                                 ]
                               }
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "color": "#031344",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1658,6 +1659,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                             align="xMidYMid"
                             bbHeight={24}
                             bbWidth={24}
+                            color="#0B3EE3"
                             focusable={false}
                             height={24}
                             importantForAccessibility="no-hide-descendants"
@@ -1671,22 +1673,17 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#0B3EE3",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 24,
                                   "width": 24,
                                 },
                               ]
                             }
-                            tintColor="#0B3EE3"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
                           >
                             <RNSVGGroup
-                              color="#0B3EE3"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -2154,16 +2151,16 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               }
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={2}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2181,29 +2178,31 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                      "paddingHorizontal": 8,
-                                      "paddingVertical": 4,
                                     },
                                     {
-                                      "backgroundColor": "#F4F5F8",
+                                      "borderRadius": 36,
+                                      "paddingHorizontal": 12,
+                                      "paddingVertical": 6,
+                                    },
+                                    {
+                                      "backgroundColor": "#E7ECFC",
                                     },
                                   ]
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "color": "#031344",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2229,6 +2228,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               align="xMidYMid"
                               bbHeight={24}
                               bbWidth={24}
+                              color="#0B3EE3"
                               focusable={false}
                               height={24}
                               importantForAccessibility="no-hide-descendants"
@@ -2242,22 +2242,17 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={24}
                             >
                               <RNSVGGroup
-                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,

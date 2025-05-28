@@ -10,6 +10,7 @@ import { WalletPaymentInputFiscalCodeScreen } from "../screens/WalletPaymentInpu
 import { WalletPaymentInputNoticeNumberScreen } from "../screens/WalletPaymentInputNoticeNumberScreen";
 import { WalletPaymentMakeScreen } from "../screens/WalletPaymentMakeScreen";
 import { WalletPaymentOutcomeScreen } from "../screens/WalletPaymentOutcomeScreen";
+import WalletPaymentWebViewScreen from "../screens/WalletPaymentWebViewScreen";
 import { PaymentsCheckoutParamsList } from "./params";
 import { PaymentsCheckoutRoutes } from "./routes";
 
@@ -24,16 +25,14 @@ export const PaymentsCheckoutNavigator = () => (
       name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER}
       component={WalletPaymentInputNoticeNumberScreen}
       options={{
-        gestureEnabled: isGestureEnabled,
-        headerShown: false
+        gestureEnabled: isGestureEnabled
       }}
     />
     <Stack.Screen
       name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_FISCAL_CODE}
       component={WalletPaymentInputFiscalCodeScreen}
       options={{
-        gestureEnabled: isGestureEnabled,
-        headerShown: false
+        gestureEnabled: isGestureEnabled
       }}
     />
     <Stack.Screen
@@ -67,6 +66,13 @@ export const PaymentsCheckoutNavigator = () => (
       options={{
         gestureEnabled: isGestureEnabled,
         headerShown: false
+      }}
+    />
+    <Stack.Screen
+      name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_WEB_VIEW}
+      component={WalletPaymentWebViewScreen}
+      options={{
+        gestureEnabled: false
       }}
     />
   </Stack.Navigator>

@@ -14,6 +14,7 @@ export type NPSIdle = {
 export type NPSLoadingContent = {
   nextStatus: "loadingContent";
   content: ThirdPartyMessagePrecondition;
+  skipLoading: boolean;
 };
 export type NPSRetrievingData = {
   nextStatus: "retrievingData";
@@ -38,10 +39,12 @@ export const toIdlePayload = (): NPSIdle => ({
   nextStatus: "idle"
 });
 export const toLoadingContentPayload = (
-  content: ThirdPartyMessagePrecondition
+  content: ThirdPartyMessagePrecondition,
+  skipLoading: boolean
 ): NPSLoadingContent => ({
   nextStatus: "loadingContent",
-  content
+  content,
+  skipLoading
 });
 export const toRetrievingDataPayload = (): NPSRetrievingData => ({
   nextStatus: "retrievingData"

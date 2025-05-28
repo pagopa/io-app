@@ -16,12 +16,6 @@ fastlane_version "2.28.5"
 default_platform :ios
 
 platform :ios do
-  before_all do
-    HOCKEYAPP_ALPHA_TOKEN = ENV["HOCKEYAPP_ALPHA_TOKEN"]
-    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-    ITUNES_USER = ENV["ITUNES_USER"]
-  end
-
   desc 'Fetch certificates and provisioning profiles'
   lane :certificates do
     # match(type: 'development')
@@ -33,66 +27,9 @@ platform :ios do
     scan
   end
 
-  desc "Register new device"
-  lane :register_new_device do  |options|
-    device_name = prompt(text: "Enter the device name: ")
-    device_udid = prompt(text: "Enter the device UDID: ")
-    device_hash = {}
-    device_hash[device_name] = device_udid
-    register_devices(
-                     devices: device_hash
-                     )
-    refresh_profiles
-  end
-
-  # A helper lane for refreshing provisioning profiles.
-  lane :refresh_profiles do
-    # match(
-    #   type: "development",
-    #   force: true)
-    match(
-      type: "adhoc",
-      force: true)
-  end
-
-  # Builds the app without signing
-  lane :test_build do |options|
-    # Install pods
-    cocoapods
-
-    # Build the app
-    xcodebuild(
-      workspace: "ItaliaApp.xcworkspace",
-      scheme: "ItaliaApp",
-      configuration: "Debug",
-      clean: options[:clean],
-      build: true,
-      destination: "generic/platform=iOS",
-      build_settings: {
-        "CODE_SIGNING_REQUIRED" => "NO",
-        "CODE_SIGN_IDENTITY" => ""
-      }
-    )
-  end
-
-  # Builds the app for ad-hoc releases (e.g. HockeyApp)
-  lane :do_adhoc_build do
-    # Install pods
-    cocoapods
-
-    # build the app
-    gym(
-      scheme: "ItaliaApp",
-      clean: true,
-      export_method: "ad-hoc",
-      workspace: "ItaliaApp.xcworkspace",
-      include_symbols: false
-    )
-  end
-
   # Builds the app for TestFlight releases
   lane :do_testflight_build do
-    sync_code_signing(type: "appstore", username: ITUNES_USER)
+    sync_code_signing(type: "appstore")
 
     # Install pods
     cocoapods
@@ -104,101 +41,6 @@ platform :ios do
       export_method: "app-store",
       workspace: "ItaliaApp.xcworkspace",
       include_symbols: false
-    )
-  end
-
-  desc "Submit a new Beta Build to HockeyApp"
-  desc "This will also make sure the profile is up to date"
-  lane :beta do |options|
-    # Ensure that your git status is not dirty
-    ensure_git_status_clean
-
-    # Increment the build number
-    build_number = get_build_number
-
-    # Get the current version from the project
-    version_number = get_version_number
-
-    # make sure to update the provisioning profile if necessary
-    # more information: https://codesigning.guide
-    match(
-      force_for_new_devices: true,
-      type: "adhoc"
-    )
-
-    do_adhoc_build
-
-    # generate the changelog based on last commits
-    changelog = changelog_from_git_commits(
-      tag_match_pattern: "ios/beta/*"
-    )
-
-    versioning_paths = [
-      "ItaliaApp.xcodeproj/project.pbxproj",
-      "ItaliaApp/Info.plist",
-      "ItaliaAppTests/Info.plist"
-    ]
-    # git_add(path: versioning_paths)
-    # git_commit(path: versioning_paths, message: "[fastlane] New iOS/HockeyApp build v#{version_number} (build #{build_number})")
-
-    # Add a git tag for this build. This will automatically
-    # use an appropriate git tag name
-    # add_git_tag(tag: "ios/beta/#{version_number}/#{build_number}")
-
-    # Push the new commit and tag back to your git remote
-    # push_to_git_remote
-
-    # upload to HockeyApp
-    hockey(
-      api_token: HOCKEYAPP_ALPHA_TOKEN,
-      notes: changelog
-    )
-  end
-
-  desc "Submit a new Beta Build to TestFlight"
-  lane :beta_testflight do |options|
-    
-    # xCode 14.2, prevents altool to fail with error "Could not
-    # determine the package’s bundle ID" during the "pilot" step
-    # See https://github.com/fastlane/fastlane/issues/20741
-    ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'false'
-
-    # Ensure that your git status is not dirty
-    ensure_git_status_clean
-
-    # Increment the build number
-    build_number = get_build_number
-
-    # Get the current version from the project
-    version_number = get_version_number
-
-    do_testflight_build
-
-    # generate the changelog based on last commits
-    changelog = changelog_from_git_commits(
-      tag_match_pattern: "ios/testflight/*"
-    )
-
-    versioning_paths = [
-      "ItaliaApp.xcodeproj/project.pbxproj",
-      "ItaliaApp/Info.plist",
-      "ItaliaAppTests/Info.plist"
-    ]
-    # git_add(path: versioning_paths)
-    # git_commit(path: versioning_paths, message: "[fastlane] New iOS/TestFlight build v#{version_number} (build #{build_number}) [skip ci]")
-
-    # Add a git tag for this build. This will automatically
-    # use an appropriate git tag name
-    # add_git_tag(tag: "ios/testflight/#{version_number}/#{build_number}")
-
-    # Push the new commit and tag back to your git remote
-    # push_to_git_remote
-
-    # upload to itunes store
-    pilot(
-      username: ITUNES_USER,
-      changelog: changelog,
-      skip_waiting_for_build_processing: true
     )
   end
 
@@ -330,15 +172,6 @@ platform :ios do
       # max wait for App Store Connect processing (30 min)
       wait_processing_timeout_duration: 1800
     )
-  end
-
-  desc "Deploy a new version to the App Store"
-  lane :release do
-    match(type: "appstore")
-    # snapshot
-    gym # Build your app - more options available
-    deliver(force: true)
-    # frameit
   end
 
   # You can define as many lanes as you want

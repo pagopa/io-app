@@ -1,4 +1,6 @@
 import { useCallback, useMemo, useRef } from "react";
+import { AccessibilityInfo } from "react-native";
+import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 import {
   useIODispatch,
   useIOSelector,
@@ -11,6 +13,7 @@ import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/Messa
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
+import { isAndroid } from "../../../../utils/platform";
 import { logoForService } from "../../../services/home/utils";
 import {
   scheduledPreconditionStatusAction,
@@ -30,7 +33,7 @@ import {
   accessibilityLabelForMessageItem,
   minDelayBetweenNavigationMilliseconds
 } from "./homeUtils";
-import { ListItemMessage } from "./DS/ListItemMessage";
+import { ListItemMessage, ListItemMessageProps } from "./DS/ListItemMessage";
 
 type WrappedListItemMessage = {
   index: number;
@@ -76,7 +79,7 @@ export const WrappedListItemMessage = ({
 
   const isRead = message.isRead;
 
-  const tag: ListItemMessage["tag"] =
+  const tag: ListItemMessageProps["tag"] =
     messageCategoryTag === SENDTagEnum.PN
       ? {
           variant: "legalMessage",
@@ -90,24 +93,46 @@ export const WrappedListItemMessage = ({
       : undefined;
 
   const accessibilityLabel = useMemo(
-    () => accessibilityLabelForMessageItem(message, isSelected),
-    [isSelected, message]
+    () => accessibilityLabelForMessageItem(message, source, isSelected),
+    [isSelected, message, source]
   );
 
-  const toggleScheduledMessageArchivingCallback = useCallback(() => {
-    const state = store.getState();
-    if (
-      isInboxOrArchiveSource(source) &&
-      !isArchivingInProcessingModeSelector(state)
-    ) {
-      dispatch(
-        toggleScheduledMessageArchivingAction({
-          messageId: message.id,
-          fromInboxToArchive: isInboxSource(source)
-        })
-      );
-    }
-  }, [dispatch, message, source, store]);
+  const toggleScheduledMessageArchivingCallback = useCallback(
+    (forceAccessibilityAnnounce: boolean) => {
+      const state = store.getState();
+      if (
+        isInboxOrArchiveSource(source) &&
+        !isArchivingInProcessingModeSelector(state)
+      ) {
+        // When the onLongPress event is triggered, VoiceOver and TalkBack do
+        // not announce the accessibilityLabel of the ListItemMessage so we
+        // have to force the announcement (but we do it only if VoiceOver and
+        // TalkBack are enabled). Unfortunately, programmatically requesting
+        // the announcement disables the automatic announcement on Android
+        // if the standard selection gesture (onPress) is used to select /
+        // deselect a message for archiving/unarchiving, so on Android we
+        // always have to force the announcement.
+        if (forceAccessibilityAnnounce) {
+          const isScreenReaderEnabled = isScreenReaderEnabledSelector(state);
+          if (isScreenReaderEnabled) {
+            const announcement = accessibilityLabelForMessageItem(
+              message,
+              source,
+              !isSelected
+            );
+            AccessibilityInfo.announceForAccessibility(announcement);
+          }
+        }
+        dispatch(
+          toggleScheduledMessageArchivingAction({
+            messageId: message.id,
+            fromInboxToArchive: isInboxSource(source)
+          })
+        );
+      }
+    },
+    [dispatch, isSelected, message, source, store]
+  );
 
   const onPressCallback = useCallback(() => {
     const state = store.getState();
@@ -115,7 +140,11 @@ export const WrappedListItemMessage = ({
       isInboxOrArchiveSource(source) &&
       isArchivingInSchedulingModeSelector(state)
     ) {
-      toggleScheduledMessageArchivingCallback();
+      // The workaround to force the announcement of the accessibilityLabel
+      // when the onLongPress event is triggered disables the automatic
+      // announcement on Android for the standard selection gesture (onPress),
+      // so we must handle that case here
+      toggleScheduledMessageArchivingCallback(isAndroid);
     } else if (isSearchSource(source) || isArchivingDisabledSelector(state)) {
       if (message.hasPrecondition) {
         dispatch(
@@ -167,7 +196,9 @@ export const WrappedListItemMessage = ({
       formattedDate={messageDate}
       isRead={isRead}
       messageTitle={messageTitle}
-      onLongPress={toggleScheduledMessageArchivingCallback}
+      // Accessibility label is not announced if the onLonPress
+      // event is triggered, so we have to force the announcement
+      onLongPress={() => toggleScheduledMessageArchivingCallback(true)}
       onPress={onPressCallback}
       organizationName={organizationName}
       selected={isSelected}

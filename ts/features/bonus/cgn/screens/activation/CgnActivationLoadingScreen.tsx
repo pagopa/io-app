@@ -1,54 +1,49 @@
-import { StyleSheet, View } from "react-native";
-import {
-  Body,
-  ContentWrapper,
-  H3,
-  IOStyles,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper, H3, VStack } from "@pagopa/io-app-design-system";
+import { useRef } from "react";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { isCgnActivationLoading } from "../../store/reducers/activation";
-import { cgnActivationCancel } from "../../store/actions/activation";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { LoadingIndicator } from "../../../../../components/ui/LoadingIndicator";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { LoadingIndicator } from "../../../../../components/ui/LoadingIndicator";
-import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { setAccessibilityFocus } from "../../../../../utils/accessibility";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { cgnActivationCancel } from "../../store/actions/activation";
+import { isCgnActivationLoading } from "../../store/reducers/activation";
 
-const styles = StyleSheet.create({
-  container: {
-    ...IOStyles.bgWhite,
-    ...IOStyles.centerJustified,
-    ...IOStyles.flex
-  },
-  contentTitle: {
-    textAlign: "center"
-  },
-  content: {
-    alignItems: "center"
-  }
-});
+const LoadingComponent = () => {
+  const ref = useRef<View>(null);
 
-const LoadingComponent = () => (
-  <SafeAreaView style={styles.container}>
-    <ContentWrapper>
-      <View style={styles.content}>
-        <View
-          accessible={false}
-          accessibilityElementsHidden={true}
-          importantForAccessibility={"no-hide-descendants"}
-        >
-          <LoadingIndicator />
-        </View>
-        <VSpacer size={24} />
-        <H3 style={styles.contentTitle}>
-          {I18n.t("bonus.cgn.activation.loading.caption")}
-        </H3>
-        <VSpacer size={24} />
-        <Body>{I18n.t("bonus.cgn.activation.loading.subCaption")}</Body>
-      </View>
-    </ContentWrapper>
-  </SafeAreaView>
-);
+  useOnFirstRender(() => {
+    setAccessibilityFocus(ref);
+  });
+
+  return (
+    <SafeAreaView
+      style={{ flex: 1, justifyContent: "center" }}
+      accessible
+      ref={ref}
+    >
+      <ContentWrapper>
+        <VStack space={24} style={{ alignItems: "center" }}>
+          <View
+            accessible={false}
+            accessibilityElementsHidden={true}
+            importantForAccessibility={"no-hide-descendants"}
+          >
+            <LoadingIndicator />
+          </View>
+          <H3 style={{ textAlign: "center" }}>
+            {I18n.t("bonus.cgn.activation.loading.caption")}
+          </H3>
+          <Body style={{ textAlign: "center" }}>
+            {I18n.t("bonus.cgn.activation.loading.subCaption")}
+          </Body>
+        </VStack>
+      </ContentWrapper>
+    </SafeAreaView>
+  );
+};
 
 const ErrorComponent = () => {
   const dispatch = useIODispatch();
@@ -57,7 +52,7 @@ const ErrorComponent = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram={"umbrellaNew"}
+      pictogram={"umbrella"}
       title={I18n.t("bonus.cgn.activation.error.title")}
       subtitle={I18n.t("bonus.cgn.activation.error.body")}
       action={{

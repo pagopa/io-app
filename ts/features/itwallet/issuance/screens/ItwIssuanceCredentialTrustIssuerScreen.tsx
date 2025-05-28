@@ -1,28 +1,34 @@
+import { useCallback } from "react";
 import {
-  Avatar,
   ContentWrapper,
   FeatureInfo,
   ForceScrollDownView,
   H2,
-  HSpacer,
-  Icon,
   ListItemHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { sequenceS } from "fp-ts/lib/Apply";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { useCallback } from "react";
-import { StyleSheet, View } from "react-native";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { FooterActions } from "../../../../components/ui/FooterActions";
+import { sequenceS } from "fp-ts/lib/Apply";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import IOMarkdown from "../../../../components/IOMarkdown";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import {
+  CREDENTIALS_MAP,
+  trackIssuanceCredentialScrollToBottom,
+  trackItwExit,
+  trackOpenItwTos
+} from "../../analytics";
+import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
-import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
@@ -32,6 +38,7 @@ import {
   RequestObject,
   StoredCredential
 } from "../../common/utils/itwTypesUtils";
+import { generateLinkRuleWithCallback } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import {
   selectCredentialTypeOption,
@@ -40,25 +47,30 @@ import {
   selectRequestedCredentialOption
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import {
-  ItwRequestedClaimsList,
-  RequiredClaim
-} from "../components/ItwRequiredClaimsList";
-import {
-  CREDENTIALS_MAP,
-  trackIssuanceCredentialScrollToBottom,
-  trackItwExit,
-  trackOpenItwTos,
-  trackWalletDataShare,
-  trackWalletDataShareAccepted
-} from "../../analytics";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
-import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
 
-const ItwIssuanceCredentialTrustIssuerScreen = () => {
+export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
+  credentialType?: string;
+  asyncContinuation?: boolean;
+};
+
+type ScreenProps =
+  // Props received when used inside a <Stack.Screen>
+  | IOStackNavigationRouteProps<
+      ItwParamsList,
+      "ITW_ISSUANCE_CREDENTIAL_TRUST_ISSUER"
+    >
+  // Props for standalone usage, outside a <Stack.Screen>
+  | ItwIssuanceCredentialTrustIssuerNavigationParams;
+
+const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
+  const { credentialType, asyncContinuation } =
+    ("route" in props ? props.route.params : props) ?? {};
+
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -69,10 +81,26 @@ const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
+  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
   usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
+
+  // Send the requested credential type to the machine when the issuance flow
+  // directly starts from this screen and not from the credentials catalog.
+  useFocusEffect(
+    useCallback(() => {
+      if (credentialType) {
+        machineRef.send({
+          type: "select-credential",
+          skipNavigation: true,
+          credentialType,
+          asyncContinuation
+        });
+      }
+    }, [credentialType, asyncContinuation, machineRef])
+  );
 
   if (isLoading) {
     return (
@@ -88,7 +116,7 @@ const ItwIssuanceCredentialTrustIssuerScreen = () => {
     }),
     O.fold(
       () => <ItwGenericErrorContent />,
-      props => <ContentView {...props} />
+      innerProps => <ContentView {...innerProps} />
     )
   );
 };
@@ -108,27 +136,22 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
 
-  useFocusEffect(
-    useCallback(() => {
-      trackWalletDataShare(CREDENTIALS_MAP[credentialType]);
-    }, [credentialType])
-  );
-
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
 
   const handleContinuePress = () => {
     machineRef.send({ type: "confirm-trust-data" });
-    trackWalletDataShareAccepted(CREDENTIALS_MAP[credentialType]);
   };
 
-  const dismissDialog = useItwDismissalDialog(() => {
-    machineRef.send({ type: "close" });
-    trackItwExit({
-      exit_page: route.name,
-      credential: CREDENTIALS_MAP[credentialType]
-    });
+  const dismissDialog = useItwDismissalDialog({
+    handleDismiss: () => {
+      machineRef.send({ type: "close" });
+      trackItwExit({
+        exit_page: route.name,
+        credential: CREDENTIALS_MAP[credentialType]
+      });
+    }
   });
 
   useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
@@ -140,13 +163,10 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const claims = parseClaims(eid.parsedCredential, {
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
   });
-  const requiredClaims = claims.map(
-    claim =>
-      ({
-        claim,
-        source: getCredentialNameFromType(eid.credentialType)
-      } as RequiredClaim)
-  );
+  const requiredClaims = claims.map(claim => ({
+    claim,
+    source: getCredentialNameFromType(eid.credentialType)
+  }));
 
   const trackScrollToBottom = (crossed: boolean) => {
     if (crossed) {
@@ -158,33 +178,42 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   };
 
   return (
-    <ForceScrollDownView onThresholdCrossed={trackScrollToBottom}>
+    <ForceScrollDownView
+      onThresholdCrossed={trackScrollToBottom}
+      footerActions={{
+        actions: {
+          type: "TwoButtons",
+          primary: {
+            label: I18n.t("global.buttons.continue"),
+            onPress: handleContinuePress,
+            loading: isIssuing
+          },
+          secondary: {
+            label: I18n.t("global.buttons.cancel"),
+            onPress: dismissDialog.show
+          }
+        }
+      }}
+    >
       <ContentWrapper>
         <VSpacer size={24} />
-        <View style={styles.header}>
-          <Avatar
-            size="small"
-            logoUri={require("../../../../../img/features/itWallet/issuer/IPZS.png")}
-          />
-          <HSpacer size={8} />
-          <Icon name={"transactions"} color={"grey-450"} size={24} />
-          <HSpacer size={8} />
-          <Avatar
-            size="small"
-            logoUri={require("../../../../../img/app/app-logo-inverted.png")}
-          />
-        </View>
+        <ItwDataExchangeIcons
+          requesterLogoUri={require("../../../../../img/features/itWallet/issuer/IPZS.png")}
+        />
         <VSpacer size={24} />
         <H2>
           {I18n.t("features.itWallet.issuance.credentialAuth.title", {
             credentialName: getCredentialNameFromType(credentialType)
           })}
         </H2>
-        <ItwMarkdown>
-          {I18n.t("features.itWallet.issuance.credentialAuth.subtitle", {
-            organization: ISSUER_MOCK_NAME
-          })}
-        </ItwMarkdown>
+        <IOMarkdown
+          content={I18n.t(
+            "features.itWallet.issuance.credentialAuth.subtitle",
+            {
+              organization: ISSUER_MOCK_NAME
+            }
+          )}
+        />
         <VSpacer size={8} />
         <ListItemHeader
           label={I18n.t(
@@ -209,39 +238,18 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           )}
         />
         <VSpacer size={32} />
-        <ItwMarkdown
-          styles={{ body: { fontSize: 14 } }}
-          onLinkOpen={trackOpenItwTos}
-        >
-          {I18n.t("features.itWallet.issuance.credentialAuth.tos", {
+        <IOMarkdown
+          content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
             privacyUrl
           })}
-        </ItwMarkdown>
+          rules={generateLinkRuleWithCallback(trackOpenItwTos)}
+        />
       </ContentWrapper>
-      <FooterActions
-        fixed={false}
-        actions={{
-          type: "TwoButtons",
-          primary: {
-            label: I18n.t("global.buttons.continue"),
-            onPress: handleContinuePress,
-            loading: isIssuing
-          },
-          secondary: {
-            label: I18n.t("global.buttons.cancel"),
-            onPress: dismissDialog.show
-          }
-        }}
-      />
     </ForceScrollDownView>
   );
 };
 
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    alignItems: "center"
-  }
-});
-
-export { ItwIssuanceCredentialTrustIssuerScreen };
+// Offline failure screen HOC
+export const ItwIssuanceCredentialTrustIssuerScreen = withOfflineFailureScreen(
+  ItwIssuanceCredentialTrustIssuer
+);

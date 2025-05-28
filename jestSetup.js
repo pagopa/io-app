@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-/* globals jest, NativeModules, require, global */
+/* globals jest, require, global */
 /**
  * Set up of the testing environment
  */
@@ -12,7 +12,9 @@ import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 
 import "react-native-get-random-values";
+require("@shopify/flash-list/jestSetup");
 
+jest.mock("react-native-i18n");
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("@react-native-community/push-notification-ios", () => jest.fn());
@@ -25,7 +27,7 @@ jest.mock("react-native-reanimated", () => {
 
   // The mock misses the `addWhitelistedUIProps` implementation
   // So we override it with a no-op
-  // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function, prettier/prettier
+  // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function
   Reanimated.default.addWhitelistedUIProps = () => {};
 
   return {
@@ -133,6 +135,11 @@ jest.mock("react-native", () => {
   // eslint-disable-next-line functional/immutable-data
   RN.NativeModules.JailMonkey = jest.requireActual("jail-monkey");
 
+  // eslint-disable-next-line functional/immutable-data
+  RN.NativeModules.AppReviewModule = {
+    requestReview: jest.fn()
+  };
+
   return RN;
 });
 
@@ -166,4 +173,30 @@ jest
  */
 jest.mock("@react-native-community/netinfo", () => ({
   fetch: jest.fn().mockResolvedValue({ isConnected: true })
+}));
+
+// eslint-disable-next-line functional/immutable-data
+window.navigator = {};
+jest.mock("reactotron-react-native", () => ({
+  default: {
+    configure: jest.fn().mockReturnThis(),
+    setAsyncStorageHandler: jest.fn().mockReturnThis(),
+    useReactNative: jest.fn().mockReturnThis(),
+    use: jest.fn().mockReturnThis(),
+    connect: jest.fn().mockReturnThis(),
+    onCustomCommand: jest.fn()
+  }
+}));
+
+jest.mock("uuid", () => ({
+  v4: () => {
+    const chars = "abcdefghijklmnopqrstuvwxyz0123456789".split("");
+    return Array.from({ length: 36 })
+      .map((_, i) =>
+        i === 8 || i === 13 || i === 18 || i === 23
+          ? "-"
+          : chars[Math.floor(Math.random() * chars.length)]
+      )
+      .join("");
+  }
 }));

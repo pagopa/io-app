@@ -1,9 +1,11 @@
 import { ReactElement } from "react";
-import { SettingsDiscoveryBanner } from "../../../screens/profile/components/SettingsDiscoveryBanner";
 import { GlobalState } from "../../../store/reducers/types";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBanner";
 import { isItwPersistedDiscoveryBannerRenderableSelector } from "../../itwallet/common/store/selectors";
-import { hasUserAcknowledgedSettingsBannerSelector } from "../../profileSettings/store/selectors";
+import { LoginExpirationBanner } from "../../authentication/loginPreferences/components/LoginExpirationBanner";
+import { isSessionExpirationBannerRenderableSelector } from "../../authentication/loginPreferences/store/selectors";
+import { PNActivationReminderBanner } from "../../pn/reminderBanner/components/PNActivationReminderBanner";
+import { isPnActivationReminderBannerRenderableSelector } from "../../pn/reminderBanner/reducer/bannerDismiss";
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
 
@@ -22,7 +24,8 @@ export type LandingScreenBannerId =
 export const LANDING_SCREEN_BANNERS_ENABLED_MAP = {
   PUSH_NOTIFICATIONS_REMINDER: true,
   ITW_DISCOVERY: true,
-  SETTINGS_DISCOVERY: true
+  LV_EXPIRATION_REMINDER: true,
+  SEND_ACTIVATION_REMINDER: true
 } as const;
 
 export const landingScreenBannerMap: BannerMapById = {
@@ -38,11 +41,16 @@ export const landingScreenBannerMap: BannerMapById = {
     ),
     isRenderableSelector: isItwPersistedDiscoveryBannerRenderableSelector
   },
-  SETTINGS_DISCOVERY: {
+  LV_EXPIRATION_REMINDER: {
     component: closeHandler => (
-      <SettingsDiscoveryBanner handleOnClose={closeHandler} />
+      <LoginExpirationBanner handleOnClose={closeHandler} />
     ),
-    isRenderableSelector: (state: GlobalState) =>
-      !hasUserAcknowledgedSettingsBannerSelector(state)
+    isRenderableSelector: isSessionExpirationBannerRenderableSelector
+  },
+  SEND_ACTIVATION_REMINDER: {
+    component: closeHandler => (
+      <PNActivationReminderBanner handleOnClose={closeHandler} />
+    ),
+    isRenderableSelector: isPnActivationReminderBannerRenderableSelector
   }
 } as const;

@@ -52,7 +52,7 @@ const PaymentsOnboardingSelectMethodScreen = () => {
   if (pot.isError(paymentMethodsPot)) {
     return (
       <OperationResultScreenContent
-        pictogram="umbrellaNew"
+        pictogram="umbrella"
         title={I18n.t("genericError")}
         subtitle={I18n.t("global.genericError")}
         action={{

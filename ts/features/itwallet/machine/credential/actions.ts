@@ -1,16 +1,20 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { ActionArgs, assign } from "xstate";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { checkCurrentSession } from "../../../../store/actions/authentication";
+import { checkCurrentSession } from "../../../authentication/common/store/actions/index.ts";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import {
   CREDENTIALS_MAP,
   trackAddCredentialProfileAndSuperProperties,
   trackSaveCredentialSuccess,
-  trackStartAddNewCredential
+  trackStartAddNewCredential,
+  trackWalletDataShare,
+  trackWalletDataShareAccepted
 } from "../../analytics";
 import {
   itwFlagCredentialAsRequested,
@@ -20,6 +24,8 @@ import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
+import { itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences.ts";
+import { CredentialType } from "../../common/utils/itwMocksUtils.ts";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -70,6 +76,12 @@ export default (
           }
         }
       ]
+    });
+  },
+
+  navigateToEidVerificationExpiredScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED
     });
   },
 
@@ -154,5 +166,69 @@ export default (
   },
 
   handleSessionExpired: () =>
-    store.dispatch(checkCurrentSession.success({ isSessionValid: false }))
+    store.dispatch(checkCurrentSession.success({ isSessionValid: false })),
+
+  trackCredentialIssuingDataShare: ({
+    context
+  }: ActionArgs<Context, CredentialIssuanceEvents, CredentialIssuanceEvents>) =>
+    trackDataShareEvent(context, store),
+
+  trackCredentialIssuingDataShareAccepted: ({
+    context
+  }: ActionArgs<Context, CredentialIssuanceEvents, CredentialIssuanceEvents>) =>
+    trackDataShareEvent(context, store, true)
 });
+
+const trackDataShareEvent = (
+  context: Context,
+  store: ReturnType<typeof useIOStore>,
+  isAccepted = false
+) => {
+  if (context.credentialType) {
+    const { credentialType, isAsyncContinuation } = context;
+    const credential = CREDENTIALS_MAP[credentialType];
+    const requestedCredentials = itwRequestedCredentialsSelector(
+      store.getState()
+    );
+    const isMdlRequested = requestedCredentials.includes(
+      CredentialType.DRIVING_LICENSE
+    );
+
+    /** Determine the correct phase based on the following conditions:
+     *
+     * - `initial_request`: No active request, user clicks on the driving license from the credential selection screen.
+     * - `request_in_progress`: An ongoing request is active, but the IPZS message has not yet been received, and the user clicks on the driving license from the credential selection screen again.
+     * - `old_message_request`: No active request, but the user clicks on an old IPZS message.
+     * - `async_continuation`: An ongoing request is active, and the user opens the IPZS message.
+     *
+     * This logic ensures that the phase is accurate regardless of whether
+     * there is an active MDL request or if the credential is requested
+     * from ItwCredentialOnboardingSection.
+     */
+    const trackingData = pipe(
+      O.fromPredicate(() => credentialType === CredentialType.DRIVING_LICENSE)(
+        credentialType
+      ),
+      O.map(() => {
+        if (isMdlRequested && isAsyncContinuation) {
+          return "async_continuation";
+        }
+        if (isMdlRequested && !isAsyncContinuation) {
+          return "request_in_progress";
+        }
+        if (!isMdlRequested && isAsyncContinuation) {
+          return "old_message_request";
+        }
+        return "initial_request";
+      }),
+      O.fold(
+        () => ({ credential }),
+        phase => ({ credential, phase })
+      )
+    );
+
+    (isAccepted ? trackWalletDataShareAccepted : trackWalletDataShare)(
+      trackingData
+    );
+  }
+};

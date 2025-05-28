@@ -1,3 +1,4 @@
+import { getType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
@@ -5,7 +6,17 @@ import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
 import { IdentificationContext } from "../machine/eid/context";
 import { IssuanceFailure } from "../machine/eid/failure";
-import { ItwCredentialStatus } from "../common/utils/itwTypesUtils";
+import {
+  ItwCredentialStatus,
+  WalletInstanceRevocationReason
+} from "../common/utils/itwTypesUtils";
+import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
+import { OfflineAccessReasonEnum } from "../../ingress/store/reducer";
+import { Action } from "../../../store/actions/types.ts";
+import {
+  resetOfflineAccessReason,
+  setOfflineAccessReason
+} from "../../ingress/store/actions";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -96,6 +107,12 @@ type CredentialUnexpectedFailure = {
   type: string;
 };
 
+type CredentialStatusAttestationFailure = {
+  credential: MixPanelCredential;
+  credential_status: string;
+  reason?: unknown;
+};
+
 type ItwIdMethod = IdentificationContext["mode"];
 
 // PROPERTIES TYPES
@@ -140,11 +157,35 @@ export const ID_STATUS_MAP: Record<
   unknown: "unknown"
 };
 
+type ItwWalletDataShare = {
+  credential: MixPanelCredential;
+  phase?:
+    | "initial_request"
+    | "request_in_progress"
+    | "old_message_request"
+    | "async_continuation";
+};
+
+type ItwCopyListItem = {
+  credential: MixPanelCredential;
+  item_copied: string;
+};
+
+type ItwOfflineBanner = {
+  screen: string;
+  error_message_type?: OfflineAccessReasonEnum;
+  use_case: "starting_app" | "foreground" | "background";
+};
+
+type ItwOfflineRicaricaAppIO = {
+  source: "bottom_sheet" | "banner";
+};
+
 // #region SCREEN VIEW EVENTS
-export const trackWalletDataShare = (credential: MixPanelCredential) => {
+export const trackWalletDataShare = (properties: ItwWalletDataShare) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_DATA_SHARE,
-    buildEventProperties("UX", "screen_view", { credential })
+    buildEventProperties("UX", "screen_view", properties)
   );
 };
 
@@ -249,6 +290,20 @@ export function trackWalletCredentialFAC_SIMILE() {
     buildEventProperties("UX", "screen_view", { credential: "ITW_TS_V2" })
   );
 }
+
+export function trackItwOfflineWallet() {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_WALLET,
+    buildEventProperties("UX", "screen_view")
+  );
+}
+
+export function trackItwOfflineBottomSheet() {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_BOTTOM_SHEET,
+    buildEventProperties("UX", "screen_view")
+  );
+}
 // #endregion SCREEN VIEW EVENTS
 
 // #region ACTIONS
@@ -261,11 +316,11 @@ export const trackItwCredentialDelete = (credential: MixPanelCredential) => {
 };
 
 export const trackWalletDataShareAccepted = (
-  credential: MixPanelCredential
+  properties: ItwWalletDataShare
 ) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_DATA_SHARE_ACCEPTED,
-    buildEventProperties("UX", "action", { credential })
+    buildEventProperties("UX", "action", properties)
   );
 };
 
@@ -493,6 +548,34 @@ export function trackIssuanceCredentialScrollToBottom(
   );
 }
 
+export function trackCredentialCardModal(credential: MixPanelCredential) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_CARD_MODAL,
+    buildEventProperties("UX", "action", {
+      credential,
+      credential_status: "valid"
+    })
+  );
+}
+
+export function trackItwOfflineRicaricaAppIO({
+  source
+}: ItwOfflineRicaricaAppIO) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_OFFLINE_RICARICA_APP_IO,
+    buildEventProperties("UX", "action", {
+      source
+    })
+  );
+}
+
+export const trackCopyListItem = (properties: ItwCopyListItem) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_COPY_LIST_ITEM,
+    buildEventProperties("UX", "action", properties)
+  );
+};
+
 // #endregion ACTIONS
 
 // #region ERRORS
@@ -651,6 +734,60 @@ export const trackItwAlreadyActivated = () => {
   );
 };
 
+export const trackItwStatusWalletAttestationFailure = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_STATUS_WALLET_ATTESTATION_FAILURE,
+    buildEventProperties("KO", "error")
+  );
+};
+
+export const trackItwStatusCredentialAttestationFailure = ({
+  credential,
+  credential_status,
+  reason
+}: CredentialStatusAttestationFailure) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_STATUS_CREDENTIAL_ATTESTATION_FAILURE,
+    buildEventProperties("KO", "error", {
+      credential,
+      credential_status,
+      reason
+    })
+  );
+};
+
+export const trackItwTrustmarkRenewFailure = (
+  credential: MixPanelCredential
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_TRUSTMARK_RENEW_FAILURE,
+    buildEventProperties("KO", "error", { credential })
+  );
+};
+
+export const trackItwOfflineReloadFailure = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_OFFLINE_RELOAD_FAILURE,
+    buildEventProperties("KO", "error")
+  );
+};
+
+export const trackItwWalletInstanceRevocation = (
+  reason: WalletInstanceRevocationReason
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_INSTANCE_REVOKED,
+    buildEventProperties("KO", "error", { reason })
+  );
+};
+
+export const trackItwWalletBadState = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_BAD_STATE_WALLET_DEACTIVATED,
+    buildEventProperties("KO", "error")
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
@@ -729,38 +866,62 @@ export const trackBackToWallet = ({ exit_page, credential }: BackToWallet) => {
 
 // #region TECH
 
-export const trackItwRequest = (ITW_ID_method?: ItwIdMethod) => {
-  if (ITW_ID_method) {
+export const trackItwRequest = (method?: ItwIdMethod) => {
+  if (method) {
     void mixpanelTrack(
       ITW_TECH_EVENTS.ITW_ID_REQUEST,
-      buildEventProperties("TECH", undefined, { ITW_ID_method })
+      buildEventProperties("TECH", undefined, { ITW_ID_method: method })
     );
   }
 };
 
-export const trackItwRequestSuccess = (ITW_ID_method?: ItwIdMethod) => {
-  if (ITW_ID_method) {
+export const trackItwRequestSuccess = (
+  method?: ItwIdMethod,
+  status?: ItwStatus
+) => {
+  if (method) {
     void mixpanelTrack(
       ITW_TECH_EVENTS.ITW_ID_REQUEST_SUCCESS,
       buildEventProperties("TECH", undefined, {
-        ITW_ID_method,
-        ITW_ID_V2: "L2"
+        ITW_ID_method: method,
+        ITW_ID_V2: status
       })
     );
   }
 };
+
+export const trackItwOfflineBanner = ({
+  screen,
+  error_message_type,
+  use_case
+}: ItwOfflineBanner) => {
+  void mixpanelTrack(
+    ITW_TECH_EVENTS.ITW_OFFLINE_BANNER,
+    buildEventProperties("TECH", undefined, {
+      screen,
+      error_message_type,
+      use_case
+    })
+  );
+};
+
 // #endregion TECH
 
 // #region PROFILE AND SUPER PROPERTIES UPDATE
 
 export const updateITWStatusAndIDProperties = (state: GlobalState) => {
+  const authLevel = itwAuthLevelSelector(state);
+  if (!authLevel) {
+    return;
+  }
+
   void updateMixpanelProfileProperties(state, {
     property: "ITW_STATUS_V2",
-    value: "L2"
+    value: authLevel
   });
   void updateMixpanelSuperProperties(state, {
     property: "ITW_STATUS_V2",
-    value: "L2"
+    value: authLevel
   });
   void updateMixpanelProfileProperties(state, {
     property: "ITW_ID_V2",
@@ -798,3 +959,26 @@ export const updatePropertiesWalletRevoked = (state: GlobalState) => {
 };
 
 // #endregion PROFILE AND SUPER PROPERTIES UPDATE
+
+/**
+ * Track the reason for offline access on Mixpanel
+ * @param action - The action that was dispatched
+ * @param state - The current state of the application
+ */
+export const trackOfflineAccessReason = (
+  action: Action,
+  state: GlobalState
+): void | ReadonlyArray<null> => {
+  switch (action.type) {
+    case getType(setOfflineAccessReason):
+      return void updateMixpanelSuperProperties(state, {
+        property: "OFFLINE_ACCESS_REASON",
+        value: action.payload
+      });
+    case getType(resetOfflineAccessReason):
+      return void updateMixpanelSuperProperties(state, {
+        property: "OFFLINE_ACCESS_REASON",
+        value: "not_available"
+      });
+  }
+};

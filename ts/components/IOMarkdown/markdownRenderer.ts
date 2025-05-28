@@ -1,6 +1,16 @@
 import { parse as textLintParse } from "@textlint/markdown-to-ast";
-import { AnyTxtNode, TxtParentNode } from "@textlint/ast-node-types";
+import {
+  AnyTxtNode,
+  TxtHeaderNode,
+  TxtLinkNode,
+  TxtListNode,
+  TxtNode,
+  TxtParagraphNode,
+  TxtParentNode,
+  TxtStrNode
+} from "@textlint/ast-node-types";
 import { omit } from "lodash";
+import { isIos } from "../../utils/platform";
 import { AnyTxtNodeWithSpacer, IOMarkdownRenderRules, Renderer } from "./types";
 
 /**
@@ -8,11 +18,18 @@ import { AnyTxtNodeWithSpacer, IOMarkdownRenderRules, Renderer } from "./types";
  * @param rules The `markdown` render rules.
  * @returns A render function for the individual node that applies the provided rendering rules.
  */
-export function getRenderMarkdown(rules: IOMarkdownRenderRules): Renderer {
+export function getRenderMarkdown(
+  rules: IOMarkdownRenderRules,
+  screenReaderEnabled: boolean
+): Renderer {
   return (content: AnyTxtNodeWithSpacer) =>
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    rules[content.type]?.(content, getRenderMarkdown(rules)) ?? null;
+    rules[content.type]?.(
+      content,
+      getRenderMarkdown(rules, screenReaderEnabled),
+      screenReaderEnabled
+    ) ?? null;
 }
 
 /**
@@ -63,3 +80,141 @@ function integrateParent<T extends AnyTxtNode>(
       }
     : { ...node, parent: parentLight };
 }
+
+export const sanitizeMarkdownForImages = (
+  inputMarkdownContent: string
+): string => {
+  const markdownImageRegex = /!\[.*?\]\((.*?)\)/g;
+
+  const reversedMatches: Array<RegExpExecArray> = [];
+  // eslint-disable-next-line functional/no-let
+  let match: RegExpExecArray | null;
+  while ((match = markdownImageRegex.exec(inputMarkdownContent)) !== null) {
+    // eslint-disable-next-line functional/immutable-data
+    reversedMatches.unshift(match);
+  }
+
+  return reversedMatches.reduce(
+    (sanitizedMarkdownContent, innerMatch) =>
+      insertNewLinesIfNeededOnMatch(sanitizedMarkdownContent, innerMatch),
+    inputMarkdownContent
+  );
+};
+
+export const insertNewLinesIfNeededOnMatch = (
+  markdownContent: string,
+  imageMatch: RegExpExecArray
+): string => {
+  const matchStartIndex = imageMatch.index;
+  const matchEndIndex = matchStartIndex + imageMatch[0].length;
+  const sanitizedMarkdownContent = insertNewLineAtIndexIfNeeded(
+    markdownContent,
+    matchEndIndex
+  );
+  return insertNewLineAtIndexIfNeeded(
+    sanitizedMarkdownContent,
+    matchStartIndex - 1,
+    true
+  );
+};
+
+const insertNewLineAtIndexIfNeeded = (
+  markdownContent: string,
+  baseIndex: number,
+  insertAfterIndex: boolean = false
+) => {
+  if (baseIndex >= 0 && baseIndex < markdownContent.length) {
+    const character = markdownContent[baseIndex];
+    if (character !== "\n") {
+      const index = insertAfterIndex ? baseIndex + 1 : baseIndex;
+      return [
+        markdownContent.slice(0, index),
+        "\n\n",
+        markdownContent.slice(index)
+      ].join("");
+    }
+  }
+  return markdownContent;
+};
+
+export const isTxtParentNode = (node: TxtNode): node is TxtParentNode =>
+  node.type === "Paragraph" ||
+  node.type === "Header" ||
+  node.type === "BlockQuote" ||
+  node.type === "List" ||
+  node.type === "ListItem" ||
+  node.type === "Table" ||
+  node.type === "TableRow" ||
+  node.type === "TableCell" ||
+  node.type === "Emphasis" ||
+  node.type === "Strong" ||
+  node.type === "Delete" ||
+  node.type === "Link";
+export const isTxtLinkNode = (node: TxtNode): node is TxtLinkNode =>
+  node.type === "Link";
+export const isTxtStrNode = (node: TxtNode): node is TxtStrNode =>
+  node.type === "Str";
+export const isTxtParagraphNode = (node: TxtNode): node is TxtParagraphNode =>
+  node.type === "Paragraph";
+
+export type LinkData = {
+  text: string;
+  url: string;
+};
+
+export const extractAllLinksFromRootNode = (
+  node: TxtHeaderNode | TxtListNode | TxtParagraphNode,
+  screenReaderEnabled: boolean
+): ReadonlyArray<LinkData> => {
+  const allLinkData: Array<LinkData> = [];
+  if (node.parent?.type === "Document" && isIos && screenReaderEnabled) {
+    extractAllLinksFromNodeWithChildren(node, allLinkData);
+  }
+  return allLinkData;
+};
+
+export const extractAllLinksFromNodeWithChildren = (
+  nodeWithChildren: Readonly<TxtParentNode>,
+  allLinks: Array<LinkData>
+) => {
+  nodeWithChildren.children.forEach(node => {
+    if (isTxtLinkNode(node)) {
+      const composedLink: Array<string> = [];
+      extractLinkDataFromRootNode(node, composedLink);
+      const text = composedLink.join("");
+      const url = node.url;
+      // eslint-disable-next-line functional/immutable-data
+      allLinks.push({
+        text,
+        url
+      });
+    } else if (isTxtParentNode(node)) {
+      extractAllLinksFromNodeWithChildren(node, allLinks);
+    }
+  });
+};
+
+export const extractLinkDataFromRootNode = (
+  inputNode: Readonly<TxtParentNode>,
+  links: Array<string>
+): void =>
+  inputNode.children.forEach(node => {
+    if (isTxtStrNode(node)) {
+      // eslint-disable-next-line functional/immutable-data
+      links.push(node.value);
+    } else if (isTxtParentNode(node)) {
+      extractLinkDataFromRootNode(node, links);
+    }
+  });
+
+export const isParagraphNodeInHierarchy = (
+  input: TxtNode | undefined
+): boolean => {
+  if (input == null || input.parent == null) {
+    return false;
+  } else if (isTxtParagraphNode(input)) {
+    return true;
+  }
+
+  return isParagraphNodeInHierarchy(input.parent);
+};

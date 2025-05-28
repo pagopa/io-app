@@ -5,10 +5,10 @@ import {
   testableALLOWED_ROUTE_NAMES
 } from "../internalLink";
 import {
-  IO_FIMS_LINK_PREFIX,
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../navigation";
+import { IO_FIMS_LINK_PREFIX } from "../../features/fims/singleSignOn/utils";
 
 describe("getInternalRoute", () => {
   const allowedRoutes = Object.entries(testableALLOWED_ROUTE_NAMES!).map(

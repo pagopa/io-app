@@ -2,7 +2,7 @@
 
 exports[`ActivityIndicator should match the snapshot with default props 1`] = `
 <ActivityIndicator
-  color="#0073E6"
+  color="#0B3EE3"
   size="large"
   testID="rn-activity-indicator"
 />

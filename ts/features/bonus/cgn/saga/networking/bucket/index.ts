@@ -5,7 +5,7 @@ import { getNetworkError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { BackendCgnMerchants } from "../../../api/backendCgnMerchants";
 import { cgnCodeFromBucket } from "../../../store/actions/bucket";
-import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 import { setMerchantDiscountCode } from "../../../store/actions/merchants";
 
 // handle the request for CGN bucket consumption

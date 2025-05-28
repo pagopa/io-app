@@ -1,5 +1,9 @@
 /* eslint-disable functional/immutable-data */
-import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  useIOTheme,
+  useIOThemeContext
+} from "@pagopa/io-app-design-system";
 import {
   LinkingOptions,
   NavigationContainer,
@@ -7,14 +11,20 @@ import {
 } from "@react-navigation/native";
 import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
 
-import { View } from "react-native";
+import { Linking, View } from "react-native";
+import { ReactNavigationInstrumentation } from "../App";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
+import { useStoredFontPreference } from "../common/context/DSTypefaceContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
+import FocusAwareStatusBar from "../components/ui/FocusAwareStatusBar";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
-import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { IngressScreen } from "../features/ingress/screens/IngressScreen";
+import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
+import { processUtmLink } from "../features/utmLink";
 import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
@@ -26,14 +36,15 @@ import {
   IONavigationLightTheme
 } from "../theme/navigations";
 import { isTestEnv } from "../utils/environment";
+import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
-import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
-import { ReactNavigationInstrumentation } from "../App";
+import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
+import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
+import { linkingSubscription } from "./linkingSubscription";
 import NavigationService, {
   navigationRef,
   setMainNavigatorReady
@@ -41,22 +52,22 @@ import NavigationService, {
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
-import { linkingSubscription } from "./linkingSubscription";
+import OfflineStackNavigator from "./OfflineStackNavigator";
 
 type OnStateChangeStateType = Parameters<
   NonNullable<NavigationContainerProps["onStateChange"]>
 >[0];
-const isMainNavigatorReady = (state: OnStateChangeStateType) =>
-  state &&
-  state.routes &&
-  state.routes.length > 0 &&
-  state.routes[0].name === ROUTES.MAIN;
+export const isMainNavigatorReady = (state: OnStateChangeStateType) => {
+  const routeName = state?.routes?.[0]?.name;
+  return routeName === ROUTES.MAIN || routeName === ITW_ROUTES.MAIN;
+};
 
 export const AppStackNavigator = (): ReactElement => {
   // This hook is used since we are in a child of the Context Provider
   // to setup the experimental design system value from AsyncStorage
   // remove this once the experimental design system is stable
   useStoredExperimentalDesign();
+  useStoredFontPreference();
 
   const dispatch = useIODispatch();
 
@@ -65,6 +76,10 @@ export const AppStackNavigator = (): ReactElement => {
   useEffect(() => {
     dispatch(startApplicationInitialization());
   }, [dispatch]);
+
+  if (startupStatus === StartupStatusEnum.OFFLINE) {
+    return <OfflineStackNavigator />;
+  }
 
   if (startupStatus === StartupStatusEnum.NOT_AUTHENTICATED) {
     return <NotAuthenticatedStackNavigator />;
@@ -90,6 +105,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
 
   // Dark/Light Mode
   const { themeType } = useIOThemeContext();
+  const theme = useIOTheme();
 
   const linking: LinkingOptions<AppParamsList> = {
     enabled: !isTestEnv, // disable linking in test env
@@ -106,12 +122,12 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
             [ROUTES.PAYMENTS_HOME]: "payments"
           }
         },
-        [ROUTES.PROFILE_NAVIGATOR]: {
+        [SETTINGS_ROUTES.PROFILE_NAVIGATOR]: {
           path: "profile",
           screens: {
-            [ROUTES.PROFILE_PREFERENCES_HOME]: "preferences",
-            [ROUTES.PROFILE_PRIVACY]: "privacy",
-            [ROUTES.PROFILE_PRIVACY_MAIN]: "privacy-main"
+            [SETTINGS_ROUTES.PROFILE_PREFERENCES_HOME]: "preferences",
+            [SETTINGS_ROUTES.PROFILE_PRIVACY]: "privacy",
+            [SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN]: "privacy-main"
           }
         },
         [SERVICES_ROUTES.SERVICES_NAVIGATOR]: {
@@ -129,11 +145,26 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         ...fciLinkingOptions,
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...idPayLinkingOptions,
-        [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
+        [ROUTES.PAGE_NOT_FOUND]: "*"
       }
     },
     subscribe: linkingSubscription(dispatch, store)
   };
+
+  /**
+   * If the app is swiped closed and it's opened with a deep link,
+   * the linking event in the NavigationContainer is not triggered.
+   * `Linking` has the option to get the initial URL when the app is opened.
+   * We can use this to check if the app was opened with a deep link and
+   * check if it has a `utm_medium` and `utm_source` parameters
+   */
+  useOnFirstRender(() => {
+    void Linking.getInitialURL().then(initialUrl => {
+      if (initialUrl) {
+        processUtmLink(initialUrl, dispatch);
+      }
+    });
+  });
 
   return (
     <NavigationContainer
@@ -165,6 +196,11 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         routeNameRef.current = currentRouteName;
       }}
     >
+      <FocusAwareStatusBar
+        backgroundColor={IOColors[theme["appBackground-primary"]]}
+        barStyle={themeType === "dark" ? "light-content" : "dark-content"}
+        animated
+      />
       {props.children}
     </NavigationContainer>
   );
@@ -177,7 +213,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
 export const IONavigationContainer = ({
   routingInstrumentation
 }: {
-  routingInstrumentation: ReactNavigationInstrumentation;
+  routingInstrumentation?: ReactNavigationInstrumentation;
 }) => (
   <InnerNavigationContainer routingInstrumentation={routingInstrumentation}>
     <AppStackNavigator />

@@ -15,10 +15,11 @@ import { ReduxSagaEffect } from "../types/utils";
 import {
   sessionExpired,
   sessionInvalid
-} from "../store/actions/authentication";
+} from "../features/authentication/common/store/actions";
 import { GlobalState } from "../store/reducers/types";
 import { updateMixpanelProfileProperties } from "../mixpanelConfig/profileProperties";
 import { setIsMixpanelInitialized } from "../features/mixpanel/store/actions";
+import { isTestEnv } from "../utils/environment";
 
 function* initializeMixpanelAndUpdateState() {
   const state = (yield* select()) as GlobalState;
@@ -68,6 +69,7 @@ export function* handleSetMixpanelEnabled(
     yield* call(identifyMixpanelSaga);
   } else {
     yield* call(terminateMixpanel);
+    yield* put(setIsMixpanelInitialized(false));
   }
 }
 
@@ -107,3 +109,7 @@ export function* askMixpanelOptIn() {
   const state = (yield* select()) as GlobalState;
   yield* call(updateMixpanelProfileProperties, state);
 }
+
+export const testable = isTestEnv
+  ? { initializeMixpanelAndUpdateState }
+  : undefined;

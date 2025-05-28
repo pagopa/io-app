@@ -10,12 +10,13 @@ import { BackendClient } from "../../../../api/backend";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { trackPNPushSettings } from "../../../pn/analytics";
 import { upsertServicePreference } from "../store/actions/preference";
 import {
+  ServicePreferencePot,
   serviceMetadataInfoSelector,
-  servicePreferencePotSelector
+  servicePreferencePotByIdSelector
 } from "../store/reducers";
 import { isServicePreferenceResponseSuccess } from "../types/ServicePreferenceResponse";
 import { mapKinds } from "./handleGetServicePreference";
@@ -28,9 +29,7 @@ import { mapKinds } from "./handleGetServicePreference";
  * @param action
  */
 const calculateUpdatingPreference = (
-  currentServicePreferenceState: ReturnType<
-    typeof servicePreferencePotSelector
-  >,
+  currentServicePreferenceState: ServicePreferencePot,
   action: ActionType<typeof upsertServicePreference.request>
 ): ServicePreference => {
   if (
@@ -77,8 +76,8 @@ export function* trackPNPushNotificationSettings(
   pipe(
     serviceMetadataInfo,
     O.fromNullable,
-    O.chainNullableK(metadata => metadata.customSpecialFlow),
-    O.filter(customSpecialFlow => customSpecialFlow === "pn"),
+    O.chainNullableK(metadata => metadata.serviceKind),
+    O.filter(serviceKind => serviceKind === "pn"),
     O.fold(
       () => undefined,
       _ => trackPNPushSettings(action.payload.push)
@@ -97,7 +96,9 @@ export function* handleUpsertServicePreference(
 ) {
   yield* call(trackPNPushNotificationSettings, action);
 
-  const servicePreferencePot = yield* select(servicePreferencePotSelector);
+  const servicePreferencePot = yield* select(state =>
+    servicePreferencePotByIdSelector(state, action.payload.id)
+  );
 
   const updatingPreference = calculateUpdatingPreference(
     servicePreferencePot,

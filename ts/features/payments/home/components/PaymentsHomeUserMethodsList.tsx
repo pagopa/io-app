@@ -1,5 +1,6 @@
 import {
   Banner,
+  BannerErrorState,
   IOVisualCostants,
   ListItemHeader,
   VSpacer
@@ -22,7 +23,6 @@ import { paymentsSetAddMethodsBannerVisible } from "../store/actions";
 import { isAddMethodsBannerVisibleSelector } from "../store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { BannerErrorState } from "../../../../components/ui/BannerErrorState";
 import { usePaymentsBackoffRetry } from "../../common/hooks/usePaymentsBackoffRetry";
 import { clearPaymentsBackoffRetry } from "../../common/store/actions";
 import {
@@ -73,22 +73,24 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     }
   }, [dispatch, paymentMethodsPot]);
 
-  const handleOnMethodPress = (walletId: string, isExpired: boolean) => () => {
-    analytics.trackPaymentWalletMethodDetail({
-      payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
-      payment_method_status: isExpired ? "invalid" : "valid"
-    });
+  const handleOnMethodPress =
+    (walletId: string, isExpired: boolean, payment_method_selected?: string) =>
+    () => {
+      analytics.trackPaymentWalletMethodDetail({
+        payment_method_selected,
+        payment_method_status: isExpired ? "invalid" : "valid"
+      });
 
-    navigation.navigate(
-      PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR,
-      {
-        screen: PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN,
-        params: {
-          walletId
+      navigation.navigate(
+        PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR,
+        {
+          screen: PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN,
+          params: {
+            walletId
+          }
         }
-      }
-    );
-  };
+      );
+    };
 
   const handleOnAddMethodPress = () => {
     analytics.trackPaymentWalletAddStart({
@@ -114,7 +116,8 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
       ...getPaymentCardPropsFromWalletInfo(method),
       onPress: handleOnMethodPress(
         method.walletId,
-        getPaymentCardPropsFromWalletInfo(method)?.isExpired ?? false
+        getPaymentCardPropsFromWalletInfo(method)?.isExpired ?? false,
+        method.details?.type
       )
     })
   );
@@ -152,7 +155,6 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
           content={I18n.t("features.payments.methods.banner.content")}
           action={I18n.t("features.payments.methods.banner.action")}
           onPress={handleOnAddMethodPress}
-          size="big"
           color="neutral"
           viewRef={bannerRef}
           labelClose={I18n.t("global.buttons.close")}
@@ -175,7 +177,8 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
                 type: "buttonLink",
                 componentProps: {
                   label: I18n.t("features.payments.methods.button"),
-                  onPress: handleOnAddMethodPress
+                  onPress: handleOnAddMethodPress,
+                  accessibilityLabel: I18n.t("features.payments.methods.button")
                 }
               }
             : undefined

@@ -252,6 +252,12 @@ export const baseRawBackendStatus: BackendStatus = {
     cdc: {
       enabled: false
     },
+    cdcV2: {
+      min_app_version: {
+        android: "0.0.0.0",
+        ios: "0.0.0.0"
+      }
+    },
     barcodesScanner: {
       dataMatrixPosteEnabled: false
     },
@@ -309,7 +315,12 @@ export const baseRawBackendStatus: BackendStatus = {
       feedback_banner_visible: true,
       disabled_identification_methods: [],
       disabled_credentials: [],
-      ipatente_cta_visible: true
+      ipatente_cta_visible: true,
+      ipatente_cta_config: {
+        visibility: true,
+        url: "",
+        service_id: ""
+      }
     }
   }
 };
@@ -348,6 +359,12 @@ export const baseBackendConfig: Config = {
   },
   cdc: {
     enabled: false
+  },
+  cdcV2: {
+    min_app_version: {
+      android: "0.0.0.0",
+      ios: "0.0.0.0"
+    }
   },
   barcodesScanner: {
     dataMatrixPosteEnabled: false
@@ -406,6 +423,11 @@ export const baseBackendConfig: Config = {
     feedback_banner_visible: true,
     disabled_credentials: [],
     disabled_identification_methods: [],
-    ipatente_cta_visible: true
+    ipatente_cta_visible: true,
+    ipatente_cta_config: {
+      visibility: true,
+      url: "",
+      service_id: ""
+    }
   }
 };

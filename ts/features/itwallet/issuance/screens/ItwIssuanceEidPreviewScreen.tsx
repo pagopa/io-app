@@ -1,25 +1,32 @@
 import {
+  ContentWrapper,
   ForceScrollDownView,
   H2,
   HeaderSecondLevel,
   HStack,
   Icon,
-  IOStyles,
-  IOVisualCostants,
+  useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useLayoutEffect, useMemo } from "react";
-import { StyleSheet, View } from "react-native";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { FooterActions } from "../../../../components/ui/FooterActions";
+import { useCallback, useLayoutEffect, useMemo } from "react";
+import IOMarkdown from "../../../../components/IOMarkdown";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { identificationRequest } from "../../../../store/actions/identification";
+import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import {
+  CREDENTIALS_MAP,
+  trackCredentialPreview,
+  trackItwExit,
+  trackItwRequestSuccess,
+  trackSaveCredentialToWallet
+} from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -28,16 +35,7 @@ import {
   selectIdentification
 } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import {
-  CREDENTIALS_MAP,
-  trackCredentialPreview,
-  trackItwExit,
-  trackItwRequestSuccess,
-  trackSaveCredentialToWallet
-} from "../../analytics";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
-import IOMarkdown from "../../../../components/IOMarkdown";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
@@ -80,23 +78,27 @@ const ContentView = ({ eid }: ContentViewProps) => {
     [eid.credentialType]
   );
 
-  useFocusEffect(() => {
-    trackCredentialPreview(mixPanelCredential);
-    trackItwRequestSuccess(identification?.mode);
-  });
+  const theme = useIOTheme();
+
+  useFocusEffect(
+    useCallback(() => {
+      trackCredentialPreview(mixPanelCredential);
+      if (identification) {
+        trackItwRequestSuccess(identification?.mode, identification?.level);
+      }
+    }, [identification, mixPanelCredential])
+  );
 
   useDebugInfo({
     parsedCredential: eid.parsedCredential
   });
 
-  const dismissDialog = useItwDismissalDialog(() => {
-    machineRef.send({ type: "close" });
-    trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+  const dismissDialog = useItwDismissalDialog({
+    handleDismiss: () => {
+      machineRef.send({ type: "close" });
+      trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+    }
   });
-
-  const handleStoreEidSuccess = () => {
-    machineRef.send({ type: "add-to-wallet" });
-  };
 
   const handleSaveToWallet = () => {
     trackSaveCredentialToWallet(eid.credentialType);
@@ -110,7 +112,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
           onCancel: () => undefined
         },
         {
-          onSuccess: handleStoreEidSuccess
+          onSuccess: () => machineRef.send({ type: "add-to-wallet" })
         }
       )
     );
@@ -134,22 +136,10 @@ const ContentView = ({ eid }: ContentViewProps) => {
   }, [navigation, dismissDialog]);
 
   return (
-    <ForceScrollDownView contentContainerStyle={styles.scroll}>
-      <VStack space={24} style={styles.contentWrapper}>
-        <HStack space={8} style={IOStyles.alignCenter}>
-          <Icon name="legalValue" color="blueIO-500" />
-          <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
-        </HStack>
-        <IOMarkdown
-          content={I18n.t("features.itWallet.issuance.eidPreview.subtitle")}
-        />
-        <View>
-          <ItwCredentialPreviewClaimsList data={eid} releaserVisible={false} />
-        </View>
-      </VStack>
-      <FooterActions
-        fixed={false}
-        actions={{
+    <ForceScrollDownView
+      contentContainerStyle={{ flexGrow: 1 }}
+      footerActions={{
+        actions: {
           type: "TwoButtons",
           primary: {
             label: I18n.t(
@@ -163,18 +153,21 @@ const ContentView = ({ eid }: ContentViewProps) => {
             ),
             onPress: dismissDialog.show
           }
-        }}
-      />
+        }
+      }}
+    >
+      <ContentWrapper style={{ flexGrow: 1 }}>
+        <VStack space={24}>
+          <HStack space={8} style={{ alignItems: "center" }}>
+            <Icon name="legalValue" color={theme["interactiveElem-default"]} />
+            <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
+          </HStack>
+          <IOMarkdown
+            content={I18n.t("features.itWallet.issuance.eidPreview.subtitle")}
+          />
+          <ItwCredentialPreviewClaimsList data={eid} releaserVisible={false} />
+        </VStack>
+      </ContentWrapper>
     </ForceScrollDownView>
   );
 };
-
-const styles = StyleSheet.create({
-  scroll: {
-    flexGrow: 1
-  },
-  contentWrapper: {
-    flexGrow: 1,
-    paddingHorizontal: IOVisualCostants.appMarginDefault
-  }
-});

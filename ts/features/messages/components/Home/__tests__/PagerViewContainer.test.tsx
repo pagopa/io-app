@@ -6,7 +6,6 @@ import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/
 import { createStore } from "redux";
 import { pageSize } from "../../../../../config";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
@@ -182,26 +181,22 @@ const renderComponent = (
   ref?: RefObject<PagerView>
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
   const finalState = {
-    ...designSystemState,
+    ...initialState,
     entities: {
-      ...designSystemState.entities,
+      ...initialState.entities,
       messages: {
-        ...designSystemState.entities.messages,
+        ...initialState.entities.messages,
         allPaginated: {
-          ...designSystemState.entities.messages.allPaginated,
+          ...initialState.entities.messages.allPaginated,
           shownCategory,
           archive: {
-            ...designSystemState.entities.messages.allPaginated.archive,
+            ...initialState.entities.messages.allPaginated.archive,
             data: archiveMessagePagePot
           },
 
           inbox: {
-            ...designSystemState.entities.messages.allPaginated.inbox,
+            ...initialState.entities.messages.allPaginated.inbox,
             data: inboxMessagePagePot
           }
         }

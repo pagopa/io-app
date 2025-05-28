@@ -1,8 +1,8 @@
 import {
   Body,
-  ButtonSolid,
   ContentWrapper,
   H6,
+  IOButton,
   LabelMini,
   Pictogram,
   Tag,
@@ -38,13 +38,13 @@ import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 import { ConfigurationMode } from "../../configuration/types";
 import { IdPayInitiativeLastUpdateCounter } from "../components/IdPayInitiativeLastUpdateCounter";
-import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
-import { InitiativeRefundSettingsComponent } from "../components/InitiativeRefundSettingsComponent";
+import { IdPayInitiativeDiscountSettingsComponent } from "../components/IdPayInitiativeDiscountSettingsComponent";
+import { IdPayInitiativeRefundSettingsComponent } from "../components/IdPayInitiativeRefundSettingsComponent";
 import {
-  InitiativeTimelineComponent,
-  InitiativeTimelineComponentSkeleton
-} from "../components/InitiativeTimelineComponent";
-import { MissingConfigurationAlert } from "../components/MissingConfigurationAlert";
+  IdPayInitiativeTimelineComponent,
+  IdPayInitiativeTimelineComponentSkeleton
+} from "../components/IdPayInitiativeTimelineComponent";
+import { IdPayMissingConfigurationAlert } from "../components/IdPayMissingConfigurationAlert";
 import { useIdPayDiscountDetailsBottomSheet } from "../hooks/useIdPayDiscountDetailsBottomSheet";
 import { IDPayDetailsParamsList, IDPayDetailsRoutes } from "../navigation";
 import {
@@ -52,6 +52,8 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
+import { useFIMSAuthenticationFlow } from "../../../fims/common/hooks";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -84,6 +86,19 @@ const IdPayInitiativeDetailsScreen = () => {
     });
   };
 
+  const startFIMSAuthenticationFlow = useFIMSAuthenticationFlow();
+  const onAddExpense = () => {
+    const addExpenseFimsUrl = pot.toUndefined(initiativeDataPot)?.webViewUrl;
+    if (!addExpenseFimsUrl) {
+      return;
+    }
+    startFIMSAuthenticationFlow(
+      I18n.t("idpay.initiative.discountDetails.addExpenseButton"),
+      "01JKB969XNTW23RZTV61XAE824" as ServiceId, // TODO change this as soon as the serviceId is available in the initiativeDataPot
+      addExpenseFimsUrl
+    );
+  };
+
   const navigateToConfiguration = () => {
     navigation.push(IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR, {
       screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
@@ -112,7 +127,7 @@ const IdPayInitiativeDetailsScreen = () => {
           <VSpacer size={8} />
           <IdPayInitiativeLastUpdateCounter isLoading={true} />
           <VSpacer size={8} />
-          <InitiativeTimelineComponentSkeleton size={5} />
+          <IdPayInitiativeTimelineComponentSkeleton size={5} />
           <VSpacer size={32} />
         </ContentWrapper>
       </BonusCardScreenComponent>
@@ -163,6 +178,16 @@ const IdPayInitiativeDetailsScreen = () => {
                   progress: amountProgress
                 }
               ];
+            case InitiativeRewardTypeEnum.EXPENSE:
+              return [
+                {
+                  type: "Value",
+                  label: I18n.t(
+                    "idpay.initiative.details.initiativeCard.refundRequestedAmount"
+                  ),
+                  value: formatNumberCentsToAmount(accruedAmount, true, "right")
+                }
+              ];
             case InitiativeRewardTypeEnum.REFUND:
               return [
                 {
@@ -185,6 +210,8 @@ const IdPayInitiativeDetailsScreen = () => {
                   value: formatNumberCentsToAmount(accruedAmount, true, "right")
                 }
               ];
+            default:
+              return [];
           }
         }
       )
@@ -205,17 +232,27 @@ const IdPayInitiativeDetailsScreen = () => {
                 <ContentWrapper>
                   <IdPayCodeCieBanner initiativeId={initiative.initiativeId} />
                   <Animated.View layout={LinearTransition.duration(200)}>
-                    <InitiativeTimelineComponent
+                    <IdPayInitiativeTimelineComponent
                       initiativeId={initiative.initiativeId}
                       size={5}
                     />
-                    <InitiativeDiscountSettingsComponent
+                    <IdPayInitiativeDiscountSettingsComponent
                       initiative={initiative}
                     />
                   </Animated.View>
                 </ContentWrapper>
               );
-
+            case InitiativeRewardTypeEnum.EXPENSE:
+              return (
+                <ContentWrapper>
+                  <VSpacer size={8} />
+                  <IdPayInitiativeTimelineComponent
+                    initiativeId={initiativeId}
+                    size={3}
+                  />
+                  <VSpacer size={24} />
+                </ContentWrapper>
+              );
             case InitiativeRewardTypeEnum.REFUND:
               if (initiativeNeedsConfiguration) {
                 return (
@@ -235,12 +272,9 @@ const IdPayInitiativeDetailsScreen = () => {
                       )}
                     </Body>
                     <VSpacer size={16} />
-                    <ButtonSolid
-                      accessibilityLabel={I18n.t(
-                        "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
-                      )}
-                      fullWidth={true}
-                      color="primary"
+                    <IOButton
+                      fullWidth
+                      variant="solid"
                       onPress={navigateToConfiguration}
                       label={I18n.t(
                         "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
@@ -252,20 +286,24 @@ const IdPayInitiativeDetailsScreen = () => {
 
               return (
                 <ContentWrapper>
-                  <MissingConfigurationAlert
+                  <IdPayMissingConfigurationAlert
                     initiativeId={initiativeId}
                     status={initiative.status}
                   />
                   <VSpacer size={8} />
-                  <InitiativeTimelineComponent
+                  <IdPayInitiativeTimelineComponent
                     initiativeId={initiativeId}
                     size={3}
                   />
                   <VSpacer size={24} />
-                  <InitiativeRefundSettingsComponent initiative={initiative} />
+                  <IdPayInitiativeRefundSettingsComponent
+                    initiative={initiative}
+                  />
                   <VSpacer size={32} />
                 </ContentWrapper>
               );
+            default:
+              return undefined;
           }
         }
       )
@@ -281,6 +319,14 @@ const IdPayInitiativeDetailsScreen = () => {
           primary: {
             label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
             onPress: discountBottomSheet.present
+          }
+        };
+      case InitiativeRewardTypeEnum.EXPENSE:
+        return {
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("idpay.initiative.discountDetails.addExpenseButton"),
+            onPress: onAddExpense
           }
         };
       default:

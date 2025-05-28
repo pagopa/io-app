@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   rectangle: {
     flexGrow: 1,
     width: 2,
-    backgroundColor: IOColors.bluegreyLight
+    backgroundColor: IOColors["grey-200"]
   },
   dot: {
     marginVertical: 4,

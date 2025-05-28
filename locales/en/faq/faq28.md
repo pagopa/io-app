@@ -1,3 +1,0 @@
-If you are not interested in receiving messages from this service, you can disable reception at any time.
-To deactivate, you must enter the Services section, select the service in question from the list, and select the word 'the service is active'. From that moment on you will see the writing 'The service is not active', and the service will no longer send you messages via the IO app.
-We remind you that the service will continue to contact you, if necessary, through the alternative channels available (mail, mail, telephone, etc.), depending on your preferences.

@@ -1,1 +1,0 @@
-The identification code or message ID is a unique code that the IO app generates in association with each message sent. You can use it to identify a message in case of requests for assistance.

@@ -1,7 +1,6 @@
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { FimsUpdateAppAlert } from "../FimsUpdateAppAlert";
@@ -57,7 +56,7 @@ describe("FimsUpdateAppAlert", () => {
     fireEvent(primaryAction, "onPress");
 
     expect(mockGoBack.mock.calls.length).toBe(1);
-    expect(mockGoBack.mock.calls[0].length).toBe(0);
+    expect(mockGoBack.mock.calls[0].length).toBe(1);
   });
   it("should set the navigation header to include the support request feature", () => {
     const mockStartSupportRequest = jest.fn();
@@ -110,11 +109,7 @@ describe("FimsUpdateAppAlert", () => {
 
 const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const dsEnabledState = appReducer(
-    globalState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-  const store = createStore(appReducer, dsEnabledState as any);
+  const store = createStore(appReducer, globalState as any);
 
   return renderScreenWithNavigationStoreContext(
     () => <FimsUpdateAppAlert />,

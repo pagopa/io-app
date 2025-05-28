@@ -174,8 +174,12 @@ export const createActorsImplementation = (
 
   const acceptRequiredCriteria = fromPromise<undefined, Context.Context>(
     async params => {
-      const { initiative, requiredCriteria, selfDeclarationsMultiAnwsers } =
-        params.input;
+      const {
+        initiative,
+        requiredCriteria,
+        selfDeclarationsMultiAnwsers,
+        selfDeclarationsTextAnswers
+      } = params.input;
 
       if (O.isNone(initiative) || O.isNone(requiredCriteria)) {
         return Promise.reject(OnboardingFailureEnum.GENERIC);
@@ -191,7 +195,8 @@ export const createActorsImplementation = (
           code: _.code,
           accepted: true
         })),
-        ...Object.values(selfDeclarationsMultiAnwsers)
+        ...Object.values(selfDeclarationsMultiAnwsers),
+        ...Object.values(selfDeclarationsTextAnswers)
       ] as Array<SelfConsentDTO>;
 
       const response = await client.consentOnboarding({

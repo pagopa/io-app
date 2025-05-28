@@ -29,7 +29,7 @@ export const ServiceDetailsFailure = ({
 
   return (
     <OperationResultScreenContent
-      pictogram="umbrellaNew"
+      pictogram="umbrella"
       title={I18n.t("services.details.failure.title")}
       subtitle={I18n.t("services.details.failure.subtitle")}
       action={{

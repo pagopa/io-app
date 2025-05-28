@@ -1,16 +1,18 @@
 import * as O from "fp-ts/lib/Option";
-import { mixpanel } from "../mixpanel";
+import { getPeople, isMixpanelInstanceInitialized } from "../mixpanel.ts";
 import { GlobalState } from "../store/reducers/types";
-import { LoginSessionDuration } from "../features/fastLogin/analytics/optinAnalytics";
+import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { BiometricsType, getBiometricsType } from "../utils/biometrics";
 import {
   getNotificationPermissionType,
+  getNotificationTokenType,
   NotificationPermissionType,
   NotificationPreferenceConfiguration,
+  NotificationTokenType,
   ServiceConfigurationTrackingType
-} from "../screens/profile/analytics";
-import { idpSelector } from "../store/reducers/authentication";
-import { tosVersionSelector } from "../store/reducers/profile";
+} from "../features/settings/common/analytics/index.ts";
+import { idpSelector } from "../features/authentication/common/store/selectors";
+import { tosVersionSelector } from "../features/settings/common/store/selectors/index.ts";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
   ItwCed,
@@ -24,6 +26,9 @@ import {
   itwCredentialsSelector
 } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
+import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
+import { fontPreferenceSelector } from "../store/reducers/persistedPreferences.ts";
+import { sendExceptionToSentry } from "../utils/sentryUtils.ts";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -44,6 +49,7 @@ type ProfileProperties = {
   BIOMETRIC_TECHNOLOGY: BiometricsType;
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
   NOTIFICATION_PERMISSION: NotificationPermissionType;
+  NOTIFICATION_TOKEN: NotificationTokenType;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   TRACKING: MixpanelOptInTrackingType;
   ITW_STATUS_V2: ItwStatus;
@@ -51,63 +57,72 @@ type ProfileProperties = {
   ITW_PG_V2: ItwPg;
   ITW_TS_V2: ItwTs;
   ITW_CED_V2: ItwCed;
-  SAVED_PAYMENT_METHOD?: number;
+  SAVED_PAYMENT_METHOD: number;
   CGN_STATUS: TrackCgnStatus;
   WELFARE_STATUS: ReadonlyArray<string>;
+  FONT_PREFERENCE: string;
 };
 
 export const updateMixpanelProfileProperties = async (
   state: GlobalState,
   forceUpdateFor?: PropertyToUpdate<ProfileProperties>
 ) => {
-  if (!mixpanel) {
-    return;
+  try {
+    if (!isMixpanelInstanceInitialized()) {
+      return;
+    }
+    const LOGIN_SESSION = loginSessionConfigHandler(state);
+    const LOGIN_METHOD = loginMethodHandler(state);
+    const TOS_ACCEPTED_VERSION = tosVersionHandler(state);
+    const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
+    const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
+    const notificationsEnabled = await checkNotificationPermissions();
+    const NOTIFICATION_TOKEN = getNotificationTokenType(state);
+    const SERVICE_CONFIGURATION = serviceConfigHandler(state);
+    const TRACKING = mixpanelOptInHandler(state);
+    const ITW_STATUS_V2 = walletStatusHandler(state);
+    const ITW_ID_V2 = idStatusHandler(state);
+    const ITW_PG_V2 = pgStatusHandler(state);
+    const ITW_TS_V2 = tsStatusHandler(state);
+    const ITW_CED_V2 = cedStatusHandler(state);
+    const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
+    const CGN_STATUS = cgnStatusHandler(state);
+    const WELFARE_STATUS = welfareStatusHandler(state);
+    const FONT_PREFERENCE = fontPreferenceSelector(state);
+
+    const profilePropertiesObject: ProfileProperties = {
+      LOGIN_SESSION,
+      LOGIN_METHOD,
+      TOS_ACCEPTED_VERSION,
+      BIOMETRIC_TECHNOLOGY,
+      NOTIFICATION_CONFIGURATION,
+      NOTIFICATION_PERMISSION:
+        getNotificationPermissionType(notificationsEnabled),
+      NOTIFICATION_TOKEN,
+      SERVICE_CONFIGURATION,
+      TRACKING,
+      ITW_STATUS_V2,
+      ITW_ID_V2,
+      ITW_PG_V2,
+      ITW_TS_V2,
+      ITW_CED_V2,
+      SAVED_PAYMENT_METHOD,
+      CGN_STATUS,
+      WELFARE_STATUS,
+      FONT_PREFERENCE
+    };
+
+    if (forceUpdateFor) {
+      forceUpdate<keyof ProfileProperties>(
+        profilePropertiesObject,
+        forceUpdateFor
+      );
+    }
+
+    getPeople()?.set(profilePropertiesObject);
+  } catch (e) {
+    sendExceptionToSentry(e, "updateMixpanelProfileProperties");
   }
-  const LOGIN_SESSION = loginSessionConfigHandler(state);
-  const LOGIN_METHOD = loginMethodHandler(state);
-  const TOS_ACCEPTED_VERSION = tosVersionHandler(state);
-  const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
-  const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
-  const notificationsEnabled = await checkNotificationPermissions();
-  const SERVICE_CONFIGURATION = serviceConfigHandler(state);
-  const TRACKING = mixpanelOptInHandler(state);
-  const ITW_STATUS_V2 = walletStatusHandler(state);
-  const ITW_ID_V2 = idStatusHandler(state);
-  const ITW_PG_V2 = pgStatusHandler(state);
-  const ITW_TS_V2 = tsStatusHandler(state);
-  const ITW_CED_V2 = cedStatusHandler(state);
-  const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
-  const CGN_STATUS = cgnStatusHandler(state);
-  const WELFARE_STATUS = welfareStatusHandler(state);
-
-  const profilePropertiesObject: ProfileProperties = {
-    LOGIN_SESSION,
-    LOGIN_METHOD,
-    TOS_ACCEPTED_VERSION,
-    BIOMETRIC_TECHNOLOGY,
-    NOTIFICATION_CONFIGURATION,
-    NOTIFICATION_PERMISSION:
-      getNotificationPermissionType(notificationsEnabled),
-    SERVICE_CONFIGURATION,
-    TRACKING,
-    ITW_STATUS_V2,
-    ITW_ID_V2,
-    ITW_PG_V2,
-    ITW_TS_V2,
-    ITW_CED_V2,
-    SAVED_PAYMENT_METHOD,
-    CGN_STATUS,
-    WELFARE_STATUS
-  };
-
-  if (forceUpdateFor) {
-    forceUpdate<keyof ProfileProperties>(
-      profilePropertiesObject,
-      forceUpdateFor
-    );
-  }
-
-  mixpanel.getPeople().set(profilePropertiesObject);
 };
 
 const forceUpdate = <T extends keyof ProfileProperties>(
@@ -129,8 +144,8 @@ const tosVersionHandler = (state: GlobalState): number | string => {
 };
 
 const walletStatusHandler = (state: GlobalState): ItwStatus => {
-  const credentialsState = itwCredentialsSelector(state);
-  return O.isSome(credentialsState.eid) ? "L2" : "not_active";
+  const authLevel = itwAuthLevelSelector(state);
+  return authLevel ?? "not_active";
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {

@@ -1,9 +1,9 @@
 import {
   Body,
   BodyProps,
-  ButtonLink,
   ComposedBodyFromArray,
   H3,
+  IOButton,
   IOPictograms,
   Pictogram,
   VStack
@@ -17,7 +17,7 @@ export type IOScrollViewCentredContent = {
   title: string;
   description?: string | Array<BodyProps>;
   additionalLink?: Pick<
-    ComponentProps<typeof ButtonLink>,
+    ComponentProps<typeof IOButton>,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
   actions: IOScrollViewActions;
@@ -42,7 +42,9 @@ export const IOScrollViewCentredContent = ({
       <Pictogram name={pictogram} size={180} />
       <View style={{ paddingHorizontal: 24 }}>
         <VStack space={8} style={{ alignItems: "center" }}>
-          <H3 style={{ textAlign: "center" }}>{title}</H3>
+          <H3 accessibilityRole="header" style={{ textAlign: "center" }}>
+            {title}
+          </H3>
           {description && (
             <>
               {typeof description === "string" ? (
@@ -56,7 +58,7 @@ export const IOScrollViewCentredContent = ({
       </View>
       {additionalLink && (
         <View style={{ alignSelf: "center" }}>
-          <ButtonLink {...additionalLink} />
+          <IOButton variant="link" {...additionalLink} />
         </View>
       )}
     </VStack>

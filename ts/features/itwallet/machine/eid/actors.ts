@@ -2,9 +2,9 @@ import cieManager from "@pagopa/react-native-cie";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
-import { sessionTokenSelector } from "../../../../store/reducers/authentication";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
-import * as cieUtils from "../../../../utils/cie";
+import * as cieUtils from "../../../authentication/login/cie/utils/cie";
 import { trackItwRequest } from "../../analytics";
 import {
   getAttestation,
@@ -17,7 +17,7 @@ import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   itwIntegrityKeyTagSelector,
-  itwIntegrityServiceReadySelector
+  itwIntegrityServiceStatusSelector
 } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import type {
@@ -35,6 +35,7 @@ export type RequestEidActorParams = {
 export type StartAuthFlowActorParams = {
   walletInstanceAttestation: string | undefined;
   identification: IdentificationContext | undefined;
+  isL3IssuanceEnabled?: boolean;
 };
 
 export type GetWalletAttestationActorParams = {
@@ -47,33 +48,26 @@ export const createEidIssuanceActorsImplementation = (
   createWalletInstance: fromPromise<string>(async () => {
     const sessionToken = sessionTokenSelector(store.getState());
     assert(sessionToken, "sessionToken is undefined");
-    const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
-
-    // If there is a stored key tag we assume the wallet instance was already created
-    // so we just need to prepare the integrity service and return the existing key tag.
-    if (O.isSome(storedIntegrityKeyTag)) {
-      return storedIntegrityKeyTag.value;
-    }
 
     // Reset the wallet store to prevent having dirty state before registering a new wallet instance
     store.dispatch(itwLifecycleStoresReset());
+
     // Await the integrity preparation before requesting the integrity key tag
-    const isIntegrityServiceReady = await pollForStoreValue({
+    const integrityServiceStatus = await pollForStoreValue({
       getState: store.getState,
-      selector: itwIntegrityServiceReadySelector,
+      selector: itwIntegrityServiceStatusSelector,
       condition: value => value !== undefined
+    }).catch(() => {
+      throw new Error("Integrity service status check timed out");
     });
-    // If the integrity service preparation is not ready (still undefined) after 10 seconds the user will be prompted with an error,
+
+    // If the integrity service preparation is not ready (still undefined) or in an error state after 10 seconds the user will be prompted with an error,
     // he will need to retry.
-    // TODO: Create a personalized error message for this case informing the user that the integrity service is not ready yet.
     assert(
-      isIntegrityServiceReady !== undefined,
-      "Integrity service not ready after 10 seconds"
+      integrityServiceStatus === "ready",
+      `Integrity service status is ${integrityServiceStatus}`
     );
-    // If the integrity service preparation is ready, but it is failed, the user will be prompted with an error
-    // and the wallet instance creation will be aborted.
-    // TODO: Create a personalized error message for this case informing the user that the integrity service is not available on his device.
-    assert(isIntegrityServiceReady, "Integrity service not available");
+
     const hardwareKeyTag = await getIntegrityHardwareKeyTag();
     await registerWalletInstance(hardwareKeyTag, sessionToken);
 
@@ -97,6 +91,27 @@ export const createEidIssuanceActorsImplementation = (
     ]);
     return { isNFCEnabled, isCIEAuthenticationSupported };
   }),
+
+  startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
+    async ({ input }) => {
+      assert(
+        input.walletInstanceAttestation,
+        "walletInstanceAttestation is undefined"
+      );
+      assert(input.identification, "identification is undefined");
+
+      const authenticationContext = await issuanceUtils.startAuthFlow({
+        walletAttestation: input.walletInstanceAttestation,
+        identification: input.identification,
+        isL3IssuanceEnabled: input.isL3IssuanceEnabled || false
+      });
+
+      return {
+        ...authenticationContext,
+        callbackUrl: "" // This is not important in this phase, it will be set after completing the auth flow
+      };
+    }
+  ),
 
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
     async ({ input }) => {
@@ -123,26 +138,6 @@ export const createEidIssuanceActorsImplementation = (
         ...authParams,
         ...input.authenticationContext
       });
-    }
-  ),
-
-  startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
-    async ({ input }) => {
-      assert(
-        input.walletInstanceAttestation,
-        "walletInstanceAttestation is undefined"
-      );
-      assert(input.identification, "identification is undefined");
-
-      const authenticationContext = await issuanceUtils.startAuthFlow({
-        walletAttestation: input.walletInstanceAttestation,
-        identification: input.identification
-      });
-
-      return {
-        ...authenticationContext,
-        callbackUrl: "" // This is not important in this phase, it will be set after completing the auth flow
-      };
     }
   ),
 

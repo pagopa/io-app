@@ -1,6 +1,6 @@
 import {
+  BannerErrorState,
   Divider,
-  IOStyles,
   ListItemHeader,
   ListItemTransaction
 } from "@pagopa/io-app-design-system";
@@ -15,7 +15,6 @@ import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
 import { walletLatestReceiptListPotSelector } from "../../receipts/store/selectors";
 import * as analytics from "../analytics";
 import { isPaymentsLatestTransactionsEmptySelector } from "../store/selectors";
-import { BannerErrorState } from "../../../../components/ui/BannerErrorState";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { usePaymentsBackoffRetry } from "../../common/hooks/usePaymentsBackoffRetry";
@@ -67,7 +66,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   }, [dispatch, latestTransactionsPot]);
 
   const handleNavigateToTransactionDetails = useCallback(
-    ({ eventId, isPayer }: NoticeListItem) => {
+    ({ eventId, isPayer, isCart }: NoticeListItem) => {
       if (eventId === undefined) {
         return;
       }
@@ -75,7 +74,8 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
         screen: PaymentsReceiptRoutes.PAYMENT_RECEIPT_DETAILS,
         params: {
           transactionId: eventId,
-          isPayer
+          isPayer,
+          isCart
         }
       });
     },
@@ -152,10 +152,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   }
 
   return (
-    <Animated.View
-      style={IOStyles.flex}
-      layout={LinearTransition.duration(200)}
-    >
+    <Animated.View style={{ flex: 1 }} layout={LinearTransition.duration(200)}>
       <ListItemHeader
         label={I18n.t("features.payments.transactions.title")}
         accessibilityLabel={I18n.t("features.payments.transactions.title")}
@@ -165,7 +162,10 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
                 type: "buttonLink",
                 componentProps: {
                   label: I18n.t("features.payments.transactions.button"),
-                  onPress: handleNavigateToTransactionList
+                  onPress: handleNavigateToTransactionList,
+                  accessibilityLabel: I18n.t(
+                    "features.payments.transactions.button"
+                  )
                 }
               }
             : undefined

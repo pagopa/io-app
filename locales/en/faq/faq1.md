@@ -1,1 +1,0 @@
-SPID is the authentication system that allows citizens and businesses to access the online services of public administration and private members with a unique digital identity. The SPID identity is made up of credentials (username and password) which are released to the user and which allow access to all online services.

@@ -9,7 +9,7 @@ import {
   CIE_ID_ERROR_MESSAGE,
   IO_LOGIN_CIE_SOURCE_APP,
   IO_LOGIN_CIE_URL_SCHEME
-} from "../../../../utils/cie";
+} from "../../../authentication/login/cie/utils/cie";
 import { isAndroid, isIos } from "../../../../utils/platform";
 import { convertUnknownToError } from "../../../../utils/errors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";

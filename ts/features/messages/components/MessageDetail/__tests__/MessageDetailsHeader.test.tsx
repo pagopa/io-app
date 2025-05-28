@@ -17,7 +17,7 @@ import { UIMessageId } from "../../../types";
 const defaultProps: ComponentProps<typeof MessageDetailsHeader> = {
   createdAt: new Date("2021-10-18T16:00:30.541Z"),
   messageId: "01J3DE93YA7QYAD9WZQZCP98M6" as UIMessageId,
-  serviceId: service_1.service_id,
+  serviceId: service_1.id,
   subject: "#### Subject ####"
 };
 
@@ -32,8 +32,8 @@ describe("MessageDetailsHeader component", () => {
       ...defaultProps,
       serviceId: "invalid" as ServiceId
     });
-    expect(component.queryByText(service_1.organization_name)).toBeNull();
-    expect(component.queryByText(service_1.service_name)).toBeNull();
+    expect(component.queryByText(service_1.organization.name)).toBeNull();
+    expect(component.queryByText(service_1.name)).toBeNull();
   });
 });
 

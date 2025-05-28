@@ -1,6 +1,5 @@
-import { IOStyles } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useState, useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Animated, {
   LinearTransition,
   useAnimatedRef
@@ -105,7 +104,7 @@ const PaymentsHomeScreen = () => {
   const AnimatedPaymentsHomeScreenContent = useCallback(
     () => (
       <Animated.View
-        style={IOStyles.flex}
+        style={{ flex: 1 }}
         layout={LinearTransition.duration(200)}
       >
         <PaymentsHomeScreenContent />

@@ -2,9 +2,8 @@ import {
   Body,
   FooterActionsInline,
   H2,
-  H6,
   HSpacer,
-  IOStyles,
+  IOVisualCostants,
   IconButton,
   ListItemNav,
   VSpacer
@@ -18,17 +17,17 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
+import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { capitalize } from "../../../../utils/strings";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 import {
   profileEmailSelector,
   profileFiscalCodeSelector,
   profileNameSelector,
   profileSelector
-} from "../../../../store/reducers/profile";
-import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { capitalize } from "../../../../utils/strings";
+} from "../../../settings/common/store/selectors";
 import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { FCI_ROUTES } from "../../navigation/routes";
@@ -104,7 +103,7 @@ const FciDataSharingScreen = (): ReactElement => {
       />
       <HSpacer size={8} />
       <View style={{ flex: 1 }}>
-        <H6 color={"bluegrey"}>
+        <Body weight="Semibold">
           {I18n.t("features.fci.shareDataScreen.alertText")}
           <HSpacer size={8} />
           <Body
@@ -112,8 +111,8 @@ const FciDataSharingScreen = (): ReactElement => {
             asLink
             onPress={() => {
               trackFciUserExit(route.name, fciEnvironment, "modifica_email");
-              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                screen: ROUTES.INSERT_EMAIL_SCREEN,
+              navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+                screen: SETTINGS_ROUTES.INSERT_EMAIL_SCREEN,
                 params: {
                   isOnboarding: false,
                   isFciEditEmailFlow: true
@@ -123,15 +122,18 @@ const FciDataSharingScreen = (): ReactElement => {
           >
             {I18n.t("features.fci.shareDataScreen.alertLink")}
           </Body>
-        </H6>
+        </Body>
       </View>
     </View>
   );
 
   return (
     <>
+      {/* TODO: Replace with `IOScrollView` and `FooterActions` component. */}
       <ScrollView
-        style={IOStyles.horizontalContentPadding}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
         testID={"FciDataSharingScreenListTestID"}
       >
         <H2>{I18n.t("features.fci.shareDataScreen.title")}</H2>

@@ -1,5 +1,4 @@
 import {
-  Body,
   Divider,
   H3,
   IOSpacingScale,
@@ -20,11 +19,12 @@ import {
 } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback, ComponentProps, useLayoutEffect } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { ComponentProps, useCallback, useLayoutEffect } from "react";
+import { AccessibilityInfo, SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -36,14 +36,17 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { cleanTransactionDescription } from "../../../../utils/payment";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
-import { formatPaymentNoticeNumber } from "../../common/utils";
+import {
+  formatPaymentNoticeNumber,
+  isPaymentMethodExpired
+} from "../../common/utils";
 import { storeNewPaymentAttemptAction } from "../../history/store/actions";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
@@ -88,6 +91,9 @@ const WalletPaymentDetailScreen = () => {
 
   useOnFirstRender(
     () => {
+      AccessibilityInfo.announceForAccessibility(
+        I18n.t("wallet.firstTransactionSummary.a11y.announce")
+      );
       analytics.trackPaymentSummaryLoading();
     },
     () => pot.isLoading(paymentDetailsPot)
@@ -192,7 +198,11 @@ const WalletPaymentDetailContent = ({
     dispatch(
       paymentsGetPaymentUserMethodsAction.request({
         onResponse: wallets => {
-          if (!wallets || wallets?.length > 0) {
+          const hasAllPaymentMethodsExpired =
+            wallets?.filter(wallet => !isPaymentMethodExpired(wallet.details))
+              .length === 0;
+          const isWalletEmpty = wallets && wallets.length === 0;
+          if (!isWalletEmpty && !hasAllPaymentMethodsExpired) {
             dispatch(
               walletPaymentSetCurrentStep(
                 WalletPaymentStepEnum.PICK_PAYMENT_METHOD
@@ -204,7 +214,7 @@ const WalletPaymentDetailContent = ({
                 screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
               }
             );
-          } else if (wallets && wallets.length === 0) {
+          } else {
             const paymentDetails = pot.toUndefined(paymentDetailsPot);
             dispatch(
               paymentsInitOnboardingWithRptIdToResume({
@@ -216,8 +226,9 @@ const WalletPaymentDetailContent = ({
               {
                 screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
                 params: {
-                  outcome:
-                    WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
+                  outcome: isWalletEmpty
+                    ? WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
+                    : WalletPaymentOutcomeEnum.PAYMENT_METHODS_EXPIRED
                 }
               }
             );
@@ -227,13 +238,13 @@ const WalletPaymentDetailContent = ({
     );
   };
 
-  const amountInfoBottomSheet = useIOBottomSheetAutoresizableModal({
+  const amountInfoBottomSheet = useIOBottomSheetModal({
     title: I18n.t("wallet.firstTransactionSummary.amountInfo.title"),
     component: (
       <SafeAreaView>
-        <Body>
-          {I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
-        </Body>
+        <IOMarkdown
+          content={I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
+        />
         <VSpacer size={24} />
       </SafeAreaView>
     )
@@ -322,7 +333,6 @@ const WalletPaymentDetailContent = ({
         testID="wallet-payment-detail-recipient"
         icon={"institution"}
         label={I18n.t("wallet.firstTransactionSummary.recipient")}
-        accessibilityLabel={I18n.t("wallet.firstTransactionSummary.recipient")}
         value={payment.paName}
       />
       <Divider />
@@ -330,7 +340,6 @@ const WalletPaymentDetailContent = ({
         testID="wallet-payment-detail-object"
         icon={"notes"}
         label={I18n.t("wallet.firstTransactionSummary.object")}
-        accessibilityLabel={I18n.t("wallet.firstTransactionSummary.object")}
         value={description}
       />
       <Divider />
@@ -338,7 +347,6 @@ const WalletPaymentDetailContent = ({
         testID="wallet-payment-detail-amount"
         icon={"psp"}
         label={I18n.t("wallet.firstTransactionSummary.amount")}
-        accessibilityLabel={I18n.t("wallet.firstTransactionSummary.amount")}
         value={amount}
         endElement={amountEndElement}
       />
@@ -348,9 +356,6 @@ const WalletPaymentDetailContent = ({
           <ListItemInfo
             icon="calendar"
             label={I18n.t("wallet.firstTransactionSummary.dueDate")}
-            accessibilityLabel={I18n.t(
-              "wallet.firstTransactionSummary.dueDate"
-            )}
             value={dueDate}
           />
           <Divider />
@@ -360,7 +365,6 @@ const WalletPaymentDetailContent = ({
         testID="payment-notice-copy-button"
         icon="docPaymentCode"
         label={I18n.t("payment.noticeCode")}
-        accessibilityLabel={I18n.t("payment.noticeCode")}
         value={formattedPaymentNoticeNumber}
         onPress={() => handleOnCopy(formattedPaymentNoticeNumber)}
       />
@@ -368,7 +372,6 @@ const WalletPaymentDetailContent = ({
       <ListItemInfoCopy
         icon="entityCode"
         label={I18n.t("wallet.firstTransactionSummary.entityCode")}
-        accessibilityLabel={I18n.t("wallet.firstTransactionSummary.entityCode")}
         value={orgFiscalCode}
         onPress={() => handleOnCopy(orgFiscalCode)}
       />

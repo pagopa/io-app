@@ -13,7 +13,7 @@ import Animated from "react-native-reanimated";
 import I18n from "../../../../../i18n";
 import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
-  borderColorByStatus,
+  useBorderColorByStatus,
   getCredentialNameFromType,
   tagPropsByStatus,
   validCredentialStatuses
@@ -29,6 +29,7 @@ import { FlippableCard } from "./FlippableCard";
 export type ItwSkeumorphicCardProps = {
   credential: StoredCredential;
   status: ItwCredentialStatus;
+  valuesHidden: boolean;
   isFlipped?: boolean;
   onPress?: () => void;
 };
@@ -37,7 +38,8 @@ const ItwSkeumorphicCard = ({
   credential,
   status,
   isFlipped = false,
-  onPress
+  onPress,
+  valuesHidden
 }: ItwSkeumorphicCardProps) => {
   const FrontSide = useMemo(
     () => (
@@ -46,10 +48,14 @@ const ItwSkeumorphicCard = ({
           credentialType={credential.credentialType}
           side="front"
         />
-        <CardData credential={credential} side="front" />
+        <CardData
+          credential={credential}
+          side="front"
+          valuesHidden={valuesHidden}
+        />
       </CardSideBase>
     ),
-    [credential, status]
+    [credential, status, valuesHidden]
   );
 
   const BackSide = useMemo(
@@ -59,10 +65,14 @@ const ItwSkeumorphicCard = ({
           credentialType={credential.credentialType}
           side="back"
         />
-        <CardData credential={credential} side="back" />
+        <CardData
+          credential={credential}
+          side="back"
+          valuesHidden={valuesHidden}
+        />
       </CardSideBase>
     ),
-    [credential, status]
+    [credential, status, valuesHidden]
   );
 
   const accessibilityProps = useMemo(
@@ -119,8 +129,10 @@ type CardSideBaseProps = {
 };
 
 const CardSideBase = ({ status, children }: CardSideBaseProps) => {
+  const borderColorMap = useBorderColorByStatus();
+
   const statusTagProps = tagPropsByStatus[status];
-  const borderColor = borderColorByStatus[status];
+  const borderColor = borderColorMap[status];
 
   const dynamicStyle: StyleProp<ViewStyle> = {
     borderColor,

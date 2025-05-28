@@ -1,4 +1,4 @@
-import { IOColors, Tag } from "@pagopa/io-app-design-system";
+import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
@@ -30,14 +30,20 @@ export const getCredentialNameFromType = (
     O.getOrElse(() => withDefault)
   );
 
-export const borderColorByStatus: { [key in ItwCredentialStatus]: string } = {
-  valid: IOColors.white,
-  invalid: IOColors["error-600"],
-  expired: IOColors["error-600"],
-  expiring: IOColors["warning-700"],
-  jwtExpired: IOColors["error-600"],
-  jwtExpiring: IOColors["warning-700"],
-  unknown: IOColors["grey-300"]
+export const useBorderColorByStatus: () => {
+  [key in ItwCredentialStatus]: string;
+} = () => {
+  const theme = useIOTheme();
+
+  return {
+    valid: IOColors[theme["appBackground-primary"]],
+    invalid: IOColors["error-600"],
+    expired: IOColors["error-600"],
+    expiring: IOColors["warning-700"],
+    jwtExpired: IOColors["error-600"],
+    jwtExpiring: IOColors["warning-700"],
+    unknown: IOColors["grey-300"]
+  };
 };
 
 export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
@@ -63,7 +69,7 @@ export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
   },
   unknown: {
     variant: "custom",
-    icon: { name: "infoFilled", color: "grey" },
+    icon: { name: "infoFilled", color: "grey-450" },
     text: I18n.t("features.itWallet.card.status.unknown")
   }
 };

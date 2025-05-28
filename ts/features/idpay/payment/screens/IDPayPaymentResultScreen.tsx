@@ -58,7 +58,7 @@ const IDPayPaymentResultScreen = () => {
 };
 
 const genericErrorProps: OperationResultScreenContentProps = {
-  pictogram: "umbrellaNew",
+  pictogram: "umbrella",
   title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
   subtitle: I18n.t("idpay.payment.result.failure.GENERIC.subtitle")
 };

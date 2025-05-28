@@ -7,7 +7,7 @@ import { FciClient } from "../../api/backendFci";
 import { fciMetadataRequest } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
 import { SessionToken } from "../../../../types/SessionToken";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 
 /*

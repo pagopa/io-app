@@ -13,11 +13,20 @@ import {
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { useIODispatch } from "../../../../../store/hooks";
 import { itwCloseDiscoveryBanner } from "../../store/actions/preferences";
+import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
 
-/**
- * to use in flows where we want to handle the banner's visibility logic externally
- *  (see MultiBanner feature for the landing screen)
- */
+const bannerConfig = {
+  onboarding: {
+    content: I18n.t("features.itWallet.discovery.banner.home.content"),
+    title: I18n.t("features.itWallet.discovery.banner.home.title"),
+    action: I18n.t("features.itWallet.discovery.banner.home.action")
+  },
+  reactivating: {
+    content: I18n.t("features.itWallet.discovery.banner.homeActive.content"),
+    title: I18n.t("features.itWallet.discovery.banner.homeActive.title"),
+    action: I18n.t("features.itWallet.discovery.banner.homeActive.action")
+  }
+} as const;
 
 export type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
@@ -26,6 +35,10 @@ export type ItwDiscoveryBannerProps = {
   handleOnClose?: () => void;
 };
 
+/**
+ * Discovery banner used in flows where we want to handle the banner's visibility logic externally
+ *  (see MultiBanner feature for the landing screen)
+ */
 export const ItwDiscoveryBanner = ({
   withTitle = true,
   ignoreMargins = false,
@@ -34,22 +47,26 @@ export const ItwDiscoveryBanner = ({
 }: ItwDiscoveryBannerProps) => {
   const bannerRef = createRef<View>();
   const dispatch = useIODispatch();
-
   const navigation = useIONavigation();
   const route = useRoute();
+  const bannerType = useItwDiscoveryBannerType();
 
   const trackBannerProperties = useMemo(
     () => ({
-      banner_id: "itwDiscoveryBannerTestID",
+      banner_id:
+        bannerType === "reactivating"
+          ? "itwDiscoveryBannerDeviceChanged"
+          : "itwDiscoveryBannerTestID",
       banner_page: route.name,
       banner_landing: "ITW_INTRO"
     }),
-    [route.name]
+    [bannerType, route.name]
   );
   const handleOnPress = () => {
     trackItWalletBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: {}
     });
   };
   useOnFirstRender(() => {
@@ -62,21 +79,22 @@ export const ItwDiscoveryBanner = ({
     dispatch(itwCloseDiscoveryBanner());
   };
 
+  if (!bannerType) {
+    return null;
+  }
+
+  const { content, title, action } = bannerConfig[bannerType];
+
   return (
     <View style={!ignoreMargins && styles.margins}>
       <Banner
         testID="itwDiscoveryBannerTestID"
         viewRef={bannerRef}
-        title={
-          withTitle
-            ? I18n.t("features.itWallet.discovery.banner.home.title")
-            : undefined
-        }
-        content={I18n.t("features.itWallet.discovery.banner.home.content")}
-        action={I18n.t("features.itWallet.discovery.banner.home.action")}
+        title={withTitle ? title : undefined}
+        content={content}
+        action={action}
         pictogramName="itWallet"
         color="turquoise"
-        size="big"
         onClose={closable ? handleClose : undefined}
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}

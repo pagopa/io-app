@@ -16,6 +16,10 @@ import { itwCredentialsStore } from "../store/actions";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../../store/reducers/types";
+import {
+  CREDENTIALS_MAP,
+  trackItwStatusCredentialAttestationFailure
+} from "../../analytics";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
@@ -37,21 +41,30 @@ export function* updateCredentialStatusAttestationSaga(
     };
   } catch (e) {
     if (isIssuerResponseError(e, Codes.CredentialInvalidStatus)) {
+      const errorCode = pipe(
+        StatusAttestationError.decode(e.reason),
+        O.fromEither,
+        O.map(x => x.error),
+        O.toUndefined
+      );
+
+      trackItwStatusCredentialAttestationFailure({
+        credential: CREDENTIALS_MAP[credential.credentialType],
+        credential_status: errorCode || "invalid"
+      });
+
       return {
         ...credential,
-        storedStatusAttestation: {
-          credentialStatus: "invalid",
-          errorCode: pipe(
-            StatusAttestationError.decode(e.reason),
-            O.fromEither,
-            O.map(x => x.error),
-            O.toUndefined
-          )
-        }
+        storedStatusAttestation: { credentialStatus: "invalid", errorCode }
       };
     }
-
     // We do not have enough information on the status, the error was unexpected
+    trackItwStatusCredentialAttestationFailure({
+      credential: CREDENTIALS_MAP[credential.credentialType],
+      credential_status: "unknown",
+      reason: e instanceof Error ? e.message : e
+    });
+
     return {
       ...credential,
       storedStatusAttestation: { credentialStatus: "unknown" }

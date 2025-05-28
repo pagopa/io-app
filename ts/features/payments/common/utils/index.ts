@@ -46,14 +46,13 @@ export const getBadgePropsByTransactionStatus = (
     case "reversal":
       return {
         text: I18n.t("global.badges.reversal"),
-        variant: "lightBlue"
+        variant: "default"
       };
     case "pending":
       return {
         text: I18n.t("global.badges.onGoing"),
-        variant: "info"
+        variant: "highlight"
       };
-    case "refunded":
     default:
       return {
         text: "",
@@ -152,8 +151,8 @@ export const getSortedPspList = (
     default:
       return _.orderBy(
         pspList,
-        ["onUs", "taxPayerFee", "pspBusinessName"],
-        ["asc", "asc", "asc"]
+        [psp => (psp.onUs ? 1 : 0), "taxPayerFee", "pspBusinessName"],
+        ["desc", "asc", "asc"]
       );
   }
 };

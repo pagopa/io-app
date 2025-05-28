@@ -1,40 +1,59 @@
-import { H3, VStack } from "@pagopa/io-app-design-system";
+import {
+  ListItemHeader,
+  ListItemSwitch,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { useState } from "react";
+import { View } from "react-native";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
+import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
 import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { ItwPresentationCredentialCardFlipButton } from "../../presentation/components/ItwPresentationCredentialCardFlipButton";
-import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
 
 const credentialsWithCard: ReadonlyArray<string> = [
   "MDL",
   "EuropeanDisabilityCard"
 ];
 
-export const ItwSkeumorphicCredentialSection = () => (
-  <VStack space={16}>
-    <H3>{"Skeumorphic credential card"}</H3>
-
-    {Object.values(ItwStoredCredentialsMocks)
-      .filter(({ credentialType }) =>
-        credentialsWithCard.includes(credentialType)
-      )
-      .map(credential => (
-        <ItwSkeumorphicCredentialItem
-          key={credential.credentialType}
-          credential={credential}
-        />
-      ))}
-  </VStack>
-);
+export const ItwSkeumorphicCredentialSection = () => {
+  const [valuesHidden, setValuesHidden] = useState(false);
+  return (
+    <View>
+      <ListItemHeader label="Skeumorphic credential card" />
+      <ListItemSwitch
+        label="Hide claim values"
+        value={valuesHidden}
+        onSwitchValueChange={() => {
+          setValuesHidden(!valuesHidden);
+        }}
+      />
+      <VStack space={16}>
+        {Object.values(ItwStoredCredentialsMocks)
+          .filter(({ credentialType }) =>
+            credentialsWithCard.includes(credentialType)
+          )
+          .map(credential => (
+            <ItwSkeumorphicCredentialItem
+              key={credential.credentialType}
+              credential={credential}
+              valuesHidden={valuesHidden}
+            />
+          ))}
+      </VStack>
+    </View>
+  );
+};
 
 const ItwSkeumorphicCredentialItem = ({
-  credential
+  credential,
+  valuesHidden
 }: {
   credential: StoredCredential;
+  valuesHidden: boolean;
 }) => {
   const navigation = useIONavigation();
   const [isFlipped, setFlipped] = useState(false);
@@ -58,6 +77,7 @@ const ItwSkeumorphicCredentialItem = ({
           status={status}
           isFlipped={isFlipped}
           onPress={handleOnPress}
+          valuesHidden={valuesHidden}
         />
       </FlipGestureDetector>
       <ItwPresentationCredentialCardFlipButton

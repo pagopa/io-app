@@ -1,1 +1,0 @@
-**Here you can view all the transactions related to a specific payment method.** These transactions may have taken place in the IO app, or in another website using pagoPA as payment platform. If you have completed payments with pagoPA before, as authenticated user, you will find all the successful transactions here.

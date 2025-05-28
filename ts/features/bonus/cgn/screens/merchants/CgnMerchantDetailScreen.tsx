@@ -1,8 +1,8 @@
 import {
   ContentWrapper,
   Divider,
-  GradientScrollView,
   H1,
+  IOSkeleton,
   IOToast,
   IOVisualCostants,
   ListItemAction,
@@ -11,7 +11,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
-import Placeholder from "rn-placeholder";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
@@ -29,7 +28,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { isReady } from "../../../../../common/model/RemoteValue";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { IOScrollView } from "../../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -193,7 +192,7 @@ const CgnMerchantDetailScreen = () => {
     );
   } else {
     return (
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={{ flex: 1 }}>
         <CgnMerchantDetailScreenSkeleton />
       </SafeAreaView>
     );
@@ -203,26 +202,26 @@ const CgnMerchantDetailScreen = () => {
 // ------------------------ render utils
 
 const CgnMerchantDetailScreenSkeleton = () => (
-  <GradientScrollView primaryActionProps={undefined}>
-    <Placeholder.Box
-      animate="fade"
-      radius={styles.merchantImage.borderRadius}
+  <IOScrollView>
+    <IOSkeleton
+      shape="rectangle"
       width="100%"
       height={210}
+      radius={styles.merchantImage.borderRadius}
     />
     <VSpacer size={24} />
-    <Placeholder.Line animate="fade" textSize={24} />
+    <IOSkeleton shape="rectangle" width="100%" height={24} radius={4} />
     <VSpacer size={16} />
-    <Placeholder.Line animate="fade" textSize={24} width="50%" />
+    <IOSkeleton shape="rectangle" width="50%" height={24} radius={4} />
     <VSpacer size={48} />
-    <Placeholder.Box animate="fade" width={100} height={16} radius={4} />
+    <IOSkeleton shape="rectangle" width="100%" height={16} radius={4} />
     <VSpacer size={24} />
-    <Placeholder.Box animate="fade" width="100%" height={170} radius={8} />
+    <IOSkeleton shape="rectangle" width="100%" height={170} radius={8} />
     <VSpacer size={8} />
-    <Placeholder.Box animate="fade" width="100%" height={170} radius={8} />
+    <IOSkeleton shape="rectangle" width="100%" height={170} radius={8} />
     <VSpacer size={24} />
     <ListItemHeader label="" />
-  </GradientScrollView>
+  </IOScrollView>
 );
 
 // ------------------------ styles - consts - export

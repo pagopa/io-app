@@ -10,15 +10,15 @@ exports[`MessageDetailsContent component should match the snapshot when abstract
     }
   />,
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#2B2E38",
-          "fontFamily": "Titillium Sans Pro",
+          "fontFamily": "Titillio",
           "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "400",

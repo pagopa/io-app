@@ -1,11 +1,10 @@
 import {
   Body,
-  ButtonLink,
   ContentWrapper,
   H3,
+  IOButton,
   IOColors,
   IOPictograms,
-  IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -23,7 +22,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import CieCardReadingAnimation, {
   ReadingState
-} from "../../../../../components/cie/CieCardReadingAnimation";
+} from "../../../../authentication/login/cie/components/CieCardReadingAnimation";
 import I18n from "../../../../../i18n";
 import {
   setAccessibilityFocus,
@@ -50,6 +49,7 @@ import {
   trackItWalletErrorCardReading
 } from "../../../analytics";
 import * as Cie from "../../components/cie";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
@@ -173,7 +173,9 @@ export const ItwCieCardReaderScreen = () => {
   const blueColorName = useInteractiveElementDefaultColorName();
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
-  const handleCancel = () => machineRef.send({ type: "close" });
+  const dismissalDialog = useItwDismissalDialog({
+    handleDismiss: () => machineRef.send({ type: "close" })
+  });
 
   const handleAccessibilityAnnouncement = (
     event: Cie.CieEvent | Cie.CieError
@@ -254,11 +256,12 @@ export const ItwCieCardReaderScreen = () => {
   }
 
   const renderCardReaderFooter = () => (
-    <View style={IOStyles.alignCenter}>
+    <View style={{ alignItems: "center" }}>
       <View>
-        <ButtonLink
+        <IOButton
+          variant="link"
           label={I18n.t("global.buttons.close")}
-          onPress={handleCancel}
+          onPress={dismissalDialog.show}
         />
       </View>
     </View>

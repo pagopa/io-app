@@ -4,7 +4,7 @@ import { NonNegativeInteger } from "@pagopa/ts-commons/lib/numbers";
 import { getType } from "typesafe-actions";
 
 import { startApplicationInitialization } from "../../../store/actions/application";
-import { profileUpsert } from "../../../store/actions/profile";
+import { profileUpsert } from "../../../features/settings/common/store/actions";
 import mockedProfile from "../../../__mocks__/initializedProfile";
 import { checkProfileEnabledSaga } from "../checkProfileEnabledSaga";
 

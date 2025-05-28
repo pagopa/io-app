@@ -4,14 +4,14 @@ import { testSaga } from "redux-saga-test-plan";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import mockedProfile from "../../__mocks__/initializedProfile";
 
-import { sessionExpired } from "../../store/actions/authentication";
+import { sessionExpired } from "../../features/authentication/common/store/actions";
 import { previousInstallationDataDeleteSuccess } from "../../store/actions/installation";
-import { resetProfileState } from "../../store/actions/profile";
+import { resetProfileState } from "../../features/settings/common/store/actions";
 import {
   sessionInfoSelector,
   sessionTokenSelector
-} from "../../store/reducers/authentication";
-import { profileSelector } from "../../store/reducers/profile";
+} from "../../features/authentication/common/store/selectors";
+import { profileSelector } from "../../features/settings/common/store/selectors";
 import { SessionToken } from "../../types/SessionToken";
 import { previousInstallationDataDeleteSaga } from "../installation";
 import {
@@ -22,13 +22,13 @@ import {
   loadProfile,
   watchProfile,
   watchProfileUpsertRequestsSaga
-} from "../profile";
+} from "../../features/settings/common/sagas/profile";
 import {
   initializeApplicationSaga,
   testWaitForNavigatorServiceInitialization
 } from "../startup";
-import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
-import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
+import { watchSessionExpiredSaga } from "../../features/authentication/common/saga/watchSessionExpiredSaga";
+import { watchProfileEmailValidationChangedSaga } from "../../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
@@ -36,20 +36,25 @@ import {
   getKeyInfo
 } from "../../features/lollipop/saga";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
-import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
-import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
+import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
+import { refreshSessionToken } from "../../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
-import { watchLogoutSaga } from "../startup/watchLogoutSaga";
+import { watchLogoutSaga } from "../../features/authentication/common/saga/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 import { startupTransientErrorInitialState } from "../../store/reducers/startup";
 import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
 import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
 import { trackKeychainFailures } from "../../utils/analytics";
-import { checkSession } from "../startup/watchCheckSessionSaga";
+import { checkSession } from "../../features/authentication/common/saga/watchCheckSessionSaga";
 import { formatRequestedTokenString } from "../../features/zendesk/utils";
 import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
-import { userFromSuccessLoginSelector } from "../../features/login/info/store/selectors";
+import { userFromSuccessLoginSelector } from "../../features/authentication/loginInfo/store/selectors";
+import { watchItwOfflineSaga } from "../../features/itwallet/common/saga";
+import {
+  isDeviceOfflineWithWalletSaga,
+  watchSessionRefreshInOfflineSaga
+} from "../../features/ingress/saga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 const aSessionInfo = O.some({
@@ -116,6 +121,12 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
+      .fork(watchItwOfflineSaga)
+      .next()
+      .call(isDeviceOfflineWithWalletSaga)
+      .next()
+      .fork(watchSessionRefreshInOfflineSaga)
+      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
@@ -171,6 +182,12 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
+      .fork(watchItwOfflineSaga)
+      .next()
+      .call(isDeviceOfflineWithWalletSaga)
+      .next()
+      .fork(watchSessionRefreshInOfflineSaga)
+      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
@@ -220,6 +237,12 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
+      .fork(watchItwOfflineSaga)
+      .next()
+      .call(isDeviceOfflineWithWalletSaga)
+      .next()
+      .fork(watchSessionRefreshInOfflineSaga)
+      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
@@ -274,6 +297,12 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
+      .fork(watchItwOfflineSaga)
+      .next()
+      .call(isDeviceOfflineWithWalletSaga)
+      .next()
+      .fork(watchSessionRefreshInOfflineSaga)
+      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
@@ -341,6 +370,12 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
+      .fork(watchItwOfflineSaga)
+      .next()
+      .call(isDeviceOfflineWithWalletSaga)
+      .next()
+      .fork(watchSessionRefreshInOfflineSaga)
+      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
@@ -395,6 +430,12 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
+      .fork(watchItwOfflineSaga)
+      .next()
+      .call(isDeviceOfflineWithWalletSaga)
+      .next()
+      .fork(watchSessionRefreshInOfflineSaga)
+      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)

@@ -34,8 +34,7 @@ import { MessageDetailsHeader } from "../components/MessageDetail/MessageDetails
 import I18n from "../../../i18n";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetailsTagBox";
-import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
-import { cleanMarkdownFromCTAs, getMessageCTA } from "../utils/messages";
+import { getMessageCTAs } from "../utils/ctas";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
 import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";
@@ -49,7 +48,7 @@ import {
   trackPNOptInMessageOpened
 } from "../../pn/analytics";
 import { RemoteContentBanner } from "../components/MessageDetail/RemoteContentBanner";
-import { setAccessibilityFocus } from "../../../utils/accessibility";
+import { MessageDetailsBody } from "../components/MessageDetail/MessageDetailsBody";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -107,19 +106,12 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
 
   const messageMarkdown =
     useIOSelector(state => messageMarkdownSelector(state, messageId)) ?? "";
-  const markdownWithNoCTA = useMemo(
-    () => cleanMarkdownFromCTAs(messageMarkdown),
-    [messageMarkdown]
-  );
+
   const serviceMetadata = useIOSelector(state =>
     serviceMetadataByIdSelector(state, serviceId)
   );
   const maybeCTAs = useMemo(
-    () =>
-      pipe(
-        getMessageCTA(messageMarkdown, serviceMetadata, serviceId),
-        O.toUndefined
-      ),
+    () => getMessageCTAs(messageMarkdown, serviceId, serviceMetadata),
     [messageMarkdown, serviceId, serviceMetadata]
   );
 
@@ -171,7 +163,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   if (message === undefined || messageDetails === undefined) {
     return (
       <OperationResultScreenContent
-        pictogram={"umbrellaNew"}
+        pictogram={"umbrella"}
         title={I18n.t("global.genericError")}
         subtitle={I18n.t("messageDetails.submitBugText")}
       />
@@ -210,15 +202,11 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
               messageId={messageId}
               title={subject}
             />
-            <MessageMarkdown
-              onLoadEnd={() => {
-                setTimeout(() => {
-                  setAccessibilityFocus(scrollViewRef);
-                }, 100);
-              }}
-            >
-              {markdownWithNoCTA}
-            </MessageMarkdown>
+            <MessageDetailsBody
+              messageMarkdown={messageMarkdown}
+              scrollViewRef={scrollViewRef}
+              serviceId={serviceId}
+            />
             <MessageDetailsPayment
               messageId={messageId}
               serviceId={serviceId}

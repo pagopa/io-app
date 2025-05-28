@@ -13,3 +13,5 @@ export enum WalletPaymentStepEnum {
   PICK_PSP = 2,
   CONFIRM_TRANSACTION = 3
 }
+
+export type TextInputValidationRefProps = { validateInput: () => void };

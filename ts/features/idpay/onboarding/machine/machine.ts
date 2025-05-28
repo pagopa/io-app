@@ -12,6 +12,7 @@ import { Context, InitialContext } from "./context";
 import { IdPayOnboardingEvents } from "./events";
 import {
   getBooleanSelfDeclarationListFromContext,
+  getInputFormSelfDeclarationFromContext,
   getMultiSelfDeclarationListFromContext
 } from "./selectors";
 
@@ -33,7 +34,8 @@ export const idPayOnboardingMachine = setup({
     navigateToFailureScreen: notImplementedStub,
     navigateToInitiativeMonitoringScreen: notImplementedStub,
     closeOnboarding: notImplementedStub,
-    handleSessionExpired: notImplementedStub
+    handleSessionExpired: notImplementedStub,
+    navigateToInputFormScreen: notImplementedStub
   },
   actors: {
     getInitiativeInfo: fromPromise<InitiativeDataDTO, string>(
@@ -71,11 +73,18 @@ export const idPayOnboardingMachine = setup({
       getBooleanSelfDeclarationListFromContext(context).length > 0,
     hasMultiSelfDeclarationList: ({ context }) =>
       getMultiSelfDeclarationListFromContext(context).length > 0,
+    hasInputFormDeclaration: ({ context }) =>
+      getInputFormSelfDeclarationFromContext(context).length > 0,
     isFirstMultiConsentPage: ({ context }) =>
       context.selfDeclarationsMultiPage === 0,
     isLastMultiConsent: ({ context }) =>
       context.selfDeclarationsMultiPage >=
       getMultiSelfDeclarationListFromContext(context).length - 1,
+    isFirstMultiTextConsent: ({ context }) =>
+      context.activeTextConsentPage === 0,
+    isLastTextConsent: ({ context }) =>
+      context.activeTextConsentPage >=
+      getInputFormSelfDeclarationFromContext(context).length - 1,
     isSessionExpired: ({ event }: { event: IdPayOnboardingEvents }) =>
       "error" in event && event.error === InitiativeFailureType.SESSION_EXPIRED
   }
@@ -266,6 +275,10 @@ export const idPayOnboardingMachine = setup({
             {
               guard: "hasMultiSelfDeclarationList",
               target: "DisplayingMultiSelfDeclarationList"
+            },
+            {
+              guard: "hasInputFormDeclaration",
+              target: "DisplayingInputForm"
             }
           ]
         },
@@ -294,6 +307,10 @@ export const idPayOnboardingMachine = setup({
               {
                 guard: "hasMultiSelfDeclarationList",
                 target: "DisplayingMultiSelfDeclarationList"
+              },
+              {
+                guard: "hasInputFormDeclaration",
+                target: "DisplayingInputForm"
               },
               {
                 target: "#idpay-onboarding.AcceptingCriteria"
@@ -346,6 +363,11 @@ export const idPayOnboardingMachine = setup({
             EvaluatingMultiSelfDeclarationList: {
               always: [
                 {
+                  guard: "hasInputFormDeclaration",
+                  target:
+                    "#idpay-onboarding.DisplayingSelfDeclarationList.DisplayingInputForm"
+                },
+                {
                   guard: "isLastMultiConsent",
                   target: "#idpay-onboarding.AcceptingCriteria"
                 },
@@ -355,6 +377,71 @@ export const idPayOnboardingMachine = setup({
                       +context.selfDeclarationsMultiPage + 1
                   })),
                   target: "DisplayingMultiSelfDeclarationItem"
+                }
+              ]
+            }
+          }
+        },
+
+        DisplayingInputForm: {
+          initial: "DisplayingInputFormScreen",
+          states: {
+            DisplayingInputFormScreen: {
+              entry: "navigateToInputFormScreen",
+              on: {
+                "input-text-criteria": {
+                  actions: assign(({ context, event }) => ({
+                    selfDeclarationsTextAnswers: {
+                      ...context.selfDeclarationsTextAnswers,
+                      [context.activeTextConsentPage]: event.criteria
+                    }
+                  })),
+                  target: "EvaluatingInputForm"
+                },
+                back: [
+                  {
+                    guard: and([
+                      "isFirstMultiTextConsent",
+                      "hasMultiSelfDeclarationList"
+                    ]),
+                    target:
+                      "#idpay-onboarding.DisplayingSelfDeclarationList.DisplayingMultiSelfDeclarationList"
+                  },
+                  {
+                    guard: and([
+                      "isFirstMultiTextConsent",
+                      "hasBooleanSelfDeclarationList"
+                    ]),
+                    target:
+                      "#idpay-onboarding.DisplayingSelfDeclarationList.DisplayingBooleanSelfDeclarationList"
+                  },
+                  {
+                    guard: and(["isFirstMultiConsentPage", "hasPdndCriteria"]),
+                    target: "#idpay-onboarding.DisplayingPdndCriteria"
+                  },
+                  {
+                    guard: "isFirstMultiTextConsent",
+                    target: "#idpay-onboarding.DisplayingInitiativeInfo"
+                  },
+                  {
+                    actions: assign(({ context }) => ({
+                      activeTextConsentPage: +context.activeTextConsentPage - 1
+                    }))
+                  }
+                ]
+              }
+            },
+            EvaluatingInputForm: {
+              always: [
+                {
+                  guard: "isLastTextConsent",
+                  target: "#idpay-onboarding.AcceptingCriteria"
+                },
+                {
+                  actions: assign(({ context }) => ({
+                    activeTextConsentPage: +context.activeTextConsentPage + 1
+                  })),
+                  target: "DisplayingInputFormScreen"
                 }
               ]
             }

@@ -1,16 +1,21 @@
 import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
-import { sessionTokenSelector } from "../../../../store/reducers/authentication";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
+import { getNetworkError } from "../../../../utils/errors";
+import {
+  trackItwStatusWalletAttestationFailure,
+  trackItwWalletBadState,
+  trackItwWalletInstanceRevocation
+} from "../../analytics";
 import { getWalletInstanceStatus } from "../../common/utils/itwAttestationUtils";
-import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
-import { itwIntegritySetServiceIsReady } from "../../issuance/store/actions";
-import { getNetworkError } from "../../../../utils/errors";
+import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
+import { checkIntegrityServiceReadySaga } from "./checkIntegrityServiceReadySaga";
 
 export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
   const sessionToken = yield* select(sessionTokenSelector);
@@ -24,12 +29,14 @@ export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
     );
 
     if (walletInstanceStatus.is_revoked) {
+      trackItwWalletInstanceRevocation(walletInstanceStatus.revocation_reason);
       yield* call(handleWalletInstanceResetSaga);
     }
 
     // Update wallet instance status
     yield* put(itwUpdateWalletInstanceStatus.success(walletInstanceStatus));
   } catch (e) {
+    trackItwStatusWalletAttestationFailure();
     yield* put(itwUpdateWalletInstanceStatus.failure(getNetworkError(e)));
   }
 }
@@ -42,13 +49,8 @@ export function* checkWalletInstanceStateSaga(): Generator<
   ReduxSagaEffect,
   void
 > {
-  // We start the warming up process of the integrity service on Android
-  try {
-    const integrityServiceReadyResult: boolean = yield* call(
-      ensureIntegrityServiceIsReady
-    );
-    yield* put(itwIntegritySetServiceIsReady(integrityServiceReadyResult));
-
+  // Before any check we need to ensure the integrity service is ready
+  if (yield* call(checkIntegrityServiceReadySaga)) {
     const isItwOperationalOrValid = yield* select(
       itwLifecycleIsOperationalOrValid
     );
@@ -58,7 +60,26 @@ export function* checkWalletInstanceStateSaga(): Generator<
     if (isItwOperationalOrValid && O.isSome(integrityKeyTag)) {
       yield* call(getStatusOrResetWalletInstance, integrityKeyTag.value);
     }
-  } catch (e) {
-    // Ignore the error, the integrity service is not available and an error will occur if the wallet requests an attestation
   }
+}
+
+/**
+ * Saga responsible for checking wallet instance inconsistency.
+ * If an eID is present but the integrity key tag is missing,
+ * the wallet instance is reset.
+ */
+export function* checkWalletInstanceInconsistencySaga(): Generator<
+  ReduxSagaEffect,
+  boolean
+> {
+  const eid = yield* select(itwCredentialsEidSelector);
+  const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
+
+  if (O.isSome(eid) && O.isNone(integrityKeyTag)) {
+    yield* call(handleWalletInstanceResetSaga);
+    trackItwWalletBadState();
+    return false;
+  }
+
+  return true;
 }

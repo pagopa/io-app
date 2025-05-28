@@ -158,7 +158,9 @@ const globalStateFromStatus = (
           isPNMessage: false,
           containsAttachments: false,
           containsPayment: undefined,
-          hasRemoteContent: false
+          hasRemoteContent: false,
+          hasFIMSCTA: false,
+          createdAt: new Date()
         })
       );
   }

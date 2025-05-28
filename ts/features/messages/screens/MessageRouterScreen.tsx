@@ -1,5 +1,4 @@
 import { ReactElement, useCallback, useEffect, useRef } from "react";
-
 import { View } from "react-native";
 import { StackActions } from "@react-navigation/native";
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
@@ -88,7 +87,9 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
         data.containsPayment,
         data.hasRemoteContent,
         data.containsAttachments,
-        fromPushNotification
+        fromPushNotification,
+        data.hasFIMSCTA,
+        data.createdAt
       );
 
       if (data.isLegacyGreenPass) {
@@ -165,7 +166,7 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
         label: I18n.t("global.buttons.retry"),
         onPress: getMessageDataCallback
       }}
-      pictogram="umbrellaNew"
+      pictogram="umbrella"
       secondaryAction={{
         label: I18n.t("global.buttons.cancel"),
         onPress: onCancelCallback

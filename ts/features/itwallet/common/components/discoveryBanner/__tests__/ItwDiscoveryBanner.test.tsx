@@ -6,11 +6,43 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { ItwDiscoveryBanner } from "../ItwDiscoveryBanner";
+import * as useItwDiscoveryBannerTypeModule from "../../../hooks/useItwDiscoveryBannerType";
+
+jest.mock("../../../hooks/useItwDiscoveryBannerType.ts", () => ({
+  useItwDiscoveryBannerType: jest.fn()
+}));
 
 describe("ItwDiscoveryBanner", () => {
-  it("should match snapshot", () => {
+  beforeEach(() => {
+    jest
+      .spyOn(useItwDiscoveryBannerTypeModule, "useItwDiscoveryBannerType")
+      .mockReturnValue("onboarding");
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should match snapshot with 'onboarding' banner type", () => {
     const { component } = renderComponent();
     expect(component.toJSON()).toMatchSnapshot();
+  });
+
+  it("should match snapshot with 'reactivating' banner type", () => {
+    jest
+      .spyOn(useItwDiscoveryBannerTypeModule, "useItwDiscoveryBannerType")
+      .mockReturnValue("reactivating");
+    const { component } = renderComponent();
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+
+  it("should not render banner when banner type is undefined", () => {
+    jest
+      .spyOn(useItwDiscoveryBannerTypeModule, "useItwDiscoveryBannerType")
+      .mockReturnValue(undefined);
+    const { component } = renderComponent();
+    const bannerElement = component.queryByTestId("itwDiscoveryBannerTestID");
+    expect(bannerElement).toBeNull();
   });
 });
 

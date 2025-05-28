@@ -2,39 +2,41 @@ import { useCallback } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import {
   Divider,
-  IOStyles,
+  IOVisualCostants,
   ListItemAction,
   ListItemHeader,
   ListItemInfo,
   ListItemInfoCopy
 } from "@pagopa/io-app-design-system";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { ServiceMetadata } from "../../../../../definitions/services/ServiceMetadata";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceMetadataByIdSelector } from "../store/reducers";
 import { handleItemOnPress } from "../../../../utils/url";
 import * as analytics from "../../common/analytics";
 
-type MetadataActionListItem = {
+type MetadataListItemBase = {
+  condition?: boolean;
+};
+
+type MetadataListItemAction = MetadataListItemBase & {
   kind: "ListItemAction";
-  condition?: boolean;
-} & Omit<ListItemAction, "accessibilityLabel" | "variant">;
+} & Omit<ListItemAction, "variant">;
 
-type MetadataInfoListItem = {
+type MetadataListItemInfo = MetadataListItemBase & {
   kind: "ListItemInfo";
-  condition?: boolean;
-} & Omit<ListItemInfo, "accessibilityLabel" | "paymentLogoIcon">;
+  label: string;
+} & ListItemInfo;
 
-type MetadataInfoCopyListItem = {
+type MetadataListItemInfoCopy = MetadataListItemBase & {
   kind: "ListItemInfoCopy";
-  condition?: boolean;
-} & Omit<ListItemInfoCopy, "accessibilityLabel">;
+} & ListItemInfoCopy;
 
 type MetadataListItem =
-  | MetadataActionListItem
-  | MetadataInfoListItem
-  | MetadataInfoCopyListItem;
+  | MetadataListItemAction
+  | MetadataListItemInfo
+  | MetadataListItemInfoCopy;
 
 export type ServiceDetailsMetadataProps = {
   organizationFiscalCode: string;
@@ -107,8 +109,8 @@ export const ServiceDetailsMetadata = ({
     },
     {
       kind: "ListItemAction",
-      icon: "phone",
       condition: !!phone,
+      icon: "phone",
       label: I18n.t("services.details.metadata.phone"),
       onPress: () => handleOpenUrl("phone", `tel:${phone}`),
       testID: "service-details-metadata-phone"
@@ -131,8 +133,11 @@ export const ServiceDetailsMetadata = ({
     },
     {
       kind: "ListItemInfoCopy",
-      label: I18n.t("services.details.metadata.fiscalCode"),
+      accessibilityHint: I18n.t(
+        "services.details.metadata.fiscalCodeAccessibilityHint"
+      ),
       icon: "entityCode",
+      label: I18n.t("services.details.metadata.fiscalCode"),
       onPress: handleItemOnPress(organizationFiscalCode, "COPY"),
       value: organizationFiscalCode,
       testID: "service-details-metadata-org-fiscal-code"
@@ -164,17 +169,11 @@ export const ServiceDetailsMetadata = ({
     }: ListRenderItemInfo<MetadataListItem>) => {
       switch (rest.kind) {
         case "ListItemAction":
-          return (
-            <ListItemAction
-              variant="primary"
-              {...rest}
-              accessibilityLabel={rest.label}
-            />
-          );
+          return <ListItemAction variant="primary" {...rest} />;
         case "ListItemInfo":
-          return <ListItemInfo {...rest} accessibilityLabel={rest.label} />;
+          return <ListItemInfo {...rest} />;
         case "ListItemInfoCopy":
-          return <ListItemInfoCopy {...rest} accessibilityLabel={rest.label} />;
+          return <ListItemInfoCopy {...rest} />;
         default:
           return null;
       }
@@ -193,7 +192,9 @@ export const ServiceDetailsMetadata = ({
     <FlatList
       ListHeaderComponent={ListHeaderComponent}
       ItemSeparatorComponent={() => <Divider />}
-      contentContainerStyle={IOStyles.horizontalContentPadding}
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
       data={filteredMetadataListItems}
       keyExtractor={item => item.label}
       renderItem={renderItem}

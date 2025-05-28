@@ -1,35 +1,26 @@
-import {
-  buttonSolidHeight,
-  GradientBottomActions,
-  IOColors,
-  IOSpacingScale,
-  IOToast,
-  IOVisualCostants
-} from "@pagopa/io-app-design-system";
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { useState, useMemo, useCallback, useEffect } from "react";
-import { LayoutChangeEvent, Platform, StyleSheet, View } from "react-native";
-import Animated, {
-  Easing,
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming
-} from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useCallback, useEffect, useMemo } from "react";
+import { Platform, View } from "react-native";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { DiscountCodeTypeEnum } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
+import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
+import {
+  IOScrollView,
+  IOScrollViewActions
+} from "../../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useScreenEndMargin } from "../../../../../hooks/useScreenEndMargin";
 import I18n from "../../../../../i18n";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { profileSelector } from "../../../../../store/reducers/profile";
+import { profileSelector } from "../../../../settings/common/store/selectors";
 import { openWebUrl } from "../../../../../utils/url";
 import { CgnDiscountContent } from "../../components/merchants/discount/CgnDiscountContent";
 import { CgnDiscountHeader } from "../../components/merchants/discount/CgnDiscountHeader";
+import { useCgnStyle } from "../../hooks/useCgnStyle";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnCodeFromBucket } from "../../store/actions/bucket";
@@ -46,8 +37,7 @@ import {
 } from "../../store/reducers/merchants";
 import { cgnOtpDataSelector } from "../../store/reducers/otp";
 import { getCgnUserAgeRange } from "../../utils/dates";
-
-const gradientSafeAreaHeight: IOSpacingScale = 96;
+import { buildEventProperties } from "../../../../../utils/analytics";
 
 const CgnDiscountDetailScreen = () => {
   const dispatch = useIODispatch();
@@ -64,12 +54,6 @@ const CgnDiscountDetailScreen = () => {
     ? merchantDetailsRemoteValue.value
     : undefined;
 
-  const [titleHeight, setTitleHeight] = useState(0);
-  const translationY = useSharedValue(0);
-  const gradientOpacity = useSharedValue(1);
-  const insets = useSafeAreaInsets();
-  const endMargins = useScreenEndMargin();
-
   const bucketResponse = useIOSelector(cgnBucketSelector);
   const discountOtp = useIOSelector(cgnOtpDataSelector);
   const discountCode = useIOSelector(cgnSelectedDiscountCodeSelector);
@@ -83,37 +67,16 @@ const CgnDiscountDetailScreen = () => {
 
   const mixpanelCgnEvent = useCallback(
     (eventName: string) =>
-      void mixpanelTrack(eventName, {
-        userAge: cgnUserAgeRange,
-        categories: discountDetails?.productCategories,
-        operator_name: merchantDetails?.name
-      }),
+      mixpanelTrack(
+        eventName,
+        buildEventProperties("UX", "action", {
+          userAge: cgnUserAgeRange,
+          categories: discountDetails?.productCategories,
+          operator_name: merchantDetails?.name,
+          merchant_business_name: merchantDetails?.fullName
+        })
+      ),
     [cgnUserAgeRange, discountDetails, merchantDetails]
-  );
-
-  const getTitleHeight = (event: LayoutChangeEvent) => {
-    const { height } = event.nativeEvent.layout;
-    if (titleHeight === 0) {
-      setTitleHeight(height - insets.top - IOVisualCostants.headerHeight);
-    }
-  };
-
-  const scrollHandler = useAnimatedScrollHandler(event => {
-    // eslint-disable-next-line functional/immutable-data
-    translationY.value = event.contentOffset.y;
-  });
-
-  const footerGradientOpacityTransition = useAnimatedStyle(() => ({
-    opacity: withTiming(gradientOpacity.value, {
-      duration: 200,
-      easing: Easing.ease
-    })
-  }));
-
-  const gradientAreaHeight: number = useMemo(
-    () =>
-      endMargins.screenEndSafeArea + buttonSolidHeight + gradientSafeAreaHeight,
-    [endMargins]
   );
 
   const onNavigateToDiscountUrl = () => {
@@ -191,15 +154,23 @@ const CgnDiscountDetailScreen = () => {
     }
   };
 
+  const {
+    header: { default: defaultHeaderStyle, new: newHeaderStyle }
+  } = useCgnStyle();
+
+  const { backgroundColor } = discountDetails?.isNew
+    ? newHeaderStyle
+    : defaultHeaderStyle;
+
+  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
+
   useHeaderSecondLevel({
-    title: discountDetails?.name || "",
-    scrollValues: {
-      contentOffsetY: translationY,
-      triggerOffset: titleHeight
-    },
-    transparent: true,
+    title: discountDetails?.name ?? "",
+    backgroundColor,
     canGoBack: true,
-    supportRequest: true
+    supportRequest: true,
+    enableDiscreteTransition: true,
+    animatedRef: animatedScrollViewRef
   });
 
   useEffect(() => {
@@ -207,102 +178,79 @@ const CgnDiscountDetailScreen = () => {
     dispatch(resetOtpState());
   }, [dispatch]);
 
-  const FooterButtonActions = () => {
-    const primaryAction: GradientBottomActions["primaryActionProps"] =
-      merchantDetails?.discountCodeType
-        ? {
-            label: I18n.t(
-              `bonus.cgn.merchantDetail.discount.cta.${merchantDetails.discountCodeType}`
-            ),
-            onPress: onPressDiscountCode,
-            disabled: loading,
-            loading,
-            testID: "discount-code-button"
-          }
-        : undefined;
-    const secondaryAction: GradientBottomActions["secondaryActionProps"] =
-      discountDetails?.discountUrl &&
-      merchantDetails?.discountCodeType !== DiscountCodeTypeEnum.landingpage
-        ? {
-            label: I18n.t(`bonus.cgn.merchantDetail.discount.secondaryCta`),
-            onPress: onNavigateToDiscountUrl,
-            testID: "discount-url-button"
-          }
-        : undefined;
+  const renderActions = (): IOScrollViewActions | undefined => {
+    const primary = merchantDetails?.discountCodeType && {
+      label: I18n.t(
+        `bonus.cgn.merchantDetail.discount.cta.${merchantDetails.discountCodeType}`
+      ),
+      onPress: onPressDiscountCode,
+      disabled: loading,
+      loading,
+      testID: "discount-code-button"
+    };
 
-    if (!primaryAction && !secondaryAction) {
-      return null;
+    const secondary = discountDetails?.discountUrl &&
+      merchantDetails?.discountCodeType !==
+        DiscountCodeTypeEnum.landingpage && {
+        label: I18n.t(`bonus.cgn.merchantDetail.discount.secondaryCta`),
+        onPress: onNavigateToDiscountUrl,
+        testID: "discount-url-button"
+      };
+
+    if (!primary && !secondary) {
+      return undefined;
     }
-    return (
-      <GradientBottomActions
-        primaryActionProps={primaryAction}
-        secondaryActionProps={secondaryAction}
-        transitionAnimStyle={footerGradientOpacityTransition}
-        dimensions={{
-          bottomMargin: endMargins.screenEndSafeArea,
-          extraBottomMargin: 0,
-          gradientAreaHeight,
-          spaceBetweenActions: 24,
-          safeBackgroundHeight: endMargins.screenEndMargin
-        }}
-      />
-    );
+    if (primary && secondary) {
+      return {
+        type: "TwoButtons",
+        primary,
+        secondary
+      };
+    }
+    if (primary) {
+      return {
+        type: "SingleButton",
+        primary
+      };
+    }
+    if (secondary) {
+      return {
+        type: "SingleButton",
+        primary: secondary
+      };
+    }
+    return undefined;
   };
-
-  const discountColor = discountDetails?.isNew
-    ? styles.backgroundNewItem
-    : styles.backgroundDefault;
 
   if (discountDetails && merchantDetails) {
     return (
       <>
-        <Animated.ScrollView
-          style={{ flexGrow: 1, backgroundColor: IOColors.white }}
-          onScroll={scrollHandler}
-          scrollEventThrottle={8}
-          snapToOffsets={[0, titleHeight]}
-          snapToEnd={false}
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom: gradientAreaHeight,
-            backgroundColor: IOColors.white
-          }}
+        <FocusAwareStatusBar backgroundColor={backgroundColor} />
+        <IOScrollView
+          animatedRef={animatedScrollViewRef}
+          includeContentMargins={false}
+          actions={renderActions()}
         >
           {Platform.OS === "ios" && (
             <View
               style={{
                 position: "absolute",
                 height: 1000,
-                backgroundColor: discountColor.backgroundColor,
+                backgroundColor,
                 top: -1000,
                 right: 0,
                 left: 0
               }}
             />
           )}
-          <CgnDiscountHeader
-            onLayout={getTitleHeight}
-            discountDetails={discountDetails}
-          />
+          <CgnDiscountHeader discountDetails={discountDetails} />
           <CgnDiscountContent discountDetails={discountDetails} />
-        </Animated.ScrollView>
-        <FooterButtonActions />
+        </IOScrollView>
       </>
     );
   }
 
   return null;
 };
-
-const styles = StyleSheet.create({
-  backgroundDefault: {
-    backgroundColor: IOColors["grey-50"],
-    borderColor: IOColors["grey-100"]
-  },
-  backgroundNewItem: {
-    backgroundColor: IOColors["hanPurple-50"],
-    borderColor: IOColors["hanPurple-250"]
-  }
-});
 
 export default CgnDiscountDetailScreen;

@@ -7,7 +7,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
       "backgroundColor": "#F4F5F8",
       "marginTop": -1334,
       "paddingBottom": undefined,
-      "paddingTop": 1534,
+      "paddingTop": 1334,
     }
   }
 >
@@ -19,6 +19,11 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
     }
   >
     <View
+      accessibilityState={
+        {
+          "busy": true,
+        }
+      }
       accessible={true}
       style={
         {
@@ -41,30 +46,23 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
           collapsable={false}
           style={
             {
-              "opacity": 0.5,
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 12,
+              "height": 66,
+              "opacity": 0.55,
+              "width": 66,
             }
           }
-        >
-          <View
-            color="#D2D6E3"
-            height={66}
-            radius={12}
-            style={
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderRadius": 12,
-                "height": 66,
-                "width": 66,
-              }
-            }
-            width={66}
-          />
-        </View>
+        />
       </View>
       <View
         style={
           {
+            "display": "flex",
             "flex": 1,
+            "flexDirection": "column",
+            "gap": 8,
           }
         }
       >
@@ -72,29 +70,12 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
           collapsable={false}
           style={
             {
-              "opacity": 0.5,
-            }
-          }
-        >
-          <View
-            color="#D2D6E3"
-            height={16}
-            radius={8}
-            style={
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderRadius": 8,
-                "height": 16,
-                "width": "100%",
-              }
-            }
-            width="100%"
-          />
-        </View>
-        <View
-          style={
-            {
-              "height": 8,
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 8,
+              "height": 16,
+              "opacity": 0.55,
+              "width": "100%",
             }
           }
         />
@@ -102,29 +83,12 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
           collapsable={false}
           style={
             {
-              "opacity": 0.5,
-            }
-          }
-        >
-          <View
-            color="#D2D6E3"
-            height={16}
-            radius={8}
-            style={
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderRadius": 8,
-                "height": 16,
-                "width": "80%",
-              }
-            }
-            width="80%"
-          />
-        </View>
-        <View
-          style={
-            {
-              "height": 8,
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 8,
+              "height": 16,
+              "opacity": 0.55,
+              "width": "80%",
             }
           }
         />
@@ -132,25 +96,15 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
           collapsable={false}
           style={
             {
-              "opacity": 0.5,
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 8,
+              "height": 8,
+              "opacity": 0.55,
+              "width": "60%",
             }
           }
-        >
-          <View
-            color="#D2D6E3"
-            height={8}
-            radius={8}
-            style={
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderRadius": 8,
-                "height": 8,
-                "width": "60%",
-              }
-            }
-            width="60%"
-          />
-        </View>
+        />
       </View>
     </View>
     <View
@@ -171,7 +125,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
       "backgroundColor": "#F4F5F8",
       "marginTop": -1334,
       "paddingBottom": undefined,
-      "paddingTop": 1534,
+      "paddingTop": 1334,
     }
   }
 >
@@ -183,6 +137,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
     }
   >
     <View
+      importantForAccessibility="no"
       style={
         {
           "alignItems": "center",
@@ -194,6 +149,9 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
       testID="services-header"
     >
       <View
+        accessibilityElementsHidden={true}
+        accessible={false}
+        importantForAccessibility="no-hide-descendants"
         style={
           {
             "marginRight": 16,
@@ -261,15 +219,16 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
         }
       >
         <Text
-          allowFontScaling={false}
+          accessibilityRole="header"
+          allowFontScaling={true}
           dynamicTypeRamp="title2"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           style={
             [
               {},
               {
                 "color": "#2B2E38",
-                "fontFamily": "Titillium Sans Pro",
+                "fontFamily": "Titillio",
                 "fontSize": 22,
                 "fontStyle": "normal",
                 "fontWeight": "600",
@@ -281,15 +240,15 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
           #### title ####
         </Text>
         <Text
-          allowFontScaling={false}
+          allowFontScaling={true}
           dynamicTypeRamp="footnote"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           style={
             [
               {},
               {
                 "color": "#555C70",
-                "fontFamily": "Titillium Sans Pro",
+                "fontFamily": "Titillio",
                 "fontSize": 14,
                 "fontStyle": "normal",
                 "fontWeight": "400",

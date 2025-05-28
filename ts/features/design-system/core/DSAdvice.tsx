@@ -1,5 +1,6 @@
 import {
   Banner,
+  BannerErrorState,
   FeatureInfo,
   H4,
   VStack,
@@ -9,7 +10,6 @@ import {
 import { Alert } from "react-native";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { BannerErrorState } from "../../../components/ui/BannerErrorState";
 
 const onLinkPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -98,19 +98,25 @@ const renderFeatureInfo = () => (
     <DSComponentViewerBox name="FeatureInfo · with Pictogram">
       <VStack space={componentInnerMargin}>
         <FeatureInfo
-          pictogramName="followMessage"
+          pictogramProps={{
+            name: "followMessage"
+          }}
           body={
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
           }
         />
         <FeatureInfo
-          pictogramName="manual"
+          pictogramProps={{
+            name: "manual"
+          }}
           body={
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
           }
         />
         <FeatureInfo
-          pictogramName="followMessage"
+          pictogramProps={{
+            name: "followMessage"
+          }}
           body={
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
           }
@@ -128,11 +134,10 @@ const renderBanner = () => (
   <VStack space={componentMargin}>
     {bannerBackgroundColours.map(color => (
       <VStack space={componentMargin} key={`${color}-block`}>
-        <DSComponentViewerBox name={`Banner · Big size, ${color} variant`}>
+        <DSComponentViewerBox name={`Banner · ${color} variant`}>
           <VStack space={componentInnerMargin}>
             <Banner
               color={color}
-              size="big"
               title="Banner title"
               pictogramName="charity"
               action="Action text"
@@ -140,7 +145,6 @@ const renderBanner = () => (
             />
             <Banner
               color={color}
-              size="big"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
@@ -148,7 +152,6 @@ const renderBanner = () => (
             />
             <Banner
               color={color}
-              size="big"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
@@ -158,7 +161,6 @@ const renderBanner = () => (
             />
             <Banner
               color={color}
-              size="big"
               title="Banner title"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
@@ -167,7 +169,6 @@ const renderBanner = () => (
             />
             <Banner
               color={color}
-              size="big"
               title="Banner title"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
@@ -178,13 +179,10 @@ const renderBanner = () => (
             />
           </VStack>
         </DSComponentViewerBox>
-        <DSComponentViewerBox
-          name={`Banner · Big size, ${color} variant, close action`}
-        >
+        <DSComponentViewerBox name={`Banner · ${color} variant, close action`}>
           <VStack space={componentInnerMargin}>
             <Banner
               color={color}
-              size="big"
               title="Banner title"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
@@ -195,7 +193,6 @@ const renderBanner = () => (
             />
             <Banner
               color={color}
-              size="big"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
@@ -204,39 +201,6 @@ const renderBanner = () => (
               pictogramName="charity"
               onClose={onClose}
               labelClose="Nascondi questo banner"
-            />
-          </VStack>
-        </DSComponentViewerBox>
-        <DSComponentViewerBox name={`Banner · Small size, ${color} variant`}>
-          <VStack space={componentInnerMargin}>
-            <Banner
-              color={color}
-              size="small"
-              title="Banner title"
-              content={
-                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
-              }
-              pictogramName="charity"
-              action="Dona anche tu"
-              onPress={onLinkPress}
-            />
-            <Banner
-              color={color}
-              size="small"
-              content={
-                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
-              }
-              action="Dona anche tu"
-              onPress={onLinkPress}
-              pictogramName="charity"
-            />
-            <Banner
-              color={color}
-              size="small"
-              content={
-                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
-              }
-              pictogramName="charity"
             />
           </VStack>
         </DSComponentViewerBox>

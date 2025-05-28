@@ -87,3 +87,13 @@ export const getAccessibleAmountText = (amount?: string) =>
     ),
     O.getOrElseW(() => undefined)
   );
+
+export const getListItemAccessibilityLabelCount = (
+  total: number,
+  index: number,
+  excludeComma = false
+) =>
+  `${excludeComma ? "" : ", "}${I18n.t("global.accessibility.list.counter", {
+    index: index + 1,
+    total
+  })}`;

@@ -1,6 +1,5 @@
 import { ComponentProps } from "react";
 import { Dimensions, View } from "react-native";
-import { useHeaderHeight } from "@react-navigation/elements";
 import {
   ContentWrapper,
   IOColors,
@@ -27,7 +26,6 @@ export const ServicesHeaderSection = ({
   extraBottomPadding,
   ...rest
 }: ServicesHeaderSectionProps) => {
-  const headerHeight = useHeaderHeight();
   const theme = useIOTheme();
 
   return (
@@ -35,7 +33,7 @@ export const ServicesHeaderSection = ({
       style={{
         backgroundColor: IOColors[theme["appBackground-secondary"]],
         paddingBottom: extraBottomPadding,
-        paddingTop: WINDOW_HEIGHT + headerHeight,
+        paddingTop: WINDOW_HEIGHT,
         marginTop: -WINDOW_HEIGHT
       }}
     >

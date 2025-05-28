@@ -15,7 +15,7 @@ const GenericErrorComponent = (props: Props) => (
   <ErrorComponent
     title={props.title}
     subTitle={props.subTitle}
-    pictogram={"umbrellaNew"}
+    pictogram={"umbrella"}
     testID={props.testID}
     onPress={props.onPress}
     retry={props.retry}

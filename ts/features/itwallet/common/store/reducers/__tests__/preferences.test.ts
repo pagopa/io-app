@@ -5,9 +5,15 @@ import {
   itwCloseDiscoveryBanner,
   itwCloseFeedbackBanner,
   itwFlagCredentialAsRequested,
+  itwSetAuthLevel,
+  itwSetClaimValuesHidden,
   itwUnflagCredentialAsRequested
 } from "../../actions/preferences";
-import reducer, { ItwPreferencesState } from "../preferences";
+import reducer, {
+  itwPreferencesInitialState,
+  ItwPreferencesState
+} from "../preferences";
+import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 
 describe("IT Wallet preferences reducer", () => {
   const INITIAL_STATE: ItwPreferencesState = {
@@ -86,5 +92,57 @@ describe("IT Wallet preferences reducer", () => {
       requestedCredentials: {}
     });
     MockDate.reset();
+  });
+
+  it("should handle itwLifecycleStoresReset action", () => {
+    const action = itwLifecycleStoresReset();
+    const newState = reducer(INITIAL_STATE, action);
+
+    expect(newState).toEqual(itwPreferencesInitialState);
+  });
+
+  it("should handle itwSetAuthLevel action", () => {
+    const action = itwSetAuthLevel("L2");
+    const newState = reducer(INITIAL_STATE, action);
+
+    expect(newState).toEqual({
+      ...newState,
+      authLevel: "L2"
+    });
+  });
+
+  it("should handle itwSetClaimValuesHidden action", () => {
+    const action = itwSetClaimValuesHidden(true);
+    const newState = reducer(INITIAL_STATE, action);
+
+    expect(newState).toEqual({
+      ...newState,
+      claimValuesHidden: true
+    });
+  });
+
+  it("should persist preferences when the wallet is being reset", () => {
+    const action = itwLifecycleStoresReset();
+    const newState = reducer(
+      {
+        hideFeedbackBannerUntilDate: "abcd",
+        hideDiscoveryBannerUntilDate: "abcd",
+        requestedCredentials: { MDL: "abcd" },
+        isPendingReview: true,
+        authLevel: "L2",
+        claimValuesHidden: true,
+        isWalletInstanceRemotelyActive: true,
+        isL3Enabled: true,
+        offlineBannerHidden: true
+      },
+      action
+    );
+
+    expect(newState).toEqual({
+      ...itwPreferencesInitialState,
+      claimValuesHidden: true,
+      isL3Enabled: true,
+      isWalletInstanceRemotelyActive: true
+    });
   });
 });

@@ -93,3 +93,6 @@ export const potFoldWithDefault = <A, E, O>(
     handlers.someUpdating ?? handlers.default,
     handlers.someError ?? handlers.default
   );
+
+export const toUndefinedOptional = <T, E>(input: pot.Pot<T, E> | undefined) =>
+  input != null ? pot.toUndefined(input) : undefined;

@@ -8,6 +8,11 @@ import { applicationChangeState } from "../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../testWrapper";
 import { usePreventScreenCapture } from "../usePreventScreenCapture";
 
+jest.mock("../../environment", () => ({
+  ...jest.requireActual("../../environment"),
+  isDevEnv: false
+}));
+
 jest.mock("react-native-screenshot-prevent", () => ({
   enableSecureView: jest.fn(),
   disableSecureView: jest.fn()

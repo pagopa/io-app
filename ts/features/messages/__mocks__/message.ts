@@ -12,14 +12,14 @@ export const messageId_1 = "FAT00001";
  */
 export const message_1: CreatedMessageWithContentAndAttachments = {
   id: messageId_1,
-  fiscal_code: service_1.organization_fiscal_code as unknown as FiscalCode,
+  fiscal_code: service_1.organization.fiscal_code as unknown as FiscalCode,
   created_at: new Date(),
   content: {
     markdown:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue." as any,
     subject: "Lorem ipsum..." as any
   },
-  sender_service_id: service_1.service_id
+  sender_service_id: service_1.id
 };
 
 export const messageWithValidPayment: CreatedMessageWithContentAndAttachments =

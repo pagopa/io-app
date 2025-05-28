@@ -4,24 +4,24 @@ import {
   OrganizationFiscalCode
 } from "@pagopa/ts-commons/lib/strings";
 import { Action, createStore } from "redux";
-import { ServiceId } from "../../../../../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../../../../../definitions/backend/ServicePublic";
-import { ServiceScopeEnum } from "../../../../../../../definitions/backend/ServiceScope";
-import { SpecialServiceCategoryEnum } from "../../../../../../../definitions/backend/SpecialServiceCategory";
-import { StandardServiceCategoryEnum } from "../../../../../../../definitions/backend/StandardServiceCategory";
+import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
+import { ServiceDetails } from "../../../../../../../definitions/services/ServiceDetails";
+import { StandardServiceCategoryEnum } from "../../../../../../../definitions/services/StandardServiceCategory";
+import { ScopeTypeEnum } from "../../../../../../../definitions/services/ScopeType";
+import { SpecialServiceCategoryEnum } from "../../../../../../../definitions/services/SpecialServiceCategory";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
   logoutSuccess,
   sessionExpired
-} from "../../../../../../store/actions/authentication";
+} from "../../../../../authentication/common/store/actions";
 import { loadServiceDetail } from "../../actions/details";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../../utils/tests";
 import {
-  isErrorServiceByIdSelector,
-  isLoadingServiceByIdSelector,
-  serviceByIdSelector,
+  isErrorServiceDetailsByIdSelector,
+  isLoadingServiceDetailsByIdSelector,
+  serviceDetailsByIdSelector,
   serviceMetadataByIdSelector,
   serviceMetadataInfoSelector
 } from "..";
@@ -29,18 +29,19 @@ import {
 const serviceId = "serviceId" as ServiceId;
 
 const service = {
-  service_id: serviceId,
-  service_name: "health",
-  organization_name: "Ċentru tas-Saħħa",
-  department_name: "covid-19",
-  organization_fiscal_code: "FSCLCD" as OrganizationFiscalCode
-} as ServicePublic;
+  id: serviceId,
+  name: "name",
+  organization: {
+    fiscal_code: "FSCLCD" as OrganizationFiscalCode,
+    name: "Ċentru tas-Saħħa"
+  }
+} as ServiceDetails;
 
 describe("serviceById reducer", () => {
   it("should have initial state", () => {
     const state = appReducer(undefined, applicationChangeState("active"));
 
-    expect(state.features.services.details.byId).toStrictEqual({});
+    expect(state.features.services.details.dataById).toStrictEqual({});
   });
 
   it("should handle loadServiceDetail action", () => {
@@ -49,12 +50,12 @@ describe("serviceById reducer", () => {
 
     store.dispatch(loadServiceDetail.request(serviceId));
 
-    expect(store.getState().features.services.details.byId).toStrictEqual({
+    expect(store.getState().features.services.details.dataById).toStrictEqual({
       serviceId: pot.noneLoading
     });
 
     store.dispatch(loadServiceDetail.success(service));
-    expect(store.getState().features.services.details.byId).toStrictEqual({
+    expect(store.getState().features.services.details.dataById).toStrictEqual({
       serviceId: pot.some(service)
     });
 
@@ -64,7 +65,7 @@ describe("serviceById reducer", () => {
     };
 
     store.dispatch(loadServiceDetail.failure(tError));
-    expect(store.getState().features.services.details.byId).toStrictEqual({
+    expect(store.getState().features.services.details.dataById).toStrictEqual({
       serviceId: pot.someError(service, new Error("load failed"))
     });
   });
@@ -81,7 +82,7 @@ describe("serviceById reducer", () => {
       appReducer,
       sequenceOfActions
     );
-    expect(state.features.services.details.byId).toEqual({});
+    expect(state.features.services.details.dataById).toEqual({});
   });
 
   it("should handle sessionExpired action", () => {
@@ -96,14 +97,14 @@ describe("serviceById reducer", () => {
       appReducer,
       sequenceOfActions
     );
-    expect(state.features.services.details.byId).toEqual({});
+    expect(state.features.services.details.dataById).toEqual({});
   });
 });
 
 describe("serviceById selectors", () => {
   describe("serviceByIdSelector", () => {
-    it("should return the ServicePublic when pot.some", () => {
-      const serviceById = serviceByIdSelector(
+    it("should return the ServiceDetails when pot.some", () => {
+      const serviceById = serviceDetailsByIdSelector(
         appReducer({} as GlobalState, loadServiceDetail.success(service)),
         serviceId
       );
@@ -112,11 +113,14 @@ describe("serviceById selectors", () => {
 
     it("should return undefined when not pot.some", () => {
       expect(
-        serviceByIdSelector(appReducer(undefined, {} as Action), serviceId)
+        serviceDetailsByIdSelector(
+          appReducer(undefined, {} as Action),
+          serviceId
+        )
       ).toBeUndefined();
 
       expect(
-        serviceByIdSelector(
+        serviceDetailsByIdSelector(
           appReducer({} as GlobalState, loadServiceDetail.request(serviceId)),
           serviceId
         )
@@ -128,7 +132,7 @@ describe("serviceById selectors", () => {
       };
 
       expect(
-        serviceByIdSelector(
+        serviceDetailsByIdSelector(
           appReducer({} as GlobalState, loadServiceDetail.failure(tError)),
           serviceId
         )
@@ -138,7 +142,7 @@ describe("serviceById selectors", () => {
 
   describe("isLoadingServiceByIdSelector", () => {
     it("should return true when pot.loading", () => {
-      const isLoadingServiceById = isLoadingServiceByIdSelector(
+      const isLoadingServiceById = isLoadingServiceDetailsByIdSelector(
         appReducer({} as GlobalState, loadServiceDetail.request(serviceId)),
         serviceId
       );
@@ -147,14 +151,14 @@ describe("serviceById selectors", () => {
 
     it("should return false when not pot.some", () => {
       expect(
-        isLoadingServiceByIdSelector(
+        isLoadingServiceDetailsByIdSelector(
           appReducer(undefined, {} as Action),
           serviceId
         )
       ).toStrictEqual(false);
 
       expect(
-        isLoadingServiceByIdSelector(
+        isLoadingServiceDetailsByIdSelector(
           appReducer({} as GlobalState, loadServiceDetail.success(service)),
           serviceId
         )
@@ -169,7 +173,7 @@ describe("serviceById selectors", () => {
         service_id: serviceId
       };
 
-      const isErrorServiceById = isErrorServiceByIdSelector(
+      const isErrorServiceById = isErrorServiceDetailsByIdSelector(
         appReducer({} as GlobalState, loadServiceDetail.failure(tError)),
         serviceId
       );
@@ -178,14 +182,14 @@ describe("serviceById selectors", () => {
 
     it("should return false when not pot.error", () => {
       expect(
-        isErrorServiceByIdSelector(
+        isErrorServiceDetailsByIdSelector(
           appReducer(undefined, {} as Action),
           serviceId
         )
       ).toStrictEqual(false);
 
       expect(
-        isErrorServiceByIdSelector(
+        isErrorServiceDetailsByIdSelector(
           appReducer({} as GlobalState, loadServiceDetail.success(service)),
           serviceId
         )
@@ -200,9 +204,9 @@ describe("serviceById selectors", () => {
           {} as GlobalState,
           loadServiceDetail.success({
             ...service,
-            service_metadata: {
+            metadata: {
               category: StandardServiceCategoryEnum.STANDARD,
-              scope: ServiceScopeEnum.LOCAL
+              scope: ScopeTypeEnum.LOCAL
             }
           })
         ),
@@ -210,7 +214,7 @@ describe("serviceById selectors", () => {
       );
       expect(serviceById).toStrictEqual({
         category: StandardServiceCategoryEnum.STANDARD,
-        scope: ServiceScopeEnum.LOCAL
+        scope: ScopeTypeEnum.LOCAL
       });
     });
 
@@ -258,10 +262,10 @@ describe("serviceById selectors", () => {
           {} as GlobalState,
           loadServiceDetail.success({
             ...service,
-            service_metadata: {
+            metadata: {
               category: SpecialServiceCategoryEnum.SPECIAL,
-              scope: ServiceScopeEnum.NATIONAL,
-              custom_special_flow: "custom_special_flow" as NonEmptyString
+              scope: ScopeTypeEnum.NATIONAL,
+              custom_special_flow: "pn" as NonEmptyString
             }
           })
         ),
@@ -269,7 +273,7 @@ describe("serviceById selectors", () => {
       );
       expect(serviceById).toStrictEqual({
         isSpecialService: true,
-        customSpecialFlow: "custom_special_flow"
+        serviceKind: "pn"
       });
     });
 

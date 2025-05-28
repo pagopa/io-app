@@ -1,18 +1,14 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useRef, useCallback } from "react";
-import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { isReady } from "../../../../common/model/RemoteValue";
-import IdpsGrid from "../../../../components/IdpsGrid";
+import IdpsGrid from "../../../authentication/login/idp/components/IdpsGrid";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { randomOrderIdps } from "../../../../screens/authentication/IdpSelectionScreen";
+import { randomOrderIdps } from "../../../authentication/login/idp/screens/IdpSelectionScreen";
 import { loadIdps } from "../../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idpsRemoteValueSelector } from "../../../../store/reducers/content";
-import {
-  LocalIdpsFallback,
-  idps as idpsFallback
-} from "../../../../utils/idps";
+import { idps as idpsFallback, SpidIdp } from "../../../../utils/idps";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import {
   trackItWalletSpidIDPSelected,
@@ -24,10 +20,8 @@ export const ItwIdentificationIdpSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const idps = useIOSelector(idpsRemoteValueSelector);
-  const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
-  const randomIdps = useRef<ReadonlyArray<SpidIdp | LocalIdpsFallback>>(
-    randomOrderIdps(idpValue)
-  );
+  const idpValue = isReady(idps) ? idps.value : idpsFallback;
+  const randomIdps = useRef<ReadonlyArray<SpidIdp>>(randomOrderIdps(idpValue));
 
   useFocusEffect(
     useCallback(() => {
@@ -36,7 +30,7 @@ export const ItwIdentificationIdpSelectionScreen = () => {
     }, [dispatch])
   );
 
-  const onIdpSelected = (idp: LocalIdpsFallback) => {
+  const onIdpSelected = (idp: SpidIdp) => {
     trackItWalletSpidIDPSelected({ idp: idp.name });
     machineRef.send({ type: "select-spid-idp", idp });
   };

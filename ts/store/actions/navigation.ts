@@ -1,10 +1,12 @@
 import { CommonActions } from "@react-navigation/native";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
-import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
-import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
+import { OnboardingServicesPreferenceScreenNavigationParams } from "../../features/onboarding/screens/OnboardingServicesPreferenceScreen";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { ServiceDetailsScreenRouteParams } from "../../features/services/details/screens/ServiceDetailsScreen";
+import { CieCardReaderScreenNavigationParams } from "../../features/authentication/login/cie/screens/CieCardReaderScreen";
+import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes";
+import { SETTINGS_ROUTES } from "../../features/settings/common/navigation/routes";
 
 /**
  * @deprecated
@@ -13,7 +15,7 @@ export const resetToAuthenticationRoute = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.reset({
       index: 0,
-      routes: [{ name: ROUTES.AUTHENTICATION }]
+      routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
     })
   );
 
@@ -43,8 +45,8 @@ export const navigateBack = () =>
  */
 export const navigateToIdpSelectionScreenAction = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_IDP_SELECTION
+    CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.IDP_SELECTION
     })
   );
 
@@ -117,8 +119,8 @@ export const navigateToServiceDetailsScreen = (
  */
 export const navigateToEmailForwardingPreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
     })
   );
 
@@ -127,8 +129,8 @@ export const navigateToEmailForwardingPreferenceScreen = () =>
  */
 export const navigateToCalendarPreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_CALENDAR
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_CALENDAR
     })
   );
 
@@ -137,8 +139,8 @@ export const navigateToCalendarPreferenceScreen = () =>
  */
 export const navigateToLanguagePreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_LANGUAGE
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_LANGUAGE
     })
   );
 
@@ -147,8 +149,8 @@ export const navigateToLanguagePreferenceScreen = () =>
  */
 export const navigateToLogout = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_LOGOUT
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_LOGOUT
     })
   );
 
@@ -157,8 +159,8 @@ export const navigateToLogout = () =>
  */
 export const navigateToRemoveAccountSuccess = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
     })
   );
 
@@ -167,8 +169,8 @@ export const navigateToRemoveAccountSuccess = () =>
  */
 export const navigateToRemoveAccountDetailScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
     })
   );
 
@@ -177,10 +179,10 @@ export const navigateToRemoveAccountDetailScreen = () =>
  */
 export const navigateToPrivacyScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PRIVACY_MAIN,
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN,
       params: {
-        screen: ROUTES.PROFILE_PRIVACY_MAIN
+        screen: SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN
       }
     })
   );
@@ -190,8 +192,8 @@ export const navigateToPrivacyScreen = () =>
  */
 export const navigateToPrivacyShareData = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PRIVACY_SHARE_DATA
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PRIVACY_SHARE_DATA
     })
   );
 
@@ -204,8 +206,8 @@ export const navigateToPrivacyShareData = () =>
  */
 export const navigateToCieInvalidScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.CIE_EXPIRED_SCREEN
+    CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.CIE_EXPIRED_SCREEN
     })
   );
 
@@ -214,8 +216,8 @@ export const navigateToCieInvalidScreen = () =>
  */
 export const navigateToCiePinScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.CIE_PIN_SCREEN
+    CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
     })
   );
 
@@ -226,8 +228,8 @@ export const navigateToCieCardReaderScreen = (
   params?: CieCardReaderScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.CIE_CARD_READER_SCREEN,
+    CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN,
       params
     })
   );
@@ -248,8 +250,8 @@ export const navigateToWorkunitGenericFailureScreen = () =>
  */
 export const navigateToSPIDTestIDP = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_IDP_TEST
+    CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.IDP_TEST
     })
   );
 
@@ -258,7 +260,7 @@ export const navigateToSPIDTestIDP = () =>
  */
 export const navigateToSPIDLogin = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_IDP_LOGIN
+    CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.IDP_LOGIN
     })
   );

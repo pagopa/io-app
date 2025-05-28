@@ -18,7 +18,7 @@ import {
   ImageLibraryOptions
 } from "react-native-image-picker";
 import I18n from "../../../i18n";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import {
   BarcodeAnalyticsFlow,
   trackBarcodeFileUpload,
@@ -262,7 +262,7 @@ const useIOBarcodeFileReader = ({
     </View>
   );
 
-  const filePickerModal = useIOBottomSheetAutoresizableModal({
+  const filePickerModal = useIOBottomSheetModal({
     component: filePickerModalComponent,
     title: "",
     onDismiss: () => setFilePickerVisible(false)

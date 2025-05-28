@@ -2,16 +2,12 @@ import { ComponentProps, useCallback, useEffect } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import {
   Divider,
-  IOStyles,
   IOToast,
+  IOVisualCostants,
   ListItemHeader,
   ListItemSwitch
 } from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
-import * as RA from "fp-ts/lib/ReadonlyArray";
-import { pipe } from "fp-ts/lib/function";
-import { NotificationChannelEnum } from "../../../../../definitions/backend/NotificationChannel";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPremiumMessagesOptInOutEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
@@ -24,18 +20,8 @@ import {
   isErrorServicePreferenceSelector,
   isLoadingServicePreferenceSelector,
   serviceMetadataInfoSelector,
-  servicePreferenceResponseSuccessSelector
+  servicePreferenceResponseSuccessByIdSelector
 } from "../store/reducers";
-
-const hasChannel = (
-  notificationChannel: NotificationChannelEnum,
-  channels: ReadonlyArray<NotificationChannelEnum> = []
-) =>
-  pipe(
-    channels,
-    RA.findFirst(channel => channel === notificationChannel),
-    O.isSome
-  );
 
 type PreferenceSwitchListItem = {
   condition?: boolean;
@@ -43,27 +29,25 @@ type PreferenceSwitchListItem = {
 
 export type ServiceDetailsPreferencesProps = {
   serviceId: ServiceId;
-  availableChannels?: ReadonlyArray<NotificationChannelEnum>;
 };
 
 export const ServiceDetailsPreferences = ({
-  serviceId,
-  availableChannels = []
+  serviceId
 }: ServiceDetailsPreferencesProps) => {
   const isFirstRender = useFirstRender();
 
   const dispatch = useIODispatch();
 
-  const servicePreferenceResponseSuccess = useIOSelector(
-    servicePreferenceResponseSuccessSelector
+  const servicePreferenceResponseSuccess = useIOSelector(state =>
+    servicePreferenceResponseSuccessByIdSelector(state, serviceId)
   );
 
-  const isLoadingServicePreference = useIOSelector(
-    isLoadingServicePreferenceSelector
+  const isLoadingServicePreference = useIOSelector(state =>
+    isLoadingServicePreferenceSelector(state, serviceId)
   );
 
-  const isErrorServicePreference = useIOSelector(
-    isErrorServicePreferenceSelector
+  const isErrorServicePreference = useIOSelector(state =>
+    isErrorServicePreferenceSelector(state, serviceId)
   );
 
   const isPremiumMessagesOptInOutEnabled = useIOSelector(
@@ -134,9 +118,7 @@ export const ServiceDetailsPreferences = ({
       value: servicePreferenceResponseSuccess?.value.inbox
     },
     {
-      condition:
-        isInboxPreferenceEnabled &&
-        hasChannel(NotificationChannelEnum.WEBHOOK, availableChannels),
+      condition: isInboxPreferenceEnabled,
       icon: "bell",
       isLoading: isLoadingServicePreference,
       label: I18n.t("services.details.preferences.pushNotifications"),
@@ -175,7 +157,9 @@ export const ServiceDetailsPreferences = ({
         <ListItemHeader label={I18n.t("services.details.preferences.title")} />
       }
       ItemSeparatorComponent={() => <Divider />}
-      contentContainerStyle={IOStyles.horizontalContentPadding}
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
       data={filteredPreferenceListItems}
       keyExtractor={item => item.label}
       renderItem={renderItem}

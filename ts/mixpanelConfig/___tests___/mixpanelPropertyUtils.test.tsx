@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import mockedProfile from "../../__mocks__/initializedProfile";
-import { NotificationPreferenceConfiguration } from "../../screens/profile/analytics";
+import { NotificationPreferenceConfiguration } from "../../features/settings/common/analytics";
 import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
 import { GlobalState } from "../../store/reducers/types";
@@ -16,25 +16,6 @@ import {
 } from "../mixpanelPropertyUtils";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
-import { WalletStatusEnum } from "../../../definitions/pagopa/walletv3/WalletStatus";
-import { WalletInfo } from "../../../definitions/pagopa/walletv3/WalletInfo";
-
-const MOCK_WALLET: WalletInfo = {
-  walletId: "1",
-  creationDate: new Date(),
-  applications: [],
-  paymentMethodAsset: "",
-  paymentMethodId: "",
-  status: WalletStatusEnum.CREATED,
-  clients: {},
-  updateDate: new Date(),
-  details: {
-    type: "",
-    maskedNumber: 1,
-    instituteCode: 1,
-    bankName: ""
-  }
-};
 
 describe("mixpanelPropertyUtils", () => {
   const state = appReducer(undefined, applicationChangeState("active"));
@@ -193,12 +174,14 @@ describe("mixpanelPropertyUtils", () => {
       ...state,
       features: {
         ...state.features,
-        payments: {
-          ...state.features.payments,
-          wallet: {
-            userMethods: pot.some({
-              wallets: [MOCK_WALLET, MOCK_WALLET]
-            })
+        wallet: {
+          ...state.features.wallet,
+          placeholders: {
+            ...state.features.wallet.placeholders,
+            items: {
+              "1": "payment",
+              "2": "payment"
+            }
           }
         }
       }

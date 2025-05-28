@@ -1,3 +1,0 @@
-If you are of legale age, simply click on the "Request Bonus Vacanze" button at the bottom of the page and follow the flow you are presented. The IO app will connect to INPS to verify the ISEE of your household, and if it complies with the established conditions, it will show you the details of the bonus you or your family members can take advantage of. Once your request has been confirmed, we will create and activate your bonus. 
-
-Please note that the process has been made as easy as possible for the citizen, but it may take longer than expected to process the data. Don't worry: if this happens, we will send you a message in-app when your request is ready.

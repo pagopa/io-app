@@ -1,8 +1,4 @@
-import {
-  FooterActionsInline,
-  IOColors,
-  IOStyles
-} from "@pagopa/io-app-design-system";
+import { FooterActionsInline, IOColors } from "@pagopa/io-app-design-system";
 import {
   RouteProp,
   StackActions,
@@ -48,7 +44,7 @@ import {
 const styles = StyleSheet.create({
   pdf: {
     flex: 1,
-    backgroundColor: IOColors.bluegrey
+    backgroundColor: IOColors["grey-700"]
   }
 });
 
@@ -243,7 +239,7 @@ const FciDocumentsScreen = () => {
         disabled={false}
         testID={"FciDocumentsNavBarTestID"}
       />
-      <View style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
+      <View style={{ flex: 1 }} testID={"FciDocumentsScreenTestID"}>
         {documents.length > 0 && (
           <>
             {renderPager()}

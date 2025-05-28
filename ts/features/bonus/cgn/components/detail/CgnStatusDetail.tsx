@@ -11,6 +11,7 @@ import { CardPending } from "../../../../../../definitions/cgn/CardPending";
 import { CardRevoked } from "../../../../../../definitions/cgn/CardRevoked";
 import I18n from "../../../../../i18n";
 import { localeDateFormat } from "../../../../../utils/locale";
+import { getAccessibleExpirationDate } from "../../utils/dates";
 
 type Props = {
   cgnDetail: Card;
@@ -38,9 +39,14 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
               cgnDetail.revocation_date,
               I18n.t("global.dateFormats.shortFormat")
             )}
+            accessibilityLabel={`${getAccessibleExpirationDate(
+              cgnDetail.revocation_date,
+              "revoked"
+            )}`}
             endElement={{
               type: "badge",
               componentProps: {
+                accessible: false,
                 text: I18n.t("bonus.cgn.detail.status.badge.revoked"),
                 variant: "error",
                 testID: "status-badge"
@@ -56,9 +62,14 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
               cgnDetail.expiration_date,
               I18n.t("global.dateFormats.shortFormat")
             )}
+            accessibilityLabel={`${getAccessibleExpirationDate(
+              cgnDetail.expiration_date,
+              "expired"
+            )}`}
             endElement={{
               type: "badge",
               componentProps: {
+                accessible: false,
                 text: I18n.t("bonus.cgn.detail.status.badge.expired"),
                 variant: "error",
                 testID: "status-badge"
@@ -74,9 +85,14 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
               cgnDetail.expiration_date,
               I18n.t("global.dateFormats.shortFormat")
             )}
+            accessibilityLabel={`${getAccessibleExpirationDate(
+              cgnDetail.expiration_date,
+              "active"
+            )}`}
             endElement={{
               type: "badge",
               componentProps: {
+                accessible: false,
                 text: I18n.t("bonus.cgn.detail.status.badge.active"),
                 variant: "success",
                 testID: "status-badge"

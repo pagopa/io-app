@@ -5,7 +5,10 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select, take } from "typed-redux-saga/macro";
 import { PlatformEnum } from "../../../../definitions/backend/Platform";
 import { BackendClient } from "../../../api/backend";
-import { notificationsInstallationSelector } from "../store/reducers/installation";
+import {
+  canSkipTokenRegistrationSelector,
+  notificationsInstallationSelector
+} from "../store/reducers/installation";
 import { convertUnknownToError } from "../../../utils/errors";
 import {
   trackNotificationInstallationTokenNotChanged,
@@ -31,12 +34,18 @@ export function* pushNotificationTokenUpload(
 ): SagaIterator {
   // Await for a notification token, since it may not
   // be available yet when this function is caled
-  const notificationsInstallation = yield* call(awaitForPushNotificationToken);
+  const notificationsInstallation = yield* call(
+    awaitForPushNotificationRegistration
+  );
+  const canSkipTokenRegistration = yield* select(
+    canSkipTokenRegistrationSelector
+  );
   // Check if the notification token has changed
   // from the one registered in the backend
   if (
     notificationsInstallation.token ===
-    notificationsInstallation.registeredToken
+      notificationsInstallation.registeredToken &&
+    canSkipTokenRegistration
   ) {
     yield* call(trackNotificationInstallationTokenNotChanged);
     return;
@@ -79,7 +88,7 @@ export function* pushNotificationTokenUpload(
   }
 }
 
-export function* awaitForPushNotificationToken() {
+export function* awaitForPushNotificationRegistration() {
   // When this function is called, the push notification token may
   // not be available yet. In such case, the code will wait for
   // 'newPushNotificationsToken' action, which is dispatched as

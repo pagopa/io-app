@@ -1,6 +1,5 @@
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../../store/reducers";
 import { UIMessageId } from "../../../types";
 import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
@@ -66,10 +65,6 @@ const renderScreen = (
   isPN: boolean = false
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
 
   const attachments = Array(attachmentCount).map(index => ({
     id: `${index}`,
@@ -78,7 +73,7 @@ const renderScreen = (
   })) as Array<ThirdPartyAttachment>;
 
   const finalState = appReducer(
-    designSystemState,
+    initialState,
     loadThirdPartyMessage.success({
       id: messageId,
       content: {

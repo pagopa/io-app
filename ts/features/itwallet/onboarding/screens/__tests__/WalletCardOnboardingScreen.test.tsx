@@ -1,36 +1,40 @@
-import * as O from "fp-ts/lib/Option";
-import _ from "lodash";
 import configureMockStore from "redux-mock-store";
-import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
-import { Config } from "../../../../../../definitions/content/Config";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { RemoteConfigState } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import * as itwLifecycleSelectors from "../../../lifecycle/store/selectors";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import * as itwRemoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
-
-type RenderOptions = {
-  isIdPayEnabled?: boolean;
-  isItwEnabled?: boolean;
-  isItwTestEnabled?: boolean;
-  itwLifecycle?: ItwLifecycleState;
-  remotelyDisabledCredentials?: Array<string>;
-};
 
 describe("WalletCardOnboardingScreen", () => {
   it("it should render the screen correctly", () => {
-    const component = renderComponent({});
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(true);
+
+    jest
+      .spyOn(itwRemoteConfigSelectors, "isItwEnabledSelector")
+      .mockReturnValue(true);
+
+    const component = renderComponent();
     expect(component).toBeTruthy();
   });
 
   it("it should render the IT Wallet modules", () => {
-    const { queryByTestId } = renderComponent({});
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(true);
+
+    jest
+      .spyOn(itwRemoteConfigSelectors, "isItwEnabledSelector")
+      .mockReturnValue(true);
+
+    const { queryByTestId } = renderComponent();
 
     expect(
       queryByTestId(`${CredentialType.DRIVING_LICENSE}ModuleTestID`)
@@ -45,26 +49,51 @@ describe("WalletCardOnboardingScreen", () => {
     ).toBeTruthy();
   });
 
-  test.each([
-    { isItwEnabled: false },
-    { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED },
-    { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_DEACTIVATED }
-  ] as ReadonlyArray<RenderOptions>)(
-    "should not render the IT Wallet modules if %p",
-    options => {
-      const { queryByTestId } = renderComponent(options);
-      expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
-    }
-  );
+  it("should not render the IT Wallet modules if ITW is not enabled", () => {
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(true);
 
-  test.each([
-    { remotelyDisabledCredentials: ["MDL"] },
-    { remotelyDisabledCredentials: ["MDL", "EuropeanHealthInsuranceCard"] }
-  ] as ReadonlyArray<RenderOptions>)(
-    "it should hide credential modules when $remotelyDisabledCredentials are remotely disabled",
-    options => {
-      const { queryByTestId } = renderComponent(options);
-      for (const type of options.remotelyDisabledCredentials!) {
+    jest
+      .spyOn(itwRemoteConfigSelectors, "isItwEnabledSelector")
+      .mockReturnValue(false);
+
+    const { queryByTestId } = renderComponent();
+    expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
+  });
+
+  it("should not render the IT Wallet modules if ITW is not in a valid state", () => {
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(false);
+
+    jest
+      .spyOn(itwRemoteConfigSelectors, "isItwEnabledSelector")
+      .mockReturnValue(true);
+
+    const { queryByTestId } = renderComponent();
+    expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
+  });
+
+  test.each([["MDL"], ["MDL", "EuropeanHealthInsuranceCard"]] as ReadonlyArray<
+    ReadonlyArray<string>
+  >)(
+    "it should hide credential modules when %1 are remotely disabled",
+    (...disabledCredentials) => {
+      jest
+        .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+        .mockReturnValue(true);
+
+      jest
+        .spyOn(itwRemoteConfigSelectors, "isItwEnabledSelector")
+        .mockReturnValue(true);
+
+      jest
+        .spyOn(itwRemoteConfigSelectors, "itwDisabledCredentialsSelector")
+        .mockReturnValue(disabledCredentials);
+
+      const { queryByTestId } = renderComponent();
+      for (const type of disabledCredentials!) {
         // Currently ModuleCredential does not attach the testID if onPress is undefined.
         // Since disabled credentials have undefined onPress, we can test for null.
         expect(queryByTestId(`${type}ModuleTestID`)).toBeNull();
@@ -74,57 +103,12 @@ describe("WalletCardOnboardingScreen", () => {
   );
 });
 
-const renderComponent = ({
-  isIdPayEnabled = true,
-  isItwEnabled = true,
-  itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID,
-  remotelyDisabledCredentials
-}: RenderOptions) => {
+const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore(
-    _.merge(undefined, globalState, {
-      features: {
-        itWallet: {
-          lifecycle: itwLifecycle,
-          ...(itwLifecycle === ItwLifecycleState.ITW_LIFECYCLE_VALID && {
-            credentials: { eid: O.some({}) },
-            issuance: { integrityKeyTag: O.some("key-tag") }
-          })
-        }
-      },
-      persistedPreferences: {
-        isIdPayTestEnabled: isIdPayEnabled
-      },
-      remoteConfig: O.some({
-        itw: {
-          enabled: isItwEnabled,
-          min_app_version: {
-            android: "0.0.0.0",
-            ios: "0.0.0.0"
-          },
-          disabled_credentials: remotelyDisabledCredentials
-        },
-        idPay: isIdPayEnabled && {
-          min_app_version: {
-            android: "0.0.0.0",
-            ios: "0.0.0.0"
-          }
-        },
-        assistanceTool: { tool: ToolEnum.none },
-        cgn: { enabled: true },
-        newPaymentSection: {
-          enabled: false,
-          min_app_version: {
-            android: "0.0.0.0",
-            ios: "0.0.0.0"
-          }
-        },
-        fims: { enabled: true }
-      } as Config) as RemoteConfigState
-    } as GlobalState)
-  );
+  const store: ReturnType<typeof mockStore> = mockStore(globalState);
+
   const logic = itwCredentialIssuanceMachine.provide({
     actions: {
       onInit: jest.fn()

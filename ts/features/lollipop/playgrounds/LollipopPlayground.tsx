@@ -3,15 +3,14 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { ProblemJson } from "../../../../definitions/lollipop/ProblemJson";
 import { SignMessageResponse } from "../../../../definitions/lollipop/SignMessageResponse";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { apiUrlPrefix } from "../../../config";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../store/hooks";
-import { sessionTokenSelector } from "../../../store/reducers/authentication";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { createLollipopClient, signMessage } from "../api/backend";
 import {
   lollipopKeyTagSelector,
@@ -128,7 +127,7 @@ const LollipopPlayground = () => {
   );
 
   return (
-    <SafeAreaView style={IOStyles.flex}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         <ContentWrapper>
           <LollipopPlaygroundContent

@@ -2,6 +2,7 @@
 
 exports[`ServicesHeader component should match the snapshot 1`] = `
 <View
+  importantForAccessibility="no"
   style={
     {
       "alignItems": "center",
@@ -13,6 +14,9 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
   testID="services-header"
 >
   <View
+    accessibilityElementsHidden={true}
+    accessible={false}
+    importantForAccessibility="no-hide-descendants"
     style={
       {
         "marginRight": 16,
@@ -80,15 +84,16 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
     }
   >
     <Text
-      allowFontScaling={false}
+      accessibilityRole="header"
+      allowFontScaling={true}
       dynamicTypeRamp="title2"
-      maxFontSizeMultiplier={1.25}
+      maxFontSizeMultiplier={1.5}
       style={
         [
           {},
           {
             "color": "#2B2E38",
-            "fontFamily": "Titillium Sans Pro",
+            "fontFamily": "Titillio",
             "fontSize": 22,
             "fontStyle": "normal",
             "fontWeight": "600",
@@ -100,15 +105,15 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
       #### title ####
     </Text>
     <Text
-      allowFontScaling={false}
+      allowFontScaling={true}
       dynamicTypeRamp="footnote"
-      maxFontSizeMultiplier={1.25}
+      maxFontSizeMultiplier={1.5}
       style={
         [
           {},
           {
             "color": "#555C70",
-            "fontFamily": "Titillium Sans Pro",
+            "fontFamily": "Titillio",
             "fontSize": 14,
             "fontStyle": "normal",
             "fontWeight": "400",

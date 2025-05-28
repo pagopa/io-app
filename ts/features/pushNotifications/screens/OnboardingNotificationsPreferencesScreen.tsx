@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import {
   VSpacer,
   ContentWrapper,
   IOStyles,
-  ButtonSolid,
   useIOToast,
   H1,
-  Body
+  Body,
+  IOButton
 } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { PushNotificationsContentTypeEnum } from "../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../definitions/backend/ReminderStatus";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { OnboardingParamsList } from "../../../navigation/params/OnboardingParamsList";
-import { profileUpsert } from "../../../store/actions/profile";
+import { OnboardingParamsList } from "../../onboarding/navigation/params/OnboardingParamsList";
+import { profileUpsert } from "../../settings/common/store/actions";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
   profileHasErrorSelector,
   profileIsUpdatingSelector
-} from "../../../store/reducers/profile";
+} from "../../settings/common/store/selectors";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../../utils/analytics";
 import {
@@ -28,16 +28,10 @@ import {
   trackNotificationScreen,
   trackNotificationsPreferencesPreviewStatus,
   trackNotificationsPreferencesReminderStatus
-} from "../../../screens/profile/analytics";
+} from "../../settings/common/analytics";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { ProfileNotificationSettings } from "../components/ProfileNotificationsSettings";
-
-const styles = StyleSheet.create({
-  scrollViewContainer: {
-    flexGrow: 1
-  }
-});
 
 export type OnboardingNotificationsPreferencesScreenNavigationParams = {
   isFirstOnboarding: boolean;
@@ -116,9 +110,11 @@ export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
 
   return (
     <>
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <ContentWrapper>
-          <H1>{I18n.t("profile.preferences.notifications.title")}</H1>
+          <H1 accessibilityRole="header">
+            {I18n.t("profile.preferences.notifications.title")}
+          </H1>
           <VSpacer size={16} />
           <Body>{I18n.t("profile.preferences.notifications.subtitle")}</Body>
           <ProfileNotificationSettings
@@ -142,8 +138,9 @@ export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
           }
         ]}
       >
-        <ButtonSolid
+        <IOButton
           fullWidth
+          variant="solid"
           loading={isUpdating}
           label={I18n.t("onboarding.notifications.continue")}
           onPress={upsertPreferences}

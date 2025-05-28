@@ -3,18 +3,16 @@ import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { ApmDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/ApmDetailType";
 import { AuthorizationDetails } from "../../../../../../definitions/pagopa/ecommerce/AuthorizationDetails";
-import {
-  LanguageEnum,
-  RequestAuthorizationRequest
-} from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
-import { WalletDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletDetailType";
-import { RedirectDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/RedirectDetailType";
 import { PaymentMethodManagementTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
+import { RedirectDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/RedirectDetailType";
+import { RequestAuthorizationRequest } from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
+import { WalletDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletDetailType";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
+import { getLanguageEnumFromPreferredLocale } from "../../../../../utils/locale";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { PaymentClient } from "../../../common/api/client";
-import { paymentsStartPaymentAuthorizationAction } from "../../store/actions/networking";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
+import { paymentsStartPaymentAuthorizationAction } from "../../store/actions/networking";
 
 export function* handleWalletPaymentAuthorization(
   requestTransactionAuthorization: PaymentClient["requestTransactionAuthorizationForIO"],
@@ -38,11 +36,13 @@ export function* handleWalletPaymentAuthorization(
             paymentMethodId: action.payload.paymentMethodId
           };
 
+    const language = getLanguageEnumFromPreferredLocale();
+
     const requestBody: RequestAuthorizationRequest = {
       amount: action.payload.paymentAmount,
       fee: action.payload.paymentFees,
       isAllCCP: action.payload.isAllCCP,
-      language: LanguageEnum.IT,
+      language,
       pspId: action.payload.pspId,
       details
     };

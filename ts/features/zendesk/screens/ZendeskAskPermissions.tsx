@@ -1,7 +1,7 @@
 import {
-  ButtonLink,
   ContentWrapper,
   Divider,
+  IOButton,
   IOToast,
   IOVisualCostants,
   ListItemHeader,
@@ -24,15 +24,14 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   idpSelector,
-  isLoggedIn,
   zendeskTokenSelector
-} from "../../../store/reducers/authentication";
+} from "../../authentication/common/store/selectors";
 import { appVersionHistorySelector } from "../../../store/reducers/installation";
 import {
   profileEmailSelector,
   profileFiscalCodeSelector,
   profileNameSurnameSelector
-} from "../../../store/reducers/profile";
+} from "../../settings/common/store/selectors";
 import { getAppVersion } from "../../../utils/appVersion";
 import {
   getFreeDiskStorage,
@@ -61,6 +60,7 @@ import { handleItemOnPress, openWebUrl } from "../../../utils/url";
 import { ZendeskParamsList } from "../navigation/params";
 import ZENDESK_ROUTES from "../navigation/routes";
 import {
+  type ZendeskAssistanceType,
   zendeskStopPolling,
   zendeskSupportCompleted,
   zendeskSupportFailure
@@ -71,6 +71,7 @@ import {
   zendeskSelectedSubcategorySelector,
   ZendeskTokenStatusEnum
 } from "../store/reducers";
+import { isLoggedIn } from "../../authentication/common/store/utils/guards";
 
 /**
  * Transform an array of string into a Zendesk
@@ -87,9 +88,7 @@ export type ItemPermissionProps = Pick<
 };
 
 export type ZendeskAskPermissionsNavigationParams = {
-  assistanceForPayment: boolean;
-  assistanceForCard: boolean;
-  assistanceForFci: boolean;
+  assistanceType: ZendeskAssistanceType;
 };
 
 /**
@@ -100,8 +99,7 @@ const ZendeskAskPermissions = () => {
   const route =
     useRoute<RouteProp<ZendeskParamsList, "ZENDESK_ASK_PERMISSIONS">>();
 
-  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
-    route.params;
+  const { assistanceType } = route.params;
 
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
@@ -271,11 +269,11 @@ const ZendeskAskPermissions = () => {
 
   const itemsToRemove: ReadonlyArray<string> = [
     // if user is not asking assistance for a payment, remove the related items from those ones shown
-    ...(!assistanceForPayment ? ["paymentIssues"] : []),
+    ...(!assistanceType.payment ? ["paymentIssues"] : []),
     // if user is not asking assistance for a payment, remove the related items from those ones shown
-    ...(!assistanceForCard ? ["addCardIssues"] : []),
+    ...(!assistanceType.card ? ["addCardIssues"] : []),
     // if user is not asking assistance for a signing flow, remove the related items from those ones shown
-    ...(!assistanceForFci ? ["addFciIssues"] : []),
+    ...(!assistanceType.fci ? ["addFciIssues"] : []),
     // if user is not logged in, remove the items related to his/her profile
     ...(!isUserLoggedIn
       ? ["profileNameSurname", "profileFiscalCode", "profileEmail"]
@@ -285,9 +283,9 @@ const ZendeskAskPermissions = () => {
   ];
 
   const items = permissionItems
-    .filter(it => (!assistanceForPayment ? it.id !== "paymentIssues" : true))
-    .filter(it => (!assistanceForCard ? it.id !== "addCardIssues" : true))
-    .filter(it => (!assistanceForFci ? it.id !== "addFciIssues" : true))
+    .filter(it => (!assistanceType.payment ? it.id !== "paymentIssues" : true))
+    .filter(it => (!assistanceType.card ? it.id !== "addCardIssues" : true))
+    .filter(it => (!assistanceType.fci ? it.id !== "addFciIssues" : true))
     .filter(it => !itemsToRemove.includes(it.id ?? ""))
     // remove these item whose have no value associated
     .filter(it => it.value !== notAvailable);
@@ -397,7 +395,9 @@ const ZendeskAskPermissions = () => {
       actions={buttonConf}
     >
       <ContentWrapper>
-        <ButtonLink
+        <IOButton
+          variant="link"
+          accessibilityRole="link"
           label={I18n.t("support.askPermissions.privacyLink")}
           onPress={() => {
             openWebUrl(zendeskPrivacyUrl, () =>

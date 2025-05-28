@@ -114,10 +114,7 @@
       "homepage_uri": "https://pre.eid.wallet.ipzs.it",
       "policy_uri": "https://pre.eid.wallet.ipzs.it/public/privacy_policy.html",
       "logo_uri": "https://pre.eid.wallet.ipzs.it/public/logo.svg",
-      "contacts": [
-        "informazioni@ipzs.it",
-        "protocollo@pec.ipzs.it"
-      ],
+      "contacts": ["informazioni@ipzs.it", "protocollo@pec.ipzs.it"],
       "tos_uri": "https://pre.eid.wallet.ipzs.it/public/info_policy.html"
     },
     "openid_credential_issuer": {
@@ -150,9 +147,7 @@
       "credential_configurations_supported": {
         "EuropeanHealthInsuranceCard": {
           "scope": "EuropeanHealthInsuranceCard",
-          "cryptographic_binding_methods_supported": [
-            "jwk"
-          ],
+          "cryptographic_binding_methods_supported": ["jwk"],
           "display": [
             {
               "name": "Tessera sanitaria europea",
@@ -189,20 +184,14 @@
           },
           "proof_types_supported": {
             "jwt": {
-              "proof_signing_alg_values_supported": [
-                "ES256",
-                "ES384",
-                "ES512"
-              ]
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
             }
           }
         },
         "MDL": {
           "vct": "MDL",
           "scope": "MDL",
-          "cryptographic_binding_methods_supported": [
-            "jwk"
-          ],
+          "cryptographic_binding_methods_supported": ["jwk"],
           "display": [
             {
               "name": "Patente di guida",
@@ -392,20 +381,14 @@
           ],
           "proof_types_supported": {
             "jwt": {
-              "proof_signing_alg_values_supported": [
-                "ES256",
-                "ES384",
-                "ES512"
-              ]
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
             }
           }
         },
         "EuropeanDisabilityCard": {
           "vct": "EuropeanDisabilityCard",
           "scope": "EuropeanDisabilityCard",
-          "cryptographic_binding_methods_supported": [
-            "jwk"
-          ],
+          "cryptographic_binding_methods_supported": ["jwk"],
           "display": [
             {
               "name": "Carta della disabilitÃ  europea",
@@ -543,11 +526,7 @@
           ],
           "proof_types_supported": {
             "jwt": {
-              "proof_signing_alg_values_supported": [
-                "ES256",
-                "ES384",
-                "ES512"
-              ]
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
             }
           }
         }
@@ -555,9 +534,7 @@
       "credential_endpoint": "https://pre.eaa.wallet.ipzs.it/credential"
     },
     "oauth_authorization_server": {
-      "client_registration_types_supported": [
-        "automatic"
-      ],
+      "client_registration_types_supported": ["automatic"],
       "pushed_authorization_request_endpoint": "https://pre.eaa.wallet.ipzs.it/as/par",
       "jwks": {
         "keys": [
@@ -572,9 +549,7 @@
           }
         ]
       },
-      "grant_types_supported": [
-        "authorization_code"
-      ],
+      "grant_types_supported": ["authorization_code"],
       "scopes_supported": [
         "EuropeanDisabilityCard",
         "EuropeanHealthInsuranceCard",
@@ -591,19 +566,10 @@
         "ES384",
         "ES512"
       ],
-      "code_challenge_methods_supported": [
-        "S256"
-      ],
-      "token_endpoint_auth_methods_supported": [
-        "attest_jwt_client_auth"
-      ],
-      "authorization_signing_alg_values_supported": [
-        "ES256"
-      ],
-      "response_modes_supported": [
-        "form_post.jwt",
-        "query"
-      ],
+      "code_challenge_methods_supported": ["S256"],
+      "token_endpoint_auth_methods_supported": ["attest_jwt_client_auth"],
+      "authorization_signing_alg_values_supported": ["ES256"],
+      "response_modes_supported": ["form_post.jwt", "query"],
       "request_object_signing_alg_values_supported": [
         "ES256",
         "ES384",
@@ -612,11 +578,7 @@
       "token_endpoint": "https://pre.eaa.wallet.ipzs.it/token"
     },
     "wallet_relying_party": {
-      "authorization_signed_response_alg": [
-        "ES256",
-        "ES384",
-        "ES512"
-      ],
+      "authorization_signed_response_alg": ["ES256", "ES384", "ES512"],
       "jwks": {
         "keys": [
           {
@@ -641,11 +603,7 @@
             {
               "format": {
                 "vc+sd-jwt": {
-                  "alg": [
-                    "ES256",
-                    "ES384",
-                    "ES512"
-                  ]
+                  "alg": ["ES256", "ES384", "ES512"]
                 },
                 "constraints": {
                   "limit_disclosure": "required",
@@ -655,27 +613,19 @@
                         "const": "PersonIdentificationData",
                         "type": "string"
                       },
-                      "path": [
-                        "$.vct"
-                      ]
+                      "path": ["$.vct"]
                     },
                     {
                       "filter": {
                         "type": "object"
                       },
-                      "path": [
-                        "$.cnf.jwk"
-                      ]
+                      "path": ["$.cnf.jwk"]
                     },
                     {
-                      "path": [
-                        "$.unique_id"
-                      ]
+                      "path": ["$.unique_id"]
                     },
                     {
-                      "path": [
-                        "$.tax_id_code"
-                      ]
+                      "path": ["$.tax_id_code"]
                     }
                   ]
                 }
@@ -685,11 +635,7 @@
             {
               "format": {
                 "jwt": {
-                  "alg": [
-                    "ES256",
-                    "ES384",
-                    "ES512"
-                  ]
+                  "alg": ["ES256", "ES384", "ES512"]
                 },
                 "constraints": {
                   "limit_disclosure": "required",
@@ -698,17 +644,13 @@
                       "filter": {
                         "type": "string"
                       },
-                      "path": [
-                        "$.iss"
-                      ]
+                      "path": ["$.iss"]
                     },
                     {
                       "filter": {
                         "type": "object"
                       },
-                      "path": [
-                        "$.cnf.jwk"
-                      ]
+                      "path": ["$.cnf.jwk"]
                     }
                   ]
                 }
@@ -722,16 +664,10 @@
       "client_id": "https://pre.eaa.wallet.ipzs.it",
       "vp_formats": {
         "vc+sd-jwt": {
-          "sd-jwt_alg_values": [
-            "ES256",
-            "ES384",
-            "ES512"
-          ]
+          "sd-jwt_alg_values": ["ES256", "ES384", "ES512"]
         }
       },
-      "authorization_encrypted_response_alg": [
-        "RSA-OAEP-256"
-      ],
+      "authorization_encrypted_response_alg": ["RSA-OAEP-256"],
       "authorization_encrypted_response_enc": [
         "A128CBC-HS256",
         "A192CBC-HS384",
@@ -740,22 +676,11 @@
         "A192GCM",
         "A256GCM"
       ],
-      "response_uris": [
-        "https://pre.eaa.wallet.ipzs.it/response_uri"
-      ],
-      "request_uris": [
-        "https://pre.eaa.wallet.ipzs.it/request_uri"
-      ],
+      "response_uris": ["https://pre.eaa.wallet.ipzs.it/response_uri"],
+      "request_uris": ["https://pre.eaa.wallet.ipzs.it/request_uri"],
       "client_name": "Organization Name",
-      "contacts": [
-        "informazioni@example.it",
-        "protocollo@pec.example.it"
-      ],
-      "request_object_signing_alg_values_supported": [
-        "ES256",
-        "ES384",
-        "ES512"
-      ]
+      "contacts": ["informazioni@example.it", "protocollo@pec.example.it"],
+      "request_object_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
     }
   },
   "keyTag": "de68e737-b264-4f5d-affb-65f7bbc5c397",

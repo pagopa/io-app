@@ -1,12 +1,12 @@
 import {
   Avatar,
   Body,
+  BodySmall,
   ContentWrapper,
   H3,
   HStack,
   IOColors,
   IOVisualCostants,
-  BodySmall,
   RadioGroup,
   VStack,
   hexToRgba,
@@ -17,17 +17,18 @@ import {
   Canvas,
   Group,
   Image,
-  LinearGradient as SkiaLinearGradient,
   Mask,
   Rect,
+  LinearGradient as SkiaLinearGradient,
   useImage,
   vec
 } from "@shopify/react-native-skia";
 import { useCallback, useMemo, useState } from "react";
-import { Dimensions, Platform, View, StatusBar } from "react-native";
+import { Dimensions, Platform, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LinearGradient from "react-native-linear-gradient";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 
 const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
 
@@ -98,11 +99,7 @@ export const DSDynamicBackground = () => {
 
   return (
     <>
-      <StatusBar
-        translucent
-        backgroundColor="transparent"
-        barStyle="dark-content"
-      />
+      <FocusAwareStatusBar translucent backgroundColor="transparent" />
       <Canvas
         style={{
           width: screenSize,

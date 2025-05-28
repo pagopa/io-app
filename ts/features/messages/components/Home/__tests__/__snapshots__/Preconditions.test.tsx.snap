@@ -335,23 +335,24 @@ exports[`Preconditions should match snapshot with mocked components 1`] = `
                       }
                     >
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
-                        enableDismissOnClose={true}
-                        footerComponent={[Function]}
-                        handleComponent={[Function]}
-                        handleComponentAccessibility={
+                        backgroundStyle={
                           {
-                            "accessible": false,
+                            "backgroundColor": "#FFFFFF",
                           }
                         }
+                        enableDismissOnClose={true}
+                        enableDynamicSizing={false}
+                        footerComponent={[Function]}
+                        handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            500,
+                            550,
                           ]
                         }
                         style={
@@ -365,9 +366,9 @@ exports[`Preconditions should match snapshot with mocked components 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -376,6 +377,20 @@ exports[`Preconditions should match snapshot with mocked components 1`] = `
                             <View>
                               Mock Preconditions Content
                             </View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
                           </View>
                         </RCTScrollView>
                       </Modal>

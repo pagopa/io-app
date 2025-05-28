@@ -1,30 +1,23 @@
 import {
   IOListItemVisualParams,
-  IOStyles,
+  IOSkeleton,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import Placeholder from "rn-placeholder";
 
 export const WalletPaymentMethodItemSkeleton = () => (
   <>
     <VSpacer />
-    <View style={IOStyles.row}>
+    <View style={{ flexDirection: "row" }}>
       <View>
-        <Placeholder.Box
-          width={IOListItemVisualParams.iconSize}
-          height={IOListItemVisualParams.iconSize}
-          animate="fade"
-          radius={4}
+        <IOSkeleton
+          shape="square"
+          size={IOListItemVisualParams.iconSize}
+          radius={8}
         />
       </View>
-      <View
-        style={[
-          IOStyles.flex,
-          { paddingLeft: IOListItemVisualParams.iconMargin }
-        ]}
-      >
-        <Placeholder.Box width={"100%"} height={24} animate="fade" radius={4} />
+      <View style={{ flex: 1, paddingLeft: IOListItemVisualParams.iconMargin }}>
+        <IOSkeleton shape="rectangle" radius={8} width={"100%"} height={24} />
       </View>
     </View>
     <VSpacer />

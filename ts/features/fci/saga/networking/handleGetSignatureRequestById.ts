@@ -13,7 +13,7 @@ import {
 import { getNetworkError } from "../../../../utils/errors";
 import { SessionToken } from "../../../../types/SessionToken";
 import { SagaCallReturnType } from "../../../../types/utils";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { Environment } from "../../../../../definitions/fci/Environment";
 import { FciHeaders } from "../../utils/fciHeaders";
 

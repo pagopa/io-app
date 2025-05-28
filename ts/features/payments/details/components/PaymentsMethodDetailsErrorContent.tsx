@@ -20,7 +20,7 @@ const PaymentsMethodDetailsErrorContent = ({ walletId }: Props) => {
     <OperationResultScreenContent
       title={I18n.t("wallet.methodDetails.error.title")}
       subtitle={I18n.t("wallet.methodDetails.error.subtitle")}
-      pictogram="umbrellaNew"
+      pictogram="umbrella"
       action={{
         label: I18n.t("wallet.methodDetails.error.primaryButton"),
         accessibilityLabel: I18n.t("wallet.methodDetails.error.primaryButton"),

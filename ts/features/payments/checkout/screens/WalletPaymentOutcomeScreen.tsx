@@ -10,7 +10,7 @@ import {
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { profileEmailSelector } from "../../../../store/reducers/profile";
+import { profileEmailSelector } from "../../../settings/common/store/selectors";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { WalletPaymentFeebackBanner } from "../components/WalletPaymentFeedbackBanner";
@@ -44,7 +44,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
 import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
 import { WalletPaymentStepEnum } from "../types";
-import { requestAppReview } from "../../../../utils/storeReview";
+import { useAppReviewRequest } from "../../../appReviews/hooks/useAppReviewRequest";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -57,7 +57,8 @@ type WalletPaymentOutcomeRouteProps = RouteProp<
 
 const WalletPaymentOutcomeScreen = () => {
   useAvoidHardwareBackButton();
-
+  const { requestFeedback, appReviewBottomSheet } =
+    useAppReviewRequest("payments");
   const dispatch = useIODispatch();
   const { params } = useRoute<WalletPaymentOutcomeRouteProps>();
   const { outcome } = params;
@@ -78,14 +79,15 @@ const WalletPaymentOutcomeScreen = () => {
   const reversedPaymentModal = usePaymentReversedInfoBottomSheet();
 
   const shouldShowHeader = [
-    WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
+    WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE,
+    WalletPaymentOutcomeEnum.PAYMENT_METHODS_EXPIRED
   ].includes(outcome);
 
   // TODO: This is a workaround to disable swipe back gesture on this screen
   // .. it should be removed as soon as the migration to react-navigation v6 is completed (https://pagopa.atlassian.net/browse/IOBP-522)
   useEffect(() => {
     // Disable swipe if not in the payment methods not available outcome
-    if (outcome === WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE) {
+    if (shouldShowHeader) {
       return;
     }
     navigation.setOptions({ gestureEnabled: false });
@@ -94,7 +96,7 @@ const WalletPaymentOutcomeScreen = () => {
     return () => {
       navigation.getParent()?.setOptions({ gestureEnabled: true });
     };
-  }, [navigation, outcome]);
+  }, [navigation, shouldShowHeader]);
 
   useHeaderSecondLevel({
     title: "",
@@ -148,7 +150,7 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleSuccessClose = () => {
-    requestAppReview();
+    requestFeedback();
     handleClose();
   };
 
@@ -175,56 +177,70 @@ const WalletPaymentOutcomeScreen = () => {
     onPress: handleContactSupport
   };
 
-  const onboardPaymentMethodCloseAction: OperationResultScreenContentProps["action"] =
-    {
-      label: I18n.t(
-        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
-      ),
-      accessibilityLabel: I18n.t(
-        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
-      ),
-      onPress: () => {
-        analytics.trackPaymentNoSavedMethodExit({
-          organization_name: paymentAnalyticsData?.verifiedData?.paName,
-          organization_fiscal_code:
-            paymentAnalyticsData?.verifiedData?.paFiscalCode,
-          service_name: paymentAnalyticsData?.serviceName,
-          first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
-          expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
-        });
-        navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
-          screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
-        });
-      }
+  const resetWalletPaymentStep = () => {
+    dispatch(
+      walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
+    );
+  };
+
+  const getOnboardPaymentMethodCloseAction: () => OperationResultScreenContentProps["action"] =
+    () => {
+      const trackingData = {
+        organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        organization_fiscal_code:
+          paymentAnalyticsData?.verifiedData?.paFiscalCode,
+        service_name: paymentAnalyticsData?.serviceName,
+        first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+      };
+
+      return {
+        label: I18n.t(
+          "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
+        ),
+        accessibilityLabel: I18n.t(
+          "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
+        ),
+        onPress: () => {
+          analytics.trackOnboardPaymentMethodCloseAction(outcome, trackingData);
+          resetWalletPaymentStep();
+          navigation.navigate(
+            PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
+            {
+              screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
+            }
+          );
+        }
+      };
     };
 
-  const onboardPaymentMethodAction: OperationResultScreenContentProps["action"] =
-    {
-      label: I18n.t(
-        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
-      ),
-      accessibilityLabel: I18n.t(
-        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
-      ),
-      onPress: () => {
-        analytics.trackPaymentNoSavedMethodContinue({
-          organization_name: paymentAnalyticsData?.verifiedData?.paName,
-          organization_fiscal_code:
-            paymentAnalyticsData?.verifiedData?.paFiscalCode,
-          service_name: paymentAnalyticsData?.serviceName,
-          first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
-          expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
-        });
-        dispatch(
-          walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
-        );
-        navigation.replace(
-          PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
-          {
-            screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
-          }
-        );
-      }
+  const getOnboardPaymentMethodAction: () => OperationResultScreenContentProps["action"] =
+    () => {
+      const trackingData = {
+        organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        organization_fiscal_code:
+          paymentAnalyticsData?.verifiedData?.paFiscalCode,
+        service_name: paymentAnalyticsData?.serviceName,
+        first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
+        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+      };
+      return {
+        label: I18n.t(
+          "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
+        ),
+        accessibilityLabel: I18n.t(
+          "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
+        ),
+        onPress: () => {
+          analytics.trackOnboardPaymentMethodAction(outcome, trackingData);
+          navigation.navigate(
+            PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
+            {
+              screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
+            }
+          );
+        }
+      };
     };
 
   const paymentReversedAction: OperationResultScreenContentProps["action"] = {
@@ -264,7 +280,8 @@ const WalletPaymentOutcomeScreen = () => {
         saved_payment_method:
           paymentAnalyticsData?.savedPaymentMethods?.length || 0,
         selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
-        data_entry: paymentAnalyticsData?.startOrigin
+        data_entry: paymentAnalyticsData?.startOrigin,
+        browser_type: paymentAnalyticsData?.browserType
       });
       return;
     }
@@ -278,6 +295,7 @@ const WalletPaymentOutcomeScreen = () => {
       attempt: paymentOngoingHistory?.attempt,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       psp_selected: paymentAnalyticsData?.selectedPsp,
+      browser_type: paymentAnalyticsData?.browserType,
       payment_phase:
         outcome === WalletPaymentOutcomeEnum.GENERIC_ERROR
           ? getPaymentPhaseFromStep(currentStep)
@@ -299,7 +317,7 @@ const WalletPaymentOutcomeScreen = () => {
       case WalletPaymentOutcomeEnum.GENERIC_ERROR:
       default:
         return {
-          pictogram: "umbrellaNew",
+          pictogram: "umbrella",
           title: I18n.t("wallet.payment.outcome.GENERIC_ERROR.title"),
           subtitle: I18n.t("wallet.payment.outcome.GENERIC_ERROR.subtitle"),
           action: closeFailureAction
@@ -407,8 +425,18 @@ const WalletPaymentOutcomeScreen = () => {
           subtitle: I18n.t(
             "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.subtitle"
           ),
-          action: onboardPaymentMethodAction,
-          secondaryAction: onboardPaymentMethodCloseAction
+          action: getOnboardPaymentMethodAction(),
+          secondaryAction: getOnboardPaymentMethodCloseAction()
+        };
+      case WalletPaymentOutcomeEnum.PAYMENT_METHODS_EXPIRED:
+        return {
+          pictogram: "cardAdd",
+          title: I18n.t("wallet.payment.outcome.PAYMENT_METHODS_EXPIRED.title"),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.PAYMENT_METHODS_EXPIRED.subtitle"
+          ),
+          action: getOnboardPaymentMethodAction(),
+          secondaryAction: getOnboardPaymentMethodCloseAction()
         };
       case WalletPaymentOutcomeEnum.PAYMENT_REVERSED:
         return {
@@ -467,7 +495,7 @@ const WalletPaymentOutcomeScreen = () => {
         };
       case WalletPaymentOutcomeEnum.BE_NODE_KO:
         return {
-          pictogram: "umbrellaNew",
+          pictogram: "umbrella",
           title: I18n.t("wallet.payment.outcome.BE_NODE_KO.title"),
           subtitle: I18n.t("wallet.payment.outcome.BE_NODE_KO.subtitle"),
           action: closeFailureAction,
@@ -483,7 +511,7 @@ const WalletPaymentOutcomeScreen = () => {
         };
       case WalletPaymentOutcomeEnum.AUTH_REQUEST_ERROR:
         return {
-          pictogram: "umbrellaNew",
+          pictogram: "umbrella",
           title: I18n.t("wallet.payment.outcome.AUTH_REQUEST_ERROR.title"),
           subtitle: I18n.t(
             "wallet.payment.outcome.AUTH_REQUEST_ERROR.subtitle"
@@ -502,6 +530,7 @@ const WalletPaymentOutcomeScreen = () => {
       </OperationResultScreenContent>
       {supportModal.bottomSheet}
       {reversedPaymentModal.bottomSheet}
+      {appReviewBottomSheet}
     </>
   );
 };

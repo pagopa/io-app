@@ -3,8 +3,8 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
 import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
-import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
-import { ServicesClient } from "../../../common/api/__mocks__/client";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { ServicesClient } from "../../../common/api/__mocks__/servicesClient";
 import {
   PaginatedInstitutionsGetPayload,
   paginatedInstitutionsGet

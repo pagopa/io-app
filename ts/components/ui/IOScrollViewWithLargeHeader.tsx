@@ -1,14 +1,13 @@
 import {
   Body,
   BodyProps,
+  BodySmall,
   ComposedBodyFromArray,
   ContentWrapper,
   H2,
   HeaderSecondLevel,
-  IOStyles,
-  BodySmall,
-  VSpacer,
-  useIOTheme
+  useIOTheme,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { ComponentProps, forwardRef, ReactNode, useState } from "react";
@@ -45,6 +44,9 @@ type Props = WithTestID<
     headerActionsProp?: HeaderActionsProps;
     canGoback?: boolean;
     excludeEndContentMargin?: boolean;
+    ignoreAccessibilityCheck?: ComponentProps<
+      typeof HeaderSecondLevel
+    >["ignoreAccessibilityCheck"];
   } & SupportRequestParams
 >;
 
@@ -69,7 +71,8 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       includeContentMargins = false,
       headerActionsProp = {},
       excludeEndContentMargin,
-      testID
+      testID,
+      ignoreAccessibilityCheck = false
     },
     ref
   ) => {
@@ -93,6 +96,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
 
     const headerProps: ComponentProps<typeof HeaderSecondLevel> = {
       ignoreSafeAreaMargin,
+      ignoreAccessibilityCheck,
       ...useHeaderProps(
         canGoback
           ? {
@@ -113,12 +117,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
         excludeEndContentMargin={excludeEndContentMargin}
         testID={testID}
       >
-        <View
-          ref={ref}
-          accessible
-          style={IOStyles.horizontalContentPadding}
-          onLayout={getTitleHeight}
-        >
+        <ContentWrapper onLayout={getTitleHeight}>
           {title.section && (
             <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
               {title.section}
@@ -127,12 +126,13 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
           <H2
             color={theme["textHeading-default"]}
             testID={title?.testID}
+            ref={ref}
             accessibilityLabel={title.accessibilityLabel ?? title.label}
             accessibilityRole="header"
           >
             {title.label}
           </H2>
-        </View>
+        </ContentWrapper>
 
         {description && (
           <ContentWrapper>

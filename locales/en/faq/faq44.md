@@ -1,2 +1,0 @@
-In return for the provision of a payment service, the payer is required to pay a fee to his PSP. Fees for payment management are caused by the service costs that PSPs incur in order to guarantee a quality service (i.e., continuity of supply, transaction execution times that must be very short, costs of international circuits in case of payment by credit card, security and anti-fraud services, reliability of the infrastructure, etc). 
-For more details see the [FAQ](https://pagopa-docs-faq.readthedocs.io/it/latest/_docs/FAQ_sezioneA.html) page on the pagoPA website.

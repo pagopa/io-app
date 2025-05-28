@@ -1,9 +1,10 @@
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
-import { RequestObject } from "@pagopa/io-react-native-wallet/lib/typescript/credential/presentation/types";
+
 import {
   IssuerConfiguration,
-  StoredCredential
+  StoredCredential,
+  RequestObject
 } from "../../common/utils/itwTypesUtils";
 import { CredentialIssuanceFailure } from "./failure";
 
@@ -18,6 +19,7 @@ export type Context = {
   requestedCredential: RequestObject | undefined;
   credential: StoredCredential | undefined;
   failure: CredentialIssuanceFailure | undefined;
+  isAsyncContinuation: boolean;
 };
 
 export const InitialContext: Context = {
@@ -30,5 +32,6 @@ export const InitialContext: Context = {
   credentialDefinition: undefined,
   requestedCredential: undefined,
   credential: undefined,
-  failure: undefined
+  failure: undefined,
+  isAsyncContinuation: false
 };

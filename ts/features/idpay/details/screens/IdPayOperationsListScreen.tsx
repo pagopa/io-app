@@ -3,6 +3,7 @@ import {
   ContentWrapper,
   Divider,
   HSpacer,
+  IOSkeleton,
   IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -12,17 +13,16 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useRef } from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
-import Placeholder from "rn-placeholder";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { localeDateFormat } from "../../../../utils/locale";
-import { useTimelineDetailsBottomSheet } from "../../timeline/components/TimelineDetailsBottomSheet";
-import { TimelineOperationListItem } from "../components/TimelineOperationListItem";
+import { useIdPayTimelineDetailsBottomSheet } from "../../timeline/components/IdPayTimelineDetailsBottomSheet";
+import { IdPayTimelineOperationListItem } from "../components/IdPayTimelineOperationListItem";
 import { useInitiativeTimelineFetcher } from "../hooks/useInitiativeTimelineFetcher";
 import { IDPayDetailsParamsList } from "../navigation";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 
 export type IdPayOperationsListScreenParams = { initiativeId: string };
 
@@ -77,7 +77,7 @@ export const IdPayOperationsListScreen = () => {
     ? timeline.length === 0 && isLoading
     : true;
 
-  const detailsBottomSheet = useTimelineDetailsBottomSheet(initiativeId);
+  const detailsBottomSheet = useIdPayTimelineDetailsBottomSheet(initiativeId);
 
   const showOperationDetailsBottomSheet = (operation: OperationListDTO) =>
     detailsBottomSheet.present(operation);
@@ -92,9 +92,7 @@ export const IdPayOperationsListScreen = () => {
       )
     ),
     O.fold(
-      () => (
-        <Placeholder.Box animate="fade" height={18} width={70} radius={4} />
-      ),
+      () => <IOSkeleton shape="rectangle" height={18} width={70} radius={4} />,
       dateString => <Body weight="Semibold">{dateString}</Body>
     )
   );
@@ -104,7 +102,7 @@ export const IdPayOperationsListScreen = () => {
       contentContainerStyle={styles.listContainer}
       data={Array.from({ length: 10 })}
       keyExtractor={(_, index) => `placeholder${index}`}
-      renderItem={() => <TimelineOperationListItem isLoading={true} />}
+      renderItem={() => <IdPayTimelineOperationListItem isLoading={true} />}
       onRefresh={refresh}
       refreshing={isRefreshing}
     />
@@ -114,7 +112,7 @@ export const IdPayOperationsListScreen = () => {
       data={timeline}
       keyExtractor={item => item.operationId}
       renderItem={({ item }) => (
-        <TimelineOperationListItem
+        <IdPayTimelineOperationListItem
           operation={item}
           onPress={() => showOperationDetailsBottomSheet(item)}
         />

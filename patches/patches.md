@@ -22,7 +22,7 @@ FIXME: Fixed in the v2 branch [here](https://github.com/mrousavy/react-native-vi
 #### Reason:
 - This patch going to remove all codes related to `colorSpace` to fix an issue on iOS 17.0.2 that cause the crash on camera load
 
-### react-native-device-info+8.3.3
+### react-native-device-info+14.0.4
 Created on **15/12/2021**
 
 #### Reason:

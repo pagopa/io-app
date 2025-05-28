@@ -8,7 +8,7 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { IDPayClient } from "../../common/api/client";
 import { idPayBeneficiaryDetailsGet } from "../store/actions";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 
 /**
  * Handle the remote call to retrieve the IDPay initiative beneficiary details

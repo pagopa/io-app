@@ -3,7 +3,6 @@ import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PreconditionsFooter } from "../PreconditionsFooter";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
@@ -123,15 +122,15 @@ const renderComponent = (
   onNavigation: () => void = jest.fn()
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-  const store = createStore(appReducer, designSystemState as any);
+  const store = createStore(appReducer, initialState as any);
 
   return renderScreenWithNavigationStoreContext(
     () => (
-      <PreconditionsFooter onDismiss={onDismiss} onNavigation={onNavigation} />
+      <PreconditionsFooter
+        onDismiss={onDismiss}
+        onNavigation={onNavigation}
+        onFooterHeightAvailable={_height => undefined}
+      />
     ),
     MESSAGES_ROUTES.MESSAGES_HOME,
     {},

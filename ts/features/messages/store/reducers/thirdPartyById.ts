@@ -3,6 +3,7 @@ import { getType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
+import { toUndefinedOptional } from "../../../../utils/pot";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { loadThirdPartyMessage, reloadAllMessages } from "../actions";
@@ -16,6 +17,8 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
 import { UIMessageDetails, UIMessageId } from "../../types";
+import { extractContentFromMessageSources } from "../../utils";
+import { isTestEnv } from "../../../../utils/environment";
 
 export type ThirdPartyById = IndexedById<
   pot.Pot<ThirdPartyMessageWithContent, Error>
@@ -97,31 +100,22 @@ const messageContentSelector = <T>(
   state: GlobalState,
   ioMessageId: UIMessageId,
   extractionFunction: (input: RemoteContentDetails | UIMessageDetails) => T
-) =>
-  pipe(
-    state.entities.messages.thirdPartyById[ioMessageId],
-    O.fromNullable,
-    O.chain(messagePot =>
-      pipe(
-        messagePot,
-        pot.toOption,
-        O.chainNullableK(message => message.third_party_message.details),
-        O.chain(details =>
-          pipe(
-            details,
-            RemoteContentDetails.decode,
-            O.fromEither,
-            O.map(extractionFunction)
-          )
-        )
-      )
-    ),
-    O.getOrElse(() =>
-      pipe(
-        state.entities.messages.detailsById[ioMessageId] ?? pot.none,
-        pot.toOption,
-        O.map(extractionFunction),
-        O.toUndefined
-      )
-    )
+) => {
+  const messageDetails = toUndefinedOptional(
+    state.entities.messages.detailsById[ioMessageId]
   );
+  const thirdPartyMessage = toUndefinedOptional(
+    state.entities.messages.thirdPartyById[ioMessageId]
+  );
+  return extractContentFromMessageSources(
+    extractionFunction,
+    messageDetails,
+    thirdPartyMessage
+  );
+};
+
+export const testable = isTestEnv
+  ? {
+      messageContentSelector
+    }
+  : undefined;

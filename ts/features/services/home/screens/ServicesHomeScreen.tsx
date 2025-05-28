@@ -1,9 +1,9 @@
 import {
-  ButtonLink,
   Divider,
   HeaderActionProps,
-  IOStyles,
+  IOButton,
   IOToast,
+  IOVisualCostants,
   ListItemHeader,
   ListItemNav,
   SearchInput,
@@ -11,7 +11,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
-import { ListRenderItemInfo, StyleSheet, View } from "react-native";
+import { ListRenderItemInfo, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { Institution } from "../../../../../definitions/services/Institution";
 import SectionStatusComponent from "../../../../components/SectionStatus";
@@ -22,7 +22,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import * as analytics from "../../common/analytics";
-import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
+import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { getLogoForInstitution } from "../../common/utils";
@@ -31,12 +31,6 @@ import { FeaturedServiceList } from "../components/FeaturedServiceList";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { useServicesHomeBottomSheet } from "../hooks/useServicesHomeBottomSheet";
 import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
-
-const styles = StyleSheet.create({
-  scrollContentContainer: {
-    flexGrow: 1
-  }
-});
 
 export const ServicesHomeScreen = () => {
   const dispatch = useIODispatch();
@@ -74,7 +68,7 @@ export const ServicesHomeScreen = () => {
     if (isFirstRender || isLoading) {
       return (
         <>
-          <InstitutionListSkeleton size={5} />
+          <ServiceListSkeleton size={5} />
           <VSpacer size={16} />
         </>
       );
@@ -112,15 +106,16 @@ export const ServicesHomeScreen = () => {
 
   const renderListFooterComponent = useCallback(() => {
     if (isUpdating && !isRefreshing) {
-      return <InstitutionListSkeleton />;
+      return <ServiceListSkeleton />;
     }
 
     if (isLastPage) {
       return (
         <>
           <VSpacer size={16} />
-          <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
-            <ButtonLink
+          <View style={{ alignItems: "center", alignSelf: "center" }}>
+            <IOButton
+              variant="link"
               label={I18n.t("services.home.searchLink")}
               onPress={() => {
                 analytics.trackSearchStart({ source: "bottom_link" });
@@ -169,12 +164,13 @@ export const ServicesHomeScreen = () => {
   const renderInstitutionItem = useCallback(
     ({ item }: ListRenderItemInfo<Institution>) => (
       <ListItemNav
-        value={item.name}
-        onPress={() => navigateToInstitution(item)}
         accessibilityLabel={item.name}
         avatarProps={{
           logoUri: getLogoForInstitution(item.fiscal_code)
         }}
+        numberOfLines={2}
+        onPress={() => navigateToInstitution(item)}
+        value={item.name}
       />
     ),
     [navigateToInstitution]
@@ -195,7 +191,10 @@ export const ServicesHomeScreen = () => {
     () => ({
       icon: "coggle",
       accessibilityLabel: I18n.t("global.buttons.settings"),
-      onPress: present
+      onPress: () => {
+        analytics.trackServicesPreferences();
+        present();
+      }
     }),
     [present]
   );
@@ -214,8 +213,7 @@ export const ServicesHomeScreen = () => {
     headerProps: {
       title: I18n.t("services.title"),
       animatedFlatListRef: scrollViewContentRef,
-      secondAction: actionSettings,
-      thirdAction: actionSearch
+      actions: [actionSearch, actionSettings]
     }
   });
 
@@ -241,12 +239,11 @@ export const ServicesHomeScreen = () => {
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
         ListHeaderComponent={renderListHeaderComponent}
-        contentContainerStyle={[
-          styles.scrollContentContainer,
-          IOStyles.horizontalContentPadding
-        ]}
-        data={data?.institutions || []}
-        keyExtractor={(item, index) => `institution-${item.id}-${index}`}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        data={data?.institutions}
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.1}
         onRefresh={handleRefresh}

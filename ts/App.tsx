@@ -1,6 +1,7 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import {
   IODSExperimentalContextProvider,
+  IONewTypefaceContextProvider,
   IOThemeContextProvider,
   ToastProvider
 } from "@pagopa/io-app-design-system";
@@ -21,10 +22,6 @@ export type ReactNavigationInstrumentation = ReturnType<
   typeof Sentry.reactNavigationIntegration
 >;
 
-export const navigationIntegration = Sentry.reactNavigationIntegration({
-  enableTimeToInitialDisplay: true
-});
-
 const removeUserFromEvent = <T extends ErrorEvent | TransactionEvent>(
   event: T
 ): T => {
@@ -37,22 +34,54 @@ const removeUserFromEvent = <T extends ErrorEvent | TransactionEvent>(
   return event;
 };
 
+/**
+ * Processes events before sending them to Sentry.
+ * Removes user data from all events and applies sampling logic.
+ * @param event - The Sentry event (exception)  to process
+ * @returns The processed event if it should be sent, or null to drop it
+ */
+const beforeSendHandler = <T extends ErrorEvent | TransactionEvent>(
+  event: T
+): T | null => {
+  const safeEvent = removeUserFromEvent(event);
+  const isSendRequired = event.contexts?.send?.isRequired;
+
+  // Always send events marked as required
+  if (isSendRequired) {
+    return safeEvent;
+  }
+
+  // Apply sampling for non-required events (20% sampling rate)
+  const sampleRate = 0.2;
+  return Math.random() <= sampleRate ? safeEvent : null;
+};
+
 Sentry.setUser(null);
 
 Sentry.init({
   dsn: sentryDsn,
   beforeSend(event) {
-    return removeUserFromEvent(event);
+    return beforeSendHandler(event);
   },
   beforeSendTransaction(event) {
     return removeUserFromEvent(event);
   },
-  integrations: integrations => [...integrations, navigationIntegration],
+  ignoreErrors: [
+    /HTTPClientError/i,
+    /HTTP Client Error with status code: 500/i,
+    /ANR/i,
+    /ApplicationNotResponding/i,
+    /Background ANR/i
+  ],
+  integrations: integrations => [
+    ...integrations,
+    Sentry.reactNativeTracingIntegration()
+  ],
   enabled: !isDevEnv,
-  // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-the-message-in-my-error-being-truncated
+  // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-message-in-my-error-being-truncated
   maxValueLength: 3000,
-  tracesSampleRate: 0.3,
-  sampleRate: 0.3
+  tracesSampleRate: 0.2,
+  sampleRate: 1
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself export
@@ -67,23 +96,23 @@ const App = (): JSX.Element => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <SafeAreaProvider>
       <IODSExperimentalContextProvider>
-        <IOThemeContextProvider theme={"light"}>
-          <ToastProvider>
-            <Provider store={store}>
-              <PersistGate loading={undefined} persistor={persistor}>
-                <BottomSheetModalProvider>
-                  <LightModalProvider>
-                    <StatusMessages>
-                      <RootContainer
-                        routingInstumentation={navigationIntegration}
-                      />
-                    </StatusMessages>
-                  </LightModalProvider>
-                </BottomSheetModalProvider>
-              </PersistGate>
-            </Provider>
-          </ToastProvider>
-        </IOThemeContextProvider>
+        <IONewTypefaceContextProvider>
+          <IOThemeContextProvider theme={"light"}>
+            <ToastProvider>
+              <Provider store={store}>
+                <PersistGate loading={undefined} persistor={persistor}>
+                  <BottomSheetModalProvider>
+                    <LightModalProvider>
+                      <StatusMessages>
+                        <RootContainer store={store} />
+                      </StatusMessages>
+                    </LightModalProvider>
+                  </BottomSheetModalProvider>
+                </PersistGate>
+              </Provider>
+            </ToastProvider>
+          </IOThemeContextProvider>
+        </IONewTypefaceContextProvider>
       </IODSExperimentalContextProvider>
     </SafeAreaProvider>
   </GestureHandlerRootView>

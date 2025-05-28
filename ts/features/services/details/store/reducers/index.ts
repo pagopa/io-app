@@ -3,19 +3,21 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { ServiceMetadata } from "../../../../../../definitions/backend/ServiceMetadata";
-import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
-import { SpecialServiceMetadata } from "../../../../../../definitions/backend/SpecialServiceMetadata";
-import {
-  logoutSuccess,
-  sessionExpired
-} from "../../../../../store/actions/authentication";
+import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { ServiceMetadata } from "../../../../../../definitions/services/ServiceMetadata";
+import { SpecialServiceMetadata } from "../../../../../../definitions/services/SpecialServiceMetadata";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { isStrictSome } from "../../../../../utils/pot";
-import { ServiceMetadataInfo } from "../../types/ServiceMetadataInfo";
+import { EnabledChannels } from "../../../../../utils/profile";
+import {
+  logoutSuccess,
+  sessionExpired
+} from "../../../../authentication/common/store/actions";
+import { ServiceKind } from "../../components/ServiceDetailsScreenComponent";
+import { ServiceMetadataInfo } from "../../types";
 import {
   ServicePreferenceResponse,
   WithServiceID,
@@ -27,17 +29,18 @@ import {
   upsertServicePreference
 } from "../actions/preference";
 
+export type ServicePreferencePot = pot.Pot<
+  ServicePreferenceResponse,
+  WithServiceID<NetworkError>
+>;
 export type ServicesDetailsState = {
-  byId: Record<string, pot.Pot<ServicePublic, Error>>;
-  servicePreference: pot.Pot<
-    ServicePreferenceResponse,
-    WithServiceID<NetworkError>
-  >;
+  dataById: Record<string, pot.Pot<ServiceDetails, Error>>;
+  preferencesById: Record<string, ServicePreferencePot>;
 };
 
 const INITIAL_STATE: ServicesDetailsState = {
-  byId: {},
-  servicePreference: pot.none
+  dataById: {},
+  preferencesById: {}
 };
 
 const servicesDetailsReducer = (
@@ -51,10 +54,10 @@ const servicesDetailsReducer = (
       // is updated with a someLoading pot, otherwise its state is updated with a noneLoading pot
       return {
         ...state,
-        byId: {
-          ...state.byId,
+        dataById: {
+          ...state.dataById,
           [action.payload]: pipe(
-            state.byId[action.payload],
+            state.dataById[action.payload],
             O.fromNullable,
             O.fold(() => pot.noneLoading, pot.toLoading)
           )
@@ -65,25 +68,26 @@ const servicesDetailsReducer = (
       // Use the ID as object key
       return {
         ...state,
-        byId: {
-          ...state.byId,
-          [action.payload.service_id]: pot.some(action.payload)
+        dataById: {
+          ...state.dataById,
+          [action.payload.id]: pot.some(action.payload)
         }
       };
 
     case getType(loadServiceDetail.failure):
       // when a request to load a previously loaded service detail fails its state is updated
       // with a someError pot, otherwise its state is updated with a noneError pot
+      const { service_id, error } = action.payload;
       return {
         ...state,
-        byId: {
-          ...state.byId,
-          [action.payload.service_id]: pipe(
-            state.byId[action.payload.service_id],
+        dataById: {
+          ...state.dataById,
+          [service_id]: pipe(
+            state.dataById[service_id],
             O.fromNullable,
             O.fold(
-              () => pot.noneError(action.payload.error),
-              servicePot => pot.toError(servicePot, action.payload.error)
+              () => pot.noneError(error),
+              servicePot => pot.toError(servicePot, error)
             )
           )
         }
@@ -91,32 +95,49 @@ const servicesDetailsReducer = (
 
     // Get service preference actions
     case getType(loadServicePreference.request):
+      const serviceId = action.payload;
+      const preferenceToLoad = state.preferencesById[serviceId] ?? pot.none;
       return {
         ...state,
-        servicePreference: pot.toLoading(state.servicePreference)
+        preferencesById: {
+          ...state.preferencesById,
+          [serviceId]: pot.toLoading(preferenceToLoad)
+        }
       };
     case getType(upsertServicePreference.request):
       const { id, ...payload } = action.payload;
+      const preferenceToUpsert = state.preferencesById[id] ?? pot.none;
 
       return {
         ...state,
-        servicePreference: pot.toUpdating(state.servicePreference, {
-          id,
-          kind: "success",
-          value: payload
-        })
+        preferencesById: {
+          ...state.preferencesById,
+          [id]: pot.toUpdating(preferenceToUpsert, {
+            id,
+            kind: "success",
+            value: payload
+          })
+        }
       };
     case getType(loadServicePreference.success):
     case getType(upsertServicePreference.success):
       return {
         ...state,
-        servicePreference: pot.some(action.payload)
+        preferencesById: {
+          ...state.preferencesById,
+          [action.payload.id]: pot.some(action.payload)
+        }
       };
     case getType(loadServicePreference.failure):
     case getType(upsertServicePreference.failure):
+      const currentPreference =
+        state.preferencesById[action.payload.id] ?? pot.none;
       return {
         ...state,
-        servicePreference: pot.toError(state.servicePreference, action.payload)
+        preferencesById: {
+          ...state.preferencesById,
+          [action.payload.id]: pot.toError(currentPreference, action.payload)
+        }
       };
 
     case getType(logoutSuccess):
@@ -129,36 +150,38 @@ const servicesDetailsReducer = (
 export default servicesDetailsReducer;
 
 // Selectors
-export const servicesByIdSelector = (state: GlobalState) =>
-  state.features.services.details.byId;
+export const servicesDetailsSelector = (state: GlobalState) =>
+  state.features.services.details.dataById;
 
-export const serviceByIdPotSelector = (
+export const serviceDetailsByIdPotSelector = (
   state: GlobalState,
   id: ServiceId
-): pot.Pot<ServicePublic, Error> =>
-  state.features.services.details.byId[id] ?? pot.none;
+): pot.Pot<ServiceDetails, Error> =>
+  state.features.services.details.dataById[id] ?? pot.none;
 
-export const serviceByIdSelector = (
+export const serviceDetailsByIdSelector = (
   state: GlobalState,
   id: ServiceId
-): ServicePublic | undefined =>
-  pipe(serviceByIdPotSelector(state, id), pot.toUndefined);
+): ServiceDetails | undefined =>
+  pipe(serviceDetailsByIdPotSelector(state, id), pot.toUndefined);
 
-export const isLoadingServiceByIdSelector = (
+export const isLoadingServiceDetailsByIdSelector = (
   state: GlobalState,
   id: ServiceId
-) => pipe(serviceByIdPotSelector(state, id), pot.isLoading);
+) => pipe(serviceDetailsByIdPotSelector(state, id), pot.isLoading);
 
-export const isErrorServiceByIdSelector = (state: GlobalState, id: ServiceId) =>
-  pipe(serviceByIdPotSelector(state, id), pot.isError);
+export const isErrorServiceDetailsByIdSelector = (
+  state: GlobalState,
+  id: ServiceId
+) => pipe(serviceDetailsByIdPotSelector(state, id), pot.isError);
 
 export const serviceMetadataByIdSelector = createSelector(
-  serviceByIdPotSelector,
+  serviceDetailsByIdPotSelector,
   serviceByIdPot =>
     pipe(
       serviceByIdPot,
       pot.toOption,
-      O.chainNullableK(service => service.service_metadata),
+      O.chainNullableK(service => service.metadata),
       O.toUndefined
     )
 );
@@ -169,11 +192,12 @@ export const serviceMetadataInfoSelector = createSelector(
     pipe(
       serviceMetadata,
       O.fromNullable,
-      O.chain<ServiceMetadata, ServiceMetadataInfo>(serviceMetadata => {
-        if (SpecialServiceMetadata.is(serviceMetadata)) {
+      O.chain<ServiceMetadata, ServiceMetadataInfo>(metadata => {
+        if (SpecialServiceMetadata.is(metadata)) {
           return O.some({
             isSpecialService: true,
-            customSpecialFlow: serviceMetadata.custom_special_flow as string
+            serviceKind:
+              metadata.custom_special_flow as NonNullable<ServiceKind>
           });
         }
         return O.none;
@@ -182,11 +206,18 @@ export const serviceMetadataInfoSelector = createSelector(
     )
 );
 
-export const servicePreferencePotSelector = (state: GlobalState) =>
-  state.features.services.details.servicePreference;
+export const servicePreferencePotByIdSelector = (
+  state: GlobalState,
+  id: ServiceId | undefined
+) => {
+  if (id === undefined) {
+    return pot.none;
+  }
+  return state.features.services.details.preferencesById[id] ?? pot.none;
+};
+export const servicePreferenceResponseSuccessByIdSelector = createSelector(
+  servicePreferencePotByIdSelector,
 
-export const servicePreferenceResponseSuccessSelector = createSelector(
-  servicePreferencePotSelector,
   servicePreferencePot =>
     pipe(
       servicePreferencePot,
@@ -196,21 +227,57 @@ export const servicePreferenceResponseSuccessSelector = createSelector(
     )
 );
 
-export const isLoadingServicePreferenceSelector = (state: GlobalState) =>
+export const isLoadingServicePreferenceSelector = (
+  state: GlobalState,
+  id: ServiceId | undefined
+) =>
   pipe(
-    state,
-    servicePreferencePotSelector,
+    servicePreferencePotByIdSelector(state, id),
     servicePreferencePot =>
       pot.isLoading(servicePreferencePot) ||
       pot.isUpdating(servicePreferencePot)
   );
 
-export const isErrorServicePreferenceSelector = (state: GlobalState) =>
+export const isErrorServicePreferenceSelector = (
+  state: GlobalState,
+  id: ServiceId | undefined
+) =>
   pipe(
-    state,
-    servicePreferencePotSelector,
+    servicePreferencePotByIdSelector(state, id),
     servicePreferencePot =>
       pot.isError(servicePreferencePot) ||
       (isStrictSome(servicePreferencePot) &&
         !isServicePreferenceResponseSuccess(servicePreferencePot.value))
+  );
+
+type PreferenceByChannelSelectorType = (
+  state: GlobalState,
+  serviceId: ServiceId | undefined,
+  channel: keyof EnabledChannels
+) => pot.Pot<boolean, WithServiceID<NetworkError>>;
+
+/**
+ * Select the preference by channel
+ * @param serviceId - The ID of the service to select the preference for
+ * @param channel - The channel of the preference to select
+ * @returns The preference value for the specified channel or undefined
+ */
+
+export const servicePreferenceByChannelPotSelector: PreferenceByChannelSelectorType =
+  createSelector(
+    [
+      servicePreferencePotByIdSelector,
+      (
+        _state: GlobalState,
+        _serviceId: ServiceId | undefined,
+        channel: keyof EnabledChannels
+      ) => channel
+    ],
+    (selector, channel) =>
+      pot.mapNullable(selector, servicePreference => {
+        if (isServicePreferenceResponseSuccess(servicePreference)) {
+          return servicePreference.value[channel];
+        }
+        return undefined;
+      })
   );

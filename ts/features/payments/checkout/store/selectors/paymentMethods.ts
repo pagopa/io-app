@@ -172,3 +172,9 @@ export const notHasValidPaymentMethodsSelector = createSelector(
     );
   }
 );
+
+export const isPaymentsPspBannerClosedSelector = (paymentMethodName: string) =>
+  createSelector(
+    selectPaymentsCheckoutState,
+    state => state.pspBannerClosed?.has(paymentMethodName) ?? false
+  );

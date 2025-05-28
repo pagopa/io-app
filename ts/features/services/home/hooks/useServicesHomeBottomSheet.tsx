@@ -8,15 +8,9 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-
-type NavigationListItem = {
-  value: string;
-} & Pick<
-  ComponentProps<typeof ListItemNav>,
-  "description" | "onPress" | "testID"
->;
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import * as analytics from "../../common/analytics";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 
 const styles = StyleSheet.create({
   containerList: {
@@ -29,44 +23,47 @@ export const useServicesHomeBottomSheet = () => {
   const navigation = useIONavigation();
 
   const handleNavigateToServicesPreferencesScreen = useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
+    analytics.trackServicesPreferencesSelected("preferences_services");
+    navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_SERVICES
     });
   }, [navigation]);
 
   const handleNavigateToSettingsScreen = useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.SETTINGS_MAIN
+    analytics.trackServicesPreferencesSelected("profile_main");
+    navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.SETTINGS_MAIN
     });
   }, [navigation]);
 
-  const navigationListItems: ReadonlyArray<NavigationListItem> = [
-    {
-      value: I18n.t(
-        "services.home.bottomSheet.content.servicesPreferences.value"
-      ),
-      description: I18n.t(
-        "services.home.bottomSheet.content.servicesPreferences.description"
-      ),
-      testID: "navigate-to-services-preferences",
-      onPress: handleNavigateToServicesPreferencesScreen
-    },
-    {
-      value: I18n.t("services.home.bottomSheet.content.settings.value"),
-      description: I18n.t(
-        "services.home.bottomSheet.content.settings.description"
-      ),
-      testID: "navigate-to-settings-main",
-      onPress: handleNavigateToSettingsScreen
-    }
-  ];
+  const navigationListItems: ReadonlyArray<ComponentProps<typeof ListItemNav>> =
+    [
+      {
+        value: I18n.t(
+          "services.home.bottomSheet.content.servicesPreferences.value"
+        ),
+        description: I18n.t(
+          "services.home.bottomSheet.content.servicesPreferences.description"
+        ),
+        testID: "navigate-to-services-preferences",
+        onPress: handleNavigateToServicesPreferencesScreen
+      },
+      {
+        value: I18n.t("services.home.bottomSheet.content.settings.value"),
+        description: I18n.t(
+          "services.home.bottomSheet.content.settings.description"
+        ),
+        testID: "navigate-to-settings-main",
+        onPress: handleNavigateToSettingsScreen
+      }
+    ];
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal({
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title: "",
     component: (
       <FlatList
         data={navigationListItems}
-        keyExtractor={item => item.value}
+        keyExtractor={(item, index) => `${item.value}-${index}`}
         renderItem={({ item: { onPress, ...rest } }) => (
           <ListItemNav
             {...rest}

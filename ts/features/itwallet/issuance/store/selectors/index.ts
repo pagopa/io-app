@@ -4,7 +4,7 @@ export const itwIntegrityKeyTagSelector = (state: GlobalState) =>
   state.features.itWallet.issuance.integrityKeyTag;
 
 /**
- * Selector that returns the integrityServiceReady flag.
+ * Selector that returns the integrityService status
  */
-export const itwIntegrityServiceReadySelector = (state: GlobalState) =>
-  state.features.itWallet.issuance.integrityServiceReady;
+export const itwIntegrityServiceStatusSelector = (state: GlobalState) =>
+  state.features.itWallet.issuance.integrityServiceStatus;

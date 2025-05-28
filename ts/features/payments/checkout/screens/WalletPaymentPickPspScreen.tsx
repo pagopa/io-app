@@ -1,6 +1,5 @@
 import {
   Body,
-  GradientScrollView,
   H2,
   ListItemHeader,
   RadioGroup,
@@ -12,6 +11,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -35,6 +35,8 @@ import {
 import { WalletPaymentPspSortType, WalletPaymentStepEnum } from "../types";
 import { FaultCodeCategoryEnum } from "../types/PspPaymentMethodNotAvailableProblemJson";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { WalletPaymentPspBanner } from "../components/WalletPaymentPspBanner";
 
 const WalletPaymentPickPspScreen = () => {
   const dispatch = useIODispatch();
@@ -189,31 +191,40 @@ const WalletPaymentPickPspScreen = () => {
   );
 
   return (
-    <GradientScrollView
-      primaryActionProps={
+    <IOScrollView
+      actions={
         canContinue
           ? {
-              label: I18n.t("wallet.payment.psp.continueButton"),
-              accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
-              onPress: handleContinue,
-              disabled: isLoading,
-              loading: isLoading
+              type: "SingleButton",
+              primary: {
+                label: I18n.t("wallet.payment.psp.continueButton"),
+                accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
+                onPress: handleContinue,
+                disabled: isLoading,
+                loading: isLoading
+              }
             }
           : undefined
       }
     >
-      <SelectPspHeadingContent />
-      {!isLoading && (
-        <RadioGroup<string>
-          onPress={handlePspSelection}
-          type="radioListItemWithAmount"
-          selectedItem={pspSelected?.idBundle}
-          items={getRadioItemsFromPspList(sortedPspList, showFeaturedPsp)}
-        />
-      )}
-      {isLoading && <WalletPspListSkeleton />}
+      <WalletPaymentPspBanner />
+      <Animated.View
+        style={{ flex: 1 }}
+        layout={LinearTransition.duration(200)}
+      >
+        <SelectPspHeadingContent />
+        {!isLoading && (
+          <RadioGroup<string>
+            onPress={handlePspSelection}
+            type="radioListItemWithAmount"
+            selectedItem={pspSelected?.idBundle}
+            items={getRadioItemsFromPspList(sortedPspList, showFeaturedPsp)}
+          />
+        )}
+        {isLoading && <WalletPspListSkeleton />}
+      </Animated.View>
       {sortPspBottomSheet}
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 

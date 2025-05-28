@@ -1,34 +1,26 @@
 import * as O from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ItwLifecycleState } from "../reducers";
-
-export const itwLifecycleSelector = (state: GlobalState) =>
-  state.features.itWallet.lifecycle;
 
 /**
- * The wallet instance is installed. In this state
- * the integrity key tag should not exist.
+ * The wallet instance is not active and there is no associated integrity key tag.
+ * The user cannot get any credential.
  */
 export const itwLifecycleIsInstalledSelector = (state: GlobalState) =>
-  state.features.itWallet.lifecycle ===
-    ItwLifecycleState.ITW_LIFECYCLE_INSTALLED &&
   O.isNone(state.features.itWallet.issuance.integrityKeyTag);
 
 /**
- * The wallet instance is operational. In this state
- * the integrity key tag must exist.
+ * The wallet instance is registered and there is an associated integrity key tag.
+ * The user can get a wallet attestation and an eID.
  */
 export const itwLifecycleIsOperationalSelector = (state: GlobalState) =>
-  state.features.itWallet.lifecycle ===
-    ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL &&
-  O.isSome(state.features.itWallet.issuance.integrityKeyTag);
+  O.isSome(state.features.itWallet.issuance.integrityKeyTag) &&
+  O.isNone(state.features.itWallet.credentials.eid);
 
 /**
- * The wallet instance is valid. In this state
- * the integrity key tag and the eID must exist.
+ * The wallet instance is registered, there is an associated integrity key tag
+ * and the user has been issued a valid eID. The user can now get other credentials.
  */
 export const itwLifecycleIsValidSelector = (state: GlobalState) =>
-  state.features.itWallet.lifecycle === ItwLifecycleState.ITW_LIFECYCLE_VALID &&
   O.isSome(state.features.itWallet.issuance.integrityKeyTag) &&
   O.isSome(state.features.itWallet.credentials.eid);
 

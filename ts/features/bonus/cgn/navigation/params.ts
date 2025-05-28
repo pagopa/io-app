@@ -19,7 +19,6 @@ export type CgnDetailsParamsList = {
   [CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES]: undefined;
   [CGN_ROUTES.DETAILS.MERCHANTS
     .LIST_BY_CATEGORY]: CgnMerchantListByCategoryScreenNavigationParams;
-  [CGN_ROUTES.DETAILS.MERCHANTS.TABS]: undefined;
   [CGN_ROUTES.DETAILS.MERCHANTS
     .DETAIL]: CgnMerchantDetailScreenNavigationParams;
   [CGN_ROUTES.DETAILS.MERCHANTS

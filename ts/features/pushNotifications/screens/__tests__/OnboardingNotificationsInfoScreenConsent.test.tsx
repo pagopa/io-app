@@ -8,7 +8,6 @@ import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { OnboardingNotificationsInfoScreenConsent } from "../OnboardingNotificationsInfoScreenConsent";
 import * as notification from "../../utils";
-import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import * as analytics from "../../analytics";
 import { notificationsInfoScreenConsent } from "../../store/actions/profileNotificationPermissions";
 import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
@@ -133,11 +132,7 @@ const renderScreen = (appStateStatus: AppStateStatus = "active") => {
     undefined,
     applicationChangeState(appStateStatus)
   );
-  const dsEnabledState = appReducer(
-    globalState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-  const store = createStore(appReducer, dsEnabledState as any);
+  const store = createStore(appReducer, globalState as any);
 
   return renderScreenWithNavigationStoreContext(
     OnboardingNotificationsInfoScreenConsent,

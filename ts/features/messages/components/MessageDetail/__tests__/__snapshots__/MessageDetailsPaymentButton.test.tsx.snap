@@ -366,39 +366,44 @@ exports[`MessageDetailsPaymentButton should match snapshot when loading 1`] = `
                         onResponderTerminate={[Function]}
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
-                        style={{}}
+                        style={
+                          {
+                            "alignSelf": "stretch",
+                            "flexShrink": 0,
+                          }
+                        }
                       >
                         <View
                           style={
                             [
                               {
                                 "alignItems": "center",
-                                "borderRadius": 4,
+                                "borderCurve": "continuous",
                                 "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
-                                "paddingHorizontal": 16,
-                                "textAlignVertical": "center",
-                              },
-                              {
                                 "overflow": "hidden",
-                              },
-                              false,
-                              {
-                                "height": 40,
-                              },
-                              {
-                                "backgroundColor": "#0073E6",
+                                "textAlignVertical": "center",
                               },
                               false,
                               {
                                 "backgroundColor": undefined,
                               },
+                              {
+                                "paddingHorizontal": 16,
+                              },
+                              {
+                                "backgroundColor": "#0B3EE3",
+                                "borderColor": "#FFFFFF",
+                                "borderRadius": 8,
+                                "borderWidth": 0,
+                                "height": 48,
+                              },
+                              {},
                             ]
                           }
                         >
                           <View
-                            entering={[Function]}
                             exiting={[Function]}
                             style={
                               {
@@ -411,7 +416,6 @@ exports[`MessageDetailsPaymentButton should match snapshot when loading 1`] = `
                             <View
                               accessibilityRole="progressbar"
                               accessible={true}
-                              importantForAccessibility="no-hide-descendants"
                               style={
                                 {
                                   "height": 24,
@@ -967,45 +971,53 @@ exports[`MessageDetailsPaymentButton should match snapshot when not loading 1`] 
                         onResponderTerminate={[Function]}
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
-                        style={{}}
+                        style={
+                          {
+                            "alignSelf": "stretch",
+                            "flexShrink": 0,
+                          }
+                        }
                       >
                         <View
                           style={
                             [
                               {
                                 "alignItems": "center",
-                                "borderRadius": 4,
+                                "borderCurve": "continuous",
                                 "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
-                                "paddingHorizontal": 16,
-                                "textAlignVertical": "center",
-                              },
-                              {
                                 "overflow": "hidden",
-                              },
-                              false,
-                              {
-                                "height": 40,
-                              },
-                              {
-                                "backgroundColor": "#0073E6",
+                                "textAlignVertical": "center",
                               },
                               false,
                               {
                                 "backgroundColor": undefined,
                               },
+                              {
+                                "paddingHorizontal": 16,
+                              },
+                              {
+                                "backgroundColor": "#0B3EE3",
+                                "borderColor": "#FFFFFF",
+                                "borderRadius": 8,
+                                "borderWidth": 0,
+                                "height": 48,
+                              },
+                              {},
                             ]
                           }
                         >
                           <View
-                            entering={[Function]}
                             style={
                               [
                                 {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "justifyContent": "center",
+                                },
+                                {
+                                  "columnGap": 8,
                                 },
                                 false,
                               ]
@@ -1014,25 +1026,33 @@ exports[`MessageDetailsPaymentButton should match snapshot when not loading 1`] 
                             <Text
                               accessibilityElementsHidden={true}
                               accessible={false}
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               ellipsizeMode="tail"
                               importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               numberOfLines={1}
                               style={
                                 [
                                   {},
                                   {
-                                    "color": "#FFFFFF",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 20,
+                                    "lineHeight": undefined,
                                   },
-                                  {
-                                    "alignSelf": "center",
-                                  },
+                                  [
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                    {
+                                      "color": "#FFFFFF",
+                                    },
+                                    {
+                                      "color": undefined,
+                                    },
+                                  ],
                                 ]
                               }
                             >

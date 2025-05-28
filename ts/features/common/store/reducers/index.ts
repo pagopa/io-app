@@ -5,15 +5,15 @@ import { Action } from "../../../../store/actions/types";
 import {
   TestLoginState,
   testLoginReducer
-} from "../../../../store/reducers/testLogin";
+} from "../../../authentication/common/store/reducers/testLogin";
 import {
   CieLoginState,
   cieLoginPersistor
-} from "../../../cieLogin/store/reducers";
+} from "../../../authentication/login/cie/store/reducers/cieLogin";
 import {
   FastLoginState,
   fastLoginReducer
-} from "../../../fastLogin/store/reducers";
+} from "../../../authentication/fastLogin/store/reducers";
 import fciReducer, { FciState } from "../../../fci/store/reducers";
 import fimsReducer, { FimsState } from "../../../fims/common/store/reducer";
 import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
@@ -23,7 +23,7 @@ import itWalletReducer, {
 import {
   NativeLoginState,
   nativeLoginReducer
-} from "../../../nativeLogin/store/reducers";
+} from "../../../authentication/nativeLogin/store/reducers";
 import walletReducer, { WalletState } from "../../../wallet/store/reducers";
 import paymentsReducer, {
   PaymentsState
@@ -51,7 +51,7 @@ import {
 import {
   loginInfoReducer,
   LoginInfoState
-} from "../../../login/info/store/reducers";
+} from "../../../authentication/loginInfo/store/reducers";
 import {
   landingScreenBannersReducer,
   LandingScreenBannerState
@@ -59,7 +59,23 @@ import {
 import {
   spidLoginReducer,
   SpidLoginState
-} from "../../../spidLogin/store/reducers";
+} from "../../../authentication/login/idp/store/reducers";
+import connectivityStateReducer, {
+  ConnectivityState
+} from "../../../connectivity/store/reducers";
+import {
+  appFeedbackPersistor,
+  AppFeedbackState
+} from "../../../appReviews/store/reducers";
+import { utmLinkReducer, UtmLinkState } from "../../../utmLink/store/reducers";
+import {
+  appearanceSettingsReducerPersistor,
+  AppearanceSettingsState
+} from "../../../appearanceSettings/store/reducers";
+import {
+  loginPreferencesPersistor,
+  LoginPreferencesState
+} from "../../../authentication/loginPreferences/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -68,6 +84,7 @@ type LoginFeaturesState = {
   cieLogin: CieLoginState & PersistPartial;
   loginInfo: LoginInfoState;
   spidLogin: SpidLoginState;
+  loginPreferences: LoginPreferencesState & PersistPartial;
 };
 
 export type FeaturesState = {
@@ -82,9 +99,13 @@ export type FeaturesState = {
   fims: FimsState;
   itWallet: PersistedItWalletState;
   profileSettings: ProfileSettingsState & PersistPartial;
+  appearanceSettings: AppearanceSettingsState & PersistPartial;
   mixpanel: MixpanelState;
   ingress: IngressScreenState;
   landingBanners: LandingScreenBannerState;
+  appFeedback: AppFeedbackState & PersistPartial;
+  utmLink: UtmLinkState;
+  connectivityStatus: ConnectivityState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -102,15 +123,20 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     fastLogin: fastLoginReducer,
     cieLogin: cieLoginPersistor,
     loginInfo: loginInfoReducer,
-    spidLogin: spidLoginReducer
+    spidLogin: spidLoginReducer,
+    loginPreferences: loginPreferencesPersistor
   }),
   wallet: walletReducer,
   fims: fimsReducer,
   itWallet: itWalletReducer,
   profileSettings: profileSettingsReducerPersistor,
+  appearanceSettings: appearanceSettingsReducerPersistor,
   mixpanel: mixpanelReducer,
   ingress: ingressScreenReducer,
-  landingBanners: landingScreenBannersReducer
+  landingBanners: landingScreenBannersReducer,
+  appFeedback: appFeedbackPersistor,
+  utmLink: utmLinkReducer,
+  connectivityStatus: connectivityStateReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;

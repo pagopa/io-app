@@ -13,7 +13,7 @@ const RequestZandeskTokenErrorScreen = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="umbrellaNew"
+      pictogram="umbrella"
       title={I18n.t("support.errorGetZendeskToken.title")}
       subtitle={I18n.t("support.errorGetZendeskToken.subtitle")}
       action={{

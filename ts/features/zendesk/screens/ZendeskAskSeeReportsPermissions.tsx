@@ -1,7 +1,7 @@
 import {
-  ButtonLink,
   ContentWrapper,
   Divider,
+  IOButton,
   IOToast,
   IOVisualCostants,
   ListItemHeader,
@@ -26,15 +26,14 @@ import {
   profileEmailSelector,
   profileFiscalCodeSelector,
   profileNameSurnameSelector
-} from "../../../store/reducers/profile";
+} from "../../settings/common/store/selectors";
 import { openWebUrl } from "../../../utils/url";
 import { ZendeskParamsList } from "../navigation/params";
+import { type ZendeskAssistanceType } from "../store/actions";
 import { ItemPermissionProps } from "./ZendeskAskPermissions";
 
 export type ZendeskAskSeeReportsPermissionsNavigationParams = {
-  assistanceForPayment: boolean;
-  assistanceForCard: boolean;
-  assistanceForFci: boolean;
+  assistanceType: ZendeskAssistanceType;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -48,8 +47,7 @@ type Props = IOStackNavigationRouteProps<
  */
 const ZendeskAskSeeReportsPermissions = (props: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
-    props.route.params;
+  const { assistanceType } = props.route.params;
 
   /* Get user's profile data */
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
@@ -110,11 +108,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
       onPress: () => {
         navigation.navigate("ZENDESK_MAIN", {
           screen: "ZENDESK_SEE_REPORTS_ROUTERS",
-          params: {
-            assistanceForPayment,
-            assistanceForCard,
-            assistanceForFci
-          }
+          params: { assistanceType }
         });
       }
     }
@@ -132,7 +126,8 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
       ignoreSafeAreaMargin={true}
     >
       <ContentWrapper>
-        <ButtonLink
+        <IOButton
+          variant="link"
           label={I18n.t("support.askPermissions.privacyLink")}
           onPress={() => {
             openWebUrl(zendeskPrivacyUrl, () =>

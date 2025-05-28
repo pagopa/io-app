@@ -1,6 +1,6 @@
 import { Banner } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
-import { useMemo, useCallback, memo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -12,25 +12,40 @@ import {
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
+import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
+
+const bannerConfig = {
+  onboarding: {
+    content: I18n.t("features.itWallet.discovery.banner.home.content")
+  },
+  reactivating: {
+    content: I18n.t(
+      "features.itWallet.discovery.banner.onboardingActive.content"
+    )
+  }
+} as const;
 
 /**
- * ITW dicovery banner to be displayed in the wallet card onboarding screen
+ * ITW discovery banner to be displayed in the wallet card onboarding screen
  */
 const ItwDiscoveryBannerOnboarding = () => {
   const navigation = useIONavigation();
   const route = useRoute();
-
+  const bannerType = useItwDiscoveryBannerType();
   const isBannerRenderable = useIOSelector(
     isItwDiscoveryBannerRenderableSelector
   );
 
   const trackBannerProperties = useMemo(
     () => ({
-      banner_id: "itwDiscoveryBannerOnboardingTestID",
+      banner_id:
+        bannerType === "reactivating"
+          ? "itwDiscoveryBannerOnboardingDeviceChanged"
+          : "itwDiscoveryBannerOnboardingTestID",
       banner_page: route.name,
       banner_landing: "ITW_ONBOARDING"
     }),
-    [route.name]
+    [bannerType, route.name]
   );
 
   useOnFirstRender(
@@ -41,28 +56,28 @@ const ItwDiscoveryBannerOnboarding = () => {
     }, [trackBannerProperties, isBannerRenderable])
   );
 
-  if (!isBannerRenderable) {
-    return null;
-  }
-
   const handleOnPress = () => {
     trackItWalletBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: {}
     });
   };
+
+  if (!isBannerRenderable || !bannerType) {
+    return null;
+  }
+
+  const { content } = bannerConfig[bannerType];
 
   return (
     <View style={styles.wrapper}>
       <Banner
         testID="itwDiscoveryBannerOnboardingTestID"
-        content={I18n.t(
-          "features.itWallet.discovery.banner.onboarding.content"
-        )}
+        content={content}
         action={I18n.t("features.itWallet.discovery.banner.onboarding.action")}
         pictogramName="itWallet"
         color="neutral"
-        size="big"
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}
       />

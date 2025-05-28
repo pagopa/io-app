@@ -1,24 +1,21 @@
-import { useCallback, useState } from "react";
-import * as t from "io-ts";
+import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useFocusEffect } from "@react-navigation/native";
-import I18n from "../../../../i18n";
+import * as t from "io-ts";
+import { useCallback } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import I18n from "../../../../i18n";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "./ItwIssuanceCredentialTrustIssuerScreen";
 
 export type ItwIssuanceCredentialAsyncContinuationNavigationParams = {
@@ -48,17 +45,17 @@ const getCredentialType = (params: unknown) =>
  * so we guard against invalid values in this screen.
  */
 export const ItwIssuanceCredentialAsyncContinuationScreen = ({
+  navigation,
   route
 }: ScreenProps) => {
   const credentialType = getCredentialType(route.params);
-  const navigation = useIONavigation();
 
   return pipe(
     credentialType,
     O.fold(
       () => (
         <OperationResultScreenContent
-          pictogram="umbrellaNew"
+          pictogram="umbrella"
           title={I18n.t("genericError")}
           action={{
             label: I18n.t("global.buttons.close"),
@@ -113,7 +110,8 @@ const InnerComponent = ({ credentialType }: { credentialType: string }) => {
           label: I18n.t(`${ns}.primaryAction`),
           onPress: () =>
             navigation.replace(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.DISCOVERY.INFO
+              screen: ITW_ROUTES.DISCOVERY.INFO,
+              params: {}
             })
         }}
         secondaryAction={{
@@ -148,34 +146,9 @@ const InnerComponent = ({ credentialType }: { credentialType: string }) => {
   }
 
   return (
-    <WrappedItwIssuanceCredentialTrustIssuerScreen
+    <ItwIssuanceCredentialTrustIssuerScreen
       credentialType={credentialType}
+      asyncContinuation
     />
-  );
-};
-
-const WrappedItwIssuanceCredentialTrustIssuerScreen = ({
-  credentialType
-}: {
-  credentialType: string;
-}) => {
-  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-  const [isMachineReady, setIsMachineReady] = useState(false);
-
-  // Transition the credential machine to the correct state when the credential selection screen is bypassed.
-  // During this transition we should not render ItwIssuanceCredentialTrustIssuerScreen to avoid the generic error screen.
-  useOnFirstRender(() => {
-    machineRef.send({
-      type: "select-credential",
-      credentialType,
-      skipNavigation: true
-    });
-    setIsMachineReady(true);
-  });
-
-  return isMachineReady ? (
-    <ItwIssuanceCredentialTrustIssuerScreen />
-  ) : (
-    <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
   );
 };

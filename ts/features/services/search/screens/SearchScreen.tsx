@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Platform, View, ViewStyle } from "react-native";
+import { Platform, ViewStyle } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import {
+  ContentWrapper,
   Divider,
   IOSpacingScale,
-  IOStyles,
   IOToast,
+  IOVisualCostants,
+  ListItemHeader,
   SearchInput,
   SearchInputRef,
   VSpacer
@@ -21,8 +23,8 @@ import { useIODispatch } from "../../../../store/hooks";
 import { getLogoForInstitution } from "../../common/utils";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { EmptyState } from "../../common/components/EmptyState";
-import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
 import { ListItemSearchInstitution } from "../../common/components/ListItemSearchInstitution";
+import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import * as analytics from "../../common/analytics";
 
 const INPUT_PADDING: IOSpacingScale = 16;
@@ -39,7 +41,6 @@ export const SearchScreen = () => {
 
   const containerStyle: ViewStyle = useMemo(
     () => ({
-      ...IOStyles.horizontalContentPadding,
       marginTop: insets.top,
       paddingVertical: INPUT_PADDING
     }),
@@ -133,7 +134,7 @@ export const SearchScreen = () => {
 
   const renderListFooterComponent = useCallback(() => {
     if (isUpdating) {
-      return <InstitutionListSkeleton />;
+      return <ServiceListSkeleton />;
     }
 
     return <VSpacer size={16} />;
@@ -152,7 +153,7 @@ export const SearchScreen = () => {
     if (data?.institutions.length === 0) {
       return (
         <EmptyState
-          pictogram="umbrellaNew"
+          pictogram="umbrella"
           title={I18n.t("services.search.emptyState.noResults.title")}
           subtitle={I18n.t("services.search.emptyState.noResults.subtitle")}
         />
@@ -160,15 +161,34 @@ export const SearchScreen = () => {
     }
 
     if (isLoading) {
-      return <InstitutionListSkeleton />;
+      return <ServiceListSkeleton sectionTitleShown />;
     }
 
     return null;
   }, [isLoading, query, data?.institutions]);
 
+  const renderListHeaderComponent = useCallback(() => {
+    if ((data?.count ?? 0) > 0) {
+      return (
+        <ListItemHeader
+          label={I18n.t("services.search.list.header.title")}
+          endElement={{
+            type: "badge",
+            componentProps: {
+              text: `${data?.count}`,
+              variant: "default"
+            }
+          }}
+        />
+      );
+    }
+
+    return null;
+  }, [data?.count]);
+
   return (
     <>
-      <View style={containerStyle}>
+      <ContentWrapper style={containerStyle}>
         <SearchInput
           accessibilityLabel={I18n.t("services.search.input.placeholderShort")}
           autoFocus={true}
@@ -181,13 +201,16 @@ export const SearchScreen = () => {
           ref={searchInputRef}
           value={query}
         />
-      </View>
+      </ContentWrapper>
       <FlashList
-        ItemSeparatorComponent={() => <Divider />}
+        ItemSeparatorComponent={Divider}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
-        contentContainerStyle={IOStyles.horizontalContentPadding}
-        data={data?.institutions || []}
+        ListHeaderComponent={renderListHeaderComponent}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        data={data?.institutions}
         estimatedItemSize={LIST_ITEM_HEIGHT}
         keyboardDismissMode={Platform.select({
           ios: "interactive",
@@ -196,7 +219,7 @@ export const SearchScreen = () => {
         keyboardShouldPersistTaps="handled"
         keyExtractor={(item, index) => `institution-${item.id}-${index}`}
         onEndReached={handleEndReached}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.5}
         renderItem={renderItem}
       />
     </>

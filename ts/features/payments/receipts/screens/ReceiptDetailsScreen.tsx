@@ -5,7 +5,6 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -32,6 +31,7 @@ import {
 export type ReceiptDetailsScreenParams = {
   transactionId: string;
   isPayer?: boolean;
+  isCart?: boolean;
 };
 
 export type ReceiptDetailsScreenProps = RouteProp<
@@ -61,7 +61,7 @@ const ReceiptDetailsScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute<ReceiptDetailsScreenProps>();
-  const { transactionId, isPayer } = route.params;
+  const { transactionId, isPayer, isCart } = route.params;
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const transactionDetailsPot = useIOSelector(walletReceiptDetailsPotSelector);
   const transactionReceiptPot = useIOSelector(walletReceiptPotSelector);
@@ -93,7 +93,9 @@ const ReceiptDetailsScreen = () => {
     analytics.trackPaymentsDownloadReceiptError({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user: paymentAnalyticsData?.receiptUser
+      user: paymentAnalyticsData?.receiptUser,
+      organization_fiscal_code:
+        paymentAnalyticsData?.receiptOrganizationFiscalCode
     });
     toast.error(I18n.t("features.payments.transactions.receipt.error"));
   };
@@ -108,10 +110,9 @@ const ReceiptDetailsScreen = () => {
     analytics.trackPaymentsDownloadReceiptAction({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       organization_fiscal_code:
-        paymentAnalyticsData?.verifiedData?.paFiscalCode,
+        paymentAnalyticsData?.receiptOrganizationFiscalCode,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user: paymentAnalyticsData?.receiptUser,
-      payment_status: "paid"
+      user: paymentAnalyticsData?.receiptUser
     });
     dispatch(
       getPaymentsReceiptDownloadAction.request({
@@ -135,7 +136,7 @@ const ReceiptDetailsScreen = () => {
   if (isError) {
     return (
       <OperationResultScreenContent
-        pictogram="umbrellaNew"
+        pictogram="umbrella"
         title={I18n.t("transaction.details.error.title")}
         action={{
           label: I18n.t("global.buttons.retry"),
@@ -151,12 +152,15 @@ const ReceiptDetailsScreen = () => {
     );
   }
 
+  const showGenerateReceiptButton =
+    transactionDetails?.infoNotice?.origin !== OriginEnum.PM && !isCart;
+
   return (
     <IOScrollView
       includeContentMargins={false}
       animatedRef={animatedScrollViewRef}
       actions={
-        transactionDetails?.infoNotice?.origin !== OriginEnum.PM
+        showGenerateReceiptButton
           ? {
               type: "SingleButton",
               primary: {
@@ -171,7 +175,6 @@ const ReceiptDetailsScreen = () => {
           : undefined
       }
     >
-      <FocusAwareStatusBar barStyle={"dark-content"} />
       <View style={[styles.wrapper, { backgroundColor }]}>
         {/* The following line is used to show the background color gray that overlay the basic one which is white */}
         <View style={[styles.bottomBackground, { backgroundColor }]} />
@@ -181,6 +184,7 @@ const ReceiptDetailsScreen = () => {
         />
         <WalletTransactionInfoSection
           transaction={transactionDetails}
+          showUnavailableReceiptBanner={!showGenerateReceiptButton}
           loading={isLoading}
         />
         <HideReceiptButton transactionId={transactionId} />

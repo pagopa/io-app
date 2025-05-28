@@ -1,15 +1,15 @@
 import { generate } from "@pagopa/io-react-native-crypto";
 import {
+  AuthorizationDetail,
   createCryptoContextFor,
-  Credential,
-  AuthorizationDetail
+  Credential
 } from "@pagopa/io-react-native-wallet";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
-import uuid from "react-native-uuid";
+import { v4 as uuidv4 } from "uuid";
 import {
-  itwPidProviderBaseUrl,
   itWalletIssuanceRedirectUri,
-  itwIdpHintTest
+  itwIdpHintTest,
+  itwPidProviderBaseUrl
 } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
 import { StoredCredential } from "./itwTypesUtils";
@@ -30,6 +30,7 @@ const CREDENTIAL_TYPE = "PersonIdentificationData";
 type StartAuthFlowParams = {
   walletAttestation: string;
   identification: IdentificationContext;
+  isL3IssuanceEnabled: boolean;
 };
 
 /**
@@ -38,18 +39,22 @@ type StartAuthFlowParams = {
  * After completing the initial authentication flow and obtaining the redirectAuthUrl from the WebView (CIE + PIN & SPID) or Browser (CIEID),
  * the flow must be completed by invoking `completeAuthFlow`.
  * @param walletAttestation - The wallet attestation.
+ * @param identification - The identification context.
+ * @param isL3IssuanceEnabled flag that indicates that we need to issue an L3 PID
  * @returns Authentication params to use when completing the flow.
  */
 const startAuthFlow = async ({
   walletAttestation,
-  identification
+  identification,
+  isL3IssuanceEnabled
 }: StartAuthFlowParams) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
     issuerUrl: itwPidProviderBaseUrl,
     credentialType: CREDENTIAL_TYPE
   });
 
-  const idpHint = getIdpHint(identification);
+  // When issuing an L3 PID, we should not provide an IDP hint
+  const idpHint = isL3IssuanceEnabled ? undefined : getIdpHint(identification);
 
   const { issuerUrl, credentialType } = startFlow();
 
@@ -162,7 +167,7 @@ const getPid = async ({
   dPoPContext,
   credentialDefinition
 }: PidIssuanceParams): Promise<StoredCredential> => {
-  const credentialKeyTag = uuid.v4().toString();
+  const credentialKeyTag = uuidv4().toString();
   await generate(credentialKeyTag);
   const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
 

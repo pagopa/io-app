@@ -1,1 +1,0 @@
-To access the IO app, you must authorize your Identity Provider to transmit your Tax Code, name, surname, e-mail address and mobile phone number to the IO platform. Your tax code is not communicated by the IO app to the institution, but each institution can use the IO app to write to you only if it already has your data (and therefore a relationship with you).

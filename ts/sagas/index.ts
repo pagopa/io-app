@@ -3,17 +3,19 @@
  */
 import { all, call } from "typed-redux-saga/macro";
 import versionInfoSaga from "../common/versionInfo/saga/versionInfo";
-import { watchTokenRefreshSaga } from "../features/fastLogin/saga/tokenRefreshSaga";
-import { watchPendingActionsSaga } from "../features/fastLogin/saga/pendingActionsSaga";
+import { watchTokenRefreshSaga } from "../features/authentication/fastLogin/saga/tokenRefreshSaga";
+import { watchPendingActionsSaga } from "../features/authentication/fastLogin/saga/pendingActionsSaga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { zendeskEnabled } from "../config";
+import { watchUtmLinkSaga } from "../features/utmLink/saga";
+import connectivityStatusSaga from "../features/connectivity/saga";
+import { watchIdentification } from "../features/identification/sagas";
 import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
 import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
 import { removePersistedStatesSaga } from "./removePersistedStates";
 
-import { watchIdentification } from "./identification";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 
 export default function* root() {
@@ -22,12 +24,14 @@ export default function* root() {
     call(watchApplicationActivitySaga),
     call(startupSaga),
     call(backendStatusSaga),
+    call(connectivityStatusSaga),
     call(versionInfoSaga),
     call(loadSystemPreferencesSaga),
     call(removePersistedStatesSaga),
     call(watchContentSaga),
     call(watchTokenRefreshSaga),
     call(watchPendingActionsSaga),
+    call(watchUtmLinkSaga),
     zendeskEnabled ? call(watchZendeskSupportSaga) : undefined
   ]);
 }

@@ -1,1 +1,0 @@
-Il codice identificativo o ID del messaggio è un codice unico che l'app IO genera in associazione ad ogni messaggio inviato. Puoi utilizzarlo per identificare un messaggio in caso di richieste di assistenza.

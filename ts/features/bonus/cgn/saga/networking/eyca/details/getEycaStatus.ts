@@ -13,7 +13,7 @@ import { readablePrivacyReport } from "../../../../../../../utils/reporters";
 import { BackendCGN } from "../../../../api/backendCgn";
 import { cgnEycaStatus } from "../../../../store/actions/eyca/details";
 import { EycaDetailKOStatus } from "../../../../store/reducers/eyca/details";
-import { withRefreshApiCall } from "../../../../../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../../../authentication/fastLogin/saga/utils";
 
 const eycaStatusMap: Record<number, EycaDetailKOStatus> = {
   403: "INELIGIBLE",

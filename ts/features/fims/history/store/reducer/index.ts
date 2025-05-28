@@ -17,9 +17,10 @@ import {
 } from "../actions";
 
 export type FimsExportSuccessStates = "SUCCESS" | "ALREADY_EXPORTING";
+export type FimsHistoryExportState = RemoteValue<FimsExportSuccessStates, null>;
 
 export type FimsHistoryState = {
-  historyExportState: RemoteValue<FimsExportSuccessStates, null>;
+  historyExportState: FimsHistoryExportState;
   consentsList: pot.Pot<AccessHistoryPage, string>;
 };
 

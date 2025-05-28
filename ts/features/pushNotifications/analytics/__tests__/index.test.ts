@@ -23,8 +23,8 @@ import {
 import { PushNotificationsContentTypeEnum } from "../../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../../definitions/backend/ReminderStatus";
 import * as Mixpanel from "../../../../mixpanel";
-import ROUTES from "../../../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 
 describe("pushNotifications analytics", () => {
   beforeEach(() => {
@@ -142,17 +142,73 @@ describe("pushNotifications analytics", () => {
       event_type: "action"
     });
   });
-  it("'trackNewPushNotificationsTokenGenerated' should have expected event name and properties", () => {
-    const mockMixpanelTrack = getMockMixpanelTrack();
-    void trackNewPushNotificationsTokenGenerated();
-    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-    expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
+  const messageId = "01JQVCP04AGJGVZ0D4D8XVK1H0";
+  [false, true].forEach(optIn =>
+    it(`trackNewPushNotificationsTokenGenerated should call 'mixpanelTrack' with proper parameters if mixpanel is initialized and the user ${
+      optIn ? "has" : "has not"
+    } opted-in`, () => {
+      jest
+        .spyOn(Mixpanel, "isMixpanelInstanceInitialized")
+        .mockReturnValue(true);
+      const spiedOnMixpanelTrack = jest
+        .spyOn(Mixpanel, "mixpanelTrack")
+        .mockImplementation();
+      const spiedOnEnqueueMixpanelEvent = jest
+        .spyOn(Mixpanel, "enqueueMixpanelEvent")
+        .mockImplementation();
+
+      trackNewPushNotificationsTokenGenerated(messageId, optIn);
+
+      expect(spiedOnMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMixpanelTrack.mock.calls[0][0]).toBe(
+        "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE"
+      );
+      expect(spiedOnMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "TECH"
+      });
+      expect(spiedOnEnqueueMixpanelEvent.mock.calls.length).toBe(0);
+    })
+  );
+  it(`trackNewPushNotificationsTokenGenerated should call 'enqueueMixpanelEvent' with proper parameters if mixpanel is not initialized and the user has opted-in`, () => {
+    jest
+      .spyOn(Mixpanel, "isMixpanelInstanceInitialized")
+      .mockReturnValue(false);
+    const spiedOnMixpanelTrack = jest
+      .spyOn(Mixpanel, "mixpanelTrack")
+      .mockImplementation();
+    const spiedOnEnqueueMixpanelEvent = jest
+      .spyOn(Mixpanel, "enqueueMixpanelEvent")
+      .mockImplementation();
+
+    trackNewPushNotificationsTokenGenerated(messageId, true);
+
+    expect(spiedOnMixpanelTrack.mock.calls.length).toBe(0);
+    expect(spiedOnEnqueueMixpanelEvent.mock.calls.length).toBe(1);
+    expect(spiedOnEnqueueMixpanelEvent.mock.calls[0].length).toBe(3);
+    expect(spiedOnEnqueueMixpanelEvent.mock.calls[0][0]).toBe(
       "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE"
     );
-    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+    expect(spiedOnEnqueueMixpanelEvent.mock.calls[0][1]).toBe(messageId);
+    expect(spiedOnEnqueueMixpanelEvent.mock.calls[0][2]).toEqual({
       event_category: "TECH"
     });
+  });
+  it(`trackNewPushNotificationsTokenGenerated should do nothing if mixpanel is not initialized and the user has not opted-in`, () => {
+    jest
+      .spyOn(Mixpanel, "isMixpanelInstanceInitialized")
+      .mockReturnValue(false);
+    const spiedOnMixpanelTrack = jest
+      .spyOn(Mixpanel, "mixpanelTrack")
+      .mockImplementation();
+    const spiedOnEnqueueMixpanelEvent = jest
+      .spyOn(Mixpanel, "enqueueMixpanelEvent")
+      .mockImplementation();
+
+    trackNewPushNotificationsTokenGenerated(messageId, false);
+
+    expect(spiedOnMixpanelTrack.mock.calls.length).toBe(0);
+    expect(spiedOnEnqueueMixpanelEvent.mock.calls.length).toBe(0);
   });
   it("'trackPushNotificationTokenUploadSucceeded' should have expected event name and properties", () => {
     const mockMixpanelTrack = getMockMixpanelTrack();
@@ -246,56 +302,58 @@ describe("pushNotifications analytics", () => {
       new_notification_status: notificationPermissionsEnabled
     });
   });
-  [MESSAGES_ROUTES.MESSAGES_HOME, ROUTES.SETTINGS_MAIN].forEach(route => {
-    it(`'trackPushNotificationsBannerVisualized' should have expected event name and properties for '${route}'`, () => {
-      const mockMixpanelTrack = getMockMixpanelTrack();
+  [MESSAGES_ROUTES.MESSAGES_HOME, SETTINGS_ROUTES.SETTINGS_MAIN].forEach(
+    route => {
+      it(`'trackPushNotificationsBannerVisualized' should have expected event name and properties for '${route}'`, () => {
+        const mockMixpanelTrack = getMockMixpanelTrack();
 
-      void trackPushNotificationsBannerVisualized(route);
+        void trackPushNotificationsBannerVisualized(route);
 
-      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(mockMixpanelTrack.mock.calls[0][0]).toBe("BANNER");
-      expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
-        event_category: "UX",
-        event_type: "screen_view",
-        banner_id: "push_notif_activation",
-        banner_page: route,
-        banner_landing: "os_notification_settings"
+        expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+        expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+        expect(mockMixpanelTrack.mock.calls[0][0]).toBe("BANNER");
+        expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "UX",
+          event_type: "screen_view",
+          banner_id: "push_notif_activation",
+          banner_page: route,
+          banner_landing: "os_notification_settings"
+        });
       });
-    });
-    it(`'trackPushNotificationsBannerTap' should have expected event name and properties for '${route}'`, () => {
-      const mockMixpanelTrack = getMockMixpanelTrack();
+      it(`'trackPushNotificationsBannerTap' should have expected event name and properties for '${route}'`, () => {
+        const mockMixpanelTrack = getMockMixpanelTrack();
 
-      void trackPushNotificationsBannerTap(route);
+        void trackPushNotificationsBannerTap(route);
 
-      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(mockMixpanelTrack.mock.calls[0][0]).toBe("TAP_BANNER");
-      expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
-        event_category: "UX",
-        event_type: "action",
-        banner_id: "push_notif_activation",
-        banner_page: route,
-        banner_landing: "os_notification_settings"
+        expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+        expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+        expect(mockMixpanelTrack.mock.calls[0][0]).toBe("TAP_BANNER");
+        expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "UX",
+          event_type: "action",
+          banner_id: "push_notif_activation",
+          banner_page: route,
+          banner_landing: "os_notification_settings"
+        });
       });
-    });
-    it(`'trackPushNotificationsBannerClosure' should have expected event name and properties for '${route}'`, () => {
-      const mockMixpanelTrack = getMockMixpanelTrack();
+      it(`'trackPushNotificationsBannerClosure' should have expected event name and properties for '${route}'`, () => {
+        const mockMixpanelTrack = getMockMixpanelTrack();
 
-      void trackPushNotificationsBannerClosure(route);
+        void trackPushNotificationsBannerClosure(route);
 
-      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(mockMixpanelTrack.mock.calls[0][0]).toBe("CLOSE_BANNER");
-      expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
-        event_category: "UX",
-        event_type: "action",
-        banner_id: "push_notif_activation",
-        banner_page: route,
-        banner_landing: "os_notification_settings"
+        expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+        expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+        expect(mockMixpanelTrack.mock.calls[0][0]).toBe("CLOSE_BANNER");
+        expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "UX",
+          event_type: "action",
+          banner_id: "push_notif_activation",
+          banner_page: route,
+          banner_landing: "os_notification_settings"
+        });
       });
-    });
-  });
+    }
+  );
   it(`'trackPushNotificationSystemPopupShown' should have expected event name and properties`, () => {
     const mockMixpanelTrack = getMockMixpanelTrack();
 

@@ -1,12 +1,4 @@
-import {
-  Body,
-  ButtonSolid,
-  ContentWrapper,
-  H2,
-  IOStyles,
-  TextInputValidation,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { IOButton, TextInputValidation } from "@pagopa/io-app-design-system";
 import {
   PaymentNoticeNumberFromString,
   RptId
@@ -16,22 +8,14 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
-import { useState, useRef } from "react";
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  View
-} from "react-native";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { useEffect, useRef, useState } from "react";
+import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import themeVariables from "../../../../theme/variables";
-import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
@@ -41,6 +25,9 @@ import {
 import * as analytics from "../analytics";
 import { usePagoPaPayment } from "../hooks/usePagoPaPayment";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
+import { TextInputValidationRefProps } from "../types";
+import { useIOSelector } from "../../../../store/hooks";
+import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -67,10 +54,27 @@ const WalletPaymentInputFiscalCodeScreen = () => {
     fiscalCode: O.none
   });
 
-  const textInputWrappperRef = useRef<View>(null);
-  const focusTextInput = () => {
-    setAccessibilityFocus(textInputWrappperRef);
-  };
+  const textInputWrapperRef = useRef<View>(null);
+  const textInputRef = useRef<TextInputValidationRefProps>(null);
+  const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
+  const [showInput, setShowInput] = useState(
+    Platform.OS === "ios" || !screenReaderEnabled
+  );
+
+  // This effect is used to show the input field after a delay when the screen reader is enabled on Android
+  // This is needed because the screen reader is focusing on the action button and not on the input field
+  useEffect(() => {
+    // This effect is only for Android
+    if (Platform.OS === "ios") {
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setShowInput(true);
+    }, 150);
+
+    return () => clearTimeout(timer);
+  }, [screenReaderEnabled]);
 
   const navigateToTransactionSummary = () => {
     pipe(
@@ -80,10 +84,8 @@ const WalletPaymentInputFiscalCodeScreen = () => {
       }),
       O.chain(flow(RptId.decode, O.fromEither)),
       O.map((rptId: RptId) => {
-        // Removes the manual input screen from the stack
         navigation.popToTop();
         navigation.pop();
-        // Navigate to the payment details screen (payment verification)
         startPaymentFlowWithRptId(rptId, {
           onSuccess: "showTransaction",
           startOrigin: "manual_insertion"
@@ -97,7 +99,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
       inputState.fiscalCode,
       O.fold(() => {
         Keyboard.dismiss();
-        focusTextInput();
+        textInputRef.current?.validateInput();
       }, navigateToTransactionSummary)
     );
 
@@ -106,64 +108,78 @@ const WalletPaymentInputFiscalCodeScreen = () => {
   });
 
   return (
-    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-      <SafeAreaView style={IOStyles.flex}>
-        <View style={{ flex: 1, flexGrow: 1 }}>
-          <ContentWrapper>
-            <H2>{I18n.t("wallet.payment.manual.fiscalCode.title")}</H2>
-            <VSpacer size={16} />
-            <Body>{I18n.t("wallet.payment.manual.fiscalCode.subtitle")}</Body>
-            <VSpacer size={16} />
-            <View accessible ref={textInputWrappperRef}>
-              <TextInputValidation
-                placeholder={I18n.t(
-                  "wallet.payment.manual.fiscalCode.placeholder"
-                )}
-                accessibilityLabel={I18n.t(
-                  "wallet.payment.manual.fiscalCode.placeholder"
-                )}
-                errorMessage={I18n.t(
-                  "wallet.payment.manual.fiscalCode.validationError"
-                )}
-                value={inputState.fiscalCodeText}
-                icon="fiscalCodeIndividual"
-                onChangeText={value =>
-                  setInputState({
-                    fiscalCodeText: value,
-                    fiscalCode: decodeOrganizationFiscalCode(value)
-                  })
+    <>
+      <IOScrollViewWithLargeHeader
+        title={{
+          label: I18n.t("wallet.payment.manual.fiscalCode.title")
+        }}
+        description={I18n.t("wallet.payment.manual.fiscalCode.subtitle")}
+        ignoreAccessibilityCheck
+        canGoback
+        headerActionsProp={{ showHelp: true }}
+        contextualHelp={emptyContextualHelp}
+        actions={
+          Platform.OS === "android"
+            ? {
+                type: "SingleButton",
+                primary: {
+                  label: I18n.t("global.buttons.continue"),
+                  onPress: handleContinueClick
                 }
-                onValidate={validateOrganizationFiscalCode}
-                counterLimit={11}
-                textInputProps={{
-                  keyboardType: "number-pad",
-                  inputMode: "numeric",
-                  returnKeyType: "done"
-                }}
-                autoFocus
-              />
-            </View>
-          </ContentWrapper>
-        </View>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "android" ? undefined : "padding"}
-          keyboardVerticalOffset={Platform.select({
-            ios: 110 + 16,
-            android: themeVariables.contentPadding
-          })}
-        >
-          <ContentWrapper>
-            <ButtonSolid
-              label="Continua"
-              accessibilityLabel="Continua"
+              }
+            : undefined
+        }
+        ref={textInputWrapperRef}
+        includeContentMargins
+      >
+        {showInput && (
+          <TextInputValidation
+            testID="fiscalCodeInput"
+            validationMode="onContinue"
+            ref={textInputRef}
+            placeholder={I18n.t("wallet.payment.manual.fiscalCode.placeholder")}
+            accessibilityLabel={I18n.t(
+              "wallet.payment.manual.fiscalCode.placeholder"
+            )}
+            errorMessage={I18n.t(
+              "wallet.payment.manual.fiscalCode.validationError"
+            )}
+            accessibilityErrorLabel={I18n.t(
+              "wallet.payment.manual.fiscalCode.a11y"
+            )}
+            value={inputState.fiscalCodeText}
+            icon="fiscalCodeIndividual"
+            onChangeText={value =>
+              setInputState({
+                fiscalCodeText: value,
+                fiscalCode: decodeOrganizationFiscalCode(value)
+              })
+            }
+            onValidate={validateOrganizationFiscalCode}
+            counterLimit={11}
+            textInputProps={{
+              keyboardType: "number-pad",
+              inputMode: "numeric",
+              returnKeyType: "done",
+              inputAccessoryViewID: "fiscalCodeInputAccessoryView"
+            }}
+            autoFocus
+          />
+        )}
+      </IOScrollViewWithLargeHeader>
+      {Platform.OS === "ios" && (
+        <InputAccessoryView nativeID="fiscalCodeInputAccessoryView">
+          <View style={{ padding: 20 }}>
+            <IOButton
+              fullWidth
+              variant="solid"
+              label={I18n.t("global.buttons.continue")}
               onPress={handleContinueClick}
-              fullWidth={true}
             />
-            <VSpacer size={16} />
-          </ContentWrapper>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </BaseScreenComponent>
+          </View>
+        </InputAccessoryView>
+      )}
+    </>
   );
 };
 

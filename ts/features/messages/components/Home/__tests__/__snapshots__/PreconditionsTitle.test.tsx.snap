@@ -690,15 +690,15 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
                         }
                       >
                         <Text
-                          allowFontScaling={false}
+                          allowFontScaling={true}
                           dynamicTypeRamp="title2"
-                          maxFontSizeMultiplier={1.25}
+                          maxFontSizeMultiplier={1.5}
                           style={
                             [
                               {},
                               {
                                 "color": "#0E0F13",
-                                "fontFamily": "Titillium Sans Pro",
+                                "fontFamily": "Titillio",
                                 "fontSize": 22,
                                 "fontStyle": "normal",
                                 "fontWeight": "600",
@@ -1415,24 +1415,15 @@ exports[`PreconditionsTitle should match snapshot when title content is 'loading
                           collapsable={false}
                           style={
                             {
-                              "opacity": 0.5,
+                              "backgroundColor": "#E8EBF1",
+                              "borderCurve": "continuous",
+                              "borderRadius": 4,
+                              "height": 20,
+                              "opacity": 0.55,
+                              "width": 182,
                             }
                           }
-                        >
-                          <View
-                            height={21}
-                            radius={4}
-                            style={
-                              {
-                                "backgroundColor": "#efefef",
-                                "borderRadius": 4,
-                                "height": 21,
-                                "width": 182,
-                              }
-                            }
-                            width={182}
-                          />
-                        </View>
+                        />
                       </View>
                     </View>
                   </View>

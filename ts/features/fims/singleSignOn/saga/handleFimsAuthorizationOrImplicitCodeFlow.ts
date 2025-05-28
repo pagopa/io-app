@@ -25,7 +25,7 @@ import {
   lollipopPublicKeySelector
 } from "../../../lollipop/store/reducers/lollipop";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
-import { serviceByIdSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
 import {
   fimsCtaTextSelector,
   relyingPartyServiceIdSelector
@@ -37,7 +37,8 @@ import {
   computeAndTrackAuthenticationError,
   absoluteRedirectUrlFromHttpClientResponse,
   isRedirectStatusCode,
-  deallocateFimsResourcesAndNavigateBack
+  handleFimsResourcesDeallocation,
+  handleFimsBackNavigation
 } from "./sagaUtils";
 
 // note: IAB => InAppBrowser
@@ -97,7 +98,7 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
   }
 
   yield* put(fimsSignAndRetrieveInAppBrowserUrlAction.success());
-  yield* call(deallocateFimsResourcesAndNavigateBack);
+  yield* call(handleFimsResourcesDeallocation);
   yield* call(computeAndTrackInAppBrowserOpening);
 
   try {
@@ -109,6 +110,8 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
     );
   } catch (error: unknown) {
     yield* call(handleInAppBrowserErrorIfNeeded, error);
+  } finally {
+    yield* call(handleFimsBackNavigation);
   }
 }
 
@@ -125,12 +128,12 @@ const getLollipopParamsFromUrlString = (url: string) => {
   }
 };
 
-type RelyingPartyOutput = {
+export type RelyingPartyOutput = {
   relyingPartyUrl: string;
   response: HttpClientResponse;
 };
 
-function* postToRelyingPartyWithImplicitCodeFlow(
+export function* postToRelyingPartyWithImplicitCodeFlow(
   rpTextHtmlResponse: HttpClientSuccessResponse
 ): Generator<ReduxSagaEffect, RelyingPartyOutput | undefined, any> {
   const formPostDataEither = yield* call(
@@ -194,7 +197,7 @@ function* postToRelyingPartyWithImplicitCodeFlow(
   return output;
 }
 
-function* redirectToRelyingPartyWithAuthorizationCodeFlow(
+export function* redirectToRelyingPartyWithAuthorizationCodeFlow(
   rpRedirectResponse: HttpClientSuccessResponse
 ): Generator<ReduxSagaEffect, RelyingPartyOutput | undefined, any> {
   const relyingPartyRedirectUrl = rpRedirectResponse.headers.location;
@@ -377,23 +380,23 @@ const validateAndProcessExtractedFormData = (
   });
 };
 
-function* computeAndTrackInAppBrowserOpening() {
+export function* computeAndTrackInAppBrowserOpening() {
   const serviceId = yield* select(relyingPartyServiceIdSelector);
   const service = serviceId
-    ? yield* select(serviceByIdSelector, serviceId)
+    ? yield* select(serviceDetailsByIdSelector, serviceId)
     : undefined;
   const ctaText = yield* select(fimsCtaTextSelector);
   yield* call(
     trackInAppBrowserOpening,
     serviceId,
-    service?.service_name,
-    service?.organization_name,
-    service?.organization_fiscal_code,
+    service?.name,
+    service?.organization.name,
+    service?.organization.fiscal_code,
     ctaText
   );
 }
 
-function* handleInAppBrowserErrorIfNeeded(error: unknown) {
+export function* handleInAppBrowserErrorIfNeeded(error: unknown) {
   if (!isInAppBrowserClosedError(error)) {
     const debugMessage = `InApp Browser opening failed: ${inAppBrowserErrorToHumanReadable(
       error

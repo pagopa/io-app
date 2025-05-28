@@ -2,9 +2,7 @@ import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useLinkTo } from "@react-navigation/native";
 import {
-  ButtonLink,
-  ButtonOutline,
-  ButtonSolid,
+  IOButton,
   IOStyles,
   VSpacer,
   buttonSolidHeight
@@ -18,14 +16,12 @@ import {
   paymentsButtonStateSelector
 } from "../../store/reducers/payments";
 import { trackPNOptInMessageAccepted } from "../../../pn/analytics";
-import { CTAActionType, handleCtaAction } from "../../utils/messages";
-import { CTA, CTAS } from "../../types/MessageCTA";
+import { handleCtaAction } from "../../utils/ctas";
+import { CTA, CTAS } from "../../../../types/LocalizedCTAs";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { useFIMSFromServiceId } from "../../../fims/common/hooks";
 import { MessageDetailsPaymentButton } from "./MessageDetailsPaymentButton";
-import {
-  computeAndTrackCTAPressAnalytics,
-  computeAndTrackFIMSAuthenticationStart
-} from "./detailsUtils";
+import { computeAndTrackCTAPressAnalytics } from "./detailsUtils";
 
 const styles = StyleSheet.create({
   container: {
@@ -176,16 +172,15 @@ const renderPaymentWithDoubleCTA = (
       isLoading={isLoadingPayment}
     />
     <VSpacer size={8} />
-    <ButtonOutline
-      accessibilityLabel={cta1.text}
-      fullWidth
+    <IOButton
+      variant="outline"
       label={cta1.text}
       onPress={() => onCTAPress(true, cta1, cta1IsPNOptInMessage)}
     />
     <VSpacer size={8} />
     <View style={styles.buttonLinkInFooter}>
-      <ButtonLink
-        accessibilityLabel={cta2.text}
+      <IOButton
+        variant="link"
         label={cta2.text}
         onPress={() => onCTAPress(false, cta2, cta2IsPNOptInMessage)}
       />
@@ -210,8 +205,8 @@ const renderPaymentWithCTA = (
     />
     <VSpacer size={8} />
     <View style={styles.buttonLinkInFooter}>
-      <ButtonLink
-        accessibilityLabel={cta1.text}
+      <IOButton
+        variant="link"
         label={cta1.text}
         onPress={() => onCTAPress(true, cta1, cta1IsPNOptInMessage)}
       />
@@ -226,16 +221,16 @@ const renderDoubleCTA = (
   onCTAPress: (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => void
 ) => (
   <>
-    <ButtonSolid
-      accessibilityLabel={cta1.text}
+    <IOButton
       fullWidth
+      variant="solid"
       label={cta1.text}
       onPress={() => onCTAPress(true, cta1, cta1IsPNOptInMessage)}
     />
     <VSpacer size={8} />
     <View style={styles.buttonLinkInFooter}>
-      <ButtonLink
-        accessibilityLabel={cta2.text}
+      <IOButton
+        variant="link"
         label={cta2.text}
         onPress={() => onCTAPress(false, cta2, cta2IsPNOptInMessage)}
       />
@@ -260,9 +255,9 @@ const renderCTA = (
   isPNOptInMessage: boolean,
   onCTAPress: (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => void
 ) => (
-  <ButtonSolid
-    accessibilityLabel={cta.text}
+  <IOButton
     fullWidth
+    variant="solid"
     label={cta.text}
     onPress={() => onCTAPress(true, cta, isPNOptInMessage)}
   />
@@ -287,14 +282,7 @@ export const MessageDetailsStickyFooter = ({
     canNavigateToPaymentFromMessageSelector(state)
   );
 
-  const onCTAPreActionCallback = useCallback(
-    (cta: CTA) => (type: CTAActionType) => {
-      const state = store.getState();
-      computeAndTrackFIMSAuthenticationStart(type, cta.text, serviceId, state);
-    },
-    [serviceId, store]
-  );
-
+  const { startFIMSAuthenticationFlow } = useFIMSFromServiceId(serviceId);
   const linkTo = useLinkTo();
   const onCTAPressedCallback = useCallback(
     (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => {
@@ -303,9 +291,11 @@ export const MessageDetailsStickyFooter = ({
       if (isPNOptInMessage) {
         trackPNOptInMessageAccepted();
       }
-      handleCtaAction(cta, linkTo, onCTAPreActionCallback(cta));
+      handleCtaAction(cta, linkTo, (label, url) =>
+        startFIMSAuthenticationFlow(label, url)
+      );
     },
-    [linkTo, onCTAPreActionCallback, serviceId, store]
+    [linkTo, serviceId, startFIMSAuthenticationFlow, store]
   );
 
   const footerData = computeFooterData(paymentData, paymentButtonStatus, ctas);
@@ -320,6 +310,7 @@ export const MessageDetailsStickyFooter = ({
       : 0);
 
   const isPaymentLoading = paymentButtonStatus === "loading";
+
   return (
     <View style={[IOStyles.footer, styles.container, { paddingBottom }]}>
       {foldFooterData(

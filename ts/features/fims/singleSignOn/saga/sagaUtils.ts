@@ -16,8 +16,8 @@ import {
   fimsRelyingPartyDomainSelector,
   relyingPartyServiceIdSelector
 } from "../store/selectors";
-import { serviceByIdSelector } from "../../../services/details/store/reducers";
-import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
+import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import NavigationService from "../../../../navigation/NavigationService";
 import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
@@ -90,14 +90,14 @@ export const formatHttpClientResponseForMixPanel = (
 export function* computeAndTrackAuthenticationError(reason: string) {
   const serviceIdOrUndefined = yield* select(relyingPartyServiceIdSelector);
   const serviceOrUndefined = serviceIdOrUndefined
-    ? yield* select(serviceByIdSelector, serviceIdOrUndefined)
+    ? yield* select(serviceDetailsByIdSelector, serviceIdOrUndefined)
     : undefined;
   yield* call(
     trackAuthenticationError,
-    serviceOrUndefined?.service_id,
-    serviceOrUndefined?.service_name,
-    serviceOrUndefined?.organization_name,
-    serviceOrUndefined?.organization_fiscal_code,
+    serviceOrUndefined?.id,
+    serviceOrUndefined?.name,
+    serviceOrUndefined?.organization.name,
+    serviceOrUndefined?.organization.fiscal_code,
     reason
   );
 }
@@ -192,12 +192,7 @@ export function* deallocateFimsAndRenewFastLoginSession() {
   );
 }
 
-export function* deallocateFimsResourcesAndNavigateBack() {
-  yield* call(handleFimsResourcesDeallocation);
-  yield* call(NavigationService.dispatchNavigationAction, StackActions.pop());
-}
-
-function* handleFimsResourcesDeallocation() {
+export function* handleFimsResourcesDeallocation() {
   const oidcProviderDomain = yield* select(oidcProviderDomainSelector);
   const relyingPartyDomain = yield* select(fimsRelyingPartyDomainSelector);
   if (oidcProviderDomain) {
@@ -207,4 +202,8 @@ function* handleFimsResourcesDeallocation() {
     yield* call(removeAllCookiesForDomain, relyingPartyDomain);
   }
   yield* call(deallocate);
+}
+
+export function* handleFimsBackNavigation() {
+  yield* call(NavigationService.dispatchNavigationAction, StackActions.pop());
 }

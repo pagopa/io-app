@@ -1,7 +1,7 @@
-import { IdPayIbanEnrollmentScreenParams } from "../screens/IbanEnrollmentScreen";
+import { IdPayIbanEnrollmentScreenParams } from "../screens/IdPayIbanEnrollmentScreen";
 import { IdPayDiscountInstrumentsScreenRouteParams } from "../screens/IdPayDiscountInstrumentsScreen";
-import { IdPayInitiativeConfigurationIntroScreenParams } from "../screens/InitiativeConfigurationIntroScreen";
-import { IdPayInstrumentsEnrollmentScreenParams } from "../screens/InstrumentsEnrollmentScreen";
+import { IdPayInitiativeConfigurationIntroScreenParams } from "../screens/IdPayInitiativeConfigurationIntroScreen";
+import { IdPayInstrumentsEnrollmentScreenParams } from "../screens/IdPayInstrumentsEnrollmentScreen";
 import { IdPayConfigurationRoutes } from "./routes";
 
 export type IdPayConfigurationParamsList = {

@@ -39,7 +39,9 @@ export type RequestGetMessageDataActionType = {
 export type SuccessGetMessageDataActionType = {
   containsAttachments: boolean;
   containsPayment?: boolean;
+  createdAt: Date;
   firstTimeOpening: boolean;
+  hasFIMSCTA: boolean;
   hasRemoteContent: boolean;
   isLegacyGreenPass?: boolean;
   isPNMessage: boolean;

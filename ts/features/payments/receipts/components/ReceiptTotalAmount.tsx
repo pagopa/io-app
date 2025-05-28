@@ -1,6 +1,5 @@
-import Placeholder from "rn-placeholder";
+import { H3, H6, IOSkeleton, useIOTheme } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import { H3, H6, IOStyles, useIOTheme } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { formatAmountText } from "../utils";
 
@@ -14,14 +13,19 @@ export const ReceiptTotalAmount = ({ totalAmount, loading }: Props) => {
 
   return (
     <View
-      style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter, IOStyles.flex]}
+      style={{
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+      }}
     >
       <H6 color={theme["textBody-tertiary"]}>
         {I18n.t("transaction.details.totalAmount")}
       </H6>
       {loading && (
         <View testID="loader">
-          <Placeholder.Box width={72} height={34} animate="fade" radius={8} />
+          <IOSkeleton shape="rectangle" width={72} height={34} radius={8} />
         </View>
       )}
       {!loading && totalAmount && (

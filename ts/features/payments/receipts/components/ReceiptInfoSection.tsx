@@ -1,9 +1,11 @@
 import {
   Alert,
+  ContentWrapper,
   Divider,
   IOColors,
   IOLogoPaymentType,
   IORadiusScale,
+  IOSkeleton,
   IOVisualCostants,
   ListItemHeader,
   ListItemInfo,
@@ -12,41 +14,32 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { capitalize } from "lodash";
-import { StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
+import { View } from "react-native";
 
-import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { capitalizeTextName } from "../../../../utils/strings";
 import { getPayerInfoLabel, isValidPspName, removeAsterisks } from "../utils";
+import { PaymentListItemInfo } from "../../common/components/PaymentListItemInfo";
 import { ReceiptDivider } from "./ReceiptDivider";
 
 type Props = {
   transaction?: NoticeDetailResponse;
   loading?: boolean;
+  showUnavailableReceiptBanner?: boolean;
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    ...IOStyles.horizontalContentPadding
-  },
-  contentCard: {
-    ...IOStyles.horizontalContentPadding,
-    borderRadius: IORadiusScale["1"],
-    marginVertical: IOVisualCostants.appMarginDefault
-  }
-});
 
 /**
  * Component that shows the biz-events transaction info
  */
-const ReceiptInfoSection = ({ transaction, loading }: Props) => {
+const ReceiptInfoSection = ({
+  transaction,
+  loading,
+  showUnavailableReceiptBanner
+}: Props) => {
   const theme = useIOTheme();
   const backgroundColor = IOColors[theme["appBackground-primary"]];
 
@@ -55,8 +48,14 @@ const ReceiptInfoSection = ({ transaction, loading }: Props) => {
   return (
     <>
       <ReceiptDivider />
-      <View style={styles.container}>
-        <View style={[styles.contentCard, { backgroundColor }]}>
+      <ContentWrapper style={{ flexGrow: 1 }}>
+        <ContentWrapper
+          style={{
+            borderRadius: IORadiusScale["1"],
+            marginVertical: IOVisualCostants.appMarginDefault,
+            backgroundColor
+          }}
+        >
           <ListItemHeader
             label={I18n.t("transaction.details.info.title")}
             accessibilityLabel={I18n.t("transaction.details.info.title")}
@@ -78,7 +77,7 @@ const ReceiptInfoSection = ({ transaction, loading }: Props) => {
             <>
               {transactionInfo.payer && (
                 <>
-                  <ListItemInfo
+                  <PaymentListItemInfo
                     testID="payer-info"
                     label={I18n.t("transaction.details.info.executedBy")}
                     value={getPayerInfoLabel(transactionInfo.payer)}
@@ -95,7 +94,7 @@ const ReceiptInfoSection = ({ transaction, loading }: Props) => {
               {(transactionInfo.walletInfo?.maskedEmail ||
                 transactionInfo.walletInfo?.accountHolder) && (
                 <>
-                  <ListItemInfo
+                  <PaymentListItemInfo
                     label={I18n.t("transaction.details.info.headedTo")}
                     value={
                       transactionInfo.walletInfo?.maskedEmail ??
@@ -110,7 +109,7 @@ const ReceiptInfoSection = ({ transaction, loading }: Props) => {
               {transactionInfo.pspName &&
                 isValidPspName(transactionInfo.pspName) && (
                   <>
-                    <ListItemInfo
+                    <PaymentListItemInfo
                       label={I18n.t("transaction.details.info.pspName")}
                       value={transactionInfo.pspName}
                     />
@@ -119,7 +118,7 @@ const ReceiptInfoSection = ({ transaction, loading }: Props) => {
                 )}
               {transactionInfo.noticeDate && (
                 <>
-                  <ListItemInfo
+                  <PaymentListItemInfo
                     label={I18n.t("transaction.details.info.dateAndHour")}
                     value={format(
                       new Date(transactionInfo.noticeDate),
@@ -177,14 +176,17 @@ const ReceiptInfoSection = ({ transaction, loading }: Props) => {
               )}
             </>
           )}
-        </View>
-        {transactionInfo?.origin === OriginEnum.PM && (
-          <Alert
-            variant="info"
-            content={I18n.t("transaction.details.bannerImported.content")}
-          />
+        </ContentWrapper>
+        {showUnavailableReceiptBanner && (
+          <>
+            <Alert
+              variant="info"
+              content={I18n.t("transaction.details.bannerImported.content")}
+            />
+            <VSpacer size={12} />
+          </>
         )}
-      </View>
+      </ContentWrapper>
     </>
   );
 };
@@ -192,7 +194,7 @@ const ReceiptInfoSection = ({ transaction, loading }: Props) => {
 const renderPaymentMethod = (walletInfo: WalletInfo) => {
   if (walletInfo.blurredNumber && walletInfo.brand) {
     return (
-      <ListItemInfo
+      <PaymentListItemInfo
         label={I18n.t("transaction.details.info.paymentMethod")}
         value={`${capitalize(walletInfo.brand)} •••• ${removeAsterisks(
           walletInfo.blurredNumber
@@ -221,10 +223,10 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
 };
 
 const SkeletonItem = () => (
-  <View style={[IOStyles.flex, { paddingVertical: 12 }]} testID="skeleton-item">
-    <Placeholder.Box height={16} width="80%" radius={4} />
+  <View style={{ flex: 1, paddingVertical: 12 }} testID="skeleton-item">
+    <IOSkeleton shape="rectangle" height={16} width="80%" radius={4} />
     <VSpacer size={8} />
-    <Placeholder.Box height={16} width="25%" radius={4} />
+    <IOSkeleton shape="rectangle" height={16} width="25%" radius={4} />
   </View>
 );
 

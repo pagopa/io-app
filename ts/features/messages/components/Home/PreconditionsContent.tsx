@@ -1,34 +1,45 @@
+import { IOSkeleton, VStack } from "@pagopa/io-app-design-system";
+import { useLinkTo } from "@react-navigation/native";
 import { useCallback } from "react";
 import { View } from "react-native";
-import Placeholder from "rn-placeholder";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import IOMarkdown from "../../../../components/IOMarkdown";
+import I18n from "../../../../i18n";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
 import {
-  preconditionsCategoryTagSelector,
-  preconditionsContentMarkdownSelector,
-  preconditionsContentSelector
-} from "../../store/reducers/messagePrecondition";
-import I18n from "../../../../i18n";
-import { pnMinAppVersionSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { MessageMarkdown } from "../MessageDetail/MessageMarkdown";
+  isIOMarkdownEnabledForMessagesAndServicesSelector,
+  pnMinAppVersionSelector
+} from "../../../../store/reducers/backendStatus/remoteConfig";
+import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
+import { trackDisclaimerLoadError } from "../../analytics";
 import {
   errorPreconditionStatusAction,
   shownPreconditionStatusAction,
   toErrorPayload,
   toShownPayload
 } from "../../store/actions/preconditions";
-import { trackDisclaimerLoadError } from "../../analytics";
+import {
+  preconditionsCategoryTagSelector,
+  preconditionsContentMarkdownSelector,
+  preconditionsContentSelector
+} from "../../store/reducers/messagePrecondition";
+import { MessageMarkdown } from "../MessageDetail/MessageMarkdown";
 import { PreconditionsFeedback } from "./PreconditionsFeedback";
 
-export const PreconditionsContent = () => {
+type PreconditionsContentProps = {
+  footerHeight: number;
+};
+
+export const PreconditionsContent = ({
+  footerHeight
+}: PreconditionsContentProps) => {
   const content = useIOSelector(preconditionsContentSelector);
   switch (content) {
     case "content":
-      return <PreconditionsContentMarkdown />;
+      return <PreconditionsContentMarkdown footerHeight={footerHeight} />;
     case "error":
       return <PreconditionsContentError />;
     case "loading":
@@ -39,10 +50,16 @@ export const PreconditionsContent = () => {
   return null;
 };
 
-const PreconditionsContentMarkdown = () => {
+const PreconditionsContentMarkdown = ({
+  footerHeight
+}: PreconditionsContentProps) => {
   const dispatch = useIODispatch();
   const store = useIOStore();
+  const linkTo = useLinkTo();
 
+  const useIOMarkdown = useIOSelector(
+    isIOMarkdownEnabledForMessagesAndServicesSelector
+  );
   const markdown = useIOSelector(preconditionsContentMarkdownSelector);
 
   const onLoadEndCallback = useCallback(() => {
@@ -63,26 +80,38 @@ const PreconditionsContentMarkdown = () => {
     },
     [dispatch, store]
   );
-
   if (!markdown) {
     return null;
   }
-
   return (
-    <MessageMarkdown
-      loadingLines={7}
-      onLoadEnd={onLoadEndCallback}
-      onError={onErrorCallback}
-      testID="preconditions_content_message_markdown"
-    >
-      {markdown}
-    </MessageMarkdown>
+    <View>
+      {useIOMarkdown ? (
+        <IOMarkdown
+          content={markdown}
+          onError={onErrorCallback}
+          rules={generateMessagesAndServicesRules(linkTo)}
+        />
+      ) : (
+        <MessageMarkdown
+          loadingLines={7}
+          onLoadEnd={onLoadEndCallback}
+          onError={onErrorCallback}
+          testID="preconditions_content_message_markdown"
+        >
+          {markdown}
+        </MessageMarkdown>
+      )}
+      {/* This view is needed since the bottom sheet has a FooterActions component
+          that is partially visible above the content. Without the extra space, the
+          Markdown will go underneath it */}
+      <View style={{ height: footerHeight + 24 }} />
+    </View>
   );
 };
 
 const PreconditionsContentError = () => (
   <PreconditionsFeedback
-    pictogram="umbrellaNew"
+    pictogram="umbrella"
     title={I18n.t("global.genericError")}
   />
 );
@@ -90,29 +119,11 @@ const PreconditionsContentError = () => (
 const PreconditionsContentSkeleton = () => (
   <View accessible={false}>
     {Array.from({ length: 3 }).map((_, i) => (
-      <View key={`pre_content_ske_${i}`}>
-        <Placeholder.Box
-          width={"100%"}
-          animate={"fade"}
-          height={21}
-          radius={4}
-        />
-        <VSpacer size={8} />
-        <Placeholder.Box
-          width={"100%"}
-          animate={"fade"}
-          height={21}
-          radius={4}
-        />
-        <VSpacer size={8} />
-        <Placeholder.Box
-          width={"90%"}
-          animate={"fade"}
-          height={21}
-          radius={4}
-        />
-        <VSpacer size={8} />
-      </View>
+      <VStack space={8} key={`pre_content_ske_${i}`}>
+        <IOSkeleton shape="rectangle" width={"100%"} height={20} radius={4} />
+        <IOSkeleton shape="rectangle" width={"100%"} height={20} radius={4} />
+        <IOSkeleton shape="rectangle" width={"90%"} height={20} radius={4} />
+      </VStack>
     ))}
   </View>
 );
@@ -121,7 +132,7 @@ const PreconditionsContentUpdate = () => {
   const pnMinAppVersion = useIOSelector(pnMinAppVersionSelector);
   return (
     <PreconditionsFeedback
-      pictogram="umbrellaNew"
+      pictogram="umbrella"
       title={I18n.t("features.messages.updateBottomSheet.title")}
       subtitle={I18n.t("features.messages.updateBottomSheet.subtitle", {
         value: pnMinAppVersion
