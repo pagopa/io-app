@@ -5,10 +5,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { CieCardReaderScreenWrapper } from "../CieCardReaderScreenWrapper";
 
-jest.mock("../../../../../../utils/hooks/theme", () => ({
-  useInteractiveElementDefaultColorName: jest.fn(() => "blueIO-500")
-}));
-
 jest.mock("react-native/Libraries/Utilities/Platform", () => ({
   OS: "android",
   select: (objs: { default: any }) => objs.default

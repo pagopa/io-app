@@ -1,6 +1,5 @@
-import { ProgressLoader } from "@pagopa/io-app-design-system";
+import { ProgressLoader, useIOTheme } from "@pagopa/io-app-design-system";
 import { ComponentProps } from "react";
-import { useInteractiveElementDefaultColor } from "../../utils/hooks/theme";
 
 export type ProgressIndicator = Exclude<
   ComponentProps<typeof ProgressLoader>,
@@ -8,7 +7,8 @@ export type ProgressIndicator = Exclude<
 >;
 
 export const ProgressIndicator = (props: ProgressIndicator) => {
-  const blueColor = useInteractiveElementDefaultColor();
+  const theme = useIOTheme();
+  const blueColor = theme["interactiveElem-default"];
 
   return <ProgressLoader progress={props.progress} color={blueColor} />;
 };
