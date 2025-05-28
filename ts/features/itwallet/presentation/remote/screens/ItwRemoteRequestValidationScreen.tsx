@@ -27,7 +27,7 @@ type ScreenProps = IOStackNavigationRouteProps<
 const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
   useItwDisableGestureNavigation();
 
-  const statupStatus = useIOSelector(isStartupLoaded);
+  const startupStatus = useIOSelector(isStartupLoaded);
 
   /**
    * There may be scenarios where the app is not running when the user opens the link,
@@ -35,7 +35,7 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
    * Here we wait for the startup status to be authenticated to avoid inconsistencies
    * between the machine and the navigation.
    */
-  if (statupStatus !== StartupStatusEnum.AUTHENTICATED) {
+  if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
     return (
       <ItwRemoteLoadingScreen
         title={I18n.t(
