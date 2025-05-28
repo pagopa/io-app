@@ -2,6 +2,7 @@ import { ContentWrapper, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import React from "react";
+import { Alert } from "react-native";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import I18n from "../../../../../i18n.ts";
 import {
@@ -102,7 +103,9 @@ export const ItwPresentationCredentialDetail = ({
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isL3Credential = isItwCredential(credential.credential);
-
+  const isDrivingLicense =
+    credential.credentialType === CredentialType.DRIVING_LICENSE;
+  const shouldRenderTrustmark = isL3Credential && !isDrivingLicense;
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -158,12 +161,7 @@ export const ItwPresentationCredentialDetail = ({
     );
   }
 
-  const ctaProps = getCtaProps(
-    credential,
-    navigation,
-    handleTrustmarkPress,
-    isL3Credential
-  );
+  const ctaProps = getCtaProps(credential, navigation, isL3Credential);
 
   return (
     <ItwPresentationDetailsScreenBase
@@ -178,7 +176,7 @@ export const ItwPresentationCredentialDetail = ({
           <ItwPresentationCredentialStatusAlert credential={credential} />
           <ItwPresentationCredentialInfoAlert credential={credential} />
           <ItwPresentationClaimsSection credential={credential} />
-          {!isL3Credential && (
+          {shouldRenderTrustmark && (
             <ItwCredentialTrustmark
               credential={credential}
               onPress={handleTrustmarkPress}
@@ -194,7 +192,6 @@ export const ItwPresentationCredentialDetail = ({
 const getCtaProps = (
   credential: StoredCredential,
   navigation: ReturnType<typeof useIONavigation>,
-  trustmarkPressHandler: () => void,
   isL3Credential: boolean
 ): CredentialCtaProps | undefined => {
   const { parsedCredential } = credential;
@@ -206,7 +203,9 @@ const getCtaProps = (
       label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
       icon: "qrCode",
       iconPosition: "end",
-      onPress: trustmarkPressHandler
+      onPress: () => {
+        Alert.alert("Alert", "QR Code to be implemented");
+      }
     };
   }
 

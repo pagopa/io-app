@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, Platform, StyleSheet, View } from "react-native";
 import {
   Canvas,
   LinearGradient,
   RoundedRect,
   vec
 } from "@shopify/react-native-skia";
-import { H5, IOColors } from "@pagopa/io-app-design-system";
+import { Caption, IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n.ts";
 
 /**
@@ -23,7 +23,7 @@ export const ItwBadge = () => (
         resizeMode="contain"
         style={styles.icon}
       />
-      <H5 style={styles.text}>{I18n.t("features.itWallet.title")}</H5>
+      <Caption style={styles.text}>{I18n.t("features.itWallet.title")}</Caption>
     </View>
   </View>
 );
@@ -54,21 +54,30 @@ const StaticGradientBackground = () => {
 
 const styles = StyleSheet.create({
   container: {
+    alignSelf: "flex-start",
     flexDirection: "row",
-    height: "100%"
+    alignItems: "center",
+    borderCurve: "continuous",
+    ...Platform.select({
+      android: {
+        textAlignVertical: "center"
+      }
+    })
   },
   content: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 12,
-    gap: 15
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4
   },
   text: {
-    color: IOColors.white
+    color: IOColors.white,
+    fontWeight: "bold"
   },
   icon: {
-    width: 20,
-    height: 20,
+    width: 14,
+    height: 14,
     backgroundColor: IOColors.white
   }
 });
