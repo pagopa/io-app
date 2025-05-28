@@ -399,7 +399,7 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Risparmia sui costi di notifica! Attiva SEND per ricevere le comunicazioni a valore legale direttamente in app. Scopri SEND su IO"
+                              accessibilityLabel="Risparmia sui costi di notifica! Scopri e attiva SEND su IO per ricevere le comunicazioni a valore legale direttamente in app. Attiva SEND su IO"
                               accessibilityRole="button"
                               accessible={true}
                               style={
@@ -448,11 +448,11 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Attiva SEND per ricevere le comunicazioni a valore legale direttamente in app.
+                                Scopri e attiva SEND su IO per ricevere le comunicazioni a valore legale direttamente in app.
                               </Text>
                               <View
                                 accessibilityElementsHidden={true}
-                                accessibilityLabel="Scopri SEND su IO"
+                                accessibilityLabel="Attiva SEND su IO"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -515,7 +515,7 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  Scopri SEND su IO
+                                  Attiva SEND su IO
                                 </Text>
                               </View>
                             </View>
