@@ -3790,7 +3790,7 @@
     "pn": {
       "reminderBanner": {
         "title": "Risparmia sui costi di notifica!",
-        "body":"Scopri e attiva SEND su IO per ricevere le comunicazioni a valore legale direttamente in app.",
+        "body": "Scopri e attiva SEND su IO per ricevere le comunicazioni a valore legale direttamente in app.",
         "cta": "Attiva SEND su IO",
         "activationFlow": {
           "FAILURE_DETAILS_FETCH": {
