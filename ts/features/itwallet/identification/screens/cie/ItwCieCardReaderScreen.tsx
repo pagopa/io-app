@@ -5,6 +5,7 @@ import {
   IOButton,
   IOColors,
   IOPictograms,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -29,7 +30,6 @@ import {
   useScreenReaderEnabled
 } from "../../../../../utils/accessibility";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { useInteractiveElementDefaultColorName } from "../../../../../utils/hooks/theme";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import {
   selectAuthUrlOption,
@@ -170,7 +170,7 @@ export const ItwCieCardReaderScreen = () => {
   );
   const [readingState, setReadingState] = useState<ReadingState>();
 
-  const blueColorName = useInteractiveElementDefaultColorName();
+  const theme = useIOTheme();
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
   const dismissalDialog = useItwDismissalDialog({
@@ -291,7 +291,7 @@ export const ItwCieCardReaderScreen = () => {
           <CieCardReadingAnimation
             pictogramName={getPictogramName(readingState)}
             readingState={readingState}
-            circleColor={blueColorName}
+            circleColor={IOColors[theme["interactiveElem-default"]]}
           />
           <VSpacer size={32} />
           <Title
