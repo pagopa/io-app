@@ -254,7 +254,7 @@
         "action": "Riprova"
       },
       "statusMessage": {
-        "message": "Nessuna connessione",
+        "message": "Nessuna connessione.",
         "action": "Cosa posso fare?"
       },
       "connectionRestored": "Connessione ripristinata.",
