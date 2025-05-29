@@ -254,7 +254,7 @@
         "action": "Riprova"
       },
       "statusMessage": {
-        "message": "Nessuna connessione",
+        "message": "Nessuna connessione.",
         "action": "Cosa posso fare?"
       },
       "connectionRestored": "Connessione ripristinata.",
@@ -354,7 +354,7 @@
     },
     "connection_lost": {
       "title": "Non hai una connessione a internet attiva",
-      "description": "Controlla la tua connessione e riavvia l’app"
+      "description": "Controlla la tua connessione e riavvia l’app."
     },
     "slowdowns_results_screen": {
       "title": "Sembra che le cose vadano un po' a rilento",
