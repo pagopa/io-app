@@ -8,9 +8,9 @@ import {
 } from "../../../../components/screens/OperationResultScreenContent.tsx";
 import I18n from "../../../../i18n.ts";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { TranslationKeys } from "../../../../../locales/locales.ts";
+import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 
 export type CieWarningType = "noPin" | "noCie";
 
@@ -26,9 +26,10 @@ type ScreenProps = IOStackNavigationRouteProps<
 export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const { warning } = params.route.params;
-  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
+  const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const validEid = maybeEidStatus === "valid";
 
-  const sectionKey = isItwValid ? "toCieFAQ" : "toL2Identification";
+  const sectionKey = validEid ? "toCieFAQ" : "toL2Identification";
 
   const t = (key: "title" | "subtitle" | "primaryAction" | "closeAction") =>
     I18n.t(
@@ -55,7 +56,7 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
     (): OperationResultScreenContentProps => {
       const primaryAction = {
         label: t("primaryAction"),
-        onPress: isItwValid
+        onPress: validEid
           ? () => Linking.openURL(cieFaqUrls[warning])
           : goToL2Identification
       };
