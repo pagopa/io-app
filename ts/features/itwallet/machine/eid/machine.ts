@@ -375,7 +375,15 @@ export const itwEidIssuanceMachine = setup({
                 target: "CieID"
               }
             ],
-            back: "L3Identification"
+            back: [
+              {
+                guard: "isL3FeaturesEnabled",
+                target: "L3Identification"
+              },
+              {
+                target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
+              }
+            ]
           }
         },
         CieWarning: {
