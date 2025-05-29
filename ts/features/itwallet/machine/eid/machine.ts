@@ -77,6 +77,9 @@ export const itwEidIssuanceMachine = setup({
     }),
     setIsReissuing: assign({
       isReissuing: true
+    }),
+    setL3FeaturesEnabled: assign({
+      isL3FeaturesEnabled: true
     })
   },
   actors: {
@@ -143,12 +146,12 @@ export const itwEidIssuanceMachine = setup({
         "start-reissuing": [
           {
             guard: not("hasValidWalletInstanceAttestation"),
-            actions: "setIsReissuing",
+            actions: ["setIsReissuing", "setL3FeaturesEnabled"],
             target: "WalletInstanceAttestationObtainment"
           },
           {
-            actions: "setIsReissuing",
-            target: "UserIdentification"
+            actions: ["setIsReissuing", "setL3FeaturesEnabled"],
+            target: "UserIdentification.L3Identification"
           }
         ]
       }
@@ -537,17 +540,8 @@ export const itwEidIssuanceMachine = setup({
         CiePin: {
           description:
             "This state handles the entire CIE + pin identification flow",
-          initial: "EvaluateInitialState",
+          initial: "PreparationCie",
           states: {
-            EvaluateInitialState: {
-              always: [
-                {
-                  guard: "isL3FeaturesEnabled",
-                  target: "PreparationCie"
-                },
-                { target: "InsertingCardPin" }
-              ]
-            },
             PreparationCie: {
               description:
                 "This state handles the CIE preparation screen, where the user is informed about the CIE card",
@@ -626,17 +620,10 @@ export const itwEidIssuanceMachine = setup({
                     }))
                   }
                 ],
-                back: [
-                  {
-                    guard: "isL3FeaturesEnabled",
-                    target:
-                      "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
-                  },
-                  {
-                    target:
-                      "#itwEidIssuanceMachine.UserIdentification.EvaluateIdentificationLevel"
-                  }
-                ]
+                back: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
+                }
               }
             },
             RequestingNfcActivation: {

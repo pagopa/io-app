@@ -10,15 +10,15 @@ import { itwDisabledIdentificationMethodsSelector } from "../../common/store/sel
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader.tsx";
 import I18n from "../../../../i18n.ts";
 
-type DefaultIdentificationViewProps = {
+type L2IdentificationViewProps = {
   onSpidPress: () => void;
   onCieIdPress: () => void;
 };
 
-export const DefaultIdentificationView = ({
+export const L2IdentificationView = ({
   onSpidPress,
   onCieIdPress
-}: DefaultIdentificationViewProps) => {
+}: L2IdentificationViewProps) => {
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );

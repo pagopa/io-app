@@ -9,9 +9,9 @@ import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import {
-  ItwIdentificationModeSelectionScreen,
-  ItwIdentificationModeSelectionScreenProps
-} from "../ItwIdentificationModeSelectionScreen";
+  ItwL3IdentificationModeSelectionScreen,
+  ItwL3IdentificationModeSelectionScreenProps
+} from "../ItwL3IdentificationModeSelectionScreen.tsx";
 
 jest.mock("../../../../../config", () => ({
   itwEnabled: true
@@ -103,26 +103,26 @@ describe("ItwIdentificationModeSelectionScreen", () => {
   });
 });
 
-const renderComponent = (isL3FeaturesEnabled = false, eidReissuing = false) => {
+const renderComponent = (isL3FeaturesEnabled = true, eidReissuing = false) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   const WrappedComponent = (
-    props: ItwIdentificationModeSelectionScreenProps
+    props: ItwL3IdentificationModeSelectionScreenProps
   ) => {
     const logic = itwEidIssuanceMachine.provide({
       actions: {
         onInit: jest.fn(),
-        navigateToIdentificationModeScreen: () => undefined
+        navigateToL3IdentificationScreen: () => undefined
       }
     });
 
     const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
     const snapshot: typeof initialSnapshot = {
       ...initialSnapshot,
-      value: { UserIdentification: "ModeSelection" },
+      value: { UserIdentification: "L3Identification" },
       context: {
         ...initialSnapshot.context,
         isL3FeaturesEnabled,
@@ -138,14 +138,14 @@ const renderComponent = (isL3FeaturesEnabled = false, eidReissuing = false) => {
         logic={logic}
         options={{ snapshot }}
       >
-        <ItwIdentificationModeSelectionScreen {...props} />
+        <ItwL3IdentificationModeSelectionScreen {...props} />
       </ItwEidIssuanceMachineContext.Provider>
     );
   };
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     WrappedComponent,
-    ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+    ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L3,
     { eidReissuing },
     store
   );

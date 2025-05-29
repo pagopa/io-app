@@ -104,6 +104,9 @@ describe("itwEidIssuanceMachine", () => {
       onInit: assign(onInit),
       setIsReissuing: assign({
         isReissuing: true
+      }),
+      setL3FeaturesEnabled: assign({
+        isL3FeaturesEnabled: true
       })
     },
     actors: {
@@ -1064,13 +1067,27 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "start-reissuing" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: "ModeSelection"
+      UserIdentification: "L3Identification"
     });
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,
-      isReissuing: true
+      isReissuing: true,
+      isL3FeaturesEnabled: true
     });
+
+    expect(navigateToL3IdentificationScreen).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "go-to-l2-identification" });
+
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual({
+        UserIdentification: "L2Identification"
+      })
+    );
+
+    expect(navigateToL2IdentificationScreen).toHaveBeenCalledTimes(1);
 
     /**
      * Choose SPID as identification mode
@@ -1111,6 +1128,7 @@ describe("itwEidIssuanceMachine", () => {
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: T_WIA,
       isReissuing: true,
+      isL3FeaturesEnabled: true,
       identification: {
         mode: "spid",
         level: "L2",
@@ -1164,6 +1182,7 @@ describe("itwEidIssuanceMachine", () => {
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: T_WIA,
       isReissuing: true,
+      isL3FeaturesEnabled: true,
       identification: {
         mode: "spid",
         level: "L2",
@@ -1177,12 +1196,13 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should go back to Idle state if isReissuing is true", async () => {
+    isL3FeaturesEnabled.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: "EvaluateIdentificationLevel" },
+      value: { UserIdentification: "L3Identification" },
       context: {
         isReissuing: true
       }
@@ -1199,12 +1219,13 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should go back to IpzsPrivacyAcceptance state if isReissuing is false", async () => {
+    isL3FeaturesEnabled.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: "EvaluateIdentificationLevel" },
+      value: { UserIdentification: "L3Identification" },
       context: {
         isReissuing: false
       }
@@ -1380,35 +1401,6 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
 
-    expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
-  });
-
-  it("Should navigate to InsertingCardPin directly if L3 isn't enabled", async () => {
-    isL3FeaturesEnabled.mockImplementation(() => false);
-    const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine
-    ).getSnapshot();
-    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: "L3Identification" },
-      context: {
-        integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA,
-        isL3FeaturesEnabled: false
-      }
-    } as MachineSnapshot);
-
-    const actor = createActor(mockedMachine, { snapshot });
-    actor.start();
-
-    actor.send({ type: "select-identification-mode", mode: "ciePin" });
-
-    expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: {
-        CiePin: "InsertingCardPin"
-      }
-    });
-
-    expect(navigateToCiePreparationScreen).toHaveBeenCalledTimes(0);
     expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
   });
 

@@ -1,15 +1,13 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../analytics";
-import { DefaultIdentificationView } from "../components/DefaultIdentificationView.tsx";
+import { L2IdentificationView } from "../components/DefaultIdentificationView.tsx";
 
-export type ItwIdentificationModeSelectionScreenNavigationParams = {
+/*export type ItwIdentificationModeSelectionScreenNavigationParams = {
   eidReissuing?: boolean;
 };
 
@@ -17,13 +15,11 @@ export type ItwIdentificationModeSelectionScreenProps =
   IOStackNavigationRouteProps<
     ItwParamsList,
     "ITW_IDENTIFICATION_LEVEL_SELECTION_L2"
-  >;
+  >;*/
 
-export const ItwL2IdentificationModeSelectionScreen = (
-  props: ItwIdentificationModeSelectionScreenProps
-) => {
+export const ItwL2IdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const { eidReissuing } = props.route.params;
+  /*  const { eidReissuing } = props.route.params;
 
   useFocusEffect(
     useCallback(() => {
@@ -31,7 +27,7 @@ export const ItwL2IdentificationModeSelectionScreen = (
         machineRef.send({ type: "start-reissuing" });
       }
     }, [eidReissuing, machineRef])
-  );
+  );*/
   useFocusEffect(trackItWalletIDMethod);
 
   const handleSpidPress = useCallback(() => {
@@ -45,7 +41,7 @@ export const ItwL2IdentificationModeSelectionScreen = (
   }, [machineRef]);
 
   return (
-    <DefaultIdentificationView
+    <L2IdentificationView
       onSpidPress={handleSpidPress}
       onCieIdPress={handleCieIdPress}
     />

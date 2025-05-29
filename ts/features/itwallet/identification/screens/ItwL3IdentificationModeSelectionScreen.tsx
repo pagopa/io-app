@@ -9,18 +9,18 @@ import {
 } from "../../analytics";
 import { L3IdentificationView } from "../components/L3IdentificationView.tsx";
 
-export type ItwIdentificationModeSelectionScreenNavigationParams = {
+export type ItwL3IdentificationNavigationParams = {
   eidReissuing?: boolean;
 };
 
-export type ItwIdentificationModeSelectionScreenProps =
+export type ItwL3IdentificationModeSelectionScreenProps =
   IOStackNavigationRouteProps<
     ItwParamsList,
     "ITW_IDENTIFICATION_LEVEL_SELECTION_L3"
   >;
 
 export const ItwL3IdentificationModeSelectionScreen = (
-  props: ItwIdentificationModeSelectionScreenProps
+  props: ItwL3IdentificationModeSelectionScreenProps
 ) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const { eidReissuing } = props.route.params;

@@ -56,8 +56,7 @@ export const createEidIssuanceActionsImplementation = (
 
   navigateToL2IdentificationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L2,
-      params: { eidReissuing: false }
+      screen: ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L2
     });
   },
 
