@@ -26,7 +26,7 @@ describe("configureStoreAndPersistor", () => {
   describe("CURRENT_REDUX_STORE_VERSION", () => {
     it("should match expected value", () => {
       const version = testable!.CURRENT_REDUX_STORE_VERSION;
-      expect(version).toBe(44);
+      expect(version).toBe(45);
     });
   });
   describe("migrations", () => {
@@ -251,7 +251,7 @@ describe("configureStoreAndPersistor", () => {
         });
       });
     });
-
+    // Test for 43 to 44
     it("should migrate from 43 to 44", () => {
       const basePersistedGlobalStateAt43 = {
         content: {
@@ -317,6 +317,70 @@ describe("configureStoreAndPersistor", () => {
       const nextState = from43To44Migration(persistedStateAt43);
 
       expect(nextState).toStrictEqual(basePersistedGlobalStateAt43);
+    });
+    // Test for 44 to 45
+    it("should migrate from 44 to 45", () => {
+      const persistedStateAt44 = {
+        content: {
+          idps: remoteUndefined,
+          municipality: {
+            codiceCatastale: pot.none,
+            data: pot.none
+          },
+          contextualHelp: pot.none
+        },
+        crossSessions: {
+          hashedFiscalCode:
+            "6494e783ad296f016b2105f8fe7dc2979551a37d3a5c40624e2ee8eee64e8017"
+        },
+        installation: {
+          isFirstRunAfterInstall: false,
+          appVersionHistory: [
+            "2.82.0.7",
+            "2.83.0.7",
+            "3.0.0.8",
+            "3.0.1.0",
+            "3.1.0.2",
+            "3.2.0.8",
+            "3.3.0.8",
+            "3.4.0.5",
+            "3.5.0.8",
+            "3.6.0.6"
+          ]
+        },
+        onboarding: {
+          isFingerprintAcknowledged: false
+        },
+        persistedPreferences: {
+          isFingerprintEnabled: undefined,
+          preferredCalendar: undefined,
+          preferredLanguage: undefined,
+          wasServiceAlertDisplayedOnce: false,
+          isPagoPATestEnabled: false,
+          isCustomEmailChannelEnabled: pot.none,
+          continueWithRootOrJailbreak: false,
+          isMixpanelEnabled: null,
+          isPnTestEnabled: false,
+          isIdPayTestEnabled: false,
+          fontPreference: "comfortable",
+          isExperimentalDesignEnabled: false
+        },
+        profile: pot.none,
+        _persist: {
+          version: 42,
+          rehydrated: false
+        }
+      };
+      const from44To45Migration = testable!.migrations[45];
+      expect(from44To45Migration).toBeDefined();
+      const globalStateAt45 = from44To45Migration(persistedStateAt44);
+      expect(globalStateAt45).toEqual({
+        ...persistedStateAt44,
+        persistedPreferences: {
+          ...persistedStateAt44.persistedPreferences,
+          useMessagePaymentInfoV2: false
+        }
+      });
     });
   });
 });

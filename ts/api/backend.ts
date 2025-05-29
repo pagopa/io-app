@@ -52,7 +52,9 @@ import {
   GetUserMessagesT,
   GetUserMessageT,
   startEmailValidationProcessDefaultDecoder,
-  abortUserDataProcessingDefaultDecoder
+  abortUserDataProcessingDefaultDecoder,
+  GetPaymentInfoV2T,
+  getPaymentInfoV2DefaultDecoder
 } from "../../definitions/backend/requestTypes";
 import { SessionToken } from "../types/SessionToken";
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
@@ -310,6 +312,17 @@ export function BackendClient(
     response_decoder: getPaymentInfoDefaultDecoder()
   };
 
+  const getPaymentInfoV2T: GetPaymentInfoV2T = {
+    method: "get",
+    url: ({ ["rptId"]: rptId }) => `$/api/v1/payment-info/${rptId}`,
+    headers: ({ ["Bearer"]: Bearer }) => ({
+      Authorization: Bearer,
+      "Content-Type": "application/json"
+    }),
+    query: ({ ["test"]: test }) => withoutUndefinedValues({ ["test"]: test }),
+    response_decoder: getPaymentInfoV2DefaultDecoder()
+  };
+
   const attivaRptT: ActivatePaymentT = {
     method: "post",
     url: ({ test }) => `/api/v1/payment-activations?test=${test}`,
@@ -368,6 +381,9 @@ export function BackendClient(
     logout: withBearerToken(createFetchRequestForApi(logoutT, options)),
     getVerificaRpt: withBearerToken(
       createFetchRequestForApi(verificaRptT, options)
+    ),
+    getPaymentInfoV2: withBearerToken(
+      createFetchRequestForApi(getPaymentInfoV2T, options)
     ),
     postAttivaRpt: withBearerToken(
       createFetchRequestForApi(attivaRptT, options)
