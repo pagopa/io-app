@@ -13,7 +13,10 @@ import {
 } from "../../../../features/itwallet/common/store/selectors/preferences";
 import { itwSetL3LocallyEnabled } from "../../../../features/itwallet/common/store/actions/preferences";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { ItwL3CredentialsSection } from "./ItwL3CredentialsSection.tsx";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
+import { CredentialL3Key } from "../../common/utils/itwMocksUtils.ts";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { ITW_PLAYGROUND_ROUTES } from "../navigation/routes.ts";
 
 export const ItwL3Section = () => {
   const dispatch = useIODispatch();
@@ -23,6 +26,8 @@ export const ItwL3Section = () => {
   const isFiscalCodeWhitelisted = useIOSelector(
     itwIsFiscalCodeWhitelistedSelector
   );
+  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
+  const navigation = useIONavigation();
 
   const navigateToTosL3Screen = useCallback(() => {
     machineRef.send({
@@ -31,11 +36,20 @@ export const ItwL3Section = () => {
     });
   }, [machineRef]);
 
+  const handleCredentialPress = (credentialType: CredentialL3Key) => {
+    navigation.navigate(ITW_PLAYGROUND_ROUTES.MAIN, {
+      screen: ITW_PLAYGROUND_ROUTES.CREDENTIAL_DETAIL,
+      params: {
+        credentialType
+      }
+    });
+  };
+
   return (
     <View>
-      <ListItemHeader label="IT Wallet (L3 locally)" />
+      <ListItemHeader label="IT Wallet (L3)" />
       <ListItemSwitch
-        label="Enable locally L3 wallet"
+        label="Enable local feature flag"
         value={isL3LocallyEnabled}
         onSwitchValueChange={() => {
           dispatch(itwSetL3LocallyEnabled(!isL3LocallyEnabled));
@@ -50,7 +64,24 @@ export const ItwL3Section = () => {
         description="Navigate to the Discovery L3 info screen"
         onPress={navigateToTosL3Screen}
       />
-      <ItwL3CredentialsSection />
+      <ListItemHeader label="L3 credentials" />
+      <ListItemNav
+        value="Driving License L3"
+        description="Navigate to the Driving License detail screen"
+        onPress={() => handleCredentialPress("mdl")}
+      />
+      {isItwValid && (
+        <ListItemNav
+          value="EU Health Insurance Card L3"
+          description="Navigate to the EHIC detail screen"
+          onPress={() => handleCredentialPress("ts")}
+        />
+      )}
+      <ListItemNav
+        value="Disability Card L3"
+        description="Navigate to the Disability Card detail screen"
+        onPress={() => handleCredentialPress("dc")}
+      />
     </View>
   );
 };

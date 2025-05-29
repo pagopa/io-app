@@ -1,4 +1,8 @@
-import { IOSpacingScale, VStack } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  IOSpacingScale,
+  VStack
+} from "@pagopa/io-app-design-system";
 
 import { PropsWithChildren, useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -13,8 +17,9 @@ import { itwCredentialStatusSelector } from "../../../credentials/store/selector
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
-import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
+import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
+import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
 type Props = {
   credential: StoredCredential;
@@ -55,6 +60,10 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
     isL3Credential
   );
 
+  const shouldRenderBadge =
+    isL3Credential &&
+    credential.credentialType === CredentialType.DRIVING_LICENSE;
+
   return (
     <VStack space={8}>
       <CardContainer backgroundColor={backgroundColor}>
@@ -68,15 +77,17 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
           />
         </FlipGestureDetector>
       </CardContainer>
-      <View
-        style={isL3Credential ? styles.horizontalLayout : styles.centeredLayout}
+      <ContentWrapper
+        style={
+          shouldRenderBadge ? styles.horizontalLayout : styles.centeredLayout
+        }
       >
-        {isL3Credential && <ItwBadge />}
+        {shouldRenderBadge && <ItwBadge />}
         <ItwPresentationCredentialCardFlipButton
           isFlipped={isFlipped}
           handleOnPress={handleFlipButtonPress}
         />
-      </View>
+      </ContentWrapper>
     </VStack>
   );
 };
@@ -113,9 +124,7 @@ const styles = StyleSheet.create({
   },
   horizontalLayout: {
     marginTop: 10,
-    width: "88%",
     flexDirection: "row",
-    alignSelf: "center",
     justifyContent: "space-between"
   },
   centeredLayout: {

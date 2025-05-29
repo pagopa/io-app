@@ -4,14 +4,14 @@ import {
 } from "../../common/utils/itwMocksUtils";
 import { ItwPresentationCredentialDetail } from "../../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
-import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
+import { ItwPlaygroundParamsList } from "../navigation/ItwPlaygroundParamsList.ts";
 
 export type ItwL3CredentialDetailScreenNavigationParams = {
   credentialType: CredentialL3Key;
 };
 
 type ScreenProps = IOStackNavigationRouteProps<
-  ItwParamsList,
+  ItwPlaygroundParamsList,
   "ITW_PLAYGROUND_CREDENTIAL_DETAIL"
 >;
 
@@ -20,9 +20,5 @@ export const ItwL3CredentialDetailScreen = (params: ScreenProps) => {
 
   const credential = ItwStoredCredentialsMocks.L3[credentialType];
 
-  return (
-    <>
-      <ItwPresentationCredentialDetail credential={credential} />
-    </>
-  );
+  return <ItwPresentationCredentialDetail credential={credential} />;
 };

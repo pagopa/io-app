@@ -147,6 +147,9 @@ const IPatenteListItemAction = ({ docNumber }: IPatenteListItemActionProps) => {
   const { startFIMSAuthenticationFlow } =
     useFIMSRemoteServiceConfiguration("iPatente");
   const ctaConfig = useIOSelector(itwIPatenteCtaConfigSelector);
+  const startFimsAuthenticationFlow = useOfflineToastGuard(() =>
+    startFIMSAuthenticationFlow(label, iPatenteUrl)
+  );
 
   if (!ctaConfig?.visibility) {
     return null;
@@ -166,7 +169,7 @@ const IPatenteListItemAction = ({ docNumber }: IPatenteListItemActionProps) => {
       variant="primary"
       icon="externalLink"
       label={label}
-      onPress={() => startFIMSAuthenticationFlow(label, iPatenteUrl)}
+      onPress={startFimsAuthenticationFlow}
     />
   );
 };
