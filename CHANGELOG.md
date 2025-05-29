@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0-rc.6](https://github.com/pagopa/io-app/compare/3.6.0-rc.5...3.6.0-rc.6) (2025-05-28)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2349](https://pagopa.atlassian.net/browse/SIW-2349)] Fix double header glitch in offline wallet screen (Android) ([#7006](https://github.com/pagopa/io-app/issues/7006)) ([eb18993](https://github.com/pagopa/io-app/commit/eb18993eba06996d20c14bbd1531be87c8d9661a))
+
+
+### Chores
+
+* [[IOCOM-2368](https://pagopa.atlassian.net/browse/IOCOM-2368)] SEND banner i18n update ([#7029](https://github.com/pagopa/io-app/issues/7029)) ([92895e0](https://github.com/pagopa/io-app/commit/92895e0defa842d51970f71c9c84be37bbd6105d))
+* [[IOPLT-1157](https://pagopa.atlassian.net/browse/IOPLT-1157)] Remove theme-related hooks ([#7028](https://github.com/pagopa/io-app/issues/7028)) ([fd55daa](https://github.com/pagopa/io-app/commit/fd55daa450741e3bf149ec2b3b738119a4de5e02))
+
 ## [3.6.0-rc.5](https://github.com/pagopa/io-app/compare/3.6.0-rc.4...3.6.0-rc.5) (2025-05-27)
 
 
