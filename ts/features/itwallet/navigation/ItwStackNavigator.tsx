@@ -48,10 +48,10 @@ import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorCont
 import { useIOSelector } from "../../../store/hooks";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { ItwIdentificationCieWarningScreen } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
+import { ItwL3IdentificationModeSelectionScreen } from "../identification/screens/ItwL3IdentificationModeSelectionScreen.tsx";
+import { ItwL2IdentificationModeSelectionScreen } from "../identification/screens/ItwL2IdentificationModeSelectionScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
-import { ItwL3IdentificationModeSelectionScreen } from "../identification/screens/ItwL3IdentificationModeSelectionScreen.tsx";
-import { ItwDefaultIdentificationModeSelectionScreen } from "../identification/screens/ItwL2IdentificationModeSelectionScreen.tsx";
 
 const Stack = createStackNavigator<ItwParamsList>();
 
@@ -112,7 +112,7 @@ const InnerNavigator = () => {
       {/* IDENTIFICATION */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L2}
-        component={ItwDefaultIdentificationModeSelectionScreen}
+        component={ItwL2IdentificationModeSelectionScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L3}

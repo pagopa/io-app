@@ -47,13 +47,6 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  /*  navigateToIdentificationModeScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
-      params: { eidReissuing: false }
-    });
-  },*/
-
   navigateToL3IdentificationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L3,

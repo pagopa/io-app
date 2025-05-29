@@ -29,7 +29,6 @@ export const itwEidIssuanceMachine = setup({
   actions: {
     navigateToTosScreen: notImplemented,
     navigateToIpzsPrivacyScreen: notImplemented,
-    navigateToIdentificationModeScreen: notImplemented,
     navigateToL2IdentificationScreen: notImplemented,
     navigateToL3IdentificationScreen: notImplemented,
     navigateToIdpSelectionScreen: notImplemented,

@@ -19,7 +19,7 @@ export type ItwIdentificationModeSelectionScreenProps =
     "ITW_IDENTIFICATION_LEVEL_SELECTION_L2"
   >;
 
-export const ItwDefaultIdentificationModeSelectionScreen = (
+export const ItwL2IdentificationModeSelectionScreen = (
   props: ItwIdentificationModeSelectionScreenProps
 ) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -34,15 +34,15 @@ export const ItwDefaultIdentificationModeSelectionScreen = (
   );
   useFocusEffect(trackItWalletIDMethod);
 
-  const handleSpidPress = () => {
+  const handleSpidPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
     trackItWalletIDMethodSelected({ ITW_ID_method: "spid" });
-  };
+  }, [machineRef]);
 
-  const handleCieIdPress = () => {
+  const handleCieIdPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
     trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
-  };
+  }, [machineRef]);
 
   return (
     <DefaultIdentificationView

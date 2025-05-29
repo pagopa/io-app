@@ -34,15 +34,15 @@ export const ItwL3IdentificationModeSelectionScreen = (
   );
   useFocusEffect(trackItWalletIDMethod);
 
-  const handleCiePinPress = () => {
+  const handleCiePinPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
     trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin" });
-  };
+  }, [machineRef]);
 
-  const handleCieIdPress = () => {
+  const handleCieIdPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
     trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
-  };
+  }, [machineRef]);
 
   return (
     <L3IdentificationView

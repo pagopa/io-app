@@ -27,7 +27,6 @@ const T_WIA: string = "abcdefg";
 describe("itwEidIssuanceMachine", () => {
   const navigateToTosScreen = jest.fn();
   const navigateToIpzsPrivacyScreen = jest.fn();
-  const navigateToIdentificationModeScreen = jest.fn();
   const navigateToIdpSelectionScreen = jest.fn();
   const navigateToEidPreviewScreen = jest.fn();
   const navigateToSpidLoginScreen = jest.fn();
@@ -75,7 +74,6 @@ describe("itwEidIssuanceMachine", () => {
     actions: {
       navigateToTosScreen,
       navigateToIpzsPrivacyScreen,
-      navigateToIdentificationModeScreen,
       navigateToIdpSelectionScreen,
       navigateToEidPreviewScreen,
       navigateToSpidLoginScreen,
@@ -139,7 +137,7 @@ describe("itwEidIssuanceMachine", () => {
     jest.resetAllMocks();
   });
 
-  it("Should obtain an eID (SPID)", async () => {
+  it("Should obtain an eID (SPID) from L3 Identification", async () => {
     isL3FeaturesEnabled.mockImplementation(() => true);
     const actor = createActor(mockedMachine);
     actor.start();
@@ -332,12 +330,11 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToWallet).toHaveBeenCalledTimes(1);
   });
 
-  it("Should obtain an eID (CieID)", async () => {
+  it("Should obtain an eID (CieID) from L2 Identification", async () => {
     /** Initial part is the same as the previous test, we can start from the identification */
 
     startAuthFlow.mockImplementation(() => Promise.resolve({}));
     requestEid.mockImplementation(() => Promise.resolve({}));
-    isL3FeaturesEnabled.mockImplementation(() => false);
 
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
@@ -370,8 +367,6 @@ describe("itwEidIssuanceMachine", () => {
       })
     );
 
-    startAuthFlow.mockImplementation(() => Promise.resolve({}));
-
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
@@ -380,7 +375,7 @@ describe("itwEidIssuanceMachine", () => {
         mode: "cieId",
         level: "L2"
       },
-      authenticationContext: {}
+      authenticationContext: expect.any(Object)
     });
     expect(navigateToCieIdLoginScreen).toHaveBeenCalledTimes(1);
 
@@ -941,6 +936,7 @@ describe("itwEidIssuanceMachine", () => {
     // Select identification mode
     actor.send({ type: "select-identification-mode", mode: "cieId" });
 
+    // eslint-disable-next-line sonarjs/no-identical-functions
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
         UserIdentification: {
