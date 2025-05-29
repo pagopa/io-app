@@ -354,7 +354,7 @@
     },
     "connection_lost": {
       "title": "It looks like you don't have an active internet connection",
-      "description": "Check your connection and restart the app"
+      "description": "Check your connection and restart the app."
     },
     "slowdowns_results_screen": {
       "title": "Things seem to be going a little slowly at the moment.",
