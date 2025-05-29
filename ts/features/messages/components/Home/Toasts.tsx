@@ -1,6 +1,7 @@
 import { useEffect } from "react";
+import { AccessibilityInfo } from "react-native";
 import { useIOToast } from "@pagopa/io-app-design-system";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import {
   archiveMessagesErrorReasonSelector,
   inboxMessagesErrorReasonSelector
@@ -10,8 +11,10 @@ import {
   processingResultReasonSelector,
   processingResultTypeSelector
 } from "../../store/reducers/archiving";
+import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 
 export const Toasts = () => {
+  const store = useIOStore();
   const toast = useIOToast();
 
   // Handling of archiving/unarchiving operations result
@@ -26,12 +29,16 @@ export const Toasts = () => {
         case "success":
           toast.success(processingResultReason);
           break;
-        case "warning":
-          toast.warning(processingResultReason);
-          break;
+      }
+
+      const isScreenReaderEnabled = isScreenReaderEnabledSelector(
+        store.getState()
+      );
+      if (isScreenReaderEnabled) {
+        AccessibilityInfo.announceForAccessibility(processingResultReason);
       }
     }
-  }, [processingResultType, processingResultReason, toast]);
+  }, [processingResultType, processingResultReason, store, toast]);
 
   // Handling of inbox messages errors. Be aware that any error
   // that happens when the list is empty is not displayed with
@@ -43,7 +50,7 @@ export const Toasts = () => {
     }
   }, [inboxErrorMessage, toast]);
 
-  // Handling of archive messages errors. Be aware that any
+  // Handling of archived messages errors. Be aware that any
   // error that happens when the list is empty is not displayed
   // with a Toast but with the EmptyList component
   const archiveErrorMessage = useIOSelector(archiveMessagesErrorReasonSelector);

@@ -14,12 +14,11 @@ export const ItwUpgradeBanner = () => {
     return null;
   }
 
-  const handleOnPress = () => {
+  const handleOnPress = () =>
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: {}
+      params: { isL3: true }
     });
-  };
 
   return (
     <>

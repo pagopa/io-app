@@ -2,6 +2,63 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0-rc.6](https://github.com/pagopa/io-app/compare/3.6.0-rc.5...3.6.0-rc.6) (2025-05-28)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2349](https://pagopa.atlassian.net/browse/SIW-2349)] Fix double header glitch in offline wallet screen (Android) ([#7006](https://github.com/pagopa/io-app/issues/7006)) ([eb18993](https://github.com/pagopa/io-app/commit/eb18993eba06996d20c14bbd1531be87c8d9661a))
+
+
+### Chores
+
+* [[IOCOM-2368](https://pagopa.atlassian.net/browse/IOCOM-2368)] SEND banner i18n update ([#7029](https://github.com/pagopa/io-app/issues/7029)) ([92895e0](https://github.com/pagopa/io-app/commit/92895e0defa842d51970f71c9c84be37bbd6105d))
+* [[IOPLT-1157](https://pagopa.atlassian.net/browse/IOPLT-1157)] Remove theme-related hooks ([#7028](https://github.com/pagopa/io-app/issues/7028)) ([fd55daa](https://github.com/pagopa/io-app/commit/fd55daa450741e3bf149ec2b3b738119a4de5e02))
+
+## [3.6.0-rc.5](https://github.com/pagopa/io-app/compare/3.6.0-rc.4...3.6.0-rc.5) (2025-05-27)
+
+
+### Features
+
+* [[IOCOM-2146](https://pagopa.atlassian.net/browse/IOCOM-2146),[IOCOM-2149](https://pagopa.atlassian.net/browse/IOCOM-2149)] Announce archive/restore ([#7015](https://github.com/pagopa/io-app/issues/7015)) ([2374446](https://github.com/pagopa/io-app/commit/23744463854eb05d0ec22bd9339f3b2919fba046))
+* **IT Wallet:** [[SIW-2444](https://pagopa.atlassian.net/browse/SIW-2444)] Add `useOfflineToastGuard` when opening FIMS from MDL details ([#7016](https://github.com/pagopa/io-app/issues/7016)) ([851da3c](https://github.com/pagopa/io-app/commit/851da3c88843c4ab30519c7d7c6a449733b1cae6))
+
+
+### Bug Fixes
+
+* [[IOBP-1700](https://pagopa.atlassian.net/browse/IOBP-1700)] Payment webview alert flow closed ([#7025](https://github.com/pagopa/io-app/issues/7025)) ([1b26fed](https://github.com/pagopa/io-app/commit/1b26fed89af7bb19bcdf778729d89235d890db17))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2397](https://pagopa.atlassian.net/browse/SIW-2397)] Update actions in `ItwPaywallComponent` ([#7022](https://github.com/pagopa/io-app/issues/7022)) ([9dc7812](https://github.com/pagopa/io-app/commit/9dc7812c32d1eff4eeabb4ce8bfbbdeba16fbc5d))
+* **IT Wallet:** [[SIW-2435](https://pagopa.atlassian.net/browse/SIW-2435)] Update discovery info component ([#7013](https://github.com/pagopa/io-app/issues/7013)) ([0d2ba95](https://github.com/pagopa/io-app/commit/0d2ba9595f061e5d59fe3f187242045b76d9bc5c))
+* [[IOBP-1696](https://pagopa.atlassian.net/browse/IOBP-1696)] Add missing key in list render children ([#7018](https://github.com/pagopa/io-app/issues/7018)) ([acadb55](https://github.com/pagopa/io-app/commit/acadb550f6a53c7b9c6c3683570534d92f89222e))
+
+## [3.6.0-rc.4](https://github.com/pagopa/io-app/compare/3.6.0-rc.3...3.6.0-rc.4) (2025-05-26)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2376](https://pagopa.atlassian.net/browse/SIW-2376)] Add FAQ link for devices that do not support NFC ([#7019](https://github.com/pagopa/io-app/issues/7019)) ([eb82b7f](https://github.com/pagopa/io-app/commit/eb82b7fd3b36dcc1be01ead40c167270f698e0fb))
+* [[IOCOM-2372](https://pagopa.atlassian.net/browse/IOCOM-2372)] SEND banner copy + pictogram update ([#7020](https://github.com/pagopa/io-app/issues/7020)) ([6e89fb0](https://github.com/pagopa/io-app/commit/6e89fb00666adac99e254f9bb9b0b0027668c7ad))
+* **IT Wallet:** [[SIW-2390](https://pagopa.atlassian.net/browse/SIW-2390)] Start upgrade flow with NFC status validation ([#6981](https://github.com/pagopa/io-app/issues/6981)) ([eddb546](https://github.com/pagopa/io-app/commit/eddb5463e6f587ff1571ce99616f29700ed9dcd5))
+* [[IOPLT-1109](https://pagopa.atlassian.net/browse/IOPLT-1109)] Add the new `IOScrollViewWithReveal` specifically designed for IT Wallet ([#6992](https://github.com/pagopa/io-app/issues/6992)) ([84bc8b2](https://github.com/pagopa/io-app/commit/84bc8b293826eecc3d4905894317369845367edf))
+* [[IOPLT-1140](https://pagopa.atlassian.net/browse/IOPLT-1140)] Blacklist routes logic to avoid status alert presentation ([#7008](https://github.com/pagopa/io-app/issues/7008)) ([82b76fc](https://github.com/pagopa/io-app/commit/82b76fcd81a243f8be635e24272a168a085b696d))
+* [[IOPLT-1151](https://pagopa.atlassian.net/browse/IOPLT-1151)] Moves polling call to backend to native fetch instead of net info library ([#7012](https://github.com/pagopa/io-app/issues/7012)) ([bf2b5e3](https://github.com/pagopa/io-app/commit/bf2b5e3a401404b54bb478c5feee983183f98347))
+
+
+### Bug Fixes
+
+* [[IOCOM-2378](https://pagopa.atlassian.net/browse/IOCOM-2378)] Continuos registration of push notification's token ([#7009](https://github.com/pagopa/io-app/issues/7009)) ([b599b6f](https://github.com/pagopa/io-app/commit/b599b6f737b83a7a99eee2615151d68ed5dbca30))
+* **IT Wallet:** [[SIW-2410](https://pagopa.atlassian.net/browse/SIW-2410)] Unrecognized attribute in presentation disclosures screen ([#7011](https://github.com/pagopa/io-app/issues/7011)) ([0d832cd](https://github.com/pagopa/io-app/commit/0d832cdc196763c84784f60221a6e6cd90c94d5d))
+* **IT Wallet:** [[SIW-2421](https://pagopa.atlassian.net/browse/SIW-2421)] Fix wallet offline flow mixpanel tracking ([#7007](https://github.com/pagopa/io-app/issues/7007)) ([7956eef](https://github.com/pagopa/io-app/commit/7956eef7ea33e765bc0b7ce33edd2a962460b0bd))
+
+
+### Chores
+
+* [[IOBP-1335](https://pagopa.atlassian.net/browse/IOBP-1335)] Add CGN barcode while generating a discount code ([#7017](https://github.com/pagopa/io-app/issues/7017)) ([5611b05](https://github.com/pagopa/io-app/commit/5611b0555a22c22b134dcd3f94065f6c97f19de2))
+
 ## [3.6.0-rc.3](https://github.com/pagopa/io-app/compare/3.6.0-rc.2...3.6.0-rc.3) (2025-05-23)
 
 
