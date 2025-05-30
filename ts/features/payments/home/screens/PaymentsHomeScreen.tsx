@@ -1,3 +1,4 @@
+import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect, useState } from "react";
 import Animated, {
@@ -141,6 +142,7 @@ const PaymentsHomeScreen = () => {
 
   return (
     <IOScrollView
+      includeContentMargins={false}
       excludeSafeAreaMargins={true}
       animatedRef={scrollViewContentRef}
       refreshControlProps={{
@@ -182,7 +184,11 @@ const PaymentsHomeScreenContent = () => {
 
   return (
     <>
-      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoadingFirstTime} />
+      <ContentWrapper>
+        <PaymentsHomeUserMethodsList
+          enforcedLoadingState={isLoadingFirstTime}
+        />
+      </ContentWrapper>
       <PaymentsHomeTransactionsList enforcedLoadingState={isLoadingFirstTime} />
     </>
   );

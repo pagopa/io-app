@@ -1,11 +1,12 @@
 import {
   BannerErrorState,
+  ContentWrapper,
   Divider,
   ListItemHeader,
   ListItemTransaction
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useEffect, useCallback, Fragment } from "react";
+import { useEffect, useCallback, Fragment, useRef } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
@@ -34,6 +35,8 @@ const PAYMENTS_HOME_TRANSACTIONS_LIST_BACKOFF: PaymentsBackoffRetry =
 const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  // Used for swipe feature
+  const openedItemRef = useRef<(() => void) | null>(null);
 
   const latestTransactionsPot = useIOSelector(
     walletLatestReceiptListPotSelector
@@ -107,6 +110,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
                   handleNavigateToTransactionDetails(latestTransaction)
                 }
                 transaction={latestTransaction}
+                openedItemRef={openedItemRef}
               />
               {index < latestTransactionsPot.value.length - 1 && <Divider />}
             </Fragment>
@@ -130,7 +134,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
     }
 
     return (
-      <View testID="PaymentsHomeTransactionsListTestID-loading">
+      <ContentWrapper testID="PaymentsHomeTransactionsListTestID-loading">
         {Array.from({ length: 10 }).map((_, index) => (
           <ListItemTransaction
             isLoading={true}
@@ -143,7 +147,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
             subtitle=""
           />
         ))}
-      </View>
+      </ContentWrapper>
     );
   };
 
@@ -153,24 +157,26 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
 
   return (
     <Animated.View style={{ flex: 1 }} layout={LinearTransition.duration(200)}>
-      <ListItemHeader
-        label={I18n.t("features.payments.transactions.title")}
-        accessibilityLabel={I18n.t("features.payments.transactions.title")}
-        endElement={
-          !isLoading && !pot.isError(latestTransactionsPot)
-            ? {
-                type: "buttonLink",
-                componentProps: {
-                  label: I18n.t("features.payments.transactions.button"),
-                  onPress: handleNavigateToTransactionList,
-                  accessibilityLabel: I18n.t(
-                    "features.payments.transactions.button"
-                  )
+      <ContentWrapper>
+        <ListItemHeader
+          label={I18n.t("features.payments.transactions.title")}
+          accessibilityLabel={I18n.t("features.payments.transactions.title")}
+          endElement={
+            !isLoading && !pot.isError(latestTransactionsPot)
+              ? {
+                  type: "buttonLink",
+                  componentProps: {
+                    label: I18n.t("features.payments.transactions.button"),
+                    onPress: handleNavigateToTransactionList,
+                    accessibilityLabel: I18n.t(
+                      "features.payments.transactions.button"
+                    )
+                  }
                 }
-              }
-            : undefined
-        }
-      />
+              : undefined
+          }
+        />
+      </ContentWrapper>
       {renderLatestNoticesItems()}
     </Animated.View>
   );
