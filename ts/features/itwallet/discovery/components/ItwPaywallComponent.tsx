@@ -42,6 +42,7 @@ import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { itwGradientColors } from "../../common/utils/constants.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors";
 
 const markdownRules = {
@@ -213,19 +214,7 @@ const BackgroundGradient = () => {
           start={vec(0, height / 2)}
           end={vec(width, 0)}
           mode="repeat"
-          colors={[
-            "#0B3EE3",
-            "#234FFF",
-            "#436FFF",
-            "#2F5EFF",
-            "#1E53FF",
-            "#1848F0",
-            "#0B3EE3",
-            "#1F4DFF",
-            "#2A5CFF",
-            "#1943E8",
-            "#0B3EE3"
-          ]}
+          colors={itwGradientColors}
         />
       </RoundedRect>
     </Canvas>

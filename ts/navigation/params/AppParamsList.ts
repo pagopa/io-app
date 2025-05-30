@@ -57,6 +57,7 @@ import { NOTIFICATIONS_ROUTES } from "../../features/pushNotifications/navigatio
 import { ServicesParamsList } from "../../features/services/common/navigation/params";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
+import { ItwPlaygroundParamsList } from "../../features/itwallet/playgrounds/navigation/ItwPlaygroundParamsList.ts";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
 import { AuthenticationParamsList } from "../../features/authentication/common/navigation/params/AuthenticationParamsList.ts";
@@ -64,6 +65,7 @@ import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navi
 import { SettingsParamsList } from "../../features/settings/common/navigation/params/SettingsParamsList.ts";
 import { SETTINGS_ROUTES } from "../../features/settings/common/navigation/routes.ts";
 import { OnboardingParamsList } from "../../features/onboarding/navigation/params/OnboardingParamsList.ts";
+import { ITW_PLAYGROUND_ROUTES } from "../../features/itwallet/playgrounds/navigation/routes.ts";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 
@@ -117,6 +119,7 @@ export type AppParamsList = {
 
   [ITW_ROUTES.MAIN]: NavigatorScreenParams<ItwParamsList>;
   [ITW_REMOTE_ROUTES.MAIN]: NavigatorScreenParams<ItwRemoteParamsList>;
+  [ITW_PLAYGROUND_ROUTES.MAIN]: NavigatorScreenParams<ItwPlaygroundParamsList>;
 };
 
 /**

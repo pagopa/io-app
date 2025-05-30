@@ -71,6 +71,8 @@ import {
 } from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
 import OnboardingNavigator from "../features/onboarding/navigation/OnboardingNavigator.tsx";
+import { ITW_PLAYGROUND_ROUTES } from "../features/itwallet/playgrounds/navigation/routes.ts";
+import { ItwPlaygroundStackNavigator } from "../features/itwallet/playgrounds/navigation/ItwPlaygroundStackNavigator.tsx";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
 import { MainTabNavigator } from "./TabNavigator";
@@ -363,6 +365,11 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={ITW_REMOTE_ROUTES.MAIN}
         component={ItwRemoteStackNavigator}
+        options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+      />
+      <Stack.Screen
+        name={ITW_PLAYGROUND_ROUTES.MAIN}
+        component={ItwPlaygroundStackNavigator}
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
       />
     </Stack.Navigator>
