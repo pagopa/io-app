@@ -5,6 +5,8 @@ import {
   parseClaims
 } from "../../../common/utils/itwClaimsUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
+import { validCredentialStatuses } from "../../../common/utils/itwCredentialUtils";
 import { isDefined } from "../../../../../utils/guards";
 import { assert } from "../../../../../utils/assert";
 import {
@@ -96,3 +98,11 @@ export const groupCredentialsByPurpose = (
     }))
   };
 };
+
+/**
+ * Return a list of credential types that have an invalid status.
+ */
+export const getInvalidCredentials = (credentials: Array<StoredCredential>) =>
+  credentials
+    .filter(c => !validCredentialStatuses.includes(getCredentialStatus(c)))
+    .map(c => c.credentialType);

@@ -3,6 +3,17 @@ import { isDefined } from "../../../../../utils/guards.ts";
 import { RemoteEvents } from "./events.ts";
 
 const { CredentialsNotFoundError } = Credential.Presentation.Errors;
+const { isRelyingPartyResponseError, RelyingPartyResponseErrorCodes: Codes } =
+  Errors;
+
+/**
+ * Error class used to wrap invalid credential types from the remote machine to the failure screen.
+ */
+export class InvalidCredentialsStatusError extends Error {
+  constructor(public invalidCredentials: Array<string>) {
+    super("One or more credential has an invalid status");
+  }
+}
 
 export enum RemoteFailureType {
   WALLET_INACTIVE = "WALLET_INACTIVE",
@@ -11,11 +22,10 @@ export enum RemoteFailureType {
   RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
   RELYING_PARTY_INVALID_AUTH_RESPONSE = "RELYING_PARTY_INVALID_AUTH_RESPONSE",
   INVALID_REQUEST_OBJECT = "INVALID_REQUEST_OBJECT",
+  INVALID_CREDENTIALS_STATUS = "INVALID_CREDENTIALS_STATUS",
   UNTRUSTED_RP = "UNTRUSTED_RP",
   UNEXPECTED = "UNEXPECTED"
 }
-const { isRelyingPartyResponseError, RelyingPartyResponseErrorCodes: Codes } =
-  Errors;
 
 /**
  * Type that contains the possible error types thrown when the requested Request Object is invalid.
@@ -45,6 +55,9 @@ export type ReasonTypeByFailure = {
   [RemoteFailureType.RELYING_PARTY_GENERIC]: Errors.RelyingPartyResponseError;
   [RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE]: Errors.RelyingPartyResponseError;
   [RemoteFailureType.INVALID_REQUEST_OBJECT]: InvalidRequestObjectError;
+  [RemoteFailureType.INVALID_CREDENTIALS_STATUS]: {
+    invalidCredentials: Array<string>;
+  };
   [RemoteFailureType.UNTRUSTED_RP]: string;
   [RemoteFailureType.UNEXPECTED]: unknown;
 };
@@ -102,6 +115,12 @@ export const mapEventToFailure = (event: RemoteEvents): RemoteFailure => {
     return {
       type: RemoteFailureType.INVALID_REQUEST_OBJECT,
       reason: error
+    };
+  }
+  if (error instanceof InvalidCredentialsStatusError) {
+    return {
+      type: RemoteFailureType.INVALID_CREDENTIALS_STATUS,
+      reason: { invalidCredentials: error.invalidCredentials }
     };
   }
   return {
