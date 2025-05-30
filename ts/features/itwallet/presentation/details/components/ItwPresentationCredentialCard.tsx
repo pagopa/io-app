@@ -17,10 +17,7 @@ import { itwCredentialStatusSelector } from "../../../credentials/store/selector
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
-import {
-  isItwCredential,
-  supportsL3Design
-} from "../../../common/utils/itwCredentialUtils.ts";
+import { supportsL3Design } from "../../../common/utils/itwCredentialUtils.ts";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
 type Props = {
@@ -45,7 +42,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   }, [credential.credentialType]);
 
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
-  const isL3Credential = isItwCredential(credential.credential);
+  const supportL3Design = supportsL3Design(credential);
 
   const handleCardPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -59,10 +56,8 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
 
   const { backgroundColor } = getThemeColorByCredentialType(
     credential.credentialType,
-    isL3Credential
+    supportL3Design
   );
-
-  const shouldRenderBadge = supportsL3Design(credential);
 
   return (
     <VStack space={8}>
@@ -79,10 +74,10 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
       </CardContainer>
       <ContentWrapper
         style={
-          shouldRenderBadge ? styles.horizontalLayout : styles.centeredLayout
+          supportL3Design ? styles.horizontalLayout : styles.centeredLayout
         }
       >
-        {shouldRenderBadge && <ItwBadge />}
+        {supportL3Design && <ItwBadge />}
         <ItwPresentationCredentialCardFlipButton
           isFlipped={isFlipped}
           handleOnPress={handleFlipButtonPress}
