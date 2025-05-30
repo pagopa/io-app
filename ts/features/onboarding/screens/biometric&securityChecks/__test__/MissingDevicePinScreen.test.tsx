@@ -6,11 +6,14 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import I18n from "../../../../../i18n";
 import ROUTES from "../../../../../navigation/routes";
 
-jest.mock("../../../../../store/hooks", () => ({
-  useIODispatch: () => jest.fn(),
-  useIOSelector: jest.fn(() => true),
-  useIOStore: jest.fn()
-}));
+jest.mock("../../../../../store/hooks", () => {
+  const original = jest.requireActual("../../../../../store/hooks");
+
+  return {
+    ...original,
+    useIODispatch: jest.fn()
+  };
+});
 
 jest.mock("../../../../../utils/analytics", () => ({
   getFlowType: jest.fn(() => "test-flow"),
