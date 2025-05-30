@@ -10,8 +10,7 @@ import {
 import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet.tsx";
 import I18n from "../../../../i18n.ts";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader.tsx";
-import { CieWarningType } from "../screens/ItwIdentificationCieWarningScreen.tsx";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
+import { useCieInfoAndPinBottomSheets } from "../hooks/useCieInfoAndPinBottomSheets.ts";
 
 type L3IdentificationViewProps = {
   handleCiePinPress: () => void;
@@ -22,12 +21,6 @@ export const L3IdentificationView = ({
   handleCiePinPress,
   handleCieIdPress
 }: L3IdentificationViewProps) => {
-  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-
-  const navigateToCieWarning = (warning: CieWarningType) => {
-    machineRef.send({ type: "go-to-cie-warning", warning });
-  };
-
   const cieBottomSheet = useItwIdentificationBottomSheet({
     title: I18n.t(
       "features.itWallet.identification.l3.mode.bottomSheet.cie.title"
@@ -61,72 +54,7 @@ export const L3IdentificationView = ({
     ]
   });
 
-  const cieInfoBottomSheet = useItwIdentificationBottomSheet({
-    title: I18n.t(
-      "features.itWallet.identification.l3.mode.bottomSheet.cieInfo.title"
-    ),
-    content: [
-      {
-        body: I18n.t(
-          "features.itWallet.identification.l3.mode.bottomSheet.cieInfo.content"
-        )
-      }
-    ],
-    imageSrc: require("../../../../../img/features/itWallet/identification/itw_cie_placeholder.png"),
-    footerButtons: [
-      {
-        label: I18n.t(
-          "features.itWallet.identification.l3.mode.bottomSheet.cieInfo.primaryAction"
-        ),
-        onPress: () => {
-          cieInfoBottomSheet.dismiss();
-        }
-      },
-      {
-        label: I18n.t(
-          "features.itWallet.identification.l3.mode.bottomSheet.cieInfo.secondaryAction"
-        ),
-        onPress: () => {
-          navigateToCieWarning("noCie");
-          cieInfoBottomSheet.dismiss();
-        }
-      }
-    ]
-  });
-
-  const pinBottomSheet = useItwIdentificationBottomSheet({
-    title: I18n.t(
-      "features.itWallet.identification.l3.mode.bottomSheet.pin.title"
-    ),
-    content: [
-      {
-        body: I18n.t(
-          "features.itWallet.identification.l3.mode.bottomSheet.pin.content"
-        )
-      }
-    ],
-    // TODO: replace with the correct image when available
-    imageSrc: require("../../../../../img/features/itWallet/identification/itw_cie_pin_placeholder.png"),
-    footerButtons: [
-      {
-        label: I18n.t(
-          "features.itWallet.identification.l3.mode.bottomSheet.pin.primaryAction"
-        ),
-        onPress: () => {
-          pinBottomSheet.dismiss();
-        }
-      },
-      {
-        label: I18n.t(
-          "features.itWallet.identification.l3.mode.bottomSheet.pin.secondaryAction"
-        ),
-        onPress: () => {
-          navigateToCieWarning("noPin");
-          pinBottomSheet.dismiss();
-        }
-      }
-    ]
-  });
+  const { cieInfoBottomSheet, pinBottomSheet } = useCieInfoAndPinBottomSheets();
 
   return (
     <IOScrollViewWithLargeHeader

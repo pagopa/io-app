@@ -89,6 +89,13 @@ export type StartReissuing = {
   type: "start-reissuing";
 };
 
+export type AcknowledgedCieInfo = {
+  type: "acknowledged-cie-info";
+};
+
+export type AcknowledgedCiePinInfo = {
+  type: "acknowledged-cie-pin-info";
+};
 export type Reset = {
   type: "reset";
 };
@@ -114,4 +121,6 @@ export type EidIssuanceEvents =
   | ExternalErrorEvent
   | StartReissuing
   | GoToCieWarning
+  | AcknowledgedCieInfo
+  | AcknowledgedCiePinInfo
   | Reset;
