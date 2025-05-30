@@ -33,6 +33,8 @@ export type PaymentAnalyticsProps = {
   browser_type: PaymentAnalyticsBrowserType;
 };
 
+export const MYBANK_PSP_BANNER_ID = "mybank_psp_selection";
+
 // eslint-disable-next-line complexity
 export const getPaymentAnalyticsEventFromFailureOutcome = (
   outcome: WalletPaymentOutcomeEnum
@@ -108,7 +110,9 @@ export const getPaymentAnalyticsEventFromRequestFailure = (
     case "DOMAIN_UNKNOWN":
       return "PAYMENT_ORGANIZATION_ERROR";
     case "PAYMENT_ONGOING":
-      return "PAYMENT_ONGOING_ERROR";
+      return failure.faultCodeDetail
+        ? `PAYMENT_${failure.faultCodeDetail}`
+        : "PAYMENT_ONGOING_ERROR";
     case "PAYMENT_EXPIRED":
       return "PAYMENT_EXPIRED_ERROR";
     case "PAYMENT_CANCELED":
@@ -437,3 +441,21 @@ export const trackPaymentUserCancellationContinue = (
     buildEventProperties("UX", "action", props)
   );
 };
+
+export const trackPaymentMyBankPspBanner = () =>
+  mixpanelTrack(
+    "BANNER",
+    buildEventProperties("UX", "screen_view", {
+      banner_id: MYBANK_PSP_BANNER_ID,
+      banner_page: "PAYMENT_PICK_PSP_SCREEN"
+    })
+  );
+
+export const trackPaymentMyBankPspBannerClose = () =>
+  mixpanelTrack(
+    "CLOSE_BANNER",
+    buildEventProperties("UX", "action", {
+      banner_id: MYBANK_PSP_BANNER_ID,
+      banner_page: "PAYMENT_PICK_PSP_SCREEN"
+    })
+  );

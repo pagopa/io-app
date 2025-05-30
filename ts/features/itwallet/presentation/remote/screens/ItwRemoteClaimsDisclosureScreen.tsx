@@ -8,20 +8,19 @@ import {
 import IOMarkdown from "../../../../../components/IOMarkdown/index.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import I18n from "../../../../../i18n";
+import { useIODispatch } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
+import { identificationRequest } from "../../../../identification/store/actions";
 import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
+import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
+import { ItwRemotePresentationDetails } from "../components/ItwRemotePresentationDetails.tsx";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import {
-  selectIsClaimsDisclosure,
   selectIsLoading,
   selectRelyingPartyData
 } from "../machine/selectors.ts";
-import { useIODispatch } from "../../../../../store/hooks.ts";
-import { identificationRequest } from "../../../../identification/store/actions";
-import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
-import { ItwRemotePresentationDetails } from "../components/ItwRemotePresentationDetails.tsx";
 
 const ItwRemoteClaimsDisclosureScreen = () => {
   usePreventScreenCapture();
@@ -29,16 +28,13 @@ const ItwRemoteClaimsDisclosureScreen = () => {
   useAvoidHardwareBackButton();
 
   const isLoading = ItwRemoteMachineContext.useSelector(selectIsLoading);
-  const isClaimsDisclosure = ItwRemoteMachineContext.useSelector(
-    selectIsClaimsDisclosure
-  );
 
   /**
    * In addition to checking for the loading state,
    * we need to ensure that the current state is not `ClaimsDisclosure`
    * to prevent a visual glitch caused by a slight delay in navigation
    */
-  if (isLoading || !isClaimsDisclosure) {
+  if (isLoading) {
     return (
       <ItwRemoteLoadingScreen
         title={I18n.t(

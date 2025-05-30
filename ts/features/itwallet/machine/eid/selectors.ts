@@ -7,6 +7,9 @@ import { IdentificationContext } from "./context";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
+export const isL3FeaturesEnabledSelector = (snapshot: MachineSnapshot) =>
+  snapshot.context.isL3FeaturesEnabled ?? false;
+
 export const selectEidOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.eid);
 

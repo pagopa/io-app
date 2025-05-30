@@ -1,12 +1,10 @@
 import {
   Body,
   BodyProps,
-  ButtonLink,
-  ButtonLinkProps,
-  ButtonSolid,
-  ButtonSolidProps,
   ComposedBodyFromArray,
   H3,
+  IOButton,
+  IOButtonProps,
   IOPictograms,
   IOVisualCostants,
   Pictogram,
@@ -22,22 +20,41 @@ import {
 import { Platform, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  AnimatedPictogram,
+  IOAnimatedPictograms
+} from "../ui/AnimatedPictogram";
 
-type OperationResultScreenContentProps = WithTestID<{
-  pictogram?: IOPictograms;
-  title: string;
-  subtitle?: string | Array<BodyProps>;
-  subtitleProps?: Pick<BodyProps, "textBreakStrategy" | "lineBreakStrategyIOS">;
-  action?: Pick<
-    ButtonSolidProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
-  >;
-  secondaryAction?: Pick<
-    ButtonLinkProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
-  >;
-  isHeaderVisible?: boolean;
-}>;
+type ButtonProps = Pick<
+  IOButtonProps,
+  "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
+>;
+
+type OperationResultScreenContentProps = WithTestID<
+  {
+    title: string;
+    subtitle?: string | Array<BodyProps>;
+    subtitleProps?: Pick<
+      BodyProps,
+      "textBreakStrategy" | "lineBreakStrategyIOS"
+    >;
+    action?: ButtonProps;
+    secondaryAction?: ButtonProps;
+    isHeaderVisible?: boolean;
+  } & GraphicAssetProps
+>;
+
+type GraphicAssetProps =
+  | {
+      enableAnimatedPictogram: true;
+      pictogram: IOAnimatedPictograms;
+      loop?: AnimatedPictogram["loop"];
+    }
+  | {
+      enableAnimatedPictogram?: false;
+      pictogram?: IOPictograms;
+      loop?: never;
+    };
 
 const OperationResultScreenContent = forwardRef<
   View,
@@ -45,7 +62,9 @@ const OperationResultScreenContent = forwardRef<
 >(
   (
     {
+      enableAnimatedPictogram,
       pictogram,
+      loop,
       title,
       subtitle,
       action,
@@ -71,9 +90,16 @@ const OperationResultScreenContent = forwardRef<
           Platform.OS === "android" && styles.wrapper_android
         ]}
       >
-        {pictogram && (
+        {!enableAnimatedPictogram && pictogram && (
           <View style={{ alignItems: "center" }}>
             <Pictogram name={pictogram} size={120} />
+            <VSpacer size={24} />
+          </View>
+        )}
+
+        {enableAnimatedPictogram && pictogram && (
+          <View style={{ alignItems: "center" }}>
+            <AnimatedPictogram name={pictogram} size={120} loop={loop} />
             <VSpacer size={24} />
           </View>
         )}
@@ -96,7 +122,7 @@ const OperationResultScreenContent = forwardRef<
           <View style={{ alignItems: "center" }}>
             <VSpacer size={24} />
             <View>
-              <ButtonSolid {...action} />
+              <IOButton variant="solid" {...action} />
             </View>
           </View>
         )}
@@ -104,7 +130,7 @@ const OperationResultScreenContent = forwardRef<
           <View style={{ alignItems: "center" }}>
             <VSpacer size={24} />
             <View>
-              <ButtonLink {...secondaryAction} />
+              <IOButton variant="link" {...secondaryAction} />
             </View>
           </View>
         )}

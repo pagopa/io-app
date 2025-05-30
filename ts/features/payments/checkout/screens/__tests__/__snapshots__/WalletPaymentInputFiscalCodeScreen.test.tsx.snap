@@ -608,6 +608,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                 inputAccessoryViewID="fiscalCodeInputAccessoryView"
                                 inputMode="numeric"
                                 keyboardType="number-pad"
+                                maxFontSizeMultiplier={1.5}
                                 maxLength={11}
                                 onBlur={[Function]}
                                 onChangeText={[Function]}
@@ -660,6 +661,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                               >
                                 <Text
                                   accessible={false}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   onLayout={[Function]}
                                   style={
@@ -866,28 +868,27 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "borderRadius": 8,
                                       "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                      "paddingHorizontal": 24,
+                                      "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
-                                    {
-                                      "height": 48,
-                                    },
-                                    {
-                                      "backgroundColor": "#0B3EE3",
-                                      "overflow": "hidden",
-                                    },
-                                    {
-                                      "paddingHorizontal": 16,
-                                    },
-                                    {},
                                     false,
                                     {
                                       "backgroundColor": undefined,
                                     },
+                                    {
+                                      "paddingHorizontal": 16,
+                                    },
+                                    {
+                                      "backgroundColor": "#0B3EE3",
+                                      "borderColor": "#FFFFFF",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": 48,
+                                    },
+                                    {},
                                   ]
                                 }
                               >
@@ -918,16 +919,24 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                       [
                                         {},
                                         {
-                                          "color": "#FFFFFF",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 20,
+                                          "lineHeight": undefined,
                                         },
-                                        {
-                                          "alignSelf": "center",
-                                        },
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#FFFFFF",
+                                          },
+                                          {
+                                            "color": undefined,
+                                          },
+                                        ],
                                       ]
                                     }
                                   >

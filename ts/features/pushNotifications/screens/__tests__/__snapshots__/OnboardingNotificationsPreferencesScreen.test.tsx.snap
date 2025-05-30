@@ -1094,28 +1094,27 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                {
-                                  "height": 48,
-                                },
-                                {
-                                  "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
-                                },
-                                {},
                                 false,
                                 {
                                   "backgroundColor": undefined,
                                 },
+                                {
+                                  "paddingHorizontal": 16,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
                               ]
                             }
                           >
@@ -1146,16 +1145,24 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   [
                                     {},
                                     {
-                                      "color": "#FFFFFF",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "alignSelf": "center",
-                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -2512,28 +2519,27 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                {
-                                  "height": 48,
-                                },
-                                {
-                                  "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
-                                },
-                                {},
                                 false,
                                 {
                                   "backgroundColor": undefined,
                                 },
+                                {
+                                  "paddingHorizontal": 16,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
                               ]
                             }
                           >
@@ -2565,16 +2571,24 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   [
                                     {},
                                     {
-                                      "color": "#FFFFFF",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "alignSelf": "center",
-                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -3931,28 +3945,27 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                {
-                                  "height": 48,
-                                },
-                                {
-                                  "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
-                                },
-                                {},
                                 false,
                                 {
                                   "backgroundColor": undefined,
                                 },
+                                {
+                                  "paddingHorizontal": 16,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
                               ]
                             }
                           >
@@ -3984,16 +3997,24 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   [
                                     {},
                                     {
-                                      "color": "#FFFFFF",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "alignSelf": "center",
-                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -5350,28 +5371,27 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                {
-                                  "height": 48,
-                                },
-                                {
-                                  "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
-                                },
-                                {},
                                 false,
                                 {
                                   "backgroundColor": undefined,
                                 },
+                                {
+                                  "paddingHorizontal": 16,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
                               ]
                             }
                           >
@@ -5403,16 +5423,24 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   [
                                     {},
                                     {
-                                      "color": "#FFFFFF",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "alignSelf": "center",
-                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -7059,28 +7087,27 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                {
-                                  "height": 48,
-                                },
-                                {
-                                  "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
-                                },
-                                {},
                                 false,
                                 {
                                   "backgroundColor": undefined,
                                 },
+                                {
+                                  "paddingHorizontal": 16,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
+                                },
+                                {},
                               ]
                             }
                           >

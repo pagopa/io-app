@@ -1,9 +1,9 @@
 import {
   Body,
-  ButtonSolid,
   ContentWrapper,
   Divider,
   H4,
+  IOButton,
   ListItemNav,
   VSpacer,
   VStack,
@@ -29,8 +29,9 @@ export const DSBottomSheet = () => {
   const defaultFooter = (
     <ContentWrapper>
       <VSpacer size={16} />
-      <ButtonSolid
+      <IOButton
         fullWidth
+        variant="solid"
         accessibilityLabel="Tap to dismiss the bottom sheet"
         label={"Dismiss bottom sheet"}
         onPress={handlePressDismiss}

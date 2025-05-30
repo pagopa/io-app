@@ -857,28 +857,27 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 24,
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  {
-                                    "height": 48,
-                                  },
-                                  {
-                                    "backgroundColor": "#0B3EE3",
-                                    "overflow": "hidden",
-                                  },
-                                  {
-                                    "paddingHorizontal": 16,
-                                  },
-                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
                                   },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
                                 ]
                               }
                             >
@@ -909,16 +908,24 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                                     [
                                       {},
                                       {
-                                        "color": "#FFFFFF",
+                                        "color": "#0E0F13",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 20,
+                                        "lineHeight": undefined,
                                       },
-                                      {
-                                        "alignSelf": "center",
-                                      },
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -1618,26 +1625,27 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
-                                        {
-                                          "height": 48,
-                                        },
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
-                                        },
-                                        false,
-                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
                                         },
+                                        {
+                                          "paddingHorizontal": 24,
+                                        },
+                                        {
+                                          "backgroundColor": "#0B3EE3",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
+                                        },
+                                        {},
                                       ]
                                     }
                                   >
@@ -1668,16 +1676,24 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -3524,26 +3540,27 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot, dispatch di
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
-                                        {
-                                          "height": 48,
-                                        },
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
-                                        },
-                                        false,
-                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
                                         },
+                                        {
+                                          "paddingHorizontal": 24,
+                                        },
+                                        {
+                                          "backgroundColor": "#0B3EE3",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
+                                        },
+                                        {},
                                       ]
                                     }
                                   >
@@ -3574,16 +3591,24 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot, dispatch di
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >

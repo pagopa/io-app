@@ -14,6 +14,17 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
 import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
 
+const bannerConfig = {
+  onboarding: {
+    content: I18n.t("features.itWallet.discovery.banner.home.content")
+  },
+  reactivating: {
+    content: I18n.t(
+      "features.itWallet.discovery.banner.onboardingActive.content"
+    )
+  }
+} as const;
+
 /**
  * ITW discovery banner to be displayed in the wallet card onboarding screen
  */
@@ -28,9 +39,9 @@ const ItwDiscoveryBannerOnboarding = () => {
   const trackBannerProperties = useMemo(
     () => ({
       banner_id:
-        bannerType === "onboarding"
-          ? "itwDiscoveryBannerOnboardingTestID"
-          : "itwDiscoveryBannerOnboardingDeviceChanged",
+        bannerType === "reactivating"
+          ? "itwDiscoveryBannerOnboardingDeviceChanged"
+          : "itwDiscoveryBannerOnboardingTestID",
       banner_page: route.name,
       banner_landing: "ITW_ONBOARDING"
     }),
@@ -48,19 +59,9 @@ const ItwDiscoveryBannerOnboarding = () => {
   const handleOnPress = () => {
     trackItWalletBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: {}
     });
-  };
-
-  const bannerConfig = {
-    onboarding: {
-      content: I18n.t("features.itWallet.discovery.banner.home.content")
-    },
-    reactivating: {
-      content: I18n.t(
-        "features.itWallet.discovery.banner.onboardingActive.content"
-      )
-    }
   };
 
   if (!isBannerRenderable || !bannerType) {

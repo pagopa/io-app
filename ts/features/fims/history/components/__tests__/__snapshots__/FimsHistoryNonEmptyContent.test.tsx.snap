@@ -756,6 +756,10 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -767,10 +771,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -811,6 +811,9 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
                                         },
                                         {
                                           "color": undefined,
@@ -1595,6 +1598,10 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -1606,10 +1613,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -3986,6 +3989,10 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -3997,10 +4004,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -4041,6 +4044,9 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
                                         },
                                         {
                                           "color": undefined,
@@ -4892,6 +4898,10 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -4903,10 +4913,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -5943,6 +5949,10 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -5954,10 +5964,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -5998,6 +6004,9 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
                                         },
                                         {
                                           "color": undefined,
@@ -6855,6 +6864,10 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -6866,10 +6879,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >

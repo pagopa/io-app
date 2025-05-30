@@ -1,4 +1,4 @@
-import { ButtonSolid, useIOToast } from "@pagopa/io-app-design-system";
+import { IOButton, useIOToast } from "@pagopa/io-app-design-system";
 import { PaymentData } from "../../types";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import I18n from "../../../../i18n";
@@ -25,10 +25,13 @@ export const MessageDetailsPaymentButton = ({
   const dispatch = useIODispatch();
   const store = useIOStore();
   const toast = useIOToast();
+
   return (
-    <ButtonSolid
+    <IOButton
+      fullWidth
+      variant="solid"
+      loading={isLoading}
       label={I18n.t("features.messages.payments.pay")}
-      accessibilityLabel={I18n.t("features.messages.payments.pay")}
       onPress={() =>
         initializeAndNavigateToWalletForPayment(
           getRptIdStringFromPaymentData(paymentData),
@@ -39,8 +42,6 @@ export const MessageDetailsPaymentButton = ({
           () => toast.error(I18n.t("genericError"))
         )
       }
-      fullWidth
-      loading={isLoading}
     />
   );
 };

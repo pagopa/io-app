@@ -1,5 +1,5 @@
 import {
-  ButtonOutline,
+  IOButton,
   H4,
   IOToast,
   ToastNotification,
@@ -21,38 +21,44 @@ export const DSToastNotifications = () => {
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Events</H4>
           <VStack space={componentMargin}>
-            <ButtonOutline
-              fullWidth={true}
+            <IOButton
+              fullWidth
+              variant="outline"
               label="Neutral"
               accessibilityLabel="Neutral"
               onPress={() => IOToast.show("Hello!")}
             />
-            <ButtonOutline
-              fullWidth={true}
+            <IOButton
+              fullWidth
+              variant="outline"
               label="Error"
               accessibilityLabel="Error"
               onPress={() => IOToast.error("Error")}
             />
-            <ButtonOutline
-              fullWidth={true}
+            <IOButton
+              fullWidth
+              variant="outline"
               label="Info"
               accessibilityLabel="Info"
               onPress={() => IOToast.info("Info")}
             />
-            <ButtonOutline
-              fullWidth={true}
+            <IOButton
+              fullWidth
+              variant="outline"
               label="Success"
               accessibilityLabel="Success"
               onPress={() => IOToast.success("Success")}
             />
-            <ButtonOutline
-              fullWidth={true}
+            <IOButton
+              fullWidth
+              variant="outline"
               label="Warning"
               accessibilityLabel="Warning"
               onPress={() => IOToast.warning("Warning")}
             />
-            <ButtonOutline
-              fullWidth={true}
+            <IOButton
+              fullWidth
+              variant="outline"
               label="Hide all"
               accessibilityLabel="Hide all"
               onPress={() => IOToast.hideAll()}

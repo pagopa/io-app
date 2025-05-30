@@ -1,4 +1,4 @@
-import { ButtonSolid, TextInputValidation } from "@pagopa/io-app-design-system";
+import { IOButton, TextInputValidation } from "@pagopa/io-app-design-system";
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
@@ -132,10 +132,10 @@ const WalletPaymentInputNoticeNumberScreen = () => {
       {Platform.OS === "ios" && (
         <InputAccessoryView nativeID="noticeNumberInputAccessoryView">
           <View style={{ padding: 20 }}>
-            <ButtonSolid
+            <IOButton
               fullWidth
+              variant="solid"
               label={I18n.t("global.buttons.continue")}
-              accessibilityLabel={I18n.t("global.buttons.continue")}
               onPress={handleContinueClick}
             />
           </View>

@@ -1,5 +1,5 @@
 import configureMockStore from "redux-mock-store";
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { ActionType } from "typesafe-actions";
 import SecurityScreen from "../SecurityScreen";
 import I18n from "../../../../../i18n";
@@ -33,17 +33,23 @@ jest.mock("react-redux", () => ({
 }));
 
 describe("Test SecurityScreen", () => {
-  jest.useFakeTimers();
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
     mockAccessibilityInfo(false);
+    jest.useFakeTimers();
   });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   it("should be not null", () => {
     const { component } = renderComponent();
 
     expect(component).not.toBeNull();
   });
+
   it("should render H1 component with title and H4 component with subtitle", () => {
     const { component } = renderComponent();
 
@@ -58,6 +64,7 @@ describe("Test SecurityScreen", () => {
       component.queryByText(I18n.t("profile.security.subtitle"))
     ).not.toBeNull();
   });
+
   it("should render ListItemNav reset unlock code with the right title and subtitle", () => {
     const { component } = renderComponent();
 
@@ -73,15 +80,16 @@ describe("Test SecurityScreen", () => {
       component.queryByText(I18n.t("profile.security.subtitle"))
     ).not.toBeNull();
   });
-  it("when press ListItemNav reset unlock code, should dispatch 'identificationRequest' with proper parameters", () => {
+
+  it("when press ListItemNav reset unlock code, should dispatch 'identificationRequest' with proper parameters", async () => {
     const { component } = renderComponent();
 
     expect(component).not.toBeNull();
     const listItemNav = component.getByTestId("reset-unlock-code");
     expect(listItemNav).not.toBeNull();
-
-    fireEvent.press(listItemNav);
-
+    await act(async () => {
+      fireEvent.press(listItemNav);
+    });
     expect(mockDispatch.mock.calls.length).toBe(1);
     expect(mockDispatch.mock.calls[0].length).toBe(1);
     const dispatchedAction = mockDispatch.mock.calls[0][0] as ActionType<
@@ -99,6 +107,7 @@ describe("Test SecurityScreen", () => {
     ).toBeDefined();
     expect(dispatchedAction.payload.shufflePad).toBe(shufflePinPadOnPayment);
   });
+
   it("should match snapshot when 'fimsIsHistoryEnabledSelector' returns 'true'", () => {
     jest
       .spyOn(fimsHistorySelectors, "fimsIsHistoryEnabledSelector")
@@ -106,21 +115,81 @@ describe("Test SecurityScreen", () => {
     const { component } = renderComponent();
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it("should have the FIMS history entry when 'fimsIsHistoryEnabledSelector' returns 'true' and the press event on it should navigate to the related screen", () => {
+
+  it("should have the FIMS history entry when 'fimsIsHistoryEnabledSelector' returns 'true' and the press event on it should navigate to the related screen", async () => {
     jest
       .spyOn(fimsHistorySelectors, "fimsIsHistoryEnabledSelector")
       .mockImplementation(_ => true);
     const { component } = renderComponent();
     const fimsListItem = component.getByTestId("fims-history");
     expect(fimsListItem).toBeDefined();
-
-    fireEvent.press(fimsListItem);
+    await act(async () => {
+      fireEvent.press(fimsListItem);
+    });
     expect(mockNavigate.mock.calls.length).toBe(1);
     expect(mockNavigate.mock.calls[0].length).toBe(2);
     expect(mockNavigate.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
     expect(mockNavigate.mock.calls[0][1]).toEqual({
       screen: FIMS_ROUTES.HISTORY
     });
+  });
+
+  it("should navigate to IDPay onboarding when not onboarded", async () => {
+    jest
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      .spyOn(require("../../../../../store/hooks"), "useIOSelector")
+      .mockImplementation((selector: any) => {
+        if (
+          selector ===
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
+          require("../../../../idpay/code/store/selectors")
+            .isIdPayCodeOnboardedSelector
+        ) {
+          return false;
+        }
+        if (
+          selector ===
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
+          require("../../../../../store/reducers/persistedPreferences")
+            .isIdPayLocallyEnabledSelector
+        ) {
+          return true;
+        }
+        return false;
+      });
+
+    const { component } = renderComponent();
+    const idpayItem = component.getByTestId("reset-idpay-code");
+    await act(async () => {
+      fireEvent.press(idpayItem);
+    });
+    expect(mockNavigate).toHaveBeenCalled();
+  });
+
+  it("should enable biometric section when biometrics are available", async () => {
+    jest
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      .spyOn(require("../../../../../utils/biometrics"), "getBiometricsType")
+      .mockResolvedValueOnce("FaceID");
+
+    const { component } = renderComponent();
+    await Promise.resolve();
+    const switchItem = component.getByTestId("biometric-recognition");
+    await act(async () => {
+      expect(switchItem).toBeTruthy();
+    });
+    fireEvent(switchItem, "onSwitchValueChange");
+  });
+
+  it("should silently fail when getBiometricsType rejects", async () => {
+    jest
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      .spyOn(require("../../../../../utils/biometrics"), "getBiometricsType")
+      .mockRejectedValueOnce(new Error("mock error"));
+
+    const { component } = renderComponent();
+    await Promise.resolve();
+    expect(component).toBeDefined();
   });
 });
 

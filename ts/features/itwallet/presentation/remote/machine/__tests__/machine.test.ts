@@ -11,16 +11,26 @@ import {
   EvaluateRelyingPartyTrustOutput,
   GetPresentationDetailsInput,
   GetPresentationDetailsOutput,
+  GetRequestObjectInput,
+  GetRequestObjectOutput,
   SendAuthorizationResponseInput,
   SendAuthorizationResponseOutput
 } from "../actors.ts";
 import { Context, InitialContext } from "../context.ts";
 import { RequestObject } from "../../../../common/utils/itwTypesUtils.ts";
+import { RemoteFailureType } from "../failure.ts";
 
 const T_CLIENT_ID = "clientId";
 const T_REQUEST_URI = "https://example.com";
 const T_STATE = "state";
 const T_REDIRECT_URI = "https://example.com/redirect";
+
+const qrCodePayload: ItwRemoteRequestPayload = {
+  client_id: T_CLIENT_ID,
+  request_uri: T_REQUEST_URI,
+  state: T_STATE,
+  request_uri_method: "get"
+};
 
 type MachineSnapshot = StateFrom<ItwRemoteMachine>;
 
@@ -33,9 +43,11 @@ describe("itwRemoteMachine", () => {
   const closePresentation = jest.fn();
 
   const isWalletActive = jest.fn();
+  const isL3Enabled = jest.fn().mockReturnValue(true);
   const isEidExpired = jest.fn();
 
   const evaluateRelyingPartyTrust = jest.fn();
+  const getRequestObject = jest.fn();
   const getPresentationDetails = jest.fn();
   const sendAuthorizationResponse = jest.fn();
 
@@ -53,6 +65,10 @@ describe("itwRemoteMachine", () => {
         EvaluateRelyingPartyTrustOutput,
         EvaluateRelyingPartyTrustInput
       >(evaluateRelyingPartyTrust),
+      getRequestObject: fromPromise<
+        GetRequestObjectOutput,
+        GetRequestObjectInput
+      >(getRequestObject),
       getPresentationDetails: fromPromise<
         GetPresentationDetailsOutput,
         GetPresentationDetailsInput
@@ -64,6 +80,7 @@ describe("itwRemoteMachine", () => {
     },
     guards: {
       isWalletActive,
+      isL3Enabled,
       isEidExpired
     }
   });
@@ -87,30 +104,45 @@ describe("itwRemoteMachine", () => {
 
     actor.send({
       type: "start",
-      payload: {
-        client_id: T_CLIENT_ID,
-        request_uri: T_REQUEST_URI,
-        state: T_STATE,
-        request_uri_method: "get"
-      }
+      payload: qrCodePayload
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    const snapshot = actor.getSnapshot();
+    expect(snapshot.value).toStrictEqual("Failure");
+    expect(snapshot.context.failure?.type).toEqual(
+      RemoteFailureType.WALLET_INACTIVE
+    );
     expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("Should navigate to wallet when user not accept to active ITWallet", async () => {
+  it("should transition from Idle to WalletInactive when the identification is not L3", () => {
+    isWalletActive.mockReturnValue(true);
+    isL3Enabled.mockReturnValueOnce(false);
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "start",
+      payload: qrCodePayload
+    });
+
+    const snapshot = actor.getSnapshot();
+    expect(snapshot.value).toStrictEqual("Failure");
+    expect(snapshot.context.failure?.type).toEqual(
+      RemoteFailureType.WALLET_INACTIVE
+    );
+    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should navigate to wallet when user not accept to active IT Wallet", async () => {
     const initialSnapshot: MachineSnapshot =
       createActor(itwRemoteMachine).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: "Failure",
       context: {
-        payload: {
-          client_id: T_CLIENT_ID,
-          request_uri: T_REQUEST_URI,
-          state: T_STATE
-        }
+        payload: qrCodePayload
       }
     } as MachineSnapshot);
 
@@ -123,18 +155,14 @@ describe("itwRemoteMachine", () => {
     expect(closePresentation).toHaveBeenCalledTimes(1);
   });
 
-  it("Should navigate to TOS when user accept to active ITWallet", async () => {
+  it("Should navigate to TOS when user accept to active IT Wallet", async () => {
     const initialSnapshot: MachineSnapshot =
       createActor(itwRemoteMachine).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: "Failure",
       context: {
-        payload: {
-          client_id: T_CLIENT_ID,
-          request_uri: T_REQUEST_URI,
-          state: T_STATE
-        }
+        payload: qrCodePayload
       }
     } as MachineSnapshot);
 
@@ -154,12 +182,7 @@ describe("itwRemoteMachine", () => {
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: "Failure",
       context: {
-        payload: {
-          client_id: T_CLIENT_ID,
-          request_uri: T_REQUEST_URI,
-          state: T_STATE,
-          request_uri_method: "get"
-        }
+        payload: qrCodePayload
       }
     } as MachineSnapshot);
 
@@ -181,19 +204,18 @@ describe("itwRemoteMachine", () => {
 
     actor.send({
       type: "start",
-      payload: {
-        client_id: T_CLIENT_ID,
-        request_uri: T_REQUEST_URI,
-        state: T_STATE,
-        request_uri_method: "get"
-      }
+      payload: qrCodePayload
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    const snapshot = actor.getSnapshot();
+    expect(snapshot.value).toStrictEqual("Failure");
+    expect(snapshot.context.failure?.type).toEqual(
+      RemoteFailureType.EID_EXPIRED
+    );
     expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("should transition from Idle to EvaluatingRelyingPartyTrust when ITWallet is active", () => {
+  it("should transition from Idle to EvaluatingRelyingPartyTrust when IT Wallet is active", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -202,15 +224,9 @@ describe("itwRemoteMachine", () => {
 
     actor.send({
       type: "start",
-      payload: {
-        client_id: T_CLIENT_ID,
-        request_uri: T_REQUEST_URI,
-        state: T_STATE,
-        request_uri_method: "get"
-      }
+      payload: qrCodePayload
     });
 
-    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().value).toStrictEqual(
       "EvaluatingRelyingPartyTrust"
     );
@@ -220,14 +236,9 @@ describe("itwRemoteMachine", () => {
     /**
      * Mocks
      */
-    const qrCodePayload: ItwRemoteRequestPayload = {
-      client_id: T_CLIENT_ID,
-      request_uri: T_REQUEST_URI,
-      state: T_STATE,
-      request_uri_method: "get"
-    };
     const rpConf = {} as RelyingPartyConfiguration;
     const presentationDetails = [] as EnrichedPresentationDetails;
+    const unverifiedRequestObject = "";
     const requestObject = {
       ...({} as RequestObject),
       client_id: T_CLIENT_ID,
@@ -248,6 +259,7 @@ describe("itwRemoteMachine", () => {
       rpConf,
       rpSubject: T_CLIENT_ID
     });
+    getRequestObject.mockResolvedValue(unverifiedRequestObject);
     getPresentationDetails.mockResolvedValue({
       requestObject,
       presentationDetails
@@ -263,7 +275,6 @@ describe("itwRemoteMachine", () => {
     actor.start();
 
     actor.send({ type: "start", payload: qrCodePayload });
-    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       payload: qrCodePayload
@@ -284,6 +295,19 @@ describe("itwRemoteMachine", () => {
     });
 
     /**
+     * Get the RequestObject from the RP
+     */
+    await waitFor(actor, snapshot => snapshot.matches("GettingRequestObject"));
+    expect(getRequestObject).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
+      ...InitialContext,
+      requestObjectEncodedJwt: unverifiedRequestObject,
+      payload: qrCodePayload,
+      rpConf,
+      rpSubject: T_CLIENT_ID
+    });
+
+    /**
      * Get the presentation details from the RP
      */
     await waitFor(actor, snapshot =>
@@ -292,6 +316,7 @@ describe("itwRemoteMachine", () => {
     expect(getPresentationDetails).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       rpConf,
       rpSubject: T_CLIENT_ID,
@@ -303,6 +328,7 @@ describe("itwRemoteMachine", () => {
      * The user selects optional credentials and gives consent to share the credentials with the RP
      */
     await waitFor(actor, snapshot => snapshot.matches("ClaimsDisclosure"));
+    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
     actor.send({
       type: "toggle-credential",
       credentialIds: ["cred01", "cred02", "cred03"]
@@ -311,6 +337,7 @@ describe("itwRemoteMachine", () => {
     actor.send({ type: "toggle-credential", credentialIds: ["cred03"] });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       rpConf,
       rpSubject: T_CLIENT_ID,
@@ -330,6 +357,7 @@ describe("itwRemoteMachine", () => {
     expect(sendAuthorizationResponse).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       rpConf,
       rpSubject: T_CLIENT_ID,
@@ -352,6 +380,7 @@ describe("itwRemoteMachine", () => {
     isWalletActive.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
     evaluateRelyingPartyTrust.mockResolvedValue({});
+    getRequestObject.mockReturnValue("");
     getPresentationDetails.mockRejectedValue({ message: "ERROR" });
 
     const actor = createActor(mockedMachine);
@@ -394,5 +423,29 @@ describe("itwRemoteMachine", () => {
 
     expect(sendAuthorizationResponse).toHaveBeenCalledTimes(1);
     await waitFor(actor, snapshot => snapshot.matches("Failure"));
+  });
+
+  it("should transition to Failure when an error occurs in EvaluatingRelyingPartyTrust", async () => {
+    isWalletActive.mockReturnValue(true);
+    isEidExpired.mockReturnValue(false);
+
+    evaluateRelyingPartyTrust.mockImplementation(() => {
+      throw new Error("Trust evaluation failed");
+    });
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "start",
+      payload: {
+        client_id: T_CLIENT_ID,
+        request_uri: T_REQUEST_URI,
+        state: T_STATE
+      } as ItwRemoteRequestPayload
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
   });
 });

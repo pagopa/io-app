@@ -1013,6 +1013,10 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -1024,10 +1028,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1068,6 +1068,9 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
                                         },
                                         {
                                           "color": undefined,

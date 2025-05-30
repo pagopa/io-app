@@ -51,6 +51,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
   credentialType?: string;
@@ -66,7 +67,7 @@ type ScreenProps =
   // Props for standalone usage, outside a <Stack.Screen>
   | ItwIssuanceCredentialTrustIssuerNavigationParams;
 
-const ItwIssuanceCredentialTrustIssuerScreen = (props: ScreenProps) => {
+const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   const { credentialType, asyncContinuation } =
     ("route" in props ? props.route.params : props) ?? {};
 
@@ -248,4 +249,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   );
 };
 
-export { ItwIssuanceCredentialTrustIssuerScreen };
+// Offline failure screen HOC
+export const ItwIssuanceCredentialTrustIssuerScreen = withOfflineFailureScreen(
+  ItwIssuanceCredentialTrustIssuer
+);

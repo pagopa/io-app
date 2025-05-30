@@ -54,6 +54,10 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_SCREEN_OPERATION_RESULT",
       title: "Operation result"
     },
+    OPERATION_RESULT_ANIMATED: {
+      route: "DS_SCREEN_OPERATION_RESULT_ANIMATED",
+      title: "Operation result (animated)"
+    },
     IOSCROLLVIEW: {
       route: "IOSCROLLVIEW",
       title: "IOScrollView"
@@ -153,6 +157,10 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   LEGACY: {
+    BUTTONS: {
+      route: "DESIGN_SYSTEM_LEGACY_BUTTONS",
+      title: "Buttons"
+    },
     ADVICE: {
       route: "DESIGN_SYSTEM_LEGACY_ADVICE",
       title: "Advice & Banners"

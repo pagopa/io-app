@@ -1126,6 +1126,10 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -1137,10 +1141,6 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1181,6 +1181,9 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
                                         },
                                         {
                                           "color": undefined,
@@ -1643,6 +1646,8 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  false,
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -1656,8 +1661,6 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                   {
                                     "opacity": 0.5,
                                   },
-                                  false,
-                                  false,
                                 ]
                               }
                             >

@@ -1,7 +1,6 @@
 import {
   Avatar,
   Body,
-  ButtonLink,
   ContentWrapper,
   ForceScrollDownView,
   H2,
@@ -9,6 +8,7 @@ import {
   hexToRgba,
   HStack,
   Icon,
+  IOButton,
   IOColors,
   IOVisualCostants,
   ListItemHeader,
@@ -148,7 +148,8 @@ export const FimsFlowSuccessBody = ({
         <Subtitle />
 
         <VSpacer size={24} />
-        <ButtonLink
+        <IOButton
+          variant="link"
           label={I18n.t("global.why")}
           onPress={BottomSheet.present}
         />

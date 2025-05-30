@@ -26,6 +26,8 @@ import {
   walletPaymentSelectedPaymentMethodOptionSelector
 } from "../store/selectors/paymentMethods";
 import { paymentMethodPspBannerClose } from "../store/actions/orchestration";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import * as analytics from "../analytics";
 
 const WalletPaymentPspBanner = () => {
   const dispatch = useIODispatch();
@@ -58,8 +60,11 @@ const WalletPaymentPspBanner = () => {
   };
 
   const handleBannerClose = () => {
+    analytics.trackPaymentMyBankPspBannerClose();
     dispatch(paymentMethodPspBannerClose(selectedPaymentMethodName));
   };
+
+  useOnFirstRender(() => analytics.trackPaymentMyBankPspBanner());
 
   if (!isBannerEnabled || !bannerConfig || isBannerClosed) {
     return null;

@@ -4,9 +4,9 @@
  */
 import {
   Body,
-  ButtonSolid,
   ContentWrapper,
   H1,
+  IOButton,
   IOToast,
   TextInputValidation,
   VSpacer
@@ -67,6 +67,12 @@ export type EmailInsertScreenNavigationParams = Readonly<{
 }>;
 
 const EMPTY_EMAIL = "";
+
+/**
+ * Since we have some users with a very large font size, that can't enter or use
+ * this screen, we need to set a maximum font size multiplier.
+ */
+const MAX_FONT_SIZE_MULTIPLIER = 1.2;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.insert.help.title",
@@ -432,20 +438,26 @@ const EmailInsertScreen = () => {
               accessibilityRole="header"
               ref={accessibilityFirstFocuseViewRef}
             >
-              <H1 testID="title-test">
+              <H1
+                testID="title-test"
+                maxFontSizeMultiplier={MAX_FONT_SIZE_MULTIPLIER}
+              >
                 {isFirstOnboarding
                   ? I18n.t("email.newinsert.title")
                   : I18n.t("email.edit.title")}
               </H1>
             </View>
             <VSpacer size={16} />
-            <Body>
+            <Body maxFontSizeMultiplier={MAX_FONT_SIZE_MULTIPLIER}>
               {isFirstOnboarding ? (
                 I18n.t("email.newinsert.subtitle")
               ) : (
                 <>
                   {I18n.t("email.edit.subtitle")}
-                  <Body weight="Semibold">
+                  <Body
+                    weight="Semibold"
+                    maxFontSizeMultiplier={MAX_FONT_SIZE_MULTIPLIER}
+                  >
                     {` ${pipe(
                       optionEmail,
                       O.getOrElse(() => "")
@@ -457,6 +469,7 @@ const EmailInsertScreen = () => {
             <VSpacer size={16} />
             <TextInputValidation
               autoFocus={!userNavigateToEmailValidationScreen}
+              testID="email-input"
               textInputProps={{
                 autoCorrect: false,
                 autoCapitalize: "none",
@@ -483,11 +496,12 @@ const EmailInsertScreen = () => {
           })}
         >
           <ContentWrapper>
-            <ButtonSolid
+            <IOButton
+              fullWidth
+              variant="solid"
               label={I18n.t("global.buttons.continue")}
-              accessibilityLabel={I18n.t("global.buttons.continue")}
               onPress={continueOnPress}
-              fullWidth={true}
+              testID="continue-button"
             />
             <VSpacer size={16} />
           </ContentWrapper>

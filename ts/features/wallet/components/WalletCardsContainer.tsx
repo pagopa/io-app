@@ -1,4 +1,4 @@
-import { ListItemHeader } from "@pagopa/io-app-design-system";
+import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
@@ -18,6 +18,7 @@ import {
   shouldRenderWalletEmptyStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
+import { ItwUpgradeBanner } from "../../itwallet/common/components/ItwUpgradeBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
@@ -65,13 +66,28 @@ const WalletCardsContainer = () => {
   ]);
 
   return (
-    <Animated.View style={{ flex: 1 }} layout={LinearTransition.duration(200)}>
-      <ItwWalletNotAvailableBanner />
-      <ItwDiscoveryBannerStandalone />
+    <Animated.View
+      style={{ flex: 1, paddingTop: 16 }}
+      layout={LinearTransition.duration(200)}
+    >
+      <WalletBannersContainer />
       {walletContent}
     </Animated.View>
   );
 };
+
+/**
+ * Renders the banners that are displayed at the top of the wallet screen
+ */
+const WalletBannersContainer = () => (
+  <VStack>
+    <ItwUpgradeBanner />
+    <ItwWalletNotAvailableBanner />
+    <ItwDiscoveryBannerStandalone />
+    {/* Dummy view wich adds a spacer in case one of the above banners is rendered */}
+    <View />
+  </VStack>
+);
 
 /**
  * Skeleton for the wallet cards container

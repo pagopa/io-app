@@ -1,13 +1,15 @@
 import {
-  ButtonLink,
   ContentWrapper,
   H2,
+  IOButton,
+  IOColors,
   IOPictograms,
   IconButton,
   Pictogram,
   ToastNotification,
   VSpacer,
-  useIOFontDynamicScale
+  useIOFontDynamicScale,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
@@ -45,7 +47,6 @@ import { IdentificationCancelData, maxAttempts } from "../store/reducers";
 import { profileNameSelector } from "../../settings/common/store/selectors";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { biometricAuthenticationRequest } from "../../../utils/biometrics";
-import { useAppBackgroundAccentColorName } from "../../../utils/hooks/theme";
 import { useBiometricType } from "../../../utils/hooks/useBiometricType";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import {
@@ -72,10 +73,9 @@ export const IdentificationModal = () => {
   const headerRef = useRef<View>(null);
   const errorStatusRef = useRef<View>(null);
 
+  const theme = useIOTheme();
   const { isDeviceScreenSmall } = useDetectSmallScreen();
   const { hugeFontEnabled } = useIOFontDynamicScale();
-
-  const blueColor = useAppBackgroundAccentColorName();
 
   const appState = useIOSelector(appCurrentStateSelector);
   const previousAppState = usePrevious(appState);
@@ -378,7 +378,12 @@ export const IdentificationModal = () => {
       onRequestClose={onRequestCloseHandler}
     >
       {Platform.OS === "ios" && <StatusBar barStyle={"light-content"} />}
-      <View style={[styles.contentWrapper, { backgroundColor: blueColor }]}>
+      <View
+        style={[
+          styles.contentWrapper,
+          { backgroundColor: IOColors[theme["appBackground-accent"]] }
+        ]}
+      >
         {isValidatingTask && (
           <View
             accessible
@@ -452,13 +457,14 @@ export const IdentificationModal = () => {
             <View>
               <VSpacer size={isDeviceScreenSmall ? 16 : 32} />
               <View style={{ alignSelf: "center" }}>
-                <ButtonLink
+                <IOButton
+                  variant="link"
                   textAlign="center"
+                  color="contrast"
                   /* Don't limit number of lines
                     when larger text is enabled */
                   numberOfLines={0}
                   accessibilityLabel={forgotCodeLabel}
-                  color="contrast"
                   label={forgotCodeLabel}
                   onPress={confirmResetAlert}
                 />

@@ -19,7 +19,10 @@ const LogoutScreen = () => {
   }, [dispatch]);
 
   return (
-    <LoadingScreenContent contentTitle={I18n.t("profile.logout.loading")} />
+    <LoadingScreenContent
+      testID="logout-test-id"
+      contentTitle={I18n.t("profile.logout.loading")}
+    />
   );
 };
 

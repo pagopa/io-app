@@ -51,6 +51,7 @@ import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
+import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLogos } from "../core/DSLogos";
@@ -62,6 +63,7 @@ import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
 import { DSScreenEndMargin } from "../core/DSScreenEndMargin";
 import { DSScreenOperationResult } from "../core/DSScreenOperationResult";
+import { DSScreenOperationResultAnimated } from "../core/DSScreenOperationResultAnimated";
 import { DSSelection } from "../core/DSSelection";
 import { DSStepper } from "../core/DSStepper";
 import { DSTabNavigation } from "../core/DSTabNavigation";
@@ -412,6 +414,12 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.OPERATION_RESULT_ANIMATED.route}
+          component={DSScreenOperationResultAnimated}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW.route}
           component={DSIOScrollView}
           options={{
@@ -576,6 +584,14 @@ export const DesignSystemNavigator = () => {
         </Stack.Group>
 
         {/* LEGACY */}
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route}
+          component={DSLegacyButtons}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.title
+          }}
+        />
 
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.ADVICE.route}
