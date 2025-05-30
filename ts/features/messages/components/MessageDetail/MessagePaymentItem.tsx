@@ -15,14 +15,17 @@ import {
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import { updatePaymentForMessage } from "../../store/actions";
+import {
+  isSpecificError,
+  PaymentError,
+  updatePaymentForMessage
+} from "../../store/actions";
 import {
   canNavigateToPaymentFromMessageSelector,
   paymentStatusForUISelector,
   shouldUpdatePaymentSelector
 } from "../../store/reducers/payments";
 import { UIMessageId } from "../../types";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import {
   RemoteValue,
@@ -63,10 +66,12 @@ type ProcessedPaymentUIData = {
   badgeText: string;
 };
 
-const paymentNoticeStatusFromDetailV2Enum = (
-  detail: Detail_v2Enum
+const paymentNoticeStatusFromPaymentError = (
+  reason: PaymentError
 ): Exclude<PaymentNoticeStatus, "default"> => {
-  const errorType = getV2ErrorMainType(detail);
+  const errorType = isSpecificError(reason)
+    ? getV2ErrorMainType(reason.details)
+    : reason.type;
   switch (errorType) {
     case "REVOKED":
       return "revoked";
@@ -77,15 +82,13 @@ const paymentNoticeStatusFromDetailV2Enum = (
     case "DUPLICATED":
       return "paid";
   }
-  // Here EC (an error on the ente-side) is treated like a generic
-  // ERROR since it is later specialized in the payment flow
   return "error";
 };
 
-const processedUIPaymentFromDetailV2Enum = (
-  detail: Detail_v2Enum
+const processedUIPaymentFromPaymentError = (
+  reason: PaymentError
 ): ProcessedPaymentUIData =>
-  pipe(detail, paymentNoticeStatusFromDetailV2Enum, paymentNoticeStatus => ({
+  pipe(reason, paymentNoticeStatusFromPaymentError, paymentNoticeStatus => ({
     paymentNoticeStatus,
     badgeText: getBadgeTextByPaymentNoticeStatus(paymentNoticeStatus)
   }));
@@ -106,7 +109,7 @@ const modulePaymentNoticeForUndefinedOrLoadingPayment = () => (
 const modulePaymentNoticeFromPaymentStatus = (
   hideExpirationDate: boolean,
   noticeNumber: string,
-  paymentStatus: RemoteValue<PaymentInfoResponse, Detail_v2Enum>,
+  paymentStatus: RemoteValue<PaymentInfoResponse, PaymentError>,
   paymentCallback: () => void
 ) =>
   fold(
@@ -153,7 +156,7 @@ const modulePaymentNoticeFromPaymentStatus = (
       const formattedPaymentNoticeNumber =
         formatPaymentNoticeNumber(noticeNumber);
       const { paymentNoticeStatus, badgeText } =
-        processedUIPaymentFromDetailV2Enum(processedPaymentDetails);
+        processedUIPaymentFromPaymentError(processedPaymentDetails);
       return (
         <ModulePaymentNotice
           title={I18n.t("features.messages.payments.noticeCode")}

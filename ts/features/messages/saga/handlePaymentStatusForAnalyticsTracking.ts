@@ -2,6 +2,7 @@ import { call, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import {
   cancelPaymentStatusTracking,
+  isSpecificError,
   startPaymentStatusTracking,
   updatePaymentForMessage
 } from "../store/actions";
@@ -83,15 +84,18 @@ export const paymentStatusFromPaymentUpdateResult = (
   >
 ) => {
   if (isActionOf(updatePaymentForMessage.failure, action)) {
-    const failureReason = action.payload.details;
-    if (isExpiredPaymentFromDetailV2Enum(failureReason)) {
-      return "expired";
-    } else if (isRevokedPaymentFromDetailV2Enum(failureReason)) {
-      return "revoked";
-    } else if (isPaidPaymentFromDetailV2Enum(failureReason)) {
-      return "paid";
-    } else if (isOngoingPaymentFromDetailV2Enum(failureReason)) {
-      return "inprogress";
+    const failureReason = action.payload.reason;
+    if (isSpecificError(failureReason)) {
+      const details = failureReason.details;
+      if (isExpiredPaymentFromDetailV2Enum(details)) {
+        return "expired";
+      } else if (isRevokedPaymentFromDetailV2Enum(details)) {
+        return "revoked";
+      } else if (isPaidPaymentFromDetailV2Enum(details)) {
+        return "paid";
+      } else if (isOngoingPaymentFromDetailV2Enum(details)) {
+        return "inprogress";
+      }
     }
     return "error";
   }

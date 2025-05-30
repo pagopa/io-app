@@ -1,7 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
-import { reloadAllMessages } from "../../../../messages/store/actions";
+import {
+  reloadAllMessages,
+  toSpecificError
+} from "../../../../messages/store/actions";
 import { Action } from "../../../../../store/actions/types";
 import { appReducer } from "../../../../../store/reducers";
 import {
@@ -118,18 +121,18 @@ describe("Messages payments reducer's tests", () => {
       serviceId
     });
     const paymentsState = paymentsReducer(undefined, requestAction);
-    const details = Detail_v2Enum.CANALE_BUSTA_ERRATA;
+    const reason = toSpecificError(Detail_v2Enum.CANALE_BUSTA_ERRATA);
     const failureAction = updatePaymentForMessage.failure({
       messageId,
       paymentId,
-      details,
+      reason,
       serviceId
     });
     const updatedPaymentsState = paymentsReducer(paymentsState, failureAction);
     const messageState = updatedPaymentsState[messageId];
     expect(messageState).toBeTruthy();
     const paymentState = messageState?.[paymentId];
-    const remoteSuccessPaymentData = remoteError(details);
+    const remoteSuccessPaymentData = remoteError(reason);
     expect(paymentState).toStrictEqual(remoteSuccessPaymentData);
   });
   it("Should handle multiple payments for a single message", () => {
@@ -158,11 +161,13 @@ describe("Messages payments reducer's tests", () => {
       successAction
     );
     const paymentId3 = "p3";
-    const thirdPaymentDetails = Detail_v2Enum.CANALE_BUSTA_ERRATA;
+    const thirdPaymentDetails = toSpecificError(
+      Detail_v2Enum.CANALE_BUSTA_ERRATA
+    );
     const failureAction = updatePaymentForMessage.failure({
       messageId,
       paymentId: paymentId3,
-      details: thirdPaymentDetails,
+      reason: thirdPaymentDetails,
       serviceId
     });
     const finalStateGeneration = paymentsReducer(
@@ -204,11 +209,13 @@ describe("Messages payments reducer's tests", () => {
       successAction
     );
     const messageId3 = "m3" as UIMessageId;
-    const failedPaymentDetails = Detail_v2Enum.CANALE_BUSTA_ERRATA;
+    const failedPaymentDetails = toSpecificError(
+      Detail_v2Enum.CANALE_BUSTA_ERRATA
+    );
     const failureAction = updatePaymentForMessage.failure({
       messageId: messageId3,
       paymentId: paymentId1,
-      details: failedPaymentDetails,
+      reason: failedPaymentDetails,
       serviceId
     });
     const finalStateGeneration = paymentsReducer(
@@ -528,12 +535,12 @@ describe("PN Payments selectors' tests", () => {
     expect(paymentStatus).toStrictEqual(remoteReady(paymentData));
   });
   it("paymentStatusForUISelector should return remoteError for a matching <message Id, payment Id> that is not payable anymore", () => {
-    const details = Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO;
+    const reason = toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO);
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.failure({
       messageId: "m1" as UIMessageId,
       paymentId: "p1",
-      details,
+      reason,
       serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
@@ -542,7 +549,7 @@ describe("PN Payments selectors' tests", () => {
       "m1" as UIMessageId,
       "p1"
     );
-    expect(paymentStatus).toStrictEqual(remoteError(details));
+    expect(paymentStatus).toStrictEqual(remoteError(reason));
   });
 
   it("addUserSelectedPaymentRptId should contain added user selected payments and removed one later", () => {

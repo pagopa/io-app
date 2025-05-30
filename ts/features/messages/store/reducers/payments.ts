@@ -17,10 +17,10 @@ import {
 } from "../../../../common/model/RemoteValue";
 import {
   addUserSelectedPaymentRptId,
+  PaymentError,
   reloadAllMessages,
   updatePaymentForMessage
 } from "../actions";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { isProfileEmailValidatedSelector } from "../../../settings/common/store/selectors";
 import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
@@ -37,7 +37,7 @@ export type MultiplePaymentState = {
 };
 
 export type SinglePaymentState = {
-  [key: string]: RemoteValue<PaymentInfoResponse, Detail_v2Enum> | undefined;
+  [key: string]: RemoteValue<PaymentInfoResponse, PaymentError> | undefined;
 };
 
 export const initialState: MultiplePaymentState = {
@@ -74,7 +74,7 @@ export const paymentsReducer = (
         ...state,
         [action.payload.messageId]: {
           ...state[action.payload.messageId],
-          [action.payload.paymentId]: remoteError(action.payload.details)
+          [action.payload.paymentId]: remoteError(action.payload.reason)
         }
       };
     case getType(updatePaymentForMessage.cancel):
@@ -111,7 +111,7 @@ const paymentStateSelector = (
     state.entities.messages.payments[messageId],
     O.fromNullable,
     O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
-    O.getOrElse<RemoteValue<PaymentInfoResponse, Detail_v2Enum>>(
+    O.getOrElse<RemoteValue<PaymentInfoResponse, PaymentError>>(
       () => remoteUndefined
     )
   );
@@ -126,7 +126,7 @@ export const paymentStatusForUISelector = (
   state: GlobalState,
   messageId: UIMessageId,
   paymentId: string
-): RemoteValue<PaymentInfoResponse, Detail_v2Enum> =>
+): RemoteValue<PaymentInfoResponse, PaymentError> =>
   pipe(paymentStateSelector(state, messageId, paymentId), remoteValue =>
     isLoading(remoteValue) ? remoteUndefined : remoteValue
   );

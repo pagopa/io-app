@@ -2,7 +2,10 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { call, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import { updatePaymentForMessage } from "../../../messages/store/actions";
+import {
+  isSpecificError,
+  updatePaymentForMessage
+} from "../../../messages/store/actions";
 import {
   cancelPNPaymentStatusTracking,
   startPNPaymentStatusTracking
@@ -123,7 +126,10 @@ function addPaymentStatusToMap(
   if (isActionOf(updatePaymentForMessage.success, action)) {
     paymentsToTrack.set(paymentId, O.some(payablePayment));
   } else {
-    const details = action.payload.details;
+    const reason = action.payload.reason;
+    const details = isSpecificError(reason)
+      ? reason.details
+      : Detail_v2Enum.GENERIC_ERROR;
     paymentsToTrack.set(paymentId, O.some(processedPayment(details)));
   }
 }

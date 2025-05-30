@@ -10,6 +10,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { toSpecificError } from "../../../messages/store/actions";
 
 jest.mock("rn-qr-generator", () => ({}));
 jest.mock("react-native-screenshot-prevent", () => ({}));
@@ -48,21 +49,23 @@ describe("MessagePaymentBottomSheet", () => {
                 description: "Uno due tre"
               }),
               [paymentIdList[1]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
               ),
               [paymentIdList[2]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_SCADUTO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
               ),
               [paymentIdList[3]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
               ),
               [paymentIdList[4]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
               ),
               [paymentIdList[5]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO)
               ),
-              [paymentIdList[6]]: remoteError(Detail_v2Enum.GENERIC_ERROR)
+              [paymentIdList[6]]: remoteError(
+                toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+              )
             }
           }
         }

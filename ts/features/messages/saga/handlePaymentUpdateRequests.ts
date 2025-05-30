@@ -15,6 +15,10 @@ import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../../api/backend";
 import {
   cancelQueuedPaymentUpdates,
+  PaymentError,
+  toGenericError,
+  toSpecificError,
+  toTimeoutError,
   updatePaymentForMessage
 } from "../store/actions";
 import {
@@ -24,8 +28,8 @@ import {
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../types/utils";
 import { readablePrivacyReport } from "../../../utils/reporters";
-import { getWalletError } from "../../../utils/errors";
 import { PaymentInfoResponse } from "../../../../definitions/backend/PaymentInfoResponse";
+import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 
 const PaymentUpdateWorkerCount = 5;
 
@@ -93,15 +97,11 @@ function* paymentUpdateRequestWorker(
         // TODO send actiont to update reducer data (from remoteLoading to remoteUndefined)
       }
     } catch (e) {
-      // TODO better handling of timeout
-      // string "max-retries"
-      // object {"message":"Aborted","name":"AbortError"}
-      // TODO better handling of generic errors that are not Details_V2Enum
-      const details = getWalletError(e);
+      const reason = unknownErrorToPaymentError(e);
       const failureAction = updatePaymentForMessage.failure({
         messageId,
         paymentId,
-        details,
+        reason,
         serviceId
       });
       yield* put(failureAction);
@@ -223,3 +223,29 @@ function* legacyGetVerificaRpt(
       );
   }
 }
+
+const unknownErrorToPaymentError = (e: unknown): PaymentError => {
+  const reason = unknownErrorToString(e);
+  const lowerCaseReason = reason.toLowerCase();
+  if (lowerCaseReason === "max-retries" || lowerCaseReason === "aborted") {
+    return toTimeoutError();
+  }
+  if (reason in Detail_v2Enum) {
+    return toSpecificError(reason as Detail_v2Enum);
+  }
+  return toGenericError(reason);
+};
+
+const unknownErrorToString = (e: unknown): string => {
+  if (e != null) {
+    if (typeof e === "string") {
+      return e as string;
+    }
+    if (typeof e === "object" && "message" in e) {
+      return `${e.message}`;
+    }
+    return "Error with unknown data";
+  }
+
+  return "Unknown error with no data";
+};

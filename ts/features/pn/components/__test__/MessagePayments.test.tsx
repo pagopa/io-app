@@ -11,6 +11,7 @@ import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
 import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { toSpecificError } from "../../../messages/store/actions";
 
 jest.mock("rn-qr-generator", () => ({}));
 jest.mock("react-native-screenshot-prevent", () => ({}));
@@ -70,19 +71,23 @@ describe("MessagePayments", () => {
                 generatePayablePayment(paymentIds[0], 199)
               ),
               [paymentIds[1]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
               ),
-              [paymentIds[2]]: remoteError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO),
+              [paymentIds[2]]: remoteError(
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
+              ),
               [paymentIds[3]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
               ),
               [paymentIds[4]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
               ),
               [paymentIds[5]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO)
               ),
-              [paymentIds[6]]: remoteError(Detail_v2Enum.GENERIC_ERROR)
+              [paymentIds[6]]: remoteError(
+                toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+              )
             }
           }
         }
@@ -143,19 +148,23 @@ describe("MessagePayments", () => {
                 generatePayablePayment(paymentIds[0], 199)
               ),
               [paymentIds[1]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
               ),
-              [paymentIds[2]]: remoteError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO),
+              [paymentIds[2]]: remoteError(
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
+              ),
               [paymentIds[3]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
               ),
               [paymentIds[4]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
               ),
               [paymentIds[5]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO)
               ),
-              [paymentIds[6]]: remoteError(Detail_v2Enum.GENERIC_ERROR)
+              [paymentIds[6]]: remoteError(
+                toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+              )
             }
           }
         }
@@ -284,14 +293,16 @@ describe("MessagePayments", () => {
                 generatePayablePayment(paymentIds[0], 199)
               ),
               [paymentIds[1]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
               ),
-              [paymentIds[2]]: remoteError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO),
+              [paymentIds[2]]: remoteError(
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
+              ),
               [paymentIds[3]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
               ),
               [paymentIds[4]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
               )
             }
           }
@@ -330,14 +341,16 @@ describe("MessagePayments", () => {
                 generatePayablePayment(paymentIds[0], 199)
               ),
               [paymentIds[1]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
               ),
-              [paymentIds[2]]: remoteError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO),
+              [paymentIds[2]]: remoteError(
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
+              ),
               [paymentIds[3]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
               ),
               [paymentIds[4]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
               )
             }
           }
@@ -378,19 +391,23 @@ describe("MessagePayments", () => {
                 generatePayablePayment(paymentIds[0], 199)
               ),
               [paymentIds[1]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
               ),
-              [paymentIds[2]]: remoteError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO),
+              [paymentIds[2]]: remoteError(
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
+              ),
               [paymentIds[3]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
               ),
               [paymentIds[4]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
               ),
               [paymentIds[5]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO)
               ),
-              [paymentIds[6]]: remoteError(Detail_v2Enum.GENERIC_ERROR)
+              [paymentIds[6]]: remoteError(
+                toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+              )
             }
           }
         }
@@ -430,19 +447,23 @@ describe("MessagePayments", () => {
                 generatePayablePayment(paymentIds[0], 199)
               ),
               [paymentIds[1]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
               ),
-              [paymentIds[2]]: remoteError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO),
+              [paymentIds[2]]: remoteError(
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
+              ),
               [paymentIds[3]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
               ),
               [paymentIds[4]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
               ),
               [paymentIds[5]]: remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO
+                toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO)
               ),
-              [paymentIds[6]]: remoteError(Detail_v2Enum.GENERIC_ERROR)
+              [paymentIds[6]]: remoteError(
+                toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+              )
             }
           }
         }
