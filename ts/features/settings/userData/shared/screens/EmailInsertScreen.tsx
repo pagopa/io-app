@@ -19,7 +19,6 @@ import { pipe } from "fp-ts/lib/function";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert,
-  Dimensions,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -60,10 +59,8 @@ import {
 } from "../../../../mailCheck/analytics";
 import { trackTosUserExit } from "../../../../authentication/common/analytics";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
-import {
-  COMPACT_SCREEN_MAX_HEIGHT,
-  isDisplayZoomed
-} from "../../../../../utils/device";
+import { isDisplayZoomed } from "../../../../../utils/device";
+import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
 
 export type EmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
@@ -72,18 +69,6 @@ export type EmailInsertScreenNavigationParams = Readonly<{
 }>;
 
 const EMPTY_EMAIL = "";
-
-const MIN_HEIGHT_TO_ENABLE_FULL_FONT_SCALING = COMPACT_SCREEN_MAX_HEIGHT;
-const screenHeight = Dimensions.get("screen").height;
-
-/**
- * Since we have some iOS users with a very large font size, that can't enter or use
- * this screen, we need to set a maximum font size multiplier.
- */
-const MAX_FONT_SIZE_MULTIPLIER = Platform.select({
-  ios: screenHeight >= MIN_HEIGHT_TO_ENABLE_FULL_FONT_SCALING ? undefined : 1.2,
-  android: undefined
-});
 
 /**
  * Since we have some iOS users with a very large font size, that can't enter or use
@@ -114,6 +99,17 @@ const EmailInsertScreen = () => {
   const navigation = useIONavigation();
 
   const dispatch = useIODispatch();
+
+  const { isDeviceScreenSmall } = useDetectSmallScreen();
+
+  /**
+   * Since we have some iOS users with a very large font size, that can't enter or use
+   * this screen, we need to set a maximum font size multiplier.
+   */
+  const MAX_FONT_SIZE_MULTIPLIER = Platform.select({
+    ios: isDeviceScreenSmall ? 1.2 : undefined,
+    android: undefined
+  });
 
   const profile = useIOSelector(profileSelector);
   const optionEmail = useIOSelector(profileEmailSelector);
