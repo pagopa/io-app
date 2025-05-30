@@ -7,11 +7,14 @@ import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { trackMixPanelTrackingInfo } from "../../../settings/common/analytics/mixpanel/mixpanelAnalytics";
 
-jest.mock("../../../../store/hooks", () => ({
-  useIODispatch: () => jest.fn(),
-  useIOSelector: jest.fn(() => true),
-  useIOStore: () => ({ getState: jest.fn() })
-}));
+jest.mock("../../../../store/hooks", () => {
+  const original = jest.requireActual("../../../../store/hooks");
+
+  return {
+    ...original,
+    useIODispatch: () => jest.fn()
+  };
+});
 
 jest.mock("../../../../utils/analytics", () => ({
   getFlowType: () => "test-flow"
