@@ -128,7 +128,12 @@ const CgnDiscountCodeScreen = () => {
               <Icon name="tag" color={theme["icon-decorative"]} />
             </View>
             <VSpacer size={4} />
-            <Barcode format="CODE128" value={discountCode} height={70} />
+            <Barcode
+              format="CODE128"
+              value={discountCode}
+              height={70}
+              width={1.15}
+            />
             <VSpacer size={4} />
             <H4 textStyle={StyleSheet.flatten([styles.labelCode])}>
               {discountCode}
