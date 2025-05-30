@@ -23,7 +23,8 @@ const timeoutError = getTimeoutError();
 
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),
-  getVersion: jest.fn().mockReturnValue("1.2.3.4")
+  getVersion: jest.fn().mockReturnValue("1.2.3.4"),
+  isDisplayZoomed: jest.fn().mockReturnValue(false)
 }));
 
 describe("Test TestAuthenticationScreen", () => {

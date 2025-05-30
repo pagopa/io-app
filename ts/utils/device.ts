@@ -28,3 +28,5 @@ export const getDeviceAppVersion = (): string =>
   });
 
 export const isTablet = (): boolean => DeviceInfo.isTablet();
+
+export const isDisplayZoomed = (): boolean => DeviceInfo.isDisplayZoomed();
