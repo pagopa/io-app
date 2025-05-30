@@ -40,6 +40,10 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
     machineRef.send({ type: "close" });
   };
 
+  const back = () => {
+    machineRef.send({ type: "back" });
+  };
+
   const goToL2Identification = () => {
     machineRef.send({ type: "go-to-l2-identification" });
   };
@@ -63,7 +67,7 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
 
       const secondaryAction = {
         label: t("closeAction"),
-        onPress: closeIdentification
+        onPress: validEid ? closeIdentification : back
       };
 
       return {
