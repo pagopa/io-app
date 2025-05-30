@@ -7,17 +7,20 @@ import {
   flush,
   fork,
   put,
+  select,
   take
 } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { BackendClient } from "../../../api/backend";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import {
   cancelQueuedPaymentUpdates,
   updatePaymentForMessage
 } from "../store/actions";
-import { commonPaymentVerificationProcedure } from "../../../sagas/legacyWallet/pagopaApis";
+import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../types/utils";
+import { readablePrivacyReport } from "../../../utils/reporters";
+import { getWalletError } from "../../../utils/errors";
 
 const PaymentUpdateWorkerCount = 5;
 
@@ -61,41 +64,78 @@ function* paymentUpdateRequestWorker(
   getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"]
 ) {
   while (true) {
+    // Listen for 'updatePaymentForMessage.request' action in the channel
     const paymentStatusRequest = yield* take(paymentStatusChannel);
 
     const { messageId, paymentId, serviceId } = paymentStatusRequest.payload;
 
-    const pagoPARptIdEither = RptIdFromString.decode(paymentId);
-    if (E.isRight(pagoPARptIdEither)) {
-      const pagoPARptId = pagoPARptIdEither.right;
+    const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
+
+    try {
       yield* call(
-        commonPaymentVerificationProcedure,
-        getVerificaRpt,
-        pagoPARptId,
-        paymentData =>
-          updatePaymentForMessage.success({
-            messageId,
-            paymentId,
-            paymentData,
-            serviceId
-          }),
-        details =>
-          updatePaymentForMessage.failure({
-            messageId,
-            paymentId,
-            details,
-            serviceId
-          })
+        legacyGetVerificaRpt,
+        paymentStatusRequest,
+        isPagoPATestEnabled,
+        getVerificaRpt
       );
-    } else {
-      yield* put(
-        updatePaymentForMessage.failure({
-          messageId,
-          paymentId,
-          details: Detail_v2Enum.GENERIC_ERROR,
-          serviceId
-        })
-      );
+    } catch (e) {
+      // TODO better handling of timeout
+      // TODO better handling of generic errors that are not Details_V2Enum
+      const details = getWalletError(e);
+      const failureAction = updatePaymentForMessage.failure({
+        messageId,
+        paymentId,
+        details,
+        serviceId
+      });
+      yield* put(failureAction);
     }
+  }
+}
+
+function* legacyGetVerificaRpt(
+  paymentStatusRequest: ActionType<typeof updatePaymentForMessage.request>,
+  isPagoPATestEnabled: boolean,
+  getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"]
+) {
+  const { messageId, paymentId, serviceId } = paymentStatusRequest.payload;
+
+  const request = getVerificaRpt({
+    rptId: paymentId,
+    test: isPagoPATestEnabled
+  });
+  const responseEither = (yield* call(
+    withRefreshApiCall,
+    request,
+    paymentStatusRequest
+  )) as SagaCallReturnType<typeof getVerificaRpt>;
+
+  if (E.isLeft(responseEither)) {
+    throw Error(readablePrivacyReport(responseEither.left));
+  }
+
+  const response = responseEither.right;
+  switch (response.status) {
+    case 200:
+      const paymentData = response.value;
+      const successAction = updatePaymentForMessage.success({
+        messageId,
+        paymentId,
+        paymentData,
+        serviceId
+      });
+      yield* put(successAction);
+      break;
+    case 401:
+      // This status code does not represent an error to show to the user
+      // The authentication will be handled by the Fast Login token refresh procedure
+      break;
+    case 500:
+    case 504:
+      // Verifica failed with a 500 or 504, that usually means there was an error
+      // interacting with pagoPA that we can interpret
+      throw Error(response.value.detail_v2);
+    default:
+      throw Error(`HTTP Status ${response.status}`);
   }
 }
