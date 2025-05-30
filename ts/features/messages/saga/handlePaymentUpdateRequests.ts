@@ -17,11 +17,15 @@ import {
   cancelQueuedPaymentUpdates,
   updatePaymentForMessage
 } from "../store/actions";
-import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import {
+  isMessagePaymentInfoV2Selector,
+  isPagoPATestEnabledSelector
+} from "../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../types/utils";
 import { readablePrivacyReport } from "../../../utils/reporters";
 import { getWalletError } from "../../../utils/errors";
+import { PaymentInfoResponse } from "../../../../definitions/backend/PaymentInfoResponse";
 
 const PaymentUpdateWorkerCount = 5;
 
@@ -71,11 +75,14 @@ function* paymentUpdateRequestWorker(
     const { messageId, paymentId, serviceId } = paymentStatusRequest.payload;
 
     const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
+    const shouldUsePaymentInfoV2 = yield* select(
+      isMessagePaymentInfoV2Selector
+    );
 
     try {
       const { wasCancelled } = yield* race({
         hasVerifiedPayment: call(
-          legacyGetVerificaRpt,
+          shouldUsePaymentInfoV2 ? updatePaymentInfo : legacyGetVerificaRpt,
           paymentStatusRequest,
           isPagoPATestEnabled,
           getVerificaRpt
@@ -99,6 +106,57 @@ function* paymentUpdateRequestWorker(
       });
       yield* put(failureAction);
     }
+  }
+}
+
+function* updatePaymentInfo(
+  paymentStatusRequest: ActionType<typeof updatePaymentForMessage.request>,
+  isPagoPATestEnabled: boolean,
+  getPaymentDataRequestFactory: ReturnType<
+    typeof BackendClient
+  >["getPaymentInfoV2"]
+) {
+  const { messageId, paymentId, serviceId } = paymentStatusRequest.payload;
+
+  const getPaymentDataRequest = getPaymentDataRequestFactory({
+    rptId: paymentId,
+    test: isPagoPATestEnabled
+  });
+  const responseEither = (yield* call(
+    withRefreshApiCall,
+    getPaymentDataRequest,
+    paymentStatusRequest
+  )) as SagaCallReturnType<typeof getPaymentDataRequestFactory>;
+
+  if (E.isLeft(responseEither)) {
+    throw Error(readablePrivacyReport(responseEither.left));
+  }
+
+  const response = responseEither.right;
+  switch (response.status) {
+    case 200:
+      const paymentData = response.value;
+      const successAction = updatePaymentForMessage.success({
+        messageId,
+        paymentId,
+        paymentData,
+        serviceId
+      });
+      yield* put(successAction);
+      break;
+    case 401:
+      // This status code does not represent an error to show to the user
+      // The authentication will be handled by the Fast Login token refresh procedure
+      break;
+    case 404:
+    case 409:
+    case 502:
+    case 503:
+      throw Error(response.value.faultCodeDetail);
+    default:
+      throw Error(
+        `HTTP Status ${response.status} (${response.value.status}) (${response.value.title}) (${response.value.detail}) (${response.value.type}) (${response.value.instance})`
+      );
   }
 }
 
@@ -126,7 +184,22 @@ function* legacyGetVerificaRpt(
   const response = responseEither.right;
   switch (response.status) {
     case 200:
-      const paymentData = response.value;
+      const legacyPaymentData = response.value;
+      const paymentDataEither = PaymentInfoResponse.decode({
+        amount: legacyPaymentData.importoSingoloVersamento,
+        rptId: legacyPaymentData.codiceContestoPagamento,
+        paFiscalCode:
+          legacyPaymentData.enteBeneficiario?.identificativoUnivocoBeneficiario,
+        paName: legacyPaymentData.enteBeneficiario?.denominazioneBeneficiario,
+        description: legacyPaymentData.causaleVersamento,
+        dueDate: legacyPaymentData.dueDate
+      });
+      if (E.isLeft(paymentDataEither)) {
+        throw Error(
+          `Conversion failed ${readablePrivacyReport(paymentDataEither.left)}`
+        );
+      }
+      const paymentData = paymentDataEither.right;
       const successAction = updatePaymentForMessage.success({
         messageId,
         paymentId,
@@ -145,6 +218,8 @@ function* legacyGetVerificaRpt(
       // interacting with pagoPA that we can interpret
       throw Error(response.value.detail_v2);
     default:
-      throw Error(`HTTP Status ${response.status}`);
+      throw Error(
+        `HTTP Status ${response.status} (${response.value.status}) (${response.value.title}) (${response.value.detail}) (${response.value.type}) (${response.value.instance})`
+      );
   }
 }

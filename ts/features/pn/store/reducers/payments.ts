@@ -10,7 +10,7 @@ import {
   RemoteValue
 } from "../../../../common/model/RemoteValue";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { getRptIdStringFromPayment } from "../../../pn/utils/rptId";
 import { SinglePaymentState } from "../../../messages/store/reducers/payments";
@@ -77,7 +77,7 @@ const computePaymentStatistics =
   (previousStatistics: PaymentStatistics) =>
   (
     maybePaymentStatus: O.Option<
-      RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>
+      RemoteValue<PaymentInfoResponse, Detail_v2Enum>
     >
   ) =>
     pipe(

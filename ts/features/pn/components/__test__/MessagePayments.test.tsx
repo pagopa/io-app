@@ -8,23 +8,23 @@ import { UIMessageId } from "../../../messages/types";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { GlobalState } from "../../../../store/reducers/types";
 import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+
+jest.mock("rn-qr-generator", () => ({}));
+jest.mock("react-native-screenshot-prevent", () => ({}));
 
 const globalMessageId = "01HTFFDYS8VQ779EA4M5WB9YWA" as UIMessageId;
 const globalMaxVisiblePaymentCount = 5;
 const globalDueDate = new Date(2099, 4, 2, 1, 1, 1);
-const generatePayablePayment = (
-  codiceContestoPagamento: string,
-  amount: number
-) =>
+const generatePayablePayment = (rptId: string, amount: number) =>
   ({
-    codiceContestoPagamento,
-    importoSingoloVersamento: amount,
+    rptId,
+    amount,
     dueDate: globalDueDate,
-    causaleVersamento: "hendrerit orci id dolor consectetur"
-  } as PaymentRequestsGetResponse);
+    description: "hendrerit orci id dolor consectetur"
+  } as PaymentInfoResponse);
 const notificationPaymentInfosFromPaymentIds = (paymentIds: Array<string>) =>
   paymentIds.map(
     payment =>

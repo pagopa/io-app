@@ -7,7 +7,7 @@ import { UIMessageId } from "../../../types";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import { updatePaymentForMessage } from "../../../store/actions";
-import { PaymentRequestsGetResponse } from "../../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 describe("MessagePaymentItem component", () => {
@@ -63,11 +63,11 @@ const renderComponent = (
             messageId,
             paymentId: rptId,
             paymentData: {
-              codiceContestoPagamento: `${payment.noticeCode}`,
-              importoSingoloVersamento: 99,
-              causaleVersamento: "Causale",
+              rptId: `${payment.noticeCode}`,
+              amount: 99,
+              description: "Causale",
               dueDate: new Date(2023, 10, 23, 10, 30)
-            } as PaymentRequestsGetResponse,
+            } as PaymentInfoResponse,
             serviceId: "01J5X5NP84QE3T3P604MWP9TKC" as ServiceId
           })
         )

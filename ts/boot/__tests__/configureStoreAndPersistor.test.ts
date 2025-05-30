@@ -345,7 +345,7 @@ describe("configureStoreAndPersistor", () => {
             "3.3.0.8",
             "3.4.0.5",
             "3.5.0.8",
-            "3.6.0.6"
+            "3.6.0.9"
           ]
         },
         onboarding: {

@@ -23,7 +23,7 @@ import {
 } from "../../store/reducers/payments";
 import { UIMessageId } from "../../types";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import {
   RemoteValue,
   fold,
@@ -106,7 +106,7 @@ const modulePaymentNoticeForUndefinedOrLoadingPayment = () => (
 const modulePaymentNoticeFromPaymentStatus = (
   hideExpirationDate: boolean,
   noticeNumber: string,
-  paymentStatus: RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>,
+  paymentStatus: RemoteValue<PaymentInfoResponse, Detail_v2Enum>,
   paymentCallback: () => void
 ) =>
   fold(
@@ -128,10 +128,10 @@ const modulePaymentNoticeFromPaymentStatus = (
         O.toUndefined
       );
       const description = cleanTransactionDescription(
-        payablePayment.causaleVersamento
+        payablePayment.description
       );
       const formattedAmount = pipe(
-        payablePayment.importoSingoloVersamento,
+        payablePayment.amount,
         centsToAmount,
         formatNumberAmount,
         formattedAmountNumber => `${formattedAmountNumber} €`

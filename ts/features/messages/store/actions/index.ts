@@ -9,7 +9,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { UIMessage, UIMessageDetails, UIMessageId } from "../../types";
 import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { MessageListCategory } from "../../types/messageListCategory";
 import {
@@ -255,7 +255,7 @@ export type UpdatePaymentForMessageRequest = {
 export type UpdatePaymentForMessageSuccess = {
   messageId: UIMessageId;
   paymentId: string;
-  paymentData: PaymentRequestsGetResponse;
+  paymentData: PaymentInfoResponse;
   serviceId: ServiceId;
 };
 

@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
-import { PaymentRequestsGetResponse } from "../../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
 import { reloadAllMessages } from "../../../../messages/store/actions";
 import { Action } from "../../../../../store/actions/types";
 import { appReducer } from "../../../../../store/reducers";
@@ -92,9 +92,9 @@ describe("Messages payments reducer's tests", () => {
     });
     const paymentsState = paymentsReducer(undefined, requestAction);
     const paymentData = {
-      importoSingoloVersamento: 100,
-      codiceContestoPagamento: "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
-    } as PaymentRequestsGetResponse;
+      amount: 100,
+      rptId: "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+    } as PaymentInfoResponse;
     const successAction = updatePaymentForMessage.success({
       messageId,
       paymentId,
@@ -144,9 +144,9 @@ describe("Messages payments reducer's tests", () => {
     const firstStateGeneration = paymentsReducer(undefined, requestAction);
     const paymentId2 = "p2";
     const secondPaymentData = {
-      importoSingoloVersamento: 100,
-      codiceContestoPagamento: "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
-    } as PaymentRequestsGetResponse;
+      amount: 100,
+      rptId: "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+    } as PaymentInfoResponse;
     const successAction = updatePaymentForMessage.success({
       messageId,
       paymentId: paymentId2,
@@ -190,9 +190,9 @@ describe("Messages payments reducer's tests", () => {
     const firstStateGeneration = paymentsReducer(undefined, requestAction);
     const messageId2 = "m2" as UIMessageId;
     const successfulPaymentData = {
-      importoSingoloVersamento: 100,
-      codiceContestoPagamento: "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
-    } as PaymentRequestsGetResponse;
+      amount: 100,
+      rptId: "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+    } as PaymentInfoResponse;
     const successAction = updatePaymentForMessage.success({
       messageId: messageId2,
       paymentId: paymentId1,
@@ -511,7 +511,7 @@ describe("PN Payments selectors' tests", () => {
     expect(paymentStatus).toBe(remoteUndefined);
   });
   it("paymentStatusForUISelector should return remoteReady for a matching <message Id, payment Id> that is payable", () => {
-    const paymentData = {} as PaymentRequestsGetResponse;
+    const paymentData = {} as PaymentInfoResponse;
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.success({
       messageId: "m1" as UIMessageId,
