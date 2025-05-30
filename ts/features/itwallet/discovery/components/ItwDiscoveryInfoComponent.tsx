@@ -1,10 +1,4 @@
-import {
-  ContentWrapper,
-  FeatureInfo,
-  H3,
-  VSpacer,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { ContentWrapper, H1, VSpacer } from "@pagopa/io-app-design-system";
 import { StyleSheet } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
@@ -62,42 +56,16 @@ export const ItwDiscoveryInfoComponent = ({
       />
       <VSpacer size={24} />
       <ContentWrapper>
-        <VStack space={24}>
-          <H3 style={{ textAlign: "center" }}>
-            {I18n.t("features.itWallet.discovery.title")}
-          </H3>
-          <FeatureInfo
-            body={I18n.t("features.itWallet.discovery.featureHighlights.1")}
-            pictogramProps={{
-              name: "itWallet"
-            }}
-          />
-          <FeatureInfo
-            body={I18n.t("features.itWallet.discovery.featureHighlights.2")}
-            pictogramProps={{
-              name: "itWallet"
-            }}
-          />
-          <FeatureInfo
-            body={I18n.t("features.itWallet.discovery.featureHighlights.3")}
-            pictogramProps={{
-              name: "security"
-            }}
-          />
-          <FeatureInfo
-            body={I18n.t("features.itWallet.discovery.featureHighlights.4")}
-            pictogramProps={{
-              name: "security"
-            }}
-          />
-          <IOMarkdown content={I18n.t("features.itWallet.discovery.content")} />
-          <IOMarkdown
-            content={I18n.t("features.itWallet.discovery.tos", {
-              tos_url
-            })}
-            rules={generateLinkRuleWithCallback(trackOpenItwTos)}
-          />
-        </VStack>
+        <H1>{I18n.t("features.itWallet.discovery.title")}</H1>
+        <VSpacer size={24} />
+        <IOMarkdown content={I18n.t("features.itWallet.discovery.content")} />
+        <VSpacer size={24} />
+        <IOMarkdown
+          content={I18n.t("features.itWallet.discovery.tos", {
+            tos_url
+          })}
+          rules={generateLinkRuleWithCallback(trackOpenItwTos)}
+        />
       </ContentWrapper>
     </IOScrollView>
   );
