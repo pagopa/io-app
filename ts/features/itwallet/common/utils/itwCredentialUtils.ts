@@ -5,7 +5,7 @@ import { decode } from "@pagopa/io-react-native-jwt";
 import * as E from "fp-ts/lib/Either";
 import I18n from "../../../../i18n";
 import { CredentialType } from "./itwMocksUtils";
-import { ItwCredentialStatus } from "./itwTypesUtils";
+import { ItwCredentialStatus, StoredCredential } from "./itwTypesUtils";
 
 export const itwCredentialNameByCredentialType: {
   [type: string]: string;
@@ -97,3 +97,21 @@ export const isItwCredential = (sdJwt: string): boolean =>
     E.map(({ protectedHeader }) => protectedHeader.typ === "dc+sd-jwt"),
     E.getOrElse(() => false)
   );
+
+/**
+ * Credential types that support the L3 design
+ */
+const credentialsWithL3Design: ReadonlyArray<string> = [
+  CredentialType.DRIVING_LICENSE
+];
+
+/**
+ * Checks if a credential supports the L3 design.
+ * It checks if the credential type is in the list of credentials with L3 design
+ * and if it is an ITW credential.
+ * @param credential - The stored credential to check
+ * @returns boolean indicating if the credential supports L3 design
+ */
+export const supportsL3Design = (credential: StoredCredential): boolean =>
+  credentialsWithL3Design.includes(credential.credentialType) &&
+  isItwCredential(credential.credential);

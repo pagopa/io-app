@@ -103,9 +103,6 @@ export const ItwPresentationCredentialDetail = ({
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isL3Credential = isItwCredential(credential.credential);
-  const isDrivingLicense =
-    credential.credentialType === CredentialType.DRIVING_LICENSE;
-  const shouldRenderTrustmark = !isL3Credential || !isDrivingLicense;
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -176,7 +173,7 @@ export const ItwPresentationCredentialDetail = ({
           <ItwPresentationCredentialStatusAlert credential={credential} />
           <ItwPresentationCredentialInfoAlert credential={credential} />
           <ItwPresentationClaimsSection credential={credential} />
-          {shouldRenderTrustmark && (
+          {!isL3Credential && (
             <ItwCredentialTrustmark
               credential={credential}
               onPress={handleTrustmarkPress}
