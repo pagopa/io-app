@@ -6,7 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp } from "@react-navigation/native";
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { LayoutChangeEvent, SectionList, SectionListData } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
@@ -39,11 +39,6 @@ import { groupTransactionsByMonth } from "../utils";
 export type ReceiptListScreenProps = RouteProp<
   PaymentsReceiptParamsList,
   "PAYMENT_RECEIPT_DETAILS"
->;
-
-type OperationResultEmptyProps = Pick<
-  OperationResultScreenContentProps,
-  "title" | "subtitle" | "pictogram"
 >;
 
 const AnimatedSectionList = Animated.createAnimatedComponent(
@@ -175,7 +170,7 @@ const ReceiptListScreen = () => {
     </>
   );
 
-  const emptyProps: OperationResultEmptyProps =
+  const emptyProps: OperationResultScreenContentProps =
     noticeCategory === "payer"
       ? {
           title: I18n.t("features.payments.transactions.list.emptyPayer.title"),

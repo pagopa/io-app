@@ -2,6 +2,57 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0-rc.9](https://github.com/pagopa/io-app/compare/3.6.0-rc.8...3.6.0-rc.9) (2025-05-30)
+
+
+### Bug Fixes
+
+* [[IOBP-1722](https://pagopa.atlassian.net/browse/IOBP-1722)] CGN Barcode width scale ([#7039](https://github.com/pagopa/io-app/issues/7039)) ([75eb85e](https://github.com/pagopa/io-app/commit/75eb85e463a9268804180e76ee6773a4fe6d9d4f))
+
+
+### Chores
+
+* [[IOPLT-1155](https://pagopa.atlassian.net/browse/IOPLT-1155)] Add support for `AnimatedPictogram` in the `OperationResultScreenContent` ([#7023](https://github.com/pagopa/io-app/issues/7023)) ([50e7435](https://github.com/pagopa/io-app/commit/50e74356b46b9da695506b77ef3912483db32a16))
+
+## [3.6.0-rc.8](https://github.com/pagopa/io-app/compare/3.6.0-rc.7...3.6.0-rc.8) (2025-05-30)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2469](https://pagopa.atlassian.net/browse/SIW-2469)] Disable gesture navigation in the final presentation screen ([#7033](https://github.com/pagopa/io-app/issues/7033)) ([324cada](https://github.com/pagopa/io-app/commit/324cada85863f13997c74b073974a35dd5f62651))
+
+## [3.6.0-rc.7](https://github.com/pagopa/io-app/compare/3.6.0-rc.6...3.6.0-rc.7) (2025-05-29)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2436](https://pagopa.atlassian.net/browse/SIW-2436)] Remote presentation failure screen for invalid credentials  ([#7021](https://github.com/pagopa/io-app/issues/7021)) ([6ac27e2](https://github.com/pagopa/io-app/commit/6ac27e2a3cfa317d2cd95be54d132c54264fa960))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2349](https://pagopa.atlassian.net/browse/SIW-2349)] Fix double header glitch in offline wallet screen ([#7036](https://github.com/pagopa/io-app/issues/7036)) ([c8ac224](https://github.com/pagopa/io-app/commit/c8ac224995a10250cf3560bc25e6ead43572773a))
+* **IT Wallet:** [[SIW-2445](https://pagopa.atlassian.net/browse/SIW-2445)] Infinite loading screen when starting presentation after full authentication ([#7030](https://github.com/pagopa/io-app/issues/7030)) ([08eab78](https://github.com/pagopa/io-app/commit/08eab78ae7fd5765f1c6589f80f3540e2e31b658))
+* [[IOPLT-0](https://pagopa.atlassian.net/browse/IOPLT-0)] Missing dot in offline banner ([#7034](https://github.com/pagopa/io-app/issues/7034)) ([92b7696](https://github.com/pagopa/io-app/commit/92b7696b6a451e13343479c22334209a72fd9286))
+
+
+### Chores
+
+* [[IOPLT-1149](https://pagopa.atlassian.net/browse/IOPLT-1149)] Normalise threshold used to hide elements on smaller screens ([#7032](https://github.com/pagopa/io-app/issues/7032)) ([52f2ef9](https://github.com/pagopa/io-app/commit/52f2ef9cc8d9b19c6af4874818c98305f696988e))
+
+## [3.6.0-rc.6](https://github.com/pagopa/io-app/compare/3.6.0-rc.5...3.6.0-rc.6) (2025-05-28)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2349](https://pagopa.atlassian.net/browse/SIW-2349)] Fix double header glitch in offline wallet screen (Android) ([#7006](https://github.com/pagopa/io-app/issues/7006)) ([eb18993](https://github.com/pagopa/io-app/commit/eb18993eba06996d20c14bbd1531be87c8d9661a))
+
+
+### Chores
+
+* [[IOCOM-2368](https://pagopa.atlassian.net/browse/IOCOM-2368)] SEND banner i18n update ([#7029](https://github.com/pagopa/io-app/issues/7029)) ([92895e0](https://github.com/pagopa/io-app/commit/92895e0defa842d51970f71c9c84be37bbd6105d))
+* [[IOPLT-1157](https://pagopa.atlassian.net/browse/IOPLT-1157)] Remove theme-related hooks ([#7028](https://github.com/pagopa/io-app/issues/7028)) ([fd55daa](https://github.com/pagopa/io-app/commit/fd55daa450741e3bf149ec2b3b738119a4de5e02))
+
 ## [3.6.0-rc.5](https://github.com/pagopa/io-app/compare/3.6.0-rc.4...3.6.0-rc.5) (2025-05-27)
 
 
