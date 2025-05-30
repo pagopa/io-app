@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Dimensions, View } from "react-native";
+import { View } from "react-native";
 import {
   Badge,
   ContentWrapper,
@@ -33,7 +33,7 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import { CieIdLoginProps } from "../../cie/components/CieIdLoginWebView";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { COMPACT_SCREEN_MAX_HEIGHT } from "../../../../../utils/device";
+import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
 
 export enum Identifier {
   SPID = "SPID",
@@ -54,8 +54,6 @@ export type ChosenIdentifier =
       identifier: Identifier.CIE_ID;
       params: CieIdLoginProps;
     };
-
-const MIN_HEIGHT_TO_SHOW_FULL_RENDER = COMPACT_SCREEN_MAX_HEIGHT;
 
 const authScreensMap = {
   CIE: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN,
@@ -81,6 +79,8 @@ const OptInScreen = () => {
     useRoute<Route<"AUTHENTICATION_OPT_IN", ChosenIdentifier>>();
   const navigation = useIONavigation();
   const store = useIOStore();
+
+  const { isDeviceScreenSmall } = useDetectSmallScreen();
 
   useOnFirstRender(() => {
     trackLoginSessionOptIn();
@@ -132,7 +132,7 @@ const OptInScreen = () => {
           if the device height is > 820 then the pictogram will be visible,
           otherwise it will not be visible
           */}
-        {Dimensions.get("screen").height > MIN_HEIGHT_TO_SHOW_FULL_RENDER && (
+        {!isDeviceScreenSmall && (
           <View style={{ alignSelf: "center" }} testID="pictogram-test">
             <Pictogram name="passcode" size={120} />
           </View>
