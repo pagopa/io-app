@@ -23,7 +23,6 @@ import {
   useState
 } from "react";
 import { Alert, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
