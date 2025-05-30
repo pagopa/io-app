@@ -7,6 +7,7 @@ import {
   flush,
   fork,
   put,
+  race,
   select,
   take
 } from "typed-redux-saga/macro";
@@ -72,14 +73,22 @@ function* paymentUpdateRequestWorker(
     const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
 
     try {
-      yield* call(
-        legacyGetVerificaRpt,
-        paymentStatusRequest,
-        isPagoPATestEnabled,
-        getVerificaRpt
-      );
+      const { wasCancelled } = yield* race({
+        hasVerifiedPayment: call(
+          legacyGetVerificaRpt,
+          paymentStatusRequest,
+          isPagoPATestEnabled,
+          getVerificaRpt
+        ),
+        wasCancelled: take(cancelQueuedPaymentUpdates)
+      });
+      if (wasCancelled != null) {
+        // TODO send actiont to update reducer data (from remoteLoading to remoteUndefined)
+      }
     } catch (e) {
       // TODO better handling of timeout
+      // string "max-retries"
+      // object {"message":"Aborted","name":"AbortError"}
       // TODO better handling of generic errors that are not Details_V2Enum
       const details = getWalletError(e);
       const failureAction = updatePaymentForMessage.failure({
@@ -100,13 +109,13 @@ function* legacyGetVerificaRpt(
 ) {
   const { messageId, paymentId, serviceId } = paymentStatusRequest.payload;
 
-  const request = getVerificaRpt({
+  const rptVerificationRequest = getVerificaRpt({
     rptId: paymentId,
     test: isPagoPATestEnabled
   });
   const responseEither = (yield* call(
     withRefreshApiCall,
-    request,
+    rptVerificationRequest,
     paymentStatusRequest
   )) as SagaCallReturnType<typeof getVerificaRpt>;
 
