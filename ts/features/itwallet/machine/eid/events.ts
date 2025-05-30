@@ -99,6 +99,9 @@ export type AcknowledgedCiePinInfo = {
 export type Reset = {
   type: "reset";
 };
+export type GoToL2IdentificationMode = {
+  type: "go-to-l2-identification";
+};
 
 export type EidIssuanceEvents =
   | Start
@@ -123,4 +126,5 @@ export type EidIssuanceEvents =
   | GoToCieWarning
   | AcknowledgedCieInfo
   | AcknowledgedCiePinInfo
-  | Reset;
+  | Reset
+  | GoToL2IdentificationMode;

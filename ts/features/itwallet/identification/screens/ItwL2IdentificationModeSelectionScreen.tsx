@@ -1,34 +1,37 @@
-import { useMemo } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useMemo } from "react";
 import {
   ContentWrapper,
   ListItemHeader,
   ModuleNavigation,
   VStack
 } from "@pagopa/io-app-design-system";
-import { useIOSelector } from "../../../../store/hooks.ts";
-import { itwDisabledIdentificationMethodsSelector } from "../../common/store/selectors/remoteConfig.ts";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
-import { isCIEAuthenticationSupportedSelector } from "../../machine/eid/selectors.ts";
-import { cieFlowForDevServerEnabled } from "../../../authentication/login/cie/utils";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import {
+  trackItWalletIDMethod,
+  trackItWalletIDMethodSelected
+} from "../../analytics";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader.tsx";
 import I18n from "../../../../i18n.ts";
+import { useIOSelector } from "../../../../store/hooks.ts";
+import { itwDisabledIdentificationMethodsSelector } from "../../common/store/selectors/remoteConfig.ts";
 
-type DefaultIdentificationViewProps = {
-  onSpidPress: () => void;
-  onCiePinPress: () => void;
-  onCieIdPress: () => void;
-};
+export const ItwL2IdentificationModeSelectionScreen = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  useFocusEffect(trackItWalletIDMethod);
 
-export const DefaultIdentificationView = ({
-  onSpidPress,
-  onCiePinPress,
-  onCieIdPress
-}: DefaultIdentificationViewProps) => {
+  const handleSpidPress = useCallback(() => {
+    machineRef.send({ type: "select-identification-mode", mode: "spid" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "spid" });
+  }, [machineRef]);
+
+  const handleCieIdPress = useCallback(() => {
+    machineRef.send({ type: "select-identification-mode", mode: "cieId" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
+  }, [machineRef]);
+
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
-  );
-  const isCieAuthenticationSupported = ItwEidIssuanceMachineContext.useSelector(
-    isCIEAuthenticationSupportedSelector
   );
 
   const isSpidDisabled = useMemo(
@@ -38,14 +41,6 @@ export const DefaultIdentificationView = ({
   const isCieIdDisabled = useMemo(
     () => disabledIdentificationMethods.includes("CieID"),
     [disabledIdentificationMethods]
-  );
-  const isCiePinDisabled = useMemo(
-    () => disabledIdentificationMethods.includes("CiePin"),
-    [disabledIdentificationMethods]
-  );
-  const isCieSupported = useMemo(
-    () => cieFlowForDevServerEnabled || isCieAuthenticationSupported,
-    [isCieAuthenticationSupported]
   );
 
   return (
@@ -69,20 +64,7 @@ export const DefaultIdentificationView = ({
               )}
               testID="Spid"
               icon="spid"
-              onPress={onSpidPress}
-            />
-          )}
-          {isCieSupported && !isCiePinDisabled && (
-            <ModuleNavigation
-              title={I18n.t(
-                "features.itWallet.identification.mode.method.ciePin.title"
-              )}
-              subtitle={I18n.t(
-                "features.itWallet.identification.mode.method.ciePin.subtitle"
-              )}
-              testID="CiePin"
-              icon="fiscalCodeIndividual"
-              onPress={onCiePinPress}
+              onPress={handleSpidPress}
             />
           )}
           {!isCieIdDisabled && (
@@ -95,7 +77,7 @@ export const DefaultIdentificationView = ({
               )}
               icon="device"
               testID="CieID"
-              onPress={onCieIdPress}
+              onPress={handleCieIdPress}
             />
           )}
         </VStack>

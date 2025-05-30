@@ -1,3 +1,5 @@
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 import {
   ContentWrapper,
   Divider,
@@ -7,20 +9,44 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import {
+  trackItWalletIDMethod,
+  trackItWalletIDMethodSelected
+} from "../../analytics";
 import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet.tsx";
 import I18n from "../../../../i18n.ts";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader.tsx";
 import { useCieInfoAndPinBottomSheets } from "../hooks/useCieInfoAndPinBottomSheets.ts";
+import { useNoCieBottomSheet } from "../hooks/useNoCieBottomSheet.tsx";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader.tsx";
+import { useIOSelector } from "../../../../store/hooks.ts";
+import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
+import { CieWarningType } from "./ItwIdentificationCieWarningScreen.tsx";
 
-type L3IdentificationViewProps = {
-  handleCiePinPress: () => void;
-  handleCieIdPress: () => void;
+export type ItwL3IdentificationNavigationParams = {
+  eidReissuing?: boolean;
 };
 
-export const L3IdentificationView = ({
-  handleCiePinPress,
-  handleCieIdPress
-}: L3IdentificationViewProps) => {
+export type ItwL3IdentificationModeSelectionScreenProps =
+  IOStackNavigationRouteProps<
+    ItwParamsList,
+    "ITW_IDENTIFICATION_LEVEL_SELECTION_L3"
+  >;
+
+export const ItwL3IdentificationModeSelectionScreen = (
+  props: ItwL3IdentificationModeSelectionScreenProps
+) => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const { eidReissuing } = props.route.params;
+  const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const validEid = maybeEidStatus === "valid";
+
+  const navigateToCieWarning = (warning: CieWarningType) => {
+    machineRef.send({ type: "go-to-cie-warning", warning });
+  };
+
   const cieBottomSheet = useItwIdentificationBottomSheet({
     title: I18n.t(
       "features.itWallet.identification.l3.mode.bottomSheet.cie.title"
@@ -56,6 +82,27 @@ export const L3IdentificationView = ({
 
   const { cieInfoBottomSheet, pinBottomSheet } = useCieInfoAndPinBottomSheets();
 
+  const { noCieBottomSheet } = useNoCieBottomSheet();
+
+  useFocusEffect(
+    useCallback(() => {
+      if (eidReissuing) {
+        machineRef.send({ type: "start-reissuing" });
+      }
+    }, [eidReissuing, machineRef])
+  );
+  useFocusEffect(trackItWalletIDMethod);
+
+  const handleCiePinPress = useCallback(() => {
+    machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin" });
+  }, [machineRef]);
+
+  const handleCieIdPress = useCallback(() => {
+    machineRef.send({ type: "select-identification-mode", mode: "cieId" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
+  }, [machineRef]);
+
   return (
     <IOScrollViewWithLargeHeader
       title={{
@@ -66,14 +113,28 @@ export const L3IdentificationView = ({
       )}
       headerActionsProp={{ showHelp: true }}
       actions={{
-        type: "SingleButton",
+        type: "TwoButtons",
         primary: {
-          label: I18n.t("features.itWallet.identification.l3.mode.action"),
+          label: I18n.t(
+            "features.itWallet.identification.l3.mode.primaryAction"
+          ),
           accessibilityLabel: I18n.t(
-            "features.itWallet.identification.l3.mode.action"
+            "features.itWallet.identification.l3.mode.primaryAction"
           ),
           onPress: handleCiePinPress,
           testID: "l3-primary-action"
+        },
+        secondary: {
+          label: I18n.t(
+            "features.itWallet.identification.l3.mode.secondaryAction"
+          ),
+          accessibilityLabel: I18n.t(
+            "features.itWallet.identification.l3.mode.secondaryAction"
+          ),
+          onPress: validEid
+            ? () => navigateToCieWarning("noCie")
+            : () => noCieBottomSheet.present(),
+          testID: "l3-secondary-action"
         }
       }}
       testID="l3-identification-view"
@@ -139,6 +200,7 @@ export const L3IdentificationView = ({
         {cieBottomSheet.bottomSheet}
         {cieInfoBottomSheet.bottomSheet}
         {pinBottomSheet.bottomSheet}
+        {noCieBottomSheet.bottomSheet}
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );
