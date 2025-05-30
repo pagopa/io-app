@@ -13817,7 +13817,7 @@ __metadata:
     react-native-reanimated: 3.16.7
     react-native-render-html: ^6.3.1
     react-native-responsive-screen: ^1.4.1
-    react-native-safe-area-context: ^5.1.0
+    react-native-safe-area-context: ^5.4.1
     react-native-screen-brightness: ^2.0.0-alpha
     react-native-screens: ^3.35.0
     react-native-screenshot-prevent: ^1.2.1
@@ -19318,7 +19318,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-safe-area-context@npm:5.4.1":
+"react-native-safe-area-context@npm:^4.10.5":
+  version: 4.14.1
+  resolution: "react-native-safe-area-context@npm:4.14.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: acf94ea2a30a3ec5594b467f8e0942ac48c10cbb5d34d16beba33cc0052f7c82dfd6ace754fa55f41d55143f134d3d3fa908eaf4cc9dec5743d6c4483b23520a
+  languageName: node
+  linkType: hard
+
+"react-native-safe-area-context@npm:^5.4.1":
   version: 5.4.1
   resolution: "react-native-safe-area-context@npm:5.4.1"
   peerDependencies:

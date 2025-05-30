@@ -143,7 +143,7 @@
     "react-native-reanimated": "3.16.7",
     "react-native-render-html": "^6.3.1",
     "react-native-responsive-screen": "^1.4.1",
-    "react-native-safe-area-context": "^5.1.0",
+    "react-native-safe-area-context": "^5.4.1",
     "react-native-screen-brightness": "^2.0.0-alpha",
     "react-native-screens": "^3.35.0",
     "react-native-screenshot-prevent": "^1.2.1",
@@ -272,8 +272,7 @@
     "@babel/preset-typescript": "^7.23.3",
     "@babel/plugin-transform-typescript": "^7.23.6",
     "@babel/plugin-syntax-typescript": "^7.23.3",
-    "@babel/types": "^7.23.6",
-    "react-native-safe-area-context": "5.4.1"
+    "@babel/types": "^7.23.6"
   },
   "react-native": {
     "path": "path-browserify",
