@@ -50,7 +50,7 @@ export const MessagePaymentBottomSheet = ({
     ),
     title: I18n.t("features.pn.details.paymentSection.bottomSheetTitle"),
     snapPoint: [snapPoint],
-    onDismiss: () => dispatch(cancelQueuedPaymentUpdates())
+    onDismiss: () => dispatch(cancelQueuedPaymentUpdates({ messageId }))
   });
   // eslint-disable-next-line functional/immutable-data
   presentPaymentsBottomSheetRef.current = present;

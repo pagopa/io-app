@@ -65,10 +65,10 @@ export const MessageDetailsScreen = () => {
 
   const goBack = useCallback(() => {
     dispatch(cancelPreviousAttachmentDownload());
-    dispatch(cancelQueuedPaymentUpdates());
+    dispatch(cancelQueuedPaymentUpdates({ messageId }));
     dispatch(cancelPNPaymentStatusTracking());
     navigation.goBack();
-  }, [dispatch, navigation]);
+  }, [dispatch, messageId, navigation]);
 
   useHeaderSecondLevel({
     title: "",

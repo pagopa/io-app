@@ -98,11 +98,11 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
 
   const goBack = useCallback(() => {
     dispatch(cancelPreviousAttachmentDownload());
-    dispatch(cancelQueuedPaymentUpdates());
+    dispatch(cancelQueuedPaymentUpdates({ messageId }));
     dispatch(cancelPaymentStatusTracking());
     dispatch(resetGetMessageDataAction());
     navigation.goBack();
-  }, [dispatch, navigation]);
+  }, [dispatch, messageId, navigation]);
 
   const messageMarkdown =
     useIOSelector(state => messageMarkdownSelector(state, messageId)) ?? "";

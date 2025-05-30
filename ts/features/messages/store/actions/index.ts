@@ -303,9 +303,9 @@ export const updatePaymentForMessage = createAsyncAction(
   UpdatePaymentForMessageCancel
 >();
 
-export const cancelQueuedPaymentUpdates = createAction(
+export const cancelQueuedPaymentUpdates = createStandardAction(
   "CANCEL_QUEUED_PAYMENT_UPDATES"
-);
+)<{ messageId: UIMessageId }>();
 
 export const startPaymentStatusTracking = createStandardAction(
   "MESSAGES_START_TRACKING_PAYMENT_STATUS"

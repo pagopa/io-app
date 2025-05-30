@@ -7,6 +7,7 @@ import { UIMessageDetails, UIMessageId } from "../../types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   foldK,
+  isError,
   isLoading,
   isUndefined,
   remoteError,
@@ -17,6 +18,9 @@ import {
 } from "../../../../common/model/RemoteValue";
 import {
   addUserSelectedPaymentRptId,
+  cancelQueuedPaymentUpdates,
+  isGenericError,
+  isTimeoutError,
   PaymentError,
   reloadAllMessages,
   updatePaymentForMessage
@@ -77,6 +81,32 @@ export const paymentsReducer = (
           [action.payload.paymentId]: remoteError(action.payload.reason)
         }
       };
+    case getType(cancelQueuedPaymentUpdates): {
+      const messageId = action.payload.messageId;
+      const messageSinglePayments = state[messageId];
+      if (messageSinglePayments != null) {
+        return {
+          ...state,
+          [messageId]: Object.entries(messageSinglePayments).reduce(
+            (acc, [key, value]) => {
+              if (
+                value != null &&
+                (isLoading(value) ||
+                  (isError(value) &&
+                    (isTimeoutError(value.error) ||
+                      isGenericError(value.error))))
+              ) {
+                return { ...acc, [key]: remoteUndefined };
+              }
+
+              return { ...acc, [key]: value };
+            },
+            {} as SinglePaymentState
+          )
+        };
+      }
+      return state;
+    }
     case getType(updatePaymentForMessage.cancel):
       return action.payload.reduce<MultiplePaymentState>(
         (previousState, queuedUpdateActionPayload) => ({
