@@ -261,3 +261,15 @@ export function trackAppearancePreferenceTypefaceUpdate(
     value: choice
   });
 }
+
+export function trackPressLogoutFromIO() {
+  void mixpanelTrack("LOGOUT_START", buildEventProperties("UX", "action"));
+}
+
+export function trackPressLogoutConfirmFromIO() {
+  void mixpanelTrack("LOGOUT_CONFIRM", buildEventProperties("UX", "action"));
+}
+
+export function trackPressLogoutCancelFromIO() {
+  void mixpanelTrack("LOGOUT_CANCEL", buildEventProperties("UX", "action"));
+}

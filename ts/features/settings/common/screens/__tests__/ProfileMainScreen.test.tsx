@@ -63,7 +63,8 @@ describe(ProfileMainScreen, () => {
       I18n.t("profile.logout.alertMessage"),
       [
         {
-          text: I18n.t("global.buttons.cancel")
+          text: I18n.t("global.buttons.cancel"),
+          onPress: expect.any(Function)
         },
         {
           text: I18n.t("profile.logout.exit"),

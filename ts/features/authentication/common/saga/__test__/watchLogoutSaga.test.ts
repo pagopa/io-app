@@ -1,6 +1,7 @@
 import { testSaga } from "redux-saga-test-plan";
 import * as E from "fp-ts/lib/Either";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { getType } from "typesafe-actions";
 import {
   logoutFailure,
   logoutRequest,
@@ -14,8 +15,6 @@ import { startApplicationInitialization } from "../../../../../store/actions/app
 import * as error from "../../../../../utils/errors";
 
 const logout = jest.fn();
-
-const takeCancellableAction = [logoutRequest, logoutSuccess, logoutFailure];
 
 const logoutRequestAct = logoutRequest({ withApiCall: true });
 const logoutSuccessAct = logoutSuccess();
@@ -151,11 +150,7 @@ describe("watchLogoutSaga", () => {
   it("should execute the normal logout flow cancelling the saga", () => {
     testSaga(watchLogoutSaga, logout)
       .next()
-      .take(takeCancellableAction)
-      .next(logoutRequestAct)
-      .fork(logoutSaga, logout, logoutRequestAct)
-      .next()
-      .take(takeCancellableAction)
+      .takeLatest(getType(logoutRequest), logoutSaga, logout)
       .next(logoutSuccessAct)
       .isDone();
   });
@@ -163,11 +158,8 @@ describe("watchLogoutSaga", () => {
   it("should execute a failed logout flow cancelling the saga", () => {
     testSaga(watchLogoutSaga, logout)
       .next()
-      .take(takeCancellableAction)
+      .takeLatest(getType(logoutRequest), logoutSaga, logout)
       .next(logoutRequestAct)
-      .fork(logoutSaga, logout, logoutRequestAct)
-      .next()
-      .take(takeCancellableAction)
       .next(logoutFailureAct)
       .isDone();
   });

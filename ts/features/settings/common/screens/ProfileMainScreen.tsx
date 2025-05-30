@@ -45,6 +45,11 @@ import { openWebUrl } from "../../../../utils/url";
 import DeveloperModeSection from "../../devMode/components/DeveloperModeSection";
 import { ProfileMainScreenTopBanner } from "../components/ProfileMainScreenTopBanner";
 import { SETTINGS_ROUTES } from "../navigation/routes";
+import {
+  trackPressLogoutCancelFromIO,
+  trackPressLogoutConfirmFromIO,
+  trackPressLogoutFromIO
+} from "../analytics";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
@@ -76,6 +81,7 @@ const ProfileMainScreenFC = () => {
   const idResetTap = useRef<number>();
 
   const handleContinue = useCallback(() => {
+    trackPressLogoutConfirmFromIO();
     navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
       screen: SETTINGS_ROUTES.PROFILE_LOGOUT
     });
@@ -92,6 +98,7 @@ const ProfileMainScreenFC = () => {
   );
 
   const onLogoutPress = useCallback(() => {
+    trackPressLogoutFromIO();
     Alert.alert(
       I18n.t("profile.logout.alertTitle"),
       selectItwLifecycleIsOperationalOrValid
@@ -99,7 +106,8 @@ const ProfileMainScreenFC = () => {
         : I18n.t("profile.logout.alertMessage"),
       [
         {
-          text: I18n.t("global.buttons.cancel")
+          text: I18n.t("global.buttons.cancel"),
+          onPress: () => trackPressLogoutCancelFromIO()
         },
         {
           text: I18n.t("profile.logout.exit"),
