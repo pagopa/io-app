@@ -377,7 +377,11 @@ export const IdentificationModal = () => {
       transparent
       onRequestClose={onRequestCloseHandler}
     >
-      <StatusBar barStyle={"light-content"} translucent />
+      <StatusBar
+        barStyle={"light-content"}
+        backgroundColor={"transparent"}
+        translucent
+      />
       <View
         style={[
           styles.contentWrapper,

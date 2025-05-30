@@ -205,60 +205,62 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                 onPress={[Function]}
                                 variant="primary"
                               />
-                              <Modal
-                                accessible={false}
-                                backdropComponent={[Function]}
-                                backgroundStyle={
-                                  {
-                                    "backgroundColor": "#FFFFFF",
-                                  }
-                                }
-                                enableDismissOnClose={true}
-                                enableDynamicSizing={true}
-                                footerComponent={[Function]}
-                                handleComponent={[Function]}
-                                hardwareAccelerated={false}
-                                importantForAccessibility="yes"
-                                maxDynamicContentSize={1334}
-                                onDismiss={[Function]}
-                                style={
-                                  {
-                                    "borderCurve": "continuous",
-                                    "borderTopLeftRadius": 24,
-                                    "borderTopRightRadius": 24,
-                                    "overflow": "hidden",
-                                  }
-                                }
-                                visible={true}
-                              >
-                                <ScrollView
-                                  overScrollMode="never"
-                                  style={
+                              <React.Fragment>
+                                <Modal
+                                  accessible={false}
+                                  backdropComponent={[Function]}
+                                  backgroundStyle={
                                     {
-                                      "paddingHorizontal": 24,
+                                      "backgroundColor": "#FFFFFF",
                                     }
                                   }
+                                  enableDismissOnClose={true}
+                                  enableDynamicSizing={true}
+                                  footerComponent={[Function]}
+                                  handleComponent={[Function]}
+                                  hardwareAccelerated={false}
+                                  importantForAccessibility="yes"
+                                  maxDynamicContentSize={1334}
+                                  onDismiss={[Function]}
+                                  style={
+                                    {
+                                      "borderCurve": "continuous",
+                                      "borderTopLeftRadius": 24,
+                                      "borderTopRightRadius": 24,
+                                      "overflow": "hidden",
+                                    }
+                                  }
+                                  visible={true}
                                 >
-                                  <View
+                                  <ScrollView
+                                    overScrollMode="never"
                                     style={
                                       {
-                                        "paddingBottom": 0,
+                                        "paddingHorizontal": 24,
                                       }
                                     }
                                   >
-                                    <ForwardRef>
-                                      To facilitate your search and improve your experience, we have organized the categories according to frequency of use. This information is not tied to your profile, but is based on aggregate data from all users who use Carta Giovani Nazionale and have consented to data processing.
-                                    </ForwardRef>
-                                  </View>
-                                  <View
-                                    style={
-                                      {
-                                        "height": 0,
+                                    <View
+                                      style={
+                                        {
+                                          "paddingBottom": 0,
+                                        }
                                       }
-                                    }
-                                  />
-                                </ScrollView>
-                              </Modal>
+                                    >
+                                      <ForwardRef>
+                                        To facilitate your search and improve your experience, we have organized the categories according to frequency of use. This information is not tied to your profile, but is based on aggregate data from all users who use Carta Giovani Nazionale and have consented to data processing.
+                                      </ForwardRef>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "height": 0,
+                                        }
+                                      }
+                                    />
+                                  </ScrollView>
+                                </Modal>
+                              </React.Fragment>
                             </React.Fragment>
                           </React.Fragment>
                         }
