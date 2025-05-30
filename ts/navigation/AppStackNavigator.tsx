@@ -131,16 +131,15 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
           }
         },
         [SERVICES_ROUTES.SERVICES_NAVIGATOR]: {
-          path: "services",
           screens: {
             [SERVICES_ROUTES.SERVICE_DETAIL]: {
-              path: "service-detail",
+              path: "services/service-detail",
               parse: {
                 activate: activate => activate === "true"
               }
             },
             [SERVICES_ROUTES.INSTITUTION_SERVICES]: {
-              path: "institution-home"
+              path: "institutions"
             }
           }
         },
