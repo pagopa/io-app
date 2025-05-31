@@ -17,6 +17,7 @@ import {
 } from "../utils/itwTypesUtils";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { itwShouldRenderNewITWallet } from "../store/selectors";
 
 const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
   "valid",
@@ -40,6 +41,7 @@ export const ItwEidLifecycleAlert = ({
   navigation
 }: Props) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
+  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWallet);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   const startEidReissuing = () => {
@@ -61,6 +63,7 @@ export const ItwEidLifecycleAlert = ({
     if (!lifecycleStatus.includes(eidStatus)) {
       return null;
     }
+    const nameSpace = isNewItwRenderable ? "itw" : "documents";
 
     const alertProps: Record<
       ItwJwtCredentialStatus,
@@ -70,7 +73,7 @@ export const ItwEidLifecycleAlert = ({
         testID: "itwEidLifecycleAlertTestID_valid",
         variant: "success",
         content: I18n.t(
-          "features.itWallet.presentation.bottomSheets.eidInfo.alert.valid",
+          `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.valid`,
           {
             date: eid.jwt.issuedAt
               ? format(eid.jwt.issuedAt, "DD-MM-YYYY")
@@ -82,13 +85,13 @@ export const ItwEidLifecycleAlert = ({
         testID: "itwEidLifecycleAlertTestID_jwtExpiring",
         variant: "warning",
         content: I18n.t(
-          "features.itWallet.presentation.bottomSheets.eidInfo.alert.expiring",
+          `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.expiring`,
           {
             date: format(eid.jwt.expiration, "DD-MM-YYYY")
           }
         ),
         action: I18n.t(
-          "features.itWallet.presentation.bottomSheets.eidInfo.alert.action"
+          `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.action`
         ),
         onPress: startEidReissuing
       },
@@ -96,10 +99,10 @@ export const ItwEidLifecycleAlert = ({
         testID: "itwEidLifecycleAlertTestID_jwtExpired",
         variant: "error",
         content: I18n.t(
-          "features.itWallet.presentation.bottomSheets.eidInfo.alert.expired"
+          `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.expired`
         ),
         action: I18n.t(
-          "features.itWallet.presentation.bottomSheets.eidInfo.alert.action"
+          `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.action`
         ),
         onPress: startEidReissuing
       }
