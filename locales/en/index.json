@@ -4820,7 +4820,36 @@
             "subtitle": "Continua sul sito dell'ente.",
             "cta": "Continua sul sito dell'ente"
           }
-        }
+        },
+        "proximity": {
+          "grantPermissions": {
+            "title": "Consenti a IO di accedere al Bluetooth",
+            "subtitle": "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.",
+            "listItems": {
+              "title": "Ecco come fare:",
+              "step1": {
+                "label": "Step 1",
+                "value": "Vai su \"Impostazioni\""
+              },
+              "step2": {
+                "label": "Step 2",
+                "value": "Seleziona \"App\""
+              },
+              "step3": {
+                "label": "Step 3",
+                "value": "Seleziona \"IO\""
+              },
+              "step4": {
+                "label": "Step 4",
+                "value": "Consenti l’accesso a Bluetooth"
+              }
+            },
+            "actions": {
+              "primary": "Apri impostazioni",
+              "secondary": "Continua"
+            }
+          }
+      }
       },
       "trustmark": {
         "description": "Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.",

@@ -1,13 +1,9 @@
 import {
-  ContentWrapper,
-  HStack,
   IconButton,
   IOVisualCostants,
-  ListItemInfo,
-  VStack
+  ListItemInfo
 } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
-import { constNull } from "fp-ts/lib/function";
 import { Platform, StyleSheet, View } from "react-native";
 import { openSettings } from "react-native-permissions";
 import I18n from "../../../../../i18n";
@@ -26,24 +22,40 @@ export const ItwGrantPermissionsScreen = () => {
   const listItems = useMemo<Array<ListItemInfo>>(
     () => [
       {
-        label: "Step 1",
-        value: 'Vai su "Impostazioni"',
+        label: I18n.t(
+          "features.itWallet.presentation.proximity.grantPermissions.listItems.step1.label"
+        ),
+        value: I18n.t(
+          "features.itWallet.presentation.proximity.grantPermissions.listItems.step1.value"
+        ),
         icon:
           Platform.OS === "ios" ? "systemSettingsiOS" : "systemSettingsAndroid"
       },
       {
-        label: "Step 2",
-        value: 'Seleziona "App"',
+        label: I18n.t(
+          "features.itWallet.presentation.proximity.grantPermissions.listItems.step2.label"
+        ),
+        value: I18n.t(
+          "features.itWallet.presentation.proximity.grantPermissions.listItems.step2.value"
+        ),
         icon: "systemAppsAndroid"
       },
       {
-        label: "Step 3",
-        value: 'Seleziona "IO"',
+        label: I18n.t(
+          "features.itWallet.presentation.proximity.grantPermissions.listItems.step3.label"
+        ),
+        value: I18n.t(
+          "features.itWallet.presentation.proximity.grantPermissions.listItems.step3.value"
+        ),
         icon: "productIOAppBlueBg"
       },
       {
-        label: "Step 4",
-        value: "Consenti l’accesso a Bluetooth",
+        label: I18n.t(
+          "features.itWallet.presentation.proximity.grantPermissions.listItems.step4.label"
+        ),
+        value: I18n.t(
+          "features.itWallet.presentation.proximity.grantPermissions.listItems.step4.value"
+        ),
         icon: "systemToggleInstructions"
       }
     ],
@@ -53,11 +65,15 @@ export const ItwGrantPermissionsScreen = () => {
   const actions: IOScrollViewActions = {
     type: "TwoButtons",
     primary: {
-      label: "Apri impostazioni",
+      label: I18n.t(
+        "features.itWallet.presentation.proximity.grantPermissions.actions.primary"
+      ),
       onPress: openAppSettings
     },
     secondary: {
-      label: I18n.t("global.buttons.continue"),
+      label: I18n.t(
+        "features.itWallet.presentation.proximity.grantPermissions.actions.secondary"
+      ),
       onPress: openSettings
     }
   };
@@ -73,11 +89,15 @@ export const ItwGrantPermissionsScreen = () => {
         />
       </View>
       <IOScrollViewWithListItems
-        title={"Consenti a IO di accedere al Bluetooth"}
-        subtitle={
-          "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo."
-        }
-        listItemHeaderLabel={"Ecco come fare:"}
+        title={I18n.t(
+          "features.itWallet.presentation.proximity.grantPermissions.title"
+        )}
+        subtitle={I18n.t(
+          "features.itWallet.presentation.proximity.grantPermissions.subtitle"
+        )}
+        listItemHeaderLabel={I18n.t(
+          "features.itWallet.presentation.proximity.grantPermissions.listItems.title"
+        )}
         renderItems={listItems}
         actions={actions}
       />
