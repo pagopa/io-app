@@ -13,7 +13,7 @@ export const itwProximityMachine = setup({
     events: {} as RemoteEvents
   },
   actions: {
-    navigateToBluetoothConsentScreen: notImplemented,
+    navigateToGrantPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
     generateQRCode: notImplemented,
     closePresentation: notImplemented
@@ -50,7 +50,7 @@ export const itwProximityMachine = setup({
       }
     },
     GrantPermissions: {
-      entry: "navigateToBluetoothConsentScreen",
+      entry: "navigateToGrantPermissionsScreen",
       on: {
         back: {
           target: "Idle"

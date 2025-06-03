@@ -50,7 +50,7 @@ import {
   ItwProximityMachineContext,
   ItwProximityMachineProvider
 } from "../presentation/proximity/machine/provider.tsx";
-import { ItwBluetoothConsentScreen } from "../presentation/proximity/screens/ItwBluetoothConsentScreen.tsx";
+import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/ItwGrantPermissionsScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -261,7 +261,7 @@ const InnerNavigator = () => {
       <Stack.Group>
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.DEVICE_PERMISSIONS}
-          component={ItwBluetoothConsentScreen}
+          component={ItwGrantPermissionsScreen}
           options={hiddenHeader}
         />
       </Stack.Group>
