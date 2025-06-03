@@ -51,20 +51,30 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -134,9 +144,13 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -242,7 +256,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -582,14 +595,22 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -648,20 +669,30 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -731,9 +762,13 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -1021,6 +1056,10 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -1032,10 +1071,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1078,6 +1113,9 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -1095,7 +1133,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -1435,14 +1472,22 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -1501,20 +1546,30 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -1584,9 +1639,13 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -1874,6 +1933,10 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -1885,10 +1948,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1929,6 +1988,9 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       [
                                         {
                                           "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
                                         },
                                         {
                                           "color": undefined,
@@ -2015,6 +2077,8 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
+                                    false,
+                                    {},
                                     {
                                       "paddingHorizontal": 0,
                                     },
@@ -2025,8 +2089,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
-                                    {},
-                                    false,
                                     {},
                                   ]
                                 }
@@ -2070,6 +2132,9 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                             "textAlign": "auto",
                                           },
                                           {
+                                            "color": "#0B3EE3",
+                                          },
+                                          {
                                             "color": undefined,
                                           },
                                         ],
@@ -2088,7 +2153,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -2428,14 +2492,22 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>

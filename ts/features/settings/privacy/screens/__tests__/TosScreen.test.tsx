@@ -36,7 +36,7 @@ describe("TosScreen", () => {
       const renderAPI = commonSetup();
 
       // Back button should be there
-      const backButtonRTI = renderAPI.queryAllByA11yLabel(
+      const backButtonRTI = renderAPI.queryAllByLabelText(
         I18n.t("global.buttons.back")
       )[0];
       expect(backButtonRTI).toBeDefined();
@@ -45,7 +45,7 @@ describe("TosScreen", () => {
   describe("When rendering the screen", () => {
     it("The help button is rendered", () => {
       const renderAPI = commonSetup();
-      const helpButtonRTI = renderAPI.queryAllByA11yLabel(
+      const helpButtonRTI = renderAPI.queryAllByLabelText(
         I18n.t("global.accessibility.contextualHelp.open.label")
       )[0];
       expect(helpButtonRTI).toBeDefined();

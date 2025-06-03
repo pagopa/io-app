@@ -51,20 +51,30 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -134,9 +144,13 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -425,6 +439,10 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -436,10 +454,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -482,6 +496,9 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -499,7 +516,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -839,14 +855,22 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -905,20 +929,30 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -988,9 +1022,13 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -1279,6 +1317,10 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
                                   {
                                     "paddingHorizontal": 16,
                                   },
@@ -1290,10 +1332,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                     "height": 48,
                                   },
                                   {},
-                                  false,
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
                                 ]
                               }
                             >
@@ -1336,6 +1374,9 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                           "textAlign": "auto",
                                         },
                                         {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
                                           "color": undefined,
                                         },
                                       ],
@@ -1353,7 +1394,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -1693,14 +1733,22 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -1759,20 +1807,30 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -1842,9 +1900,13 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -1950,7 +2012,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -2290,14 +2351,22 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -2356,20 +2425,30 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -2439,9 +2518,13 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -2547,7 +2630,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -2887,14 +2969,22 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>

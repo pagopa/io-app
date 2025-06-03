@@ -10,8 +10,12 @@ import {
 import { RequestObject } from "../../../common/utils/itwTypesUtils";
 import { useIOStore } from "../../../../../store/hooks";
 import { itwCredentialsSelector } from "../../../credentials/store/selectors";
-import { enrichPresentationDetails } from "../utils/itwRemotePresentationUtils";
+import {
+  enrichPresentationDetails,
+  getInvalidCredentials
+} from "../utils/itwRemotePresentationUtils";
 import { assert } from "../../../../../utils/assert";
+import { InvalidCredentialsStatusError } from "./failure";
 
 export type EvaluateRelyingPartyTrustInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
@@ -20,11 +24,15 @@ export type EvaluateRelyingPartyTrustOutput = {
   rpConf: RelyingPartyConfiguration;
   rpSubject: string;
 };
-
+export type GetRequestObjectInput = Partial<{
+  qrCodePayload: ItwRemoteRequestPayload;
+}>;
+export type GetRequestObjectOutput = string;
 export type GetPresentationDetailsInput = Partial<{
   rpConf: RelyingPartyConfiguration;
   rpSubject: string;
   qrCodePayload: ItwRemoteRequestPayload;
+  requestObjectEncodedJwt: string;
 }>;
 export type GetPresentationDetailsOutput = {
   requestObject: RequestObject;
@@ -61,20 +69,33 @@ export const createRemoteActorsImplementation = (
     return { rpConf, rpSubject: subject };
   });
 
+  // The retrieval of the Request Object is managed by a dedicated actor to enable access
+  // to the `response_uri` parameter in the event of a validation failure during its processing.
+  const getRequestObject = fromPromise<
+    GetRequestObjectOutput,
+    GetRequestObjectInput
+  >(async ({ input }) => {
+    const { qrCodePayload } = input;
+    assert(qrCodePayload, "Missing required qrCodePayload");
+    const { request_uri } = qrCodePayload;
+
+    const { requestObjectEncodedJwt } =
+      await Credential.Presentation.getRequestObject(request_uri);
+
+    return requestObjectEncodedJwt;
+  });
+
   const getPresentationDetails = fromPromise<
     GetPresentationDetailsOutput,
     GetPresentationDetailsInput
   >(async ({ input }) => {
-    const { rpConf, rpSubject, qrCodePayload } = input;
+    const { rpConf, rpSubject, qrCodePayload, requestObjectEncodedJwt } = input;
     assert(
-      rpConf && rpSubject && qrCodePayload,
+      rpConf && rpSubject && qrCodePayload && requestObjectEncodedJwt,
       "Missing required getPresentationDetails actor params"
     );
 
-    const { request_uri, client_id, state } = qrCodePayload;
-
-    const { requestObjectEncodedJwt } =
-      await Credential.Presentation.getRequestObject(request_uri);
+    const { client_id, state } = qrCodePayload;
 
     const { requestObject } = await Credential.Presentation.verifyRequestObject(
       requestObjectEncodedJwt,
@@ -92,6 +113,7 @@ export const createRemoteActorsImplementation = (
     assert(O.isSome(eid), "Missing PID");
 
     // Prepare credentials to evaluate the Relying Party request
+    // TODO: add the Wallet Attestation in SD-JWT format
     const credentialsSdJwt: Array<[string, string]> = [
       [eid.value.keyTag, eid.value.credential],
       ...credentials
@@ -99,6 +121,7 @@ export const createRemoteActorsImplementation = (
         .map(c => [c.value.keyTag, c.value.credential] as [string, string])
     ];
 
+    // Evaluate the DCQL query against the credentials contained in the Wallet
     const result = Credential.Presentation.evaluateDcqlQuery(
       credentialsSdJwt,
       requestObject.dcql_query as DcqlQuery
@@ -111,6 +134,16 @@ export const createRemoteActorsImplementation = (
         .map(c => [c.value.credentialType, c.value])
     );
 
+    // Check whether any of the requested credential is invalid
+    const invalidCredentials = getInvalidCredentials(
+      result.map(c => credentialsByType[c.vct])
+    );
+
+    if (invalidCredentials.length > 0) {
+      throw new InvalidCredentialsStatusError(invalidCredentials);
+    }
+
+    // Add localization to the requested claims
     const presentationDetails = enrichPresentationDetails(
       result,
       credentialsByType
@@ -164,6 +197,7 @@ export const createRemoteActorsImplementation = (
 
   return {
     evaluateRelyingPartyTrust,
+    getRequestObject,
     getPresentationDetails,
     sendAuthorizationResponse
   };

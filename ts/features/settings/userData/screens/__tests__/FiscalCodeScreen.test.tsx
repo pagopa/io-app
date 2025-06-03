@@ -1,5 +1,6 @@
 import { PreloadedState, createStore } from "redux";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
+import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -9,6 +10,7 @@ import { profileLoadSuccess } from "../../../common/store/actions";
 import { EmailAddress } from "../../../../../../definitions/auth/EmailAddress";
 import { ServicesPreferencesModeEnum } from "../../../../../../definitions/auth/ServicesPreferencesMode";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
+import I18n from "../../../../../i18n";
 
 jest.mock("../../../../../utils/brightness", () => ({
   useMaxBrightness: jest.fn()
@@ -17,6 +19,20 @@ jest.mock("../../../../../utils/brightness", () => ({
 const FISCAL_CODE_TEST = "AAAAAA00A00A000A" as FiscalCode;
 
 describe(FiscalCodeScreen, () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.useFakeTimers();
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
+  it("should match snapshot", () => {
+    const { component } = renderComponent();
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+
   it("Should be defined", () => {
     const { component } = renderComponent();
 
@@ -25,11 +41,32 @@ describe(FiscalCodeScreen, () => {
   it("Should display the barcode with the correct tax code", () => {
     const { component } = renderComponent();
 
-    const barcode = component.getByTestId(/barcode-box/);
-    const taxCode = component.getByTestId(/fiscal-code/);
+    const barcode = component.getByTestId("barcode-box");
+    const taxCode = component.getByTestId("fiscal-code");
 
     expect(barcode).toBeDefined();
     expect(taxCode).toHaveTextContent(FISCAL_CODE_TEST);
+  });
+
+  it("Should copy the tax code to the clipboard", async () => {
+    const { component } = renderComponent();
+
+    const copyButton = component.getByTestId("copy-fiscal-code-button");
+    fireEvent.press(copyButton);
+
+    await waitFor(() => {
+      expect(
+        component.getByText(I18n.t("profile.fiscalCode.codeCopied"))
+      ).toBeDefined();
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(6000);
+    });
+
+    expect(
+      component.getByText(I18n.t("profile.fiscalCode.copyCode"))
+    ).toBeDefined();
   });
 });
 

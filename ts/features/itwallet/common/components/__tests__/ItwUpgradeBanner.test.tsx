@@ -1,4 +1,5 @@
 import configureMockStore from "redux-mock-store";
+import { fireEvent, waitFor } from "@testing-library/react-native";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -6,8 +7,27 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as selectors from "../../store/selectors";
 import { ItwUpgradeBanner } from "../ItwUpgradeBanner";
+import { ITW_ROUTES } from "../../../navigation/routes";
+
+import I18n from "../../../../../i18n";
+
+const mockNavigate = jest.fn();
+
+jest.mock("@react-navigation/native", () => {
+  const actual = jest.requireActual("@react-navigation/native");
+  return {
+    ...actual,
+    useNavigation: () => ({
+      navigate: mockNavigate
+    })
+  };
+});
 
 describe("ItwUpgradeBanner", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it.each([true, false])("should render %s", shouldRender => {
     jest
       .spyOn(selectors, "itwShouldRenderL3UpgradeBannerSelector")
@@ -20,6 +40,25 @@ describe("ItwUpgradeBanner", () => {
     } else {
       expect(() => getByTestId("itwUpgradeBannerTestID")).toThrow();
     }
+  });
+
+  it("should navigate to the Discovery Info Screen", async () => {
+    jest
+      .spyOn(selectors, "itwShouldRenderL3UpgradeBannerSelector")
+      .mockReturnValue(true);
+
+    const { getByText } = renderComponent();
+
+    const button = getByText(I18n.t("features.itWallet.upgrade.banner.action"));
+    fireEvent.press(button);
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledTimes(1);
+      expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.DISCOVERY.INFO,
+        params: { isL3: true }
+      });
+    });
   });
 });
 

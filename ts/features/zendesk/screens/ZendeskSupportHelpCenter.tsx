@@ -9,8 +9,8 @@ import {
   HeaderSecondLevel,
   IOButton,
   IOToast,
-  VSpacer,
-  useIOTheme
+  useIOTheme,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -64,10 +64,10 @@ import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSigna
 import { ZendeskParamsList } from "../navigation/params";
 import ZENDESK_ROUTES from "../navigation/routes";
 import {
-  ZendeskStartPayload,
   getZendeskConfig,
   getZendeskPaymentConfig,
   getZendeskToken,
+  ZendeskStartPayload,
   zendeskSupportCancel
 } from "../store/actions";
 import {
@@ -301,7 +301,7 @@ const ZendeskSupportHelpCenter = () => {
 
   /**
    * as first step request the config (categories + panicmode) that could
-     be used in the next steps (possible network error are handled in {@link ZendeskAskPermissions})
+   be used in the next steps (possible network error are handled in {@link ZendeskAskPermissions})
    */
   useEffect(() => {
     dispatch(getZendeskConfig.request());

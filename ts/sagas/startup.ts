@@ -11,7 +11,6 @@ import {
   fork,
   put,
   select,
-  spawn,
   take,
   takeEvery,
   takeLatest
@@ -21,23 +20,42 @@ import { UserDataProcessingChoiceEnum } from "../../definitions/auth/UserDataPro
 import { UserDataProcessingStatusEnum } from "../../definitions/auth/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
-import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
-import { shouldTrackLevelSecurityMismatchSaga } from "../features/authentication/login/cie/sagas/trackLevelSecuritySaga";
+import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
+import { loadSessionInformationSaga } from "../features/authentication/common/saga/loadSessionInformationSaga";
+import {
+  checkSession,
+  watchCheckSessionSaga
+} from "../features/authentication/common/saga/watchCheckSessionSaga";
+import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
+import { watchSessionExpiredSaga } from "../features/authentication/common/saga/watchSessionExpiredSaga";
+import { sessionExpired } from "../features/authentication/common/store/actions";
+import {
+  sessionInfoSelector,
+  sessionTokenSelector
+} from "../features/authentication/common/store/selectors";
 import { setSecurityAdviceReadyToShow } from "../features/authentication/fastLogin/store/actions/securityAdviceActions";
 import { refreshSessionToken } from "../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import {
   isFastLoginEnabledSelector,
   tokenRefreshSelector
 } from "../features/authentication/fastLogin/store/selectors";
+import { shouldTrackLevelSecurityMismatchSaga } from "../features/authentication/login/cie/sagas/trackLevelSecuritySaga";
+import { userFromSuccessLoginSelector } from "../features/authentication/loginInfo/store/selectors";
+import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
+import { startAndReturnIdentificationResult } from "../features/identification/sagas";
+import { IdentificationResult } from "../features/identification/store/reducers";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
+import {
+  isDeviceOfflineWithWalletSaga,
+  watchSessionRefreshInOfflineSaga
+} from "../features/ingress/saga";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import {
-  watchItwSaga,
-  watchItwOfflineSaga
+  watchItwOfflineSaga,
+  watchItwSaga
 } from "../features/itwallet/common/saga";
-import { userFromSuccessLoginSelector } from "../features/authentication/loginInfo/store/selectors";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
@@ -46,8 +64,17 @@ import {
 } from "../features/lollipop/saga";
 import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
 import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
+import { checkAcknowledgedEmailSaga } from "../features/mailCheck/sagas/checkAcknowledgedEmailSaga";
+import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sagas/checkEmailNotificationPreferencesSaga";
+import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
+import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
+import { watchProfileEmailValidationChangedSaga } from "../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
+import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
+import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
+import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
+import { clearOnboarding } from "../features/onboarding/store/actions";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
@@ -56,6 +83,21 @@ import { profileAndSystemNotificationsPermissions } from "../features/pushNotifi
 import { pushNotificationTokenUpload } from "../features/pushNotifications/sagas/pushNotificationTokenUpload";
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import { watchServicesSaga } from "../features/services/common/saga";
+import { fetchServicePreferencesForStartup } from "../features/services/details/saga/handleGetServicePreference";
+import {
+  loadProfile,
+  watchProfile,
+  watchProfileRefreshRequestsSaga,
+  watchProfileUpsertRequestsSaga
+} from "../features/settings/common/sagas/profile";
+import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
+import {
+  clearCache,
+  resetProfileState
+} from "../features/settings/common/store/actions";
+import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
+import { profileSelector } from "../features/settings/common/store/selectors";
+import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
 import { watchWalletSaga } from "../features/wallet/saga";
@@ -71,70 +113,28 @@ import {
   applicationInitialized,
   startApplicationInitialization
 } from "../store/actions/application";
-import { sessionExpired } from "../features/authentication/common/store/actions";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { navigateToPrivacyScreen } from "../store/actions/navigation";
-import { clearOnboarding } from "../features/onboarding/store/actions";
-import {
-  clearCache,
-  resetProfileState
-} from "../features/settings/common/store/actions";
 import {
   startupLoadSuccess,
   startupTransientError
 } from "../store/actions/startup";
-import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
-import {
-  sessionInfoSelector,
-  sessionTokenSelector
-} from "../features/authentication/common/store/selectors";
 import {
   isIdPayEnabledSelector,
-  isPnEnabledSelector,
+  isPnRemoteEnabledSelector,
   remoteConfigSelector
 } from "../store/reducers/backendStatus/remoteConfig";
-import { IdentificationResult } from "../features/identification/store/reducers";
-import { profileSelector } from "../features/settings/common/store/selectors";
-import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
 import {
   StartupStatusEnum,
   startupTransientErrorInitialState
 } from "../store/reducers/startup";
-import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
-import {
-  isDeviceOfflineWithWalletSaga,
-  watchSessionRefreshInOfflineSaga
-} from "../features/ingress/saga";
-import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
-import {
-  loadProfile,
-  watchProfile,
-  watchProfileRefreshRequestsSaga,
-  watchProfileUpsertRequestsSaga
-} from "../features/settings/common/sagas/profile";
-import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
-import { watchProfileEmailValidationChangedSaga } from "../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
-import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
-import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sagas/checkEmailNotificationPreferencesSaga";
-import { checkAcknowledgedEmailSaga } from "../features/mailCheck/sagas/checkAcknowledgedEmailSaga";
-import { loadSessionInformationSaga } from "../features/authentication/common/saga/loadSessionInformationSaga";
-import {
-  checkSession,
-  watchCheckSessionSaga
-} from "../features/authentication/common/saga/watchCheckSessionSaga";
-import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
-import { watchSessionExpiredSaga } from "../features/authentication/common/saga/watchSessionExpiredSaga";
-import { startAndReturnIdentificationResult } from "../features/identification/sagas";
-import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
-import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
-import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -157,14 +157,24 @@ const warningWaitNavigatorTime = 2000 as Millisecond;
 /**
  * Handles the application startup and the main application logic loop
  */
+/**
+ * The startup saga is triggered in the following scenarios:
+ * - During the root saga initialization
+ * - On logout or expired session
+ * - On FL session refresh
+ * - When accessing the Wallet mini app in offline mode
+ */
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 export function* initializeApplicationSaga(
   startupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {
+  // ingress screen
   const isBlockingScreen = yield* select(isBlockingScreenSelector);
   if (isBlockingScreen) {
     return;
   }
+
+  // LV
   const handleSessionExpiration = !!(
     startupAction?.payload && startupAction.payload.handleSessionExpiration
   );
@@ -187,19 +197,26 @@ export function* initializeApplicationSaga(
 
   // remove all local notifications (see function comment)
   yield* call(cancellAllLocalNotifications);
-  yield* call(previousInstallationDataDeleteSaga);
+  yield* call(previousInstallationDataDeleteSaga); // consider to move out of the startup saga
+  /**
+   * Consider moving previousInstallationDataDeleteSuccess inside previousInstallationDataDeleteSaga
+   * TODO: https://pagopa.atlassian.net/browse/IOPID-3038
+   */
   yield* put(previousInstallationDataDeleteSuccess());
 
   // listen for mixpanel enabling events
   yield* takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
   // clear cached downloads when the logged user changes
-  yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments);
-
+  yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments); // Consider using takeLatest here instead
   // Retrieve and listen for notification permissions status changes
   yield* fork(notificationPermissionsListener);
 
-  // Get last logged in Profile from the state
+  /**
+   * Get last logged in Profile from the state
+   * Consider creating separate selectors for email and fiscal code (refer to the related use case below)
+   * TODO: https://pagopa.atlassian.net/browse/IOPID-3039
+   */
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
     yield* select(profileSelector);
 
@@ -207,19 +224,31 @@ export function* initializeApplicationSaga(
     ? O.fromNullable(lastLoggedInProfileState.value.is_email_validated)
     : O.none;
 
-  // Watch for profile changes
+  /**
+   * Watch for profile changes
+   * TODO: https://pagopa.atlassian.net/browse/IOPID-3040
+   */
   yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
+  // Might be removable: https://github.com/pagopa/io-app/pull/398/files#diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31
+  // It was likely used by the old ingress screen to track check progress
+  // If removed, ensure the condition `if (O.isNone(maybeUserProfile))` is preserved,
+  // as it plays a key role in detecting uninitialized profiles.
+  // TODO: https://pagopa.atlassian.net/browse/IOPID-3042
+
   if (!handleSessionExpiration) {
-    yield* put(resetProfileState());
+    yield* put(resetProfileState()); // Consider identifying all scenarios where the profile should be reset (e.g. Wallet offline).
+    // It might be worth consolidating them into a single function
   }
 
   // We need to generate a key in the application startup flow
   // to use this information on old app version already logged in users.
   // Here we are blocking the application startup, but we have the
   // the profile loading spinner active.
+
+  // Consider extracting this logic, for example into the root saga
 
   yield* call(generateLollipopKeySaga);
 
@@ -304,10 +333,22 @@ export function* initializeApplicationSaga(
     keyInfo
   );
 
+  // The following functions all rely on backendClient
+
+  // Now this saga (watchLogoutSaga) is launched using `fork` instead of `spawn`,
+  // meaning it is tied to the lifecycle of the parent saga (`startupSaga`).
+
+  // watchLogoutSaga is launched using `fork` so that it will be cancelled
+  // if the parent saga (`startupSaga`) is cancelled or restarted
+  // (e.g. on session expiration or when coming back online).
+
+  // Originally the logic with spawn was introduced in this PR: https://github.com/pagopa/io-app/pull/1417
+  // to ensure the logout listener remained active independently.
+  // Now changed to `fork` to better align with the parent lifecycle.
+
   // Watch for requests to logout
-  // Since this saga is spawned and not forked
-  // it will handle its own cancelation logic.
-  yield* spawn(watchLogoutSaga, backendClient.logout);
+  // This saga handles user state cleanup during logout.
+  yield* fork(watchLogoutSaga, backendClient.logout);
 
   if (zendeskEnabled) {
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
@@ -352,6 +393,9 @@ export function* initializeApplicationSaga(
     backendClient.deleteUserDataProcessingRequest
   );
 
+  // The logic below relies on the current active session
+  // and is maintained by separate teams
+
   // Start watching for Services actions
   yield* fork(watchServicesSaga, backendClient, sessionToken);
 
@@ -365,7 +409,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchFciSaga, sessionToken, keyInfo);
 
   // whether we asked the user to login again
-  const isSessionRefreshed = previousSessionToken !== sessionToken;
+  const isSessionRefreshed = previousSessionToken !== sessionToken; // Needs further investigation
 
   // Let's see if have to load the session info, either because
   // we don't have one for the current session or because we
@@ -383,6 +427,8 @@ export function* initializeApplicationSaga(
   // we have to load the session information from the backend.
   // In a future refactoring where the checkSession won't get the session tokens
   // anymore, we will need to rethink about this check.
+  // **However**, this refactor depends on the saga startup integer refactor,
+  // so it momentarily does not have a jira ticket assigned
   if (
     O.isNone(maybeSessionInformation) ||
     (O.isSome(maybeSessionInformation) &&
@@ -457,6 +503,9 @@ export function* initializeApplicationSaga(
   // If user logged in with different credentials, but this device still has
   // user data loaded, then delete data keeping current session (user already
   // logged in)
+  // Refactor: this logic might be duplicated with the one that dispatches the `differentProfileLoggedIn` action.
+  // Consider consolidating the logic in one place to ensure consistency and avoid duplication.
+  // See related Jira task: https://pagopa.atlassian.net/browse/IOPID-3047
   if (
     pot.isSome(lastLoggedInProfileState) &&
     lastLoggedInProfileState.value.fiscal_code !== userProfile.fiscal_code
@@ -487,6 +536,7 @@ export function* initializeApplicationSaga(
 
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
+  // start onboarding
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
   if (!handleSessionExpiration) {
     yield* call(waitForMainNavigator);
@@ -532,6 +582,8 @@ export function* initializeApplicationSaga(
     }
   }
 
+  yield* call(fetchServicePreferencesForStartup);
+
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);
 
@@ -547,12 +599,19 @@ export function* initializeApplicationSaga(
   yield* call(checkConfiguredPinSaga);
   yield* call(checkAcknowledgedFingerprintSaga);
 
+  // email validation polling
   yield* fork(watchEmailValidationSaga);
 
   if (!hasPreviousSessionAndPin || userProfile.email === undefined) {
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
 
+  /**
+   * if the checks fail (email already taken or email not validated) then the user
+   * is sent back to the page that communicates the problem and from there if starts
+   * the validation flow. If the user wants to validate the email the flow
+   * that triggers polling begins (watchEmailValidationSaga)
+   */
   userProfile = (yield* call(checkEmailSaga)) ?? userProfile;
 
   // Check for both profile notifications permissions (anonymous
@@ -567,6 +626,7 @@ export function* initializeApplicationSaga(
     yield* call(completeOnboardingSaga);
   }
 
+  // finish the onboarding
   // Stop the watchAbortOnboardingSaga
   yield* cancel(watchAbortOnboardingSagaTask);
 
@@ -597,8 +657,8 @@ export function* initializeApplicationSaga(
   // Start watching for cgn actions
   yield* fork(watchBonusCgnSaga, sessionToken);
 
-  const pnEnabled: ReturnType<typeof isPnEnabledSelector> = yield* select(
-    isPnEnabledSelector
+  const pnEnabled: ReturnType<typeof isPnRemoteEnabledSelector> = yield* select(
+    isPnRemoteEnabledSelector
   );
 
   if (pnEnabled) {
@@ -706,6 +766,8 @@ export function* initializeApplicationSaga(
 /**
  * Wait until the {@link NavigationService} is initialized.
  * The NavigationService is initialized when is called {@link RootContainer} componentDidMount and the ref is set with setTopLevelNavigator
+ * Consider moving this to a dedicated file.
+ * TODO: https://pagopa.atlassian.net/browse/IOPID-3041
  */
 function* waitForNavigatorServiceInitialization() {
   // eslint-disable-next-line functional/no-let
@@ -736,6 +798,9 @@ function* waitForNavigatorServiceInitialization() {
     elapsedTime: initTime
   });
 }
+
+// Consider moving this to a dedicated file
+// TODO: https://pagopa.atlassian.net/browse/IOPID-3041
 
 function* waitForMainNavigator() {
   // eslint-disable-next-line functional/no-let

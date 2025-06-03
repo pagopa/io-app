@@ -17,6 +17,15 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList.
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { useItwRemoteUntrustedRPBottomSheet } from "../hooks/useItwRemoteUntrustedRPBottomSheet.tsx";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
+import {
+  useItwFailureSupportModal,
+  ZendeskSubcategoryValue
+} from "../../../common/hooks/useItwFailureSupportModal.tsx";
+import { useItwSendAuthorizationErrorResponse } from "../hooks/useItwSendAuthorizationErrorResponse.tsx";
+
+const zendeskAssistanceErrors = [
+  RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE
+];
 
 export const ItwRemoteFailureScreen = () => {
   const failureOption =
@@ -48,6 +57,14 @@ const ContentView = ({ failure }: ContentViewProps) => {
     customBodyMessage: I18n.t(`${i18nNs}.walletInactiveScreen.alert.body`)
   });
 
+  const failureSupportModal = useItwFailureSupportModal({
+    failure,
+    supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
+    zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA
+  });
+
+  const closeMachine = () => machineRef.send({ type: "close" });
+
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       switch (failure.type) {
@@ -58,7 +75,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             pictogram: "workInProgress",
             action: {
               label: I18n.t("global.buttons.close"),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: closeMachine
             }
           };
         case RemoteFailureType.WALLET_INACTIVE:
@@ -119,7 +136,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 `${i18nNs}.missingCredentialsScreen.secondaryAction`
               ),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: dismissalDialog.show
             }
           };
         }
@@ -135,30 +152,103 @@ const ContentView = ({ failure }: ContentViewProps) => {
             },
             secondaryAction: {
               label: I18n.t(`${i18nNs}.eidExpiredScreen.secondaryAction`),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: closeMachine
+            }
+          };
+        }
+        case RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE: {
+          return {
+            title: I18n.t(`${i18nNs}.relyingParty.invalidAuthResponse.title`),
+            subtitle: I18n.t(
+              `${i18nNs}.relyingParty.invalidAuthResponse.subtitle`
+            ),
+            pictogram: "stopSecurity",
+            action: {
+              label: I18n.t(
+                `${i18nNs}.relyingParty.invalidAuthResponse.primaryAction`
+              ),
+              onPress: closeMachine
+            },
+            secondaryAction: {
+              label: I18n.t(
+                `${i18nNs}.relyingParty.invalidAuthResponse.secondaryAction`
+              ),
+              onPress: failureSupportModal.present
+            }
+          };
+        }
+        case RemoteFailureType.RELYING_PARTY_GENERIC: {
+          return {
+            title: I18n.t(`${i18nNs}.relyingParty.genericError.title`),
+            subtitle: I18n.t(`${i18nNs}.relyingParty.genericError.subtitle`),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                `${i18nNs}.relyingParty.genericError.primaryAction`
+              ),
+              onPress: () => machineRef.send({ type: "go-to-barcode-scan" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                `${i18nNs}.relyingParty.genericError.secondaryAction`
+              ),
+              onPress: closeMachine
+            }
+          };
+        }
+        case RemoteFailureType.INVALID_REQUEST_OBJECT: {
+          return {
+            title: I18n.t(`${i18nNs}.relyingParty.invalidRequestObject.title`),
+            subtitle: I18n.t(
+              `${i18nNs}.relyingParty.invalidRequestObject.subtitle`
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                `${i18nNs}.relyingParty.invalidRequestObject.primaryAction`
+              ),
+              onPress: closeMachine
             }
           };
         }
         case RemoteFailureType.UNTRUSTED_RP: {
           return {
-            title: I18n.t(
-              "features.itWallet.presentation.remote.untrustedRpScreen.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.presentation.remote.untrustedRpScreen.subtitle"
-            ),
+            title: I18n.t(`${i18nNs}.untrustedRpScreen.title`),
+            subtitle: I18n.t(`${i18nNs}.untrustedRpScreen.subtitle`),
             pictogram: "stopSecurity",
             action: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.untrustedRpScreen.primaryAction"
-              ),
+              label: I18n.t(`${i18nNs}.untrustedRpScreen.primaryAction`),
               onPress: () => machineRef.send({ type: "close" })
             },
             secondaryAction: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.untrustedRpScreen.secondaryAction"
-              ),
+              label: I18n.t(`${i18nNs}.untrustedRpScreen.secondaryAction`),
               onPress: present
+            }
+          };
+        }
+        case RemoteFailureType.INVALID_CREDENTIALS_STATUS: {
+          const { invalidCredentials } = failure.reason;
+          const count = invalidCredentials.length;
+          return {
+            title: I18n.t(`${i18nNs}.invalidCredentialsScreen.title`, {
+              count,
+              credentialName: getCredentialNameFromType(invalidCredentials[0]),
+              defaultValue: I18n.t(
+                `${i18nNs}.invalidCredentialsScreen.title.other`,
+                { count }
+              )
+            }),
+            subtitle: I18n.t(`${i18nNs}.invalidCredentialsScreen.subtitle`, {
+              count,
+              defaultValue: I18n.t(
+                `${i18nNs}.invalidCredentialsScreen.subtitle.other`,
+                { count }
+              )
+            }),
+            pictogram: "accessDenied",
+            action: {
+              label: I18n.t(`${i18nNs}.invalidCredentialsScreen.primaryAction`),
+              onPress: closeMachine
             }
           };
         }
@@ -167,6 +257,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   const resultScreenProps = getOperationResultScreenContentProps();
 
+  useItwSendAuthorizationErrorResponse({ failure, resultScreenProps });
+
   return (
     <>
       <OperationResultScreenContent
@@ -174,6 +266,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
         subtitleProps={{ textBreakStrategy: "simple" }}
       />
       {bottomSheet}
+      {failureSupportModal.bottomSheet}
     </>
   );
 };

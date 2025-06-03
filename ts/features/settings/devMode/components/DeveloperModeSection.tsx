@@ -48,7 +48,7 @@ import {
 } from "../../../../store/reducers/persistedPreferences";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { getDeviceId } from "../../../../utils/device";
-import { isDevEnv } from "../../../../utils/environment";
+import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import { useAppReviewRequest } from "../../../appReviews/hooks/useAppReviewRequest";
@@ -73,7 +73,12 @@ type DevDataCopyListItem = {
 
 type TestEnvironmentsListItem = Pick<
   ComponentProps<typeof ListItemSwitch>,
-  "label" | "value" | "description" | "testID" | "onSwitchValueChange"
+  | "label"
+  | "value"
+  | "description"
+  | "testID"
+  | "onSwitchValueChange"
+  | "disabled"
 >;
 
 type DevActionButton = {
@@ -498,9 +503,12 @@ const DeveloperTestEnvironmentSection = ({
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
       label: I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
-      description: I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert"),
+      description: isLocalEnv
+        ? I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlertLocal")
+        : I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert"),
       value: isPagoPATestEnabled,
-      onSwitchValueChange: onPagoPAEnvironmentToggle
+      onSwitchValueChange: onPagoPAEnvironmentToggle,
+      disabled: isLocalEnv
     },
     {
       label: I18n.t("profile.main.pnEnvironment.pnEnv"),
@@ -536,6 +544,7 @@ const DeveloperTestEnvironmentSection = ({
           description={item.description}
           value={item.value}
           onSwitchValueChange={item.onSwitchValueChange}
+          disabled={item.disabled}
         />
       )}
       ItemSeparatorComponent={() => <Divider />}
@@ -560,7 +569,7 @@ const DeveloperModeSection = () => {
 
   return (
     <>
-      <ContentWrapper>
+      <ContentWrapper testID="developerModeSection">
         <VSpacer size={24} />
         <H2 color={theme["textHeading-default"]}>
           {I18n.t("profile.main.developersSectionHeader")}
@@ -569,6 +578,7 @@ const DeveloperModeSection = () => {
 
         {/* Enable/Disable Developer Mode */}
         <ListItemSwitch
+          testID="debugModeSwitch"
           label={I18n.t("profile.main.debugMode")}
           value={isDebugModeEnabled}
           onSwitchValueChange={enabled =>

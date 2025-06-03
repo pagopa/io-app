@@ -13,33 +13,22 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
   style={
     {
       "flexGrow": 1,
-      "marginHorizontal": 24,
     }
   }
 >
   <RCTScrollView
+    alwaysBounceVertical={false}
     centerContent={true}
-    collapsable={false}
     contentContainerStyle={
       [
         {
           "alignContent": "center",
           "alignItems": "stretch",
-          "flex": 1,
+          "flexGrow": 1,
           "justifyContent": "center",
+          "padding": 24,
         },
         false,
-      ]
-    }
-    handlerTag={6}
-    handlerType="NativeViewGestureHandler"
-    onGestureHandlerEvent={[Function]}
-    onGestureHandlerStateChange={[Function]}
-    waitFor={
-      [
-        {
-          "current": null,
-        },
       ]
     }
   >
@@ -300,6 +289,10 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {
+                    "backgroundColor": undefined,
+                  },
                   {
                     "paddingHorizontal": 24,
                   },
@@ -311,10 +304,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "height": 48,
                   },
                   {},
-                  false,
-                  {
-                    "backgroundColor": undefined,
-                  },
                 ]
               }
             >
@@ -355,6 +344,9 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                       [
                         {
                           "textAlign": "auto",
+                        },
+                        {
+                          "color": "#FFFFFF",
                         },
                         {
                           "color": undefined,
@@ -444,6 +436,8 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {},
                   {
                     "paddingHorizontal": 0,
                   },
@@ -454,8 +448,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "borderWidth": 0,
                     "height": undefined,
                   },
-                  {},
-                  false,
                   {},
                 ]
               }
@@ -499,6 +491,9 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                           "textAlign": "auto",
                         },
                         {
+                          "color": "#0B3EE3",
+                        },
+                        {
                           "color": undefined,
                         },
                       ],
@@ -530,33 +525,22 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
   style={
     {
       "flexGrow": 1,
-      "marginHorizontal": 24,
     }
   }
 >
   <RCTScrollView
+    alwaysBounceVertical={false}
     centerContent={true}
-    collapsable={false}
     contentContainerStyle={
       [
         {
           "alignContent": "center",
           "alignItems": "stretch",
-          "flex": 1,
+          "flexGrow": 1,
           "justifyContent": "center",
+          "padding": 24,
         },
         false,
-      ]
-    }
-    handlerTag={2}
-    handlerType="NativeViewGestureHandler"
-    onGestureHandlerEvent={[Function]}
-    onGestureHandlerStateChange={[Function]}
-    waitFor={
-      [
-        {
-          "current": null,
-        },
       ]
     }
   >
@@ -819,6 +803,10 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {
+                    "backgroundColor": undefined,
+                  },
                   {
                     "paddingHorizontal": 24,
                   },
@@ -830,10 +818,6 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "height": 48,
                   },
                   {},
-                  false,
-                  {
-                    "backgroundColor": undefined,
-                  },
                 ]
               }
             >
@@ -874,6 +858,9 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                       [
                         {
                           "textAlign": "auto",
+                        },
+                        {
+                          "color": "#FFFFFF",
                         },
                         {
                           "color": undefined,
@@ -963,6 +950,8 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {},
                   {
                     "paddingHorizontal": 0,
                   },
@@ -973,8 +962,6 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "borderWidth": 0,
                     "height": undefined,
                   },
-                  {},
-                  false,
                   {},
                 ]
               }
@@ -1016,6 +1003,9 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                       [
                         {
                           "textAlign": "auto",
+                        },
+                        {
+                          "color": "#0B3EE3",
                         },
                         {
                           "color": undefined,

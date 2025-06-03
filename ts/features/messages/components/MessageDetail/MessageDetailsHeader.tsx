@@ -6,7 +6,7 @@ import { localeDateFormat } from "../../../../utils/locale";
 import I18n from "../../../../i18n";
 import { logosForService } from "../../../services/common/utils";
 import { useIOSelector } from "../../../../store/hooks";
-import { serviceByIdSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
 import { gapBetweenItemsInAGrid } from "../../utils";
 import { UIMessageId } from "../../types";
 import { OrganizationHeader } from "./OrganizationHeader";
@@ -52,7 +52,9 @@ export const MessageDetailsHeader = ({
   serviceId,
   ...rest
 }: MessageDetailsHeaderProps) => {
-  const service = useIOSelector(state => serviceByIdSelector(state, serviceId));
+  const service = useIOSelector(state =>
+    serviceDetailsByIdSelector(state, serviceId)
+  );
 
   return (
     <>

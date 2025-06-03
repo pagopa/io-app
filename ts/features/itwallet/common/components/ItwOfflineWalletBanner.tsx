@@ -1,12 +1,41 @@
-import { Banner } from "@pagopa/io-app-design-system";
+import { Banner, IOToast } from "@pagopa/io-app-design-system";
+import { useCallback, useMemo } from "react";
+import { useRoute } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwSetOfflineBannerHidden } from "../store/actions/preferences.ts";
 import { itwShouldRenderOfflineBannerSelector } from "../store/selectors";
+import { openWebUrl } from "../../../../utils/url.ts";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import {
+  trackItWalletBannerTap,
+  trackITWalletBannerVisualized
+} from "../../analytics";
+
+const offlineDocumentsFAQ =
+  "https://assistenza.ioapp.it/hc/it/articles/34805335324049-Posso-usare-i-documenti-digitali-senza-connessione";
 
 export const ItwOfflineWalletBanner = () => {
   const dispatch = useIODispatch();
   const shouldRender = useIOSelector(itwShouldRenderOfflineBannerSelector);
+  const route = useRoute();
+
+  const trackBannerProperties = useMemo(
+    () => ({
+      banner_id: "itwOfflineBanner",
+      banner_page: route.name,
+      banner_landing: offlineDocumentsFAQ
+    }),
+    [route.name]
+  );
+
+  useOnFirstRender(
+    useCallback(() => {
+      if (shouldRender) {
+        trackITWalletBannerVisualized(trackBannerProperties);
+      }
+    }, [trackBannerProperties, shouldRender])
+  );
 
   // Show the banner only if the wallet is valid, offline access is enabled, and the banner is not hidden
   if (!shouldRender) {
@@ -14,7 +43,10 @@ export const ItwOfflineWalletBanner = () => {
   }
 
   const handlePress = () => {
-    // TODO: [SIW-2309] Implement action when the FAQ are ready
+    trackItWalletBannerTap(trackBannerProperties);
+    openWebUrl(offlineDocumentsFAQ, () =>
+      IOToast.error(I18n.t("genericError"))
+    );
   };
 
   const handleOnClose = () => {

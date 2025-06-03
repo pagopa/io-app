@@ -5,7 +5,7 @@ import {
   startPaymentStatusTracking,
   updatePaymentForMessage
 } from "../store/actions";
-import { serviceByIdSelector } from "../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../services/details/store/reducers";
 import { Detail_v2Enum } from "../../../../definitions/payments/PaymentProblemJson";
 import {
   isExpiredPaymentFromDetailV2Enum,
@@ -57,7 +57,7 @@ function* trackPaymentUpdates() {
     ]);
 
     const serviceId = messagePaymentUpdateResult.payload.serviceId;
-    const service = yield* select(serviceByIdSelector, serviceId);
+    const service = yield* select(serviceDetailsByIdSelector, serviceId);
     const organizationName = service?.organization.name;
     const organizationFiscalCode = service?.organization.fiscal_code;
     const serviceName = service?.name;

@@ -16,13 +16,13 @@ import {
 } from "../../store/actions";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
-import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdPotSelector } from "../../../services/details/store/reducers";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../../store/reducers/detailsById";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/communications/ThirdPartyMessageWithContent";
 import { thirdPartyFromIdSelector } from "../../store/reducers/thirdPartyById";
 import { TagEnum } from "../../../../../definitions/communications/MessageCategoryPN";
-import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isLoadingOrUpdatingInbox } from "../../store/reducers/allPaginated";
 import { ThirdPartyMessage } from "../../../../../definitions/communications/ThirdPartyMessage";
 import { ThirdPartyAttachment } from "../../../../../definitions/communications/ThirdPartyAttachment";
@@ -107,13 +107,13 @@ describe("getService", () => {
     const serviceDetails = { id: serviceId } as ServiceDetails;
     testSaga(testable!.getServiceDetails, serviceId)
       .next()
-      .select(serviceByIdPotSelector, serviceId)
+      .select(serviceDetailsByIdPotSelector, serviceId)
       .next(pot.none)
       .put(loadServiceDetail.request(serviceId))
       .next()
       .take([loadServiceDetail.success, loadServiceDetail.failure])
       .next(loadServiceDetail.success(serviceDetails))
-      .select(serviceByIdPotSelector, serviceId)
+      .select(serviceDetailsByIdPotSelector, serviceId)
       .next(pot.some(serviceDetails))
       .returns(serviceDetails);
   });
@@ -122,13 +122,13 @@ describe("getService", () => {
     const serviceDetails = { id: serviceId } as ServiceDetails;
     testSaga(testable!.getServiceDetails, serviceId)
       .next()
-      .select(serviceByIdPotSelector, serviceId)
+      .select(serviceDetailsByIdPotSelector, serviceId)
       .next(pot.noneError)
       .put(loadServiceDetail.request(serviceId))
       .next()
       .take([loadServiceDetail.success, loadServiceDetail.failure])
       .next(loadServiceDetail.success(serviceDetails))
-      .select(serviceByIdPotSelector, serviceId)
+      .select(serviceDetailsByIdPotSelector, serviceId)
       .next(pot.some(serviceDetails))
       .returns(serviceDetails);
   });
@@ -137,13 +137,13 @@ describe("getService", () => {
     const serviceDetails = { id: serviceId } as ServiceDetails;
     testSaga(testable!.getServiceDetails, serviceId)
       .next()
-      .select(serviceByIdPotSelector, serviceId)
+      .select(serviceDetailsByIdPotSelector, serviceId)
       .next(pot.someError({}, new Error()))
       .put(loadServiceDetail.request(serviceId))
       .next()
       .take([loadServiceDetail.success, loadServiceDetail.failure])
       .next(loadServiceDetail.success(serviceDetails))
-      .select(serviceByIdPotSelector, serviceId)
+      .select(serviceDetailsByIdPotSelector, serviceId)
       .next(pot.some(serviceDetails))
       .returns(serviceDetails);
   });
@@ -152,7 +152,7 @@ describe("getService", () => {
     const serviceDetails = { id: serviceId } as ServiceDetails;
     testSaga(testable!.getServiceDetails, serviceId)
       .next()
-      .select(serviceByIdPotSelector, serviceId)
+      .select(serviceDetailsByIdPotSelector, serviceId)
       .next(pot.some(serviceDetails))
       .returns(serviceDetails);
   });
@@ -160,7 +160,7 @@ describe("getService", () => {
     const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     testSaga(testable!.getServiceDetails, serviceId)
       .next()
-      .select(serviceByIdPotSelector, serviceId)
+      .select(serviceDetailsByIdPotSelector, serviceId)
       .next(pot.none)
       .put(loadServiceDetail.request(serviceId))
       .next()
@@ -429,7 +429,7 @@ describe("dispatchSuccessAction", () => {
       thirdPartyMessage
     )
       .next()
-      .select(isPnEnabledSelector)
+      .select(isPnRemoteEnabledSelector)
       .next(true)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
@@ -481,7 +481,7 @@ describe("dispatchSuccessAction", () => {
       thirdPartyMessage
     )
       .next()
-      .select(isPnEnabledSelector)
+      .select(isPnRemoteEnabledSelector)
       .next(true)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
@@ -531,7 +531,7 @@ describe("dispatchSuccessAction", () => {
       thirdPartyMessage
     )
       .next()
-      .select(isPnEnabledSelector)
+      .select(isPnRemoteEnabledSelector)
       .next(true)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
@@ -578,7 +578,7 @@ describe("dispatchSuccessAction", () => {
       undefined
     )
       .next()
-      .select(isPnEnabledSelector)
+      .select(isPnRemoteEnabledSelector)
       .next(false)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
@@ -625,7 +625,7 @@ describe("dispatchSuccessAction", () => {
       undefined
     )
       .next()
-      .select(isPnEnabledSelector)
+      .select(isPnRemoteEnabledSelector)
       .next(false)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
@@ -675,7 +675,7 @@ describe("dispatchSuccessAction", () => {
       undefined
     )
       .next()
-      .select(isPnEnabledSelector)
+      .select(isPnRemoteEnabledSelector)
       .next(false)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
@@ -724,7 +724,7 @@ describe("dispatchSuccessAction", () => {
       undefined
     )
       .next()
-      .select(isPnEnabledSelector)
+      .select(isPnRemoteEnabledSelector)
       .next(false)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
@@ -779,7 +779,7 @@ describe("dispatchSuccessAction", () => {
       thirdPartyMessage
     )
       .next()
-      .select(isPnEnabledSelector)
+      .select(isPnRemoteEnabledSelector)
       .next(true)
       .put(getMessageDataAction.success(expectedOutput))
       .next()

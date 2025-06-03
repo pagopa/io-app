@@ -21,7 +21,7 @@ import { SagaCallReturnType } from "../../../types/utils";
 import { unknownToReason } from "../utils";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/communications/ThirdPartyMessageWithContent";
 import { TagEnum } from "../../../../definitions/communications/MessageCategoryPN";
-import { serviceByIdSelector } from "../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../services/details/store/reducers";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 
 export function* handleThirdPartyMessage(
@@ -33,7 +33,7 @@ export function* handleThirdPartyMessage(
   // This method is called by `handleLoadMessageData` saga, which makes
   // sure that the service details are properly retrieved and loaded
   // into the redux store before requesting a third-party-message
-  const serviceDetails = yield* select(serviceByIdSelector, serviceId);
+  const serviceDetails = yield* select(serviceDetailsByIdSelector, serviceId);
   trackRemoteContentLoadRequest(
     serviceId,
     serviceDetails?.name,

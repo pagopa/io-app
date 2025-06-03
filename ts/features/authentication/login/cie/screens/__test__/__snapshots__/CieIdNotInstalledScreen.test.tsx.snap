@@ -13,33 +13,22 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
   style={
     {
       "flexGrow": 1,
-      "marginHorizontal": 24,
     }
   }
 >
   <RCTScrollView
+    alwaysBounceVertical={false}
     centerContent={true}
-    collapsable={false}
     contentContainerStyle={
       [
         {
           "alignContent": "center",
           "alignItems": "stretch",
-          "flex": 1,
+          "flexGrow": 1,
           "justifyContent": "center",
+          "padding": 24,
         },
         false,
-      ]
-    }
-    handlerTag={1}
-    handlerType="NativeViewGestureHandler"
-    onGestureHandlerEvent={[Function]}
-    onGestureHandlerStateChange={[Function]}
-    waitFor={
-      [
-        {
-          "current": null,
-        },
       ]
     }
   >
@@ -286,6 +275,10 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {
+                    "backgroundColor": undefined,
+                  },
                   {
                     "paddingHorizontal": 24,
                   },
@@ -297,10 +290,6 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
                     "height": 48,
                   },
                   {},
-                  false,
-                  {
-                    "backgroundColor": undefined,
-                  },
                 ]
               }
             >
@@ -341,6 +330,9 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
                       [
                         {
                           "textAlign": "auto",
+                        },
+                        {
+                          "color": "#FFFFFF",
                         },
                         {
                           "color": undefined,
@@ -430,6 +422,8 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {},
                   {
                     "paddingHorizontal": 0,
                   },
@@ -440,8 +434,6 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
                     "borderWidth": 0,
                     "height": undefined,
                   },
-                  {},
-                  false,
                   {},
                 ]
               }
@@ -483,6 +475,9 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
                       [
                         {
                           "textAlign": "auto",
+                        },
+                        {
+                          "color": "#0B3EE3",
                         },
                         {
                           "color": undefined,

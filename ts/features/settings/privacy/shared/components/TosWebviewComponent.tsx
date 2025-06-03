@@ -18,7 +18,7 @@ import {
 import TosWebviewErrorComponent from "../../components/TosWebviewErrorComponent";
 import { NOTIFY_LINK_CLICK_SCRIPT } from "../../../../../components/ui/Markdown/script";
 import { WebViewMessage } from "../../../../../components/ui/Markdown/types";
-import { trackToSWebViewError, trackToSWebViewErrorRetry } from "./analytics";
+import { trackToSWebViewError, trackToSWebViewErrorRetry } from "../analytics";
 
 type Props = {
   webViewSource: WebViewSource;

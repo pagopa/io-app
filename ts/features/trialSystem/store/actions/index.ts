@@ -3,8 +3,8 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { TrialId } from "../../../../../definitions/trial_system/TrialId";
-import { Subscription } from "../../../../../definitions/trial_system/Subscription";
+import { TrialId } from "../../../../../definitions/platform/TrialId";
+import { Subscription } from "../../../../../definitions/platform/Subscription";
 import { TrialSystemError } from "../../utils/error";
 
 type ErrorPayload = {

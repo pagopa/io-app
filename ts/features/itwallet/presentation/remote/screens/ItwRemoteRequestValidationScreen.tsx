@@ -10,6 +10,11 @@ import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
 import { ItwRemoteDeepLinkFailure } from "../components/ItwRemoteDeepLinkFailure.tsx";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import {
+  StartupStatusEnum,
+  isStartupLoaded
+} from "../../../../../store/reducers/startup.ts";
 
 export type ItwRemoteRequestValidationScreenNavigationParams =
   Partial<ItwRemoteRequestPayload>;
@@ -21,6 +26,24 @@ type ScreenProps = IOStackNavigationRouteProps<
 
 const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
   useItwDisableGestureNavigation();
+
+  const startupStatus = useIOSelector(isStartupLoaded);
+
+  /**
+   * There may be scenarios where the app is not running when the user opens the link,
+   * so the app is started and the user goes through the identification or the full authentication process.
+   * Here we wait for the startup status to be authenticated to avoid inconsistencies
+   * between the machine and the navigation.
+   */
+  if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
+    return (
+      <ItwRemoteLoadingScreen
+        title={I18n.t(
+          "features.itWallet.presentation.remote.loadingScreen.request"
+        )}
+      />
+    );
+  }
 
   const payload = validateItwPresentationQrCodeParams(route.params);
 

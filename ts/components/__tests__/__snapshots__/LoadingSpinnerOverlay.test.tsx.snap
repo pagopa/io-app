@@ -308,6 +308,11 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
+                false,
+                {
+                  "backgroundColor": undefined,
+                  "borderColor": undefined,
+                },
                 {
                   "paddingHorizontal": 24,
                 },
@@ -319,11 +324,6 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                   "height": 48,
                 },
                 {},
-                false,
-                {
-                  "backgroundColor": undefined,
-                  "borderColor": undefined,
-                },
               ]
             }
           >
@@ -364,6 +364,9 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                     [
                       {
                         "textAlign": "auto",
+                      },
+                      {
+                        "color": "#0B3EE3",
                       },
                       {
                         "color": undefined,

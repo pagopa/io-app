@@ -14,6 +14,17 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
 import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
 
+const bannerConfig = {
+  onboarding: {
+    content: I18n.t("features.itWallet.discovery.banner.home.content")
+  },
+  reactivating: {
+    content: I18n.t(
+      "features.itWallet.discovery.banner.onboardingActive.content"
+    )
+  }
+} as const;
+
 /**
  * ITW discovery banner to be displayed in the wallet card onboarding screen
  */
@@ -48,26 +59,9 @@ const ItwDiscoveryBannerOnboarding = () => {
   const handleOnPress = () => {
     trackItWalletBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: {}
     });
-  };
-
-  const bannerConfig = {
-    onboarding: {
-      content: I18n.t("features.itWallet.discovery.banner.home.content")
-    },
-    // TODO: Once offline access is fully integrated, the "homeWithOffline" copy can be
-    // merged into "home" and onboardingWithOffline config can be removed. [SIW-2330]
-    onboardingWithOffline: {
-      content: I18n.t(
-        "features.itWallet.discovery.banner.homeWithOffline.content"
-      )
-    },
-    reactivating: {
-      content: I18n.t(
-        "features.itWallet.discovery.banner.onboardingActive.content"
-      )
-    }
   };
 
   if (!isBannerRenderable || !bannerType) {

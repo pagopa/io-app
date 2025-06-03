@@ -150,31 +150,33 @@ const servicesDetailsReducer = (
 export default servicesDetailsReducer;
 
 // Selectors
-export const servicesByIdSelector = (state: GlobalState) =>
+export const servicesDetailsSelector = (state: GlobalState) =>
   state.features.services.details.dataById;
 
-export const serviceByIdPotSelector = (
+export const serviceDetailsByIdPotSelector = (
   state: GlobalState,
   id: ServiceId
 ): pot.Pot<ServiceDetails, Error> =>
   state.features.services.details.dataById[id] ?? pot.none;
 
-export const serviceByIdSelector = (
+export const serviceDetailsByIdSelector = (
   state: GlobalState,
   id: ServiceId
 ): ServiceDetails | undefined =>
-  pipe(serviceByIdPotSelector(state, id), pot.toUndefined);
+  pipe(serviceDetailsByIdPotSelector(state, id), pot.toUndefined);
 
-export const isLoadingServiceByIdSelector = (
+export const isLoadingServiceDetailsByIdSelector = (
   state: GlobalState,
   id: ServiceId
-) => pipe(serviceByIdPotSelector(state, id), pot.isLoading);
+) => pipe(serviceDetailsByIdPotSelector(state, id), pot.isLoading);
 
-export const isErrorServiceByIdSelector = (state: GlobalState, id: ServiceId) =>
-  pipe(serviceByIdPotSelector(state, id), pot.isError);
+export const isErrorServiceDetailsByIdSelector = (
+  state: GlobalState,
+  id: ServiceId
+) => pipe(serviceDetailsByIdPotSelector(state, id), pot.isError);
 
 export const serviceMetadataByIdSelector = createSelector(
-  serviceByIdPotSelector,
+  serviceDetailsByIdPotSelector,
   serviceByIdPot =>
     pipe(
       serviceByIdPot,

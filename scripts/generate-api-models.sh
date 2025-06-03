@@ -5,6 +5,8 @@ IO_BACKEND_VERSION=refactor-openapi-specs
 IO_SERVICES_METADATA_VERSION=1.0.68
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.4.0
+# IO Wallet Backend version
+IO_WALLET_BACKEND_VERSION=refactor-openapi-specs
 
 declare -a apis=(
   # Backend APIs
@@ -26,7 +28,7 @@ declare -a apis=(
   # Services APIs
   "./definitions/services https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_services.yaml"
   # Trial system APIs
-  "./definitions/trial_system https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_platform.yaml"
+  "./definitions/platform https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_platform_legacy.yaml"
   # Fims APIs
   "./definitions/fims_history https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_io_fims.yaml"
   "./definitions/fims_sso https://raw.githubusercontent.com/pagopa/io-fims/a93f1a1abf5230f103d9f489b139902b87288061/apps/op-app/openapi.yaml"
@@ -39,6 +41,8 @@ declare -a apis=(
   "./definitions/cgn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_cgn.yaml"
   # FCI APIs
   "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_io_sign.yaml"
+  # ITW APIs
+  "./definitions/itw https://raw.githubusercontent.com/pagopa/io-backend/$IO_WALLET_BACKEND_VERSION/openapi/generated/api_io_wallet.yaml"
 )
 
 for elem in "${apis[@]}"; do

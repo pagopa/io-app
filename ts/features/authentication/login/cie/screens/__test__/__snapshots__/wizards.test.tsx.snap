@@ -173,6 +173,8 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
+                false,
+                {},
                 {
                   "paddingHorizontal": 0,
                 },
@@ -183,8 +185,6 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   "borderWidth": 0,
                   "height": undefined,
                 },
-                {},
-                false,
                 {},
               ]
             }
@@ -226,6 +226,9 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                     [
                       {
                         "textAlign": "auto",
+                      },
+                      {
+                        "color": "#0B3EE3",
                       },
                       {
                         "color": undefined,
@@ -429,6 +432,10 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                 "overflow": "hidden",
                 "textAlignVertical": "center",
               },
+              false,
+              {
+                "backgroundColor": undefined,
+              },
               {
                 "paddingHorizontal": 16,
               },
@@ -440,10 +447,6 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                 "height": 48,
               },
               {},
-              false,
-              {
-                "backgroundColor": undefined,
-              },
             ]
           }
         >
@@ -484,6 +487,9 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   [
                     {
                       "textAlign": "auto",
+                    },
+                    {
+                      "color": "#FFFFFF",
                     },
                     {
                       "color": undefined,
@@ -571,6 +577,8 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
+                false,
+                {},
                 {
                   "paddingHorizontal": 0,
                 },
@@ -581,8 +589,6 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   "borderWidth": 0,
                   "height": undefined,
                 },
-                {},
-                false,
                 {},
               ]
             }
@@ -624,6 +630,9 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                     [
                       {
                         "textAlign": "auto",
+                      },
+                      {
+                        "color": "#0B3EE3",
                       },
                       {
                         "color": undefined,
@@ -814,6 +823,8 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
+                false,
+                {},
                 {
                   "paddingHorizontal": 0,
                 },
@@ -824,8 +835,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   "borderWidth": 0,
                   "height": undefined,
                 },
-                {},
-                false,
                 {},
               ]
             }
@@ -867,6 +876,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     [
                       {
                         "textAlign": "auto",
+                      },
+                      {
+                        "color": "#0B3EE3",
                       },
                       {
                         "color": undefined,
@@ -1172,6 +1184,8 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {},
                   {
                     "paddingHorizontal": 0,
                   },
@@ -1182,8 +1196,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "borderWidth": 0,
                     "height": undefined,
                   },
-                  {},
-                  false,
                   {},
                 ]
               }
@@ -1225,6 +1237,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                       [
                         {
                           "textAlign": "auto",
+                        },
+                        {
+                          "color": "#0B3EE3",
                         },
                         {
                           "color": undefined,
@@ -1436,6 +1451,10 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 "overflow": "hidden",
                 "textAlignVertical": "center",
               },
+              false,
+              {
+                "backgroundColor": undefined,
+              },
               {
                 "paddingHorizontal": 16,
               },
@@ -1447,10 +1466,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 "height": 48,
               },
               {},
-              false,
-              {
-                "backgroundColor": undefined,
-              },
             ]
           }
         >
@@ -1491,6 +1506,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   [
                     {
                       "textAlign": "auto",
+                    },
+                    {
+                      "color": "#FFFFFF",
                     },
                     {
                       "color": undefined,
@@ -1578,6 +1596,8 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
+                false,
+                {},
                 {
                   "paddingHorizontal": 0,
                 },
@@ -1588,8 +1608,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   "borderWidth": 0,
                   "height": undefined,
                 },
-                {},
-                false,
                 {},
               ]
             }
@@ -1631,6 +1649,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     [
                       {
                         "textAlign": "auto",
+                      },
+                      {
+                        "color": "#0B3EE3",
                       },
                       {
                         "color": undefined,
@@ -2500,6 +2521,10 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 "overflow": "hidden",
                 "textAlignVertical": "center",
               },
+              false,
+              {
+                "backgroundColor": undefined,
+              },
               {
                 "paddingHorizontal": 16,
               },
@@ -2511,10 +2536,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 "height": 48,
               },
               {},
-              false,
-              {
-                "backgroundColor": undefined,
-              },
             ]
           }
         >
@@ -2555,6 +2576,9 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   [
                     {
                       "textAlign": "auto",
+                    },
+                    {
+                      "color": "#FFFFFF",
                     },
                     {
                       "color": undefined,
@@ -2853,6 +2877,10 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 "overflow": "hidden",
                 "textAlignVertical": "center",
               },
+              false,
+              {
+                "backgroundColor": undefined,
+              },
               {
                 "paddingHorizontal": 16,
               },
@@ -2864,10 +2892,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 "height": 48,
               },
               {},
-              false,
-              {
-                "backgroundColor": undefined,
-              },
             ]
           }
         >
@@ -2908,6 +2932,9 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                   [
                     {
                       "textAlign": "auto",
+                    },
+                    {
+                      "color": "#FFFFFF",
                     },
                     {
                       "color": undefined,
@@ -2995,6 +3022,8 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                   "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
+                false,
+                {},
                 {
                   "paddingHorizontal": 0,
                 },
@@ -3005,8 +3034,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                   "borderWidth": 0,
                   "height": undefined,
                 },
-                {},
-                false,
                 {},
               ]
             }
@@ -3048,6 +3075,9 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                     [
                       {
                         "textAlign": "auto",
+                      },
+                      {
+                        "color": "#0B3EE3",
                       },
                       {
                         "color": undefined,
