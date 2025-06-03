@@ -46,6 +46,11 @@ import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorCont
 import { useIOSelector } from "../../../store/hooks";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { ItwIdentificationCieWarningScreen } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
+import {
+  ItwProximityMachineContext,
+  ItwProximityMachineProvider
+} from "../presentation/proximity/machine/provider.tsx";
+import { ItwBluetoothConsentScreen } from "../presentation/proximity/screens/ItwBluetoothConsentScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -55,7 +60,9 @@ const hiddenHeader = { headerShown: false };
 
 export const ItwStackNavigator = () => (
   <ItWalletIssuanceMachineProvider>
-    <InnerNavigator />
+    <ItwProximityMachineProvider>
+      <InnerNavigator />
+    </ItwProximityMachineProvider>
   </ItWalletIssuanceMachineProvider>
 );
 
@@ -63,6 +70,7 @@ const InnerNavigator = () => {
   const eidIssuanceMachineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialIssuanceMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
+  const itwProximityMachineRef = ItwProximityMachineContext.useActorRef();
 
   return (
     <Stack.Navigator
@@ -75,6 +83,7 @@ const InnerNavigator = () => {
           // Since the back event is accepted only by specific states, we can safely send a back event to each machine
           eidIssuanceMachineRef.send({ type: "back" });
           credentialIssuanceMachineRef.send({ type: "back" });
+          itwProximityMachineRef.send({ type: "back" });
         }
       }}
     >
@@ -248,6 +257,14 @@ const InnerNavigator = () => {
         component={ItwPresentationEidVerificationExpiredScreen}
         options={{ headerShown: false }}
       />
+      {/*  Proximity's flow routes */}
+      <Stack.Group>
+        <Stack.Screen
+          name={ITW_ROUTES.PROXIMITY.DEVICE_PERMISSIONS}
+          component={ItwBluetoothConsentScreen}
+          options={hiddenHeader}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

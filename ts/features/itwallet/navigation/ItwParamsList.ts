@@ -8,6 +8,7 @@ import { ItwPresentationCredentialCardModalNavigationParams } from "../presentat
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
+import { ItwProximityParamsList } from "../presentation/proximity/navigation/itwProximityParamsList.ts";
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
@@ -64,4 +65,4 @@ export type ItwParamsList = {
   // OTHERS
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
   [ITW_ROUTES.WALLET_REVOCATION_SCREEN]: undefined;
-};
+} & ItwProximityParamsList;
