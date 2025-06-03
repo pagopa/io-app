@@ -29,8 +29,6 @@ import {
   toggleScheduledMessageArchivingAction
 } from "./archiving";
 
-export type ThirdPartyMessageActions = ActionType<typeof loadThirdPartyMessage>;
-
 export type RequestGetMessageDataActionType = {
   messageId: UIMessageId;
   fromPushNotification: boolean;
@@ -106,7 +104,7 @@ export const loadMessageDetails = createAsyncAction(
   "MESSAGE_DETAILS_LOAD_FAILURE"
 )<{ id: UIMessageId }, UIMessageDetails, { id: string; error: Error }>();
 
-export type Filter = { getArchived?: boolean };
+type Filter = { getArchived?: boolean };
 
 // generic error used by all pagination actions
 export type MessagesFailurePayload = {
