@@ -101,8 +101,8 @@ describe("OnboardingServicesPreferenceScreen", () => {
   });
 
   it("disables the confirm button when no mode is selected", () => {
-    const { getByA11yLabel } = renderComponent();
-    const confirmButton = getByA11yLabel(I18n.t("global.buttons.confirm"));
+    const { getByLabelText } = renderComponent();
+    const confirmButton = getByLabelText(I18n.t("global.buttons.confirm"));
     expect(confirmButton.props.accessibilityState?.disabled).toBe(true);
   });
 

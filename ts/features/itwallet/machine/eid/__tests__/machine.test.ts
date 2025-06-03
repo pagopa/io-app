@@ -1365,7 +1365,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(navigateToCiePreparationScreen).toHaveBeenCalledTimes(1);
 
-    actor.send({ type: "acknowledged-cie-info" });
+    actor.send({ type: "next" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
@@ -1375,7 +1375,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(navigateToCiePinPreparationScreen).toHaveBeenCalledTimes(1);
 
-    actor.send({ type: "acknowledged-cie-pin-info" });
+    actor.send({ type: "next" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
@@ -1417,7 +1417,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(navigateToCiePreparationScreen).toHaveBeenCalledTimes(1);
 
-    actor.send({ type: "acknowledged-cie-info" });
+    actor.send({ type: "next" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {

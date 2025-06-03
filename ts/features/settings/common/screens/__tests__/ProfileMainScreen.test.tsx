@@ -1,5 +1,5 @@
 import { PreloadedState, createStore } from "redux";
-import { fireEvent, waitFor } from "@testing-library/react-native";
+import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import { Alert } from "react-native";
 import { appReducer } from "../../../../../store/reducers";
 import ProfileMainScreen from "../ProfileMainScreen";
@@ -63,7 +63,8 @@ describe(ProfileMainScreen, () => {
       I18n.t("profile.logout.alertMessage"),
       [
         {
-          text: I18n.t("global.buttons.cancel")
+          text: I18n.t("global.buttons.cancel"),
+          onPress: expect.any(Function)
         },
         {
           text: I18n.t("profile.logout.exit"),
@@ -165,7 +166,9 @@ describe(ProfileMainScreen, () => {
   it("should not show developer section if debug mode is already enabled at mount", () => {
     const { component, store } = renderComponent();
 
-    store.dispatch(setDebugModeEnabled(true));
+    act(() => {
+      store.dispatch(setDebugModeEnabled(true));
+    });
 
     expect(component.getByTestId("developerModeSection")).toBeTruthy();
   });

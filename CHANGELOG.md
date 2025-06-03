@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0-rc.9](https://github.com/pagopa/io-app/compare/3.6.0-rc.8...3.6.0-rc.9) (2025-05-30)
+
+
+### Bug Fixes
+
+* [[IOBP-1722](https://pagopa.atlassian.net/browse/IOBP-1722)] CGN Barcode width scale ([#7039](https://github.com/pagopa/io-app/issues/7039)) ([75eb85e](https://github.com/pagopa/io-app/commit/75eb85e463a9268804180e76ee6773a4fe6d9d4f))
+
+
+### Chores
+
+* [[IOPLT-1155](https://pagopa.atlassian.net/browse/IOPLT-1155)] Add support for `AnimatedPictogram` in the `OperationResultScreenContent` ([#7023](https://github.com/pagopa/io-app/issues/7023)) ([50e7435](https://github.com/pagopa/io-app/commit/50e74356b46b9da695506b77ef3912483db32a16))
+
+## [3.6.0-rc.8](https://github.com/pagopa/io-app/compare/3.6.0-rc.7...3.6.0-rc.8) (2025-05-30)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2469](https://pagopa.atlassian.net/browse/SIW-2469)] Disable gesture navigation in the final presentation screen ([#7033](https://github.com/pagopa/io-app/issues/7033)) ([324cada](https://github.com/pagopa/io-app/commit/324cada85863f13997c74b073974a35dd5f62651))
+
 ## [3.6.0-rc.7](https://github.com/pagopa/io-app/compare/3.6.0-rc.6...3.6.0-rc.7) (2025-05-29)
 
 
