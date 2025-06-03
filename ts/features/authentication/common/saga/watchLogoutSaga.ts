@@ -1,7 +1,7 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 
-import { call, fork, put, take } from "typed-redux-saga/macro";
+import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../../../api/backend";
 import { deleteCurrentLollipopKeyAndGenerateNewKeyTag } from "../../../lollipop/saga";
@@ -74,30 +74,5 @@ export function* logoutSaga(
 export function* watchLogoutSaga(
   logout: ReturnType<typeof BackendClient>["logout"]
 ) {
-  // This saga will handle its own cancelation because
-  // it will be spawned using `spawn` instead of `fork`,
-  // thus being detached from the main saga, and resulting
-  // in duplicated processes.
-  while (true) {
-    const cancellableAction = yield* take<
-      ActionType<
-        typeof logoutRequest | typeof logoutSuccess | typeof logoutFailure
-      >
-    >([
-      logoutRequest,
-
-      // Since the logout in the user interface
-      // happens with both a success and a failure action
-      // this saga will be cancelled in both the cases.
-      logoutSuccess,
-      logoutFailure
-    ]);
-
-    if (cancellableAction.type === getType(logoutRequest)) {
-      yield* fork(logoutSaga, logout, cancellableAction);
-      continue;
-    }
-
-    break;
-  }
+  yield* takeLatest(getType(logoutRequest), logoutSaga, logout);
 }

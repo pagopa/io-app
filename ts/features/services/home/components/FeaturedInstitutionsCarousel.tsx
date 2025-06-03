@@ -3,8 +3,7 @@ import {
   IOSpacingScale,
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
-import { FlatListProps, StyleSheet } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList, FlatListProps, StyleSheet } from "react-native";
 import { TestID, WithTestID } from "../../../../types/WithTestID";
 import {
   CARD_WIDTH,

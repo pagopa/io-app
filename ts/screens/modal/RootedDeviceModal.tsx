@@ -7,8 +7,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
-import { Platform, StyleSheet, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import IOMarkdown from "../../components/IOMarkdown";

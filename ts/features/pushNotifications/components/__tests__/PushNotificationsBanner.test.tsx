@@ -70,7 +70,7 @@ describe("PushNotificationsBanner", () => {
       <PushNotificationsBanner closeHandler={testClose} />
     );
     fireEvent(
-      component.getByA11yLabel(I18n.t("global.buttons.close")),
+      component.getByLabelText(I18n.t("global.buttons.close")),
       "onPress"
     );
     expect(
@@ -107,7 +107,7 @@ describe("PushNotificationsBanner", () => {
         <PushNotificationsBanner closeHandler={() => null} />
       );
       fireEvent(
-        component.getByA11yLabel(I18n.t("global.buttons.close")),
+        component.getByLabelText(I18n.t("global.buttons.close")),
         "onPress"
       );
       const dismissionThresholdReached = timeDismissed >= 2;
