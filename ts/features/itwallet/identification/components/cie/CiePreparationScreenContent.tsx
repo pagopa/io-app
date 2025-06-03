@@ -47,7 +47,7 @@ const getContent = ({
       ),
       onPress: () =>
         sendEvent({
-          type: isCie ? "acknowledged-cie-info" : "acknowledged-cie-pin-info"
+          type: "next"
         })
     },
     secondaryAction: {
