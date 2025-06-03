@@ -22,10 +22,10 @@ describe("CgnActivationLoadingScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
-    const { getByText, getByA11yRole } = renderComponent(store);
+    const { getByText, getByRole } = renderComponent(store);
 
     store.dispatch(cgnRequestActivation());
-    expect(getByA11yRole("header")).toBeTruthy();
+    expect(getByRole("header")).toBeTruthy();
     expect(
       getByText(I18n.t("bonus.cgn.activation.loading.caption"))
     ).toBeTruthy();

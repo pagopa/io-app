@@ -611,6 +611,7 @@
       "pagoPaEnvironment": {
         "pagoPaEnv": "pagoPA",
         "pagoPAEnvAlert": "This change requires app reboot",
+        "pagoPAEnvAlertLocal": "The pagoPA test environment cannot be enabled with the local app build",
         "alertConfirmTitle": "Do you want to use the pagoPA test environment?",
         "alertConfirmMessage": "If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.",
         "alertMessage": "The application must be restarted for the changes to take effect."
