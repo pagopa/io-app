@@ -83,29 +83,13 @@ export const paymentsReducer = (
       };
     case getType(cancelQueuedPaymentUpdates): {
       const messageId = action.payload.messageId;
-      const messageSinglePayments = state[messageId];
-      if (messageSinglePayments != null) {
-        return {
-          ...state,
-          [messageId]: Object.entries(messageSinglePayments).reduce(
-            (acc, [key, value]) => {
-              if (
-                value != null &&
-                (isLoading(value) ||
-                  (isError(value) &&
-                    (isTimeoutError(value.error) ||
-                      isGenericError(value.error))))
-              ) {
-                return { ...acc, [key]: undefined };
-              }
-
-              return { ...acc, [key]: value };
-            },
-            {} as SinglePaymentState
-          )
-        };
-      }
-      return state;
+      const messagePayments = state[messageId];
+      return messagePayments != null
+        ? {
+            ...state,
+            [messageId]: purgePaymentsWithIncompleteData(messagePayments)
+          }
+        : state;
     }
     case getType(addUserSelectedPaymentRptId):
       return {
@@ -119,6 +103,19 @@ export const paymentsReducer = (
       return initialState;
   }
   return state;
+};
+
+const purgePaymentsWithIncompleteData = (state: SinglePaymentState) => {
+  const isTimeoutOrGenericError = (input: RemoteValue<unknown, PaymentError>) =>
+    isError(input) &&
+    (isTimeoutError(input.error) || isGenericError(input.error));
+
+  return Object.entries(state).reduce((acc, [key, value]) => {
+    if (value == null || isLoading(value) || isTimeoutOrGenericError(value)) {
+      return { ...acc, [key]: undefined };
+    }
+    return { ...acc, [key]: value };
+  }, {} as SinglePaymentState);
 };
 
 const paymentStateSelector = (
