@@ -11,15 +11,14 @@ import { useFocusEffect } from "@react-navigation/native";
 import { MutableRefObject, ReactNode, useCallback, useRef } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import {
-  GestureEvent,
-  GestureHandlerRootView,
-  HandlerStateChangeEvent,
-  PanGestureHandler,
-  PanGestureHandlerEventPayload
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView
 } from "react-native-gesture-handler";
 import HapticFeedback from "react-native-haptic-feedback";
 import Animated, {
   interpolateColor,
+  runOnJS,
   SharedValue,
   useAnimatedStyle,
   useSharedValue,
@@ -136,49 +135,56 @@ const ListItemSwipeAction = ({
     transform: [{ translateX: translateX.value }]
   }));
 
-  const handleGestureEvent = (
-    event: GestureEvent<PanGestureHandlerEventPayload>
-  ) => {
-    const { translationX } = event.nativeEvent;
-
-    if (translationX < 0) {
-      const newTranslateX = gestureContext.current.startX + translationX;
-      translateX.value = Math.max(newTranslateX, -width * 0.9);
-
-      if (
-        openedItemRef?.current &&
-        openedItemRef.current !== resetSwipePosition
-      ) {
-        openedItemRef.current();
-      }
-
-      if (openedItemRef) {
-        openedItemRef.current = resetSwipePosition;
-      }
-
-      if (translationX < -200 && !hapticTriggered.current) {
-        HapticFeedback.trigger("impactLight");
-        hapticTriggered.current = true;
-      } else if (translationX >= -200) {
-        hapticTriggered.current = false;
-      }
-    }
+  const triggerHaptic = () => {
+    HapticFeedback.trigger("impactLight");
   };
 
-  const handleGestureEnd = (
-    event: HandlerStateChangeEvent<PanGestureHandlerEventPayload>
-  ) => {
-    const { translationX, velocityX } = event.nativeEvent;
+  // Define the gesture action and props
+  const panGesture = Gesture.Pan()
+    .activeOffsetX([-10, 10])
+    .failOffsetY([-5, 5])
+    .onBegin(() => {
+      gestureContext.current.startX = translateX.value;
+    })
+    .onUpdate(event => {
+      const translationX = event.translationX;
+      if (translationX < 0) {
+        const newTranslateX = gestureContext.current.startX + translationX;
+        translateX.value = Math.max(newTranslateX, -width * 0.9);
 
-    if (translationX < -200 || velocityX < -800) {
-      onRightActionPressed({ resetSwipePosition, triggerSwipeAction });
-    } else {
-      translateX.value = withSpring(
-        translationX < -50 ? -60 : 0,
-        IOSpringValues.accordion
-      );
-    }
-  };
+        if (
+          openedItemRef?.current &&
+          openedItemRef.current !== resetSwipePosition
+        ) {
+          openedItemRef.current();
+        }
+
+        if (openedItemRef) {
+          openedItemRef.current = resetSwipePosition;
+        }
+
+        if (translationX < -200 && !hapticTriggered.current) {
+          runOnJS(triggerHaptic)();
+          hapticTriggered.current = true;
+        } else if (translationX >= -200) {
+          hapticTriggered.current = false;
+        }
+      }
+    })
+    .onEnd(event => {
+      const { translationX, velocityX } = event;
+      if (translationX < -200 || velocityX < -800) {
+        runOnJS(onRightActionPressed)({
+          resetSwipePosition,
+          triggerSwipeAction
+        });
+      } else {
+        translateX.value = withSpring(
+          translationX < -50 ? -60 : 0,
+          IOSpringValues.accordion
+        );
+      }
+    });
 
   // Reset when screen refocuses (e.g., after navigating back)
   useFocusEffect(
@@ -206,19 +212,7 @@ const ListItemSwipeAction = ({
           }
           accessibilityLabel={accessibilityLabel}
         />
-        <PanGestureHandler
-          activeOffsetX={[-10, 10]}
-          failOffsetY={[-5, 5]}
-          onGestureEvent={handleGestureEvent}
-          onBegan={() => {
-            gestureContext.current.startX = translateX.value;
-          }}
-          onEnded={event =>
-            handleGestureEnd(
-              event as HandlerStateChangeEvent<PanGestureHandlerEventPayload>
-            )
-          }
-        >
+        <GestureDetector gesture={panGesture}>
           <Animated.View
             style={[
               {
@@ -231,7 +225,7 @@ const ListItemSwipeAction = ({
           >
             <ContentWrapper>{children}</ContentWrapper>
           </Animated.View>
-        </PanGestureHandler>
+        </GestureDetector>
       </ContentWrapper>
     </GestureHandlerRootView>
   );
