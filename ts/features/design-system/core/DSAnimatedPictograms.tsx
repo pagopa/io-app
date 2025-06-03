@@ -8,8 +8,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useCallback, useState } from "react";
-import { View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {

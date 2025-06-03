@@ -25,7 +25,7 @@ describe("ItwRemoteRequestValidationScreen", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should render the loading screen and start the machine if payload is valid", async () => {
+  it("should render the loading screen and start the machine if payload is valid", () => {
     const validPayload = {
       client_id: "abc123xy",
       request_uri: "https://example.com/callback",
@@ -40,7 +40,7 @@ describe("ItwRemoteRequestValidationScreen", () => {
 
     const { getByTestId } = renderComponent(validPayload);
 
-    await act(() => {
+    act(() => {
       expect(mockSend).toHaveBeenCalledTimes(1);
       expect(getByTestId("loader")).toBeTruthy();
     });
@@ -68,7 +68,7 @@ describe("ItwRemoteRequestValidationScreen", () => {
     expect(getByTestId("failure")).toBeTruthy();
   });
 
-  it("should render the loading screen and not start the machine if the user is not authenticated", async () => {
+  it("should render the loading screen and not start the machine if the user is not authenticated", () => {
     const validPayload = {
       client_id: "abc123xy",
       request_uri: "https://example.com/callback",
@@ -82,7 +82,7 @@ describe("ItwRemoteRequestValidationScreen", () => {
 
     const { getByTestId } = renderComponent(validPayload, false);
 
-    await act(() => {
+    act(() => {
       expect(mockSend).not.toHaveBeenCalled();
       expect(getByTestId("loader")).toBeTruthy();
     });
