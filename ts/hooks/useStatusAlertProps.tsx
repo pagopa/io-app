@@ -77,8 +77,14 @@ export const useStatusAlertProps = (
   const localeFallback = fallbackForLocalizedMessageKeys(locale);
 
   useEffect(() => {
-    // If the user is offline and the current route is not in the blacklist, show the alert
-    if (blackListOfflineAlertRoutes.has(currentRoute)) {
+    if (
+      blackListOfflineAlertRoutes.has(currentRoute) ||
+      offlineAccessReason !== undefined
+    ) {
+      /**
+       * In case we are in the mini-app for offline usage or the current route is in the blacklist,
+       * we don't need to show the alert.
+       */
       setConnectivityAlert(undefined);
       return;
     }
@@ -131,13 +137,6 @@ export const useStatusAlertProps = (
   ]);
 
   return useMemo(() => {
-    if (offlineAccessReason) {
-      /**
-       * In case we are in the mini-app for offline usage, we don't need to show the alert.
-       * The mini-app manages the alert by itself.
-       */
-      return undefined;
-    }
     if (isConnected === false && connectivityAlert) {
       return {
         alertProps: connectivityAlert,
@@ -174,7 +173,6 @@ export const useStatusAlertProps = (
     localeFallback,
     isConnected,
     bottomSheet,
-    connectivityAlert,
-    offlineAccessReason
+    connectivityAlert
   ]);
 };
