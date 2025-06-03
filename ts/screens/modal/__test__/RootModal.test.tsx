@@ -1,6 +1,7 @@
 import DeviceInfo from "react-native-device-info";
 
 import { createStore } from "redux";
+import { act } from "@testing-library/react-native";
 import {
   versionInfoLoadFailure,
   versionInfoLoadSuccess
@@ -48,7 +49,9 @@ describe("RootModal", () => {
       jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("5.0.4.2");
       const store = createStore(appReducer, globalState as any);
       expect(store.getState().versionInfo).toStrictEqual(null);
-      store.dispatch(versionInfoLoadFailure(new Error()));
+      act(() => {
+        store.dispatch(versionInfoLoadFailure(new Error()));
+      });
 
       const testComponent = renderScreenWithNavigationStoreContext<GlobalState>(
         RootModal,
@@ -70,7 +73,9 @@ describe("RootModal", () => {
         jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("5.0.4.2");
         const store = createStore(appReducer, globalState as any);
         expect(store.getState().versionInfo).toStrictEqual(null);
-        store.dispatch(versionInfoLoadFailure(new Error()));
+        act(() => {
+          store.dispatch(versionInfoLoadFailure(new Error()));
+        });
 
         const testComponent =
           renderScreenWithNavigationStoreContext<GlobalState>(
@@ -83,15 +88,17 @@ describe("RootModal", () => {
 
         expect(testComponent.queryByText(I18n.t("titleUpdateApp"))).toBeNull();
 
-        store.dispatch(
-          versionInfoLoadSuccess({
-            ...mockIoVersionInfo,
-            min_app_version: {
-              ios: "6.0.0.0",
-              android: "6.0.0.0"
-            }
-          })
-        );
+        act(() => {
+          store.dispatch(
+            versionInfoLoadSuccess({
+              ...mockIoVersionInfo,
+              min_app_version: {
+                ios: "6.0.0.0",
+                android: "6.0.0.0"
+              }
+            })
+          );
+        });
 
         expect(
           testComponent.queryByText(I18n.t("titleUpdateApp"))
@@ -118,15 +125,17 @@ const testRootModal = (
   jest.spyOn(DeviceInfo, "getVersion").mockReturnValue(appVersion);
   jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue(appVersion);
   const store = createStore(appReducer, globalState as any);
-  store.dispatch(
-    versionInfoLoadSuccess({
-      ...mockIoVersionInfo,
-      min_app_version: {
-        ios: minVersion,
-        android: minVersion
-      }
-    })
-  );
+  act(() => {
+    store.dispatch(
+      versionInfoLoadSuccess({
+        ...mockIoVersionInfo,
+        min_app_version: {
+          ios: minVersion,
+          android: minVersion
+        }
+      })
+    );
+  });
   expect(store.getState().versionInfo?.min_app_version).toStrictEqual({
     ios: minVersion,
     android: minVersion
@@ -140,6 +149,7 @@ const testRootModal = (
   );
   expect(testComponent).not.toBeNull();
 
+  // eslint-disable-next-line jest/valid-expect
   const searchUpdateText = expect(
     testComponent.queryByText(I18n.t("titleUpdateApp"))
   );

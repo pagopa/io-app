@@ -69,6 +69,7 @@ import {
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
+import { isTestEnv } from "../../../utils/environment";
 import { CameraPermissionView } from "./CameraPermissionView";
 
 type HelpProps = {
@@ -349,21 +350,23 @@ const BarcodeScanBaseScreenComponent = ({
           {/* This overrides BaseHeader status bar configuration */}
           <FocusAwareStatusBar barStyle={"light-content"} translucent={true} />
           {/* FIXME: replace with new header */}
-          <BaseHeader
-            accessibilityEvents={{
-              avoidNavigationEventsUsage: true,
-              disableAccessibilityFocus: true
-            }}
-            hideSafeArea={true}
-            dark={true}
-            backgroundColor={"transparent"}
-            goBack={true}
-            customGoBack={customGoBack}
-            onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
-            customRightIcon={
-              shouldDisplayTorchButton ? torchIconButton : undefined
-            }
-          />
+          {!isTestEnv && (
+            <BaseHeader
+              accessibilityEvents={{
+                avoidNavigationEventsUsage: true,
+                disableAccessibilityFocus: true
+              }}
+              hideSafeArea={true}
+              dark={true}
+              backgroundColor={"transparent"}
+              goBack={true}
+              customGoBack={customGoBack}
+              onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
+              customRightIcon={
+                shouldDisplayTorchButton ? torchIconButton : undefined
+              }
+            />
+          )}
         </SafeAreaView>
       </LinearGradient>
     </View>

@@ -14,6 +14,7 @@ import {
   resetCustomFields
 } from "../../../utils/supportAssistance";
 import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
+import { isTestEnv } from "../../../utils/environment";
 
 export type ContextualHelpProps = {
   title: string;
@@ -125,7 +126,7 @@ const BaseScreenComponent = ({
 
   return (
     <View style={{ flexGrow: 1 }}>
-      {!hideBaseHeader && (
+      {!hideBaseHeader && !isTestEnv && (
         <BaseHeader
           hideSafeArea={hideSafeArea}
           onAccessibilityNavigationHeaderFocus={
