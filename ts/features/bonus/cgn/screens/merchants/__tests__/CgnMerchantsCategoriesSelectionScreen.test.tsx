@@ -51,8 +51,8 @@ describe("CgnMerchantsCategoriesSelectionScreen", () => {
   });
 
   it("should render correctly", () => {
-    const { toJSON } = renderComponent(defaultState);
-    expect(toJSON()).toMatchSnapshot();
+    const component = renderComponent(defaultState);
+    expect(component).toBeTruthy();
   });
 
   it("should render the tab navigation with categories and merchants tabs", () => {

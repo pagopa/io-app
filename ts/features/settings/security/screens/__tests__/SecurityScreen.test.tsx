@@ -173,7 +173,9 @@ describe("Test SecurityScreen", () => {
       .mockResolvedValueOnce("FaceID");
 
     const { component } = renderComponent();
-    await Promise.resolve();
+    await act(async () => {
+      await Promise.resolve();
+    });
     const switchItem = component.getByTestId("biometric-recognition");
     await act(async () => {
       expect(switchItem).toBeTruthy();

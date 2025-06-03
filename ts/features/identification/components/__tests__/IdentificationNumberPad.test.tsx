@@ -42,7 +42,7 @@ describe("IdentificationNumberPad", () => {
   });
 
   it("should render all number pad buttons", () => {
-    const { getByText, getByA11yLabel } = renderComponent(defaultProps);
+    const { getByText, getByLabelText } = renderComponent(defaultProps);
 
     // Check for all number buttons
     // eslint-disable-next-line functional/no-let
@@ -51,7 +51,7 @@ describe("IdentificationNumberPad", () => {
     }
 
     // Check for delete button
-    expect(getByA11yLabel("Delete")).toBeTruthy();
+    expect(getByLabelText("Delete")).toBeTruthy();
   });
 
   it("should update successfully validate PIN if it's enter correctly", () => {
