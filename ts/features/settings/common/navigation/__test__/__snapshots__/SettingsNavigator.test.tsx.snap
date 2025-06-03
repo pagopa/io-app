@@ -2055,6 +2055,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                               [
                                 {
                                   "description": "This change requires app reboot",
+                                  "disabled": false,
                                   "label": "pagoPA",
                                   "onSwitchValueChange": [Function],
                                   "value": false,
@@ -2191,7 +2192,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                     <View
                                       accessibilityState={
                                         {
-                                          "disabled": undefined,
+                                          "disabled": false,
                                         }
                                       }
                                       accessible={false}
@@ -2252,9 +2253,10 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                         accessibilityState={
                                           {
                                             "checked": false,
-                                            "disabled": undefined,
+                                            "disabled": false,
                                           }
                                         }
+                                        disabled={false}
                                         onChange={[Function]}
                                         onResponderTerminationRequest={[Function]}
                                         onStartShouldSetResponder={[Function]}
