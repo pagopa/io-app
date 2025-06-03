@@ -640,6 +640,7 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                 inputAccessoryViewID="noticeNumberInputAccessoryView"
                                 inputMode="numeric"
                                 keyboardType="number-pad"
+                                maxFontSizeMultiplier={1.5}
                                 onBlur={[Function]}
                                 onChangeText={[Function]}
                                 onFocus={[Function]}
@@ -691,6 +692,7 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                               >
                                 <Text
                                   accessible={false}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   onLayout={[Function]}
                                   style={

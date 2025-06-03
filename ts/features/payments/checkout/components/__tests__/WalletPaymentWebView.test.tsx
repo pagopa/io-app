@@ -106,6 +106,7 @@ describe("WalletPaymentWebView", () => {
 
     const webView = getByTestId("webview");
     fireEvent(webView, "onShouldStartLoadWithRequest", {
+      isTopFrame: true,
       url: "about:blank"
     });
 

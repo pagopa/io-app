@@ -81,15 +81,15 @@ describe("Test SecurityScreen", () => {
     ).not.toBeNull();
   });
 
-  it("when press ListItemNav reset unlock code, should dispatch 'identificationRequest' with proper parameters", () => {
+  it("when press ListItemNav reset unlock code, should dispatch 'identificationRequest' with proper parameters", async () => {
     const { component } = renderComponent();
 
     expect(component).not.toBeNull();
     const listItemNav = component.getByTestId("reset-unlock-code");
     expect(listItemNav).not.toBeNull();
-
-    fireEvent.press(listItemNav);
-
+    await act(async () => {
+      fireEvent.press(listItemNav);
+    });
     expect(mockDispatch.mock.calls.length).toBe(1);
     expect(mockDispatch.mock.calls[0].length).toBe(1);
     const dispatchedAction = mockDispatch.mock.calls[0][0] as ActionType<
@@ -116,15 +116,16 @@ describe("Test SecurityScreen", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
 
-  it("should have the FIMS history entry when 'fimsIsHistoryEnabledSelector' returns 'true' and the press event on it should navigate to the related screen", () => {
+  it("should have the FIMS history entry when 'fimsIsHistoryEnabledSelector' returns 'true' and the press event on it should navigate to the related screen", async () => {
     jest
       .spyOn(fimsHistorySelectors, "fimsIsHistoryEnabledSelector")
       .mockImplementation(_ => true);
     const { component } = renderComponent();
     const fimsListItem = component.getByTestId("fims-history");
     expect(fimsListItem).toBeDefined();
-
-    fireEvent.press(fimsListItem);
+    await act(async () => {
+      fireEvent.press(fimsListItem);
+    });
     expect(mockNavigate.mock.calls.length).toBe(1);
     expect(mockNavigate.mock.calls[0].length).toBe(2);
     expect(mockNavigate.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
@@ -133,7 +134,7 @@ describe("Test SecurityScreen", () => {
     });
   });
 
-  it("should navigate to IDPay onboarding when not onboarded", () => {
+  it("should navigate to IDPay onboarding when not onboarded", async () => {
     jest
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       .spyOn(require("../../../../../store/hooks"), "useIOSelector")
@@ -159,7 +160,9 @@ describe("Test SecurityScreen", () => {
 
     const { component } = renderComponent();
     const idpayItem = component.getByTestId("reset-idpay-code");
-    fireEvent.press(idpayItem);
+    await act(async () => {
+      fireEvent.press(idpayItem);
+    });
     expect(mockNavigate).toHaveBeenCalled();
   });
 
@@ -174,7 +177,9 @@ describe("Test SecurityScreen", () => {
       await Promise.resolve();
     });
     const switchItem = component.getByTestId("biometric-recognition");
-    expect(switchItem).toBeTruthy();
+    await act(async () => {
+      expect(switchItem).toBeTruthy();
+    });
     fireEvent(switchItem, "onSwitchValueChange");
   });
 

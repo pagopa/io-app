@@ -254,7 +254,7 @@
         "action": "Riprova"
       },
       "statusMessage": {
-        "message": "Nessuna connessione",
+        "message": "Nessuna connessione.",
         "action": "Cosa posso fare?"
       },
       "connectionRestored": "Connessione ripristinata.",
@@ -354,7 +354,7 @@
     },
     "connection_lost": {
       "title": "Non hai una connessione a internet attiva",
-      "description": "Controlla la tua connessione e riavvia l’app"
+      "description": "Controlla la tua connessione e riavvia l’app."
     },
     "slowdowns_results_screen": {
       "title": "Sembra che le cose vadano un po' a rilento",
@@ -611,6 +611,7 @@
       "pagoPaEnvironment": {
         "pagoPaEnv": "pagoPA",
         "pagoPAEnvAlert": "La modifica richiede il riavvio dell'app",
+        "pagoPAEnvAlertLocal": "L'ambiente di UAT pagoPA non può essere abilitato con la build dell'app in locale",
         "alertConfirmTitle": "Vuoi usare l'ambiente di test pagoPA?",
         "alertConfirmMessage": "Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.",
         "alertMessage": "È necessario il riavvio dell'applicazione affinché le modifiche abbiano effetto."
@@ -3789,9 +3790,9 @@
     },
     "pn": {
       "reminderBanner": {
-        "title": "Ricevi le tue comunicazioni a valore legale su IO!",
-        "body": "Con IO è più semplice, ti basta attivare il servizio SEND.",
-        "cta": "Scopri SEND su IO",
+        "title": "Risparmia sui costi di notifica!",
+        "body": "Scopri e attiva SEND su IO per ricevere le comunicazioni a valore legale direttamente in app.",
+        "cta": "Attiva SEND su IO",
         "activationFlow": {
           "FAILURE_DETAILS_FETCH": {
             "title": "Non riusciamo ad attivare il servizio SEND",
@@ -4343,6 +4344,18 @@
           "content": "Continua ad aggiungere le versioni digitali dei tuoi documenti al Portafoglio.",
           "action": "Vai al Portafoglio"
         },
+        "nfcNotSupported": {
+          "title": "IT-Wallet richiede un dispositivo con tecnologia NFC",
+          "subtitle": "Il tuo dispositivo non è dotato di tecnologia NFC, necessaria per il funzionamento dei portafogli digitali.",
+          "actions": {
+            "continue": "Continua senza IT-Wallet",
+            "cancel": "Non ora",
+            "l3": {
+              "continue": "Scopri di più",
+              "cancel": "Chiudi"
+            }
+          }
+        },
         "paywall": {
           "badge": "Novità",
           "description": "L'unico Wallet di Stato:\npubblico, sicuro, gratuito.",
@@ -4371,7 +4384,9 @@
               "content": "IT-Wallet si integrerà al Portafoglio Digitale Europeo: potrai usare i tuoi documenti con pieno valore legale in tutta Europa."
             }
           },
-          "tos": "Premendo **Ottieni IT-Wallet** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}})"
+          "tos": "Premendo **Ottieni IT-Wallet** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}})",
+          "anchorAction": "Scopri tutti i vantaggi",
+          "primaryAction": "Ottieni IT-Wallet"
         },
         "offlineBanner": {
           "title": "Novità: i tuoi documenti anche offline",
@@ -4746,6 +4761,17 @@
               "other": "Aggiungi documenti al Portafoglio"
             },
             "secondaryAction": "Non ora"
+          },
+          "invalidCredentialsScreen": {
+            "title": {
+              "one": "Non puoi continuare con la richiesta perché {{credentialName}} non è valida",
+              "other": "Non puoi continuare con la richiesta perché alcuni documenti non risultano validi"
+            },
+            "subtitle": {
+              "one": "Assicurati di essere in possesso del documento richiesto valido e poi riprova.",
+              "other": "Assicurati di essere in possesso dei documenti richiesti validi e poi riprova."
+            },
+            "primaryAction": "Ho capito"
           },
           "deepLinkValidationErrorScreen": {
             "title": "Il link sembra non funzionare",

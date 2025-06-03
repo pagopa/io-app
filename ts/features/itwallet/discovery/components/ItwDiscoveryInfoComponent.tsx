@@ -21,8 +21,7 @@ export type ItwDiscoveryInfoComponentProps = {
 /**
  * This is the component that shows the information about the discovery process
  * about the activation of the DIW. It uses a markdown component to render
- * the content of the screen. The screen is wrapped in a GradientScrollView
- * with a primary and secondary action.
+ * the content of the screen.
  */
 export const ItwDiscoveryInfoComponent = ({
   onContinuePress

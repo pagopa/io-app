@@ -1,6 +1,7 @@
 import { Linking } from "react-native";
 import { IOToast } from "@pagopa/io-app-design-system";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation";
 import I18n from "../../../../../i18n";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen";
 import { ItwRemoteMachineContext } from "../machine/provider";
@@ -12,6 +13,8 @@ import {
 } from "../machine/selectors";
 
 export const ItwRemoteAuthResponseScreen = () => {
+  useItwDisableGestureNavigation();
+
   const machineRef = ItwRemoteMachineContext.useActorRef();
   const isLoading = ItwRemoteMachineContext.useSelector(selectIsLoading);
   const isSuccess = ItwRemoteMachineContext.useSelector(selectIsSuccess);
