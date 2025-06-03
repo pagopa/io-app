@@ -9,8 +9,6 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import {
   trackItWalletIDMethod,
@@ -22,26 +20,12 @@ import { useCieInfoAndPinBottomSheets } from "../hooks/useCieInfoAndPinBottomShe
 import { useNoCieBottomSheet } from "../hooks/useNoCieBottomSheet.tsx";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader.tsx";
 import { useIOSelector } from "../../../../store/hooks.ts";
-import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { CieWarningType } from "./ItwIdentificationCieWarningScreen.tsx";
 
-export type ItwL3IdentificationNavigationParams = {
-  eidReissuing?: boolean;
-};
-
-export type ItwL3IdentificationModeSelectionScreenProps =
-  IOStackNavigationRouteProps<
-    ItwParamsList,
-    "ITW_IDENTIFICATION_LEVEL_SELECTION_L3"
-  >;
-
-export const ItwL3IdentificationModeSelectionScreen = (
-  props: ItwL3IdentificationModeSelectionScreenProps
-) => {
+export const ItwL3IdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const { eidReissuing } = props.route.params;
-  const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
-  const validEid = maybeEidStatus === "valid";
+  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
 
   const navigateToCieWarning = (warning: CieWarningType) => {
     machineRef.send({ type: "go-to-cie-warning", warning });
@@ -83,14 +67,6 @@ export const ItwL3IdentificationModeSelectionScreen = (
   const { cieInfoBottomSheet, pinBottomSheet } = useCieInfoAndPinBottomSheets();
 
   const { noCieBottomSheet } = useNoCieBottomSheet();
-
-  useFocusEffect(
-    useCallback(() => {
-      if (eidReissuing) {
-        machineRef.send({ type: "start-reissuing" });
-      }
-    }, [eidReissuing, machineRef])
-  );
   useFocusEffect(trackItWalletIDMethod);
 
   const handleCiePinPress = useCallback(() => {
@@ -131,7 +107,7 @@ export const ItwL3IdentificationModeSelectionScreen = (
           accessibilityLabel: I18n.t(
             "features.itWallet.identification.l3.mode.secondaryAction"
           ),
-          onPress: validEid
+          onPress: isItwValid
             ? () => navigateToCieWarning("noCie")
             : () => noCieBottomSheet.present(),
           testID: "l3-secondary-action"

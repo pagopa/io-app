@@ -104,9 +104,6 @@ describe("itwEidIssuanceMachine", () => {
       onInit: assign(onInit),
       setIsReissuing: assign({
         isReissuing: true
-      }),
-      setL3FeaturesEnabled: assign({
-        isL3FeaturesEnabled: true
       })
     },
     actors: {
@@ -1067,25 +1064,13 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "start-reissuing" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: "L3Identification"
+      UserIdentification: "L2Identification"
     });
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,
-      isReissuing: true,
-      isL3FeaturesEnabled: true
+      isReissuing: true
     });
-
-    expect(navigateToL3IdentificationScreen).toHaveBeenCalledTimes(1);
-
-    actor.send({ type: "go-to-l2-identification" });
-
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    await waitFor(() =>
-      expect(actor.getSnapshot().value).toStrictEqual({
-        UserIdentification: "L2Identification"
-      })
-    );
 
     expect(navigateToL2IdentificationScreen).toHaveBeenCalledTimes(1);
 
@@ -1128,7 +1113,6 @@ describe("itwEidIssuanceMachine", () => {
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: T_WIA,
       isReissuing: true,
-      isL3FeaturesEnabled: true,
       identification: {
         mode: "spid",
         level: "L2",
@@ -1182,7 +1166,6 @@ describe("itwEidIssuanceMachine", () => {
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: T_WIA,
       isReissuing: true,
-      isL3FeaturesEnabled: true,
       identification: {
         mode: "spid",
         level: "L2",
@@ -1196,13 +1179,12 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should go back to Idle state if isReissuing is true", async () => {
-    isL3FeaturesEnabled.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: "L3Identification" },
+      value: { UserIdentification: "L2Identification" },
       context: {
         isReissuing: true
       }

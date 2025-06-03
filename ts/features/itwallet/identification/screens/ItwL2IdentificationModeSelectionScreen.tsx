@@ -15,9 +15,32 @@ import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollV
 import I18n from "../../../../i18n.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwDisabledIdentificationMethodsSelector } from "../../common/store/selectors/remoteConfig.ts";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
+import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 
-export const ItwL2IdentificationModeSelectionScreen = () => {
+export type ItwL2IdentificationNavigationParams = {
+  eidReissuing?: boolean;
+};
+
+export type ItwL2IdentificationModeSelectionScreenProps =
+  IOStackNavigationRouteProps<
+    ItwParamsList,
+    "ITW_IDENTIFICATION_LEVEL_SELECTION_L2"
+  >;
+
+export const ItwL2IdentificationModeSelectionScreen = (
+  props: ItwL2IdentificationModeSelectionScreenProps
+) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const { eidReissuing } = props.route.params;
+
+  useFocusEffect(
+    useCallback(() => {
+      if (eidReissuing) {
+        machineRef.send({ type: "start-reissuing" });
+      }
+    }, [eidReissuing, machineRef])
+  );
   useFocusEffect(trackItWalletIDMethod);
 
   const handleSpidPress = useCallback(() => {

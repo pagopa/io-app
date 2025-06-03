@@ -7,7 +7,7 @@ import { ItwPresentationCredentialCardModalNavigationParams } from "../presentat
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
-import { ItwL3IdentificationNavigationParams } from "../identification/screens/ItwL3IdentificationModeSelectionScreen.tsx";
+import { ItwL2IdentificationNavigationParams } from "../identification/screens/ItwL2IdentificationModeSelectionScreen.tsx";
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
@@ -21,9 +21,9 @@ export type ItwParamsList = {
   [ITW_ROUTES.DISCOVERY.IPZS_PRIVACY]: undefined;
   [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]: undefined;
   // IDENTIFICATION
-  [ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L2]: undefined;
   [ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION
-    .L3]: ItwL3IdentificationNavigationParams;
+    .L2]: ItwL2IdentificationNavigationParams;
+  [ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L3]: undefined;
   // IDENTIFICATION ERRORS
   [ITW_ROUTES.IDENTIFICATION
     .CIE_WARNING]: ItwIdentificationCieWarningScreenNavigationParams;

@@ -7,10 +7,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import {
-  ItwL3IdentificationModeSelectionScreen,
-  ItwL3IdentificationModeSelectionScreenProps
-} from "../ItwL3IdentificationModeSelectionScreen.tsx";
+import { ItwL3IdentificationModeSelectionScreen } from "../ItwL3IdentificationModeSelectionScreen.tsx";
 
 jest.mock("../../../../../config", () => ({
   itwEnabled: true
@@ -40,15 +37,13 @@ describe("ItwL3IdentificationModeSelectionScreen", () => {
   });
 });
 
-const renderComponent = (isL3FeaturesEnabled = true, eidReissuing = false) => {
+const renderComponent = (isL3FeaturesEnabled = true) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
-  const WrappedComponent = (
-    props: ItwL3IdentificationModeSelectionScreenProps
-  ) => {
+  const WrappedComponent = () => {
     const logic = itwEidIssuanceMachine.provide({
       actions: {
         onInit: jest.fn(),
@@ -75,7 +70,7 @@ const renderComponent = (isL3FeaturesEnabled = true, eidReissuing = false) => {
         logic={logic}
         options={{ snapshot }}
       >
-        <ItwL3IdentificationModeSelectionScreen {...props} />
+        <ItwL3IdentificationModeSelectionScreen />
       </ItwEidIssuanceMachineContext.Provider>
     );
   };
@@ -83,7 +78,7 @@ const renderComponent = (isL3FeaturesEnabled = true, eidReissuing = false) => {
   return renderScreenWithNavigationStoreContext<GlobalState>(
     WrappedComponent,
     ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L3,
-    { eidReissuing },
+    {},
     store
   );
 };

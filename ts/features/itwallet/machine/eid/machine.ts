@@ -77,9 +77,6 @@ export const itwEidIssuanceMachine = setup({
     }),
     setIsReissuing: assign({
       isReissuing: true
-    }),
-    setL3FeaturesEnabled: assign({
-      isL3FeaturesEnabled: true
     })
   },
   actors: {
@@ -146,12 +143,12 @@ export const itwEidIssuanceMachine = setup({
         "start-reissuing": [
           {
             guard: not("hasValidWalletInstanceAttestation"),
-            actions: ["setIsReissuing", "setL3FeaturesEnabled"],
+            actions: "setIsReissuing",
             target: "WalletInstanceAttestationObtainment"
           },
           {
-            actions: ["setIsReissuing", "setL3FeaturesEnabled"],
-            target: "UserIdentification.L3Identification"
+            actions: "setIsReissuing",
+            target: "UserIdentification.L2Identification"
           }
         ]
       }
@@ -344,15 +341,9 @@ export const itwEidIssuanceMachine = setup({
             "go-to-cie-warning": {
               target: "CieWarning.L3Identification"
             },
-            back: [
-              {
-                guard: "isReissuing",
-                target: "#itwEidIssuanceMachine.Idle"
-              },
-              {
-                target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
-              }
-            ]
+            back: {
+              target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
+            }
           }
         },
         L2Identification: {
@@ -376,6 +367,10 @@ export const itwEidIssuanceMachine = setup({
               }
             ],
             back: [
+              {
+                guard: "isReissuing",
+                target: "#itwEidIssuanceMachine.Idle"
+              },
               {
                 guard: "isL3FeaturesEnabled",
                 target: "L3Identification"
