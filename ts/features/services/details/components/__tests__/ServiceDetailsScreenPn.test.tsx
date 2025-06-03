@@ -66,7 +66,8 @@ const servicePreferenceWihInboxDisabled: ServicePreferenceResponse = {
 
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest.fn().mockReturnValue("2.35.0.1"),
-  getVersion: jest.fn().mockReturnValue("2.35.0.1")
+  getVersion: jest.fn().mockReturnValue("2.35.0.1"),
+  isDisplayZoomed: jest.fn().mockReturnValue(false)
 }));
 
 describe("ServiceDetailsScreenPn", () => {
