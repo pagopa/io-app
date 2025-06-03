@@ -3,9 +3,8 @@ import {
   IOVisualCostants,
   ListItemInfo
 } from "@pagopa/io-app-design-system";
-import { useMemo } from "react";
-import { Platform, StyleSheet, View } from "react-native";
-import { openSettings } from "react-native-permissions";
+import { useEffect, useMemo } from "react";
+import { Alert, Platform, StyleSheet, View } from "react-native";
 import I18n from "../../../../../i18n";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
@@ -13,11 +12,39 @@ import { openAppSettings } from "../../../../../utils/appSettings";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { ItwProximityMachineContext } from "../machine/provider";
+import { selectIsPermissionsRequiredState } from "../machine/selectors";
 
 export const ItwGrantPermissionsScreen = () => {
   const navigation = useIONavigation();
   const machineRef = ItwProximityMachineContext.useActorRef();
+  const isPermissionRequiredState = ItwProximityMachineContext.useSelector(
+    selectIsPermissionsRequiredState
+  );
+
   useHardwareBackButton(() => true);
+
+  useEffect(() => {
+    if (isPermissionRequiredState) {
+      Alert.alert(
+        I18n.t(
+          "features.itWallet.presentation.proximity.permissionsRequired.alert.title"
+        ),
+        I18n.t(
+          "features.itWallet.presentation.proximity.permissionsRequired.alert.message"
+        ),
+        [
+          {
+            text: I18n.t(
+              "features.itWallet.presentation.proximity.permissionsRequired.alert.text"
+            ),
+            onPress: () => {
+              machineRef.send({ type: "close" });
+            }
+          }
+        ]
+      );
+    }
+  }, [isPermissionRequiredState, machineRef]);
 
   const listItems = useMemo<Array<ListItemInfo>>(
     () => [
@@ -74,7 +101,9 @@ export const ItwGrantPermissionsScreen = () => {
       label: I18n.t(
         "features.itWallet.presentation.proximity.grantPermissions.actions.secondary"
       ),
-      onPress: openSettings
+      onPress: () => {
+        machineRef.send({ type: "continue" });
+      }
     }
   };
 

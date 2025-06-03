@@ -9,7 +9,7 @@ import {
 import { fromPromise } from "xstate";
 
 export const createProximityActorsImplementation = () => {
-  const checkPermissions = fromPromise<any, any>(async () => {
+  const checkPermissions = fromPromise<boolean, void>(async () => {
     // eslint-disable-next-line functional/no-let
     let permissionsToCheck: Array<Permission>;
 

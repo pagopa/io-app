@@ -6,3 +6,6 @@ type MachineSnapshot = StateFrom<ItwProximityMachine>;
 
 export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwPresentationTags.Loading);
+
+export const selectIsPermissionsRequiredState = (snapshot: MachineSnapshot) =>
+  snapshot.matches("PermissionsRequired");

@@ -1,4 +1,4 @@
-import { fromPromise, setup } from "xstate";
+import { assign, fromPromise, setup } from "xstate";
 import { InitialContext, Context } from "./context";
 import { RemoteEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
@@ -15,11 +15,12 @@ export const itwProximityMachine = setup({
   actions: {
     navigateToGrantPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
+    navigateToMDLScreen: notImplemented,
     generateQRCode: notImplemented,
     closePresentation: notImplemented
   },
   actors: {
-    checkPermissions: fromPromise<Promise<boolean>, void>(notImplemented),
+    checkPermissions: fromPromise<boolean, void>(notImplemented),
     checkBluetoothIsActive: fromPromise(notImplemented)
   }
 }).createMachine({
@@ -41,9 +42,16 @@ export const itwProximityMachine = setup({
       description: "",
       invoke: {
         src: "checkPermissions",
-        onDone: {
-          target: "CheckingBluetoothIsActive"
-        },
+        onDone: [
+          {
+            guard: ({ event }) => !!event.output,
+            target: "CheckingBluetoothIsActive"
+          },
+          {
+            guard: ({ event }) => !event.output,
+            target: "GrantPermissions"
+          }
+        ],
         onError: {
           target: "GrantPermissions"
         }
@@ -53,6 +61,36 @@ export const itwProximityMachine = setup({
       entry: "navigateToGrantPermissionsScreen",
       on: {
         back: {
+          target: "Idle"
+        },
+        continue: {
+          target: "CheckPermissionsSilently"
+        }
+      }
+    },
+    CheckPermissionsSilently: {
+      tags: [ItwPresentationTags.Loading],
+      invoke: {
+        src: "checkPermissions",
+        onDone: [
+          {
+            guard: ({ event }) => !!event.output,
+            target: "CheckingBluetoothIsActive"
+          },
+          {
+            guard: ({ event }) => !event.output,
+            actions: "navigateToMDLScreen",
+            target: "PermissionsRequired"
+          }
+        ],
+        onError: {
+          target: "PermissionsRequired"
+        }
+      }
+    },
+    PermissionsRequired: {
+      on: {
+        close: {
           target: "Idle"
         }
       }

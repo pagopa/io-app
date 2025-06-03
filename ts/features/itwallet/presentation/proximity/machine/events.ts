@@ -10,4 +10,8 @@ export type Close = {
   type: "close";
 };
 
-export type RemoteEvents = Start | Back | Close;
+export type Continue = {
+  type: "continue";
+};
+
+export type RemoteEvents = Start | Back | Continue | Close;
