@@ -49,6 +49,7 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 
 const WalletPaymentConfirmScreen = () => {
   const navigation = useIONavigation();
@@ -242,6 +243,7 @@ const WalletPaymentConfirmScreen = () => {
           Link: (param, renderer) => (
             <Body
               asLink
+              key={getTxtNodeKey(param)}
               weight="Semibold"
               onPress={() => onLinkPress(param.url)}
               accessibilityRole="link"
