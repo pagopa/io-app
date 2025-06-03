@@ -54,6 +54,10 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_SCREEN_OPERATION_RESULT",
       title: "Operation result"
     },
+    OPERATION_RESULT_ANIMATED: {
+      route: "DS_SCREEN_OPERATION_RESULT_ANIMATED",
+      title: "Operation result (animated)"
+    },
     IOSCROLLVIEW: {
       route: "IOSCROLLVIEW",
       title: "IOScrollView"

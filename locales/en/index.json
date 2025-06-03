@@ -611,6 +611,7 @@
       "pagoPaEnvironment": {
         "pagoPaEnv": "pagoPA",
         "pagoPAEnvAlert": "This change requires app reboot",
+        "pagoPAEnvAlertLocal": "The pagoPA test environment cannot be enabled with the local app build",
         "alertConfirmTitle": "Do you want to use the pagoPA test environment?",
         "alertConfirmMessage": "If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.",
         "alertMessage": "The application must be restarted for the changes to take effect."
@@ -4330,14 +4331,8 @@
             "action": "Inizia"
           }
         },
-        "title": "Aggiungi i tuoi documenti\ndigitali su IO",
-        "featureHighlights": {
-          "1": "Aggiungi la versione digitale di alcuni dei tuoi documenti nel Portafoglio dell'app",
-          "2": "Hai a disposizione la Patente di guida, la Tessera sanitaria - Tessera europea di assicurazione malattia e la Carta Europea della Disabilità",
-          "3": "Mostri i tuoi documenti dal telefono, in totale sicurezza",
-          "4": "Puoi usare la tua Patente su IO per dimostrare la tua idoneità alla guida"
-        },
-        "content": "###### Come ottenerli \n\n Continua per ottenere i tuoi documenti su IO: puoi usare **SPID** o **CieID (livello 2)**.",
+        "title": "La versione digitale dei tuoi documenti, su IO",
+        "content": "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n\n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati.",
         "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
         "upcomingWalletBanner": {
           "title": "Novità in arrivo: i tuoi Documenti su IO",
