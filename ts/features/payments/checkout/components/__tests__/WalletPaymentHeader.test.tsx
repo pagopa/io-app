@@ -61,8 +61,8 @@ describe("WalletPaymentHeader", () => {
       globalState,
       WalletPaymentStepEnum.PICK_PAYMENT_METHOD
     );
-    const { getByA11yLabel } = component;
-    const backButton = getByA11yLabel(I18n.t("global.buttons.back"));
+    const { getByLabelText } = component;
+    const backButton = getByLabelText(I18n.t("global.buttons.back"));
     fireEvent.press(backButton);
     expect(mockGoBack).toHaveBeenCalled();
   });
@@ -93,8 +93,8 @@ describe("WalletPaymentHeader", () => {
       enrichedState,
       WalletPaymentStepEnum.CONFIRM_TRANSACTION
     );
-    const { getByA11yLabel } = component;
-    const backButton = getByA11yLabel(I18n.t("global.buttons.back"));
+    const { getByLabelText } = component;
+    const backButton = getByLabelText(I18n.t("global.buttons.back"));
     fireEvent.press(backButton);
     expect(store.getActions()).toContainEqual(
       walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
@@ -128,7 +128,7 @@ describe("WalletPaymentHeader", () => {
       WalletPaymentStepEnum.CONFIRM_TRANSACTION
     );
 
-    const backButton = component.getByA11yLabel(I18n.t("global.buttons.back"));
+    const backButton = component.getByLabelText(I18n.t("global.buttons.back"));
     fireEvent.press(backButton);
 
     expect(store.getActions()).toContainEqual(

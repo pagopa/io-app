@@ -48,7 +48,7 @@ export const MainTabNavigator = () => {
             typefacePreference === "comfortable"
               ? "Titillio"
               : "TitilliumSansPro",
-            11,
+            14,
             "Regular"
           ),
           tabBarHideOnKeyboard: true,

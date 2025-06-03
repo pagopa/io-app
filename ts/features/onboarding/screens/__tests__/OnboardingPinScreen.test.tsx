@@ -13,10 +13,7 @@ jest.mock("../../../settings/security/shared/components/PinCreation", () => ({
 describe("OnboardingPinScreen", () => {
   it("should render PinCreation with isOnboarding=true", () => {
     renderComponent();
-    expect(PinCreation).toHaveBeenCalledWith(
-      expect.objectContaining({ isOnboarding: true }),
-      {}
-    );
+    expect(PinCreation).toHaveBeenCalledWith({ isOnboarding: true }, undefined);
   });
 });
 

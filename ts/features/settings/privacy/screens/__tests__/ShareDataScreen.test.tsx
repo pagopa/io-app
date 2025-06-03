@@ -44,9 +44,13 @@ describe("ShareDataScreen", () => {
     });
 
     jest.spyOn(hooks, "useIODispatch").mockReturnValue(mockDispatch);
-    jest
-      .spyOn(require("@pagopa/io-app-design-system"), "useIOToast")
-      .mockReturnValue(mockToast);
+    jest.mock("@pagopa/io-app-design-system", () => {
+      const actual = jest.requireActual("@pagopa/io-app-design-system");
+      return {
+        ...actual,
+        useIOToast: () => mockToast
+      };
+    });
   });
 
   afterAll(() => {
