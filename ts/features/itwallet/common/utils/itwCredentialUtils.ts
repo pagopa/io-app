@@ -106,12 +106,12 @@ const credentialsWithL3Design: ReadonlyArray<string> = [
 ];
 
 /**
- * Checks if a credential supports the L3 design.
+ * Checks if a credential has L3 design.
  * It checks if the credential type is in the list of credentials with L3 design
  * and if it is an ITW credential.
  * @param credential - The stored credential to check
  * @returns boolean indicating if the credential supports L3 design
  */
-export const supportsL3Design = (credential: StoredCredential): boolean =>
+export const hasL3Design = (credential: StoredCredential): boolean =>
   credentialsWithL3Design.includes(credential.credentialType) &&
   isItwCredential(credential.credential);

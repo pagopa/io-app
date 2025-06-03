@@ -8,7 +8,7 @@ import { StyleSheet, Text, View } from "react-native";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
 import {
   getCredentialNameFromType,
-  supportsL3Design
+  hasL3Design
 } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
@@ -35,11 +35,11 @@ const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
   const { isExperimental } = useIOExperimentalDesign();
-  const supportL3Design = supportsL3Design(credential);
+  const withL3Design = hasL3Design(credential);
   const { backgroundColor, textColor, statusBarStyle } =
     getThemeColorByCredentialType(
       credential.credentialType as CredentialType,
-      supportL3Design
+      withL3Design
     );
 
   const headerContent = useMemo(() => {
