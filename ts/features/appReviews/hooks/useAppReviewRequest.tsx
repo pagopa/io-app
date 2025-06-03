@@ -35,7 +35,6 @@ export const useAppReviewRequest = (topic: TopicKeys = "general") => {
           [
             {
               text: I18n.t("appFeedback.alert.discard"),
-              style: "cancel",
               onPress: () => {
                 dispatch(appReviewNegativeFeedback(topic));
                 present();

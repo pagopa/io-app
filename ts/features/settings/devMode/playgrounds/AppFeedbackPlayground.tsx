@@ -1,4 +1,5 @@
 import { Body, IOButton, VSpacer } from "@pagopa/io-app-design-system";
+import { useContext } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clearFeedbackDatas } from "../../../appReviews/store/actions";
@@ -7,20 +8,22 @@ import {
   appReviewPositiveFeedbackLogSelector
 } from "../../../appReviews/store/selectors";
 import { useAppReviewRequest } from "../../../appReviews/hooks/useAppReviewRequest";
+import { AppFeedbackContext } from "../../../appReviews/components/AppFeedbackProvider";
 
 export const AppFeedbackPlayground = () => {
-  const {
-    requestFeedback: requestFeedbackItw,
-    appReviewBottomSheet: itwFeedbackBottomSheet
-  } = useAppReviewRequest("itw");
-  const {
-    requestFeedback: requestFeedbackPayment,
-    appReviewBottomSheet: paymentsFeedbackBottomSheet
-  } = useAppReviewRequest("payments");
-  const {
-    requestFeedback: requestFeedbackGeneral,
-    appReviewBottomSheet: generalFeedbackBottomSheet
-  } = useAppReviewRequest();
+  const { requestFeedback } = useContext(AppFeedbackContext);
+  // const {
+  //   requestFeedback: requestFeedbackItw,
+  //   appReviewBottomSheet: itwFeedbackBottomSheet
+  // } = useAppReviewRequest("itw");
+  // const {
+  //   requestFeedback: requestFeedbackPayment,
+  //   appReviewBottomSheet: paymentsFeedbackBottomSheet
+  // } = useAppReviewRequest("payments");
+  // const {
+  //   requestFeedback: requestFeedbackGeneral,
+  //   appReviewBottomSheet: generalFeedbackBottomSheet
+  // } = useAppReviewRequest();
   const dispatch = useIODispatch();
   const appReviewPositiveFeedbackLog = useIOSelector(
     appReviewPositiveFeedbackLogSelector
@@ -57,24 +60,21 @@ export const AppFeedbackPlayground = () => {
       <VSpacer />
       <IOButton
         variant="solid"
-        onPress={requestFeedbackPayment}
+        onPress={() => requestFeedback("payments")}
         label="Richiedi feedback pagamenti"
       />
       <VSpacer />
       <IOButton
         variant="solid"
-        onPress={requestFeedbackItw}
+        onPress={() => requestFeedback("itw")}
         label="Richiedi feedback ITW"
       />
       <VSpacer />
       <IOButton
         variant="solid"
-        onPress={requestFeedbackGeneral}
+        onPress={() => requestFeedback("general")}
         label="Richiedi feedback generale"
       />
-      {generalFeedbackBottomSheet}
-      {itwFeedbackBottomSheet}
-      {paymentsFeedbackBottomSheet}
     </IOScrollViewWithLargeHeader>
   );
 };
