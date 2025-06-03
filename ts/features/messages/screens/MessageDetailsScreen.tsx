@@ -8,10 +8,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { UIMessageId } from "../types";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessagesParamsList } from "../navigation/params";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
@@ -72,7 +69,6 @@ type MessageDetailsScreenProps = IOStackNavigationRouteProps<
 export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   const { messageId, serviceId } = props.route.params;
 
-  const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const scrollViewRef = useRef<ScrollView>(null);
 
@@ -95,14 +91,6 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
 
   const subject =
     useIOSelector(state => messageTitleSelector(state, messageId)) ?? "";
-
-  const goBack = useCallback(() => {
-    dispatch(cancelPreviousAttachmentDownload());
-    dispatch(cancelQueuedPaymentUpdates({ messageId }));
-    dispatch(cancelPaymentStatusTracking());
-    dispatch(resetGetMessageDataAction());
-    navigation.goBack();
-  }, [dispatch, messageId, navigation]);
 
   const messageMarkdown =
     useIOSelector(state => messageMarkdownSelector(state, messageId)) ?? "";
@@ -129,7 +117,6 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
 
   useHeaderSecondLevel({
     title: "",
-    goBack,
     supportRequest: true
   });
 
@@ -139,7 +126,13 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
       trackPNOptInMessageOpened();
       trackPNOptInMessageCTADisplaySuccess();
     }
-  }, [dispatch, isPNOptInMessage]);
+    return () => {
+      dispatch(cancelPreviousAttachmentDownload());
+      dispatch(cancelQueuedPaymentUpdates({ messageId }));
+      dispatch(cancelPaymentStatusTracking());
+      dispatch(resetGetMessageDataAction());
+    };
+  }, [dispatch, messageId, isPNOptInMessage]);
 
   useFocusEffect(
     useCallback(() => {

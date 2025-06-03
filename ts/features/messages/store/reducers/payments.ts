@@ -96,7 +96,7 @@ export const paymentsReducer = (
                     (isTimeoutError(value.error) ||
                       isGenericError(value.error))))
               ) {
-                return { ...acc, [key]: remoteUndefined };
+                return { ...acc, [key]: undefined };
               }
 
               return { ...acc, [key]: value };
@@ -107,23 +107,12 @@ export const paymentsReducer = (
       }
       return state;
     }
-    case getType(updatePaymentForMessage.cancel):
-      return action.payload.reduce<MultiplePaymentState>(
-        (previousState, queuedUpdateActionPayload) => ({
-          ...previousState,
-          [queuedUpdateActionPayload.messageId]: {
-            ...previousState[queuedUpdateActionPayload.messageId],
-            [queuedUpdateActionPayload.paymentId]: undefined
-          }
-        }),
-        state
-      );
     case getType(addUserSelectedPaymentRptId):
       return {
         ...state,
         userSelectedPayments: duplicateSetAndAdd(
           state.userSelectedPayments,
-          action.payload.paymentId
+          action.payload
         )
       };
     case getType(reloadAllMessages.request):

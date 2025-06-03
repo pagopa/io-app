@@ -27,11 +27,7 @@ import {
 } from "../../store/reducers/payments";
 import { UIMessageId } from "../../types";
 import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
-import {
-  RemoteValue,
-  fold,
-  isError
-} from "../../../../common/model/RemoteValue";
+import { RemoteValue, fold } from "../../../../common/model/RemoteValue";
 import { format } from "../../../../utils/dates";
 import {
   cleanTransactionDescription,
@@ -46,7 +42,10 @@ import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { trackPNPaymentStart } from "../../../pn/analytics";
-import { computeAndTrackPaymentStart } from "./detailsUtils";
+import {
+  computeAndTrackPaymentStart,
+  shouldUpdatePaymentUponReturning
+} from "./detailsUtils";
 
 type MessagePaymentItemProps = {
   hideExpirationDate?: boolean;
@@ -200,9 +199,11 @@ export const MessagePaymentItem = ({
   );
 
   const startPaymentCallback = useCallback(() => {
+    const updatePaymentUponReturning =
+      shouldUpdatePaymentUponReturning(paymentStatusForUI);
     initializeAndNavigateToWalletForPayment(
       rptId,
-      isError(paymentStatusForUI),
+      updatePaymentUponReturning,
       canNavigateToPayment,
       dispatch,
       () => {

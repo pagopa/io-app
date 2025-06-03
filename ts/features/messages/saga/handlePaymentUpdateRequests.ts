@@ -53,16 +53,7 @@ export function* handlePaymentUpdateRequests(
     yield* take(cancelQueuedPaymentUpdates);
 
     // Flush the channel
-    const unproccessedQueuedUpdateRequests = yield* flush(paymentUpdateChannel);
-
-    // If there were actions enqueued, put their payloads into an array and
-    // dispatch an 'updatePaymentForMessage.cancel' to restore payments' state
-    const payloads = unproccessedQueuedUpdateRequests.map(
-      updateRequest => updateRequest.payload
-    );
-    if (payloads.length > 0) {
-      yield* put(updatePaymentForMessage.cancel(payloads));
-    }
+    yield* flush(paymentUpdateChannel);
   }
 }
 
@@ -84,7 +75,7 @@ function* paymentUpdateRequestWorker(
     );
 
     try {
-      const { wasCancelled } = yield* race({
+      yield* race({
         hasVerifiedPayment: call(
           shouldUsePaymentInfoV2 ? updatePaymentInfo : legacyGetVerificaRpt,
           paymentStatusRequest,
@@ -93,9 +84,6 @@ function* paymentUpdateRequestWorker(
         ),
         wasCancelled: take(cancelQueuedPaymentUpdates)
       });
-      if (wasCancelled != null) {
-        // TODO send actiont to update reducer data (from remoteLoading to remoteUndefined)
-      }
     } catch (e) {
       const reason = unknownErrorToPaymentError(e);
       const failureAction = updatePaymentForMessage.failure({

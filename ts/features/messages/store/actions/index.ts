@@ -288,19 +288,14 @@ export type UpdatePaymentForMessageFailure = {
   serviceId: ServiceId;
 };
 
-export type UpdatePaymentForMessageCancel =
-  ReadonlyArray<UpdatePaymentForMessageRequest>;
-
 export const updatePaymentForMessage = createAsyncAction(
   "UPDATE_PAYMENT_FOR_MESSAGE_REQUEST",
   "UPDATE_PAYMENT_FOR_MESSAGE_SUCCESS",
-  "UPDATE_PAYMENT_FOR_MESSAGE_FAILURE",
-  "UPDATE_PAYMENT_FOR_MESSAGE_CANCEL"
+  "UPDATE_PAYMENT_FOR_MESSAGE_FAILURE"
 )<
   UpdatePaymentForMessageRequest,
   UpdatePaymentForMessageSuccess,
-  UpdatePaymentForMessageFailure,
-  UpdatePaymentForMessageCancel
+  UpdatePaymentForMessageFailure
 >();
 
 export const cancelQueuedPaymentUpdates = createStandardAction(
@@ -314,10 +309,9 @@ export const cancelPaymentStatusTracking = createStandardAction(
   "MESSAGES_CANCEL_PAYMENT_STATUS_TRACKING"
 )<void>();
 
-export const addUserSelectedPaymentRptId = createAction(
-  "MESSAGES_ADD_USER_SELECTED_PAYMENT_RPTID",
-  resolve => (paymentId: string) => resolve({ paymentId })
-);
+export const addUserSelectedPaymentRptId = createStandardAction(
+  "MESSAGES_ADD_USER_SELECTED_PAYMENT_RPTID"
+)<string>(); // PaymentId
 
 export const setShownMessageCategoryAction = createStandardAction(
   "SET_SHOWN_MESSAGE_CATEGORY"
