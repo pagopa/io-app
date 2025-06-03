@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0-canary.7075](https://github.com/pagopa/io-app/compare/3.6.0-rc.9...3.6.0-canary.7075) (2025-06-03)
+
+
+### Features
+
+* [[IOPLT-1034](https://pagopa.atlassian.net/browse/IOPLT-1034)] Upgrade react-native to 0.78.2 ([#6888](https://github.com/pagopa/io-app/issues/6888)) ([bddf2ad](https://github.com/pagopa/io-app/commit/bddf2ad05e4b3d5be991d3fce834158f8ad90caa)), closes [pagopa/io-react-native-login-utils#20](https://github.com/pagopa/io-react-native-login-utils/issues/20)
+
+
+### Bug Fixes
+
+* [[IOBP-1726](https://pagopa.atlassian.net/browse/IOBP-1726)] Add missing key to Markdown Body element ([#7041](https://github.com/pagopa/io-app/issues/7041)) ([3370c7d](https://github.com/pagopa/io-app/commit/3370c7d3304ed059a92afbc96ad4954a9b5b144e))
+
+
+### Chores
+
+* [[IOBP-1723](https://pagopa.atlassian.net/browse/IOBP-1723)] Disable pagoPA UAT toggle if app is in local env ([#7040](https://github.com/pagopa/io-app/issues/7040)) ([3d2e8b7](https://github.com/pagopa/io-app/commit/3d2e8b7e6f6804f894d65c5a10b2f44a2586644d))
+* [[IOPID-2962](https://pagopa.atlassian.net/browse/IOPID-2962)]: add logout events and fix logout logic ([#7031](https://github.com/pagopa/io-app/issues/7031)) ([d0a3ac6](https://github.com/pagopa/io-app/commit/d0a3ac6ad3a05df2a1e4a0cc76f7c78e0e2071db))
+
 ## [3.6.0-rc.9](https://github.com/pagopa/io-app/compare/3.6.0-rc.8...3.6.0-rc.9) (2025-05-30)
 
 
