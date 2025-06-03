@@ -54,9 +54,9 @@ describe("ListItemSwipeAction", () => {
   });
 
   it("triggers action on icon press", () => {
-    const { getByA11yLabel } = renderWithNavigation();
+    const { getByLabelText } = renderWithNavigation();
 
-    fireEvent.press(getByA11yLabel("Hide item"));
+    fireEvent.press(getByLabelText("Hide item"));
 
     expect(swipeActionMock).toHaveBeenCalled();
   });
@@ -111,9 +111,9 @@ describe("ListItemSwipeAction", () => {
   });
 
   it("renders RightActions component with correct props", () => {
-    const { getByA11yLabel } = renderWithNavigation();
+    const { getByLabelText } = renderWithNavigation();
 
-    const button = getByA11yLabel("Hide item");
+    const button = getByLabelText("Hide item");
     expect(button).toBeTruthy();
   });
 
