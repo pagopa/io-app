@@ -17,8 +17,7 @@ import {
   isValidElement,
   PropsWithChildren
 } from "react";
-import { Platform, StyleSheet, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   AnimatedPictogram,
@@ -78,16 +77,17 @@ const OperationResultScreenContent = forwardRef<
   ) => (
     <SafeAreaView
       edges={isHeaderVisible ? ["bottom"] : undefined}
-      style={styles.container}
+      style={{ flexGrow: 1 }}
       testID={testID}
       ref={ref}
     >
       <ScrollView
+        alwaysBounceVertical={false}
         centerContent={true}
         contentContainerStyle={[
           styles.wrapper,
           /* Android fallback because `centerContent` is only an iOS property */
-          Platform.OS === "android" && styles.wrapper_android
+          Platform.OS === "android" && styles.wrapperAndroid
         ]}
       >
         {!enableAnimatedPictogram && pictogram && (
@@ -142,17 +142,14 @@ const OperationResultScreenContent = forwardRef<
 );
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    marginHorizontal: IOVisualCostants.appMarginDefault
-  },
   wrapper: {
-    flex: 1,
+    flexGrow: 1,
     alignItems: "stretch",
     justifyContent: "center",
-    alignContent: "center"
+    alignContent: "center",
+    padding: IOVisualCostants.appMarginDefault
   },
-  wrapper_android: {
+  wrapperAndroid: {
     flexGrow: 1,
     justifyContent: "center"
   }

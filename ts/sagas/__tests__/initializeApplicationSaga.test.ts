@@ -137,7 +137,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
-      .spawn(watchLogoutSaga, undefined)
+      .fork(watchLogoutSaga, undefined)
       .next()
       .next(200) // checkSession
       .next()
@@ -198,7 +198,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
-      .spawn(watchLogoutSaga, undefined)
+      .fork(watchLogoutSaga, undefined)
       .next()
       .call(checkSession, undefined, formatRequestedTokenString())
       .next(401)
@@ -253,7 +253,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
-      .spawn(watchLogoutSaga, undefined)
+      .fork(watchLogoutSaga, undefined)
       .next()
       .call(checkSession, undefined, formatRequestedTokenString())
       .next(401)
@@ -313,7 +313,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
-      .spawn(watchLogoutSaga, undefined)
+      .fork(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
       .next()
@@ -386,7 +386,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
-      .spawn(watchLogoutSaga, undefined)
+      .fork(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
       .next()
@@ -446,7 +446,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
-      .spawn(watchLogoutSaga, undefined)
+      .fork(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
       .next()
