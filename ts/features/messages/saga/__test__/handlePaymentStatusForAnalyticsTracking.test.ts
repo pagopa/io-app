@@ -23,7 +23,6 @@ import { UIMessageId } from "../../types";
 import { ServiceId } from "../../../../../definitions/auth/ServiceId";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
 import { trackPaymentStatus } from "../../analytics";
-import { remoteError } from "../../../../common/model/RemoteValue";
 
 const messageId = "01JWX68NS39VA6YVWX0R10E3VM" as UIMessageId;
 const paymentId = "01234567890123456789012345678901234567890";
