@@ -2,8 +2,11 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
 import {
+  cancelQueuedPaymentUpdates,
   reloadAllMessages,
-  toSpecificError
+  toGenericError,
+  toSpecificError,
+  toTimeoutError
 } from "../../../../messages/store/actions";
 import { Action } from "../../../../../store/actions/types";
 import { appReducer } from "../../../../../store/reducers";
@@ -31,7 +34,10 @@ import {
   isUserSelectedPaymentSelector,
   canNavigateToPaymentFromMessageSelector,
   paymentsButtonStateSelector,
-  isPaymentsButtonVisibleSelector
+  isPaymentsButtonVisibleSelector,
+  testable,
+  SinglePaymentState,
+  MultiplePaymentState
 } from "../payments";
 import { getRptIdStringFromPaymentData } from "../../../utils";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -291,6 +297,78 @@ describe("Messages payments reducer's tests", () => {
     const endingUserSelectedPayments = endingPaymentsState.userSelectedPayments;
     const endingPaymentsToCheckSize = endingUserSelectedPayments.size;
     expect(endingPaymentsToCheckSize).toBe(0);
+  });
+  it("Should remove undefined, loading, generic and timeout errors when receiving a cancelQueuedPaymentUpdates action", () => {
+    const inputState = {
+      "01JWX4BBJBQ1SY34F68X92QFW4": {
+        "01234567890012345678912345610": undefined,
+        "01234567890012345678912345620": remoteUndefined,
+        "01234567890012345678912345630": remoteLoading,
+        "01234567890012345678912345640": remoteReady({} as PaymentInfoResponse),
+        "01234567890012345678912345650": remoteError(
+          toGenericError("An error")
+        ),
+        "01234567890012345678912345660": remoteError(
+          toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+        ),
+        "01234567890012345678912345670": remoteError(toTimeoutError())
+      },
+      "01JWX4BMJ7S372FHQEKCZKGN90": {
+        "01234567890012345678912345610": undefined,
+        "01234567890012345678912345620": remoteUndefined,
+        "01234567890012345678912345630": remoteLoading,
+        "01234567890012345678912345640": remoteReady({} as PaymentInfoResponse),
+        "01234567890012345678912345650": remoteError(
+          toGenericError("An error")
+        ),
+        "01234567890012345678912345660": remoteError(
+          toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+        ),
+        "01234567890012345678912345670": remoteError(toTimeoutError())
+      },
+      userSelectedPayments: new Set<string>([
+        "01234567890012345678912345610",
+        "01234567890012345678912345640",
+        "01234567890012345678912345650"
+      ])
+    } as MultiplePaymentState;
+    const output = paymentsReducer(
+      inputState,
+      cancelQueuedPaymentUpdates({
+        messageId: "01JWX4BMJ7S372FHQEKCZKGN90" as UIMessageId
+      })
+    );
+    expect(output).toEqual({
+      "01JWX4BBJBQ1SY34F68X92QFW4": {
+        "01234567890012345678912345610": undefined,
+        "01234567890012345678912345620": remoteUndefined,
+        "01234567890012345678912345630": remoteLoading,
+        "01234567890012345678912345640": remoteReady({} as PaymentInfoResponse),
+        "01234567890012345678912345650": remoteError(
+          toGenericError("An error")
+        ),
+        "01234567890012345678912345660": remoteError(
+          toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+        ),
+        "01234567890012345678912345670": remoteError(toTimeoutError())
+      },
+      "01JWX4BMJ7S372FHQEKCZKGN90": {
+        "01234567890012345678912345610": undefined,
+        "01234567890012345678912345620": remoteUndefined,
+        "01234567890012345678912345630": undefined,
+        "01234567890012345678912345640": remoteReady({} as PaymentInfoResponse),
+        "01234567890012345678912345650": undefined,
+        "01234567890012345678912345660": remoteError(
+          toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+        ),
+        "01234567890012345678912345670": undefined
+      },
+      userSelectedPayments: new Set<string>([
+        "01234567890012345678912345610",
+        "01234567890012345678912345640",
+        "01234567890012345678912345650"
+      ])
+    });
   });
 });
 
@@ -1016,5 +1094,111 @@ describe("isPaymentsButtonVisibleSelector", () => {
       messageId
     );
     expect(isPaymentButtonVisible).toBe(true);
+  });
+});
+
+describe("paymentStateSelector", () => {
+  const message1Id = "01HR9GY9GHGH5BQEJAKPWXEKV3" as UIMessageId;
+  const message2Id = "01HR9GY9GHGH5BQEJAKPWXEKV4" as UIMessageId;
+  const paymentId1 = "01234567890012345678912345610";
+  const paymentId2 = "01234567890012345678912345620";
+  it("should return remoteUndefined when there is no match on messageId", () => {
+    const state = {
+      entities: {
+        messages: {
+          payments: {
+            [message2Id]: {
+              [paymentId1]: remoteLoading
+            }
+          }
+        }
+      }
+    } as unknown as GlobalState;
+    const output = testable!.paymentStateSelector(
+      state,
+      message1Id,
+      paymentId1
+    );
+    expect(output).toBe(remoteUndefined);
+  });
+  it("should return remoteUndefined when there is no match on paymentId", () => {
+    const state = {
+      entities: {
+        messages: {
+          payments: {
+            [message1Id]: {
+              [paymentId2]: remoteLoading
+            }
+          }
+        }
+      }
+    } as unknown as GlobalState;
+    const output = testable!.paymentStateSelector(
+      state,
+      message1Id,
+      paymentId1
+    );
+    expect(output).toBe(remoteUndefined);
+  });
+  [
+    remoteUndefined,
+    remoteLoading,
+    remoteReady({} as PaymentInfoResponse),
+    remoteError(toTimeoutError())
+  ].forEach(paymentStatus => {
+    it(`should return expected status (${JSON.stringify(
+      paymentStatus
+    )})`, () => {
+      const state = {
+        entities: {
+          messages: {
+            payments: {
+              [message1Id]: {
+                [paymentId1]: remoteReady({} as PaymentInfoResponse)
+              },
+              [message2Id]: {
+                [paymentId2]: paymentStatus
+              }
+            }
+          }
+        }
+      } as unknown as GlobalState;
+      const output = testable!.paymentStateSelector(
+        state,
+        message2Id,
+        paymentId2
+      );
+      expect(output).toEqual(paymentStatus);
+    });
+  });
+
+  describe("purgePaymentsWithIncompleteData", () => {
+    it("should remove loading, generic error and timeout errors from input state", () => {
+      const inputState: SinglePaymentState = {
+        "01234567890012345678912345610": undefined,
+        "01234567890012345678912345620": remoteUndefined,
+        "01234567890012345678912345630": remoteLoading,
+        "01234567890012345678912345640": remoteReady({} as PaymentInfoResponse),
+        "01234567890012345678912345650": remoteError(
+          toGenericError("An error")
+        ),
+        "01234567890012345678912345660": remoteError(
+          toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+        ),
+        "01234567890012345678912345670": remoteError(toTimeoutError())
+      };
+      const output = testable!.purgePaymentsWithIncompleteData(inputState);
+      expect(output).toEqual({
+        "01234567890012345678912345610": undefined,
+        "01234567890012345678912345620": remoteUndefined,
+        "01234567890012345678912345630": undefined,
+        "01234567890012345678912345640": remoteReady({} as PaymentInfoResponse),
+        "01234567890012345678912345650": undefined,
+        "01234567890012345678912345660": remoteError(
+          toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+        ),
+        "01234567890012345678912345670": undefined
+      });
+    });
   });
 });

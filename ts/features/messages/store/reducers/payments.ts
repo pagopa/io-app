@@ -2,6 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
+import { isTestEnv } from "../../../../utils/environment";
 import { Action } from "../../../../store/actions/types";
 import { UIMessageDetails, UIMessageId } from "../../types";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -105,33 +106,6 @@ export const paymentsReducer = (
   return state;
 };
 
-const purgePaymentsWithIncompleteData = (state: SinglePaymentState) => {
-  const isTimeoutOrGenericError = (input: RemoteValue<unknown, PaymentError>) =>
-    isError(input) &&
-    (isTimeoutError(input.error) || isGenericError(input.error));
-
-  return Object.entries(state).reduce((acc, [key, value]) => {
-    if (value == null || isLoading(value) || isTimeoutOrGenericError(value)) {
-      return { ...acc, [key]: undefined };
-    }
-    return { ...acc, [key]: value };
-  }, {} as SinglePaymentState);
-};
-
-const paymentStateSelector = (
-  state: GlobalState,
-  messageId: UIMessageId,
-  paymentId: string
-) =>
-  pipe(
-    state.entities.messages.payments[messageId],
-    O.fromNullable,
-    O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
-    O.getOrElse<RemoteValue<PaymentInfoResponse, PaymentError>>(
-      () => remoteUndefined
-    )
-  );
-
 export const shouldUpdatePaymentSelector = (
   state: GlobalState,
   messageId: UIMessageId,
@@ -206,3 +180,34 @@ export const isPaymentsButtonVisibleSelector = (
     paymentsButtonStateSelector(state, messageId),
     status => status !== "hidden"
   );
+
+const paymentStateSelector = (
+  state: GlobalState,
+  messageId: UIMessageId,
+  paymentId: string
+) =>
+  pipe(
+    state.entities.messages.payments[messageId],
+    O.fromNullable,
+    O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
+    O.getOrElse<RemoteValue<PaymentInfoResponse, PaymentError>>(
+      () => remoteUndefined
+    )
+  );
+
+const purgePaymentsWithIncompleteData = (state: SinglePaymentState) => {
+  const isTimeoutOrGenericError = (input: RemoteValue<unknown, PaymentError>) =>
+    isError(input) &&
+    (isTimeoutError(input.error) || isGenericError(input.error));
+
+  return Object.entries(state).reduce((acc, [key, value]) => {
+    if (value == null || isLoading(value) || isTimeoutOrGenericError(value)) {
+      return { ...acc, [key]: undefined };
+    }
+    return { ...acc, [key]: value };
+  }, {} as SinglePaymentState);
+};
+
+export const testable = isTestEnv
+  ? { paymentStateSelector, purgePaymentsWithIncompleteData }
+  : undefined;
