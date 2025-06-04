@@ -1,5 +1,4 @@
 import { Body, IOButton, VSpacer } from "@pagopa/io-app-design-system";
-import { useContext } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clearFeedbackDatas } from "../../../appReviews/store/actions";
@@ -7,23 +6,10 @@ import {
   appReviewNegativeFeedbackLogSelector,
   appReviewPositiveFeedbackLogSelector
 } from "../../../appReviews/store/selectors";
-import { useAppReviewRequest } from "../../../appReviews/hooks/useAppReviewRequest";
-import { AppFeedbackContext } from "../../../appReviews/components/AppFeedbackProvider";
+import { useAppFeedbackContext } from "../../../appReviews/components/AppFeedbackProvider";
 
 export const AppFeedbackPlayground = () => {
-  const { requestFeedback } = useContext(AppFeedbackContext);
-  // const {
-  //   requestFeedback: requestFeedbackItw,
-  //   appReviewBottomSheet: itwFeedbackBottomSheet
-  // } = useAppReviewRequest("itw");
-  // const {
-  //   requestFeedback: requestFeedbackPayment,
-  //   appReviewBottomSheet: paymentsFeedbackBottomSheet
-  // } = useAppReviewRequest("payments");
-  // const {
-  //   requestFeedback: requestFeedbackGeneral,
-  //   appReviewBottomSheet: generalFeedbackBottomSheet
-  // } = useAppReviewRequest();
+  const { requestFeedback } = useAppFeedbackContext();
   const dispatch = useIODispatch();
   const appReviewPositiveFeedbackLog = useIOSelector(
     appReviewPositiveFeedbackLogSelector

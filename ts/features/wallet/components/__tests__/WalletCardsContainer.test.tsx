@@ -30,6 +30,7 @@ import {
 } from "../WalletCardsContainer";
 import I18n from "../../../../i18n";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
+import { AppFeedbackContext } from "../../../appReviews/components/AppFeedbackProvider";
 
 jest.spyOn(Alert, "alert");
 jest.mock("react-native-reanimated", () => ({
@@ -487,8 +488,12 @@ describe("OtherWalletCardsContainer", () => {
     jest
       .spyOn(itwPreferencesSelectors, "itwIsPendingReviewSelector")
       .mockImplementation(() => true);
-
-    const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
+    const requestReview = jest.fn();
+    const { queryByTestId } = renderComponent(() => (
+      <AppFeedbackContext.Provider value={{ requestFeedback: requestReview }}>
+        <ItwWalletCardsContainer />
+      </AppFeedbackContext.Provider>
+    ));
     expect(queryByTestId(`walletCardsCategoryItwHeaderTestID`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_itw_4`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_itw_5`)).not.toBeNull();
@@ -507,7 +512,7 @@ describe("OtherWalletCardsContainer", () => {
       }
     });
 
-    expect(AppReview.requestReview).toHaveBeenCalledTimes(1);
+    expect(requestReview).toHaveBeenCalledTimes(1);
   });
 });
 
