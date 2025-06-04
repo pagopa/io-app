@@ -1,6 +1,12 @@
 import { Body, FooterActions, useIOToast } from "@pagopa/io-app-design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import { createContext, PropsWithChildren, useEffect, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState
+} from "react";
 import { Alert } from "react-native";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import I18n from "../../../i18n";
@@ -102,3 +108,5 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
     </AppFeedbackContext.Provider>
   );
 };
+
+export const useAppFeedbackContext = () => useContext(AppFeedbackContext);
