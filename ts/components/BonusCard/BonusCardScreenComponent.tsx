@@ -4,15 +4,15 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { ReactNode } from "react";
-import { Dimensions } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+import { useDetectSmallScreen } from "../../hooks/useDetectSmallScreen";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
+import { useIOSelector } from "../../store/hooks";
+import { isScreenReaderEnabledSelector } from "../../store/reducers/preferences";
 import { isAndroid } from "../../utils/platform";
 import FocusAwareStatusBar from "../ui/FocusAwareStatusBar";
 import { IOScrollView, IOScrollViewActions } from "../ui/IOScrollView";
-import { isScreenReaderEnabledSelector } from "../../store/reducers/preferences";
-import { useIOSelector } from "../../store/hooks";
 import { BonusCard } from "./BonusCard";
 
 type BaseProps = {
@@ -26,14 +26,6 @@ export type BonusScreenComponentProps = BaseProps &
   SupportRequestParams &
   BonusCard;
 
-/*
-Let's reuse the variable names set in the PR#6088 to make the
-the eventual refactoring much easier.
-In this specific case, we set the threshold to show/hide
-the `BonusCard` logo
-*/
-export const MIN_HEIGHT_TO_SHOW_FULL_RENDER = 700;
-
 const BonusCardScreenComponent = ({
   title,
   headerAction,
@@ -45,9 +37,7 @@ const BonusCardScreenComponent = ({
   ...cardProps
 }: BonusScreenComponentProps) => {
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
-
-  const screenHeight = Dimensions.get("window").height;
-  const shouldHideLogo = screenHeight < MIN_HEIGHT_TO_SHOW_FULL_RENDER;
+  const { isDeviceScreenSmall } = useDetectSmallScreen();
 
   const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
 
@@ -88,7 +78,7 @@ const BonusCardScreenComponent = ({
         actions={actions}
         includeContentMargins={false}
       >
-        <BonusCard hideLogo={shouldHideLogo} {...cardProps} />
+        <BonusCard hideLogo={isDeviceScreenSmall} {...cardProps} />
         {children}
       </IOScrollView>
     </>

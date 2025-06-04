@@ -63,6 +63,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
     zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA
   });
 
+  const closeMachine = () => machineRef.send({ type: "close" });
+
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       switch (failure.type) {
@@ -73,7 +75,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             pictogram: "workInProgress",
             action: {
               label: I18n.t("global.buttons.close"),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: closeMachine
             }
           };
         case RemoteFailureType.WALLET_INACTIVE:
@@ -150,7 +152,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             },
             secondaryAction: {
               label: I18n.t(`${i18nNs}.eidExpiredScreen.secondaryAction`),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: closeMachine
             }
           };
         }
@@ -165,7 +167,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 `${i18nNs}.relyingParty.invalidAuthResponse.primaryAction`
               ),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: closeMachine
             },
             secondaryAction: {
               label: I18n.t(
@@ -190,7 +192,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 `${i18nNs}.relyingParty.genericError.secondaryAction`
               ),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: closeMachine
             }
           };
         }
@@ -205,7 +207,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 `${i18nNs}.relyingParty.invalidRequestObject.primaryAction`
               ),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: closeMachine
             }
           };
         }
@@ -221,6 +223,32 @@ const ContentView = ({ failure }: ContentViewProps) => {
             secondaryAction: {
               label: I18n.t(`${i18nNs}.untrustedRpScreen.secondaryAction`),
               onPress: present
+            }
+          };
+        }
+        case RemoteFailureType.INVALID_CREDENTIALS_STATUS: {
+          const { invalidCredentials } = failure.reason;
+          const count = invalidCredentials.length;
+          return {
+            title: I18n.t(`${i18nNs}.invalidCredentialsScreen.title`, {
+              count,
+              credentialName: getCredentialNameFromType(invalidCredentials[0]),
+              defaultValue: I18n.t(
+                `${i18nNs}.invalidCredentialsScreen.title.other`,
+                { count }
+              )
+            }),
+            subtitle: I18n.t(`${i18nNs}.invalidCredentialsScreen.subtitle`, {
+              count,
+              defaultValue: I18n.t(
+                `${i18nNs}.invalidCredentialsScreen.subtitle.other`,
+                { count }
+              )
+            }),
+            pictogram: "accessDenied",
+            action: {
+              label: I18n.t(`${i18nNs}.invalidCredentialsScreen.primaryAction`),
+              onPress: closeMachine
             }
           };
         }
