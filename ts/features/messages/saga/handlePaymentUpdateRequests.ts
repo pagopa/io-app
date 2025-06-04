@@ -30,11 +30,13 @@ import { SagaCallReturnType } from "../../../types/utils";
 import { readablePrivacyReport } from "../../../utils/reporters";
 import { PaymentInfoResponse } from "../../../../definitions/backend/PaymentInfoResponse";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
+import { isTestEnv } from "../../../utils/environment";
 
 const PaymentUpdateWorkerCount = 5;
 
 export function* handlePaymentUpdateRequests(
-  getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"]
+  getPaymentDataRequestFactory: BackendClient["getPaymentInfoV2"],
+  getVerificaRptFactory: BackendClient["getVerificaRpt"]
 ) {
   // Create a channel where 'updatePaymentForMessage.request' actions will be enqueued
   const paymentUpdateChannel = yield* actionChannel(
@@ -44,7 +46,12 @@ export function* handlePaymentUpdateRequests(
   // Create workers to process 'updatePaymentForMessage.request' actions 'concurrently'
   yield* all(
     [...Array(PaymentUpdateWorkerCount).keys()].map(() =>
-      fork(paymentUpdateRequestWorker, paymentUpdateChannel, getVerificaRpt)
+      fork(
+        paymentUpdateRequestWorker,
+        paymentUpdateChannel,
+        getPaymentDataRequestFactory,
+        getVerificaRptFactory
+      )
     )
   );
 
@@ -61,7 +68,8 @@ function* paymentUpdateRequestWorker(
   paymentStatusChannel: Channel<
     ActionType<typeof updatePaymentForMessage.request>
   >,
-  getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"]
+  getPaymentDataRequestFactory: BackendClient["getPaymentInfoV2"],
+  getVerificaRptFactory: BackendClient["getVerificaRpt"]
 ) {
   while (true) {
     // Listen for 'updatePaymentForMessage.request' action in the channel
@@ -76,16 +84,23 @@ function* paymentUpdateRequestWorker(
 
     try {
       yield* race({
-        hasVerifiedPayment: call(
-          shouldUsePaymentInfoV2 ? updatePaymentInfo : legacyGetVerificaRpt,
-          paymentStatusRequest,
-          isPagoPATestEnabled,
-          getVerificaRpt
-        ),
+        hasVerifiedPayment: shouldUsePaymentInfoV2
+          ? call(
+              updatePaymentInfo,
+              paymentStatusRequest,
+              isPagoPATestEnabled,
+              getPaymentDataRequestFactory
+            )
+          : call(
+              legacyGetVerificaRpt,
+              paymentStatusRequest,
+              isPagoPATestEnabled,
+              getVerificaRptFactory
+            ),
         wasCancelled: take(cancelQueuedPaymentUpdates)
       });
     } catch (e) {
-      const reason = unknownErrorToPaymentError(e);
+      const reason = yield* call(unknownErrorToPaymentError, e);
       const failureAction = updatePaymentForMessage.failure({
         messageId,
         paymentId,
@@ -100,9 +115,7 @@ function* paymentUpdateRequestWorker(
 function* updatePaymentInfo(
   paymentStatusRequest: ActionType<typeof updatePaymentForMessage.request>,
   isPagoPATestEnabled: boolean,
-  getPaymentDataRequestFactory: ReturnType<
-    typeof BackendClient
-  >["getPaymentInfoV2"]
+  getPaymentDataRequestFactory: BackendClient["getPaymentInfoV2"]
 ) {
   const { messageId, paymentId, serviceId } = paymentStatusRequest.payload;
 
@@ -151,11 +164,11 @@ function* updatePaymentInfo(
 function* legacyGetVerificaRpt(
   paymentStatusRequest: ActionType<typeof updatePaymentForMessage.request>,
   isPagoPATestEnabled: boolean,
-  getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"]
+  getVerificaRptFactory: BackendClient["getVerificaRpt"]
 ) {
   const { messageId, paymentId, serviceId } = paymentStatusRequest.payload;
 
-  const rptVerificationRequest = getVerificaRpt({
+  const rptVerificationRequest = getVerificaRptFactory({
     rptId: paymentId,
     test: isPagoPATestEnabled
   });
@@ -163,7 +176,7 @@ function* legacyGetVerificaRpt(
     withRefreshApiCall,
     rptVerificationRequest,
     paymentStatusRequest
-  )) as SagaCallReturnType<typeof getVerificaRpt>;
+  )) as SagaCallReturnType<typeof getVerificaRptFactory>;
 
   if (E.isLeft(responseEither)) {
     throw Error(readablePrivacyReport(responseEither.left));
@@ -237,3 +250,13 @@ const unknownErrorToString = (e: unknown): string => {
 
   return "Unknown error with no data";
 };
+
+export const testable = isTestEnv
+  ? {
+      legacyGetVerificaRpt,
+      paymentUpdateRequestWorker,
+      unknownErrorToPaymentError,
+      unknownErrorToString,
+      updatePaymentInfo
+    }
+  : undefined;
