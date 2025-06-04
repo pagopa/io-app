@@ -545,7 +545,7 @@
             "description": "Help the IO team to monitor the functioning of the app"
           },
           "screen": {
-            "title": "Your data on IO",
+            "title": "I tuoi dati di utilizzo",
             "description": "Sharing your data helps us improve your experience and provide you with targeted assistance.",
             "why": {
               "description": {
@@ -578,7 +578,7 @@
             "cta": {
               "shareData": "Share",
               "dontShareData": "Please don't share data",
-              "dontShare": "Not now"
+              "dontShare": "Non condividere"
             },
             "confirmToast": "Preferences updated!"
           },
