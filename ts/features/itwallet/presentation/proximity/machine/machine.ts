@@ -38,7 +38,7 @@ export const itwProximityMachine = setup({
     },
     CheckingPermissions: {
       tags: [ItwPresentationTags.Loading],
-      description: "",
+      description: "Check if the device permissions have been granted",
       invoke: {
         src: "checkPermissions",
         onDone: [
@@ -58,6 +58,8 @@ export const itwProximityMachine = setup({
     },
     GrantPermissions: {
       entry: "navigateToGrantPermissionsScreen",
+      description:
+        "Display the screen prompting the user to grant device permissions",
       on: {
         back: {
           target: "Idle"
@@ -69,6 +71,7 @@ export const itwProximityMachine = setup({
     },
     CheckPermissionsSilently: {
       tags: [ItwPresentationTags.Loading],
+      description: "Check if the device permissions have been granted",
       invoke: {
         src: "checkPermissions",
         onDone: [
@@ -87,6 +90,8 @@ export const itwProximityMachine = setup({
       }
     },
     PermissionsRequired: {
+      description:
+        "Display the system alert informing the user that permissions must be granted to proceed",
       on: {
         close: {
           target: "Idle"
@@ -95,7 +100,7 @@ export const itwProximityMachine = setup({
     },
     CheckingBluetoothIsActive: {
       tags: [ItwPresentationTags.Loading],
-      description: "",
+      description: "Check if Bluetooth is enabled",
       invoke: {
         src: "checkBluetoothIsActive",
         onDone: [
@@ -115,13 +120,48 @@ export const itwProximityMachine = setup({
     },
     EnableBluetooth: {
       entry: "navigateToBluetoothActivationScreen",
+      description: "Display the screen prompting the user to enable Bluetooth",
       on: {
         back: {
+          target: "Idle"
+        },
+        continue: {
+          target: "CheckingBluetoothIsActiveSilently"
+        }
+      }
+    },
+    CheckingBluetoothIsActiveSilently: {
+      tags: [ItwPresentationTags.Loading],
+      description: "Check if Bluetooth is enabled",
+      invoke: {
+        src: "checkBluetoothIsActive",
+        onDone: [
+          {
+            guard: ({ event }) => !!event.output,
+            target: "GeneratingQRCode"
+          },
+          {
+            guard: ({ event }) => !event.output,
+            target: "BluetoothRequired"
+          }
+        ],
+        onError: {
+          target: "BluetoothRequired"
+        }
+      }
+    },
+    BluetoothRequired: {
+      description:
+        "Display the system alert informing the user that must enable the Bluetooth to proceed",
+      on: {
+        close: {
           target: "Idle"
         }
       }
     },
-    GeneratingQRCode: {}
+    GeneratingQRCode: {
+      tags: [ItwPresentationTags.Loading]
+    }
   }
 });
 

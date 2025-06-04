@@ -6,6 +6,7 @@ import {
   requestMultiple,
   RESULTS
 } from "react-native-permissions";
+import { BluetoothStateManager } from "react-native-bluetooth-state-manager";
 import { fromPromise } from "xstate";
 
 export const createProximityActorsImplementation = () => {
@@ -49,9 +50,11 @@ export const createProximityActorsImplementation = () => {
     return true;
   });
 
-  const checkBluetoothIsActive = fromPromise<boolean, void>(
-    async () => new Promise(resolve => setTimeout(() => resolve(false), 500))
-  );
+  const checkBluetoothIsActive = fromPromise<boolean, void>(async () => {
+    const bluetoothState = await BluetoothStateManager.getState();
+
+    return bluetoothState === "PoweredOn";
+  });
   return {
     checkPermissions,
     checkBluetoothIsActive

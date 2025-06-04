@@ -9,3 +9,6 @@ export const selectIsLoading = (snapshot: MachineSnapshot) =>
 
 export const selectIsPermissionsRequiredState = (snapshot: MachineSnapshot) =>
   snapshot.matches("PermissionsRequired");
+
+export const selectIsBluetoothRequiredState = (snapshot: MachineSnapshot) =>
+  snapshot.matches("BluetoothRequired");

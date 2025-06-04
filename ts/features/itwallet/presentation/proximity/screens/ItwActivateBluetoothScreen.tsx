@@ -1,16 +1,43 @@
-import { Platform } from "react-native";
+import { Alert, Platform } from "react-native";
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import I18n from "../../../../../i18n";
 import { ItwPermissionsWizard } from "../components/ItwPermissionsWizard";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
-import { openAppSettings } from "../../../../../utils/appSettings";
 import { ItwProximityMachineContext } from "../machine/provider";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { openBluetoothPreferences } from "../utils";
+import { selectIsBluetoothRequiredState } from "../machine/selectors";
 
 export const ItwActivateBluetoothScreen = () => {
-  const machineRef = ItwProximityMachineContext.useActorRef();
   const navigation = useIONavigation();
+  const machineRef = ItwProximityMachineContext.useActorRef();
+  const isBluetoothRequiredState = ItwProximityMachineContext.useSelector(
+    selectIsBluetoothRequiredState
+  );
+
+  useEffect(() => {
+    if (isBluetoothRequiredState) {
+      Alert.alert(
+        I18n.t(
+          "features.itWallet.presentation.proximity.bluetoothRequired.alert.title"
+        ),
+        I18n.t(
+          "features.itWallet.presentation.proximity.bluetoothRequired.alert.message"
+        ),
+        [
+          {
+            text: I18n.t(
+              "features.itWallet.presentation.proximity.bluetoothRequired.alert.text"
+            ),
+            onPress: () => {
+              machineRef.send({ type: "close" });
+            }
+          }
+        ]
+      );
+    }
+  }, [isBluetoothRequiredState, machineRef]);
 
   const listItems = useMemo<Array<ListItemInfo>>(
     () => [
@@ -52,7 +79,7 @@ export const ItwActivateBluetoothScreen = () => {
       label: I18n.t(
         "features.itWallet.presentation.proximity.activateBluetooth.actions.primary"
       ),
-      onPress: openAppSettings
+      onPress: openBluetoothPreferences
     },
     secondary: {
       label: I18n.t(
@@ -60,6 +87,7 @@ export const ItwActivateBluetoothScreen = () => {
       ),
       onPress: () => {
         machineRef.send({ type: "continue" });
+        navigation.goBack();
       }
     }
   };

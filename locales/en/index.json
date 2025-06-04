@@ -4884,7 +4884,14 @@
                 "message":"Vai a Impostazioni e modifica le preferenze, poi riprova.",
                 "text": "Ho capito"
               }
+          },
+          "bluetoothRequired": {
+            "alert": {
+              "title":  "È richiesto l’utilizzo del Bluetooth per continuare",
+              "message":"Vai a Impostazioni e modifica le preferenze, poi riprova.",
+              "text": "Ho capito"
             }
+          }
       }
       },
       "trustmark": {
