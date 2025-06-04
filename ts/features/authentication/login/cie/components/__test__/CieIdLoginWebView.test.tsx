@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { fireEvent, render } from "@testing-library/react-native";
+import { act, fireEvent, render } from "@testing-library/react-native";
 import { EmitterSubscription, Linking } from "react-native";
 import CieIdLoginWebView from "../CieIdLoginWebView";
 import * as loginHooks from "../../../../../lollipop/hooks/useLollipopLoginSource";
@@ -62,7 +62,7 @@ describe(CieIdLoginWebView, () => {
     jest.restoreAllMocks();
     jest.clearAllMocks();
   });
-  it("Should match the snapshot", () => {
+  it("Should match the snapshot", async () => {
     jest
       .spyOn(Linking, "addEventListener")
       // @ts-ignore
@@ -83,8 +83,10 @@ describe(CieIdLoginWebView, () => {
     const cancelButton = await findByTestId(
       "loadingSpinnerOverlayCancelButton"
     );
-    fireEvent.press(cancelButton);
 
+    await act(async () => {
+      fireEvent.press(cancelButton);
+    });
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
@@ -110,8 +112,9 @@ describe(CieIdLoginWebView, () => {
 
     expect(idpScreen).toBeFalsy();
     const webView = getByTestId("cie-id-webview");
-
-    fireEvent(webView, "error", { nativeEvent: {} });
+    act(() => {
+      fireEvent(webView, "error", { nativeEvent: {} });
+    });
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
@@ -127,9 +130,13 @@ describe(CieIdLoginWebView, () => {
     const idpScreen = queryByTestId("idp-successful-authentication");
 
     expect(idpScreen).toBeFalsy();
-    const webView = getByTestId("cie-id-webview");
 
-    fireEvent(webView, "error", { nativeEvent: { statusCode: 401, url: [] } });
+    const webView = getByTestId("cie-id-webview");
+    act(() => {
+      fireEvent(webView, "error", {
+        nativeEvent: { statusCode: 401, url: [] }
+      });
+    });
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
@@ -146,8 +153,11 @@ describe(CieIdLoginWebView, () => {
 
     expect(idpScreen).toBeFalsy();
     const webView = getByTestId("cie-id-webview");
-
-    fireEvent(webView, "error", { nativeEvent: { statusCode: 403, url: [] } });
+    act(() => {
+      fireEvent(webView, "error", {
+        nativeEvent: { statusCode: 403, url: [] }
+      });
+    });
     expect(mockReplace).toHaveBeenCalledTimes(0);
     expect(mockReplace).not.toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
@@ -164,9 +174,10 @@ describe(CieIdLoginWebView, () => {
 
     expect(idpScreen).toBeFalsy();
     const webView = getByTestId("cie-id-webview");
-
-    fireEvent(webView, "error", {
-      nativeEvent: { statusCode: 403, url: [API_PREFIX_URL] }
+    act(() => {
+      fireEvent(webView, "error", {
+        nativeEvent: { statusCode: 403, url: [API_PREFIX_URL] }
+      });
     });
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
@@ -184,9 +195,10 @@ describe(CieIdLoginWebView, () => {
 
     expect(idpScreen).toBeFalsy();
     const webView = getByTestId("cie-id-webview");
-
-    fireEvent(webView, "onShouldStartLoadWithRequest", {
-      url: `${API_PREFIX_URL}/error.html?errorCode=generic`
+    act(() => {
+      fireEvent(webView, "onShouldStartLoadWithRequest", {
+        url: `${API_PREFIX_URL}/error.html?errorCode=generic`
+      });
     });
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
@@ -214,9 +226,10 @@ describe(CieIdLoginWebView, () => {
 
     expect(idpScreen).toBeFalsy();
     const webView = getByTestId("cie-id-webview");
-
-    fireEvent(webView, "onShouldStartLoadWithRequest", {
-      url: `${API_PREFIX_URL}/profile.html?token=my-secret-token`
+    act(() => {
+      fireEvent(webView, "onShouldStartLoadWithRequest", {
+        url: `${API_PREFIX_URL}/profile.html?token=my-secret-token`
+      });
     });
     expect(mockReplace).toHaveBeenCalledTimes(0);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
@@ -235,9 +248,10 @@ describe(CieIdLoginWebView, () => {
 
     expect(idpScreen).toBeFalsy();
     const webView = getByTestId("cie-id-webview");
-
-    fireEvent(webView, "onShouldStartLoadWithRequest", {
-      url: `${API_PREFIX_URL}/profile.html?token=`
+    act(() => {
+      fireEvent(webView, "onShouldStartLoadWithRequest", {
+        url: `${API_PREFIX_URL}/profile.html?token=`
+      });
     });
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledTimes(1);

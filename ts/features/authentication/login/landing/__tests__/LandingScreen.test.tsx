@@ -1,5 +1,5 @@
 import { createStore } from "redux";
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { LandingScreen } from "../screens/LandingScreen";
@@ -61,62 +61,75 @@ describe(LandingScreen, () => {
 
   it("Should be defined", toBeDefined);
   it("Should match the snapshot", toMatchSnapshot);
-  it("Should present the modal", () => {
+  it("Should present the modal", async () => {
     const { getByTestId } = renderComponent();
 
     const loginWithCie = getByTestId("landing-button-login-cie");
-    fireEvent.press(loginWithCie);
+    await act(async () => {
+      fireEvent.press(loginWithCie);
+    });
 
     expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
     expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
   });
-  it("Should call navigateToCiePinInsertion", () => {
+  it("Should call navigateToCiePinInsertion", async () => {
     const { getByTestId } = renderComponent();
 
     const loginWithCie = getByTestId("landing-button-login-cie");
-    fireEvent.press(loginWithCie);
+    await act(async () => {
+      fireEvent.press(loginWithCie);
+    });
 
     expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
     expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
 
     const loginWithCiePin = getByTestId("bottom-sheet-login-with-cie-pin");
-    fireEvent.press(loginWithCiePin);
+    await act(async () => {
+      fireEvent.press(loginWithCiePin);
+    });
 
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
     expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
     expect(mockNavigateToCiePinInsertion).toHaveBeenCalled();
   });
-  it("Should call navigateToCieIdLoginScreen", () => {
+  it("Should call navigateToCieIdLoginScreen", async () => {
     const { getByTestId } = renderComponent();
 
     const loginWithCie = getByTestId("landing-button-login-cie");
-    fireEvent.press(loginWithCie);
+    await act(async () => {
+      fireEvent.press(loginWithCie);
+    });
 
     expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
     expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
 
     const loginWithCieID = getByTestId("bottom-sheet-login-with-cie-id");
-    fireEvent.press(loginWithCieID);
+    await act(async () => {
+      fireEvent.press(loginWithCieID);
+    });
 
     expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
     expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith("SpidL2");
   });
-  it("Should navigate to the wizards screens", () => {
+  it("Should navigate to the wizards screens", async () => {
     const { getByTestId } = renderComponent();
 
     const loginWithCie = getByTestId("landing-button-login-cie");
-    fireEvent.press(loginWithCie);
-
+    await act(async () => {
+      fireEvent.press(loginWithCie);
+    });
     expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
     expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
 
     const wizardsBanner = getByTestId("bottom-sheet-login-wizards");
-    fireEvent.press(wizardsBanner);
+    await act(async () => {
+      fireEvent.press(wizardsBanner);
+    });
 
     expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();

@@ -63,6 +63,7 @@ import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
 import { DSScreenEndMargin } from "../core/DSScreenEndMargin";
 import { DSScreenOperationResult } from "../core/DSScreenOperationResult";
+import { DSScreenOperationResultAnimated } from "../core/DSScreenOperationResultAnimated";
 import { DSSelection } from "../core/DSSelection";
 import { DSStepper } from "../core/DSStepper";
 import { DSTabNavigation } from "../core/DSTabNavigation";
@@ -409,6 +410,12 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.SCREENS.OPERATION_RESULT.route}
           component={DSScreenOperationResult}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.OPERATION_RESULT_ANIMATED.route}
+          component={DSScreenOperationResultAnimated}
           options={{ headerShown: false }}
         />
 

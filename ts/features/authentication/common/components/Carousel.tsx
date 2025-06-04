@@ -1,4 +1,4 @@
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme, VSpacer } from "@pagopa/io-app-design-system";
 
 import { ComponentProps, forwardRef, useCallback, useRef } from "react";
 import {
@@ -10,10 +10,6 @@ import {
   View
 } from "react-native";
 import { LandingCardComponent } from "../../../../components/LandingCardComponent";
-import {
-  useAppBackgroundPrimaryColorName,
-  useInteractiveElementDefaultColorName
-} from "../../../../utils/hooks/theme";
 import { trackCarousel } from "../analytics/carouselAnalytics";
 
 const styles = StyleSheet.create({
@@ -40,8 +36,10 @@ const CarouselDots = (props: CarouselDotsProps) => {
   const { carouselCards, dotEasterEggCallback, scrollX } = props;
   const dotTouchCount = useRef(0);
 
-  const blueColor = useInteractiveElementDefaultColorName();
-  const whiteColor = useAppBackgroundPrimaryColorName();
+  const theme = useIOTheme();
+
+  const primaryColor = IOColors[theme["interactiveElem-default"]];
+  const backgroundColor = IOColors[theme["appBackground-primary"]];
 
   const screenDimension = useWindowDimensions();
   const windowWidth = screenDimension.width;
@@ -62,7 +60,7 @@ const CarouselDots = (props: CarouselDotsProps) => {
         }),
         backgroundColor: scrollX.interpolate({
           inputRange,
-          outputRange: [whiteColor, blueColor, whiteColor],
+          outputRange: [backgroundColor, primaryColor, backgroundColor],
           extrapolate: "clamp"
         }),
         height: scrollX.interpolate({
@@ -77,7 +75,7 @@ const CarouselDots = (props: CarouselDotsProps) => {
         })
       };
     },
-    [windowWidth, scrollX, whiteColor, blueColor]
+    [windowWidth, scrollX, backgroundColor, primaryColor]
   );
 
   return (

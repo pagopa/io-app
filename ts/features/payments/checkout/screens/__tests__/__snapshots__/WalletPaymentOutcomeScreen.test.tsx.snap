@@ -51,20 +51,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -134,9 +144,13 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -205,33 +219,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={2}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -492,6 +495,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -503,10 +510,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -1805,7 +1808,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -1933,14 +1935,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -1999,20 +2009,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -2082,15 +2102,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={3}
+                handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -2153,33 +2177,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={4}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -2487,6 +2500,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -2498,10 +2515,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -3800,7 +3813,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -3928,14 +3940,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -3994,20 +4014,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -4077,15 +4107,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={5}
+                handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -4148,33 +4182,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={6}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -4463,6 +4486,10 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -4474,10 +4501,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -5776,7 +5799,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -5904,14 +5926,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -5970,20 +6000,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -6053,15 +6093,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={7}
+                handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -6124,33 +6168,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={8}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -6424,6 +6457,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -6435,10 +6472,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -7737,7 +7770,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -7865,14 +7897,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -7931,20 +7971,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -8014,15 +8064,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={9}
+                handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -8085,33 +8139,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={10}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -8399,6 +8442,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -8410,10 +8457,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -9712,7 +9755,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -9840,14 +9882,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -9906,20 +9956,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -9989,15 +10049,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={11}
+                handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -10060,33 +10124,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={12}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -10330,6 +10383,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -10341,10 +10398,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -10476,6 +10529,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -10486,8 +10541,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -11787,7 +11840,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -11915,14 +11967,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -11981,20 +12041,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -12064,15 +12134,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={13}
+                handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -12135,33 +12209,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={14}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -12377,6 +12440,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -12388,10 +12455,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -12523,6 +12586,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -12533,8 +12598,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -13834,7 +13897,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -13962,14 +14024,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -14028,20 +14098,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -14111,15 +14191,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={15}
+                handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -14182,33 +14266,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={16}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -14482,6 +14555,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -14493,10 +14570,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -15795,7 +15868,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -15923,14 +15995,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -15989,20 +16069,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -16072,15 +16162,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={17}
+                handlerTag={9}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -16143,33 +16237,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={18}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -16393,6 +16476,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -16404,10 +16491,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -17706,7 +17789,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -17834,14 +17916,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -17900,20 +17990,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -17983,15 +18083,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={19}
+                handlerTag={10}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -18054,33 +18158,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={20}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -18388,6 +18481,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -18399,10 +18496,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -19701,7 +19794,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -19829,14 +19921,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -19895,20 +19995,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -19978,15 +20088,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={21}
+                handlerTag={11}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -20049,33 +20163,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={22}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -20363,6 +20466,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -20374,10 +20481,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -21676,7 +21779,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -21804,14 +21906,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -21870,20 +21980,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -21953,15 +22073,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={23}
+                handlerTag={12}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -22024,33 +22148,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={24}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -22358,6 +22471,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -22369,10 +22486,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -23671,7 +23784,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -23799,14 +23911,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -23865,20 +23985,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -23948,15 +24078,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={25}
+                handlerTag={13}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -24019,33 +24153,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={26}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -24289,6 +24412,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -24300,10 +24427,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -24435,6 +24558,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -24445,8 +24570,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -25746,7 +25869,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -25874,14 +25996,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -25940,20 +26070,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -26023,15 +26163,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={27}
+                handlerTag={14}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -26094,33 +26238,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={28}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -26428,6 +26561,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -26439,10 +26576,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -27741,7 +27874,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -27869,14 +28001,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -27935,20 +28075,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -28018,15 +28168,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={29}
+                handlerTag={15}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -28089,33 +28243,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={30}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -28423,6 +28566,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -28434,10 +28581,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -29736,7 +29879,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -29864,14 +30006,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -29930,20 +30080,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -30013,15 +30173,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={31}
+                handlerTag={16}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -30084,33 +30248,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={32}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -30426,6 +30579,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -30437,10 +30594,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -31739,7 +31892,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -31867,14 +32019,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -31933,20 +32093,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -32016,15 +32186,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={33}
+                handlerTag={17}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -32087,33 +32261,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={34}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -32401,6 +32564,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -32412,10 +32579,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -33714,7 +33877,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -33842,14 +34004,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -33908,20 +34078,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -33991,15 +34171,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={35}
+                handlerTag={18}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -34062,33 +34246,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={36}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -34334,6 +34507,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -34345,10 +34522,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -34480,6 +34653,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -34490,8 +34665,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -35791,7 +35964,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -35919,14 +36091,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -35985,20 +36165,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -36068,15 +36258,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={37}
+                handlerTag={19}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -36139,33 +36333,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={38}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -36453,6 +36636,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -36464,10 +36651,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -37766,7 +37949,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -37894,14 +38076,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -37960,20 +38150,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -38043,15 +38243,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={39}
+                handlerTag={20}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -38114,33 +38318,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={40}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -38434,6 +38627,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -38445,10 +38642,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -38580,6 +38773,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -38590,8 +38785,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -39891,7 +40084,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -40125,14 +40317,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -40191,20 +40391,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -40274,15 +40484,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={41}
+                handlerTag={21}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -40345,33 +40559,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={42}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -40666,6 +40869,10 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -40677,10 +40884,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -40812,6 +41015,8 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -40822,8 +41027,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -42123,7 +42326,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -42357,14 +42559,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -42423,20 +42633,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -42506,15 +42726,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={43}
+                handlerTag={22}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -42577,33 +42801,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={44}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -42933,6 +43146,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -42944,10 +43161,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -44246,7 +44459,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -44374,14 +44586,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -44440,20 +44660,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -44523,15 +44753,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={45}
+                handlerTag={23}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -44594,33 +44828,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={46}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -44867,6 +45090,10 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -44878,10 +45105,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -45013,6 +45236,8 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -45023,8 +45248,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -46324,7 +46547,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -46452,14 +46674,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -46518,20 +46748,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -46601,15 +46841,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={47}
+                handlerTag={24}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -46672,33 +46916,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={48}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -47006,6 +47239,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -47017,10 +47254,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -47152,6 +47385,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {},
                                         {
                                           "paddingHorizontal": 0,
                                         },
@@ -47162,8 +47397,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
-                                        {},
-                                        false,
                                         {},
                                       ]
                                     }
@@ -48463,7 +48696,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -48591,14 +48823,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -48657,20 +48897,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -48740,15 +48990,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={49}
+                handlerTag={25}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -48811,33 +49065,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={50}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -49111,6 +49354,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -49122,10 +49369,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -50424,7 +50667,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -50552,14 +50794,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -50618,20 +50868,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -50701,15 +50961,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={51}
+                handlerTag={26}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -50772,33 +51036,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={52}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -51114,6 +51367,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -51125,10 +51382,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -52427,7 +52680,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -52555,14 +52807,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -52621,20 +52881,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -52704,15 +52974,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={53}
+                handlerTag={27}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -52775,33 +53049,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={54}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -53089,6 +53352,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -53100,10 +53367,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -54402,7 +54665,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -54530,14 +54792,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -54596,20 +54866,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -54679,15 +54959,19 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={55}
+                handlerTag={28}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -54750,33 +55034,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         style={
                           {
                             "flexGrow": 1,
-                            "marginHorizontal": 24,
                           }
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           centerContent={true}
-                          collapsable={false}
                           contentContainerStyle={
                             [
                               {
                                 "alignContent": "center",
                                 "alignItems": "stretch",
-                                "flex": 1,
+                                "flexGrow": 1,
                                 "justifyContent": "center",
+                                "padding": 24,
                               },
                               false,
-                            ]
-                          }
-                          handlerTag={56}
-                          handlerType="NativeViewGestureHandler"
-                          onGestureHandlerEvent={[Function]}
-                          onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
                             ]
                           }
                         >
@@ -55084,6 +55357,10 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
                                         {
                                           "paddingHorizontal": 24,
                                         },
@@ -55095,10 +55372,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {},
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                        },
                                       ]
                                     }
                                   >
@@ -56397,7 +56670,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -56525,14 +56797,22 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>

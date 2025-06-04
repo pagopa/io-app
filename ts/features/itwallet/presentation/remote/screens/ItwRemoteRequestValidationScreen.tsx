@@ -11,7 +11,10 @@ import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
 import { ItwRemoteDeepLinkFailure } from "../components/ItwRemoteDeepLinkFailure.tsx";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
 import { useIOSelector } from "../../../../../store/hooks.ts";
-import { progressSelector } from "../../../../identification/store/selectors/index.ts";
+import {
+  StartupStatusEnum,
+  isStartupLoaded
+} from "../../../../../store/reducers/startup.ts";
 
 export type ItwRemoteRequestValidationScreenNavigationParams =
   Partial<ItwRemoteRequestPayload>;
@@ -24,16 +27,15 @@ type ScreenProps = IOStackNavigationRouteProps<
 const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
   useItwDisableGestureNavigation();
 
-  const identificationProgress = useIOSelector(progressSelector);
+  const startupStatus = useIOSelector(isStartupLoaded);
 
   /**
-   * In case of same-device flow the app might not be running when the user opens the link,
-   * so the app is started and the user needs to complete the identification process.
-   * Here we wait for the identification to finish to avoid inconsistencies
+   * There may be scenarios where the app is not running when the user opens the link,
+   * so the app is started and the user goes through the identification or the full authentication process.
+   * Here we wait for the startup status to be authenticated to avoid inconsistencies
    * between the machine and the navigation.
-   * This also applies when the token expires and the user needs to identify again.
    */
-  if (identificationProgress.kind !== "identified") {
+  if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
     return (
       <ItwRemoteLoadingScreen
         title={I18n.t(

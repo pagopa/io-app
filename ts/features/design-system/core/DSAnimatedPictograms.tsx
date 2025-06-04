@@ -8,25 +8,19 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useCallback, useState } from "react";
-import { View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import LottieView from "lottie-react-native";
+import {
+  AnimatedPictogram,
+  IOAnimatedPictograms
+} from "../../../components/ui/AnimatedPictogram";
 
-/* Animated Pictograms */
-import empty from "../../../../assets/animated-pictograms/Empty.json";
-import error from "../../../../assets/animated-pictograms/Error.json";
-import fatalError from "../../../../assets/animated-pictograms/FatalError.json";
-import lock from "../../../../assets/animated-pictograms/Lock.json";
-import scanCardAndroid from "../../../../assets/animated-pictograms/ScanCardAndroid.json";
-import scanCardiOS from "../../../../assets/animated-pictograms/ScanCardiOS.json";
-import search from "../../../../assets/animated-pictograms/Search.json";
-import success from "../../../../assets/animated-pictograms/Success.json";
-import umbrella from "../../../../assets/animated-pictograms/Umbrella.json";
-import warning from "../../../../assets/animated-pictograms/Warning.json";
-import welcome from "../../../../assets/animated-pictograms/Welcome.json";
-import waiting from "../../../../assets/animated-pictograms/Waiting.json";
+type AnimatedPictogramType = {
+  name: IOAnimatedPictograms;
+  label: string;
+  loop: AnimatedPictogram["loop"];
+};
 
 export const DSAnimatedPictograms = () => {
   const insets = useSafeAreaInsets();
@@ -35,19 +29,19 @@ export const DSAnimatedPictograms = () => {
   const scrollGradientHeight: number = 32;
   const pictogramSize: IOPictogramSizeScale = 180;
 
-  const pictogramsRefs = [
-    { name: welcome, label: "Welcome", loop: false },
-    { name: empty, label: "Empty", loop: true },
-    { name: scanCardiOS, label: "Scan Card (iOS)", loop: true },
-    { name: scanCardAndroid, label: "Scan Card (Android)", loop: true },
-    { name: umbrella, label: "Umbrella", loop: true },
-    { name: error, label: "Error", loop: true },
-    { name: fatalError, label: "Fatal Error", loop: true },
-    { name: lock, label: "Lock", loop: true },
-    { name: search, label: "Search", loop: true },
-    { name: success, label: "Success", loop: true },
-    { name: warning, label: "Warning", loop: true },
-    { name: waiting, label: "Waiting", loop: true }
+  const pictogramsRefs: Array<AnimatedPictogramType> = [
+    { name: "welcome", label: "Welcome", loop: false },
+    { name: "empty", label: "Empty", loop: true },
+    { name: "scanCardiOS", label: "Scan Card (iOS)", loop: true },
+    { name: "scanCardAndroid", label: "Scan Card (Android)", loop: true },
+    { name: "umbrella", label: "Umbrella", loop: true },
+    { name: "error", label: "Error", loop: true },
+    { name: "fatalError", label: "Fatal Error", loop: true },
+    { name: "lock", label: "Lock", loop: true },
+    { name: "search", label: "Search", loop: true },
+    { name: "success", label: "Success", loop: true },
+    { name: "warning", label: "Warning", loop: true },
+    { name: "waiting", label: "Waiting", loop: true }
   ];
 
   const renderedPictogramsRefs: Array<{
@@ -89,16 +83,14 @@ export const DSAnimatedPictograms = () => {
           alignItems: "center"
         }}
       >
-        <LottieView
-          autoPlay={true}
-          style={{
-            width: pictogramSize,
-            height: pictogramSize,
-            marginVertical: IOVisualCostants.appMarginDefault
-          }}
-          source={getCurrentPictogram()?.name || pictogramsRefs[0].name}
-          loop={getCurrentPictogram()?.loop || pictogramsRefs[0].loop}
-        />
+        <View style={{ marginVertical: IOVisualCostants.appMarginDefault }}>
+          <AnimatedPictogram
+            size={pictogramSize}
+            name={getCurrentPictogram()?.name || pictogramsRefs[0].name}
+            loop={getCurrentPictogram()?.loop || pictogramsRefs[0].loop}
+          />
+        </View>
+
         <LinearGradient
           style={{
             height: scrollGradientHeight,

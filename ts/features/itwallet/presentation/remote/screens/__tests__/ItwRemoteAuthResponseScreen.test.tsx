@@ -1,8 +1,12 @@
 import { createActor } from "xstate";
-import { render } from "@testing-library/react-native";
+import { createStore } from "redux";
 import { itwRemoteMachine } from "../../machine/machine";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { appReducer } from "../../../../../../store/reducers";
 import { ItwRemoteMachineContext } from "../../machine/provider";
 import { ItwRemoteAuthResponseScreen } from "../ItwRemoteAuthResponseScreen";
+import { ITW_REMOTE_ROUTES } from "../../navigation/routes";
+import { applicationChangeState } from "../../../../../../store/actions/application";
 
 describe("ItwRemoteAuthResponseScreen", () => {
   it("should match snapshot when no redirect_uri is available", () => {
@@ -16,6 +20,8 @@ describe("ItwRemoteAuthResponseScreen", () => {
 
 const renderComponent = (redirectUri?: string) => {
   const initialSnapshot = createActor(itwRemoteMachine).getSnapshot();
+  const initialState = appReducer(undefined, applicationChangeState("active"));
+
   const snapshot: typeof initialSnapshot = {
     ...initialSnapshot,
     value: "Success",
@@ -25,9 +31,14 @@ const renderComponent = (redirectUri?: string) => {
     }
   };
 
-  return render(
-    <ItwRemoteMachineContext.Provider options={{ snapshot }}>
-      <ItwRemoteAuthResponseScreen />
-    </ItwRemoteMachineContext.Provider>
+  return renderScreenWithNavigationStoreContext(
+    () => (
+      <ItwRemoteMachineContext.Provider options={{ snapshot }}>
+        <ItwRemoteAuthResponseScreen />
+      </ItwRemoteMachineContext.Provider>
+    ),
+    ITW_REMOTE_ROUTES.AUTH_RESPONSE,
+    {},
+    createStore(appReducer, initialState as any)
   );
 };
