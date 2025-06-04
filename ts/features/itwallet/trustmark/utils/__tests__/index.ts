@@ -1,6 +1,7 @@
 import { Credential } from "@pagopa/io-react-native-wallet";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { getCredentialDocumentNumber, getCredentialTrustmark } from "..";
+import { Env } from "../../../common/utils/environment";
 
 jest.mock("@pagopa/io-react-native-wallet", () => ({
   ...jest.requireActual("@pagopa/io-react-native-wallet"),
@@ -38,9 +39,9 @@ describe("ITW trustmark utils", () => {
         );
 
       const trustmark = await getCredentialTrustmark(
+        { VERIFIER_BASE_URL: "https://verifier.url" } as Env,
         "walletInstanceAttestation",
-        ItwStoredCredentialsMocks.mdl,
-        "https://verifier.url"
+        ItwStoredCredentialsMocks.mdl
       );
 
       expect(Credential.Trustmark.getCredentialTrustmark).toHaveBeenCalledWith({

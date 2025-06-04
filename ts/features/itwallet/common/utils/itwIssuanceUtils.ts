@@ -6,11 +6,7 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import { v4 as uuidv4 } from "uuid";
-import {
-  itWalletIssuanceRedirectUri,
-  itwIdpHintTest,
-  itwPidProviderBaseUrl
-} from "../../../../config";
+import { itwIdpHintTest } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
 import { StoredCredential } from "./itwTypesUtils";
 import {
@@ -18,6 +14,7 @@ import {
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
+import { Env } from "./environment";
 
 type AccessToken = Awaited<
   ReturnType<typeof Credential.Issuance.authorizeAccess>
@@ -28,6 +25,7 @@ type IssuerConf = Parameters<Credential.Issuance.ObtainCredential>[0];
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
 type StartAuthFlowParams = {
+  env: Env;
   walletAttestation: string;
   identification: IdentificationContext;
   isL3IssuanceEnabled: boolean;
@@ -38,18 +36,20 @@ type StartAuthFlowParams = {
  * proceeding with the authentication process to get the `authUrl` and other parameters needed later.
  * After completing the initial authentication flow and obtaining the redirectAuthUrl from the WebView (CIE + PIN & SPID) or Browser (CIEID),
  * the flow must be completed by invoking `completeAuthFlow`.
+ * @param env - The environment to use for the wallet provider base URL
  * @param walletAttestation - The wallet attestation.
  * @param identification - The identification context.
  * @param isL3IssuanceEnabled flag that indicates that we need to issue an L3 PID
  * @returns Authentication params to use when completing the flow.
  */
 const startAuthFlow = async ({
+  env,
   walletAttestation,
   identification,
   isL3IssuanceEnabled
 }: StartAuthFlowParams) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
-    issuerUrl: itwPidProviderBaseUrl,
+    issuerUrl: env.WALLET_PID_PROVIDER_BASE_URL,
     credentialType: CREDENTIAL_TYPE
   });
 
@@ -70,7 +70,7 @@ const startAuthFlow = async ({
       credentialType,
       {
         walletInstanceAttestation: walletAttestation,
-        redirectUri: itWalletIssuanceRedirectUri,
+        redirectUri: env.ISSUANCE_REDIRECT_URI,
         wiaCryptoContext
       }
     );
@@ -89,7 +89,7 @@ const startAuthFlow = async ({
     clientId,
     codeVerifier,
     credentialDefinition,
-    redirectUri: itWalletIssuanceRedirectUri
+    redirectUri: env.ISSUANCE_REDIRECT_URI
   };
 };
 
