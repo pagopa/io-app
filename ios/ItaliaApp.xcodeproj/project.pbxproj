@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1024B7E387E34295AFBA19B6 /* TitilliumSansPro-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3CA5B0F4CFD44E78900FE43A /* TitilliumSansPro-LightItalic.otf */; };
 		133638FA213D788900B0C079 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 133638FC213D788900B0C079 /* InfoPlist.strings */; };
-		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13F005FA91AA4EF5BAD12096 /* Titillio-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9205B2AD16D94BDAA69E880E /* Titillio-Black.otf */; };
 		16471906574A44719FD557C5 /* TitilliumSansPro-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 872A6A79E0CF4C4DA0AEAF3E /* TitilliumSansPro-BoldItalic.otf */; };
 		194A5D2B1F027F5A0078620E /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 194A5D2A1F027F5A0078620E /* Podfile */; };
@@ -30,6 +29,7 @@
 		97F089B39469411991377615 /* DMMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 875B0C3A5326413494A9311A /* DMMono-Medium.ttf */; };
 		A5C4E8CE93074865A66DFAC1 /* TitilliumSansPro-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 015E4FBE7D1D4C2485C73321 /* TitilliumSansPro-SemiboldItalic.otf */; };
 		B551AC412DA55A0E00A4E30F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B551AC402DA55A0E00A4E30F /* AppDelegate.swift */; };
+		B572E1E42DC12161009BA244 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		B57C5DCD2D8B12A500173EF4 /* AppReviewModule.m in Sources */ = {isa = PBXBuildFile; fileRef = B57C5DCC2D8B129A00173EF4 /* AppReviewModule.m */; };
 		B57C5DCF2D8B12DC00173EF4 /* AppReviewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57C5DCE2D8B12D200173EF4 /* AppReviewModule.swift */; };
 		B7B71EAAE496484488FE3751 /* Titillio-Extrabold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 59423B676D254801BFAA4C5E /* Titillio-Extrabold.otf */; };
