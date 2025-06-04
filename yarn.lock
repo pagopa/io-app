@@ -3968,6 +3968,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pagopa/io-react-native-proximity@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "@pagopa/io-react-native-proximity@npm:0.5.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: a692b5ed7bd697d56edeb8719fd92a05527f44acafc9651f6e0f0a5bb83b42df4b31819dfca1d5744d076c1ba0a075fa8579f1b1cd49475f273ecf0b9948b8e0
+  languageName: node
+  linkType: hard
+
 "@pagopa/io-react-native-secure-storage@npm:^0.2.0":
   version: 0.2.0
   resolution: "@pagopa/io-react-native-secure-storage@npm:0.2.0"
@@ -13137,6 +13147,7 @@ __metadata:
     "@pagopa/io-react-native-integrity": ^0.3.2
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": ^1.0.9
+    "@pagopa/io-react-native-proximity": ^0.5.0
     "@pagopa/io-react-native-secure-storage": ^0.2.0
     "@pagopa/io-react-native-wallet": ^0.30.0
     "@pagopa/io-react-native-zendesk": ^0.3.30
