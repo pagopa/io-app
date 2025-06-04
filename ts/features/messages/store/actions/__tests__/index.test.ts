@@ -1,45 +1,55 @@
 import {
+  addUserSelectedPaymentRptId,
   cancelGetMessageDataAction,
+  cancelPaymentStatusTracking,
+  cancelPreviousAttachmentDownload,
+  cancelQueuedPaymentUpdates,
+  clearRequestedAttachmentDownload,
+  downloadAttachment,
   getMessageDataAction,
+  isGenericError,
+  isSpecificError,
+  isTimeoutError,
   loadMessageById,
   loadMessageDetails,
   loadNextPageMessages,
   loadPreviousPageMessages,
   loadThirdPartyMessage,
+  PaymentError,
   reloadAllMessages,
+  removeCachedAttachment,
   requestAutomaticMessagesRefresh,
   resetGetMessageDataAction,
+  setShownMessageCategoryAction,
+  startPaymentStatusTracking,
+  toGenericError,
+  toSpecificError,
+  toTimeoutError,
+  updatePaymentForMessage,
   upsertMessageStatusAttributes
 } from "..";
+import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
+import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
 import { ThirdPartyMessageWithContent } from "../../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { UIMessage, UIMessageDetails, UIMessageId } from "../../../types";
-import { MessageListCategory } from "../../../types/messageListCategory";
 
 describe("index", () => {
-  describe("requestAutomaticMessagesRefresh", () => {
-    it("should construct the acton with proper type and payload for 'INBOX' category", () => {
-      const category: MessageListCategory = "INBOX";
-      const requestAction = requestAutomaticMessagesRefresh(category);
-      expect(requestAction.type).toStrictEqual(
-        "REQUEST_AUOMATIC_MESSAGE_REFRESH"
-      );
-      expect(requestAction.payload).toStrictEqual(category);
-    });
-    it("should construct the acton with proper type and payload for 'ARCHIVE' category", () => {
-      const category: MessageListCategory = "ARCHIVE";
-      const requestAction = requestAutomaticMessagesRefresh(category);
-      expect(requestAction.type).toStrictEqual(
-        "REQUEST_AUOMATIC_MESSAGE_REFRESH"
-      );
-      expect(requestAction.payload).toStrictEqual(category);
-    });
-  });
-
   const messageId = "01JKAGGZTSQDR1GB5TYJ9PHXM6" as UIMessageId;
   const serviceId = "01JKAGWVQRFE1P8QAHZS743M90" as ServiceId;
   const tag = "A tag";
   const message = { title: "The title" } as UIMessage;
+  const attachment = {
+    id: "1",
+    url: "https://an.url"
+  } as ThirdPartyAttachment;
+  const genericError: PaymentError = toGenericError("An error occurred");
+  const specificError: PaymentError = toSpecificError(
+    Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+  );
+  const timeoutError: PaymentError = toTimeoutError();
+  const paymentId = "00123456789001122334455667788";
 
   describe("getMessageDataAction.request", () =>
     [false, true].forEach(fromPushNotification =>
@@ -487,6 +497,282 @@ describe("index", () => {
           error,
           payload: { message, update }
         });
+      });
+    });
+  });
+
+  describe("downloadAttachment.request", () => {
+    [false, true].forEach(skipTracking => {
+      it(`should match expected type and payload (skipTracking ${JSON.stringify(
+        skipTracking
+      )})`, () => {
+        const action = downloadAttachment.request({
+          attachment,
+          messageId,
+          skipMixpanelTrackingOnFailure: skipTracking
+        });
+        expect(action.type).toBe("DOWNLOAD_ATTACHMENT_REQUEST");
+        expect(action.payload).toEqual({
+          attachment,
+          messageId,
+          skipMixpanelTrackingOnFailure: skipTracking
+        });
+      });
+    });
+  });
+  describe("downloadAttachment.success", () => {
+    it(`should match expected type and payload`, () => {
+      const action = downloadAttachment.success({
+        attachment,
+        messageId,
+        path: "/path"
+      });
+      expect(action.type).toBe("DOWNLOAD_ATTACHMENT_SUCCESS");
+      expect(action.payload).toEqual({
+        attachment,
+        messageId,
+        path: "/path"
+      });
+    });
+  });
+  describe("downloadAttachment.failure", () => {
+    it(`should match expected type and payload`, () => {
+      const error = Error("An error occurred");
+      const action = downloadAttachment.failure({
+        attachment,
+        error,
+        messageId
+      });
+      expect(action.type).toBe("DOWNLOAD_ATTACHMENT_FAILURE");
+      expect(action.payload).toEqual({
+        attachment,
+        error,
+        messageId
+      });
+    });
+  });
+  describe("downloadAttachment.cancel", () => {
+    it(`should match expected type and payload`, () => {
+      const action = downloadAttachment.cancel({
+        attachment,
+        messageId
+      });
+      expect(action.type).toBe("DOWNLOAD_ATTACHMENT_CANCEL");
+      expect(action.payload).toEqual({
+        attachment,
+        messageId
+      });
+    });
+  });
+
+  describe("cancelPreviousAttachmentDownload", () => {
+    it("should match expected type and payload", () => {
+      const action = cancelPreviousAttachmentDownload();
+      expect(action.type).toBe("CANCEL_PREVIOUS_ATTACHMENT_DOWNLOAD");
+    });
+  });
+
+  describe("clearRequestedAttachmentDownload", () => {
+    it("should match expected type and payload", () => {
+      const action = clearRequestedAttachmentDownload();
+      expect(action.type).toBe("CLEAR_REQUESTED_ATTACHMNET_DOWNLOAD");
+    });
+  });
+
+  describe("removeCachedAttachment", () => {
+    it("should match expected type and payload", () => {
+      const action = removeCachedAttachment({
+        attachment,
+        messageId,
+        path: "/path/attachment"
+      });
+      expect(action.type).toBe("REMOVE_CACHED_ATTACHMENT");
+      expect(action.payload).toEqual({
+        attachment,
+        messageId,
+        path: "/path/attachment"
+      });
+    });
+  });
+
+  describe("isGenericError", () => {
+    it("should return true for a generic error", () => {
+      const output = isGenericError(genericError);
+      expect(output).toBe(true);
+    });
+    it("should return false for a specific error", () => {
+      const output = isGenericError(specificError);
+      expect(output).toBe(false);
+    });
+    it("should return false for a timeout error", () => {
+      const output = isGenericError(timeoutError);
+      expect(output).toBe(false);
+    });
+  });
+
+  describe("isSpecificError", () => {
+    it("should return false for a generic error", () => {
+      const output = isSpecificError(genericError);
+      expect(output).toBe(false);
+    });
+    it("should return true for a specific error", () => {
+      const output = isSpecificError(specificError);
+      expect(output).toBe(true);
+    });
+    it("should return false for a timeout error", () => {
+      const output = isSpecificError(timeoutError);
+      expect(output).toBe(false);
+    });
+  });
+
+  describe("isTimeoutError", () => {
+    it("should return false for a generic error", () => {
+      const output = isTimeoutError(genericError);
+      expect(output).toBe(false);
+    });
+    it("should return false for a specific error", () => {
+      const output = isTimeoutError(specificError);
+      expect(output).toBe(false);
+    });
+    it("should return true for a timeout error", () => {
+      const output = isTimeoutError(timeoutError);
+      expect(output).toBe(true);
+    });
+  });
+
+  describe("toGenericError", () => {
+    it("should build a generic error with expected parameters", () => {
+      const anError = toGenericError("An error occurred");
+      expect(anError).toEqual({
+        type: "generic",
+        message: "An error occurred"
+      });
+    });
+  });
+
+  describe("toSpecificError", () => {
+    it("should build a specific error with expected parameters", () => {
+      const anError = toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO);
+      expect(anError).toEqual({
+        type: "specific",
+        details: Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+      });
+    });
+  });
+
+  describe("toTimeoutError", () => {
+    it("should build a timeout error with expected parameters", () => {
+      const anError = toTimeoutError();
+      expect(anError).toEqual({
+        type: "timeout"
+      });
+    });
+  });
+
+  describe("updatePaymentForMessage.request", () => {
+    it(`should match expected type and payload`, () => {
+      const action = updatePaymentForMessage.request({
+        messageId,
+        paymentId,
+        serviceId
+      });
+      expect(action.type).toBe("UPDATE_PAYMENT_FOR_MESSAGE_REQUEST");
+      expect(action.payload).toEqual({
+        messageId,
+        paymentId,
+        serviceId
+      });
+    });
+  });
+  describe("updatePaymentForMessage.success", () => {
+    it(`should match expected type and payload`, () => {
+      const action = updatePaymentForMessage.success({
+        messageId,
+        paymentId,
+        paymentData: {
+          amount: 100
+        } as PaymentInfoResponse,
+        serviceId
+      });
+      expect(action.type).toBe("UPDATE_PAYMENT_FOR_MESSAGE_SUCCESS");
+      expect(action.payload).toEqual({
+        messageId,
+        paymentId,
+        paymentData: {
+          amount: 100
+        },
+        serviceId
+      });
+    });
+  });
+  describe("updatePaymentForMessage.failure", () => {
+    [genericError, specificError, timeoutError].forEach(reason => {
+      it(`should match expected type and payload (reason ${JSON.stringify(
+        reason
+      )})`, () => {
+        const action = updatePaymentForMessage.failure({
+          messageId,
+          paymentId,
+          reason,
+          serviceId
+        });
+        expect(action.type).toBe("UPDATE_PAYMENT_FOR_MESSAGE_FAILURE");
+        expect(action.payload).toEqual({
+          messageId,
+          paymentId,
+          reason,
+          serviceId
+        });
+      });
+    });
+  });
+
+  describe("cancelQueuedPaymentUpdates", () => {
+    it("should match expected type and payload", () => {
+      const action = cancelQueuedPaymentUpdates({ messageId });
+      expect(action.type).toBe("CANCEL_QUEUED_PAYMENT_UPDATES");
+      expect(action.payload).toEqual({ messageId });
+    });
+  });
+
+  describe("startPaymentStatusTracking", () => {
+    it("should match expected type and payload", () => {
+      const action = startPaymentStatusTracking();
+      expect(action.type).toBe("MESSAGES_START_TRACKING_PAYMENT_STATUS");
+    });
+  });
+
+  describe("cancelPaymentStatusTracking", () => {
+    it("should match expected type and payload", () => {
+      const action = cancelPaymentStatusTracking();
+      expect(action.type).toBe("MESSAGES_CANCEL_PAYMENT_STATUS_TRACKING");
+    });
+  });
+
+  describe("addUserSelectedPaymentRptId", () => {
+    it("should match expected type and payload", () => {
+      const action = addUserSelectedPaymentRptId(paymentId);
+      expect(action.type).toBe("MESSAGES_ADD_USER_SELECTED_PAYMENT_RPTID");
+      expect(action.payload).toBe(paymentId);
+    });
+  });
+
+  describe("setShownMessageCategoryAction", () => {
+    (["INBOX", "ARCHIVE"] as const).forEach(category => {
+      it(`should match expected type and payload (category ${category})`, () => {
+        const action = setShownMessageCategoryAction(category);
+        expect(action.type).toBe("SET_SHOWN_MESSAGE_CATEGORY");
+        expect(action.payload).toBe(category);
+      });
+    });
+  });
+
+  describe("requestAutomaticMessagesRefresh", () => {
+    (["INBOX", "ARCHIVE"] as const).forEach(category => {
+      it(`should match expected type and payload (category ${category})`, () => {
+        const action = requestAutomaticMessagesRefresh(category);
+        expect(action.type).toBe("REQUEST_AUTOMATIC_MESSAGE_REFRESH");
+        expect(action.payload).toBe(category);
       });
     });
   });

@@ -316,7 +316,7 @@ export const setShownMessageCategoryAction = createStandardAction(
 )<MessageListCategory>();
 
 export const requestAutomaticMessagesRefresh = createStandardAction(
-  "REQUEST_AUOMATIC_MESSAGE_REFRESH"
+  "REQUEST_AUTOMATIC_MESSAGE_REFRESH"
 )<MessageListCategory>();
 
 export type MessagesActions = ActionType<
