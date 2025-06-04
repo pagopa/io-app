@@ -77,7 +77,6 @@ describe("index", () => {
                   it(`should construt the action with proper type and payload (containsAttachments ${containsAttachments}) (containsPayment ${containsPayment}) (firstTimeOpening ${firstTimeOpening}) (hasFIMSCTA ${hasFIMSCTA}) (hasRemoteContent ${hasRemoteContent}) (isLegacyGreenPass ${isLegacyGreenPass}) (isPNMessage ${isPNMessage})`, () => {
                     const organizationName = "The organization name";
                     const organizationFiscalCode = "12345678901";
-                    const serviceId = "01JKAGWVQRFE1P8QAHZS743M90" as ServiceId;
                     const serviceName = "The service name";
                     const createdAt = new Date(2025, 0, 1, 10, 30, 26);
                     const requestAction = getMessageDataAction.success({
@@ -236,12 +235,12 @@ describe("index", () => {
   });
   describe("loadMessageDetails.success", () => {
     it("should match expected type and payload", () => {
-      const message = {
+      const messageDetails = {
         subject: "This is a message subject"
       } as UIMessageDetails;
-      const action = loadMessageDetails.success(message);
+      const action = loadMessageDetails.success(messageDetails);
       expect(action.type).toBe("MESSAGE_DETAILS_LOAD_SUCCESS");
-      expect(action.payload).toEqual(message);
+      expect(action.payload).toEqual(messageDetails);
     });
   });
   describe("loadMessageDetails.failure", () => {
