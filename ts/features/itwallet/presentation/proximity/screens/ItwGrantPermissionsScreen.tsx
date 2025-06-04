@@ -1,18 +1,14 @@
-import {
-  IconButton,
-  IOVisualCostants,
-  ListItemInfo
-} from "@pagopa/io-app-design-system";
+import { ListItemInfo } from "@pagopa/io-app-design-system";
 import { useEffect, useMemo } from "react";
-import { Alert, Platform, StyleSheet, View } from "react-native";
+import { Alert, Platform } from "react-native";
 import I18n from "../../../../../i18n";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
-import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 import { openAppSettings } from "../../../../../utils/appSettings";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { ItwProximityMachineContext } from "../machine/provider";
 import { selectIsPermissionsRequiredState } from "../machine/selectors";
+import { ItwPermissionsWizard } from "../components/ItwPermissionsWizard";
 
 export const ItwGrantPermissionsScreen = () => {
   const navigation = useIONavigation();
@@ -103,43 +99,25 @@ export const ItwGrantPermissionsScreen = () => {
       ),
       onPress: () => {
         machineRef.send({ type: "continue" });
+        navigation.goBack();
       }
     }
   };
 
   return (
-    <>
-      <View style={styles.header}>
-        <IconButton
-          color="neutral"
-          icon="closeLarge"
-          onPress={navigation.goBack}
-          accessibilityLabel="close"
-        />
-      </View>
-      <IOScrollViewWithListItems
-        title={I18n.t(
-          "features.itWallet.presentation.proximity.grantPermissions.title"
-        )}
-        subtitle={I18n.t(
-          "features.itWallet.presentation.proximity.grantPermissions.subtitle"
-        )}
-        listItemHeaderLabel={I18n.t(
-          "features.itWallet.presentation.proximity.grantPermissions.listItems.title"
-        )}
-        renderItems={listItems}
-        actions={actions}
-      />
-    </>
+    <ItwPermissionsWizard
+      title={I18n.t(
+        "features.itWallet.presentation.proximity.grantPermissions.title"
+      )}
+      subtitle={I18n.t(
+        "features.itWallet.presentation.proximity.grantPermissions.subtitle"
+      )}
+      listItemHeaderLabel={I18n.t(
+        "features.itWallet.presentation.proximity.grantPermissions.listItems.title"
+      )}
+      listItems={listItems}
+      actions={actions}
+      onClose={navigation.goBack}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
-    paddingVertical: 16
-  }
-});

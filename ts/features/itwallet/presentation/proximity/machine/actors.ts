@@ -49,7 +49,11 @@ export const createProximityActorsImplementation = () => {
     return true;
   });
 
+  const checkBluetoothIsActive = fromPromise<boolean, void>(
+    async () => new Promise(resolve => setTimeout(() => resolve(false), 500))
+  );
   return {
-    checkPermissions
+    checkPermissions,
+    checkBluetoothIsActive
   };
 };

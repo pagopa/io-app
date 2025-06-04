@@ -4826,7 +4826,7 @@
             "title": "Consenti a IO di accedere al Bluetooth",
             "subtitle": "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.",
             "listItems": {
-              "title": "Ecco come fare:",
+              "title": "Ecco come:",
               "step1": {
                 "label": "Step 1",
                 "value": "Vai su \"Impostazioni\""
@@ -4844,6 +4844,29 @@
                 "value": "Consenti l’accesso a Bluetooth"
               }
             },
+            "actions": {
+              "primary": "Apri impostazioni",
+              "secondary": "Continua"
+            }
+          },
+          "activateBluetooth": {
+            "title": "Attiva il Bluetooth per continuare",
+            "subtitle": "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.",
+            "listItems": {
+              "title": "Ecco come:",
+              "step1": {
+                "label": "Step 1",
+                "value": "Vai su \"Impostazioni\""
+              },
+              "step2": {
+                "label": "Step 2",
+                "value": "Seleziona \"Bluetooth\""
+              },
+              "step3": {
+                "label": "Step 3",
+                "value": "Consenti l’utilizzo del Bluetooth"
+              }
+            },  
             "actions": {
               "primary": "Apri impostazioni",
               "secondary": "Continua"

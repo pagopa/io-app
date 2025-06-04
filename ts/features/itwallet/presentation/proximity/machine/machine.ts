@@ -1,4 +1,4 @@
-import { assign, fromPromise, setup } from "xstate";
+import { fromPromise, setup } from "xstate";
 import { InitialContext, Context } from "./context";
 import { RemoteEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
@@ -15,7 +15,6 @@ export const itwProximityMachine = setup({
   actions: {
     navigateToGrantPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
-    navigateToMDLScreen: notImplemented,
     generateQRCode: notImplemented,
     closePresentation: notImplemented
   },
@@ -79,7 +78,6 @@ export const itwProximityMachine = setup({
           },
           {
             guard: ({ event }) => !event.output,
-            actions: "navigateToMDLScreen",
             target: "PermissionsRequired"
           }
         ],
@@ -100,11 +98,26 @@ export const itwProximityMachine = setup({
       description: "",
       invoke: {
         src: "checkBluetoothIsActive",
-        onDone: {
-          target: "GeneratingQRCode"
-        },
+        onDone: [
+          {
+            guard: ({ event }) => !!event.output,
+            target: "GeneratingQRCode"
+          },
+          {
+            guard: ({ event }) => !event.output,
+            target: "EnableBluetooth"
+          }
+        ],
         onError: {
-          target: "GrantPermissions" // TODO: Change this target
+          target: "EnableBluetooth"
+        }
+      }
+    },
+    EnableBluetooth: {
+      entry: "navigateToBluetoothActivationScreen",
+      on: {
+        back: {
+          target: "Idle"
         }
       }
     },

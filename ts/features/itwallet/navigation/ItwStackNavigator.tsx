@@ -51,6 +51,7 @@ import {
   ItwProximityMachineProvider
 } from "../presentation/proximity/machine/provider.tsx";
 import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/ItwGrantPermissionsScreen.tsx";
+import { ItwActivateBluetoothScreen } from "../presentation/proximity/screens/ItwActivateBluetoothScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -258,11 +259,14 @@ const InnerNavigator = () => {
         options={{ headerShown: false }}
       />
       {/*  Proximity's flow routes */}
-      <Stack.Group>
+      <Stack.Group screenOptions={hiddenHeader}>
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.DEVICE_PERMISSIONS}
           component={ItwGrantPermissionsScreen}
-          options={hiddenHeader}
+        />
+        <Stack.Screen
+          name={ITW_ROUTES.PROXIMITY.BLUETOOTH_ACTIVATION}
+          component={ItwActivateBluetoothScreen}
         />
       </Stack.Group>
     </Stack.Navigator>
