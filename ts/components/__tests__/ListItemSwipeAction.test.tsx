@@ -80,8 +80,6 @@ describe("ListItemSwipeAction", () => {
   });
 
   it("triggers swipe action and haptic feedback on strong left swipe", () => {
-    const { getByText } = renderWithNavigation();
-
     act(() => {
       gestureProps.onBegin?.();
       gestureProps.onUpdate?.({ translationX: -250 });
