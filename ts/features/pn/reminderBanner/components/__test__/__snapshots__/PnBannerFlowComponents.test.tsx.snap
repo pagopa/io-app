@@ -3029,7 +3029,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
 </View>
 `;
 
-exports[`PnBannerFlowComponents SuccessScreen should match snapshot, dispatch dismissPnActivationReminderBanner on first render and dispatch the correct analytics for its state 1`] = `
+exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch the correct analytics for its state on first render 1`] = `
 <View
   style={
     {
