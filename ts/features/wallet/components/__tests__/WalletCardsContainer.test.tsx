@@ -10,7 +10,6 @@ import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as itwSelectors from "../../../itwallet/common/store/selectors";
-import AppReview from "../../../appReviews/native/AppReview";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
