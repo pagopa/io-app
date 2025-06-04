@@ -15,6 +15,7 @@ import {
   isRevokedPaymentFromDetailV2Enum
 } from "../../../utils/payment";
 import { trackPaymentStatus } from "../analytics";
+import { isTestEnv } from "../../../utils/environment";
 
 type PayablePayment = {
   kind: "Payable";
@@ -49,10 +50,7 @@ export function* handlePaymentStatusForAnalyticsTracking(
 
 function* trackPaymentUpdates() {
   do {
-    const messagePaymentUpdateResult: ActionType<
-      | typeof updatePaymentForMessage.success
-      | typeof updatePaymentForMessage.failure
-    > = yield* take([
+    const messagePaymentUpdateResult = yield* take([
       updatePaymentForMessage.success,
       updatePaymentForMessage.failure
     ]);
@@ -101,3 +99,5 @@ export const paymentStatusFromPaymentUpdateResult = (
   }
   return "unpaid";
 };
+
+export const testable = isTestEnv ? { trackPaymentUpdates } : undefined;
