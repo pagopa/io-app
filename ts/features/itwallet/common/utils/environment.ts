@@ -1,0 +1,43 @@
+import Config from "react-native-config";
+
+export type EnvType = "pre" | "prod";
+
+export type Env = {
+  WALLET_PROVIDER_BASE_URL: string;
+  WALLET_PID_PROVIDER_BASE_URL: string;
+  WALLET_EAA_PROVIDER_BASE_URL: string;
+  REDIRECT_URI: string;
+  GOOGLE_CLOUD_PROJECT_NUMBER: string;
+  VERIFIER_BASE_URL: string;
+  ISSUANCE_REDIRECT_URI: string;
+};
+
+export const getEnv = (env?: EnvType): Env => {
+  switch (env) {
+    case "pre":
+      return {
+        WALLET_PROVIDER_BASE_URL: Config.ITW_PRE_WALLET_PROVIDER_BASE_URL,
+        WALLET_PID_PROVIDER_BASE_URL:
+          Config.ITW_PRE_WALLET_PID_PROVIDER_BASE_URL,
+        WALLET_EAA_PROVIDER_BASE_URL:
+          Config.ITW_PRE_WALLET_EAA_PROVIDER_BASE_URL,
+        REDIRECT_URI: Config.ITW_PRE_REDIRECT_URI,
+        GOOGLE_CLOUD_PROJECT_NUMBER: Config.ITW_PRE_GOOGLE_CLOUD_PROJECT_NUMBER,
+        VERIFIER_BASE_URL: Config.ITW_PRE_VERIFIER_BASE_URL,
+        ISSUANCE_REDIRECT_URI: Config.ITW_PRE_ISSUANCE_REDIRECT_URI
+      };
+    default:
+      return {
+        WALLET_PROVIDER_BASE_URL: Config.ITW_PROD_WALLET_PROVIDER_BASE_URL,
+        WALLET_PID_PROVIDER_BASE_URL:
+          Config.ITW_PROD_WALLET_PID_PROVIDER_BASE_URL,
+        WALLET_EAA_PROVIDER_BASE_URL:
+          Config.ITW_PROD_WALLET_EAA_PROVIDER_BASE_URL,
+        REDIRECT_URI: Config.ITW_PROD_REDIRECT_URI,
+        GOOGLE_CLOUD_PROJECT_NUMBER:
+          Config.ITW_PROD_GOOGLE_CLOUD_PROJECT_NUMBER,
+        VERIFIER_BASE_URL: Config.ITW_PROD_VERIFIER_BASE_URL,
+        ISSUANCE_REDIRECT_URI: Config.ITW_PROD_ISSUANCE_REDIRECT_URI
+      };
+  }
+};

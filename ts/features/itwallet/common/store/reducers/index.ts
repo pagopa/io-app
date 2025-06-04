@@ -23,9 +23,11 @@ import issuanceReducer, {
 import wiaReducer, {
   ItwWalletInstanceState
 } from "../../../walletInstance/store/reducers";
+import environmentReducer, { ItwEnvironmentState } from "./environment";
 import preferencesReducer, { ItwPreferencesState } from "./preferences";
 
 export type ItWalletState = {
+  environment: ItwEnvironmentState;
   identification: ItwIdentificationState;
   issuance: ItwIssuanceState & PersistPartial;
   credentials: ItwCredentialsState & PersistPartial;
@@ -36,6 +38,7 @@ export type ItWalletState = {
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
 
 const itwReducer = combineReducers({
+  environment: environmentReducer,
   identification: identificationReducer,
   issuance: issuanceReducer,
   credentials: itwCredentialsReducer,
@@ -43,7 +46,7 @@ const itwReducer = combineReducers({
   preferences: preferencesReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 3;
+const CURRENT_REDUX_ITW_STORE_VERSION = 4;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -61,8 +64,13 @@ export const migrations: MigrationManifest = {
     const authLevel = lifecycle === "ITW_LIFECYCLE_VALID" ? "L2" : undefined;
     return _.set(state, "preferences.authLevel", authLevel);
   },
+
   // Removed lifecycle reducer
-  "3": (state: PersistedState): PersistedState => _.omit(state, "lifecycle")
+  "3": (state: PersistedState): PersistedState => _.omit(state, "lifecycle"),
+
+  // Added environment reducer
+  "4": (state: PersistedState): PersistedState =>
+    _.set(state, "environment", { env: "prod" })
 };
 
 const itwPersistConfig: PersistConfig = {
