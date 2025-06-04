@@ -13253,6 +13253,7 @@ __metadata:
     react-native-background-timer: 2.1.1
     react-native-barcode-builder: ^2.0.0
     react-native-blob-util: 0.15.0
+    react-native-bluetooth-state-manager: ^2.0.2
     react-native-bundle-visualizer: ^2.2.1
     react-native-calendar-events: 2.2.0
     react-native-config: ^1.4.5
@@ -13272,6 +13273,7 @@ __metadata:
     react-native-linear-gradient: ^2.5.6
     react-native-markdown-display: ^7.0.2
     react-native-masked-text: ^1.13.0
+    react-native-nitro-modules: ^0.25.2
     react-native-notifications-utils: ^0.3.0
     react-native-pager-view: ^6.4.1
     react-native-pdf: 6.7.7
@@ -17750,6 +17752,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-bluetooth-state-manager@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "react-native-bluetooth-state-manager@npm:2.0.2"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-nitro-modules: "*"
+  checksum: 7adc1b16b080ddede6a533ee6ea939a094f1854d71e5e9389e8a678d6e576c49c24a57e3f2f46449b7915e24c5427ce7761124a978f9f572f18ec329a07a330d
+  languageName: node
+  linkType: hard
+
 "react-native-bundle-visualizer@npm:^2.2.1":
   version: 2.2.1
   resolution: "react-native-bundle-visualizer@npm:2.2.1"
@@ -17999,6 +18012,16 @@ __metadata:
     date-and-time: 0.9.0
     tinymask: 1.0.2
   checksum: d1ccd591a5262c322333d56e2c4ac7e2729e8cddc55225f5495e55904506935797c6d165ca8a36185627ff1845e5a29accbab6a63ec9d6712a6a1e9613f391ee
+  languageName: node
+  linkType: hard
+
+"react-native-nitro-modules@npm:^0.25.2":
+  version: 0.25.2
+  resolution: "react-native-nitro-modules@npm:0.25.2"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 3b61943021fda1fb34235037020d360dabef33cb4b6fe217b070f7500e3976c0acc6a1bd9dcfe212a704723d23ef7c21ec7c75c240d980daab0a95936aae6bb9
   languageName: node
   linkType: hard
 

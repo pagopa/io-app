@@ -1,5 +1,27 @@
 PODS:
   - Alamofire (5.9.1)
+  - BluetoothStateManager (2.0.2):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - NitroModules
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - boost (1.84.0)
   - BVLinearGradient (2.5.6):
     - React
@@ -43,6 +65,29 @@ PODS:
   - MixpanelReactNative (2.4.1):
     - Mixpanel-swift (= 4.2.0)
     - React-Core
+  - NitroModules (0.25.2):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-callinvoker
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - pagopa-io-react-native-cieid (0.3.5):
     - DoubleConversion
     - glog
@@ -2205,6 +2250,7 @@ PODS:
   - ZXingObjC/All (3.6.9)
 
 DEPENDENCIES:
+  - BluetoothStateManager (from `../node_modules/react-native-bluetooth-state-manager`)
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -2216,6 +2262,7 @@ DEPENDENCIES:
   - jail-monkey (from `../node_modules/jail-monkey`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
   - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
+  - NitroModules (from `../node_modules/react-native-nitro-modules`)
   - "pagopa-io-react-native-cieid (from `../node_modules/@pagopa/io-react-native-cieid`)"
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
   - "pagopa-io-react-native-http-client (from `../node_modules/@pagopa/io-react-native-http-client`)"
@@ -2350,6 +2397,8 @@ SPEC REPOS:
     - ZXingObjC
 
 EXTERNAL SOURCES:
+  BluetoothStateManager:
+    :path: "../node_modules/react-native-bluetooth-state-manager"
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
   BVLinearGradient:
@@ -2373,6 +2422,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/lottie-react-native"
   MixpanelReactNative:
     :path: "../node_modules/mixpanel-react-native"
+  NitroModules:
+    :path: "../node_modules/react-native-nitro-modules"
   pagopa-io-react-native-cieid:
     :path: "../node_modules/@pagopa/io-react-native-cieid"
   pagopa-io-react-native-crypto:
@@ -2592,6 +2643,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  BluetoothStateManager: defa4c68635dc332244e6ff8c18f97d2a7fe94d8
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   BVLinearGradient: 44fd36b87f318e7933c4c91a6991442a5e3f5bcf
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
@@ -2606,6 +2658,7 @@ SPEC CHECKSUMS:
   lottie-react-native: 35b7c1125a01f847fa5905d380e54951132d2450
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
   MixpanelReactNative: 37259ace491ca9d927c0f81498e6577a32a69f43
+  NitroModules: 40b44e1471d346ade022ff61bf98298cbb9cfed7
   pagopa-io-react-native-cieid: fbec2a09807357509e986e1ae831c38e559d4ac2
   pagopa-io-react-native-crypto: 9fc27db71785efd281454fd0e0d023c4ce1594d0
   pagopa-io-react-native-http-client: b2620097b64752b290374f7d2aab64e537f89f03
@@ -2703,7 +2756,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 92e89a04cd0d1c77f383a55d14c15e7f423f4c00
   RNI18n: 11ec5086508673ef71b5b567da3e8bcca8a926e1
   RNKeychain: e593cdad28fe4365dbfa703d25560d765a16bc52
-  RNPermissions: e65447d4a83dc5882f35fe277d163fc8ebb22a8b
+  RNPermissions: d26bad65a4dcb0a360a6a3c5c8f54bf43017e578
   RNQrGenerator: 60eab4f7c9e3f09db78029636fe356dca5cb585f
   RNReactNativeHapticFeedback: f9cfb40676f21a52e9e172648d033f539156a5ec
   RNReanimated: eccbdd305c2e2e9ea6569aa1be95c24a8904be8b
@@ -2730,6 +2783,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: b512cfc74b6bf8490e589f02cf52e27ed4f2bebe
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: 014e7c91b040cdb7b26feb5be55ceb0d0dd1f8a1
+PODFILE CHECKSUM: 06fb4de49714af995f47aaad622d22e773859fa6
 
 COCOAPODS: 1.15.2

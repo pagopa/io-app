@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1024B7E387E34295AFBA19B6 /* TitilliumSansPro-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3CA5B0F4CFD44E78900FE43A /* TitilliumSansPro-LightItalic.otf */; };
 		133638FA213D788900B0C079 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 133638FC213D788900B0C079 /* InfoPlist.strings */; };
-		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13F005FA91AA4EF5BAD12096 /* Titillio-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9205B2AD16D94BDAA69E880E /* Titillio-Black.otf */; };
 		16471906574A44719FD557C5 /* TitilliumSansPro-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 872A6A79E0CF4C4DA0AEAF3E /* TitilliumSansPro-BoldItalic.otf */; };
 		194A5D2B1F027F5A0078620E /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 194A5D2A1F027F5A0078620E /* Podfile */; };
@@ -341,7 +340,6 @@
 				16471906574A44719FD557C5 /* TitilliumSansPro-BoldItalic.otf in Resources */,
 				8D51BCD77547410BBC7E6050 /* TitilliumSansPro-Italic.otf in Resources */,
 				1024B7E387E34295AFBA19B6 /* TitilliumSansPro-LightItalic.otf in Resources */,
-				B572E1E42DC12161009BA244 /* Images.xcassets in Resources */,
 				A5C4E8CE93074865A66DFAC1 /* TitilliumSansPro-SemiboldItalic.otf in Resources */,
 				45678F6126F1401FB03B1B02 /* TitilliumSansPro-ThinItalic.otf in Resources */,
 				13F005FA91AA4EF5BAD12096 /* Titillio-Black.otf in Resources */,
