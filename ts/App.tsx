@@ -73,6 +73,7 @@ Sentry.init({
     /ApplicationNotResponding/i,
     /Background ANR/i
   ],
+  enableCaptureFailedRequests: false,
   integrations: integrations => [
     ...integrations,
     Sentry.reactNativeTracingIntegration()
