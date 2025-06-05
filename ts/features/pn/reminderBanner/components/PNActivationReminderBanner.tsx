@@ -44,7 +44,7 @@ export const PNActivationReminderBanner = ({ handleOnClose }: Props) => {
         title={I18n.t("features.pn.reminderBanner.title")}
         content={I18n.t("features.pn.reminderBanner.body")}
         action={I18n.t("features.pn.reminderBanner.cta")}
-        color="neutral"
+        color="turquoise"
         onPress={navigateToActivationFlow}
         pictogramName="savingMoney"
         onClose={closeHandler}
