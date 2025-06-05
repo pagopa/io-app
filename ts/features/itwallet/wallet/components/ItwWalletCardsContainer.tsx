@@ -29,7 +29,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
   const isEidExpired = eidStatus === "jwtExpired";
 
-  const appFeedbackBottomSheet = useItwPendingReviewRequest();
+  useItwPendingReviewRequest();
 
   useDebugInfo({
     itw: {
@@ -95,7 +95,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         bottomElement={<ItwFeedbackBanner />}
       />
       {eidInfoBottomSheet.bottomSheet}
-      {appFeedbackBottomSheet}
     </VStack>
   );
 });

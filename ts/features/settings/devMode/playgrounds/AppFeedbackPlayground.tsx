@@ -6,21 +6,10 @@ import {
   appReviewNegativeFeedbackLogSelector,
   appReviewPositiveFeedbackLogSelector
 } from "../../../appReviews/store/selectors";
-import { useAppReviewRequest } from "../../../appReviews/hooks/useAppReviewRequest";
+import { useAppFeedbackContext } from "../../../appReviews/components/AppFeedbackProvider";
 
 export const AppFeedbackPlayground = () => {
-  const {
-    requestFeedback: requestFeedbackItw,
-    appReviewBottomSheet: itwFeedbackBottomSheet
-  } = useAppReviewRequest("itw");
-  const {
-    requestFeedback: requestFeedbackPayment,
-    appReviewBottomSheet: paymentsFeedbackBottomSheet
-  } = useAppReviewRequest("payments");
-  const {
-    requestFeedback: requestFeedbackGeneral,
-    appReviewBottomSheet: generalFeedbackBottomSheet
-  } = useAppReviewRequest();
+  const { requestFeedback } = useAppFeedbackContext();
   const dispatch = useIODispatch();
   const appReviewPositiveFeedbackLog = useIOSelector(
     appReviewPositiveFeedbackLogSelector
@@ -57,24 +46,21 @@ export const AppFeedbackPlayground = () => {
       <VSpacer />
       <IOButton
         variant="solid"
-        onPress={requestFeedbackPayment}
+        onPress={() => requestFeedback("payments")}
         label="Richiedi feedback pagamenti"
       />
       <VSpacer />
       <IOButton
         variant="solid"
-        onPress={requestFeedbackItw}
+        onPress={() => requestFeedback("itw")}
         label="Richiedi feedback ITW"
       />
       <VSpacer />
       <IOButton
         variant="solid"
-        onPress={requestFeedbackGeneral}
+        onPress={() => requestFeedback("general")}
         label="Richiedi feedback generale"
       />
-      {generalFeedbackBottomSheet}
-      {itwFeedbackBottomSheet}
-      {paymentsFeedbackBottomSheet}
     </IOScrollViewWithLargeHeader>
   );
 };
