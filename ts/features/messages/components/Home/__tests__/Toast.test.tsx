@@ -29,9 +29,6 @@ jest.mock("@pagopa/io-app-design-system", () => ({
 }));
 
 describe("Toast", () => {
-  const mockedAnnounceForAccessibility = jest
-    .spyOn(AccessibilityInfo, "announceForAccessibility")
-    .mockImplementation(jest.fn());
   afterEach(() => {
     jest.resetAllMocks();
     jest.restoreAllMocks();
@@ -43,6 +40,9 @@ describe("Toast", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should display no toast when there are no data to show", () => {
+    const mockedAnnounceForAccessibility = jest
+      .spyOn(AccessibilityInfo, "announceForAccessibility")
+      .mockImplementation(jest.fn());
     mockSelectorOutput();
 
     renderComponent();
@@ -52,6 +52,9 @@ describe("Toast", () => {
     expect(mockedAnnounceForAccessibility.mock.calls.length).toBe(0);
   });
   it("should display a success toast when a message has been successfully archived or restored. No accessibility announcement if screen reader is disabled", () => {
+    const mockedAnnounceForAccessibility = jest
+      .spyOn(AccessibilityInfo, "announceForAccessibility")
+      .mockImplementation(jest.fn());
     const reason = "My reason of success";
     mockSelectorOutput("success", reason, false);
 
@@ -66,6 +69,9 @@ describe("Toast", () => {
     expect(mockedAnnounceForAccessibility.mock.calls.length).toBe(0);
   });
   it("should display a success toast when a message has been successfully archived or restored. Accessibility was announced with screen reader enabled", () => {
+    const mockedAnnounceForAccessibility = jest
+      .spyOn(AccessibilityInfo, "announceForAccessibility")
+      .mockImplementation(jest.fn());
     const reason = "My reason of success";
     mockSelectorOutput("success", reason, true);
 
@@ -82,6 +88,9 @@ describe("Toast", () => {
     expect(mockedAnnounceForAccessibility.mock.calls[0][0]).toBe(reason);
   });
   it("should display a failure toast when a message has been successfully archived or restored. No accessibility announcement if screen reader is disabled", () => {
+    const mockedAnnounceForAccessibility = jest
+      .spyOn(AccessibilityInfo, "announceForAccessibility")
+      .mockImplementation(jest.fn());
     const reason = "My reason of failure";
     mockSelectorOutput("error", reason, false);
 
@@ -96,6 +105,9 @@ describe("Toast", () => {
     expect(mockedAnnounceForAccessibility.mock.calls.length).toBe(0);
   });
   it("should display a failure toast when a message has been successfully archived or restored. Accessibility was announced with screen reader enabled", () => {
+    const mockedAnnounceForAccessibility = jest
+      .spyOn(AccessibilityInfo, "announceForAccessibility")
+      .mockImplementation(jest.fn());
     const reason = "My reason of failure";
     mockSelectorOutput("error", reason, true);
 
@@ -112,6 +124,9 @@ describe("Toast", () => {
     expect(mockedAnnounceForAccessibility.mock.calls[0][0]).toBe(reason);
   });
   it("should display a failure toast when there is an error in the Inbox", () => {
+    const mockedAnnounceForAccessibility = jest
+      .spyOn(AccessibilityInfo, "announceForAccessibility")
+      .mockImplementation(jest.fn());
     mockSelectorOutput(
       undefined,
       undefined,
@@ -132,6 +147,9 @@ describe("Toast", () => {
     expect(mockedAnnounceForAccessibility.mock.calls.length).toBe(0);
   });
   it("should display a failure toast when there is an error in the Archive", () => {
+    const mockedAnnounceForAccessibility = jest
+      .spyOn(AccessibilityInfo, "announceForAccessibility")
+      .mockImplementation(jest.fn());
     mockSelectorOutput(
       undefined,
       undefined,
@@ -153,6 +171,9 @@ describe("Toast", () => {
     expect(mockedAnnounceForAccessibility.mock.calls.length).toBe(0);
   });
   it("should display three toasts when there is a success in archiving/restoring, an error in Inbox and an error in Archive", () => {
+    const mockedAnnounceForAccessibility = jest
+      .spyOn(AccessibilityInfo, "announceForAccessibility")
+      .mockImplementation(jest.fn());
     const successReason = "My reason of success";
     mockSelectorOutput(
       "success",

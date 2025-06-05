@@ -15,9 +15,11 @@ const styles = StyleSheet.create({
 
 type OwnProps = {
   downloadPath: string;
+  onLoadComplete?: () => void;
 };
 
-type Props = OwnProps & Omit<ComponentProps<typeof Pdf>, "source">;
+type Props = OwnProps &
+  Omit<ComponentProps<typeof Pdf>, "source" | "onLoadComplete">;
 
 export const PdfViewer = ({
   style,
@@ -27,6 +29,12 @@ export const PdfViewer = ({
   ...rest
 }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
+  const commonOnLoadingCompleted = () => {
+    if (isLoading) {
+      setIsLoading(false);
+      onLoadComplete?.();
+    }
+  };
   return (
     <LoadingSpinnerOverlay
       isLoading={isLoading}
@@ -37,14 +45,17 @@ export const PdfViewer = ({
         accessible={true}
         accessibilityLabel={I18n.t("messagePDFPreview.pdfAccessibility")}
       >
+        {/** Be aware that, in react-native-pdf 6.7.7, on Android, there
+         * is a bug where onLoadComplete callback is not called. So,
+         * in order to detect proper PDF loading ending, we rely on
+         * onPageChanged, which is called to report that the first page
+         * has loaded */}
         <Pdf
           {...rest}
           source={{ uri: downloadPath, cache: true }}
           style={[styles.pdf, style]}
-          onLoadComplete={(...args) => {
-            setIsLoading(false);
-            onLoadComplete?.(...args);
-          }}
+          onPageChanged={commonOnLoadingCompleted}
+          onLoadComplete={commonOnLoadingCompleted}
           onError={(...args) => {
             setIsLoading(false);
             onError?.(...args);

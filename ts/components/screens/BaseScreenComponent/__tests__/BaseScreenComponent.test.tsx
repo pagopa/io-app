@@ -18,7 +18,8 @@ jest.useFakeTimers();
 
 const defaultProps: Props = {
   goBack: () => undefined,
-  headerTitle: "a title"
+  headerTitle: "a title",
+  hideBaseHeader: true
 };
 
 describe("BaseScreenComponent", () => {

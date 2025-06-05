@@ -6,8 +6,8 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 
 describe("CieLoginConfigScreen", () => {
   it("renders the OTPInput initially", () => {
-    const { getByText } = renderComponent();
-    expect(getByText("CIE Login Settings")).toBeTruthy();
+    const { getByTestId } = renderComponent();
+    expect(getByTestId("CieLoginConfigScreen")).toBeTruthy();
   });
 
   it("renders the locked screen initially (PIN view)", () => {

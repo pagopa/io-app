@@ -2,7 +2,7 @@
 
 IO_BACKEND_VERSION=832fee2c244746d1f4b1b7e792a92d25f99aa46b
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=1.0.68
+IO_SERVICES_METADATA_VERSION=1.0.69
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.4.0
 # IO Wallet Backend version

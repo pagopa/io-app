@@ -6,8 +6,7 @@ import {
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { Platform, SafeAreaView, Text, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Platform, SafeAreaView, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const DSSafeAreaCentered = () => {

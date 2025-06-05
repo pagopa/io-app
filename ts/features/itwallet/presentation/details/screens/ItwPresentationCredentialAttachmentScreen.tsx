@@ -96,6 +96,11 @@ export const ItwPresentationCredentialAttachmentScreen = ({
         paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
       }}
     >
+      {/** Be aware that, in react-native-pdf 6.7.7, on Android, there
+       * is a bug where onLoadComplete callback is not called. So,
+       * if you have to use such callback, you should rely upon
+       * onPageChanged, which is called to report that the first page
+       * has loaded */}
       <Pdf
         enablePaging
         fitPolicy={0}
