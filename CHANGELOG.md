@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0-rc.1](https://github.com/pagopa/io-app/compare/3.7.0-rc.0...3.7.0-rc.1) (2025-06-04)
+
+
+### Chores
+
+* **CdC:** [[IOBP-1535](https://pagopa.atlassian.net/browse/IOBP-1535)] Add CdC FIMS with remote url and service configuration ([#7044](https://github.com/pagopa/io-app/issues/7044)) ([ba07e32](https://github.com/pagopa/io-app/commit/ba07e3204906cc96eb4d2a47645b7ff722497ef8)), closes [/#diff-cfa4376631b208ff63ccc712193e710058b0643d98742d83dc64111ed7854ebcR11-R19](https://github.com/pagopa///issues/diff-cfa4376631b208ff63ccc712193e710058b0643d98742d83dc64111ed7854ebcR11-R19) [/#diff-26cadf9600bdf09b95047a17d044bff33fd2cd638c7a958667bb5e60e02c6a68R1-R23](https://github.com/pagopa///issues/diff-26cadf9600bdf09b95047a17d044bff33fd2cd638c7a958667bb5e60e02c6a68R1-R23)
+
 ## [3.7.0-rc.0](https://github.com/pagopa/io-app/compare/3.6.0-rc.9...3.7.0-rc.0) (2025-06-04)
 
 
