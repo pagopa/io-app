@@ -10,10 +10,7 @@ import {
   cancelPNPaymentStatusTracking,
   startPNPaymentStatusTracking
 } from "../actions";
-import {
-  maxVisiblePaymentCountGenerator,
-  paymentsFromPNMessagePot
-} from "../../utils";
+import { maxVisiblePaymentCount, paymentsFromPNMessagePot } from "../../utils";
 import { UIMessageId } from "../../../messages/types";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
 import { pnMessageFromIdSelector } from "../reducers";
@@ -31,6 +28,7 @@ import {
   PaymentStatus,
   processedPayment
 } from "../../../messages/saga/handlePaymentStatusForAnalyticsTracking";
+import { isTestEnv } from "../../../../utils/environment";
 
 type PartialTrackPNPaymentStatus = Omit<TrackPNPaymentStatus, "paymentCount">;
 
@@ -38,7 +36,7 @@ export function* watchPaymentStatusForMixpanelTracking(
   action: ActionType<typeof startPNPaymentStatusTracking>
 ) {
   yield* race({
-    polling: call(trackPaymentUpdates, action.payload.messageId),
+    polling: call(trackPaymentUpdates, action.payload),
     cancelAction: take(cancelPNPaymentStatusTracking)
   });
 }
@@ -57,7 +55,6 @@ export function* watchPaymentStatusForMixpanelTracking(
  * the statistics required by the tracking event and this saga is terminated.
  */
 function* trackPaymentUpdates(messageId: UIMessageId) {
-  const maxVisiblePaymentsInDetailsUI = maxVisiblePaymentCountGenerator();
   const paymentsToTrackMap = new Map<string, O.Option<PaymentStatus>>();
   while (true) {
     const updatePaymentForMessageAction = yield* take([
@@ -68,14 +65,14 @@ function* trackPaymentUpdates(messageId: UIMessageId) {
     if (
       isActionOf(updatePaymentForMessage.request, updatePaymentForMessageAction)
     ) {
-      // Make sure not to enqueue more payments than the one shown by the UI.
+      // Make sure not to enqueue more payments than the ones shown by the UI.
       // This may happen if some payments get updated while others suffer from
       // some delay. In such case, the user may have the time to open the
       // bottom sheet (which cannot be opened until at least one payment update
       // is completed) and this code would be triggered but, since the first
       // UI payment were already requested, this guard prevent adding
       // un-observed payment to the map
-      if (paymentsToTrackMap.size <= maxVisiblePaymentsInDetailsUI) {
+      if (paymentsToTrackMap.size < maxVisiblePaymentCount) {
         const paymentId = updatePaymentForMessageAction.payload.paymentId;
         paymentsToTrackMap.set(paymentId, O.none);
       }
@@ -212,3 +209,9 @@ const computeProcessedPaymentStatistics = (
         ...accumulator,
         errorCount: accumulator.errorCount + 1
       };
+
+export const testable = isTestEnv
+  ? {
+      trackPaymentUpdates
+    }
+  : undefined;
