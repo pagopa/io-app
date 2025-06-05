@@ -6,7 +6,6 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import { v4 as uuidv4 } from "uuid";
-import { itwIdpHintTest } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
 import { StoredCredential } from "./itwTypesUtils";
 import {
@@ -54,7 +53,9 @@ const startAuthFlow = async ({
   });
 
   // When issuing an L3 PID, we should not provide an IDP hint
-  const idpHint = isL3IssuanceEnabled ? undefined : getIdpHint(identification);
+  const idpHint = isL3IssuanceEnabled
+    ? undefined
+    : getIdpHint(identification, env);
 
   const { issuerUrl, credentialType } = startFlow();
 
@@ -241,9 +242,9 @@ const SPID_IDP_HINTS: { [key: string]: string } = {
  * for CIE the hint is always the same and it's defined in the {@link CIE_HINT_PROD} constant.
  * @param idCtx the identification context which contains the mode and the IDP ID if the mode is SPID
  */
-const getIdpHint = (idCtx: IdentificationContext) => {
+const getIdpHint = (idCtx: IdentificationContext, env: Env) => {
   const isSpidMode = idCtx.mode === "spid";
-  if (itwIdpHintTest) {
+  if (env.type === "pre") {
     return isSpidMode ? SPID_HINT_TEST : CIE_HINT_TEST;
   } else {
     return isSpidMode ? getSpidProductionIdpHint(idCtx.idpId) : CIE_HINT_PROD;

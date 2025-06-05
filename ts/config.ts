@@ -242,4 +242,3 @@ export const defaultPin = "162534";
 // IT Wallet
 export const itwBypassIdentityMatch =
   Config.ITW_BYPASS_IDENTITY_MATCH === "YES";
-export const itwIdpHintTest = Config.ITW_IDP_HINT_TEST === "YES";

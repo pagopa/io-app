@@ -3,6 +3,7 @@ import Config from "react-native-config";
 export type EnvType = "pre" | "prod";
 
 export type Env = {
+  type: EnvType;
   WALLET_PROVIDER_BASE_URL: string;
   WALLET_PID_PROVIDER_BASE_URL: string;
   WALLET_EAA_PROVIDER_BASE_URL: string;
@@ -16,6 +17,7 @@ export const getEnv = (env?: EnvType): Env => {
   switch (env) {
     case "pre":
       return {
+        type: "pre",
         WALLET_PROVIDER_BASE_URL: Config.ITW_PRE_WALLET_PROVIDER_BASE_URL,
         WALLET_PID_PROVIDER_BASE_URL:
           Config.ITW_PRE_WALLET_PID_PROVIDER_BASE_URL,
@@ -28,6 +30,7 @@ export const getEnv = (env?: EnvType): Env => {
       };
     default:
       return {
+        type: "prod",
         WALLET_PROVIDER_BASE_URL: Config.ITW_PROD_WALLET_PROVIDER_BASE_URL,
         WALLET_PID_PROVIDER_BASE_URL:
           Config.ITW_PROD_WALLET_PID_PROVIDER_BASE_URL,
