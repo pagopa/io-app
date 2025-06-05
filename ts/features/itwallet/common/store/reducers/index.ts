@@ -76,7 +76,9 @@ export const migrations: MigrationManifest = {
 const itwPersistConfig: PersistConfig = {
   key: "itWallet",
   storage: AsyncStorage,
-  whitelist: ["preferences"] satisfies Array<keyof ItWalletState>,
+  whitelist: ["preferences", "environment"] satisfies Array<
+    keyof ItWalletState
+  >,
   version: CURRENT_REDUX_ITW_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv })
 };
