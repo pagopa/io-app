@@ -11,7 +11,6 @@ import {
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { memo, useCallback, useRef, useState } from "react";
 import {
@@ -23,7 +22,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
-import { itwIdpHintTest } from "../../../../../config";
 import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import {
@@ -156,7 +154,8 @@ const LoadingSpinner = (
 
 export const ItwCieCardReaderScreen = () => {
   const navigation = useNavigation<StackNavigationProp<ItwParamsList>>();
-  const { ISSUANCE_REDIRECT_URI } = pipe(useIOSelector(selectItwEnv), getEnv);
+  const env = useIOSelector(selectItwEnv);
+  const { ISSUANCE_REDIRECT_URI } = getEnv(env);
 
   useFocusEffect(trackItWalletCieCardReading);
 
@@ -324,7 +323,7 @@ export const ItwCieCardReaderScreen = () => {
           <Cie.WebViewComponent
             authUrl={cieAuthUrl.value}
             pin={ciePin}
-            useUat={itwIdpHintTest}
+            useUat={env === "pre"}
             onEvent={handleCieReadEvent}
             onSuccess={handleCieReadSuccess}
             onError={handleCieReadError}

@@ -10,7 +10,6 @@ import {
   checkIntegrityServiceReadySaga,
   warmUpIntegrityServiceSaga
 } from "../checkIntegrityServiceReadySaga";
-import { getEnv } from "../../../common/utils/environment";
 
 describe("checkIntegrityServiceReadySaga", () => {
   it("Should wait for the integrity service status to be set", () => {
@@ -83,7 +82,6 @@ describe("checkIntegrityServiceReadySaga", () => {
         }
       }
     };
-    getEnv();
     return expectSaga(checkIntegrityServiceReadySaga)
       .withState(store)
       .select(itwIntegrityServiceStatusSelector)
@@ -95,22 +93,54 @@ describe("checkIntegrityServiceReadySaga", () => {
 });
 
 describe("warmUpIntegrityServiceSaga", () => {
-  it("Sets the integrity service status to ready when the integrity service is ready", () =>
-    expectSaga(warmUpIntegrityServiceSaga)
+  it("Sets the integrity service status to ready when the integrity service is ready", () => {
+    const store: DeepPartial<GlobalState> = {
+      features: {
+        itWallet: {
+          environment: {
+            env: "prod"
+          }
+        }
+      }
+    };
+    return expectSaga(warmUpIntegrityServiceSaga)
+      .withState(store)
       .provide([[matchers.call.fn(ensureIntegrityServiceIsReady), true]])
       .call.fn(ensureIntegrityServiceIsReady)
       .put(itwSetIntegrityServiceStatus("ready"))
-      .run());
+      .run();
+  });
 
-  it("Sets the integrity service status to unavailable when the integrity service is unavailable", () =>
-    expectSaga(warmUpIntegrityServiceSaga)
+  it("Sets the integrity service status to unavailable when the integrity service is unavailable", () => {
+    const store: DeepPartial<GlobalState> = {
+      features: {
+        itWallet: {
+          environment: {
+            env: "prod"
+          }
+        }
+      }
+    };
+    return expectSaga(warmUpIntegrityServiceSaga)
+      .withState(store)
       .provide([[matchers.call.fn(ensureIntegrityServiceIsReady), false]])
       .call.fn(ensureIntegrityServiceIsReady)
       .put(itwSetIntegrityServiceStatus("unavailable"))
-      .run());
+      .run();
+  });
 
-  it("Sets the integrity service status to error when the integrity service is unavailable", () =>
-    expectSaga(warmUpIntegrityServiceSaga)
+  it("Sets the integrity service status to error when the integrity service is unavailable", () => {
+    const store: DeepPartial<GlobalState> = {
+      features: {
+        itWallet: {
+          environment: {
+            env: "prod"
+          }
+        }
+      }
+    };
+    return expectSaga(warmUpIntegrityServiceSaga)
+      .withState(store)
       .provide([
         [
           matchers.call.fn(ensureIntegrityServiceIsReady),
@@ -119,5 +149,6 @@ describe("warmUpIntegrityServiceSaga", () => {
       ])
       .call.fn(ensureIntegrityServiceIsReady)
       .put(itwSetIntegrityServiceStatus("error"))
-      .run());
+      .run();
+  });
 });
