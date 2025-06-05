@@ -1,7 +1,8 @@
 import { Effect } from "redux-saga/effects";
 import { testSaga } from "redux-saga-test-plan";
 import { call, take } from "typed-redux-saga/macro";
-import { Detail_v2Enum } from "../../../../../definitions/payments/PaymentProblemJson";
+import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   cancelPaymentStatusTracking,
   startPaymentStatusTracking,
@@ -20,7 +21,7 @@ import {
   testable
 } from "../handlePaymentStatusForAnalyticsTracking";
 import { UIMessageId } from "../../types";
-import { ServiceId } from "../../../../../definitions/auth/ServiceId";
+
 import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
 import { trackPaymentStatus } from "../../analytics";
 

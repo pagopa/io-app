@@ -16,12 +16,12 @@ import {
   UpdatePaymentForMessageSuccess
 } from "../../store/actions";
 import { UIMessageId } from "../../types";
-import { ServiceId } from "../../../../../definitions/auth/ServiceId";
+import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   isMessagePaymentInfoV2Selector,
   isPagoPATestEnabledSelector
 } from "../../../../store/reducers/persistedPreferences";
-import { Detail_v2Enum } from "../../../../../definitions/payments/PaymentProblemJson";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 
 describe("handlePaymentUpdateRequests", () => {

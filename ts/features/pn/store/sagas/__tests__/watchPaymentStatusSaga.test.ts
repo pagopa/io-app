@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { call, take } from "redux-saga/effects";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
+import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import {
   testable,
   watchPaymentStatusForMixpanelTracking
@@ -17,7 +18,6 @@ import {
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
 import * as analytics from "../../../analytics";
-import { Detail_v2Enum } from "../../../../../../definitions/payments/PaymentProblemJson";
 
 describe("watchPaymentStatusSaga", () => {
   afterEach(() => {
