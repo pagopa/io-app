@@ -51,7 +51,6 @@ import { getDeviceId } from "../../../../utils/device";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
-import { useAppReviewRequest } from "../../../appReviews/hooks/useAppReviewRequest";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
@@ -87,8 +86,6 @@ type DevActionButton = {
 
 const DeveloperActionsSection = () => {
   const dispatch = useIODispatch();
-  const { requestFeedback, appReviewBottomSheet } =
-    useAppReviewRequest("general");
 
   const handleClearCachePress = () => {
     Alert.alert(
@@ -164,12 +161,6 @@ const DeveloperActionsSection = () => {
       color: "primary",
       label: I18n.t("profile.main.sentryTestEvent"),
       onPress: sendSentryTestEvent
-    },
-    {
-      condition: true,
-      color: "primary",
-      label: I18n.t("profile.main.storeReview"),
-      onPress: () => requestFeedback()
     }
   ];
 
@@ -193,7 +184,6 @@ const DeveloperActionsSection = () => {
 
   return (
     <>
-      {appReviewBottomSheet}
       <FlatList
         ListHeaderComponent={<ListItemHeader label="Actions" />}
         scrollEnabled={false}
