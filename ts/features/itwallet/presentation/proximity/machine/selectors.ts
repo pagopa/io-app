@@ -12,3 +12,12 @@ export const selectIsPermissionsRequiredState = (snapshot: MachineSnapshot) =>
 
 export const selectIsBluetoothRequiredState = (snapshot: MachineSnapshot) =>
   snapshot.matches("BluetoothRequired");
+
+export const selectQRCodeString = (snapshot: MachineSnapshot) =>
+  snapshot.context.qrCodeString;
+
+export const selectShouldPresentQRCodeBottomSheet = (
+  snapshot: MachineSnapshot
+) =>
+  snapshot.matches("DisplayQRCode") ||
+  snapshot.matches("QRCodeGenerationError");

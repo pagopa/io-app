@@ -50,6 +50,7 @@ import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredent
 import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
 import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
 import { selectIsLoading } from "../../proximity/machine/selectors.ts";
+import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -65,6 +66,7 @@ type Props = IOStackNavigationRouteProps<
  */
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
+  const { bottomSheet, dismiss } = useItwPresentQRCode();
   const { credentialType } = route.params;
   const credentialOption = useIOSelector(
     itwCredentialByTypeSelector(credentialType)
@@ -92,7 +94,10 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   }
 
   return (
-    <ItwPresentationCredentialDetail credential={credentialOption.value} />
+    <>
+      <ItwPresentationCredentialDetail credential={credentialOption.value} />
+      {bottomSheet}
+    </>
   );
 };
 

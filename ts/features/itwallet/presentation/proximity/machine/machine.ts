@@ -1,4 +1,4 @@
-import { fromPromise, setup } from "xstate";
+import { assign, fromPromise, setup } from "xstate";
 import { InitialContext, Context } from "./context";
 import { RemoteEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
@@ -15,12 +15,12 @@ export const itwProximityMachine = setup({
   actions: {
     navigateToGrantPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
-    generateQRCode: notImplemented,
     closePresentation: notImplemented
   },
   actors: {
     checkPermissions: fromPromise<boolean, void>(notImplemented),
-    checkBluetoothIsActive: fromPromise(notImplemented)
+    checkBluetoothIsActive: fromPromise(notImplemented),
+    generateQRCodeString: fromPromise<string, void>(notImplemented)
   }
 }).createMachine({
   id: "itwProximityMachine",
@@ -106,7 +106,7 @@ export const itwProximityMachine = setup({
         onDone: [
           {
             guard: ({ event }) => !!event.output,
-            target: "GeneratingQRCode"
+            target: "GeneratingQRCodeString"
           },
           {
             guard: ({ event }) => !event.output,
@@ -138,7 +138,7 @@ export const itwProximityMachine = setup({
         onDone: [
           {
             guard: ({ event }) => !!event.output,
-            target: "GeneratingQRCode"
+            target: "GeneratingQRCodeString"
           },
           {
             guard: ({ event }) => !event.output,
@@ -159,9 +159,21 @@ export const itwProximityMachine = setup({
         }
       }
     },
-    GeneratingQRCode: {
-      tags: [ItwPresentationTags.Loading]
-    }
+    GeneratingQRCodeString: {
+      tags: [ItwPresentationTags.Loading],
+      invoke: {
+        src: "generateQRCodeString",
+        onDone: {
+          actions: assign(({ event }) => ({ qrCodeString: event.output })),
+          target: "DisplayQRCode"
+        },
+        onError: {
+          target: "QRCodeGenerationError"
+        }
+      }
+    },
+    DisplayQRCode: {},
+    QRCodeGenerationError: {}
   }
 });
 

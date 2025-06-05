@@ -4894,6 +4894,12 @@
               "message":"Vai a Impostazioni e modifica le preferenze, poi riprova.",
               "text": "Ho capito"
             }
+          },
+          "mdl": {
+            "bottomSheet": {
+              "title": "Patente di guida",
+              "body": "Mostra il QR Code in caso di controlli o altre necessità."
+            }
           }
         }
       },

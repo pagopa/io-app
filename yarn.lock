@@ -13284,7 +13284,7 @@ __metadata:
     react-native-linear-gradient: ^2.5.6
     react-native-markdown-display: ^7.0.2
     react-native-masked-text: ^1.13.0
-    react-native-nitro-modules: ^0.25.2
+    react-native-nitro-modules: ^0.26.1
     react-native-notifications-utils: ^0.3.0
     react-native-pager-view: ^6.4.1
     react-native-pdf: 6.7.7
@@ -18026,13 +18026,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-nitro-modules@npm:^0.25.2":
-  version: 0.25.2
-  resolution: "react-native-nitro-modules@npm:0.25.2"
+"react-native-nitro-modules@npm:^0.26.1":
+  version: 0.26.1
+  resolution: "react-native-nitro-modules@npm:0.26.1"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 3b61943021fda1fb34235037020d360dabef33cb4b6fe217b070f7500e3976c0acc6a1bd9dcfe212a704723d23ef7c21ec7c75c240d980daab0a95936aae6bb9
+  checksum: dba351863b49ef4733c687a88f09b5955465f29042222c1642f821fef3a851fd28fbbc900f3ef286bf1660b1da1a35224b9cd925b6fee9a08a954bb958ce3829
   languageName: node
   linkType: hard
 

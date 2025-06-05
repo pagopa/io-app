@@ -8,6 +8,7 @@ import {
 } from "react-native-permissions";
 import { BluetoothStateManager } from "react-native-bluetooth-state-manager";
 import { fromPromise } from "xstate";
+import { Proximity } from "@pagopa/io-react-native-proximity";
 
 export const createProximityActorsImplementation = () => {
   const checkPermissions = fromPromise<boolean, void>(async () => {
@@ -55,8 +56,15 @@ export const createProximityActorsImplementation = () => {
 
     return bluetoothState === "PoweredOn";
   });
+
+  const generateQRCodeString = fromPromise<string, void>(async () => {
+    await Proximity.start();
+    return await Proximity.getQrCodeString();
+  });
+
   return {
     checkPermissions,
-    checkBluetoothIsActive
+    checkBluetoothIsActive,
+    generateQRCodeString
   };
 };

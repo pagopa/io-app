@@ -1,3 +1,5 @@
-export type Context = object;
+export type Context = {
+  qrCodeString?: string;
+};
 
 export const InitialContext: Context = {};
