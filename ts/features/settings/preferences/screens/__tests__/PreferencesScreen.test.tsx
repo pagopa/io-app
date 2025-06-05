@@ -117,7 +117,7 @@ describe("PreferencesScreen", () => {
 
     const { getByText } = renderComponent();
 
-    await fireEvent.press(
+    fireEvent.press(
       getByText(I18n.t("profile.preferences.list.preferred_calendar.title"))
     );
 
@@ -141,7 +141,7 @@ describe("PreferencesScreen", () => {
     const alertSpy = jest.spyOn(Alert, "alert");
     const { getByText } = renderComponent();
 
-    await fireEvent.press(
+    fireEvent.press(
       getByText(I18n.t("profile.preferences.list.preferred_calendar.title"))
     );
 

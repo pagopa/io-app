@@ -16,7 +16,7 @@ import { MessageListCategory } from "../../types/messageListCategory";
 export type ArchivingStatus = "disabled" | "enabled" | "processing";
 
 export type ProcessingResult = {
-  type: "success" | "warning" | "error";
+  type: "success" | "error";
   reason: string;
 };
 

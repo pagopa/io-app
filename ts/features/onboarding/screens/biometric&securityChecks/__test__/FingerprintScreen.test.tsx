@@ -11,11 +11,14 @@ import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import I18n from "../../../../../i18n";
 
-jest.mock("../../../../../store/hooks", () => ({
-  useIODispatch: jest.fn(),
-  useIOSelector: jest.fn(() => true),
-  useIOStore: jest.fn()
-}));
+jest.mock("../../../../../store/hooks", () => {
+  const original = jest.requireActual("../../../../../store/hooks");
+
+  return {
+    ...original,
+    useIODispatch: jest.fn()
+  };
+});
 
 jest.mock("../../../../../utils/analytics", () => ({
   getFlowType: jest.fn(() => "test-flow"),
@@ -63,8 +66,8 @@ describe("FingerprintScreen", () => {
   it("handles successful biometric activation", async () => {
     (biometrics.mayUserActivateBiometric as jest.Mock).mockResolvedValue(true);
 
-    const { getByA11yLabel } = renderComponent();
-    const activateButton = getByA11yLabel(I18n.t("global.buttons.activate2"));
+    const { getByLabelText } = renderComponent();
+    const activateButton = getByLabelText(I18n.t("global.buttons.activate2"));
 
     fireEvent.press(activateButton);
 
@@ -86,8 +89,8 @@ describe("FingerprintScreen", () => {
       "PERMISSION_DENIED"
     );
 
-    const { getByA11yLabel } = renderComponent();
-    const activateButton = getByA11yLabel(I18n.t("global.buttons.activate2"));
+    const { getByLabelText } = renderComponent();
+    const activateButton = getByLabelText(I18n.t("global.buttons.activate2"));
 
     fireEvent.press(activateButton);
 
@@ -105,8 +108,8 @@ describe("FingerprintScreen", () => {
   });
 
   it("handles secondary button press (Not Now)", () => {
-    const { getByA11yLabel } = renderComponent();
-    const notNowButton = getByA11yLabel(I18n.t("global.buttons.notNow"));
+    const { getByLabelText } = renderComponent();
+    const notNowButton = getByLabelText(I18n.t("global.buttons.notNow"));
 
     fireEvent.press(notNowButton);
 

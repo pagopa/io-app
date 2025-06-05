@@ -32,9 +32,9 @@ export const ItwL3Section = () => {
 
   return (
     <View>
-      <ListItemHeader label="IT Wallet (L3 locally)" />
+      <ListItemHeader label="IT Wallet (L3)" />
       <ListItemSwitch
-        label="Enable locally L3 wallet"
+        label="Enable local feature flag"
         value={isL3LocallyEnabled}
         onSwitchValueChange={() => {
           dispatch(itwSetL3LocallyEnabled(!isL3LocallyEnabled));

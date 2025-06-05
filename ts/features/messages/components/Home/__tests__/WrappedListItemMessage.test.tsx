@@ -51,9 +51,7 @@ describe("WrappedListItemMessage", () => {
     jest.resetAllMocks();
     jest.restoreAllMocks();
   });
-  const mockedAnnounceForAccessibility = jest
-    .spyOn(AccessibilityInfo, "announceForAccessibility")
-    .mockImplementation(jest.fn());
+
   [0, 1].forEach(index =>
     (["INBOX", "ARCHIVE", "SEARCH"] as const).forEach(source =>
       (
@@ -151,6 +149,9 @@ describe("WrappedListItemMessage", () => {
     const mockAccessibilityLabelForMessageItem = jest
       .spyOn(homeUtils, "accessibilityLabelForMessageItem")
       .mockImplementation(() => "Mock announcement");
+    const mockedAnnounceForAccessibility = jest
+      .spyOn(AccessibilityInfo, "announceForAccessibility")
+      .mockImplementation(jest.fn());
     const message = generateMessage(
       { tag: "GENERIC" } as MessageCategory,
       false,
