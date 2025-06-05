@@ -547,7 +547,7 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                                 ]
                               }
                             >
-                              Se accedi alle comunicazioni in digitale entro i tempi previsti, non riceverai la raccomandata e non pagherai i relativi costi di stampa e invio della raccomandata.
+                              Se accedi alle comunicazioni in digitale entro i tempi previsti, eviterai le raccomandate e i relativi costi.
                             </Text>
                             <View
                               style={
@@ -3029,7 +3029,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
 </View>
 `;
 
-exports[`PnBannerFlowComponents SuccessScreen should match snapshot, dispatch dismissPnActivationReminderBanner on first render and dispatch the correct analytics for its state 1`] = `
+exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch the correct analytics for its state on first render 1`] = `
 <View
   style={
     {
