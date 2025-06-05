@@ -135,9 +135,7 @@ const ListItemSwipeAction = ({
     transform: [{ translateX: translateX.value }]
   }));
 
-  const triggerHaptic = () => {
-    HapticFeedback.trigger("impactLight");
-  };
+  const triggerHaptic = () => HapticFeedback.trigger("impactLight");
 
   // Define the gesture action and props
   const panGesture = Gesture.Pan()
@@ -184,7 +182,8 @@ const ListItemSwipeAction = ({
           IOSpringValues.accordion
         );
       }
-    });
+    })
+    .withTestId("swipe-gesture");
 
   // Reset when screen refocuses (e.g., after navigating back)
   useFocusEffect(

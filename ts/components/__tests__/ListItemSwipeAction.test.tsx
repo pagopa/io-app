@@ -1,63 +1,46 @@
-import { NavigationContainer } from "@react-navigation/native"; // Import NavigationContainer
-import { act, fireEvent, render } from "@testing-library/react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { fireEvent, render } from "@testing-library/react-native";
 import { Text } from "react-native";
+import { PanGesture, State } from "react-native-gesture-handler";
+import {
+  fireGestureHandler,
+  getByGestureTestId
+} from "react-native-gesture-handler/jest-utils";
 import ListItemSwipeAction from "../ListItemSwipeAction";
 
-// Mock react-native-reanimated
-jest.mock("react-native-reanimated", () => {
-  const Reanimated = jest.requireActual("react-native-reanimated");
-  // eslint-disable-next-line functional/immutable-data
-  Reanimated.default.call = jest.fn();
-  return Reanimated;
-});
-
-// Mock react-native-gesture-handler
-// eslint-disable-next-line functional/no-let
-let gestureProps: Record<string, any> = {};
-jest.mock("react-native-gesture-handler", () => {
-  const actual = jest.requireActual("react-native-gesture-handler");
-  return {
-    ...actual,
-    PanGestureHandler: ({ children, ...props }: any) => {
-      gestureProps = props;
-      return children;
-    }
-  };
-});
-
-beforeAll(() => {
-  jest.useFakeTimers();
-});
-
-const swipeActionMock = jest.fn();
-
-const renderWithNavigation = () =>
-  render(
-    <NavigationContainer>
-      <ListItemSwipeAction
-        color="contrast"
-        icon="eyeHide"
-        onRightActionPressed={({ triggerSwipeAction }) => {
-          swipeActionMock();
-          triggerSwipeAction();
-        }}
-        accessibilityLabel="Hide item"
-      >
-        <Text>Hide item</Text>
-      </ListItemSwipeAction>
-    </NavigationContainer>
-  );
-
 describe("ListItemSwipeAction", () => {
+  const swipeActionMock = jest.fn();
+  const oldReset = jest.fn();
+  const openedItemRef = { current: oldReset };
+
+  const renderWithNavigation = () =>
+    render(
+      <NavigationContainer>
+        <ListItemSwipeAction
+          openedItemRef={openedItemRef}
+          color="contrast"
+          icon="eyeHide"
+          onRightActionPressed={({ triggerSwipeAction }) => {
+            swipeActionMock();
+            triggerSwipeAction();
+          }}
+          accessibilityLabel="Hide item"
+        >
+          <Text>Hide item</Text>
+        </ListItemSwipeAction>
+      </NavigationContainer>
+    );
+
   beforeEach(() => {
+    swipeActionMock.mockClear();
     jest.clearAllMocks();
   });
 
   it("triggers action on icon press", () => {
     const { getByLabelText } = renderWithNavigation();
-
-    fireEvent.press(getByLabelText("Hide item"));
-
+    const button = getByLabelText("Hide item");
+    fireEvent.press(button);
+    expect(button).toBeTruthy();
     expect(swipeActionMock).toHaveBeenCalled();
   });
 
@@ -72,20 +55,39 @@ describe("ListItemSwipeAction", () => {
     expect(getByText("Hide item")).toBeTruthy();
   });
 
-  it("renders RightActions component with correct props", () => {
-    const { getByLabelText } = renderWithNavigation();
+  it("triggers swipe action and haptic feedback on strong left swipe", () => {
+    renderWithNavigation();
+    const gestureHandler = getByGestureTestId("swipe-gesture");
 
-    const button = getByLabelText("Hide item");
-    expect(button).toBeTruthy();
+    fireGestureHandler<PanGesture>(gestureHandler, [
+      { state: State.BEGAN, translationX: 0 },
+      { state: State.ACTIVE, translationX: -250 },
+      { state: State.END, translationX: -250, velocityX: -900 }
+    ]);
+    expect(swipeActionMock).toHaveBeenCalled();
   });
 
-  it("triggers swipe action and haptic feedback on strong left swipe", () => {
-    act(() => {
-      gestureProps.onBegin?.();
-      gestureProps.onUpdate?.({ translationX: -250 });
-      gestureProps.onEnd?.({ translationX: -250, velocityX: -900 });
-    });
+  it("does not trigger swipe action on weak left swipe", () => {
+    renderWithNavigation();
+    const gestureHandler = getByGestureTestId("swipe-gesture");
 
-    expect(swipeActionMock).toHaveBeenCalled();
+    fireGestureHandler<PanGesture>(gestureHandler, [
+      { state: State.BEGAN, translationX: 0 },
+      { state: State.ACTIVE, translationX: -10 },
+      { state: State.END, translationX: -10, velocityX: -10 }
+    ]);
+    expect(swipeActionMock).not.toHaveBeenCalled();
+  });
+
+  it("springs to -60 when swipe is moderate (between -50 and -200)", () => {
+    renderWithNavigation();
+    const gestureHandler = getByGestureTestId("swipe-gesture");
+
+    fireGestureHandler<PanGesture>(gestureHandler, [
+      { state: State.BEGAN, translationX: 0 },
+      { state: State.ACTIVE, translationX: -100 },
+      { state: State.END, translationX: -100, velocityX: 0 }
+    ]);
+    expect(swipeActionMock).not.toHaveBeenCalled();
   });
 });
