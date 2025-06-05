@@ -10,6 +10,7 @@ import {
   checkIntegrityServiceReadySaga,
   warmUpIntegrityServiceSaga
 } from "../checkIntegrityServiceReadySaga";
+import { getEnv } from "../../../common/utils/environment";
 
 describe("checkIntegrityServiceReadySaga", () => {
   it("Should wait for the integrity service status to be set", () => {
@@ -75,10 +76,14 @@ describe("checkIntegrityServiceReadySaga", () => {
         itWallet: {
           issuance: {
             integrityServiceStatus: "error"
+          },
+          environment: {
+            env: "prod"
           }
         }
       }
     };
+    getEnv();
     return expectSaga(checkIntegrityServiceReadySaga)
       .withState(store)
       .select(itwIntegrityServiceStatusSelector)
