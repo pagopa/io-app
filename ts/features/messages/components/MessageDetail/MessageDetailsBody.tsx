@@ -66,6 +66,7 @@ export const MessageDetailsBody = ({
     <IOMarkdown
       content={markdownWithNoCTA}
       rules={generateMessagesAndServicesRules(linkTo)}
+      sanitizeNewLines={true}
     />
   ) : (
     <MessageMarkdown
