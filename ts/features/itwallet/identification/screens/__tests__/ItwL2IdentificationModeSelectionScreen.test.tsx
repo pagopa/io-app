@@ -8,8 +8,10 @@ import * as remoteConfigSelectors from "../../../common/store/selectors/remoteCo
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwL2IdentificationModeSelectionScreen, ItwL2IdentificationModeSelectionScreenProps } from "../ItwL2IdentificationModeSelectionScreen";
-
+import {
+  ItwL2IdentificationModeSelectionScreen,
+  ItwL2IdentificationModeSelectionScreenProps
+} from "../ItwL2IdentificationModeSelectionScreen";
 
 jest.mock("../../../../../config", () => ({
   itwEnabled: true
