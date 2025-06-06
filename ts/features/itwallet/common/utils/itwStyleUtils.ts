@@ -12,7 +12,7 @@ export type CredentialTheme = {
 
 export const getThemeColorByCredentialType = (
   credentialType: string,
-  supportsL3Design?: boolean
+  withL3Design?: boolean
 ): CredentialTheme => {
   switch (credentialType) {
     case CredentialType.PID:
@@ -24,8 +24,8 @@ export const getThemeColorByCredentialType = (
       };
     case CredentialType.DRIVING_LICENSE:
       return {
-        backgroundColor: supportsL3Design ? IOColors["blueIO-500"] : "#744C63",
-        textColor: supportsL3Design ? "#032D5C" : "#652035",
+        backgroundColor: withL3Design ? IOColors["blueIO-500"] : "#744C63",
+        textColor: withL3Design ? "#032D5C" : "#652035",
         statusBarStyle: "light-content"
       };
     case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
@@ -45,11 +45,11 @@ export const getThemeColorByCredentialType = (
 
 export const getHeaderPropsByCredentialType = (
   credentialType: string,
-  supportsL3Design: boolean
+  withL3Design: boolean
 ): HeaderSecondLevelHookProps => {
   const { backgroundColor } = getThemeColorByCredentialType(
     credentialType,
-    supportsL3Design
+    withL3Design
   );
 
   switch (credentialType) {
