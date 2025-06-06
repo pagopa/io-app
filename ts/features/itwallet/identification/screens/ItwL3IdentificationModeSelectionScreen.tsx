@@ -14,14 +14,14 @@ import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../analytics";
-import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet.tsx";
-import I18n from "../../../../i18n.ts";
-import { useCieInfoAndPinBottomSheets } from "../hooks/useCieInfoAndPinBottomSheets.ts";
-import { useNoCieBottomSheet } from "../hooks/useNoCieBottomSheet.tsx";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader.tsx";
-import { useIOSelector } from "../../../../store/hooks.ts";
+import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet";
+import I18n from "i18n-js";
+import { useCieInfoAndPinBottomSheets } from "../hooks/useCieInfoAndPinBottomSheets";
+import { useNoCieBottomSheet } from "../hooks/useNoCieBottomSheet";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useIOSelector } from "../../../../store/hooks";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { CieWarningType } from "./ItwIdentificationCieWarningScreen.tsx";
+import { CieWarningType } from "./ItwIdentificationCieWarningScreen";
 
 export const ItwL3IdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();

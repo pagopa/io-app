@@ -11,12 +11,12 @@ import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../analytics";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader.tsx";
-import I18n from "../../../../i18n.ts";
-import { useIOSelector } from "../../../../store/hooks.ts";
-import { itwDisabledIdentificationMethodsSelector } from "../../common/store/selectors/remoteConfig.ts";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
-import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import I18n from "i18n-js";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwDisabledIdentificationMethodsSelector } from "../../common/store/selectors/remoteConfig";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
 
 export type ItwL2IdentificationNavigationParams = {
   eidReissuing?: boolean;

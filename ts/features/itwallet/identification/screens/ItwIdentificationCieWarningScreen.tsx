@@ -2,14 +2,11 @@ import { Linking } from "react-native";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import {
-  OperationResultScreenContent,
-  OperationResultScreenContentProps
-} from "../../../../components/screens/OperationResultScreenContent.tsx";
-import I18n from "../../../../i18n.ts";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
-import { useIOSelector } from "../../../../store/hooks.ts";
-import { TranslationKeys } from "../../../../../locales/locales.ts";
+import { OperationResultScreenContent, OperationResultScreenContentProps } from "../../../../components/screens/OperationResultScreenContent";
+import I18n from "i18n-js";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useIOSelector } from "../../../../store/hooks";
+import { TranslationKeys } from "../../../../../locales/locales";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 
 export type CieWarningType = "noPin" | "noCie";

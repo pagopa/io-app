@@ -4,7 +4,7 @@ import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScro
 import I18n from "../../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { EidIssuanceEvents } from "../../../machine/eid/events.ts";
-import { useCieInfoAndPinBottomSheets } from "../../hooks/useCieInfoAndPinBottomSheets.ts";
+import { useCieInfoAndPinBottomSheets } from "../../hooks/useCieInfoAndPinBottomSheets";
 
 type InfoType = "cie" | "ciePin";
 

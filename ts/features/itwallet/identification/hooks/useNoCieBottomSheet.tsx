@@ -4,10 +4,10 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
-import I18n from "../../../../i18n.ts";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import I18n from "i18n-js";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 const noCieContentKeys = [
   "features.itWallet.identification.l3.mode.bottomSheet.noCie.content.firstAttention",
