@@ -3958,13 +3958,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-login-utils@npm:^1.0.9":
-  version: 1.0.9
-  resolution: "@pagopa/io-react-native-login-utils@npm:1.0.9"
+"@pagopa/io-react-native-login-utils@git+https://github.com/pagopa/io-react-native-login-utils.git#cookies-handling":
+  version: 1.1.0
+  resolution: "@pagopa/io-react-native-login-utils@https://github.com/pagopa/io-react-native-login-utils.git#commit=3a7aab9b9ef57d83759ff58f573e43b60be3193a"
+  dependencies:
+    react-native-webview: ^13.14.1
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: d9df42098dac39295e7a490a0f9ed821b720f441ee7ffd0f92a1dd870da343e38621c78f4019bd19497611893d9c4160e652f84147fc29988224b4888a44698f
+  checksum: 7cecbf053d1384c2682626405ceaf88d3e7338f2f405714a67b57754cf70544c9e71413a93b276b6e30fa9736baf2cafa243bed0f44ed13c73da136d48f423a7
   languageName: node
   linkType: hard
 
@@ -13136,7 +13138,7 @@ __metadata:
     "@pagopa/io-react-native-http-client": 1.0.5
     "@pagopa/io-react-native-integrity": ^0.3.2
     "@pagopa/io-react-native-jwt": ^2.1.0
-    "@pagopa/io-react-native-login-utils": ^1.0.9
+    "@pagopa/io-react-native-login-utils": "git+https://github.com/pagopa/io-react-native-login-utils.git#cookies-handling"
     "@pagopa/io-react-native-secure-storage": ^0.2.0
     "@pagopa/io-react-native-wallet": ^0.30.0
     "@pagopa/io-react-native-zendesk": ^0.3.30
@@ -18318,6 +18320,19 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 7f3bce1b37d6be9b2f07f0f7481181d5344f9e58022645b0d20dc58cd66056bb6efecacb231963959db6283cc66d977593db62a403c7c151f83568f83041c2eb
+  languageName: node
+  linkType: hard
+
+"react-native-webview@npm:^13.14.1":
+  version: 13.14.1
+  resolution: "react-native-webview@npm:13.14.1"
+  dependencies:
+    escape-string-regexp: ^4.0.0
+    invariant: 2.2.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 3860c17dc0ccfb8df5d1bfc2f970a31dc2a28e132fb36779b0d253c5b0d3c2457b0bde071ada1c4f0ea415ccc72b6216892ad46e497d9eb879504d07b2a2f00e
   languageName: node
   linkType: hard
 
