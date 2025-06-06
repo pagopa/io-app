@@ -20,11 +20,12 @@ runs:
           ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           ${{ runner.os }}-yarn-
     - name: Install dependencies
-      run: yarn install --frozen-lockfile
+      run: yarn install
       shell: bash
-    - name: Setup tmate session
-      if: ${{ failure() }}
-      uses: mxschmitt/action-tmate@v3
+    - name: show login-util-checksum
+      run: |
+        cat yarn.lock | grep io-react-native-login-utils -A 10 | grep checksum
+      shell: bash
     - id: generate-api-client
       run: yarn generate
       shell: bash
