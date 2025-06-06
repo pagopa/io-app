@@ -57,7 +57,7 @@ export const MessageFooter = ({
       const paymentId = getRptIdStringFromPayment(firstPayment);
       initializeAndNavigateToWalletForPayment(
         paymentId,
-        false,
+        true,
         canNavigateToPayment,
         dispatch,
         () => trackPNPaymentStart(),

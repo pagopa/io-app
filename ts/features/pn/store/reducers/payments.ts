@@ -9,11 +9,11 @@ import {
   isReady,
   RemoteValue
 } from "../../../../common/model/RemoteValue";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { getRptIdStringFromPayment } from "../../../pn/utils/rptId";
 import { SinglePaymentState } from "../../../messages/store/reducers/payments";
+import { PaymentError } from "../../../messages/store/actions";
 
 export const paymentsButtonStateSelector = (
   state: GlobalState,
@@ -76,9 +76,7 @@ const errorPaymentStatistics = (previousStatistics: PaymentStatistics) => ({
 const computePaymentStatistics =
   (previousStatistics: PaymentStatistics) =>
   (
-    maybePaymentStatus: O.Option<
-      RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>
-    >
+    maybePaymentStatus: O.Option<RemoteValue<PaymentInfoResponse, PaymentError>>
   ) =>
     pipe(
       maybePaymentStatus,

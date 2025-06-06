@@ -28,7 +28,7 @@ export const getRptIdStringFromPaymentData = (
 
 export const initializeAndNavigateToWalletForPayment = (
   paymentId: string,
-  isPaidOrHasAnError: boolean,
+  shouldUpdateAgainAfterPaymentProcedure: boolean,
   canNavigateToPayment: boolean,
   dispatch: Dispatch<Action>,
   analyticsCallback: (() => void) | undefined,
@@ -57,7 +57,7 @@ export const initializeAndNavigateToWalletForPayment = (
 
   analyticsCallback?.();
 
-  if (!isPaidOrHasAnError) {
+  if (shouldUpdateAgainAfterPaymentProcedure) {
     dispatch(addUserSelectedPaymentRptId(paymentId));
   }
 

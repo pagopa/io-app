@@ -2,11 +2,13 @@ import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
+import { isTestEnv } from "../../../../utils/environment";
 import { Action } from "../../../../store/actions/types";
 import { UIMessageDetails, UIMessageId } from "../../types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   foldK,
+  isError,
   isLoading,
   isUndefined,
   remoteError,
@@ -17,11 +19,14 @@ import {
 } from "../../../../common/model/RemoteValue";
 import {
   addUserSelectedPaymentRptId,
+  cancelQueuedPaymentUpdates,
+  isGenericError,
+  isTimeoutError,
+  PaymentError,
   reloadAllMessages,
   updatePaymentForMessage
 } from "../actions";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { isProfileEmailValidatedSelector } from "../../../settings/common/store/selectors";
 import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
 import {
@@ -37,9 +42,7 @@ export type MultiplePaymentState = {
 };
 
 export type SinglePaymentState = {
-  [key: string]:
-    | RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>
-    | undefined;
+  [key: string]: RemoteValue<PaymentInfoResponse, PaymentError> | undefined;
 };
 
 export const initialState: MultiplePaymentState = {
@@ -76,26 +79,25 @@ export const paymentsReducer = (
         ...state,
         [action.payload.messageId]: {
           ...state[action.payload.messageId],
-          [action.payload.paymentId]: remoteError(action.payload.details)
+          [action.payload.paymentId]: remoteError(action.payload.reason)
         }
       };
-    case getType(updatePaymentForMessage.cancel):
-      return action.payload.reduce<MultiplePaymentState>(
-        (previousState, queuedUpdateActionPayload) => ({
-          ...previousState,
-          [queuedUpdateActionPayload.messageId]: {
-            ...previousState[queuedUpdateActionPayload.messageId],
-            [queuedUpdateActionPayload.paymentId]: undefined
+    case getType(cancelQueuedPaymentUpdates): {
+      const messageId = action.payload.messageId;
+      const messagePayments = state[messageId];
+      return messagePayments != null
+        ? {
+            ...state,
+            [messageId]: purgePaymentsWithIncompleteData(messagePayments)
           }
-        }),
-        state
-      );
+        : state;
+    }
     case getType(addUserSelectedPaymentRptId):
       return {
         ...state,
         userSelectedPayments: duplicateSetAndAdd(
           state.userSelectedPayments,
-          action.payload.paymentId
+          action.payload
         )
       };
     case getType(reloadAllMessages.request):
@@ -103,20 +105,6 @@ export const paymentsReducer = (
   }
   return state;
 };
-
-const paymentStateSelector = (
-  state: GlobalState,
-  messageId: UIMessageId,
-  paymentId: string
-) =>
-  pipe(
-    state.entities.messages.payments[messageId],
-    O.fromNullable,
-    O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
-    O.getOrElse<RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>>(
-      () => remoteUndefined
-    )
-  );
 
 export const shouldUpdatePaymentSelector = (
   state: GlobalState,
@@ -128,7 +116,7 @@ export const paymentStatusForUISelector = (
   state: GlobalState,
   messageId: UIMessageId,
   paymentId: string
-): RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum> =>
+): RemoteValue<PaymentInfoResponse, PaymentError> =>
   pipe(paymentStateSelector(state, messageId, paymentId), remoteValue =>
     isLoading(remoteValue) ? remoteUndefined : remoteValue
   );
@@ -192,3 +180,34 @@ export const isPaymentsButtonVisibleSelector = (
     paymentsButtonStateSelector(state, messageId),
     status => status !== "hidden"
   );
+
+const paymentStateSelector = (
+  state: GlobalState,
+  messageId: UIMessageId,
+  paymentId: string
+) =>
+  pipe(
+    state.entities.messages.payments[messageId],
+    O.fromNullable,
+    O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
+    O.getOrElse<RemoteValue<PaymentInfoResponse, PaymentError>>(
+      () => remoteUndefined
+    )
+  );
+
+const purgePaymentsWithIncompleteData = (state: SinglePaymentState) => {
+  const isTimeoutOrGenericError = (input: RemoteValue<unknown, PaymentError>) =>
+    isError(input) &&
+    (isTimeoutError(input.error) || isGenericError(input.error));
+
+  return Object.entries(state).reduce((acc, [key, value]) => {
+    if (value == null || isLoading(value) || isTimeoutOrGenericError(value)) {
+      return { ...acc, [key]: undefined };
+    }
+    return { ...acc, [key]: value };
+  }, {} as SinglePaymentState);
+};
+
+export const testable = isTestEnv
+  ? { paymentStateSelector, purgePaymentsWithIncompleteData }
+  : undefined;

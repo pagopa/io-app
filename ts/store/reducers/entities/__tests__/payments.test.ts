@@ -1,6 +1,7 @@
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
+  toSpecificError,
   updatePaymentForMessage,
   UpdatePaymentForMessageFailure
 } from "../../../../features/messages/store/actions";
@@ -22,7 +23,7 @@ describe("payments", () => {
       }
     };
     const payload: UpdatePaymentForMessageFailure = {
-      details: Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO,
+      reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO),
       messageId: "5a15aba4-7cd6-490b-b3fe-cf766f731a2f" as UIMessageId,
       paymentId: "01234567890012345678912345630",
       serviceId: "75c046cf-77a7-4d33-9c3f-578e00379b55" as ServiceId
@@ -36,7 +37,7 @@ describe("payments", () => {
             initialState,
             updatePaymentForMessage.failure({
               ...payload,
-              details: detailV2Enum
+              reason: toSpecificError(detailV2Enum)
             })
           );
           expect(outputState).toBe(initialState);
@@ -48,7 +49,7 @@ describe("payments", () => {
         updatePaymentForMessage.failure({
           ...payload,
           paymentId: rptId1,
-          details: Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+          reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
         })
       );
       expect(outputState).toBe(initialState);
@@ -59,7 +60,7 @@ describe("payments", () => {
         updatePaymentForMessage.failure({
           ...payload,
           paymentId: rptId1,
-          details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+          reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO)
         })
       );
       expect(outputState).toBe(initialState);
@@ -69,7 +70,7 @@ describe("payments", () => {
         initialState,
         updatePaymentForMessage.failure({
           ...payload,
-          details: Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+          reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
         })
       );
       expect(outputState).toEqual({
@@ -82,7 +83,7 @@ describe("payments", () => {
         initialState,
         updatePaymentForMessage.failure({
           ...payload,
-          details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+          reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO)
         })
       );
       expect(outputState).toEqual({

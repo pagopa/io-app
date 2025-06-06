@@ -50,7 +50,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const analyticsCallback = jest.fn();
     initializeAndNavigateToWalletForPayment(
       paymentId,
-      false,
+      true,
       true,
       {} as Dispatch<any>,
       analyticsCallback,
@@ -70,7 +70,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     const analyticsCallback = jest.fn();
     initializeAndNavigateToWalletForPayment(
       paymentId,
-      false,
+      true,
       false,
       {} as Dispatch<any>,
       analyticsCallback,
@@ -103,7 +103,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
 
     initializeAndNavigateToWalletForPayment(
       paymentId,
-      false,
+      true,
       true,
       dispatch,
       analyticsCallback,
@@ -147,7 +147,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
 
     initializeAndNavigateToWalletForPayment(
       paymentId,
-      false,
+      true,
       true,
       dispatch,
       analyticsCallback,
@@ -190,7 +190,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
 
     initializeAndNavigateToWalletForPayment(
       paymentId,
-      false,
+      true,
       true,
       dispatch,
       analyticsCallback,
@@ -235,7 +235,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
 
     initializeAndNavigateToWalletForPayment(
       paymentId,
-      true,
+      false,
       true,
       dispatch,
       analyticsCallback,

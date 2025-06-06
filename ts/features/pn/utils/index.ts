@@ -15,7 +15,7 @@ import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdParty
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { TimelineStatus } from "../components/Timeline";
 
-export const maxVisiblePaymentCountGenerator = () => 5;
+export const maxVisiblePaymentCount = 5;
 
 export const getNotificationStatusInfo = (status: NotificationStatus) =>
   I18n.t(`features.pn.details.timeline.status.${status}`, {
@@ -134,9 +134,7 @@ export const canShowMorePaymentsLink = (
   isCancelled: boolean,
   payments?: ReadonlyArray<NotificationPaymentInfo>
 ): payments is ReadonlyArray<NotificationPaymentInfo> =>
-  !isCancelled &&
-  !!payments &&
-  payments.length > maxVisiblePaymentCountGenerator();
+  !isCancelled && !!payments && payments.length > maxVisiblePaymentCount;
 
 export const shouldUseBottomSheetForPayments = (
   isCancelled: boolean,

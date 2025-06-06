@@ -35,7 +35,7 @@ export const MessageDetailsPaymentButton = ({
       onPress={() =>
         initializeAndNavigateToWalletForPayment(
           getRptIdStringFromPaymentData(paymentData),
-          false,
+          true,
           canNavigateToPayment,
           dispatch,
           () => computeAndTrackPaymentStart(serviceId, store.getState()),
