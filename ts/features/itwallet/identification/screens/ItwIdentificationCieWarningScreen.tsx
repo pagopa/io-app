@@ -2,7 +2,10 @@ import { Linking } from "react-native";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { OperationResultScreenContent, OperationResultScreenContentProps } from "../../../../components/screens/OperationResultScreenContent";
+import {
+  OperationResultScreenContent,
+  OperationResultScreenContentProps
+} from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "i18n-js";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";

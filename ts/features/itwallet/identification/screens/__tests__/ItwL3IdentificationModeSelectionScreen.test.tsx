@@ -7,7 +7,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwL3IdentificationModeSelectionScreen } from "../ItwL3IdentificationModeSelectionScreen.tsx";
+import { ItwL3IdentificationModeSelectionScreen } from "../ItwL3IdentificationModeSelectionScreen";
 
 jest.mock("../../../../../config", () => ({
   itwEnabled: true
