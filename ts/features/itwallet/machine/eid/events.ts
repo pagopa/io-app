@@ -96,6 +96,7 @@ export type Next = {
 export type Reset = {
   type: "reset";
 };
+
 export type GoToL2IdentificationMode = {
   type: "go-to-l2-identification";
 };
