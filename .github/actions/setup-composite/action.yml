@@ -21,7 +21,7 @@ runs:
           ${{ runner.os }}-yarn-
     - name: Install dependencies
       run: yarn install --frozen-lockfile
-      shell: bash    
+      shell: bash
     - id: generate-api-client
       run: yarn generate
       shell: bash
