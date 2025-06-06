@@ -1,4 +1,5 @@
 import { View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { useIOSelector } from "../../../../../store/hooks";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
 import { ItwDiscoveryBanner } from "./ItwDiscoveryBanner";
@@ -17,8 +18,11 @@ export const ItwDiscoveryBannerStandalone = () => {
   }
 
   return (
-    <View testID="itwDiscoveryBannerStandaloneTestID">
-      <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
-    </View>
+    <>
+      <VSpacer />
+      <View testID="itwDiscoveryBannerStandaloneTestID">
+        <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
+      </View>
+    </>
   );
 };

@@ -1,4 +1,4 @@
-import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import { ListItemHeader, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
@@ -19,6 +19,7 @@ import {
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
 import { ItwUpgradeBanner } from "../../itwallet/common/components/ItwUpgradeBanner";
+import { ItwWalletCardsWrapper } from "../../itwallet/common/components/ItwWalletCardsWrapper";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
@@ -55,7 +56,11 @@ const WalletCardsContainer = () => {
     }
     return (
       <View testID="walletCardsContainerTestID" style={{ flex: 1 }}>
-        {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
+        {shouldRenderItwCardsContainer && (
+          <ItwWalletCardsWrapper>
+            <ItwWalletCardsContainer />
+          </ItwWalletCardsWrapper>
+        )}
         <OtherWalletCardsContainer />
       </View>
     );
@@ -66,10 +71,7 @@ const WalletCardsContainer = () => {
   ]);
 
   return (
-    <Animated.View
-      style={{ flex: 1, paddingTop: 16 }}
-      layout={LinearTransition.duration(200)}
-    >
+    <Animated.View style={{ flex: 1 }} layout={LinearTransition.duration(200)}>
       <WalletBannersContainer />
       {walletContent}
     </Animated.View>
@@ -94,6 +96,7 @@ const WalletBannersContainer = () => (
  */
 const WalletCardsContainerSkeleton = () => (
   <>
+    <VSpacer />
     <WalletCardSkeleton testID="walletCardSkeletonTestID_1" cardProps={{}} />
     <WalletCardSkeleton testID="walletCardSkeletonTestID_2" cardProps={{}} />
     <WalletCardSkeleton testID="walletCardSkeletonTestID_3" cardProps={{}} />
