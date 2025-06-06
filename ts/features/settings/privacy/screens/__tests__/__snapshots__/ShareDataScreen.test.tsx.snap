@@ -239,7 +239,7 @@ exports[`ShareDataScreen should match snapshot 1`] = `
                             }
                           >
                             <Text
-                              accessibilityLabel="Your data on IO"
+                              accessibilityLabel="Your usage data"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -259,7 +259,7 @@ exports[`ShareDataScreen should match snapshot 1`] = `
                               }
                               testID="share-data-component-title"
                             >
-                              Your data on IO
+                              Your usage data
                             </Text>
                           </View>
                           <View
@@ -1495,7 +1495,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Your data on IO"
+                              accessibilityLabel="Your usage data"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -1535,7 +1535,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                                   ]
                                 }
                               >
-                                Your data on IO
+                                Your usage data
                               </Text>
                             </View>
                             <View
