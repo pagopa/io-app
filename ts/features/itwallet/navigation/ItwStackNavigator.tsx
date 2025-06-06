@@ -33,7 +33,6 @@ import {
   ItwEidIssuanceMachineContext
 } from "../machine/provider";
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
-import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModal } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailScreen } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
@@ -248,8 +247,6 @@ const InnerNavigator = () => {
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL}
         component={ItwPresentationCredentialFiscalCodeModal}
       />
-      {/* PLAYGROUNDS */}
-      <Stack.Screen name={ITW_ROUTES.PLAYGROUNDS} component={ItwPlayground} />
       {/* LIFECYCLE */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}
