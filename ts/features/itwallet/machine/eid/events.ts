@@ -92,6 +92,7 @@ export type StartReissuing = {
 export type Next = {
   type: "next";
 };
+
 export type Reset = {
   type: "reset";
 };

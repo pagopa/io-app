@@ -523,12 +523,10 @@ export const itwEidIssuanceMachine = setup({
                 "This state handles the CIE preparation screen, where the user is informed about the CIE card",
               entry: "navigateToCiePreparationScreen",
               on: {
-                next: [
-                  {
-                    target:
-                      "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
-                  }
-                ],
+                next:  {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
+                },
                 "go-to-cie-warning": {
                   target:
                     "#itwEidIssuanceMachine.UserIdentification.CieWarning.PreparationCie"
@@ -547,12 +545,10 @@ export const itwEidIssuanceMachine = setup({
                 "This state handles the CIE PIN preparation screen, where the user is informed about the CIE PIN",
               entry: "navigateToCiePinPreparationScreen",
               on: {
-                next: [
-                  {
-                    target:
-                      "#itwEidIssuanceMachine.UserIdentification.CiePin.InsertingCardPin"
-                  }
-                ],
+                next: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CiePin.InsertingCardPin"
+                },
                 "go-to-cie-warning": {
                   target:
                     "#itwEidIssuanceMachine.UserIdentification.CieWarning.PreparationPin"
