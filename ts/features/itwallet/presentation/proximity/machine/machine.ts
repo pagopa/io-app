@@ -1,4 +1,4 @@
-import { assign, fromPromise, setup } from "xstate";
+import { assign, fromCallback, fromPromise, setup } from "xstate";
 import { InitialContext, Context } from "./context";
 import { RemoteEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
@@ -19,8 +19,10 @@ export const itwProximityMachine = setup({
   },
   actors: {
     checkPermissions: fromPromise<boolean, void>(notImplemented),
-    checkBluetoothIsActive: fromPromise(notImplemented),
-    generateQRCodeString: fromPromise<string, void>(notImplemented)
+    checkBluetoothIsActive: fromPromise<boolean, void>(notImplemented),
+    startFlow: fromPromise<void, void>(notImplemented),
+    generateQRCodeString: fromPromise<string, void>(notImplemented),
+    closeFlow: fromCallback(notImplemented)
   }
 }).createMachine({
   id: "itwProximityMachine",
@@ -106,7 +108,7 @@ export const itwProximityMachine = setup({
         onDone: [
           {
             guard: ({ event }) => !!event.output,
-            target: "GeneratingQRCodeString"
+            target: "StartingProximityFlow"
           },
           {
             guard: ({ event }) => !event.output,
@@ -138,7 +140,7 @@ export const itwProximityMachine = setup({
         onDone: [
           {
             guard: ({ event }) => !!event.output,
-            target: "GeneratingQRCodeString"
+            target: "StartingProximityFlow"
           },
           {
             guard: ({ event }) => !event.output,
@@ -159,8 +161,22 @@ export const itwProximityMachine = setup({
         }
       }
     },
+    StartingProximityFlow: {
+      tags: [ItwPresentationTags.Loading],
+      description: "Start the Proximity flow",
+      invoke: {
+        src: "startFlow",
+        onDone: {
+          target: "GeneratingQRCodeString"
+        },
+        onError: {
+          target: "QRCodeGenerationError"
+        }
+      }
+    },
     GeneratingQRCodeString: {
       tags: [ItwPresentationTags.Loading],
+      description: "Generate the QR string",
       invoke: {
         src: "generateQRCodeString",
         onDone: {
@@ -172,8 +188,34 @@ export const itwProximityMachine = setup({
         }
       }
     },
-    DisplayQRCode: {},
-    QRCodeGenerationError: {}
+    DisplayQRCode: {
+      description: "Display the QR Code",
+      on: {
+        close: {
+          target: "ClosePresentation"
+        }
+      }
+    },
+    QRCodeGenerationError: {
+      description: "Display the QR code generation error",
+      on: {
+        close: {
+          target: "ClosePresentation"
+        }
+      }
+    },
+    ClosePresentation: {
+      tags: [ItwPresentationTags.Loading],
+      description: "Close the proximity presentation flow",
+      invoke: {
+        src: "closeFlow"
+      },
+      on: {
+        close: {
+          target: "Idle"
+        }
+      }
+    }
   }
 });
 

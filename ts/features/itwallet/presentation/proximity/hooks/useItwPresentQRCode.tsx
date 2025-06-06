@@ -19,6 +19,7 @@ const QR_WIDTH =
   Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
 
 export const useItwPresentQRCode = () => {
+  const machineRef = ItwProximityMachineContext.useActorRef();
   const qrCodeString =
     ItwProximityMachineContext.useSelector(selectQRCodeString);
   const shouldPresentQRCodeBottomSheet = ItwProximityMachineContext.useSelector(
@@ -38,7 +39,10 @@ export const useItwPresentQRCode = () => {
         <QRCode value={qrCodeString} size={QR_WIDTH} ecl="Q" />
         <VSpacer />
       </VStack>
-    )
+    ),
+    onDismiss: () => {
+      machineRef.send({ type: "close" });
+    }
   });
 
   useEffect(() => {
