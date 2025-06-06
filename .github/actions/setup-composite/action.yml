@@ -22,9 +22,6 @@ runs:
     - name: Install dependencies
       run: yarn install --frozen-lockfile
       shell: bash
-    - name: Setup tmate session
-      if: ${{ failure() }}
-      uses: mxschmitt/action-tmate@v3
     - id: generate-api-client
       run: yarn generate
       shell: bash
