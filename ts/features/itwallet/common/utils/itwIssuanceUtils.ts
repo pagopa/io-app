@@ -30,7 +30,7 @@ const CREDENTIAL_TYPE = "PersonIdentificationData";
 type StartAuthFlowParams = {
   walletAttestation: string;
   identification: IdentificationContext;
-  isL3IssuanceEnabled: boolean;
+  isL3: boolean;
 };
 
 /**
@@ -40,13 +40,13 @@ type StartAuthFlowParams = {
  * the flow must be completed by invoking `completeAuthFlow`.
  * @param walletAttestation - The wallet attestation.
  * @param identification - The identification context.
- * @param isL3IssuanceEnabled flag that indicates that we need to issue an L3 PID
+ * @param isL3 flag that indicates that we need to issue an L3 PID
  * @returns Authentication params to use when completing the flow.
  */
 const startAuthFlow = async ({
   walletAttestation,
   identification,
-  isL3IssuanceEnabled
+  isL3
 }: StartAuthFlowParams) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
     issuerUrl: itwPidProviderBaseUrl,
@@ -54,7 +54,7 @@ const startAuthFlow = async ({
   });
 
   // When issuing an L3 PID, we should not provide an IDP hint
-  const idpHint = isL3IssuanceEnabled ? undefined : getIdpHint(identification);
+  const idpHint = isL3 ? undefined : getIdpHint(identification);
 
   const { issuerUrl, credentialType } = startFlow();
 
