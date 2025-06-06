@@ -4,7 +4,7 @@ on:
   - workflow_call
 jobs:
   static-checks:
-    runs-on: macos-14
+    runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
