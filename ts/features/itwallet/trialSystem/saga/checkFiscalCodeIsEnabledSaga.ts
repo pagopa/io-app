@@ -1,9 +1,11 @@
 import { SagaIterator } from "redux-saga";
 import { call, select } from "typed-redux-saga/macro";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { assert } from "../../../../utils/assert.ts";
-import { createItWalletClient } from "../../api/client.ts";
 import { apiUrlPrefix } from "../../../../config.ts";
+import { assert } from "../../../../utils/assert.ts";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { createItWalletClient } from "../../api/client.ts";
+import { selectItwEnv } from "../../common/store/selectors/environment.ts";
+import { getEnv } from "../../common/utils/environment.ts";
 import { handleGetWhitelistedStatus } from "./handleGetWhitelistedStatus.ts";
 
 /**
@@ -12,6 +14,13 @@ import { handleGetWhitelistedStatus } from "./handleGetWhitelistedStatus.ts";
 export function* checkFiscalCodeEnabledSaga(): SagaIterator {
   const sessionToken = yield* select(sessionTokenSelector);
   assert(sessionToken, "Missing session token");
-  const client = createItWalletClient(apiUrlPrefix, sessionToken);
+
+  const { WALLET_PROVIDER_BASE_URL } = getEnv(yield* select(selectItwEnv));
+
+  const client = createItWalletClient(
+    sessionToken,
+    WALLET_PROVIDER_BASE_URL,
+    apiUrlPrefix
+  );
   yield* call(handleGetWhitelistedStatus, client, sessionToken);
 }

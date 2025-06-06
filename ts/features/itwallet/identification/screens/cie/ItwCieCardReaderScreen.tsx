@@ -9,6 +9,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import * as O from "fp-ts/lib/Option";
 import { memo, useCallback, useRef, useState } from "react";
 import {
@@ -19,37 +21,34 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import CieCardReadingAnimation, {
-  ReadingState
-} from "../../../../authentication/login/cie/components/CieCardReadingAnimation";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import I18n from "../../../../../i18n";
+import { useIOSelector } from "../../../../../store/hooks";
 import {
   setAccessibilityFocus,
   useScreenReaderEnabled
 } from "../../../../../utils/accessibility";
-import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
-import {
-  selectAuthUrlOption,
-  selectCiePin,
-  selectIsLoading
-} from "../../../machine/eid/selectors";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
-import {
-  itWalletIssuanceRedirectUri,
-  itwIdpHintTest
-} from "../../../../../config";
+import CieCardReadingAnimation, {
+  ReadingState
+} from "../../../../authentication/login/cie/components/CieCardReadingAnimation";
 import {
   trackItWalletCieCardReading,
   trackItWalletCieCardReadingFailure,
   trackItWalletCieCardReadingSuccess,
   trackItWalletErrorCardReading
 } from "../../../analytics";
-import * as Cie from "../../components/cie";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
+import { selectItwEnv } from "../../../common/store/selectors/environment";
+import { getEnv } from "../../../common/utils/environment";
+import {
+  selectAuthUrlOption,
+  selectCiePin,
+  selectIsLoading
+} from "../../../machine/eid/selectors";
+import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../../navigation/routes";
+import * as Cie from "../../components/cie";
 
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
@@ -155,6 +154,8 @@ const LoadingSpinner = (
 
 export const ItwCieCardReaderScreen = () => {
   const navigation = useNavigation<StackNavigationProp<ItwParamsList>>();
+  const env = useIOSelector(selectItwEnv);
+  const { ISSUANCE_REDIRECT_URI } = getEnv(env);
 
   useFocusEffect(trackItWalletCieCardReading);
 
@@ -322,11 +323,11 @@ export const ItwCieCardReaderScreen = () => {
           <Cie.WebViewComponent
             authUrl={cieAuthUrl.value}
             pin={ciePin}
-            useUat={itwIdpHintTest}
+            useUat={env === "pre"}
             onEvent={handleCieReadEvent}
             onSuccess={handleCieReadSuccess}
             onError={handleCieReadError}
-            redirectUrl={itWalletIssuanceRedirectUri}
+            redirectUrl={ISSUANCE_REDIRECT_URI}
           />
         ) : null}
       </View>

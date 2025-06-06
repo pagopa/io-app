@@ -29,7 +29,7 @@ import { CredentialType } from "../../common/utils/itwMocksUtils.ts";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
-export default (
+export const createCredentialIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
   store: ReturnType<typeof useIOStore>,
   toast: IOToast

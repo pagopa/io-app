@@ -19,6 +19,7 @@ import {
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
 import { ItwUpgradeBanner } from "../../itwallet/common/components/ItwUpgradeBanner";
+import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
@@ -81,6 +82,7 @@ const WalletCardsContainer = () => {
  */
 const WalletBannersContainer = () => (
   <VStack>
+    <ItwEnvironmentAlert />
     <ItwUpgradeBanner />
     <ItwWalletNotAvailableBanner />
     <ItwDiscoveryBannerStandalone />

@@ -14,7 +14,7 @@ import { Platform } from "react-native";
 import sha from "sha.js";
 import { addPadding, removePadding } from "@pagopa/io-react-native-jwt";
 import { v4 as uuidv4 } from "uuid";
-import { itwGoogleCloudProjectNumber } from "../../../../config";
+import { Env } from "./environment";
 
 /**
  * Type returned by the getHardwareSignatureWithAuthData function of {@link IntegrityContext}.
@@ -71,9 +71,10 @@ const generateIntegrityHardwareKeyTag = () =>
 
 /**
  * Ensures the integrity service is ready on the device.
+ * @param env - The environment to use for the Google Cloud Project Number
  * @returns a promise with resolves with a boolean value indicating whether the integrity service is available.
  */
-const ensureIntegrityServiceIsReady = () =>
+const ensureIntegrityServiceIsReady = ({ GOOGLE_CLOUD_PROJECT_NUMBER }: Env) =>
   Platform.select({
     ios: async () => await isAttestationServiceAvailable(),
     android: async () => {
@@ -81,7 +82,7 @@ const ensureIntegrityServiceIsReady = () =>
       if (!res) {
         return false;
       }
-      await prepareIntegrityToken(itwGoogleCloudProjectNumber);
+      await prepareIntegrityToken(GOOGLE_CLOUD_PROJECT_NUMBER);
       return true;
     },
     default: () => Promise.reject(new Error("Unsupported platform"))

@@ -48,7 +48,10 @@ describe("checkWalletInstanceStateSaga", () => {
             integrityServiceStatus: "ready",
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           },
-          credentials: { eid: O.none, credentials: [] }
+          credentials: { eid: O.none, credentials: [] },
+          environment: {
+            env: "prod"
+          }
         }
       }
     };
@@ -75,7 +78,10 @@ describe("checkWalletInstanceStateSaga", () => {
           issuance: {
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           },
-          credentials: { eid: O.none, credentials: [] }
+          credentials: { eid: O.none, credentials: [] },
+          environment: {
+            env: "prod"
+          }
         }
       }
     };
@@ -101,7 +107,10 @@ describe("checkWalletInstanceStateSaga", () => {
           issuance: {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
           },
-          credentials: { eid: O.some({} as StoredCredential), credentials: [] }
+          credentials: { eid: O.some({} as StoredCredential), credentials: [] },
+          environment: {
+            env: "prod"
+          }
         }
       }
     };
@@ -127,7 +136,10 @@ describe("checkWalletInstanceStateSaga", () => {
           issuance: {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
           },
-          credentials: { eid: O.some({} as StoredCredential), credentials: [] }
+          credentials: { eid: O.some({} as StoredCredential), credentials: [] },
+          environment: {
+            env: "prod"
+          }
         }
       }
     };

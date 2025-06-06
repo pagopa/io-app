@@ -1,29 +1,34 @@
 import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { getNetworkError } from "../../../../utils/errors";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import {
   trackItwStatusWalletAttestationFailure,
   trackItwWalletBadState,
   trackItwWalletInstanceRevocation
 } from "../../analytics";
+import { selectItwEnv } from "../../common/store/selectors/environment";
+import { getEnv } from "../../common/utils/environment";
 import { getWalletInstanceStatus } from "../../common/utils/itwAttestationUtils";
+import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
-import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
-import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 import { checkIntegrityServiceReadySaga } from "./checkIntegrityServiceReadySaga";
+import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
 export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
   const sessionToken = yield* select(sessionTokenSelector);
   assert(sessionToken, "Missing session token");
 
+  const env = getEnv(yield* select(selectItwEnv));
+
   try {
     const walletInstanceStatus = yield* call(
       getWalletInstanceStatus,
+      env,
       integrityKeyTag,
       sessionToken
     );

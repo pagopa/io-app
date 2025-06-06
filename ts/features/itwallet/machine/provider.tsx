@@ -1,16 +1,19 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { createActorContext } from "@xstate/react";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { useIOStore } from "../../../store/hooks";
+import { pipe } from "fp-ts/lib/function";
 import { itwBypassIdentityMatch } from "../../../config";
-import createCredentialIssuanceActionsImplementation from "./credential/actions";
-import createCredentialIssuanceActorsImplementation from "./credential/actors";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { useIOSelector, useIOStore } from "../../../store/hooks";
+import { selectItwEnv } from "../common/store/selectors/environment";
+import { getEnv } from "../common/utils/environment";
+import { createCredentialIssuanceActionsImplementation } from "./credential/actions";
+import { createCredentialIssuanceActorsImplementation } from "./credential/actors";
+import { createCredentialIssuanceGuardsImplementation } from "./credential/guards";
 import { itwCredentialIssuanceMachine } from "./credential/machine";
 import { createEidIssuanceActionsImplementation } from "./eid/actions";
 import { createEidIssuanceActorsImplementation } from "./eid/actors";
 import { createEidIssuanceGuardsImplementation } from "./eid/guards";
 import { itwEidIssuanceMachine } from "./eid/machine";
-import { createCredentialIssuanceGuardsImplementation } from "./credential/guards";
 
 type Props = {
   children: JSX.Element;
@@ -29,12 +32,14 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
   const navigation = useIONavigation();
   const toast = useIOToast();
 
+  const env = pipe(useIOSelector(selectItwEnv), getEnv);
+
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
     guards: createEidIssuanceGuardsImplementation(store, {
       bypassIdentityMatch: itwBypassIdentityMatch
     }),
     actions: createEidIssuanceActionsImplementation(navigation, store, toast),
-    actors: createEidIssuanceActorsImplementation(store)
+    actors: createEidIssuanceActorsImplementation(env, store)
   });
 
   const credentialIssuanceMachine = itwCredentialIssuanceMachine.provide({
@@ -44,7 +49,7 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
       store,
       toast
     ),
-    actors: createCredentialIssuanceActorsImplementation(store)
+    actors: createCredentialIssuanceActorsImplementation(env, store)
   });
 
   return (

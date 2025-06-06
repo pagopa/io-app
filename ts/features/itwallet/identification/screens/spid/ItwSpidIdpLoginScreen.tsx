@@ -4,7 +4,6 @@ import { memo, useCallback, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
-import { itWalletIssuanceRedirectUri } from "../../../../../config";
 import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
@@ -18,6 +17,9 @@ import {
   selectIsLoading
 } from "../../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { useIOSelector } from "../../../../../store/hooks";
+import { selectItwEnv } from "../../../common/store/selectors/environment";
+import { getEnv } from "../../../common/utils/environment";
 
 const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
@@ -33,6 +35,8 @@ const defaultUserAgent =
  * and sends the redirectAuthUrl back to the state machine.
  */
 const ItwSpidIdpLoginScreen = () => {
+  const { ISSUANCE_REDIRECT_URI } = pipe(useIOSelector(selectItwEnv), getEnv);
+
   const isMachineLoading =
     ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const spidAuthUrl =
@@ -77,7 +81,7 @@ const ItwSpidIdpLoginScreen = () => {
         O.fromNullable,
         O.fold(
           () => false,
-          s => s.startsWith(itWalletIssuanceRedirectUri)
+          s => s.startsWith(ISSUANCE_REDIRECT_URI)
         )
       );
 
@@ -88,7 +92,7 @@ const ItwSpidIdpLoginScreen = () => {
         });
       }
     },
-    [machineRef]
+    [machineRef, ISSUANCE_REDIRECT_URI]
   );
 
   // Setup header properties

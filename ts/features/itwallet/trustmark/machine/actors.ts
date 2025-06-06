@@ -1,6 +1,5 @@
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
-import { itwEaaVerifierBaseUrl } from "../../../../config";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
@@ -8,6 +7,7 @@ import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import * as itwTrustmarkUtils from "../utils";
+import { Env } from "../../common/utils/environment";
 
 export type GetWalletAttestationActorOutput = Awaited<
   ReturnType<typeof itwAttestationUtils.getAttestation>
@@ -24,10 +24,12 @@ export type GetCredentialTrustmarkUrlActorOutput = Awaited<
 
 /**
  * Creates the actors for the itwTrustmarkMachine
+ * @param env - The environment to use for the IT Wallet API calls
  * @param store the IOStore
  * @returns the actors
  */
 export const createItwTrustmarkActorsImplementation = (
+  env: Env,
   store: ReturnType<typeof useIOStore>
 ) => {
   /**
@@ -45,6 +47,7 @@ export const createItwTrustmarkActorsImplementation = (
        * Get the wallet instance attestation
        */
       return await itwAttestationUtils.getAttestation(
+        env,
         integrityKeyTag.value,
         sessionToken
       );
@@ -62,9 +65,9 @@ export const createItwTrustmarkActorsImplementation = (
 
     // Generate trustmark url to be presented
     return await itwTrustmarkUtils.getCredentialTrustmark(
+      env,
       input.walletInstanceAttestation,
-      input.credential,
-      itwEaaVerifierBaseUrl
+      input.credential
     );
   });
 

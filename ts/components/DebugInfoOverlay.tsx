@@ -8,9 +8,16 @@ import {
 } from "@pagopa/io-app-design-system";
 
 import { FunctionComponent, useState } from "react";
-import { Platform, Pressable, SafeAreaView, StyleSheet } from "react-native";
+import {
+  Platform,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  View
+} from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
+import { selectItwEnv } from "../features/itwallet/common/store/selectors/environment";
 import { ReduxProps } from "../store/actions/types";
 import { useIOSelector } from "../store/hooks";
 import { currentRouteSelector } from "../store/reducers/navigation";
@@ -88,6 +95,7 @@ const DebugInfoOverlay: FunctionComponent<Props> = (props: Props) => {
               </IOText>
             </Pressable>
             {isPagoPATestEnabled && <PagoPATestIndicator />}
+            <ItwPreIndicator />
           </HStack>
           {showRootName && (
             <Pressable
@@ -118,6 +126,36 @@ const DebugInfoOverlay: FunctionComponent<Props> = (props: Props) => {
         <DebugDataOverlay onDismissed={() => showDebugData(false)} />
       )}
     </>
+  );
+};
+
+const ItwPreIndicator = () => {
+  const itwEnv = useIOSelector(selectItwEnv);
+
+  if (itwEnv !== "pre") {
+    return null;
+  }
+
+  return (
+    <View
+      style={[
+        styles.versionTextWrapper,
+        {
+          backgroundColor: hexToRgba(IOColors["error-500"], 0.4),
+          borderColor: hexToRgba(IOColors["error-850"], 0.1)
+        }
+      ]}
+    >
+      <IOText
+        color={"error-850"}
+        font="TitilliumSansPro"
+        weight="Semibold"
+        size={12}
+        lineHeight={16}
+      >
+        ITW PRE
+      </IOText>
+    </View>
   );
 };
 

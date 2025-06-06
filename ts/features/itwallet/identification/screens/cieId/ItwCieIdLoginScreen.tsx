@@ -8,11 +8,13 @@ import { selectAuthUrlOption } from "../../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import I18n from "../../../../../i18n";
 import { originSchemasWhiteList } from "../../../../authentication/common/utils/originSchemasWhiteList";
-import { itWalletIssuanceRedirectUri } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useCieIdApp } from "../../hooks/useCieIdApp";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
+import { useIOSelector } from "../../../../../store/hooks";
+import { selectItwEnv } from "../../../common/store/selectors/environment";
+import { getEnv } from "../../../common/utils/environment";
 
 // To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
 const defaultUserAgent =
@@ -33,6 +35,8 @@ const isAuthenticationUrl = (url: string) => {
  * and sends the redirectAuthUrl back to the state machine.
  */
 const ItwCieIdLoginScreen = () => {
+  const { ISSUANCE_REDIRECT_URI } = pipe(useIOSelector(selectItwEnv), getEnv);
+
   const initialAuthUrl =
     ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -92,7 +96,7 @@ const ItwCieIdLoginScreen = () => {
         O.fromNullable,
         O.fold(
           () => false,
-          s => s.startsWith(itWalletIssuanceRedirectUri)
+          s => s.startsWith(ISSUANCE_REDIRECT_URI)
         )
       );
 
@@ -103,7 +107,7 @@ const ItwCieIdLoginScreen = () => {
         });
       }
     },
-    [machineRef]
+    [machineRef, ISSUANCE_REDIRECT_URI]
   );
 
   const content = useMemo(
