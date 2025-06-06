@@ -523,7 +523,7 @@ export const itwEidIssuanceMachine = setup({
                 "This state handles the CIE preparation screen, where the user is informed about the CIE card",
               entry: "navigateToCiePreparationScreen",
               on: {
-                next:  {
+                next: {
                   target:
                     "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
                 },
