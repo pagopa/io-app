@@ -26,11 +26,12 @@ describe("ItwRemoteRequestValidationScreen", () => {
   });
 
   it("should render the loading screen and start the machine if payload is valid", () => {
-    const validPayload = {
+    const validPayload: ItwRemoteRequestPayload = {
       client_id: "abc123xy",
       request_uri: "https://example.com/callback",
-      state: "hyqizm592"
-    } as ItwRemoteRequestPayload;
+      state: "hyqizm592",
+      request_uri_method: "get"
+    };
 
     const mockSend = jest.fn();
 
@@ -41,7 +42,11 @@ describe("ItwRemoteRequestValidationScreen", () => {
     const { getByTestId } = renderComponent(validPayload);
 
     act(() => {
-      expect(mockSend).toHaveBeenCalledTimes(1);
+      expect(mockSend).toHaveBeenCalledWith({ type: "reset" });
+      expect(mockSend).toHaveBeenCalledWith({
+        type: "start",
+        payload: validPayload
+      });
       expect(getByTestId("loader")).toBeTruthy();
     });
   });
