@@ -11,7 +11,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
-import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../../../definitions/auth/InitializedProfile";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import TosScreen from "../TosScreen";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";

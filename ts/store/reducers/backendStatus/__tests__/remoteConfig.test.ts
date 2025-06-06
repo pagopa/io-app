@@ -15,7 +15,7 @@ import {
   pnPrivacyUrlsSelector
 } from "../remoteConfig";
 import * as appVersion from "../../../../utils/appVersion";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
 describe("remoteConfig", () => {
   afterEach(() => {

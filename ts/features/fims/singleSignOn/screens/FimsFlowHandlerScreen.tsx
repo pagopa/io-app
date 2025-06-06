@@ -28,7 +28,7 @@ import {
   fimsAuthenticationFailedSelector,
   fimsLoadingStateSelector
 } from "../store/selectors";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
 export type FimsFlowHandlerScreenRouteParams = {
   /* The label on the button that started the FIMS flow */

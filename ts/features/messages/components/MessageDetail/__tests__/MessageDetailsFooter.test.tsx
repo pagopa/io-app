@@ -10,8 +10,8 @@ import { loadServiceDetail } from "../../../../services/details/store/actions/de
 import { messageId_1, service_1 } from "../../../__mocks__/messages";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { MessageDetailsFooter } from "../MessageDetailsFooter";
-import { ServiceMetadata } from "../../../../../../definitions/services/ServiceMetadata";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import { ServiceMetadataV2 } from "../../../../../../definitions/services/ServiceMetadataV2";
 
 const mockPresentBottomSheet = jest.fn();
 
@@ -42,7 +42,7 @@ describe("MessageDetailsFooter component", () => {
         metadata: {
           email: "test@test.com",
           phone: "+393331234567"
-        } as ServiceMetadata
+        } as ServiceMetadataV2
       })
     ];
 
@@ -64,7 +64,7 @@ describe("MessageDetailsFooter component", () => {
         metadata: {
           email: "test@test.com",
           phone: "+393331234567"
-        } as ServiceMetadata
+        } as ServiceMetadataV2
       })
     ];
 
@@ -89,7 +89,7 @@ describe("MessageDetailsFooter component", () => {
         metadata: {
           email: "test@test.com",
           phone: "+393331234567"
-        } as ServiceMetadata
+        } as ServiceMetadataV2
       })
     ];
 
@@ -114,7 +114,7 @@ describe("MessageDetailsFooter component", () => {
         metadata: {
           email: "test@test.com",
           phone: "+393331234567"
-        } as ServiceMetadata
+        } as ServiceMetadataV2
       })
     ];
 
@@ -233,7 +233,7 @@ describe("MessageDetailsFooter component", () => {
         metadata: {
           email: "test@test.com",
           phone: "+393331234567"
-        } as ServiceMetadata
+        } as ServiceMetadataV2
       })
     ];
 

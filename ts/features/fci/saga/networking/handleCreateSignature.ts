@@ -76,7 +76,7 @@ export function* handleCreateSignature(
 
     const createSignatureRequest = fciLollipopclient.createSignature({
       body: action.payload,
-      Bearer: `Bearer ${bearerToken}`,
+      Bearer: `${bearerToken}`,
       "x-pagopa-lollipop-original-method": LollipopMethodEnum.POST,
       "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
       "signature-input": "" as LollipopSignatureInput,

@@ -1,4 +1,4 @@
-import { DiscountBucketCode } from "../../../../../definitions/cgn/merchants/DiscountBucketCode";
+import { DiscountBucketCode } from "../../../../../definitions/cgn/DiscountBucketCode";
 
 /**
  * Type representing bucket code successfully loaded

@@ -5,10 +5,10 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { MessagePaymentItem } from "../MessagePaymentItem";
 import { UIMessageId } from "../../../types";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
-import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
+import { Detail_v2Enum } from "../../../../../../definitions/payments/PaymentProblemJson";
 import { updatePaymentForMessage } from "../../../store/actions";
-import { PaymentRequestsGetResponse } from "../../../../../../definitions/backend/PaymentRequestsGetResponse";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { PaymentRequestsGetResponse } from "../../../../../../definitions/payments/PaymentRequestsGetResponse";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 describe("MessagePaymentItem component", () => {
   it("Should match the snapshot for a loading item", () => {

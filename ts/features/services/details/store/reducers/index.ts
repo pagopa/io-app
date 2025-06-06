@@ -4,9 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
-import { ServiceMetadata } from "../../../../../../definitions/services/ServiceMetadata";
-import { SpecialServiceMetadata } from "../../../../../../definitions/services/SpecialServiceMetadata";
+import { SpecialServiceMetadataV2 } from "../../../../../../definitions/services/SpecialServiceMetadataV2";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
@@ -28,6 +26,8 @@ import {
   loadServicePreference,
   upsertServicePreference
 } from "../actions/preference";
+import { ServiceMetadataV2 } from "../../../../../../definitions/services/ServiceMetadataV2";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 export type ServicePreferencePot = pot.Pot<
   ServicePreferenceResponse,
@@ -192,8 +192,8 @@ export const serviceMetadataInfoSelector = createSelector(
     pipe(
       serviceMetadata,
       O.fromNullable,
-      O.chain<ServiceMetadata, ServiceMetadataInfo>(metadata => {
-        if (SpecialServiceMetadata.is(metadata)) {
+      O.chain<ServiceMetadataV2, ServiceMetadataInfo>(metadata => {
+        if (SpecialServiceMetadataV2.is(metadata)) {
           return O.some({
             isSpecialService: true,
             serviceKind:

@@ -21,7 +21,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { ComponentProps, useCallback, useLayoutEffect } from "react";
 import { AccessibilityInfo, SafeAreaView, StyleSheet } from "react-native";
-import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
+import { OrganizationFiscalCode } from "../../../../../definitions/communications/OrganizationFiscalCode";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import IOMarkdown from "../../../../components/IOMarkdown";

@@ -8,9 +8,9 @@ import {
   getProfileEmail,
   getProfileSpidEmail
 } from "../utils/guards";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
-import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
-import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/auth/ServicesPreferencesMode";
+import { EmailAddress } from "../../../../../../definitions/auth/EmailAddress";
+import { InitializedProfile } from "../../../../../../definitions/auth/InitializedProfile";
 
 const baseProfile = {
   has_profile: true,

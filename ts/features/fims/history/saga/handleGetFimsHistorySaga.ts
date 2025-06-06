@@ -23,7 +23,7 @@ export function* handleGetFimsHistorySaga(
   );
 
   const getHistoryRequest = getFimsHistory({
-    Bearer: `Bearer ${bearerToken}`,
+    Bearer: `${bearerToken}`,
     "Accept-Language": preferredLanguage,
     page: action.payload.continuationToken
   });

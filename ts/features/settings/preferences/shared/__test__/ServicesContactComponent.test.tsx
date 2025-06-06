@@ -1,7 +1,7 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import ServicesContactComponent from "../components/ServicesContactComponent";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/auth/ServicesPreferencesMode";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";

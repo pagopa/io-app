@@ -41,7 +41,7 @@ import { MessageListCategory } from "../../../types/messageListCategory";
 import { emptyMessageArray } from "../../../utils";
 import { isSomeLoadingOrSomeUpdating } from "../../../../../utils/pot";
 import { PaymentByRptIdState } from "../../../../../store/reducers/entities/payments";
-import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
+import { MessageCategory } from "../../../../../../definitions/communications/MessageCategory";
 import { nextPageLoadingWaitMillisecondsGenerator } from "../../../components/Home/homeUtils";
 
 describe("allPaginated reducer", () => {

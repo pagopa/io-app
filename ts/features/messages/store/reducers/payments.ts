@@ -20,8 +20,8 @@ import {
   reloadAllMessages,
   updatePaymentForMessage
 } from "../actions";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { Detail_v2Enum } from "../../../../../definitions/payments/PaymentProblemJson";
+import { PaymentRequestsGetResponse } from "../../../../../definitions/payments/PaymentRequestsGetResponse";
 import { isProfileEmailValidatedSelector } from "../../../settings/common/store/selectors";
 import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
 import {

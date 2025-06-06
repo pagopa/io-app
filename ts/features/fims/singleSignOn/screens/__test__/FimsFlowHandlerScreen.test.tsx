@@ -7,7 +7,7 @@ import { FimsFlowHandlerScreen } from "../FimsFlowHandlerScreen";
 import { FIMS_ROUTES } from "../../../common/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
 import * as ANALYTICS from "../../../common/analytics";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { fimsGetConsentsListAction } from "../../store/actions";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import * as APPVERSION from "../../../../../utils/appVersion";

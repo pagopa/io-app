@@ -10,7 +10,7 @@ import * as hooks from "../../../../../store/hooks";
 import * as selectors from "../../../common/store/selectors/userDataProcessing";
 import { upsertUserDataProcessing } from "../../../common/store/actions/userDataProcessing";
 import I18n from "../../../../../i18n";
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
+import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/auth/UserDataProcessingChoice";
 
 jest.mock("../../../../../store/hooks", () => ({
   useIODispatch: jest.fn(),

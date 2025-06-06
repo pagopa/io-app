@@ -6,11 +6,11 @@ import {
   profileUpsert,
   resetProfileState
 } from "../actions";
-import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../../../definitions/auth/InitializedProfile";
 import { ProfileError } from "../types";
-import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
-import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
+import { EmailAddress } from "../../../../../../definitions/auth/EmailAddress";
+import { PreferredLanguageEnum } from "../../../../../../definitions/auth/PreferredLanguage";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/auth/ServicesPreferencesMode";
 import reducer, { exported } from "../reducers";
 
 const testableModule = exported!;

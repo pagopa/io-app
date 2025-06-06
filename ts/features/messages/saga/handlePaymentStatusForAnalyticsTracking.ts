@@ -6,7 +6,7 @@ import {
   updatePaymentForMessage
 } from "../store/actions";
 import { serviceDetailsByIdSelector } from "../../services/details/store/reducers";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
+import { Detail_v2Enum } from "../../../../definitions/payments/PaymentProblemJson";
 import {
   isExpiredPaymentFromDetailV2Enum,
   isOngoingPaymentFromDetailV2Enum,

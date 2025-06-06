@@ -14,7 +14,7 @@ import {
 import { UIMessageId } from "../../../messages/types";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
 import { pnMessageFromIdSelector } from "../reducers";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { Detail_v2Enum } from "../../../../../definitions/payments/PaymentProblemJson";
 import {
   isPaidPaymentFromDetailV2Enum,
   isExpiredPaymentFromDetailV2Enum,

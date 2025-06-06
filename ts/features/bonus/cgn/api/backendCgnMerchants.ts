@@ -18,7 +18,7 @@ import {
   GetPublishedProductCategoriesT,
   searchDefaultDecoder,
   SearchT
-} from "../../../../../definitions/cgn/merchants/requestTypes";
+} from "../../../../../definitions/cgn/requestTypes";
 import { tokenHeaderProducer, withBearerToken } from "../../../../utils/api";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 

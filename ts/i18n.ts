@@ -4,7 +4,7 @@ import I18n from "react-native-i18n";
 // npm run generate:locales
 import * as locales from "../locales/locales";
 import { Locales } from "../locales/locales";
-import { PreferredLanguageEnum } from "../definitions/backend/PreferredLanguage";
+import { PreferredLanguageEnum } from "../definitions/auth/PreferredLanguage";
 import { BackendStatusMessage } from "../definitions/content/BackendStatusMessage";
 
 export type LocalizedMessageKeys = keyof BackendStatusMessage;
