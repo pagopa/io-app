@@ -28,7 +28,8 @@ export function* handleDisableReceipt(
     analytics.trackHideReceiptFailure({
       organization_name: paymentsAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentsAnalyticsData?.receiptFirstTimeOpening,
-      user: paymentsAnalyticsData?.receiptUser
+      user: paymentsAnalyticsData?.receiptUser,
+      trigger: action.payload.trigger
     });
   };
 
@@ -41,7 +42,8 @@ export function* handleDisableReceipt(
       first_time_opening: paymentsAnalyticsData?.receiptFirstTimeOpening,
       user: paymentsAnalyticsData?.receiptUser,
       organization_fiscal_code:
-        paymentsAnalyticsData?.receiptOrganizationFiscalCode
+        paymentsAnalyticsData?.receiptOrganizationFiscalCode,
+      trigger: action.payload.trigger
     });
   };
 
