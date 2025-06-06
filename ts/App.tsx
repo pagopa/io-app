@@ -17,6 +17,7 @@ import { LightModalProvider } from "./components/ui/LightModal";
 import { sentryDsn } from "./config";
 import { isDevEnv } from "./utils/environment";
 import { StatusMessages } from "./components/StatusMessages";
+import { AppFeedbackProvider } from "./features/appReviews/components/AppFeedbackProvider";
 
 export type ReactNavigationInstrumentation = ReturnType<
   typeof Sentry.reactNavigationIntegration
@@ -105,9 +106,11 @@ const App = (): JSX.Element => (
                 <PersistGate loading={undefined} persistor={persistor}>
                   <BottomSheetModalProvider>
                     <LightModalProvider>
-                      <StatusMessages>
-                        <RootContainer store={store} />
-                      </StatusMessages>
+                      <AppFeedbackProvider>
+                        <StatusMessages>
+                          <RootContainer store={store} />
+                        </StatusMessages>
+                      </AppFeedbackProvider>
                     </LightModalProvider>
                   </BottomSheetModalProvider>
                 </PersistGate>

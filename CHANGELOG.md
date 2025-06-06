@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0-rc.2](https://github.com/pagopa/io-app/compare/3.7.0-rc.1...3.7.0-rc.2) (2025-06-05)
+
+
+### Chores
+
+* [[IOCOM-2398](https://pagopa.atlassian.net/browse/IOCOM-2398),[IOCOM-2373](https://pagopa.atlassian.net/browse/IOCOM-2373)] update i18n and color for SEND engagement banner ([#7052](https://github.com/pagopa/io-app/issues/7052)) ([8b5af2a](https://github.com/pagopa/io-app/commit/8b5af2a4c3a1fe21e83e3bf6e4cedf01284d673b))
+
 ## [3.7.0-rc.1](https://github.com/pagopa/io-app/compare/3.7.0-rc.0...3.7.0-rc.1) (2025-06-04)
 
 
