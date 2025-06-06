@@ -22,6 +22,10 @@ runs:
     - name: Install dependencies
       run: yarn install --frozen-lockfile
       shell: bash
+    - name: List yarn cache
+      if: always()
+      run: ls .yarn/cache | grep io-react-native-login-utils | xargs -I % openssl dgst -sha512 .yarn/cache/%
+      shell: bash
     - id: generate-api-client
       run: yarn generate
       shell: bash
