@@ -6,7 +6,7 @@ import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "i18n-js";
+import I18n from "../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import { TranslationKeys } from "../../../../../locales/locales";

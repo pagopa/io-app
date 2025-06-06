@@ -4,8 +4,8 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import I18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import I18n from "i18n-js";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 

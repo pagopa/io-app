@@ -6,13 +6,13 @@ import {
   ModuleNavigation,
   VStack
 } from "@pagopa/io-app-design-system";
+import I18n from "../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../analytics";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "i18n-js";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwDisabledIdentificationMethodsSelector } from "../../common/store/selectors/remoteConfig";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";

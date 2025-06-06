@@ -9,13 +9,13 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
+import I18n from "../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../analytics";
 import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet";
-import I18n from "i18n-js";
 import { useCieInfoAndPinBottomSheets } from "../hooks/useCieInfoAndPinBottomSheets";
 import { useNoCieBottomSheet } from "../hooks/useNoCieBottomSheet";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
