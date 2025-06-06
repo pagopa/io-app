@@ -3,13 +3,22 @@ description: "This action collects the steps to setup any job"
 runs:
   using: "composite"
   steps:
-    - id: enable-corepack
-      shell: bash
-      run: corepack enable
+    # - id: enable-corepack
+    #   shell: bash
+    #   run: corepack enable
     - id: setup-node
       uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 # v3.8.2
       with:
         node-version-file: ".node-version"
+    # 3. Installa ESATTAMENTE Yarn v3.6.4 globalmente.
+    - name: Install specific Yarn version
+      shell: bash
+      run: npm install -g yarn@3.6.4
+
+    # 4. Aggiungi uno step per verificare la versione installata (opzionale ma consigliato per il debug).
+    - name: Check Yarn version
+      shell: bash
+      run: yarn --version
     - id: yarn-cache
       uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
       with:
