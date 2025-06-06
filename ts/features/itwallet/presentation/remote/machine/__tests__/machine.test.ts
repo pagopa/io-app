@@ -448,4 +448,23 @@ describe("itwRemoteMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
   });
+
+  it("should reset the machine", async () => {
+    const initialSnapshot = createActor(itwRemoteMachine).getSnapshot();
+    const actor = createActor(mockedMachine, {
+      snapshot: _.merge(undefined, initialSnapshot, {
+        value: "ClaimsDisclosure",
+        context: {
+          ...InitialContext,
+          payload: qrCodePayload,
+          rpSubject: "test_rp"
+        }
+      })
+    });
+    actor.start();
+    actor.send({ type: "reset" });
+
+    await waitFor(actor, snapshot => snapshot.matches("Idle"));
+    expect(actor.getSnapshot().context).toStrictEqual<Context>(InitialContext);
+  });
 });
