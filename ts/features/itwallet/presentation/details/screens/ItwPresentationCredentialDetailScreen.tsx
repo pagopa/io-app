@@ -6,7 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import I18n from "../../../../../i18n.ts";
 import {
@@ -86,6 +86,15 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
         dispatch(itwSetReviewPending(true));
       }
     }, [credentialType, isPendingReview, dispatch])
+  );
+  useFocusEffect(
+    // eslint-disable-next-line arrow-body-style
+    useCallback(() => {
+      /**
+       * Dismiss the bottom sheet when this screen is no longer in focus.
+       */
+      return dismiss;
+    }, [dismiss])
   );
 
   if (O.isNone(credentialOption)) {

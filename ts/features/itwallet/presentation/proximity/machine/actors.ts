@@ -7,9 +7,8 @@ import {
   RESULTS
 } from "react-native-permissions";
 import { BluetoothStateManager } from "react-native-bluetooth-state-manager";
-import { fromCallback, fromPromise } from "xstate";
+import { fromPromise } from "xstate";
 import { Proximity } from "@pagopa/io-react-native-proximity";
-import { constUndefined } from "fp-ts/lib/function";
 
 export const createProximityActorsImplementation = () => {
   const checkPermissions = fromPromise<boolean, void>(async () => {
@@ -62,14 +61,12 @@ export const createProximityActorsImplementation = () => {
     await Proximity.start();
   });
 
-  const generateQRCodeString = fromPromise<string, void>(async () => await Proximity.getQrCodeString());
+  const generateQRCodeString = fromPromise<string, void>(async () =>
+    Proximity.getQrCodeString()
+  );
 
-  const closeFlow = fromCallback(({ sendBack }) => {
-    void Proximity.close()
-      .then(() => {
-        sendBack({ type: "close" });
-      })
-      .catch(constUndefined);
+  const closeFlow = fromPromise<void, void>(async () => {
+    await Proximity.close();
   });
 
   return {

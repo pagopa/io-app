@@ -1,4 +1,4 @@
-import { assign, fromCallback, fromPromise, setup } from "xstate";
+import { assign, fromPromise, setup } from "xstate";
 import { InitialContext, Context } from "./context";
 import { RemoteEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
@@ -22,7 +22,7 @@ export const itwProximityMachine = setup({
     checkBluetoothIsActive: fromPromise<boolean, void>(notImplemented),
     startFlow: fromPromise<void, void>(notImplemented),
     generateQRCodeString: fromPromise<string, void>(notImplemented),
-    closeFlow: fromCallback(notImplemented)
+    closeFlow: fromPromise<void, void>(notImplemented)
   }
 }).createMachine({
   id: "itwProximityMachine",
@@ -205,15 +205,13 @@ export const itwProximityMachine = setup({
       }
     },
     ClosePresentation: {
-      tags: [ItwPresentationTags.Loading],
       description: "Close the proximity presentation flow",
       invoke: {
-        src: "closeFlow"
-      },
-      on: {
-        close: {
+        src: "closeFlow",
+        onDone: {
           target: "Idle"
         }
+        // TODO: Handle any potential error scenario.
       }
     }
   }
