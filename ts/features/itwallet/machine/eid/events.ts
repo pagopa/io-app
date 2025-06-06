@@ -1,6 +1,6 @@
 import { ErrorActorEvent } from "xstate";
 import { SpidIdp } from "../../../../utils/idps";
-import { CieWarningType } from "../../identification/screens/ItwIdentificationCieWarningScreen.tsx";
+import { CieWarningType } from "../../identification/screens/ItwIdentificationCieWarningScreen";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";
 

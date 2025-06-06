@@ -3,7 +3,7 @@ import { ContentWrapper, IOButton } from "@pagopa/io-app-design-system";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
-import { EidIssuanceEvents } from "../../../machine/eid/events.ts";
+import { EidIssuanceEvents } from "../../../machine/eid/events";
 import { useCieInfoAndPinBottomSheets } from "../../hooks/useCieInfoAndPinBottomSheets";
 
 type InfoType = "cie" | "ciePin";
