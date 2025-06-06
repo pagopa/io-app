@@ -34,6 +34,10 @@ export type Consent = {
   type: "holder-consent";
 };
 
+export type Reset = {
+  type: "reset";
+};
+
 export type RemoteEvents =
   | Start
   | GoToWalletActivation
@@ -42,4 +46,5 @@ export type RemoteEvents =
   | Consent
   | ToggleCredential
   | Back
-  | Close;
+  | Close
+  | Reset;

@@ -60,11 +60,18 @@ export const itwRemoteMachine = setup({
   id: "itwRemoteMachine",
   context: { ...InitialContext },
   initial: "Idle",
+  on: {
+    reset: {
+      target: ".Idle",
+      actions: assign({ ...InitialContext })
+    }
+  },
   states: {
     Idle: {
       description:
         "The machine is in idle, ready to start the remote presentation flow",
       on: {
+        reset: {}, // Do nothing if the machine is already idle
         start: {
           actions: assign(({ event }) => ({
             payload: event.payload
