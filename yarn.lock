@@ -3958,13 +3958,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-login-utils@npm:^1.0.9":
-  version: 1.0.9
-  resolution: "@pagopa/io-react-native-login-utils@npm:1.0.9"
+"@pagopa/io-react-native-login-utils@git+https://github.com/pagopa/io-react-native-login-utils.git#d9db7f80ff5763e1ef6642379aad1633a8a43bd7":
+  version: 1.1.0
+  resolution: "@pagopa/io-react-native-login-utils@https://github.com/pagopa/io-react-native-login-utils.git#commit=d9db7f80ff5763e1ef6642379aad1633a8a43bd7"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: d9df42098dac39295e7a490a0f9ed821b720f441ee7ffd0f92a1dd870da343e38621c78f4019bd19497611893d9c4160e652f84147fc29988224b4888a44698f
+  checksum: 6705dd6802f467dd915d26680991e0b24c6c98d77d1e0d6ff5461459383c708ccd2a00a603003c0e337d3a651e547321970e7bea768eacdd8521c650a6f213c6
   languageName: node
   linkType: hard
 
@@ -13136,7 +13136,7 @@ __metadata:
     "@pagopa/io-react-native-http-client": 1.0.5
     "@pagopa/io-react-native-integrity": ^0.3.2
     "@pagopa/io-react-native-jwt": ^2.1.0
-    "@pagopa/io-react-native-login-utils": ^1.0.9
+    "@pagopa/io-react-native-login-utils": "git+https://github.com/pagopa/io-react-native-login-utils.git#d9db7f80ff5763e1ef6642379aad1633a8a43bd7"
     "@pagopa/io-react-native-secure-storage": ^0.2.0
     "@pagopa/io-react-native-wallet": ^0.30.0
     "@pagopa/io-react-native-zendesk": ^0.3.30
