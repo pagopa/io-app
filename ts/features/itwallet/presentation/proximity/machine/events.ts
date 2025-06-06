@@ -14,4 +14,8 @@ export type Continue = {
   type: "continue";
 };
 
-export type RemoteEvents = Start | Back | Continue | Close;
+export type Retry = {
+  type: "retry";
+};
+
+export type RemoteEvents = Start | Back | Continue | Close | Retry;

@@ -1,43 +1,52 @@
-import { useEffect } from "react";
-import {
-  Body,
-  IOVisualCostants,
-  VSpacer,
-  VStack
-} from "@pagopa/io-app-design-system";
-import QRCode from "react-native-qrcode-svg";
-import { Dimensions } from "react-native";
+import { useCallback, useEffect } from "react";
+import { Body, VStack } from "@pagopa/io-app-design-system";
+import { View } from "react-native";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { ItwProximityMachineContext } from "../machine/provider";
 import {
-  selectShouldPresentQRCodeBottomSheet,
-  selectQRCodeString
+  selectIsLoading,
+  selectIsQRCodeGenerationError,
+  selectQRCodeString,
+  selectShouldPresentQRCodeBottomSheet
 } from "../machine/selectors";
 import I18n from "../../../../../i18n";
-
-const QR_WIDTH =
-  Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
+import { ItwEngagementQRCode } from "../components/ItwEngagementQRCode";
 
 export const useItwPresentQRCode = () => {
-  const machineRef = ItwProximityMachineContext.useActorRef();
   const qrCodeString =
     ItwProximityMachineContext.useSelector(selectQRCodeString);
+  const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
+  const isQRCodeGenerationError = ItwProximityMachineContext.useSelector(
+    selectIsQRCodeGenerationError
+  );
+  const machineRef = ItwProximityMachineContext.useActorRef();
   const shouldPresentQRCodeBottomSheet = ItwProximityMachineContext.useSelector(
     selectShouldPresentQRCodeBottomSheet
   );
+
+  const handleRetry = useCallback(() => {
+    machineRef.send({ type: "retry" });
+  }, [machineRef]);
+
   const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
     title: I18n.t(
       "features.itWallet.presentation.proximity.mdl.bottomSheet.title"
     ),
     component: (
-      <VStack>
+      <VStack space={24}>
         <Body>
           {I18n.t(
             "features.itWallet.presentation.proximity.mdl.bottomSheet.body"
           )}
         </Body>
-        <QRCode value={qrCodeString} size={QR_WIDTH} ecl="Q" />
-        <VSpacer />
+        <ItwEngagementQRCode
+          qrCodeString={qrCodeString}
+          isQRCodeGenerationError={isQRCodeGenerationError}
+          isLoading={isLoading}
+          onRetry={handleRetry}
+        />
+        {/* Dummy View used to add space */}
+        <View />
       </VStack>
     ),
     onDismiss: () => {

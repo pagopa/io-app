@@ -16,6 +16,9 @@ export const selectIsBluetoothRequiredState = (snapshot: MachineSnapshot) =>
 export const selectQRCodeString = (snapshot: MachineSnapshot) =>
   snapshot.context.qrCodeString;
 
+export const selectIsQRCodeGenerationError = (snapshot: MachineSnapshot) =>
+  !!snapshot.context.isQRCodeGenerationError;
+
 export const selectShouldPresentQRCodeBottomSheet = (
   snapshot: MachineSnapshot
 ) =>

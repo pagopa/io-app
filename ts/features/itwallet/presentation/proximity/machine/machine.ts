@@ -2,6 +2,7 @@ import { assign, fromPromise, setup } from "xstate";
 import { InitialContext, Context } from "./context";
 import { RemoteEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
+import { StartProximityFlowInput } from "./actors";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -13,6 +14,7 @@ export const itwProximityMachine = setup({
     events: {} as RemoteEvents
   },
   actions: {
+    setQRCodeGenerationError: assign({ isQRCodeGenerationError: true }),
     navigateToGrantPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
     closePresentation: notImplemented
@@ -20,9 +22,11 @@ export const itwProximityMachine = setup({
   actors: {
     checkPermissions: fromPromise<boolean, void>(notImplemented),
     checkBluetoothIsActive: fromPromise<boolean, void>(notImplemented),
-    startFlow: fromPromise<void, void>(notImplemented),
+    startProximityFlow: fromPromise<void, StartProximityFlowInput>(
+      notImplemented
+    ),
     generateQRCodeString: fromPromise<string, void>(notImplemented),
-    closeFlow: fromPromise<void, void>(notImplemented)
+    closeProximityFlow: fromPromise<void, void>(notImplemented)
   }
 }).createMachine({
   id: "itwProximityMachine",
@@ -165,11 +169,19 @@ export const itwProximityMachine = setup({
       tags: [ItwPresentationTags.Loading],
       description: "Start the Proximity flow",
       invoke: {
-        src: "startFlow",
+        input: ({ context }) => ({
+          isProximityFlowStarted: !!context.isProximityFlowStarted
+        }),
+        src: "startProximityFlow",
         onDone: {
+          actions: assign({ isProximityFlowStarted: true }),
           target: "GeneratingQRCodeString"
         },
         onError: {
+          actions: [
+            "setQRCodeGenerationError",
+            assign({ isProximityFlowStarted: false })
+          ],
           target: "QRCodeGenerationError"
         }
       }
@@ -180,10 +192,14 @@ export const itwProximityMachine = setup({
       invoke: {
         src: "generateQRCodeString",
         onDone: {
-          actions: assign(({ event }) => ({ qrCodeString: event.output })),
+          actions: assign(({ event }) => ({
+            qrCodeString: event.output,
+            isQRCodeGenerationError: false
+          })),
           target: "DisplayQRCode"
         },
         onError: {
+          actions: "setQRCodeGenerationError",
           target: "QRCodeGenerationError"
         }
       }
@@ -201,14 +217,18 @@ export const itwProximityMachine = setup({
       on: {
         close: {
           target: "ClosePresentation"
+        },
+        retry: {
+          target: "StartingProximityFlow"
         }
       }
     },
     ClosePresentation: {
       description: "Close the proximity presentation flow",
       invoke: {
-        src: "closeFlow",
+        src: "closeProximityFlow",
         onDone: {
+          actions: assign({ isProximityFlowStarted: false }),
           target: "Idle"
         }
         // TODO: Handle any potential error scenario.

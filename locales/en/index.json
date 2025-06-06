@@ -4911,7 +4911,11 @@
           "mdl": {
             "bottomSheet": {
               "title": "Patente di guida",
-              "body": "Mostra il QR Code in caso di controlli o altre necessità."
+              "body": "Mostra il QR Code in caso di controlli o altre necessità.",
+              "error": {
+                "message": "Abbiamo avuto un problema nel generare il QR Code.",
+                "action": "Prova di nuovo"
+              }
             }
           }
       }

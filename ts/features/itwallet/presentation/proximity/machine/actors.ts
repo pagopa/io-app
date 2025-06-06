@@ -10,6 +10,10 @@ import { BluetoothStateManager } from "react-native-bluetooth-state-manager";
 import { fromPromise } from "xstate";
 import { Proximity } from "@pagopa/io-react-native-proximity";
 
+export type StartProximityFlowInput = {
+  isProximityFlowStarted: boolean;
+};
+
 export const createProximityActorsImplementation = () => {
   const checkPermissions = fromPromise<boolean, void>(async () => {
     // eslint-disable-next-line functional/no-let
@@ -57,23 +61,27 @@ export const createProximityActorsImplementation = () => {
     return bluetoothState === "PoweredOn";
   });
 
-  const startFlow = fromPromise<void, void>(async () => {
-    await Proximity.start();
-  });
+  const startProximityFlow = fromPromise<void, StartProximityFlowInput>(
+    async ({ input }) => {
+      if (!input.isProximityFlowStarted) {
+        await Proximity.start();
+      }
+    }
+  );
 
   const generateQRCodeString = fromPromise<string, void>(async () =>
     Proximity.getQrCodeString()
   );
 
-  const closeFlow = fromPromise<void, void>(async () => {
+  const closeProximityFlow = fromPromise<void, void>(async () => {
     await Proximity.close();
   });
 
   return {
     checkPermissions,
     checkBluetoothIsActive,
-    startFlow,
+    startProximityFlow,
     generateQRCodeString,
-    closeFlow
+    closeProximityFlow
   };
 };
