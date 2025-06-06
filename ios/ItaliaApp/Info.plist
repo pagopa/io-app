@@ -36,7 +36,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>1</string>
+    <string>2</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
@@ -98,12 +98,6 @@
     <string>The app needs NSSpeechRecognitionUsageDescription permission</string>
     <key>UIAppFonts</key>
     <array>
-      <string>RobotoMono-Bold.ttf</string>
-      <string>RobotoMono-BoldItalic.ttf</string>
-      <string>RobotoMono-Light.ttf</string>
-      <string>RobotoMono-LightItalic.ttf</string>
-      <string>RobotoMono-Regular.ttf</string>
-      <string>RobotoMono-RegularItalic.ttf</string>
       <string>DMMono-Medium.ttf</string>
       <string>TitilliumSansPro-Black.otf</string>
       <string>TitilliumSansPro-Bold.otf</string>
