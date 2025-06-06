@@ -1,21 +1,37 @@
-import { Avatar, ListItemTransaction } from "@pagopa/io-app-design-system";
+import {
+  Avatar,
+  IOIcons,
+  ListItemTransaction
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { memo, useMemo } from "react";
+import { memo, MutableRefObject, useMemo } from "react";
+import { Alert } from "react-native";
+import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import ListItemSwipeAction, {
+  SwipeControls
+} from "../../../../components/ListItemSwipeAction";
+import I18n from "../../../../i18n";
+import { useIODispatch } from "../../../../store/hooks";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import { format } from "../../../../utils/dates";
+import { PaymentAnalyticsData } from "../../common/types/PaymentAnalytics";
 import { getTransactionLogo } from "../../common/utils";
+import {
+  analyticsHideReceiptAction,
+  analyticsHideReceiptConfirmAction
+} from "../analytics/utils";
+import { hidePaymentsReceiptAction } from "../store/actions";
 import { formatAmountText } from "../utils";
-import I18n from "../../../../i18n";
-import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 
 type Props = {
   transaction: NoticeListItem;
   onPress?: () => void;
+  openedItemRef?: MutableRefObject<(() => void) | null>;
 };
 
 const ReceiptListItemTransaction = memo(
-  ({ transaction, onPress }: Props) => {
+  ({ transaction, onPress, openedItemRef }: Props) => {
     const recipient = transaction.isCart
       ? I18n.t("features.payments.transactions.multiplePayment")
       : transaction.payeeName ?? "";
@@ -54,36 +70,104 @@ const ReceiptListItemTransaction = memo(
       O.getOrElseW(() => TransactionEmptyIcon)
     );
 
+    const dispatch = useIODispatch();
+
+    const paymentAnalyticsData: PaymentAnalyticsData = {
+      receiptOrganizationName: transaction.payeeName,
+      receiptOrganizationFiscalCode: transaction.payeeTaxCode,
+      receiptUser: transaction.isPayer ? "payer" : "payee"
+    };
+
+    const swipeActionProps = {
+      icon: "eyeHide" as IOIcons,
+      accessibilityLabel: I18n.t(
+        "features.payments.transactions.receipt.hideFromList"
+      ),
+      onRightActionPressed: ({
+        resetSwipePosition,
+        triggerSwipeAction
+      }: SwipeControls) => {
+        analyticsHideReceiptAction(paymentAnalyticsData, "swipe");
+
+        Alert.alert(
+          I18n.t("features.payments.transactions.receipt.hideBanner.title"),
+          I18n.t("features.payments.transactions.receipt.hideBanner.content"),
+          [
+            {
+              text: I18n.t("global.buttons.cancel"),
+              style: "cancel",
+              onPress: () => {
+                setTimeout(() => {
+                  resetSwipePosition();
+                }, 50);
+              }
+            },
+            {
+              text: I18n.t(
+                "features.payments.transactions.receipt.hideBanner.accept"
+              ),
+              style: "destructive",
+              onPress: () => {
+                analyticsHideReceiptConfirmAction(
+                  paymentAnalyticsData,
+                  "swipe"
+                );
+                triggerSwipeAction();
+                dispatch(
+                  hidePaymentsReceiptAction.request({
+                    transactionId: transaction.eventId,
+                    trigger: "swipe"
+                  })
+                );
+              }
+            }
+          ]
+        );
+      }
+    };
+
     if (transaction.isCart) {
       return (
+        <ListItemSwipeAction
+          color="contrast"
+          {...swipeActionProps}
+          openedItemRef={openedItemRef}
+        >
+          <ListItemTransaction
+            paymentLogoIcon={TransactionEmptyIcon}
+            onPress={onPress}
+            accessible
+            accessibilityLabel={accessibilityLabel}
+            title={I18n.t("features.payments.transactions.multiplePayment")}
+            subtitle={datetime}
+            transaction={{
+              amount: amountText,
+              amountAccessibilityLabel: accessibleAmountText
+            }}
+          />
+        </ListItemSwipeAction>
+      );
+    }
+
+    return (
+      <ListItemSwipeAction
+        color="contrast"
+        {...swipeActionProps}
+        openedItemRef={openedItemRef}
+      >
         <ListItemTransaction
-          paymentLogoIcon={TransactionEmptyIcon}
+          paymentLogoIcon={transactionLogo}
           onPress={onPress}
+          title={recipient}
           accessible
           accessibilityLabel={accessibilityLabel}
-          title={I18n.t("features.payments.transactions.multiplePayment")}
           subtitle={datetime}
           transaction={{
             amount: amountText,
             amountAccessibilityLabel: accessibleAmountText
           }}
         />
-      );
-    }
-
-    return (
-      <ListItemTransaction
-        paymentLogoIcon={transactionLogo}
-        onPress={onPress}
-        title={recipient}
-        accessible
-        accessibilityLabel={accessibilityLabel}
-        subtitle={datetime}
-        transaction={{
-          amount: amountText,
-          amountAccessibilityLabel: accessibleAmountText
-        }}
-      />
+      </ListItemSwipeAction>
     );
   },
   (prevProps, nextProps) => prevProps.transaction === nextProps.transaction
