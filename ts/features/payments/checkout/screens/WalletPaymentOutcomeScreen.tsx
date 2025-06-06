@@ -44,7 +44,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
 import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
 import { WalletPaymentStepEnum } from "../types";
-import { useAppReviewRequest } from "../../../appReviews/hooks/useAppReviewRequest";
+import { useAppFeedbackContext } from "../../../appReviews/components/AppFeedbackProvider";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -57,8 +57,7 @@ type WalletPaymentOutcomeRouteProps = RouteProp<
 
 const WalletPaymentOutcomeScreen = () => {
   useAvoidHardwareBackButton();
-  const { requestFeedback, appReviewBottomSheet } =
-    useAppReviewRequest("payments");
+  const { requestFeedback } = useAppFeedbackContext();
   const dispatch = useIODispatch();
   const { params } = useRoute<WalletPaymentOutcomeRouteProps>();
   const { outcome } = params;
@@ -150,7 +149,7 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleSuccessClose = () => {
-    requestFeedback();
+    requestFeedback("payments");
     handleClose();
   };
 
@@ -530,7 +529,6 @@ const WalletPaymentOutcomeScreen = () => {
       </OperationResultScreenContent>
       {supportModal.bottomSheet}
       {reversedPaymentModal.bottomSheet}
-      {appReviewBottomSheet}
     </>
   );
 };

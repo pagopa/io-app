@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0-rc.2](https://github.com/pagopa/io-app/compare/3.7.0-rc.1...3.7.0-rc.2) (2025-06-05)
+
+
+### Chores
+
+* [[IOCOM-2398](https://pagopa.atlassian.net/browse/IOCOM-2398),[IOCOM-2373](https://pagopa.atlassian.net/browse/IOCOM-2373)] update i18n and color for SEND engagement banner ([#7052](https://github.com/pagopa/io-app/issues/7052)) ([8b5af2a](https://github.com/pagopa/io-app/commit/8b5af2a4c3a1fe21e83e3bf6e4cedf01284d673b))
+
+## [3.7.0-rc.1](https://github.com/pagopa/io-app/compare/3.7.0-rc.0...3.7.0-rc.1) (2025-06-04)
+
+
+### Chores
+
+* **CdC:** [[IOBP-1535](https://pagopa.atlassian.net/browse/IOBP-1535)] Add CdC FIMS with remote url and service configuration ([#7044](https://github.com/pagopa/io-app/issues/7044)) ([ba07e32](https://github.com/pagopa/io-app/commit/ba07e3204906cc96eb4d2a47645b7ff722497ef8)), closes [/#diff-cfa4376631b208ff63ccc712193e710058b0643d98742d83dc64111ed7854ebcR11-R19](https://github.com/pagopa///issues/diff-cfa4376631b208ff63ccc712193e710058b0643d98742d83dc64111ed7854ebcR11-R19) [/#diff-26cadf9600bdf09b95047a17d044bff33fd2cd638c7a958667bb5e60e02c6a68R1-R23](https://github.com/pagopa///issues/diff-26cadf9600bdf09b95047a17d044bff33fd2cd638c7a958667bb5e60e02c6a68R1-R23)
+
+## [3.7.0-rc.0](https://github.com/pagopa/io-app/compare/3.6.0-rc.9...3.7.0-rc.0) (2025-06-04)
+
+
+### Features
+
+* [[IOPLT-1034](https://pagopa.atlassian.net/browse/IOPLT-1034)] Upgrade react-native to 0.78.2 ([#6888](https://github.com/pagopa/io-app/issues/6888)) ([bddf2ad](https://github.com/pagopa/io-app/commit/bddf2ad05e4b3d5be991d3fce834158f8ad90caa)), closes [pagopa/io-react-native-login-utils#20](https://github.com/pagopa/io-react-native-login-utils/issues/20)
+
+
+### Bug Fixes
+
+* [[IOBP-1726](https://pagopa.atlassian.net/browse/IOBP-1726)] Add missing key to Markdown Body element ([#7041](https://github.com/pagopa/io-app/issues/7041)) ([3370c7d](https://github.com/pagopa/io-app/commit/3370c7d3304ed059a92afbc96ad4954a9b5b144e))
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Restore icon and splash screen visualization ([#7043](https://github.com/pagopa/io-app/issues/7043)) ([9e2b700](https://github.com/pagopa/io-app/commit/9e2b700bfa481bb93ec742ca23f0dbcd6404fc2a))
+
+
+### Chores
+
+* [[IOBP-1723](https://pagopa.atlassian.net/browse/IOBP-1723)] Disable pagoPA UAT toggle if app is in local env ([#7040](https://github.com/pagopa/io-app/issues/7040)) ([3d2e8b7](https://github.com/pagopa/io-app/commit/3d2e8b7e6f6804f894d65c5a10b2f44a2586644d))
+* [[IOCOM-2409](https://pagopa.atlassian.net/browse/IOCOM-2409)] Send engagement banner full logic ([#7048](https://github.com/pagopa/io-app/issues/7048)) ([0a3bc2c](https://github.com/pagopa/io-app/commit/0a3bc2ccfe6af8e8694afffea6ee6bc32905f473))
+* [[IOPID-2962](https://pagopa.atlassian.net/browse/IOPID-2962)]: add logout events and fix logout logic ([#7031](https://github.com/pagopa/io-app/issues/7031)) ([d0a3ac6](https://github.com/pagopa/io-app/commit/d0a3ac6ad3a05df2a1e4a0cc76f7c78e0e2071db))
+* [[IOPLT-1158](https://pagopa.atlassian.net/browse/IOPLT-1158)] Reduces connectivity polling time to fetch ([#7047](https://github.com/pagopa/io-app/issues/7047)) ([ab3d9d4](https://github.com/pagopa/io-app/commit/ab3d9d442be9c4ec0e0939c5f5f7b3580f5749d3))
+
 ## [3.6.0-rc.9](https://github.com/pagopa/io-app/compare/3.6.0-rc.8...3.6.0-rc.9) (2025-05-30)
 
 
