@@ -49,9 +49,8 @@ import {
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { getDeviceId } from "../../../../utils/device";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
-
-import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
+import { ITW_PLAYGROUND_ROUTES } from "../../../itwallet/playgrounds/navigation/routes.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -381,8 +380,8 @@ const PlaygroundsSection = () => {
     {
       value: "Documenti su IO",
       onPress: () =>
-        navigation.navigate(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.PLAYGROUNDS
+        navigation.navigate(ITW_PLAYGROUND_ROUTES.MAIN, {
+          screen: ITW_PLAYGROUND_ROUTES.LANDING
         })
     },
     {

@@ -89,6 +89,10 @@ export type StartReissuing = {
   type: "start-reissuing";
 };
 
+export type Next = {
+  type: "next";
+};
+
 export type Reset = {
   type: "reset";
 };
@@ -114,4 +118,5 @@ export type EidIssuanceEvents =
   | ExternalErrorEvent
   | StartReissuing
   | GoToCieWarning
+  | Next
   | Reset;

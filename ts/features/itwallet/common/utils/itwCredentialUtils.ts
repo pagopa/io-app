@@ -1,9 +1,11 @@
 import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { decode } from "@pagopa/io-react-native-jwt";
+import * as E from "fp-ts/lib/Either";
 import I18n from "../../../../i18n";
 import { CredentialType } from "./itwMocksUtils";
-import { ItwCredentialStatus } from "./itwTypesUtils";
+import { ItwCredentialStatus, StoredCredential } from "./itwTypesUtils";
 
 export const itwCredentialNameByCredentialType: {
   [type: string]: string;
@@ -82,3 +84,34 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
   "expiring",
   "jwtExpiring"
 ];
+
+/**
+ * Checks if a credential is an ITW enabled credential by checking the
+ * JWT header's typ parameter.
+ * @param sdJwt - The SD-JWT string to check
+ * @returns boolean indicating if the credential is an ITW credential (L3)
+ */
+export const isItwCredential = (sdJwt: string): boolean =>
+  pipe(
+    E.tryCatch(() => decode(sdJwt), E.toError),
+    E.map(({ protectedHeader }) => protectedHeader.typ === "dc+sd-jwt"),
+    E.getOrElse(() => false)
+  );
+
+/**
+ * Credential types that support the L3 design
+ */
+const credentialsWithL3Design: ReadonlyArray<string> = [
+  CredentialType.DRIVING_LICENSE
+];
+
+/**
+ * Checks if a credential has L3 design.
+ * It checks if the credential type is in the list of credentials with L3 design
+ * and if it is an ITW credential.
+ * @param credential - The stored credential to check
+ * @returns boolean indicating if the credential supports L3 design
+ */
+export const hasL3Design = (credential: StoredCredential): boolean =>
+  credentialsWithL3Design.includes(credential.credentialType) &&
+  isItwCredential(credential.credential);

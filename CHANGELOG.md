@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0-rc.3](https://github.com/pagopa/io-app/compare/3.7.0-rc.2...3.7.0-rc.3) (2025-06-06)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2259](https://pagopa.atlassian.net/browse/SIW-2259),[SIW-2473](https://pagopa.atlassian.net/browse/SIW-2473)] New driving license details ([#6989](https://github.com/pagopa/io-app/issues/6989)) ([af76816](https://github.com/pagopa/io-app/commit/af76816c331029f922b279e35711c84523ca974c))
+* **IT Wallet:** [[SIW-2268](https://pagopa.atlassian.net/browse/SIW-2268),[SIW-2269](https://pagopa.atlassian.net/browse/SIW-2269),[SIW-2361](https://pagopa.atlassian.net/browse/SIW-2361)] Preparation screen for CIE flow using L3 as authentication method ([#6968](https://github.com/pagopa/io-app/issues/6968)) ([ef86fe5](https://github.com/pagopa/io-app/commit/ef86fe5e2df2a153b6a2200fb6b070aaddd436f8))
+* [[IOBP-1598](https://pagopa.atlassian.net/browse/IOBP-1598)] Listitem swipe action component ([#6911](https://github.com/pagopa/io-app/issues/6911)) ([116a691](https://github.com/pagopa/io-app/commit/116a691f202c2d7b9610e6b0248b8105ab63514f))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2492](https://pagopa.atlassian.net/browse/SIW-2492)] Infinite loading when starting a presentation while another one is pending ([#7042](https://github.com/pagopa/io-app/issues/7042)) ([49101ff](https://github.com/pagopa/io-app/commit/49101ffd019023a53529a8dc80fd51144c21e05d))
+
+
+### Chores
+
+* [[IOCOM-2412](https://pagopa.atlassian.net/browse/IOCOM-2412)] Remove Roboto ([#7056](https://github.com/pagopa/io-app/issues/7056)) ([adb498c](https://github.com/pagopa/io-app/commit/adb498cd9d0c308088922453e9069373a2fde24b))
+
+## [3.7.0-rc.2](https://github.com/pagopa/io-app/compare/3.7.0-rc.1...3.7.0-rc.2) (2025-06-05)
+
+
+### Chores
+
+* [[IOCOM-2398](https://pagopa.atlassian.net/browse/IOCOM-2398),[IOCOM-2373](https://pagopa.atlassian.net/browse/IOCOM-2373)] update i18n and color for SEND engagement banner ([#7052](https://github.com/pagopa/io-app/issues/7052)) ([8b5af2a](https://github.com/pagopa/io-app/commit/8b5af2a4c3a1fe21e83e3bf6e4cedf01284d673b))
+
 ## [3.7.0-rc.1](https://github.com/pagopa/io-app/compare/3.7.0-rc.0...3.7.0-rc.1) (2025-06-04)
 
 
