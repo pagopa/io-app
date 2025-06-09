@@ -14,7 +14,6 @@ import {
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import { isItwCredential } from "../../utils/itwCredentialUtils";
 import {
-  itwAuthLevelSelector,
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
   itwIsL3EnabledSelector,
@@ -119,13 +118,13 @@ const isItwCredentialSelector = (state: GlobalState) =>
  * - The user has online access (not available in the mini-app)
  * - The IT Wallet feature flag is enabled
  * - The L3 feature flag is enabled
- * - The wallet is not already with L3 auth
+ * - Isn't ITW Credential
  */
 export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
   !offlineAccessReasonSelector(state) &&
   isItwEnabledSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  itwAuthLevelSelector(state) !== "L3";
+  !isItwCredentialSelector(state);
 
 /**
  * Returns whether the new IT-Wallet variant should be rendered.
