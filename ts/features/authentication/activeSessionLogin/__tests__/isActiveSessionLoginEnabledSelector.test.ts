@@ -12,7 +12,7 @@ jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest.fn(() => "3.2.1.0")
 }));
 
-describe("isActiveSessionLoginEnabledSelector", () => {
+describe("isActiveSessionLoginRemotelyEnabledSelector", () => {
   const getState = (loginConfig: object | undefined) =>
     ({
       remoteConfig: O.some({
@@ -63,7 +63,7 @@ describe("isActiveSessionLoginEnabledSelector", () => {
   });
 });
 
-describe("isActiveSessionLoginEnabledSelector (local flag)", () => {
+describe("isActiveSessionLoginEnabledSelector (local and remote flags)", () => {
   const getState = (
     loginConfig: object | undefined,
     localFlag: boolean | undefined = true
