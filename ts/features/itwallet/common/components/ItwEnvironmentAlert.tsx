@@ -5,6 +5,12 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { itwResetEnv } from "../store/actions/environment.ts";
 import { selectItwEnv } from "../store/selectors/environment.ts";
 
+/**
+ * Shows an Alert if the environment is set to "pre", which informs the user about
+ * the risks of using the test environment.
+ * The Alert contains a bottom sheet with more information and a button to reset the environment.
+ * @returns The Alert component if the environment is set to "pre", otherwise null.
+ */
 export const ItwEnvironmentAlert = () => {
   const dispatch = useIODispatch();
   const env = useIOSelector(selectItwEnv);

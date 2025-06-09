@@ -12,6 +12,9 @@ function* handleItwEnvironmentChanged(): SagaIterator {
   yield* put(walletRemoveCardsByCategory("itw"));
 }
 
+/**
+ * Watch environment actions and triggers the IT Wallet reset.
+ */
 export function* watchItwEnvironment(): SagaIterator {
   yield* takeLatest(itwSetEnv, handleItwEnvironmentChanged);
   yield* takeLatest(itwResetEnv, handleItwEnvironmentChanged);
