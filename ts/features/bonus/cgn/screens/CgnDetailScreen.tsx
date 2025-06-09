@@ -128,6 +128,8 @@ const CgnDetailScreen = (props: Props): ReactElement => {
           label: I18n.t("global.buttons.retry"),
           onPress: loadCGN
         }}
+        enableAnimatedPictogram
+        loop
       />
     );
   }
