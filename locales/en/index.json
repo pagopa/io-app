@@ -622,7 +622,7 @@
       "idpay": {
         "idpayTest": "IDPay",
         "idpayTestAlert": "This change requires app reboot"
-      },      
+      },
       "loginEnvironment": {
         "activeSession": {
           "switchTitle": "Login a sessione attiva"
