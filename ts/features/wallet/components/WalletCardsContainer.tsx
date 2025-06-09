@@ -1,4 +1,4 @@
-import { ListItemHeader, VSpacer, VStack } from "@pagopa/io-app-design-system";
+import { ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
@@ -82,13 +82,11 @@ const WalletCardsContainer = () => {
  * Renders the banners that are displayed at the top of the wallet screen
  */
 const WalletBannersContainer = () => (
-  <VStack>
+  <View>
     <ItwUpgradeBanner />
     <ItwWalletNotAvailableBanner />
     <ItwDiscoveryBannerStandalone />
-    {/* Dummy view wich adds a spacer in case one of the above banners is rendered */}
-    <View />
-  </VStack>
+  </View>
 );
 
 /**

@@ -54,19 +54,16 @@ export const ItwOfflineWalletBanner = () => {
   };
 
   return (
-    <>
-      <VSpacer />
-      <Banner
-        testID="itwOfflineWalletBannerTestID"
-        title={I18n.t("features.itWallet.discovery.offlineBanner.title")}
-        content={I18n.t("features.itWallet.discovery.offlineBanner.content")}
-        action={I18n.t("features.itWallet.discovery.offlineBanner.action")}
-        pictogramName="notification"
-        color="neutral"
-        onPress={handlePress}
-        labelClose={I18n.t("global.buttons.close")}
-        onClose={handleOnClose}
-      />
-    </>
+    <Banner
+      testID="itwOfflineWalletBannerTestID"
+      title={I18n.t("features.itWallet.discovery.offlineBanner.title")}
+      content={I18n.t("features.itWallet.discovery.offlineBanner.content")}
+      action={I18n.t("features.itWallet.discovery.offlineBanner.action")}
+      pictogramName="notification"
+      color="neutral"
+      onPress={handlePress}
+      labelClose={I18n.t("global.buttons.close")}
+      onClose={handleOnClose}
+    />
   );
 };

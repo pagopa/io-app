@@ -19,7 +19,7 @@ export const ItwDiscoveryBannerStandalone = () => {
 
   return (
     <>
-      <VSpacer />
+      <VSpacer size={16} />
       <View testID="itwDiscoveryBannerStandaloneTestID">
         <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
       </View>

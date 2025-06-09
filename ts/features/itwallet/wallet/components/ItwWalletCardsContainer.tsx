@@ -111,6 +111,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         </View>
       )}
       <VStack space={16}>
+        {/* Dummy View used to add space */}
+        <View />
         <ItwOfflineWalletBanner />
         <WalletCardsCategoryContainer
           key={`cards_category_itw`}
