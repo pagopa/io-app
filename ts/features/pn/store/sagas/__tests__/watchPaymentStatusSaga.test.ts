@@ -113,7 +113,12 @@ describe("watchPaymentStatusSaga", () => {
       )
         .next()
         .race({
-          polling: call(testable!.trackPaymentUpdates, messageId),
+          polling: call(
+            testable!.generateSENDMessagePaymentStatistics,
+            messageId,
+            0,
+            []
+          ),
           cancelAction: take(cancelPNPaymentStatusTracking)
         })
         .next(cancelPNPaymentStatusTracking)
@@ -189,7 +194,12 @@ describe("watchPaymentStatusSaga", () => {
         .spyOn(analytics, "trackPNPaymentStatus")
         .mockImplementation();
 
-      await expectSaga(testable!.trackPaymentUpdates, messageId)
+      await expectSaga(
+        testable!.generateSENDMessagePaymentStatistics,
+        messageId,
+        0,
+        []
+      )
         .withReducer(reducer)
         .dispatch(requestAction1)
         .dispatch(requestAction2)
@@ -234,7 +244,12 @@ describe("watchPaymentStatusSaga", () => {
         .spyOn(analytics, "trackPNPaymentStatus")
         .mockImplementation();
 
-      await expectSaga(testable!.trackPaymentUpdates, messageId)
+      await expectSaga(
+        testable!.generateSENDMessagePaymentStatistics,
+        messageId,
+        0,
+        []
+      )
         .withReducer(reducer)
         .dispatch(requestAction1)
         .dispatch(requestAction2)

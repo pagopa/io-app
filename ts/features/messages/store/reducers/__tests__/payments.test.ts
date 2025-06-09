@@ -37,7 +37,8 @@ import {
   isPaymentsButtonVisibleSelector,
   testable,
   SinglePaymentState,
-  MultiplePaymentState
+  MultiplePaymentState,
+  paymentStatisticsForMessageUncachedSelector
 } from "../payments";
 import { getRptIdStringFromPaymentData } from "../../../utils";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -1198,6 +1199,364 @@ describe("paymentStateSelector", () => {
           toSpecificError(Detail_v2Enum.GENERIC_ERROR)
         ),
         "01234567890012345678912345670": undefined
+      });
+    });
+  });
+});
+
+describe("initialPaymentStatistics", () => {
+  it("should match expected value", () => {
+    const output = testable!.initialPaymentStatistics(5);
+    expect(output).toEqual({
+      paymentCount: 5,
+      unpaidCount: 0,
+      paidCount: 0,
+      errorCount: 0,
+      expiredCount: 0,
+      revokedCount: 0,
+      ongoingCount: 0
+    });
+  });
+});
+
+const errorCases = [
+  [toGenericError("An error"), { errorCount: 1 }],
+  [toTimeoutError(), { errorCount: 1 }],
+  [toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO), { paidCount: 1 }],
+  [toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO), { paidCount: 1 }],
+  [toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO), { revokedCount: 1 }],
+  [toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO), { expiredCount: 1 }],
+  [toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO), { ongoingCount: 1 }],
+  [toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO), { ongoingCount: 1 }],
+  [
+    toSpecificError(Detail_v2Enum.CANALE_CARRELLO_DUPLICATO_UNKNOWN),
+    { errorCount: 1 }
+  ],
+  [toSpecificError(Detail_v2Enum.GENERIC_ERROR), { errorCount: 1 }]
+] as const;
+const paymentStatistics = testable!.initialPaymentStatistics(1);
+
+describe("paymentErrorToPaymentStatistics", () => {
+  errorCases.forEach(([error, expectedStatistics]) => {
+    it(`should return expected statistics for error: ${JSON.stringify(
+      error
+    )}`, () => {
+      const output = testable!.paymentErrorToPaymentStatistics(
+        paymentStatistics,
+        error
+      );
+      expect(output).toEqual({
+        ...paymentStatistics,
+        ...expectedStatistics
+      });
+    });
+  });
+});
+
+describe("paymentStatisticsForMessageUncachedSelector", () => {
+  const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+  const paymentId1 = "01234567890012345678912345610";
+  const paymentId2 = "01234567890012345678912345611";
+  const payment1Data = { amount: 100 } as PaymentInfoResponse;
+  it("should return undefined for unmatching message Id", () => {
+    const state = {
+      entities: {
+        messages: {
+          payments: {
+            [messageId]: {
+              [paymentId1]: remoteReady(payment1Data)
+            }
+          }
+        }
+      }
+    } as unknown as GlobalState;
+    const messageId2 = "01HRSSD1R29DA2HJQHGYJP19T9" as UIMessageId;
+    const output = paymentStatisticsForMessageUncachedSelector(
+      state,
+      messageId2,
+      1,
+      [paymentId1]
+    );
+    expect(output).toBeUndefined();
+  });
+  [remoteUndefined, remoteLoading].forEach(remoteStatus => {
+    it(`should return undefined for one not-ready payment (${remoteStatus.kind})`, () => {
+      const state = {
+        entities: {
+          messages: {
+            payments: {
+              [messageId]: {
+                [paymentId1]: remoteStatus
+              }
+            }
+          }
+        }
+      } as unknown as GlobalState;
+      const output = paymentStatisticsForMessageUncachedSelector(
+        state,
+        messageId,
+        1,
+        [paymentId1]
+      );
+      expect(output).toBeUndefined();
+    });
+  });
+  const successAndErrorCases = [
+    [remoteReady(payment1Data), { unpaidCount: 1 }] as const,
+    ...errorCases.map(
+      ([input, expectedStatistics]) =>
+        [remoteError(input), expectedStatistics] as const
+    )
+  ] as const;
+  successAndErrorCases.forEach(([input, expectedStatistics]) => {
+    it(`should return expected statistics for one ready payment (${JSON.stringify(
+      input
+    )})`, () => {
+      const state = {
+        entities: {
+          messages: {
+            payments: {
+              [messageId]: {
+                [paymentId1]: input
+              }
+            }
+          }
+        }
+      } as unknown as GlobalState;
+      const output = paymentStatisticsForMessageUncachedSelector(
+        state,
+        messageId,
+        1,
+        [paymentId1]
+      );
+      expect(output).toEqual({ ...paymentStatistics, ...expectedStatistics });
+    });
+  });
+  [remoteUndefined, remoteLoading].forEach(remoteStatus => {
+    it(`should return undefined for two payments, one ready and one not (${remoteStatus.kind})`, () => {
+      const state = {
+        entities: {
+          messages: {
+            payments: {
+              [messageId]: {
+                [paymentId1]: remoteReady({ amount: 200 }),
+                [paymentId2]: remoteStatus
+              }
+            }
+          }
+        }
+      } as unknown as GlobalState;
+      const output = paymentStatisticsForMessageUncachedSelector(
+        state,
+        messageId,
+        2,
+        [paymentId1, paymentId2]
+      );
+      expect(output).toBeUndefined();
+    });
+  });
+  successAndErrorCases.forEach(([input, expectedStatistics]) => {
+    it(`should return expected statistics for two payments: one ready and one (${JSON.stringify(
+      input
+    )})`, () => {
+      const state = {
+        entities: {
+          messages: {
+            payments: {
+              [messageId]: {
+                [paymentId1]: remoteReady({ amount: 200 }),
+                [paymentId2]: input
+              }
+            }
+          }
+        }
+      } as unknown as GlobalState;
+      const output = paymentStatisticsForMessageUncachedSelector(
+        state,
+        messageId,
+        2,
+        [paymentId1, paymentId2]
+      );
+      const expectedOutput = {
+        ...paymentStatistics,
+        ...expectedStatistics,
+        paymentCount: 2
+      };
+      expect(output).toEqual({
+        ...expectedOutput,
+        unpaidCount: expectedOutput.unpaidCount + 1
+      });
+    });
+  });
+  const paymentId3 = "01234567890012345678912345612";
+  const paymentId4 = "01234567890012345678912345613";
+  const paymentId5 = "01234567890012345678912345614";
+  const paymentId6 = "01234567890012345678912345615";
+  const paymentId7 = "01234567890012345678912345616";
+  const paymentId8 = "01234567890012345678912345617";
+  const paymentId9 = "01234567890012345678912345618";
+  const paymentId10 = "01234567890012345678912345619";
+  const paymentId11 = "01234567890012345678912345620";
+  const paymentId12 = "01234567890012345678912345621";
+  [remoteUndefined, remoteLoading].forEach(remoteStatus => {
+    it(`should return undefined for 12 payments, 11 ready and one not (${remoteStatus.kind})`, () => {
+      const state = {
+        entities: {
+          messages: {
+            payments: {
+              [messageId]: {
+                [paymentId1]: remoteReady({ amount: 200 }),
+                [paymentId2]: remoteError(toGenericError("An error")),
+                [paymentId3]: remoteError(toTimeoutError()),
+                [paymentId4]: remoteError(
+                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
+                ),
+                [paymentId5]: remoteError(
+                  toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO)
+                ),
+                [paymentId6]: remoteError(
+                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
+                ),
+                [paymentId7]: remoteError(
+                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
+                ),
+                [paymentId8]: remoteError(
+                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
+                ),
+                [paymentId9]: remoteError(
+                  toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO)
+                ),
+                [paymentId10]: remoteError(
+                  toSpecificError(
+                    Detail_v2Enum.CANALE_CARRELLO_DUPLICATO_UNKNOWN
+                  )
+                ),
+                [paymentId11]: remoteError(
+                  toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+                ),
+                [paymentId12]: remoteStatus
+              }
+            }
+          }
+        }
+      } as unknown as GlobalState;
+      const output = paymentStatisticsForMessageUncachedSelector(
+        state,
+        messageId,
+        12,
+        [
+          paymentId1,
+          paymentId2,
+          paymentId3,
+          paymentId4,
+          paymentId5,
+          paymentId6,
+          paymentId7,
+          paymentId8,
+          paymentId9,
+          paymentId10,
+          paymentId11,
+          paymentId12
+        ]
+      );
+      expect(output).toBeUndefined();
+    });
+  });
+  successAndErrorCases.forEach(([input, expectedStatistics]) => {
+    it(`should return expected statistics for 12 payments: 1 ready, 10 in error and one (${JSON.stringify(
+      input
+    )})`, () => {
+      const state = {
+        entities: {
+          messages: {
+            payments: {
+              [messageId]: {
+                [paymentId1]: remoteReady({ amount: 200 }),
+                [paymentId2]: remoteError(toGenericError("An error")),
+                [paymentId3]: remoteError(toTimeoutError()),
+                [paymentId4]: remoteError(
+                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
+                ),
+                [paymentId5]: remoteError(
+                  toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO)
+                ),
+                [paymentId6]: remoteError(
+                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
+                ),
+                [paymentId7]: remoteError(
+                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
+                ),
+                [paymentId8]: remoteError(
+                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
+                ),
+                [paymentId9]: remoteError(
+                  toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO)
+                ),
+                [paymentId10]: remoteError(
+                  toSpecificError(
+                    Detail_v2Enum.CANALE_CARRELLO_DUPLICATO_UNKNOWN
+                  )
+                ),
+                [paymentId11]: remoteError(
+                  toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+                ),
+                [paymentId12]: input
+              }
+            }
+          }
+        }
+      } as unknown as GlobalState;
+      const output = paymentStatisticsForMessageUncachedSelector(
+        state,
+        messageId,
+        12,
+        [
+          paymentId1,
+          paymentId2,
+          paymentId3,
+          paymentId4,
+          paymentId5,
+          paymentId6,
+          paymentId7,
+          paymentId8,
+          paymentId9,
+          paymentId10,
+          paymentId11,
+          paymentId12
+        ]
+      );
+      expect(output).toEqual({
+        paymentCount: 12,
+        unpaidCount:
+          1 +
+          ("unpaidCount" in expectedStatistics
+            ? expectedStatistics.unpaidCount
+            : 0),
+        paidCount:
+          2 +
+          ("paidCount" in expectedStatistics
+            ? expectedStatistics.paidCount
+            : 0),
+        errorCount:
+          4 +
+          ("errorCount" in expectedStatistics
+            ? expectedStatistics.errorCount
+            : 0),
+        expiredCount:
+          1 +
+          ("expiredCount" in expectedStatistics
+            ? expectedStatistics.expiredCount
+            : 0),
+        revokedCount:
+          1 +
+          ("revokedCount" in expectedStatistics
+            ? expectedStatistics.revokedCount
+            : 0),
+        ongoingCount:
+          2 +
+          ("ongoingCount" in expectedStatistics
+            ? expectedStatistics.ongoingCount
+            : 0)
       });
     });
   });

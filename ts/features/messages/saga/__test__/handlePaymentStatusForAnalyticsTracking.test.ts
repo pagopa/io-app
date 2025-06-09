@@ -13,11 +13,8 @@ import {
   UpdatePaymentForMessageSuccess
 } from "../../store/actions";
 import {
-  foldPaymentStatus,
   handlePaymentStatusForAnalyticsTracking,
-  payablePayment,
   paymentStatusFromPaymentUpdateResult,
-  processedPayment,
   testable
 } from "../handlePaymentStatusForAnalyticsTracking";
 import { UIMessageId } from "../../types";
@@ -30,61 +27,6 @@ const paymentId = "01234567890123456789012345678901234567890";
 const serviceId = "01JWX69WSREBXHRENH0GRP0N9M" as ServiceId;
 
 describe("handlePaymentStatusForAnalyticsTracking", () => {
-  describe("payablePayment", () => {
-    it("should match expected value", () => {
-      expect(payablePayment).toEqual({
-        kind: "Payable"
-      });
-    });
-  });
-
-  describe("processedPayment", () => {
-    it("should match expected value", () => {
-      const output = processedPayment(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO);
-      expect(output).toEqual({
-        kind: "Processed",
-        details: Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
-      });
-    });
-  });
-
-  describe("foldPaymentStatus", () => {
-    it("should invoke the first callback with proper parameters", () => {
-      const payableCallback = jest.fn().mockReturnValue(3);
-      const processedCallback = jest.fn().mockReturnValue(4);
-
-      foldPaymentStatus(payableCallback, processedCallback)(payablePayment);
-
-      expect(payableCallback.mock.calls.length).toBe(1);
-      expect(payableCallback.mock.calls[0].length).toBe(0);
-      expect(payableCallback.mock.results.length).toBe(1);
-      expect(payableCallback.mock.results[0].value).toBe(3);
-
-      expect(processedCallback.mock.results.length).toBe(0);
-      expect(processedCallback.mock.calls.length).toBe(0);
-    });
-    it("should invoke the second callback with proper parameters", () => {
-      const payableCallback = jest.fn().mockReturnValue(3);
-      const processedCallback = jest.fn().mockReturnValue(4);
-
-      foldPaymentStatus(
-        payableCallback,
-        processedCallback
-      )(processedPayment(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO));
-
-      expect(payableCallback.mock.calls.length).toBe(0);
-      expect(payableCallback.mock.results.length).toBe(0);
-
-      expect(processedCallback.mock.calls.length).toBe(1);
-      expect(processedCallback.mock.calls[0].length).toBe(1);
-      expect(processedCallback.mock.calls[0][0]).toBe(
-        Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
-      );
-      expect(processedCallback.mock.results.length).toBe(1);
-      expect(processedCallback.mock.results[0].value).toBe(4);
-    });
-  });
-
   describe("handlePaymentStatusForAnalyticsTracking", () => {
     it("should race 'trackPaymentUdpates' and 'cancelPaymentStatusTracking'", () => {
       testSaga(

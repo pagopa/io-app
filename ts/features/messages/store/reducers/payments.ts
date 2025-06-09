@@ -10,6 +10,7 @@ import {
   foldK,
   isError,
   isLoading,
+  isReady,
   isUndefined,
   remoteError,
   remoteLoading,
@@ -21,6 +22,7 @@ import {
   addUserSelectedPaymentRptId,
   cancelQueuedPaymentUpdates,
   isGenericError,
+  isSpecificError,
   isTimeoutError,
   PaymentError,
   reloadAllMessages,
@@ -34,6 +36,12 @@ import {
   duplicateSetAndRemove,
   getRptIdStringFromPaymentData
 } from "../../utils";
+import {
+  isExpiredPaymentFromDetailV2Enum,
+  isOngoingPaymentFromDetailV2Enum,
+  isPaidPaymentFromDetailV2Enum,
+  isRevokedPaymentFromDetailV2Enum
+} from "../../../../utils/payment";
 import { messagePaymentDataSelector } from "./detailsById";
 
 export type MultiplePaymentState = {
@@ -44,6 +52,26 @@ export type MultiplePaymentState = {
 export type SinglePaymentState = {
   [key: string]: RemoteValue<PaymentInfoResponse, PaymentError> | undefined;
 };
+
+export type PaymentStatistics = {
+  paymentCount: number;
+  unpaidCount: number;
+  paidCount: number;
+  errorCount: number;
+  expiredCount: number;
+  revokedCount: number;
+  ongoingCount: number;
+};
+
+const initialPaymentStatistics = (paymentCount: number): PaymentStatistics => ({
+  paymentCount,
+  unpaidCount: 0,
+  paidCount: 0,
+  errorCount: 0,
+  expiredCount: 0,
+  revokedCount: 0,
+  ongoingCount: 0
+});
 
 export const initialState: MultiplePaymentState = {
   userSelectedPayments: new Set<string>()
@@ -208,6 +236,79 @@ const purgePaymentsWithIncompleteData = (state: SinglePaymentState) => {
   }, {} as SinglePaymentState);
 };
 
+export const paymentStatisticsForMessageUncachedSelector = (
+  state: GlobalState,
+  messageId: UIMessageId,
+  paymentCount: number,
+  paymentIds: ReadonlyArray<string>
+): PaymentStatistics | undefined => {
+  try {
+    return paymentIds.reduce((accumulator, paymentId) => {
+      const paymentStatus = paymentStateSelector(state, messageId, paymentId);
+      if (isReady(paymentStatus)) {
+        return {
+          ...accumulator,
+          unpaidCount: accumulator.unpaidCount + 1
+        };
+      } else if (isError(paymentStatus)) {
+        return paymentErrorToPaymentStatistics(
+          accumulator,
+          paymentStatus.error
+        );
+      } else {
+        throw Error("Data is not ready");
+      }
+    }, initialPaymentStatistics(paymentCount));
+  } catch (e) {
+    return undefined;
+  }
+};
+
+const paymentErrorToPaymentStatistics = (
+  accumulator: PaymentStatistics,
+  paymentError: PaymentError
+): PaymentStatistics => {
+  if (isSpecificError(paymentError)) {
+    const details = paymentError.details;
+    if (isPaidPaymentFromDetailV2Enum(details)) {
+      return {
+        ...accumulator,
+        paidCount: accumulator.paidCount + 1
+      };
+    } else if (isExpiredPaymentFromDetailV2Enum(details)) {
+      return {
+        ...accumulator,
+        expiredCount: accumulator.expiredCount + 1
+      };
+    } else if (isRevokedPaymentFromDetailV2Enum(details)) {
+      return {
+        ...accumulator,
+        revokedCount: accumulator.revokedCount + 1
+      };
+    } else if (isOngoingPaymentFromDetailV2Enum(details)) {
+      return {
+        ...accumulator,
+        ongoingCount: accumulator.ongoingCount + 1
+      };
+    } else {
+      return {
+        ...accumulator,
+        errorCount: accumulator.errorCount + 1
+      };
+    }
+  } else {
+    return {
+      ...accumulator,
+      errorCount: accumulator.errorCount + 1
+    };
+  }
+};
+
 export const testable = isTestEnv
-  ? { paymentStateSelector, purgePaymentsWithIncompleteData }
+  ? {
+      initialPaymentStatistics,
+      paymentErrorToPaymentStatistics,
+      paymentStateSelector,
+      purgePaymentsWithIncompleteData
+    }
   : undefined;

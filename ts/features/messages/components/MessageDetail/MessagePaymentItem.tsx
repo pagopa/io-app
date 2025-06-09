@@ -236,7 +236,7 @@ export const MessagePaymentItem = ({
       });
       dispatch(updateAction);
     }
-  }, [dispatch, messageId, isPNPayment, rptId, serviceId, shouldUpdatePayment]);
+  }, [dispatch, messageId, rptId, serviceId, shouldUpdatePayment]);
   return (
     <View>
       {!noSpaceOnTop && <VSpacer size={index > 0 ? 8 : 24} />}

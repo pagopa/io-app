@@ -7,7 +7,6 @@ import {
   updatePaymentForMessage
 } from "../store/actions";
 import { serviceDetailsByIdSelector } from "../../services/details/store/reducers";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import {
   isExpiredPaymentFromDetailV2Enum,
   isOngoingPaymentFromDetailV2Enum,
@@ -16,28 +15,6 @@ import {
 } from "../../../utils/payment";
 import { trackPaymentStatus } from "../analytics";
 import { isTestEnv } from "../../../utils/environment";
-
-type PayablePayment = {
-  kind: "Payable";
-};
-type ProcessedPayment = {
-  kind: "Processed";
-  details: Detail_v2Enum;
-};
-export type PaymentStatus = PayablePayment | ProcessedPayment;
-
-export const payablePayment: PayablePayment = {
-  kind: "Payable"
-};
-export const processedPayment = (details: Detail_v2Enum): ProcessedPayment => ({
-  kind: "Processed",
-  details
-});
-
-export const foldPaymentStatus =
-  <T>(payable: () => T, processed: (details: Detail_v2Enum) => T) =>
-  (input: PaymentStatus) =>
-    input.kind === "Payable" ? payable() : processed(input.details);
 
 export function* handlePaymentStatusForAnalyticsTracking(
   _: ActionType<typeof startPaymentStatusTracking>
