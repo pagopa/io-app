@@ -30,7 +30,7 @@ import {
   isWalletEmptySelector,
   isWalletScreenRefreshingSelector
 } from "../store/selectors";
-import { itwShouldRenderNewITWallet } from "../../itwallet/common/store/selectors";
+import { itwShouldRenderNewITWalletSelector } from "../../itwallet/common/store/selectors";
 import { itwHasWalletAtLeastTwoCredentialsSelector } from "../../itwallet/credentials/store/selectors";
 import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
@@ -57,7 +57,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     itwHasWalletAtLeastTwoCredentialsSelector
   );
   const isRefreshingContent = useIOSelector(isWalletScreenRefreshingSelector);
-  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWallet);
+  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWalletSelector);
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();

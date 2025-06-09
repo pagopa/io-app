@@ -12,7 +12,7 @@ import {
 } from "../../utils/itwCredentialUtils";
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
-import { itwShouldRenderNewITWallet } from "../../store/selectors";
+import { itwShouldRenderNewITWalletSelector } from "../../store/selectors";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
@@ -34,7 +34,7 @@ export const ItwCredentialCard = ({
   credentialType
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
-  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWallet);
+  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWalletSelector);
 
   const borderColorMap = useBorderColorByStatus();
   const statusTagProps = tagPropsByStatus[status];

@@ -17,7 +17,7 @@ import {
 } from "../utils/itwTypesUtils";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { itwShouldRenderNewITWallet } from "../store/selectors";
+import { itwShouldRenderNewITWalletSelector } from "../store/selectors";
 
 const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
   "valid",
@@ -41,7 +41,7 @@ export const ItwEidLifecycleAlert = ({
   navigation
 }: Props) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
-  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWallet);
+  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWalletSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   const startEidReissuing = () => {

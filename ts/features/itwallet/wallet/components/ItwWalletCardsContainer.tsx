@@ -25,13 +25,13 @@ import { ItwFeedbackBanner } from "../../common/components/ItwFeedbackBanner";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
-import { itwShouldRenderNewITWallet } from "../../common/store/selectors";
+import { itwShouldRenderNewITWalletSelector } from "../../common/store/selectors";
 import { ItwBadge } from "../../common/components/ItwBadge";
 import { ItwEidDetail } from "../../common/components/ItwEidDetail";
 import { ItwOfflineWalletBanner } from "../../common/components/ItwOfflineWalletBanner.tsx";
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
-  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWallet);
+  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWalletSelector);
   const navigation = useIONavigation();
   const cards = useIOSelector(state =>
     selectWalletCardsByCategory(state, "itw")

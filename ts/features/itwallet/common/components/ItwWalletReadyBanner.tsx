@@ -4,14 +4,14 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
-  itwShouldRenderNewITWallet,
+  itwShouldRenderNewITWalletSelector,
   itwShouldRenderWalletReadyBannerSelector
 } from "../store/selectors";
 
 export const ItwWalletReadyBanner = () => {
   const navigation = useIONavigation();
   const shouldRender = useIOSelector(itwShouldRenderWalletReadyBannerSelector);
-  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWallet);
+  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWalletSelector);
 
   if (!shouldRender) {
     return null;
