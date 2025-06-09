@@ -625,7 +625,7 @@
       },
       "loginEnvironment": {
         "activeSession": {
-          "switchTitle": "Login a sessione attiva"
+          "switchTitle": "Active session login"
         }
       },
       "experimentalEnvironment": "Experimental interface",
