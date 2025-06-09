@@ -95,6 +95,11 @@ const DocumentWithSignature = (props: Props) => {
    */
   const RenderPdf = useCallback(
     ({ document, page }: { document: string; page: number }) => (
+      /** Be aware that, in react-native-pdf 6.7.7, on Android, there
+       * is a bug where onLoadComplete callback is not called. So,
+       * in order to detect proper PDF loading ending, we rely on
+       * onPageChanged, which is called to report that the first page
+       * has loaded */
       <Pdf
         ref={pdfRef}
         source={{
@@ -104,8 +109,11 @@ const DocumentWithSignature = (props: Props) => {
         onLoadComplete={(numberOfPages, _) => {
           setTotalPages(numberOfPages);
         }}
-        onPageChanged={(page, _) => {
-          setCurrentPage(page);
+        onPageChanged={(internalPage, numberOfPages) => {
+          if (totalPages === 0) {
+            setTotalPages(numberOfPages);
+          }
+          setCurrentPage(internalPage);
         }}
         // TODO: add test for errors https://pagopa.atlassian.net/browse/SFEQS-1606
         onError={props.onError}
@@ -114,7 +122,7 @@ const DocumentWithSignature = (props: Props) => {
         style={styles.pdf}
       />
     ),
-    [props.onError]
+    [props.onError, totalPages]
   );
 
   /**

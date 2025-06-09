@@ -1,13 +1,12 @@
 import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
-import { ItwOfflineSection } from "../components/ItwOfflineSection";
-import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
-import { ItwL3Section } from "../components/ItwL3Section";
 import { ItwBannerSection } from "../components/ItwBannerSection";
+import { ItwL3Section } from "../components/ItwL3Section";
+import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
+import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
 
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
@@ -32,7 +31,6 @@ const ItwPlayground = () => {
     <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
       <ContentWrapper>
         <VStack space={8}>
-          <ItwOfflineSection />
           <ItwL3Section />
           <ItwLifecycleSection />
           <ItwSkeumorphicCredentialSection />

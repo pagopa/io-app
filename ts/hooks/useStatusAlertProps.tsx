@@ -20,6 +20,15 @@ import { mixpanelTrack } from "../mixpanel";
 import { currentRouteSelector } from "../store/reducers/navigation";
 import { buildEventProperties } from "../utils/analytics";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
+import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
+
+// This is a list of routes where the offline alert should not be shown
+const blackListOfflineAlertRoutes = new Set<string>([
+  ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
+  ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL,
+  ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
+  ITW_ROUTES.OFFLINE.WALLET
+]);
 
 const statusVariantMap: Record<LevelEnum, AlertEdgeToEdgeProps["variant"]> = {
   [LevelEnum.normal]: "info",
@@ -68,6 +77,17 @@ export const useStatusAlertProps = (
   const localeFallback = fallbackForLocalizedMessageKeys(locale);
 
   useEffect(() => {
+    if (
+      blackListOfflineAlertRoutes.has(currentRoute) ||
+      offlineAccessReason !== undefined
+    ) {
+      /**
+       * In case we are in the mini-app for offline usage or the current route is in the blacklist,
+       * we don't need to show the alert.
+       */
+      setConnectivityAlert(undefined);
+      return;
+    }
     if (isConnected === false) {
       setConnectivityAlert({
         variant: "info",
@@ -83,6 +103,13 @@ export const useStatusAlertProps = (
           );
         }
       });
+
+      void mixpanelTrack(
+        "OFFLINE_BANNER",
+        buildEventProperties("TECH", undefined, {
+          screen: currentRoute
+        })
+      );
     }
     if (prevIsConnected === false && isConnected === true) {
       setConnectivityAlert({
@@ -101,17 +128,16 @@ export const useStatusAlertProps = (
         setConnectivityAlert(undefined);
       }, 3000);
     }
-  }, [isConnected, present, prevIsConnected, currentRoute]);
+  }, [
+    isConnected,
+    present,
+    prevIsConnected,
+    currentRoute,
+    offlineAccessReason
+  ]);
 
   return useMemo(() => {
-    if (offlineAccessReason) {
-      /**
-       * In case we are in the mini-app for offline usage, we don't need to show the alert.
-       * The mini-app manages the alert by itself.
-       */
-      return undefined;
-    }
-    if (isConnected === false || connectivityAlert) {
+    if (isConnected === false && connectivityAlert) {
       return {
         alertProps: connectivityAlert,
         bottomSheet
@@ -147,7 +173,6 @@ export const useStatusAlertProps = (
     localeFallback,
     isConnected,
     bottomSheet,
-    connectivityAlert,
-    offlineAccessReason
+    connectivityAlert
   ]);
 };

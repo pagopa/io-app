@@ -1,5 +1,6 @@
 import { ErrorActorEvent } from "xstate";
-import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
+import { SpidIdp } from "../../../../utils/idps";
+import { CieWarningType } from "../../identification/screens/ItwIdentificationCieWarningScreen.tsx";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
@@ -31,6 +32,11 @@ export type AddNewCredential = {
 export type SelectIdentificationMode = {
   type: "select-identification-mode";
   mode: IdentificationMode;
+};
+
+export type GoToCieWarning = {
+  type: "go-to-cie-warning";
+  warning: CieWarningType;
 };
 
 export type SelectSpidIdp = {
@@ -83,6 +89,10 @@ export type StartReissuing = {
   type: "start-reissuing";
 };
 
+export type Next = {
+  type: "next";
+};
+
 export type Reset = {
   type: "reset";
 };
@@ -107,4 +117,6 @@ export type EidIssuanceEvents =
   | ErrorActorEvent
   | ExternalErrorEvent
   | StartReissuing
+  | GoToCieWarning
+  | Next
   | Reset;

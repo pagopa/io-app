@@ -2,7 +2,7 @@
 
 IO_BACKEND_VERSION=v16.12.1
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=1.0.68
+IO_SERVICES_METADATA_VERSION=1.0.69
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.4.0
 # IO Wallet Backend version
@@ -45,6 +45,8 @@ declare -a apis=(
   "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_sign.yaml"
   # ITW APIs
   "./definitions/itw https://raw.githubusercontent.com/pagopa/io-backend/$IO_WALLET_BACKEND_VERSION/api_io_wallet.yaml"
+  # Connectivity APIs (used for connectivity checks)
+  "./definitions/connectivity https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_public.yaml"
 )
 
 for elem in "${apis[@]}"; do

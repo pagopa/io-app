@@ -1,14 +1,23 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { persistReducer } from "redux-persist";
-import { getType } from "typesafe-actions";
-import { Action } from "../../../../store/actions/types";
-import { dismissPnActivationReminderBanner } from "../../store/actions";
-import { GlobalState } from "../../../../store/reducers/types";
-import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
-  logoutFailure,
-  logoutSuccess
-} from "../../../../features/authentication/common/store/actions";
+  MigrationManifest,
+  PersistConfig,
+  PersistedState,
+  createMigrate,
+  persistReducer
+} from "redux-persist";
+import { getType } from "typesafe-actions";
+import { differentProfileLoggedIn } from "../../../../store/actions/crossSessions";
+import { Action } from "../../../../store/actions/types";
+import {
+  isPnRemoteEnabledSelector,
+  pnMessagingServiceIdSelector
+} from "../../../../store/reducers/backendStatus/remoteConfig";
+import { GlobalState } from "../../../../store/reducers/types";
+import { servicePreferenceByChannelPotSelector } from "../../../services/details/store/reducers";
+import { dismissPnActivationReminderBanner } from "../../store/actions";
+import { isDevEnv, isTestEnv } from "../../../../utils/environment";
 
 export type PnBannerDismissState = {
   dismissed: boolean;
@@ -26,20 +35,30 @@ const pnBannerDismissReducer = (
       return {
         dismissed: true
       };
-    // Logout changes are handled here in order to make
-    // sure that they are immediately persisted
-    case getType(logoutSuccess):
-    case getType(logoutFailure):
+    // the dismiss state has to be reset when, after logging out, the user logs in with a different profile
+    case getType(differentProfileLoggedIn):
       return INITIAL_STATE;
   }
   return state;
 };
-const persistConfig = {
+const CURRENT_STORE_VERSION = 0;
+const migrations: MigrationManifest = {
+  // the dismission state is reset to analyze the behaviour of the banner's new UI
+  "0": state =>
+    ({
+      ...state,
+      dismissed: false
+    } as PersistedState)
+};
+
+const persistConfig: PersistConfig = {
   key: "pnBannerDismiss",
   storage: AsyncStorage,
-  version: -1,
+  version: CURRENT_STORE_VERSION,
+  migrate: createMigrate(migrations, { debug: isDevEnv }),
   whitelist: ["dismissed"]
 };
+
 export const persistedPnBannerDismissReducer = persistReducer(
   persistConfig,
   pnBannerDismissReducer
@@ -47,7 +66,19 @@ export const persistedPnBannerDismissReducer = persistReducer(
 export const isPnActivationReminderBannerRenderableSelector = (
   state: GlobalState
 ) => {
-  const isPnEnabled = isPnEnabledSelector(state);
-  const hasBeenDismissed = state.features.pn.bannerDismiss.dismissed === true;
-  return isPnEnabled && !hasBeenDismissed;
+  const pnServiceId = pnMessagingServiceIdSelector(state);
+
+  const hasBannerBeenDismissed =
+    state.features.pn.bannerDismiss.dismissed === true;
+  const isPnRemoteEnabled = isPnRemoteEnabledSelector(state);
+  const isPnInboxEnabled = pot.getOrElse(
+    servicePreferenceByChannelPotSelector(state, pnServiceId, "inbox"),
+    false
+  );
+
+  return isPnRemoteEnabled && !hasBannerBeenDismissed && !isPnInboxEnabled;
 };
+
+export const testable = isTestEnv
+  ? { CURRENT_STORE_VERSION, migrations }
+  : undefined;

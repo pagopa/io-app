@@ -7,6 +7,7 @@ import { ItwPresentationCredentialAttachmentNavigationParams } from "../presenta
 import { ItwPresentationCredentialCardModalNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
+import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
@@ -14,17 +15,24 @@ export type ItwParamsList = {
   // OFFLINE WALLET
   [ITW_ROUTES.OFFLINE.WALLET]: undefined;
   // DISCOVERY
-  [ITW_ROUTES.DISCOVERY.INFO]: ItwDiscoveryInfoScreenNavigationParams;
+  [ITW_ROUTES.DISCOVERY.INFO]:
+    | ItwDiscoveryInfoScreenNavigationParams
+    | undefined;
   [ITW_ROUTES.DISCOVERY.IPZS_PRIVACY]: undefined;
   [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]: undefined;
   // IDENTIFICATION
   [ITW_ROUTES.IDENTIFICATION
     .MODE_SELECTION]: ItwIdentificationModeSelectionScreenNavigationParams;
+  // IDENTIFICATION ERRORS
+  [ITW_ROUTES.IDENTIFICATION
+    .CIE_WARNING]: ItwIdentificationCieWarningScreenNavigationParams;
   // IDENTIFICATION SPID
   [ITW_ROUTES.IDENTIFICATION.IDP_SELECTION]: undefined;
   [ITW_ROUTES.IDENTIFICATION.SPID.LOGIN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN]: undefined;
   // IDENTIFICATION CIE + PIN
+  [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE
@@ -55,8 +63,7 @@ export type ItwParamsList = {
     .CREDENTIAL_CARD_MODAL]: ItwPresentationCredentialCardModalNavigationParams;
   [ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL]: undefined;
   [ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED]: undefined;
-  // PLAYGROUNDS
-  [ITW_ROUTES.PLAYGROUNDS]: undefined;
+  // OTHERS
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
   [ITW_ROUTES.WALLET_REVOCATION_SCREEN]: undefined;
 };

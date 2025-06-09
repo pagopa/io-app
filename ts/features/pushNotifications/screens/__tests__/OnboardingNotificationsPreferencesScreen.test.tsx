@@ -50,34 +50,34 @@ describe("OnboardingNotificationsPreferencesScreen", () => {
     const screen = renderScreen(false);
     expect(screen.toJSON()).toMatchSnapshot();
   });
-  it("should match snapshot when not updating the profile, disabled previews switch", async () => {
+  it("should match snapshot when not updating the profile, disabled previews switch", () => {
     const screen = renderScreen(false);
 
     const previewSwitch = screen.getByTestId("previewsPreferenceSwitch");
-    await act(() => {
+    act(() => {
       fireEvent(previewSwitch, "onValueChange", false);
     });
 
     expect(screen.toJSON()).toMatchSnapshot();
   });
-  it("should match snapshot when not updating the profile, disabled reminder switch", async () => {
+  it("should match snapshot when not updating the profile, disabled reminder switch", () => {
     const screen = renderScreen(false);
 
     const reminderSwitch = screen.getByTestId("remindersPreferenceSwitch");
-    await act(() => {
+    act(() => {
       fireEvent(reminderSwitch, "onValueChange", false);
     });
 
     expect(screen.toJSON()).toMatchSnapshot();
   });
 
-  it("should match snapshot when not updating the profile, disabled previews and reminder switches", async () => {
+  it("should match snapshot when not updating the profile, disabled previews and reminder switches", () => {
     const screen = renderScreen(false);
 
     const previewSwitch = screen.getByTestId("previewsPreferenceSwitch");
 
     const reminderSwitch = screen.getByTestId("remindersPreferenceSwitch");
-    await act(() => {
+    act(() => {
       fireEvent(previewSwitch, "onValueChange", false);
       fireEvent(reminderSwitch, "onValueChange", false);
     });

@@ -1,7 +1,7 @@
 import {
   FooterActions,
-  H1,
   H2,
+  H4,
   Icon,
   IOColors,
   useIOTheme,
@@ -10,6 +10,7 @@ import {
 import { Second } from "@pagopa/ts-commons/lib/units";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import Barcode from "react-native-barcode-builder";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
 import { isReady } from "../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
@@ -127,9 +128,16 @@ const CgnDiscountCodeScreen = () => {
               <Icon name="tag" color={theme["icon-decorative"]} />
             </View>
             <VSpacer size={4} />
-            <H1 textStyle={StyleSheet.flatten([styles.labelCode])}>
+            <Barcode
+              format="CODE128"
+              value={discountCode}
+              height={70}
+              width={1.15}
+            />
+            <VSpacer size={4} />
+            <H4 textStyle={StyleSheet.flatten([styles.labelCode])}>
               {discountCode}
-            </H1>
+            </H4>
             {isReady(discountOtp) && !isDiscountCodeExpired && (
               <>
                 <VSpacer size={16} />

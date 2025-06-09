@@ -13,33 +13,22 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
   style={
     {
       "flexGrow": 1,
-      "marginHorizontal": 24,
     }
   }
 >
   <RCTScrollView
+    alwaysBounceVertical={false}
     centerContent={true}
-    collapsable={false}
     contentContainerStyle={
       [
         {
           "alignContent": "center",
           "alignItems": "stretch",
-          "flex": 1,
+          "flexGrow": 1,
           "justifyContent": "center",
+          "padding": 24,
         },
         false,
-      ]
-    }
-    handlerTag={1}
-    handlerType="NativeViewGestureHandler"
-    onGestureHandlerEvent={[Function]}
-    onGestureHandlerStateChange={[Function]}
-    waitFor={
-      [
-        {
-          "current": null,
-        },
       ]
     }
   >
@@ -286,6 +275,10 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {
+                    "backgroundColor": undefined,
+                  },
                   {
                     "paddingHorizontal": 24,
                   },
@@ -297,10 +290,6 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                     "height": 48,
                   },
                   {},
-                  false,
-                  {
-                    "backgroundColor": undefined,
-                  },
                 ]
               }
             >
@@ -433,6 +422,8 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {},
                   {
                     "paddingHorizontal": 0,
                   },
@@ -443,8 +434,6 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                     "borderWidth": 0,
                     "height": undefined,
                   },
-                  {},
-                  false,
                   {},
                 ]
               }

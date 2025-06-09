@@ -13,6 +13,10 @@ export type GoToIdentificationMode = {
   type: "go-to-identification-mode";
 };
 
+export type GoToBarcodeScan = {
+  type: "go-to-barcode-scan";
+};
+
 export type Back = {
   type: "back";
 };
@@ -30,11 +34,17 @@ export type Consent = {
   type: "holder-consent";
 };
 
+export type Reset = {
+  type: "reset";
+};
+
 export type RemoteEvents =
   | Start
   | GoToWalletActivation
   | GoToIdentificationMode
+  | GoToBarcodeScan
   | Consent
   | ToggleCredential
   | Back
-  | Close;
+  | Close
+  | Reset;

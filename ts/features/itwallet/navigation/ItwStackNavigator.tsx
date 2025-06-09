@@ -34,7 +34,6 @@ import {
   ItwEidIssuanceMachineContext
 } from "../machine/provider";
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
-import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModal } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailScreen } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
@@ -42,10 +41,13 @@ import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/detail
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
+import { ItwCiePreparationScreen } from "../identification/screens/cie/ItwCiePreparationScreen.tsx";
+import { ItwCiePinPreparationScreen } from "../identification/screens/cie/ItwCiePinPreparationScreen.tsx";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { useIOSelector } from "../../../store/hooks";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
+import { ItwIdentificationCieWarningScreen } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -111,6 +113,10 @@ const InnerNavigator = () => {
         component={ItwIdentificationModeSelectionScreen}
       />
       <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE_WARNING}
+        component={ItwIdentificationCieWarningScreen}
+      />
+      <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.IDP_SELECTION}
         component={ItwIdentificationIdpSelectionScreen}
       />
@@ -123,6 +129,14 @@ const InnerNavigator = () => {
         component={ItwCieIdLoginScreen}
       />
       {/* IDENTIFICATION CIE + PIN */}
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN}
+        component={ItwCiePreparationScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN}
+        component={ItwCiePinPreparationScreen}
+      />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}
         component={ItwCiePinScreen}
@@ -228,8 +242,6 @@ const InnerNavigator = () => {
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL}
         component={ItwPresentationCredentialFiscalCodeModal}
       />
-      {/* PLAYGROUNDS */}
-      <Stack.Screen name={ITW_ROUTES.PLAYGROUNDS} component={ItwPlayground} />
       {/* LIFECYCLE */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}

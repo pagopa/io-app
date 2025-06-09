@@ -17,6 +17,7 @@ import {
   InitialContext
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
+import { CieWarningType } from "../../../identification/screens/ItwIdentificationCieWarningScreen.tsx";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -35,10 +36,13 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToFailureScreen = jest.fn();
   const navigateToWallet = jest.fn();
   const navigateToCredentialCatalog = jest.fn();
+  const navigateToCiePreparationScreen = jest.fn();
+  const navigateToCiePinPreparationScreen = jest.fn();
   const navigateToCiePinScreen = jest.fn();
   const navigateToCieReadCardScreen = jest.fn();
   const navigateToNfcInstructionsScreen = jest.fn();
   const navigateToCieIdLoginScreen = jest.fn();
+  const navigateToCieWarningScreen = jest.fn();
   const storeIntegrityKeyTag = jest.fn();
   const cleanupIntegrityKeyTag = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
@@ -77,10 +81,13 @@ describe("itwEidIssuanceMachine", () => {
       navigateToFailureScreen,
       navigateToWallet,
       navigateToCredentialCatalog,
+      navigateToCiePreparationScreen,
+      navigateToCiePinPreparationScreen,
       navigateToCiePinScreen,
       navigateToCieReadCardScreen,
       navigateToNfcInstructionsScreen,
       navigateToCieIdLoginScreen,
+      navigateToCieWarningScreen,
       storeIntegrityKeyTag,
       cleanupIntegrityKeyTag,
       storeWalletInstanceAttestation,
@@ -1246,6 +1253,184 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
   });
 
+  it("Should navigate to CieWarning screen when 'go-to-cie-warning' event is received", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshotInModeSelection: MachineSnapshot = _.merge(
+      undefined,
+      initialSnapshot,
+      {
+        value: { UserIdentification: "ModeSelection" },
+        context: {
+          ...InitialContext,
+          integrityKeyTag: T_INTEGRITY_KEY,
+          walletInstanceAttestation: T_WIA
+        }
+      } as MachineSnapshot
+    );
+
+    const actor = createActor(mockedMachine, {
+      snapshot: snapshotInModeSelection
+    });
+
+    actor.start();
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: "ModeSelection"
+    });
+
+    const testWarningType: CieWarningType = "noCie" as CieWarningType;
+
+    actor.send({ type: "go-to-cie-warning", warning: testWarningType });
+
+    await waitFor(() => {
+      expect(actor.getSnapshot().value).toStrictEqual({
+        UserIdentification: {
+          CieWarning: "ModeSelection"
+        }
+      });
+    });
+
+    expect(navigateToCieWarningScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should navigate to InsertingCardPin through the preparation screens if L3 is enabled", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: "ModeSelection" },
+      context: {
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: T_WIA,
+        isL3FeaturesEnabled: true
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "select-identification-mode", mode: "ciePin" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "PreparationCie"
+      }
+    });
+
+    expect(navigateToCiePreparationScreen).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "next" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "PreparationPin"
+      }
+    });
+
+    expect(navigateToCiePinPreparationScreen).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "next" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "InsertingCardPin"
+      }
+    });
+
+    expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should navigate to InsertingCardPin directly if L3 isn't enabled", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: "ModeSelection" },
+      context: {
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: T_WIA,
+        isL3FeaturesEnabled: false
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "select-identification-mode", mode: "ciePin" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "InsertingCardPin"
+      }
+    });
+
+    expect(navigateToCiePreparationScreen).toHaveBeenCalledTimes(0);
+    expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should return to PreparationPin when navigating back from CieWarning", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: "ModeSelection" },
+      context: {
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: T_WIA,
+        isL3FeaturesEnabled: true,
+        cieContext: {
+          isNFCEnabled: true,
+          isCIEAuthenticationSupported: true
+        }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "select-identification-mode", mode: "ciePin" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "PreparationCie"
+      }
+    });
+
+    expect(navigateToCiePreparationScreen).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "next" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "PreparationPin"
+      }
+    });
+
+    const testWarningType: CieWarningType = "noCie" as CieWarningType;
+
+    actor.send({ type: "go-to-cie-warning", warning: testWarningType });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CieWarning: "PreparationPin"
+      }
+    });
+
+    expect(navigateToCieWarningScreen).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "back" });
+
+    expect(navigateToCiePinPreparationScreen).toHaveBeenCalledTimes(2);
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "PreparationPin"
+      }
+    });
+  });
   it("Should initialize the machine context with L3 active", async () => {
     const actor = createActor(mockedMachine);
     actor.start();

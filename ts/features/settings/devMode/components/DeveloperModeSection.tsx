@@ -48,11 +48,9 @@ import {
 } from "../../../../store/reducers/persistedPreferences";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { getDeviceId } from "../../../../utils/device";
-import { isDevEnv } from "../../../../utils/environment";
-
-import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
-import { useAppReviewRequest } from "../../../appReviews/hooks/useAppReviewRequest";
+import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
+import { ITW_PLAYGROUND_ROUTES } from "../../../itwallet/playgrounds/navigation/routes.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -73,7 +71,12 @@ type DevDataCopyListItem = {
 
 type TestEnvironmentsListItem = Pick<
   ComponentProps<typeof ListItemSwitch>,
-  "label" | "value" | "description" | "testID" | "onSwitchValueChange"
+  | "label"
+  | "value"
+  | "description"
+  | "testID"
+  | "onSwitchValueChange"
+  | "disabled"
 >;
 
 type DevActionButton = {
@@ -82,8 +85,6 @@ type DevActionButton = {
 
 const DeveloperActionsSection = () => {
   const dispatch = useIODispatch();
-  const { requestFeedback, appReviewBottomSheet } =
-    useAppReviewRequest("general");
 
   const handleClearCachePress = () => {
     Alert.alert(
@@ -159,12 +160,6 @@ const DeveloperActionsSection = () => {
       color: "primary",
       label: I18n.t("profile.main.sentryTestEvent"),
       onPress: sendSentryTestEvent
-    },
-    {
-      condition: true,
-      color: "primary",
-      label: I18n.t("profile.main.storeReview"),
-      onPress: () => requestFeedback()
     }
   ];
 
@@ -188,7 +183,6 @@ const DeveloperActionsSection = () => {
 
   return (
     <>
-      {appReviewBottomSheet}
       <FlatList
         ListHeaderComponent={<ListItemHeader label="Actions" />}
         scrollEnabled={false}
@@ -386,8 +380,8 @@ const PlaygroundsSection = () => {
     {
       value: "Documenti su IO",
       onPress: () =>
-        navigation.navigate(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.PLAYGROUNDS
+        navigation.navigate(ITW_PLAYGROUND_ROUTES.MAIN, {
+          screen: ITW_PLAYGROUND_ROUTES.LANDING
         })
     },
     {
@@ -498,9 +492,12 @@ const DeveloperTestEnvironmentSection = ({
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
       label: I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
-      description: I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert"),
+      description: isLocalEnv
+        ? I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlertLocal")
+        : I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert"),
       value: isPagoPATestEnabled,
-      onSwitchValueChange: onPagoPAEnvironmentToggle
+      onSwitchValueChange: onPagoPAEnvironmentToggle,
+      disabled: isLocalEnv
     },
     {
       label: I18n.t("profile.main.pnEnvironment.pnEnv"),
@@ -536,6 +533,7 @@ const DeveloperTestEnvironmentSection = ({
           description={item.description}
           value={item.value}
           onSwitchValueChange={item.onSwitchValueChange}
+          disabled={item.disabled}
         />
       )}
       ItemSeparatorComponent={() => <Divider />}
@@ -560,7 +558,7 @@ const DeveloperModeSection = () => {
 
   return (
     <>
-      <ContentWrapper>
+      <ContentWrapper testID="developerModeSection">
         <VSpacer size={24} />
         <H2 color={theme["textHeading-default"]}>
           {I18n.t("profile.main.developersSectionHeader")}
@@ -569,6 +567,7 @@ const DeveloperModeSection = () => {
 
         {/* Enable/Disable Developer Mode */}
         <ListItemSwitch
+          testID="debugModeSwitch"
           label={I18n.t("profile.main.debugMode")}
           value={isDebugModeEnabled}
           onSwitchValueChange={enabled =>

@@ -38,6 +38,7 @@ local.properties
 *.hprof
 Google Play Android Developer-04750d2c0cf8.json
 .cxx/
+.kotlin/
 
 **/fastlane/report.xml
 **/fastlane/Preview.html

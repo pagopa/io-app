@@ -1,3 +1,4 @@
+import { getType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
@@ -10,6 +11,12 @@ import {
   WalletInstanceRevocationReason
 } from "../common/utils/itwTypesUtils";
 import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
+import { OfflineAccessReasonEnum } from "../../ingress/store/reducer";
+import { Action } from "../../../store/actions/types.ts";
+import {
+  resetOfflineAccessReason,
+  setOfflineAccessReason
+} from "../../ingress/store/actions";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -164,6 +171,16 @@ type ItwCopyListItem = {
   item_copied: string;
 };
 
+type ItwOfflineBanner = {
+  screen: string;
+  error_message_type?: OfflineAccessReasonEnum;
+  use_case: "starting_app" | "foreground" | "background";
+};
+
+type ItwOfflineRicaricaAppIO = {
+  source: "bottom_sheet" | "banner";
+};
+
 // #region SCREEN VIEW EVENTS
 export const trackWalletDataShare = (properties: ItwWalletDataShare) => {
   void mixpanelTrack(
@@ -271,6 +288,20 @@ export function trackWalletCredentialFAC_SIMILE() {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS["ITW_CREDENTIAL_FAC-SIMILE"],
     buildEventProperties("UX", "screen_view", { credential: "ITW_TS_V2" })
+  );
+}
+
+export function trackItwOfflineWallet() {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_WALLET,
+    buildEventProperties("UX", "screen_view")
+  );
+}
+
+export function trackItwOfflineBottomSheet() {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_BOTTOM_SHEET,
+    buildEventProperties("UX", "screen_view")
   );
 }
 // #endregion SCREEN VIEW EVENTS
@@ -527,6 +558,17 @@ export function trackCredentialCardModal(credential: MixPanelCredential) {
   );
 }
 
+export function trackItwOfflineRicaricaAppIO({
+  source
+}: ItwOfflineRicaricaAppIO) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_OFFLINE_RICARICA_APP_IO,
+    buildEventProperties("UX", "action", {
+      source
+    })
+  );
+}
+
 export const trackCopyListItem = (properties: ItwCopyListItem) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_COPY_LIST_ITEM,
@@ -723,6 +765,13 @@ export const trackItwTrustmarkRenewFailure = (
   );
 };
 
+export const trackItwOfflineReloadFailure = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_OFFLINE_RELOAD_FAILURE,
+    buildEventProperties("KO", "error")
+  );
+};
+
 export const trackItwWalletInstanceRevocation = (
   reason: WalletInstanceRevocationReason
 ) => {
@@ -840,6 +889,22 @@ export const trackItwRequestSuccess = (
     );
   }
 };
+
+export const trackItwOfflineBanner = ({
+  screen,
+  error_message_type,
+  use_case
+}: ItwOfflineBanner) => {
+  void mixpanelTrack(
+    ITW_TECH_EVENTS.ITW_OFFLINE_BANNER,
+    buildEventProperties("TECH", undefined, {
+      screen,
+      error_message_type,
+      use_case
+    })
+  );
+};
+
 // #endregion TECH
 
 // #region PROFILE AND SUPER PROPERTIES UPDATE
@@ -894,3 +959,26 @@ export const updatePropertiesWalletRevoked = (state: GlobalState) => {
 };
 
 // #endregion PROFILE AND SUPER PROPERTIES UPDATE
+
+/**
+ * Track the reason for offline access on Mixpanel
+ * @param action - The action that was dispatched
+ * @param state - The current state of the application
+ */
+export const trackOfflineAccessReason = (
+  action: Action,
+  state: GlobalState
+): void | ReadonlyArray<null> => {
+  switch (action.type) {
+    case getType(setOfflineAccessReason):
+      return void updateMixpanelSuperProperties(state, {
+        property: "OFFLINE_ACCESS_REASON",
+        value: action.payload
+      });
+    case getType(resetOfflineAccessReason):
+      return void updateMixpanelSuperProperties(state, {
+        property: "OFFLINE_ACCESS_REASON",
+        value: "not_available"
+      });
+  }
+};

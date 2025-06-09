@@ -13,33 +13,22 @@ exports[`PageNotFound Should match the snapshot 1`] = `
   style={
     {
       "flexGrow": 1,
-      "marginHorizontal": 24,
     }
   }
 >
   <RCTScrollView
+    alwaysBounceVertical={false}
     centerContent={true}
-    collapsable={false}
     contentContainerStyle={
       [
         {
           "alignContent": "center",
           "alignItems": "stretch",
-          "flex": 1,
+          "flexGrow": 1,
           "justifyContent": "center",
+          "padding": 24,
         },
         false,
-      ]
-    }
-    handlerTag={1}
-    handlerType="NativeViewGestureHandler"
-    onGestureHandlerEvent={[Function]}
-    onGestureHandlerStateChange={[Function]}
-    waitFor={
-      [
-        {
-          "current": null,
-        },
       ]
     }
   >
@@ -301,6 +290,10 @@ Try updating IO.
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {
+                    "backgroundColor": undefined,
+                  },
                   {
                     "paddingHorizontal": 24,
                   },
@@ -312,10 +305,6 @@ Try updating IO.
                     "height": 48,
                   },
                   {},
-                  false,
-                  {
-                    "backgroundColor": undefined,
-                  },
                 ]
               }
             >
@@ -448,6 +437,8 @@ Try updating IO.
                     "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
+                  false,
+                  {},
                   {
                     "paddingHorizontal": 0,
                   },
@@ -458,8 +449,6 @@ Try updating IO.
                     "borderWidth": 0,
                     "height": undefined,
                   },
-                  {},
-                  false,
                   {},
                 ]
               }
