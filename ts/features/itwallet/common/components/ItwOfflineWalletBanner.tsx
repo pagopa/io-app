@@ -1,4 +1,4 @@
-import { Banner, IOToast } from "@pagopa/io-app-design-system";
+import { Banner, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import { useCallback, useMemo } from "react";
 import { useRoute } from "@react-navigation/native";
 import I18n from "../../../../i18n";
@@ -54,16 +54,19 @@ export const ItwOfflineWalletBanner = () => {
   };
 
   return (
-    <Banner
-      testID="itwOfflineWalletBannerTestID"
-      title={I18n.t("features.itWallet.discovery.offlineBanner.title")}
-      content={I18n.t("features.itWallet.discovery.offlineBanner.content")}
-      action={I18n.t("features.itWallet.discovery.offlineBanner.action")}
-      pictogramName="notification"
-      color="neutral"
-      onPress={handlePress}
-      labelClose={I18n.t("global.buttons.close")}
-      onClose={handleOnClose}
-    />
+    <>
+      <VSpacer />
+      <Banner
+        testID="itwOfflineWalletBannerTestID"
+        title={I18n.t("features.itWallet.discovery.offlineBanner.title")}
+        content={I18n.t("features.itWallet.discovery.offlineBanner.content")}
+        action={I18n.t("features.itWallet.discovery.offlineBanner.action")}
+        pictogramName="notification"
+        color="neutral"
+        onPress={handlePress}
+        labelClose={I18n.t("global.buttons.close")}
+        onClose={handleOnClose}
+      />
+    </>
   );
 };

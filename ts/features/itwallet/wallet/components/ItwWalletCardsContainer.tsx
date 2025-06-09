@@ -101,7 +101,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     <>
       {isNewItwRenderable && (
         <View style={styles.itwHeader}>
-          <ItwBadge />
+          <ItwBadge variant="outlined" />
           <IOButton
             color="contrast"
             variant="link"

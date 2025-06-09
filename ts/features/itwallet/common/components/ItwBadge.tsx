@@ -1,12 +1,12 @@
 import { memo, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Image, Platform, StyleSheet, View } from "react-native";
 import {
   Canvas,
   LinearGradient,
   RoundedRect,
   vec
 } from "@shopify/react-native-skia";
-import { Caption, Icon, IOColors } from "@pagopa/io-app-design-system";
+import { Caption, IOColors } from "@pagopa/io-app-design-system";
 import {
   Easing,
   Extrapolation,
@@ -16,34 +16,60 @@ import {
   withRepeat,
   withTiming
 } from "react-native-reanimated";
+import I18n from "../../../../i18n.ts";
 
-export const ItwBadge = memo(() => (
-  <View style={styles.badge}>
-    <AnimatedStrokeGradient />
-    <View style={styles.content}>
-      <Caption style={styles.text}>It-wallet</Caption>
-      {/* TODO: Temporary icon, it must be changed with the ITW Logo  */}
-      <Icon name="navWallet" color="white" size={16} />
+type Props = {
+  variant?: "filled" | "outlined";
+};
+
+/**
+ * This component renders the logo of the IT Wallet, image and text.
+ */
+// TODO: replace with the correct image [SIW-2412]
+export const ItwBadge = memo(({ variant = "filled" }: Props) => {
+  const SkiaComponent = skiaComponentMap[variant];
+
+  return (
+    <View style={styles.container}>
+      <SkiaComponent />
+      <View style={styles.content}>
+        <Image
+          accessibilityIgnoresInvertColors
+          accessible={true}
+          resizeMode="contain"
+          style={styles.icon}
+        />
+        <Caption style={styles.text}>
+          {I18n.t("features.itWallet.title")}
+        </Caption>
+      </View>
     </View>
-  </View>
-));
-
-const styles = StyleSheet.create({
-  badge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4
-  },
-  content: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4
-  },
-  text: {
-    color: IOColors.white,
-    fontWeight: "500",
-    letterSpacing: 0
-  }
+  );
 });
+
+const StaticGradientBackground = () => {
+  const [{ width, height }, setDimensions] = useState({ width: 0, height: 0 });
+
+  return (
+    <Canvas
+      style={StyleSheet.absoluteFill}
+      onLayout={event => {
+        setDimensions({
+          width: event.nativeEvent.layout.width,
+          height: event.nativeEvent.layout.height
+        });
+      }}
+    >
+      <RoundedRect x={0} y={0} width={width} height={height} r={100}>
+        <LinearGradient
+          start={vec(0, height)}
+          end={vec(width, height + width * Math.tan((60 * Math.PI) / 180))}
+          colors={["#002FCB", "#003BFE", "#0335DA", "#053FFF", "#0335DD"]}
+        />
+      </RoundedRect>
+    </Canvas>
+  );
+};
 
 const AnimatedStrokeGradient = () => {
   const [{ width, height }, setDimensions] = useState({ width: 0, height: 0 });
@@ -81,6 +107,7 @@ const AnimatedStrokeGradient = () => {
   return (
     <Canvas
       style={StyleSheet.absoluteFill}
+      // eslint-disable-next-line sonarjs/no-identical-functions
       onLayout={event => {
         setDimensions({
           width: event.nativeEvent.layout.width,
@@ -114,3 +141,38 @@ const AnimatedStrokeGradient = () => {
     </Canvas>
   );
 };
+
+const skiaComponentMap = {
+  filled: StaticGradientBackground,
+  outlined: AnimatedStrokeGradient
+};
+
+const styles = StyleSheet.create({
+  container: {
+    alignSelf: "flex-start",
+    flexDirection: "row",
+    alignItems: "center",
+    borderCurve: "continuous",
+    ...Platform.select({
+      android: {
+        textAlignVertical: "center"
+      }
+    })
+  },
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4
+  },
+  text: {
+    color: IOColors.white,
+    fontWeight: "bold"
+  },
+  icon: {
+    width: 14,
+    height: 14,
+    backgroundColor: IOColors.white
+  }
+});
