@@ -61,10 +61,9 @@ const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {
 
   useFocusEffect(
     useCallback(() => {
-      machineRef.send({
-        type: "start",
-        payload
-      });
+      // Reset the machine in case there is a pending presentation
+      machineRef.send({ type: "reset" });
+      machineRef.send({ type: "start", payload });
     }, [payload, machineRef])
   );
 
