@@ -301,6 +301,7 @@ const WalletPaymentOutcomeScreen = () => {
           : undefined
     });
   };
+
   // eslint-disable-next-line complexity
   const getPropsForOutcome = (): OperationResultScreenContentProps => {
     switch (outcome) {
@@ -311,7 +312,9 @@ const WalletPaymentOutcomeScreen = () => {
             amount: paymentAmount
           }),
           subtitle: I18n.t("wallet.payment.outcome.SUCCESS.subtitle"),
-          action: closeSuccessAction
+          action: closeSuccessAction,
+          enableAnimatedPictogram: true,
+          loop: false
         };
       case WalletPaymentOutcomeEnum.GENERIC_ERROR:
       default:
@@ -319,7 +322,8 @@ const WalletPaymentOutcomeScreen = () => {
           pictogram: "umbrella",
           title: I18n.t("wallet.payment.outcome.GENERIC_ERROR.title"),
           subtitle: I18n.t("wallet.payment.outcome.GENERIC_ERROR.subtitle"),
-          action: closeFailureAction
+          action: closeFailureAction,
+          enableAnimatedPictogram: true
         };
       case WalletPaymentOutcomeEnum.AUTH_ERROR:
         return {
@@ -498,7 +502,8 @@ const WalletPaymentOutcomeScreen = () => {
           title: I18n.t("wallet.payment.outcome.BE_NODE_KO.title"),
           subtitle: I18n.t("wallet.payment.outcome.BE_NODE_KO.subtitle"),
           action: closeFailureAction,
-          secondaryAction: contactSupportAction
+          secondaryAction: contactSupportAction,
+          enableAnimatedPictogram: true
         };
       case WalletPaymentOutcomeEnum.PSP_ERROR:
         return {
@@ -515,7 +520,8 @@ const WalletPaymentOutcomeScreen = () => {
           subtitle: I18n.t(
             "wallet.payment.outcome.AUTH_REQUEST_ERROR.subtitle"
           ),
-          action: closeFailureAction
+          action: closeFailureAction,
+          enableAnimatedPictogram: true
         };
     }
   };

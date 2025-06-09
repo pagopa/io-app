@@ -3,10 +3,11 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
+import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -18,8 +19,11 @@ import {
   useIOStore
 } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
+import { usePaymentFailureSupportModal } from "../../checkout/hooks/usePaymentFailureSupportModal";
 import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 import * as analytics from "../analytics";
 import { usePaymentOnboardingAuthErrorBottomSheet } from "../components/PaymentsOnboardingAuthErrorBottomSheet";
@@ -34,10 +38,6 @@ import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
 } from "../types/OnboardingOutcomeEnum";
-import { usePaymentFailureSupportModal } from "../../checkout/hooks/usePaymentFailureSupportModal";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
