@@ -222,9 +222,6 @@ const useIOBarcodeFileReader = ({
   /**
    * Shows the document picker that lets the user select a PDF document from the library
    */
-  /**
-   * Shows the document picker that lets the user select a PDF document from the library
-   */
   const showDocumentPicker = async () => {
     setIsLoading(true);
     await pipe(
