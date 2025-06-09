@@ -4942,6 +4942,33 @@
           "description": "L’unico Wallet di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
           "action": "Ottieni IT-Wallet"
         }
+      },
+      "playgrounds": {
+        "environment": {
+          "toggle": {
+            "pre": {
+              "value": "Imposta l'ambiente su PRE",
+              "description": "Usa l'ambiente pre-produzione. Potrebbe essere necessario un proxy per accedere ai servizi. Questa azione reimposta lo stato di IT-Wallet."
+            },
+            "prod": {
+              "value": "Imposta l'ambiente su PROD",
+              "description": "Usa l'ambiente di produzione. Questa azione reimposta lo stato di IT-Wallet."
+            }
+          },
+          "alert": {
+            "title": "Imposta l'ambiente su [{{environment}}]",
+            "content": "Stai per accedere all'ambiente di test dedicato a IT-Wallet.\nLa funzionalità Documenti su IO, se attiva, verrà automaticamente disattivata."
+          },
+          "banner": {
+            "content": "Ti trovi nell’ambiente di test dell’app dedicato a IT-Wallet.",
+            "action": "Come funziona?"
+          },
+          "bottom_sheet": {
+            "title": "Ambiente di test IT-Wallet",
+            "content": "Se avevi attivato Documenti su IO, la funzionalità è stata disattivata automaticamente.\nPer riattivarla, esci dall’ambiente di test e attiva di nuovo Documenti su IO.",
+            "action": "Esci dall'ambiente di test"
+          }
+        }
       }
     }
   },

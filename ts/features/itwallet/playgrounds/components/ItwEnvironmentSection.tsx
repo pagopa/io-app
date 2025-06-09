@@ -9,6 +9,7 @@ import { EnvType } from "../../common/utils/environment";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { itwSetEnv } from "../../common/store/actions/environment";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
+import I18n from "../../../../i18n";
 
 export const ItwEnvironmentSection = () => {
   const dispatch = useIODispatch();
@@ -16,37 +17,44 @@ export const ItwEnvironmentSection = () => {
 
   const toggleEnvionment = (selected: EnvType) => {
     Alert.alert(
-      `Set environment to [${selected.toUpperCase()}]`,
-      `This action will reset the IT Wallet state, which means you will lose all your credentials.\nThe action is not reversible.`,
+      I18n.t("features.itWallet.playgrounds.environment.alert.title", {
+        environment: selected.toUpperCase()
+      }),
+      I18n.t("features.itWallet.playgrounds.environment.alert.content"),
       [
         {
-          text: "Cancel",
+          text: I18n.t("global.buttons.cancel"),
           style: "cancel"
         },
         {
-          text: "Confirm",
+          text: I18n.t("global.buttons.confirm"),
           style: "destructive",
           onPress: () => {
-            dispatch(itwLifecycleStoresReset());
             dispatch(itwSetEnv(selected));
+            dispatch(itwLifecycleStoresReset());
           }
         }
       ],
       { cancelable: true }
     );
   };
-
   const envRadioItems = (): ReadonlyArray<RadioItem<EnvType>> => [
     {
-      value: "Set PRE environment",
-      description:
-        "Use the PRE environment. A Proxy might be needed to access the services. This action will reset the IT Wallet state.",
+      value: I18n.t(
+        "features.itWallet.playgrounds.environment.toggle.pre.value"
+      ),
+      description: I18n.t(
+        "features.itWallet.playgrounds.environment.toggle.pre.description"
+      ),
       id: "pre"
     },
     {
-      value: "Set PROD environment",
-      description:
-        "Use the PROD environment. This action will reset the IT Wallet state.",
+      value: I18n.t(
+        "features.itWallet.playgrounds.environment.toggle.prod.value"
+      ),
+      description: I18n.t(
+        "features.itWallet.playgrounds.environment.toggle.prod.description"
+      ),
       id: "prod"
     }
   ];
@@ -56,7 +64,7 @@ export const ItwEnvironmentSection = () => {
       <ListItemHeader label="Environment" />
       <RadioGroup
         type="radioListItem"
-        key="check_income"
+        key="itw_environment"
         items={envRadioItems()}
         selectedItem={selectedEnv}
         onPress={toggleEnvionment}
