@@ -3,9 +3,9 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
-import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
+import { Merchant } from "../../../../../../definitions/cgn/Merchant";
+import { OfflineMerchant } from "../../../../../../definitions/cgn/OfflineMerchant";
+import { OnlineMerchant } from "../../../../../../definitions/cgn/OnlineMerchant";
 import {
   getValueOrElse,
   isLoading

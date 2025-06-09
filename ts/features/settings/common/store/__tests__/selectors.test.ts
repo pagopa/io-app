@@ -14,9 +14,9 @@ import {
   profileNotificationSettingsSelector,
   tosVersionSelector
 } from "../selectors";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
-import { ReminderStatusEnum } from "../../../../../../definitions/backend/ReminderStatus";
-import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/backend/PushNotificationsContentType";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/auth/ServicesPreferencesMode";
+import { ReminderStatusEnum } from "../../../../../../definitions/auth/ReminderStatus";
+import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/auth/PushNotificationsContentType";
 
 describe("profile selectors", () => {
   const baseProfile = {

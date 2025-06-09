@@ -14,7 +14,7 @@ export function* handleExportFimsHistorySaga(
   action: ActionType<typeof fimsHistoryExport.request>
 ) {
   const exportHistoryRequest = exportHistory({
-    Bearer: `Bearer ${bearerToken}`
+    Bearer: `${bearerToken}`
   });
 
   try {

@@ -5,8 +5,8 @@ import { getType } from "typesafe-actions";
 import {
   SubscriptionState,
   SubscriptionStateEnum
-} from "../../../../../definitions/trial_system/SubscriptionState";
-import { TrialId } from "../../../../../definitions/trial_system/TrialId";
+} from "../../../../../definitions/platform/SubscriptionState";
+import { TrialId } from "../../../../../definitions/platform/TrialId";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { TrialSystemError } from "../../utils/error";

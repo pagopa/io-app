@@ -20,7 +20,7 @@ export function* handleGetMetadata(
 ): SagaIterator {
   try {
     const getMetadataRequest = getMetadata({
-      Bearer: `Bearer ${bearerToken}`
+      Bearer: `${bearerToken}`
     });
     const getMetadataResponse = (yield* call(
       withRefreshApiCall,

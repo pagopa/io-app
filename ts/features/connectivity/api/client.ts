@@ -1,4 +1,4 @@
-import { createClient } from "../../../../definitions/connectivity/client";
+import { createClient } from "../../../../definitions/platform/client";
 import { defaultRetryingFetch } from "../../../utils/fetch";
 
 export const createConnectivityClient = (baseUrl: string) =>

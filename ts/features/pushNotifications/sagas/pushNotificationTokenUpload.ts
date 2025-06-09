@@ -3,7 +3,7 @@ import * as E from "fp-ts/lib/Either";
 import { Platform } from "react-native";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, take } from "typed-redux-saga/macro";
-import { PlatformEnum } from "../../../../definitions/backend/Platform";
+import { PlatformEnum } from "../../../../definitions/communications/Platform";
 import { BackendClient } from "../../../api/backend";
 import {
   canSkipTokenRegistrationSelector,

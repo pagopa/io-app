@@ -20,7 +20,7 @@ export function* handleGetSignatureRequests(
 ): SagaIterator {
   try {
     const getSignatureRequestsCall = getSignatureRequests({
-      Bearer: `Bearer ${bearerToken}`
+      Bearer: `${bearerToken}`
     });
 
     const getSignatureRequestsResponse = (yield* call(

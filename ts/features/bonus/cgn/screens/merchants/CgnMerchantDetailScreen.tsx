@@ -25,8 +25,8 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import { Discount } from "../../../../../../definitions/cgn/Discount";
+import { Merchant } from "../../../../../../definitions/cgn/Merchant";
 import { isReady } from "../../../../../common/model/RemoteValue";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";

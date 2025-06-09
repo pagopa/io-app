@@ -17,7 +17,7 @@ import {
   toLoadingContentPayload
 } from "../store/actions/preconditions";
 import { UIMessageId } from "../types";
-import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
+import { MessageCategory } from "../../../../definitions/communications/MessageCategory";
 import {
   preconditionsCategoryTagSelector,
   preconditionsMessageIdSelector

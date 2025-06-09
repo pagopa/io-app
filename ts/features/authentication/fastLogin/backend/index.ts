@@ -2,10 +2,10 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { LollipopConfig } from "../../../lollipop";
 import { lollipopFetch } from "../../../lollipop/utils/fetch";
-import { LollipopMethodEnum } from "../../../../../definitions/lollipop/LollipopMethod";
-import { LollipopOriginalURL } from "../../../../../definitions/lollipop/LollipopOriginalURL";
-import { LollipopSignatureInput } from "../../../../../definitions/lollipop/LollipopSignatureInput";
-import { LollipopSignature } from "../../../../../definitions/lollipop/LollipopSignature";
+import { LollipopMethodEnum } from "../../../../../definitions/auth/LollipopMethod";
+import { LollipopOriginalURL } from "../../../../../definitions/auth/LollipopOriginalURL";
+import { LollipopSignatureInput } from "../../../../../definitions/auth/LollipopSignatureInput";
+import { LollipopSignature } from "../../../../../definitions/auth/LollipopSignature";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import { createClient } from "../../../../../definitions/fast_login/client";
 

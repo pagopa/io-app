@@ -5,7 +5,7 @@ import { PaymentData, UIMessageDetails, UIMessageId } from "../../../types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessageDetailsPayment } from "../MessageDetailsPayment";
 import { loadMessageDetails } from "../../../store/actions";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 describe("MessageDetailsPayment", () => {
   it("Should match snapshot for no payment data", () => {

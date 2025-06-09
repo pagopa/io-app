@@ -1,4 +1,4 @@
-import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "../../../../../definitions/auth/ServicesPreferencesMode";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";

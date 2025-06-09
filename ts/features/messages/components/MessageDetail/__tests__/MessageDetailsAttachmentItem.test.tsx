@@ -5,8 +5,8 @@ import { downloadAttachment } from "../../../store/actions";
 import { UIMessageId } from "../../../types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessageDetailsAttachmentItem } from "../MessageDetailsAttachmentItem";
-import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../../definitions/communications/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 describe("MessageDetailsAttachmentItem", () => {
   it("Should match snapshot with required parameters", () => {

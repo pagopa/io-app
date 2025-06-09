@@ -2,11 +2,11 @@ import * as E from "fp-ts/lib/Either";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { Linking } from "react-native";
 import FM from "front-matter";
-import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
-import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
-import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
-import { MessageContent } from "../../../../../definitions/backend/MessageContent";
-import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
+import { CreatedMessageWithContent } from "../../../../../definitions/communications/CreatedMessageWithContent";
+import { FiscalCode } from "../../../../../definitions/auth/FiscalCode";
+import { MessageBodyMarkdown } from "../../../../../definitions/communications/MessageBodyMarkdown";
+import { NewMessageContent as MessageContent } from "../../../../../definitions/communications/NewMessageContent";
+import { TimeToLiveSeconds } from "../../../../../definitions/communications/TimeToLiveSeconds";
 import { Locales } from "../../../../../locales/locales";
 import { setLocale } from "../../../../i18n";
 import { CTA, CTAS, LocalizedCTAs } from "../../../../types/LocalizedCTAs";
@@ -21,8 +21,8 @@ import {
   testable
 } from "../ctas";
 import * as ANALYTICS from "../../analytics";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ServiceMetadata } from "../../../../../definitions/services/ServiceMetadata";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { ServiceMetadataV2 } from "../../../../../definitions/services/ServiceMetadataV2";
 
 const messageBody = `### this is a message
 
@@ -631,7 +631,7 @@ describe("hasMetadataTokenName", () => {
     expect(hasTokenName).toBe(false);
   });
   it("should return false if metadata's token_name is undefined", () => {
-    const metadata = {} as ServiceMetadata;
+    const metadata = {} as ServiceMetadataV2;
 
     const hasTokenName = testable!.hasMetadataTokenName(metadata);
 
@@ -640,7 +640,7 @@ describe("hasMetadataTokenName", () => {
   it("should return true if metadata's token_name defined", () => {
     const metadata = {
       token_name: "a token name"
-    } as ServiceMetadata;
+    } as ServiceMetadataV2;
 
     const hasTokenName = testable!.hasMetadataTokenName(metadata);
 
@@ -1748,7 +1748,7 @@ describe("getServiceCTAs", () => {
     expect(serviceCTA).toBeUndefined();
   });
   it("should return undefined if input service has no cta", () => {
-    const serviceMetadata = {} as ServiceMetadata;
+    const serviceMetadata = {} as ServiceMetadataV2;
 
     const serviceCTA = getServiceCTAs(serviceId, serviceMetadata);
 
@@ -1758,7 +1758,7 @@ describe("getServiceCTAs", () => {
   it("should return the CTA if input service has a properly formatted cta", () => {
     const serviceMetadata = {
       cta: `---\nit:\n cta_1:\n  action: "ioit://messages"\n  text: "CTA's text"\n---`
-    } as ServiceMetadata;
+    } as ServiceMetadataV2;
 
     const serviceCTA = getServiceCTAs(serviceId, serviceMetadata);
 

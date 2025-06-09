@@ -11,7 +11,7 @@ import {
 } from "../../../lollipop/store/reducers/lollipop";
 import { generateKeyInfo } from "../../../lollipop/saga";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../../definitions/communications/ThirdPartyAttachment";
 import { messageId_1 } from "../../__mocks__/messages";
 
 const handleRequestInitFactory = testableHandleRequestInitFactory!;

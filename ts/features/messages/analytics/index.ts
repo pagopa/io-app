@@ -1,8 +1,8 @@
 import * as t from "io-ts";
 import * as S from "fp-ts/lib/string";
 import { getType } from "typesafe-actions";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { MessageCategory } from "../../../../definitions/communications/MessageCategory";
 import {
   enqueueMixpanelEvent,
   isMixpanelInstanceInitialized,

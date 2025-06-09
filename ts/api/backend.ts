@@ -17,43 +17,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import _ from "lodash";
 import { v4 as uuid } from "uuid";
 import { withoutUndefinedValues } from "@pagopa/ts-commons/lib/types";
-import { ProblemJson } from "../../definitions/backend/ProblemJson";
-import {
-  AbortUserDataProcessingT,
-  activatePaymentDefaultDecoder,
-  ActivatePaymentT,
-  createOrUpdateInstallationDefaultDecoder,
-  CreateOrUpdateInstallationT,
-  getActivationStatusDefaultDecoder,
-  GetActivationStatusT,
-  getPaymentInfoDefaultDecoder,
-  GetPaymentInfoT,
-  getServicePreferencesDefaultDecoder,
-  GetServicePreferencesT,
-  getUserDataProcessingDefaultDecoder,
-  GetUserDataProcessingT,
-  getUserMessageDefaultDecoder,
-  getUserMessagesDefaultDecoder,
-  GetUserProfileT,
-  StartEmailValidationProcessT,
-  updateProfileDefaultDecoder,
-  UpdateProfileT,
-  upsertServicePreferencesDefaultDecoder,
-  UpsertServicePreferencesT,
-  upsertUserDataProcessingDefaultDecoder,
-  UpsertUserDataProcessingT,
-  upsertMessageStatusAttributesDefaultDecoder,
-  UpsertMessageStatusAttributesT,
-  getUserProfileDefaultDecoder,
-  GetThirdPartyMessageT,
-  getThirdPartyMessageDefaultDecoder,
-  GetThirdPartyMessagePreconditionT,
-  getThirdPartyMessagePreconditionDefaultDecoder,
-  GetUserMessagesT,
-  GetUserMessageT,
-  startEmailValidationProcessDefaultDecoder,
-  abortUserDataProcessingDefaultDecoder
-} from "../../definitions/backend/requestTypes";
+import { ProblemJson } from "../../definitions/auth/ProblemJson";
 import { SessionToken } from "../types/SessionToken";
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 import {
@@ -66,6 +30,46 @@ import {
   getSessionStateDefaultDecoder,
   GetSessionStateT
 } from "../../definitions/session_manager/requestTypes";
+import {
+  CreateOrUpdateInstallationT,
+  getUserMessagesDefaultDecoder,
+  GetThirdPartyMessagePreconditionT,
+  GetThirdPartyMessageT,
+  GetUserMessagesT,
+  GetUserMessageT,
+  UpsertMessageStatusAttributesT,
+  getUserMessageDefaultDecoder,
+  getThirdPartyMessageDefaultDecoder,
+  getThirdPartyMessagePreconditionDefaultDecoder,
+  upsertMessageStatusAttributesDefaultDecoder,
+  createOrUpdateInstallationDefaultDecoder
+} from "../../definitions/communications/requestTypes";
+import {
+  abortUserDataProcessingDefaultDecoder,
+  AbortUserDataProcessingT,
+  getServicePreferencesDefaultDecoder,
+  GetServicePreferencesT,
+  getUserDataProcessingDefaultDecoder,
+  GetUserDataProcessingT,
+  getUserProfileDefaultDecoder,
+  GetUserProfileT,
+  startEmailValidationProcessDefaultDecoder,
+  StartEmailValidationProcessT,
+  updateProfileDefaultDecoder,
+  UpdateProfileT,
+  upsertServicePreferencesDefaultDecoder,
+  UpsertServicePreferencesT,
+  upsertUserDataProcessingDefaultDecoder,
+  UpsertUserDataProcessingT
+} from "../../definitions/auth/requestTypes";
+import {
+  activatePaymentDefaultDecoder,
+  ActivatePaymentT,
+  getActivationStatusDefaultDecoder,
+  GetActivationStatusT,
+  getPaymentInfoDefaultDecoder,
+  GetPaymentInfoT
+} from "../../definitions/payments/requestTypes";
 
 /**
  * We will retry for as many times when polling for a payment ID.
