@@ -8,7 +8,6 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { EnvType } from "../../common/utils/environment";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { itwSetEnv } from "../../common/store/actions/environment";
-import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import I18n from "../../../../i18n";
 
 export const ItwEnvironmentSection = () => {
@@ -31,7 +30,6 @@ export const ItwEnvironmentSection = () => {
           style: "destructive",
           onPress: () => {
             dispatch(itwSetEnv(selected));
-            dispatch(itwLifecycleStoresReset());
           }
         }
       ],
