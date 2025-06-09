@@ -6,6 +6,10 @@ import * as O from "fp-ts/lib/Option";
 import { useEffect, useRef } from "react";
 import { View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import {
+  IOAnimatedPictograms,
+  IOAnimatedPictogramsAssets
+} from "../../../../components/ui/AnimatedPictogram";
 import I18n from "../../../../i18n";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import {
@@ -202,14 +206,29 @@ const PaymentsOnboardingFeedbackScreen = () => {
     )
   );
 
+  const hasAnimation = (value: IOPictograms): boolean =>
+    value in IOAnimatedPictogramsAssets;
+
+  const animationProps = hasAnimation(pictogramByOutcome[outcome])
+    ? {
+        enableAnimatedPictogram: true as const,
+        loop: pictogramByOutcome[outcome] === "umbrella",
+        pictogram: pictogramByOutcome[outcome] as IOAnimatedPictograms
+      }
+    : {
+        pictogram: pictogramByOutcome[outcome],
+        enableAnimatedPictogram: false as const,
+        loop: undefined
+      };
+
   return (
     <View style={{ flex: 1 }}>
       <OperationResultScreenContent
+        {...animationProps}
         title={I18n.t(`wallet.onboarding.outcome.${outcomeEnumKey}.title`)}
         subtitle={I18n.t(
           `wallet.onboarding.outcome.${outcomeEnumKey}.subtitle`
         )}
-        pictogram={pictogramByOutcome[outcome]}
         action={{
           label: actionButtonLabel,
           accessibilityLabel: actionButtonLabel,
