@@ -56,7 +56,7 @@ export const useSpecialCtaCdc = (
       return undefined;
     }
 
-    if (isServiceActive) {
+    if (!isServiceActive) {
       return {
         label: I18n.t("bonus.cdc.request"),
         loading,
