@@ -1,4 +1,4 @@
-import { Banner, IOToast, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, IOToast } from "@pagopa/io-app-design-system";
 import { useCallback, useMemo } from "react";
 import { useRoute } from "@react-navigation/native";
 import I18n from "../../../../i18n";
