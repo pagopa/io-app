@@ -53,19 +53,21 @@ type PaymentsOnboardingFeedbackScreenRouteProps = RouteProp<
   "PAYMENT_ONBOARDING_RESULT_FEEDBACK"
 >;
 
-export const pictogramByOutcome: Record<WalletOnboardingOutcome, IOPictograms> =
-  {
-    [WalletOnboardingOutcomeEnum.SUCCESS]: "success",
-    [WalletOnboardingOutcomeEnum.GENERIC_ERROR]: "umbrella",
-    [WalletOnboardingOutcomeEnum.AUTH_ERROR]: "accessDenied",
-    [WalletOnboardingOutcomeEnum.TIMEOUT]: "time",
-    [WalletOnboardingOutcomeEnum.CANCELED_BY_USER]: "trash",
-    [WalletOnboardingOutcomeEnum.INVALID_SESSION]: "umbrella",
-    [WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED]: "success",
-    [WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND]: "attention",
-    [WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING]: "attention",
-    [WalletOnboardingOutcomeEnum.BE_KO]: "umbrella"
-  };
+export const pictogramByOutcome: Record<
+  WalletOnboardingOutcome,
+  IOPictograms | IOAnimatedPictograms
+> = {
+  [WalletOnboardingOutcomeEnum.SUCCESS]: "success",
+  [WalletOnboardingOutcomeEnum.GENERIC_ERROR]: "umbrella",
+  [WalletOnboardingOutcomeEnum.AUTH_ERROR]: "error",
+  [WalletOnboardingOutcomeEnum.TIMEOUT]: "time",
+  [WalletOnboardingOutcomeEnum.CANCELED_BY_USER]: "trash",
+  [WalletOnboardingOutcomeEnum.INVALID_SESSION]: "umbrella",
+  [WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED]: "success",
+  [WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND]: "attention",
+  [WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING]: "attention",
+  [WalletOnboardingOutcomeEnum.BE_KO]: "umbrella"
+};
 
 const PaymentsOnboardingFeedbackScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -206,7 +208,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
     )
   );
 
-  const hasAnimation = (value: IOPictograms): boolean =>
+  const hasAnimation = (value: IOPictograms | IOAnimatedPictograms): boolean =>
     value in IOAnimatedPictogramsAssets;
 
   const animationProps = hasAnimation(pictogramByOutcome[outcome])
@@ -216,7 +218,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
         pictogram: pictogramByOutcome[outcome] as IOAnimatedPictograms
       }
     : {
-        pictogram: pictogramByOutcome[outcome],
+        pictogram: pictogramByOutcome[outcome] as IOPictograms,
         enableAnimatedPictogram: false as const,
         loop: undefined
       };

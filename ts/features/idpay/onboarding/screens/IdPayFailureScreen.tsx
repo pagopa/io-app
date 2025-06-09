@@ -65,25 +65,29 @@ const IdPayFailureScreen = () => {
         };
       case OnboardingFailureEnum.UNSATISFIED_REQUIREMENTS:
         return {
-          pictogram: "accessDenied",
+          pictogram: "error",
           title: I18n.t(
             "idpay.onboarding.failure.message.UNSATISFIED_REQUIREMENTS.title"
           ),
           subtitle: I18n.t(
             "idpay.onboarding.failure.message.UNSATISFIED_REQUIREMENTS.subtitle"
           ),
-          action: defaultCloseAction
+          action: defaultCloseAction,
+          enableAnimatedPictogram: true,
+          loop: false
         };
       case OnboardingFailureEnum.USER_NOT_IN_WHITELIST:
         return {
-          pictogram: "accessDenied",
+          pictogram: "error",
           title: I18n.t(
             "idpay.onboarding.failure.message.USER_NOT_IN_WHITELIST.title"
           ),
           subtitle: I18n.t(
             "idpay.onboarding.failure.message.USER_NOT_IN_WHITELIST.subtitle"
           ),
-          action: defaultCloseAction
+          action: defaultCloseAction,
+          enableAnimatedPictogram: true,
+          loop: false
         };
       case OnboardingFailureEnum.INITIATIVE_NOT_STARTED:
         return {
@@ -122,7 +126,7 @@ const IdPayFailureScreen = () => {
         };
       case OnboardingFailureEnum.USER_UNSUBSCRIBED:
         return {
-          pictogram: "accessDenied",
+          pictogram: "error",
           title: I18n.t(
             "idpay.onboarding.failure.message.USER_UNSUBSCRIBED.title"
           ),
@@ -130,7 +134,9 @@ const IdPayFailureScreen = () => {
             "idpay.onboarding.failure.message.USER_UNSUBSCRIBED.subtitle"
           ),
           action: defaultCloseAction,
-          secondaryAction: goToInitiativeAction
+          secondaryAction: goToInitiativeAction,
+          enableAnimatedPictogram: true,
+          loop: false
         };
       case OnboardingFailureEnum.USER_ONBOARDED:
         return {

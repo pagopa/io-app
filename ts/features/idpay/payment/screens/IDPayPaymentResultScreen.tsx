@@ -87,19 +87,23 @@ const mapFailureToContentProps = (
       };
     case PaymentFailureEnum.USER_NOT_ONBOARDED:
       return {
-        pictogram: "accessDenied",
+        pictogram: "error",
         title: I18n.t("idpay.payment.result.failure.USER_NOT_ONBOARDED.title"),
         subtitle: I18n.t(
           "idpay.payment.result.failure.USER_NOT_ONBOARDED.subtitle"
-        )
+        ),
+        enableAnimatedPictogram: true,
+        loop: false
       };
     case PaymentFailureEnum.USER_UNSUBSCRIBED:
       return {
-        pictogram: "accessDenied",
+        pictogram: "error",
         title: I18n.t("idpay.payment.result.failure.USER_UNSUBSCRIBED.title"),
         subtitle: I18n.t(
           "idpay.payment.result.failure.USER_UNSUBSCRIBED.subtitle"
-        )
+        ),
+        enableAnimatedPictogram: true,
+        loop: false
       };
     case PaymentFailureEnum.ALREADY_AUTHORIZED:
       return {
