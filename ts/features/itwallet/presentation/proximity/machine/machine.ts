@@ -50,7 +50,7 @@ export const itwProximityMachine = setup({
         onDone: [
           {
             guard: ({ event }) => !!event.output,
-            target: "CheckingBluetoothIsActive"
+            target: "Bluetooth"
           },
           {
             guard: ({ event }) => !event.output,
@@ -83,7 +83,7 @@ export const itwProximityMachine = setup({
         onDone: [
           {
             guard: ({ event }) => !!event.output,
-            target: "CheckingBluetoothIsActive"
+            target: "Bluetooth"
           },
           {
             guard: ({ event }) => !event.output,
@@ -104,64 +104,71 @@ export const itwProximityMachine = setup({
         }
       }
     },
-    CheckingBluetoothIsActive: {
-      tags: [ItwPresentationTags.Loading],
-      description: "Check if Bluetooth is enabled",
-      invoke: {
-        src: "checkBluetoothIsActive",
-        onDone: [
-          {
-            guard: ({ event }) => !!event.output,
-            target: "StartingProximityFlow"
-          },
-          {
-            guard: ({ event }) => !event.output,
-            target: "EnableBluetooth"
+    Bluetooth: {
+      initial: "CheckingBluetoothIsActive",
+      description: "Perform all the checks related to Bluetooth",
+      states: {
+        CheckingBluetoothIsActive: {
+          tags: [ItwPresentationTags.Loading],
+          description: "Check if Bluetooth is enabled",
+          invoke: {
+            src: "checkBluetoothIsActive",
+            onDone: [
+              {
+                guard: ({ event }) => !!event.output,
+                target: "#itwProximityMachine.StartingProximityFlow"
+              },
+              {
+                guard: ({ event }) => !event.output,
+                target: "EnableBluetooth"
+              }
+            ],
+            onError: {
+              target: "EnableBluetooth"
+            }
           }
-        ],
-        onError: {
-          target: "EnableBluetooth"
-        }
-      }
-    },
-    EnableBluetooth: {
-      entry: "navigateToBluetoothActivationScreen",
-      description: "Display the screen prompting the user to enable Bluetooth",
-      on: {
-        back: {
-          target: "Idle"
         },
-        continue: {
-          target: "CheckingBluetoothIsActiveSilently"
-        }
-      }
-    },
-    CheckingBluetoothIsActiveSilently: {
-      tags: [ItwPresentationTags.Loading],
-      description: "Check if Bluetooth is enabled",
-      invoke: {
-        src: "checkBluetoothIsActive",
-        onDone: [
-          {
-            guard: ({ event }) => !!event.output,
-            target: "StartingProximityFlow"
-          },
-          {
-            guard: ({ event }) => !event.output,
-            target: "BluetoothRequired"
+        EnableBluetooth: {
+          entry: "navigateToBluetoothActivationScreen",
+          description:
+            "Display the screen prompting the user to enable Bluetooth",
+          on: {
+            back: {
+              target: "#itwProximityMachine.Idle"
+            },
+            continue: {
+              target: "CheckingBluetoothIsActiveSilently"
+            }
           }
-        ],
-        onError: {
-          target: "BluetoothRequired"
-        }
-      }
-    },
-    BluetoothRequired: {
-      description:
-        "Display the system alert informing the user that must enable the Bluetooth to proceed",
-      on: {
-        close: {
-          target: "Idle"
+        },
+        CheckingBluetoothIsActiveSilently: {
+          tags: [ItwPresentationTags.Loading],
+          description: "Check if Bluetooth is enabled",
+          invoke: {
+            src: "checkBluetoothIsActive",
+            onDone: [
+              {
+                guard: ({ event }) => !!event.output,
+                target: "#itwProximityMachine.StartingProximityFlow"
+              },
+              {
+                guard: ({ event }) => !event.output,
+                target: "BluetoothRequired"
+              }
+            ],
+            onError: {
+              target: "BluetoothRequired"
+            }
+          }
+        },
+        BluetoothRequired: {
+          description:
+            "Display the system alert informing the user that must enable the Bluetooth to proceed",
+          on: {
+            close: {
+              target: "#itwProximityMachine.Idle"
+            }
+          }
         }
       }
     },

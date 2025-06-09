@@ -11,7 +11,7 @@ export const selectIsPermissionsRequiredState = (snapshot: MachineSnapshot) =>
   snapshot.matches("PermissionsRequired");
 
 export const selectIsBluetoothRequiredState = (snapshot: MachineSnapshot) =>
-  snapshot.matches("BluetoothRequired");
+  snapshot.matches({ Bluetooth: "BluetoothRequired" });
 
 export const selectQRCodeString = (snapshot: MachineSnapshot) =>
   snapshot.context.qrCodeString;
