@@ -2,15 +2,20 @@ import { getType } from "typesafe-actions";
 import { PersistConfig, persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Action } from "../../../../../store/actions/types";
-import { closeSessionExpirationBanner } from "../actions";
+import {
+  closeSessionExpirationBanner,
+  setActiveSessionLoginLocalFlag
+} from "../actions";
 import { loginSuccess } from "../../../common/store/actions";
 
 export type LoginPreferencesState = {
   showSessionExpirationBanner: boolean;
+  activeSessionLoginLocalFlag: boolean;
 };
 
 const loginPreferencesInitialState: LoginPreferencesState = {
-  showSessionExpirationBanner: true
+  showSessionExpirationBanner: true,
+  activeSessionLoginLocalFlag: false
 };
 
 const loginPreferencesReducer = (
@@ -24,6 +29,11 @@ const loginPreferencesReducer = (
       return {
         ...state,
         showSessionExpirationBanner: false
+      };
+    case getType(setActiveSessionLoginLocalFlag):
+      return {
+        ...state,
+        activeSessionLoginLocalFlag: action.payload
       };
     default:
       return state;
