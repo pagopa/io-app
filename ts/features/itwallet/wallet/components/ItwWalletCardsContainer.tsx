@@ -110,7 +110,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           />
         </View>
       )}
-      <VStack>
+      <VStack space={16}>
         <ItwOfflineWalletBanner />
         <WalletCardsCategoryContainer
           key={`cards_category_itw`}
