@@ -41,7 +41,9 @@ const IdPayFailureScreen = () => {
       pictogram: "umbrella",
       title: I18n.t("idpay.onboarding.failure.message.GENERIC.title"),
       subtitle: I18n.t("idpay.onboarding.failure.message.GENERIC.subtitle"),
-      action: defaultCloseAction
+      action: defaultCloseAction,
+      enableAnimatedPictogram: true,
+      loop: true
     }),
     [defaultCloseAction]
   );
@@ -114,7 +116,9 @@ const IdPayFailureScreen = () => {
           subtitle: I18n.t(
             "idpay.onboarding.failure.message.BUDGET_EXHAUSTED.subtitle"
           ),
-          action: defaultCloseAction
+          action: defaultCloseAction,
+          enableAnimatedPictogram: true,
+          loop: false
         };
       case OnboardingFailureEnum.USER_UNSUBSCRIBED:
         return {
@@ -134,7 +138,9 @@ const IdPayFailureScreen = () => {
           title: I18n.t(
             "idpay.onboarding.failure.message.USER_ONBOARDED.title"
           ),
-          action: goToInitiativeAction
+          action: goToInitiativeAction,
+          enableAnimatedPictogram: true,
+          loop: false
         };
       case OnboardingFailureEnum.NOT_ELIGIBLE:
         return {
