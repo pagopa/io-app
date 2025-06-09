@@ -38,69 +38,75 @@ export const itwProximityMachine = setup({
         "The machine is in idle, ready to start the proximity presentation flow",
       on: {
         start: {
-          target: "CheckingPermissions"
+          target: "Permissions"
         }
       }
     },
-    CheckingPermissions: {
-      tags: [ItwPresentationTags.Loading],
-      description: "Check if the device permissions have been granted",
-      invoke: {
-        src: "checkPermissions",
-        onDone: [
-          {
-            guard: ({ event }) => !!event.output,
-            target: "Bluetooth"
-          },
-          {
-            guard: ({ event }) => !event.output,
-            target: "GrantPermissions"
+    Permissions: {
+      initial: "CheckingPermissions",
+      description: "Perform all the checks related to the device permissions",
+      states: {
+        CheckingPermissions: {
+          tags: [ItwPresentationTags.Loading],
+          description: "Check if the device permissions have been granted",
+          invoke: {
+            src: "checkPermissions",
+            onDone: [
+              {
+                guard: ({ event }) => !!event.output,
+                target: "#itwProximityMachine.Bluetooth"
+              },
+              {
+                guard: ({ event }) => !event.output,
+                target: "GrantPermissions"
+              }
+            ],
+            onError: {
+              target: "GrantPermissions"
+            }
           }
-        ],
-        onError: {
-          target: "GrantPermissions"
-        }
-      }
-    },
-    GrantPermissions: {
-      entry: "navigateToGrantPermissionsScreen",
-      description:
-        "Display the screen prompting the user to grant device permissions",
-      on: {
-        back: {
-          target: "Idle"
         },
-        continue: {
-          target: "CheckPermissionsSilently"
-        }
-      }
-    },
-    CheckPermissionsSilently: {
-      tags: [ItwPresentationTags.Loading],
-      description: "Check if the device permissions have been granted",
-      invoke: {
-        src: "checkPermissions",
-        onDone: [
-          {
-            guard: ({ event }) => !!event.output,
-            target: "Bluetooth"
-          },
-          {
-            guard: ({ event }) => !event.output,
-            target: "PermissionsRequired"
+        GrantPermissions: {
+          entry: "navigateToGrantPermissionsScreen",
+          description:
+            "Display the screen prompting the user to grant device permissions",
+          on: {
+            back: {
+              target: "#itwProximityMachine.Idle"
+            },
+            continue: {
+              target: "CheckPermissionsSilently"
+            }
           }
-        ],
-        onError: {
-          target: "PermissionsRequired"
-        }
-      }
-    },
-    PermissionsRequired: {
-      description:
-        "Display the system alert informing the user that permissions must be granted to proceed",
-      on: {
-        close: {
-          target: "Idle"
+        },
+        CheckPermissionsSilently: {
+          tags: [ItwPresentationTags.Loading],
+          description: "Check if the device permissions have been granted",
+          invoke: {
+            src: "checkPermissions",
+            onDone: [
+              {
+                guard: ({ event }) => !!event.output,
+                target: "#itwProximityMachine.Bluetooth"
+              },
+              {
+                guard: ({ event }) => !event.output,
+                target: "PermissionsRequired"
+              }
+            ],
+            onError: {
+              target: "PermissionsRequired"
+            }
+          }
+        },
+        PermissionsRequired: {
+          description:
+            "Display the system alert informing the user that permissions must be granted to proceed",
+          on: {
+            close: {
+              target: "#itwProximityMachine.Idle"
+            }
+          }
         }
       }
     },

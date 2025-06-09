@@ -8,7 +8,7 @@ export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwPresentationTags.Loading);
 
 export const selectIsPermissionsRequiredState = (snapshot: MachineSnapshot) =>
-  snapshot.matches("PermissionsRequired");
+  snapshot.matches({ Permissions: "PermissionsRequired" });
 
 export const selectIsBluetoothRequiredState = (snapshot: MachineSnapshot) =>
   snapshot.matches({ Bluetooth: "BluetoothRequired" });
