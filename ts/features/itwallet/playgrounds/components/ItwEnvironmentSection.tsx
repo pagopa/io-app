@@ -5,14 +5,20 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Alert, View } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { EnvType } from "../../common/utils/environment";
+import { EnvType, getEnv } from "../../common/utils/environment";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { itwSetEnv } from "../../common/store/actions/environment";
 import I18n from "../../../../i18n";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 
 export const ItwEnvironmentSection = () => {
   const dispatch = useIODispatch();
   const selectedEnv = useIOSelector(selectItwEnv);
+  const envObject = getEnv(selectedEnv);
+
+  useDebugInfo({
+    env: envObject
+  });
 
   const toggleEnvionment = (selected: EnvType) => {
     Alert.alert(
