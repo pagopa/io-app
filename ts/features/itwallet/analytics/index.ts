@@ -140,20 +140,29 @@ export type ItwCed = "not_available" | "valid" | "not_valid" | "expiring";
 /**
  * This map is used to map the eid credential status to the MixPanel eid credential status
  * valid: valid
- * pending: not_valid
- * expired: not_valid
+ * invalid: not_valid
+ * expired: expired
  * expiring: expiring
+ * jwtExpired: verification_expired
+ * jwtExpiring: expiring_verification
+ * unknown: unknown
  */
 export const ID_STATUS_MAP: Record<
   ItwCredentialStatus,
-  "valid" | "not_valid" | "expiring" | "unknown"
+  | "valid"
+  | "not_valid"
+  | "expiring"
+  | "expired"
+  | "expiring_verification"
+  | "verification_expired"
+  | "unknown"
 > = {
   valid: "valid",
   invalid: "not_valid",
-  expired: "not_valid",
+  expired: "expired",
   expiring: "expiring",
-  jwtExpired: "not_valid",
-  jwtExpiring: "expiring",
+  jwtExpired: "verification_expired",
+  jwtExpiring: "expiring_verification",
   unknown: "unknown"
 };
 
