@@ -7,25 +7,19 @@ import {
 import { View } from "react-native";
 import { useCallback } from "react";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  itwIsFiscalCodeWhitelistedSelector,
-  itwIsL3LocallyEnabledSelector
-} from "../../../../features/itwallet/common/store/selectors/preferences";
-import { itwSetL3LocallyEnabled } from "../../../../features/itwallet/common/store/actions/preferences";
+import { itwIsL3EnabledSelector } from "../../../../features/itwallet/common/store/selectors/preferences";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
-import { CredentialL3Key } from "../../common/utils/itwMocksUtils.ts";
+import { itwSetFiscalCodeWhitelisted } from "../../common/store/actions/preferences";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { CredentialL3Key } from "../../common/utils/itwMocksUtils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { ITW_PLAYGROUND_ROUTES } from "../navigation/routes.ts";
+import { ITW_PLAYGROUND_ROUTES } from "../navigation/routes";
 
 export const ItwL3Section = () => {
-  const dispatch = useIODispatch();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const dispatch = useIODispatch();
 
-  const isL3LocallyEnabled = useIOSelector(itwIsL3LocallyEnabledSelector);
-  const isFiscalCodeWhitelisted = useIOSelector(
-    itwIsFiscalCodeWhitelistedSelector
-  );
+  const isFiscalCodeWhitelisted = useIOSelector(itwIsL3EnabledSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const navigation = useIONavigation();
 
@@ -48,16 +42,16 @@ export const ItwL3Section = () => {
   return (
     <View>
       <ListItemHeader label="IT Wallet (L3)" />
-      <ListItemSwitch
-        label="Enable local feature flag"
-        value={isL3LocallyEnabled}
-        onSwitchValueChange={() => {
-          dispatch(itwSetL3LocallyEnabled(!isL3LocallyEnabled));
-        }}
-      />
       <ListItemInfo
         label={"Fiscal code whitelisted"}
         value={isFiscalCodeWhitelisted ? "YES" : "NO"}
+      />
+      <ListItemSwitch
+        label="Disable L3 ( this is only for testing purposes to return to L2 )"
+        value={isFiscalCodeWhitelisted}
+        onSwitchValueChange={() => {
+          dispatch(itwSetFiscalCodeWhitelisted(false));
+        }}
       />
       <ListItemNav
         value="Discovery L3"
