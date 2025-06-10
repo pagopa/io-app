@@ -42,6 +42,7 @@ import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
 } from "../types/OnboardingOutcomeEnum";
+import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -68,6 +69,8 @@ export const pictogramByOutcome: Record<
   [WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING]: "attention",
   [WalletOnboardingOutcomeEnum.BE_KO]: "umbrella"
 };
+
+const PAYMENT_AUTHORIZATION_DENIED_ERROR = "PAYMENT_AUTHORIZATION_DENIED_ERROR";
 
 const ASSISTANCE_URL =
   "https://assistenza.ioapp.it/hc/it/articles/35337442750225-Non-riesco-ad-aggiungere-un-metodo-di-pagamento";
@@ -178,6 +181,17 @@ const PaymentsOnboardingFeedbackScreen = () => {
     supportModal.present();
   };
 
+  const { name: routeName } = useRoute();
+
+  const onPress = () => {
+    trackHelpCenterCtaTapped(
+      PAYMENT_AUTHORIZATION_DENIED_ERROR,
+      ASSISTANCE_URL,
+      routeName
+    );
+    openWebUrl(ASSISTANCE_URL);
+  };
+
   const renderSecondaryAction = () => {
     switch (outcome) {
       case WalletOnboardingOutcomeEnum.AUTH_ERROR:
@@ -187,7 +201,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
             `wallet.onboarding.outcome.AUTH_ERROR.secondaryAction`
           ),
           icon: "instruction" as const,
-          onPress: () => openWebUrl(ASSISTANCE_URL),
+          onPress,
           testID: "wallet-onboarding-secondary-action-button"
         };
       case WalletOnboardingOutcomeEnum.BE_KO:
