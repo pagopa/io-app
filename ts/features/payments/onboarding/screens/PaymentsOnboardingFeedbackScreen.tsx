@@ -23,6 +23,7 @@ import {
   useIOStore
 } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { openWebUrl } from "../../../../utils/url";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 import { usePaymentFailureSupportModal } from "../../checkout/hooks/usePaymentFailureSupportModal";
@@ -30,7 +31,6 @@ import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 import * as analytics from "../analytics";
-import { usePaymentOnboardingAuthErrorBottomSheet } from "../components/PaymentsOnboardingAuthErrorBottomSheet";
 import { PaymentsOnboardingParamsList } from "../navigation/params";
 import { paymentsResetRptIdToResume } from "../store/actions";
 import {
@@ -69,6 +69,9 @@ export const pictogramByOutcome: Record<
   [WalletOnboardingOutcomeEnum.BE_KO]: "umbrella"
 };
 
+const ASSISTANCE_URL =
+  "https://assistenza.ioapp.it/hc/it/articles/35337442750225-Non-riesco-ad-aggiungere-un-metodo-di-pagamento";
+
 const PaymentsOnboardingFeedbackScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const route = useRoute<PaymentsOnboardingFeedbackScreenRouteProps>();
@@ -83,7 +86,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
 
   const rptIdToResume = useIOSelector(selectPaymentOnboardingRptIdToResume);
   const { startPaymentFlow } = usePagoPaPayment();
-  const { bottomSheet, present } = usePaymentOnboardingAuthErrorBottomSheet();
+
   const supportModal = usePaymentFailureSupportModal({
     outcome,
     isOnboarding: true
@@ -183,7 +186,8 @@ const PaymentsOnboardingFeedbackScreen = () => {
           accessibilityLabel: I18n.t(
             `wallet.onboarding.outcome.AUTH_ERROR.secondaryAction`
           ),
-          onPress: present,
+          icon: "instruction" as const,
+          onPress: () => openWebUrl(ASSISTANCE_URL),
           testID: "wallet-onboarding-secondary-action-button"
         };
       case WalletOnboardingOutcomeEnum.BE_KO:
@@ -239,7 +243,6 @@ const PaymentsOnboardingFeedbackScreen = () => {
         }}
         secondaryAction={renderSecondaryAction()}
       />
-      {bottomSheet}
       {supportModal.bottomSheet}
     </View>
   );
