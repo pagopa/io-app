@@ -107,8 +107,8 @@ export type ItwCredentialStatus =
 
 export type ItwAuthLevel = "L2" | "L3";
 
-export type WalletInstanceAttestation = Awaited<
+export type WalletInstanceAttestations = Awaited<
   ReturnType<typeof WalletInstanceAttestation.getAttestation>
 >;
 
-export type WiaFormat = WalletInstanceAttestation[number]["format"];
+export type WiaFormat = WalletInstanceAttestations[number]["format"];

@@ -1,8 +1,7 @@
 import {
   createCryptoContextFor,
   IntegrityContext,
-  WalletInstance,
-  WalletInstanceAttestation
+  WalletInstance
 } from "@pagopa/io-react-native-wallet";
 import { itwWalletProviderBaseUrl } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
@@ -13,6 +12,8 @@ import {
   generateIntegrityHardwareKeyTag,
   getIntegrityContext
 } from "./itwIntegrityUtils";
+import { WalletInstanceAttestations } from "./itwTypesUtils.ts";
+import { ioRNWProxy } from "./itwIoReactNativeWalletProxy.ts";
 
 /**
  * Getter for the integrity hardware keytag to be used for an {@link IntegrityContext}.
@@ -49,15 +50,16 @@ export const registerWalletInstance = async (
  */
 export const getAttestation = async (
   hardwareKeyTag: string,
-  sessionToken: SessionToken
-): Promise<string> => {
+  sessionToken: SessionToken,
+  useNewAPI: boolean = false // TODO: [SIW-2530] Remove after transitioning to API 1.0
+): Promise<string | WalletInstanceAttestations> => {
   const integrityContext = getIntegrityContext(hardwareKeyTag);
 
   await regenerateCryptoKey(WIA_KEYTAG);
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
   const appFetch = createItWalletFetch(itwWalletProviderBaseUrl, sessionToken);
 
-  return await WalletInstanceAttestation.getAttestation({
+  return await ioRNWProxy.WalletInstanceAttestation(useNewAPI).getAttestation({
     wiaCryptoContext,
     integrityContext,
     walletProviderBaseUrl: itwWalletProviderBaseUrl,
@@ -72,9 +74,12 @@ export const getAttestation = async (
  * @returns true if the Wallet Instance Attestation is expired or not present
  */
 export const isWalletInstanceAttestationValid = (
-  attestation: string
+  attestation: string,
+  useNewAPI: boolean = false // TODO: [SIW-2530] Remove after transitioning to API 1.0
 ): boolean => {
-  const { payload } = WalletInstanceAttestation.decode(attestation);
+  const { payload } = ioRNWProxy
+    .WalletInstanceAttestation(useNewAPI)
+    .decode(attestation);
   const expiryDate = new Date(payload.exp * 1000);
   const now = new Date();
   return now < expiryDate;

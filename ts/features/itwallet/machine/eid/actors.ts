@@ -14,7 +14,10 @@ import {
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import {
+  StoredCredential,
+  WalletInstanceAttestations
+} from "../../common/utils/itwTypesUtils";
 import {
   itwIntegrityKeyTagSelector,
   itwIntegrityServiceStatusSelector
@@ -40,6 +43,7 @@ export type StartAuthFlowActorParams = {
 
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
+  isL3IssuanceEnabled?: boolean;
 };
 
 export const createEidIssuanceActorsImplementation = (
@@ -74,15 +78,20 @@ export const createEidIssuanceActorsImplementation = (
     return hardwareKeyTag;
   }),
 
-  getWalletAttestation: fromPromise<string, GetWalletAttestationActorParams>(
-    ({ input }) => {
-      const sessionToken = sessionTokenSelector(store.getState());
-      assert(sessionToken, "sessionToken is undefined");
-      assert(input.integrityKeyTag, "integrityKeyTag is undefined");
+  getWalletAttestation: fromPromise<
+    string | WalletInstanceAttestations,
+    GetWalletAttestationActorParams
+  >(({ input }) => {
+    const sessionToken = sessionTokenSelector(store.getState());
+    assert(sessionToken, "sessionToken is undefined");
+    assert(input.integrityKeyTag, "integrityKeyTag is undefined");
 
-      return getAttestation(input.integrityKeyTag, sessionToken);
-    }
-  ),
+    return getAttestation(
+      input.integrityKeyTag,
+      sessionToken,
+      input.isL3IssuanceEnabled || false
+    );
+  }),
 
   getCieStatus: fromPromise<CieContext>(async () => {
     const [isNFCEnabled, isCIEAuthenticationSupported] = await Promise.all([

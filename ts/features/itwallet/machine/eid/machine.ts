@@ -241,7 +241,10 @@ export const itwEidIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "getWalletAttestation",
-        input: ({ context }) => ({ integrityKeyTag: context.integrityKeyTag }),
+        input: ({ context }) => ({
+          integrityKeyTag: context.integrityKeyTag,
+          isL3IssuanceEnabled: context.isL3FeaturesEnabled
+        }),
         onDone: [
           {
             guard: "isReissuing",
