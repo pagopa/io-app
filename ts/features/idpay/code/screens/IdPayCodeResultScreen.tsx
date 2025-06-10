@@ -50,6 +50,8 @@ const IdPayCodeResultScreen = () => {
         ),
         onPress: handleClose
       }}
+      enableAnimatedPictogram
+      loop
     />
   ) : (
     <OperationResultScreenContent
@@ -70,6 +72,8 @@ const IdPayCodeResultScreen = () => {
       subtitle={I18n.t(
         "idpay.initiative.discountDetails.IDPayCode.successScreen.body"
       )}
+      enableAnimatedPictogram
+      loop={false}
     />
   );
 

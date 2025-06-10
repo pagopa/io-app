@@ -174,7 +174,9 @@ const ReceiptListScreen = () => {
     noticeCategory === "payer"
       ? {
           title: I18n.t("features.payments.transactions.list.emptyPayer.title"),
-          pictogram: "empty"
+          pictogram: "empty",
+          enableAnimatedPictogram: true,
+          loop: false
         }
       : {
           title: I18n.t("features.payments.transactions.list.empty.title"),
