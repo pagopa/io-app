@@ -9,10 +9,11 @@ import {
 import { BluetoothStateManager } from "react-native-bluetooth-state-manager";
 import { fromPromise } from "xstate";
 import { Proximity } from "@pagopa/io-react-native-proximity";
+import { constUndefined } from "fp-ts/lib/function";
 
 export type StartProximityFlowInput = {
-  isProximityFlowStarted: boolean;
-};
+  isRestarting?: boolean;
+} | void;
 
 export const createProximityActorsImplementation = () => {
   const checkPermissions = fromPromise<boolean, void>(async () => {
@@ -63,9 +64,11 @@ export const createProximityActorsImplementation = () => {
 
   const startProximityFlow = fromPromise<void, StartProximityFlowInput>(
     async ({ input }) => {
-      if (!input.isProximityFlowStarted) {
-        await Proximity.start();
+      if (input?.isRestarting) {
+        // The proximity flow must be closed before restarting
+        await Proximity.close().catch(constUndefined);
       }
+      await Proximity.start();
     }
   );
 

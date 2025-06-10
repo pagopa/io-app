@@ -23,4 +23,4 @@ export const selectShouldPresentQRCodeBottomSheet = (
   snapshot: MachineSnapshot
 ) =>
   snapshot.matches("DisplayQRCode") ||
-  snapshot.matches("QRCodeGenerationError");
+  snapshot.matches({ GenerateQRCode: "QRCodeGenerationError" });

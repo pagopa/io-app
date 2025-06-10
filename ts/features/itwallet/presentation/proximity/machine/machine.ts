@@ -122,7 +122,7 @@ export const itwProximityMachine = setup({
             onDone: [
               {
                 guard: ({ event }) => !!event.output,
-                target: "#itwProximityMachine.StartingProximityFlow"
+                target: "#itwProximityMachine.GenerateQRCode"
               },
               {
                 guard: ({ event }) => !event.output,
@@ -155,7 +155,7 @@ export const itwProximityMachine = setup({
             onDone: [
               {
                 guard: ({ event }) => !!event.output,
-                target: "#itwProximityMachine.StartingProximityFlow"
+                target: "#itwProximityMachine.GenerateQRCode"
               },
               {
                 guard: ({ event }) => !event.output,
@@ -178,42 +178,67 @@ export const itwProximityMachine = setup({
         }
       }
     },
-    StartingProximityFlow: {
-      tags: [ItwPresentationTags.Loading],
-      description: "Start the Proximity flow",
-      invoke: {
-        input: ({ context }) => ({
-          isProximityFlowStarted: !!context.isProximityFlowStarted
-        }),
-        src: "startProximityFlow",
-        onDone: {
-          actions: assign({ isProximityFlowStarted: true }),
-          target: "GeneratingQRCodeString"
+    GenerateQRCode: {
+      initial: "StartingProximityFlow",
+      description: "Start the proximity and generates the QR code string",
+      states: {
+        StartingProximityFlow: {
+          tags: [ItwPresentationTags.Loading],
+          description: "Start the Proximity flow",
+          invoke: {
+            src: "startProximityFlow",
+            onDone: {
+              target: "GeneratingQRCodeString"
+            },
+            onError: {
+              actions: "setQRCodeGenerationError",
+              target: "QRCodeGenerationError"
+            }
+          }
         },
-        onError: {
-          actions: [
-            "setQRCodeGenerationError",
-            assign({ isProximityFlowStarted: false })
-          ],
-          target: "QRCodeGenerationError"
-        }
-      }
-    },
-    GeneratingQRCodeString: {
-      tags: [ItwPresentationTags.Loading],
-      description: "Generate the QR string",
-      invoke: {
-        src: "generateQRCodeString",
-        onDone: {
-          actions: assign(({ event }) => ({
-            qrCodeString: event.output,
-            isQRCodeGenerationError: false
-          })),
-          target: "DisplayQRCode"
+        GeneratingQRCodeString: {
+          tags: [ItwPresentationTags.Loading],
+          description: "Generate the QR string",
+          invoke: {
+            src: "generateQRCodeString",
+            onDone: {
+              actions: assign(({ event }) => ({
+                qrCodeString: event.output,
+                isQRCodeGenerationError: false
+              })),
+              target: "#itwProximityMachine.DisplayQRCode"
+            },
+            onError: {
+              actions: "setQRCodeGenerationError",
+              target: "QRCodeGenerationError"
+            }
+          }
         },
-        onError: {
-          actions: "setQRCodeGenerationError",
-          target: "QRCodeGenerationError"
+        QRCodeGenerationError: {
+          description: "Display the QR code generation error",
+          on: {
+            close: {
+              target: "#itwProximityMachine.ClosePresentation"
+            },
+            retry: {
+              target: "RestartingProximityFlow"
+            }
+          }
+        },
+        RestartingProximityFlow: {
+          tags: [ItwPresentationTags.Loading],
+          description: "Restart the proximity flow",
+          invoke: {
+            src: "startProximityFlow",
+            input: { isRestarting: true },
+            onDone: {
+              target: "GeneratingQRCodeString"
+            },
+            onError: {
+              actions: "setQRCodeGenerationError",
+              target: "QRCodeGenerationError"
+            }
+          }
         }
       }
     },
@@ -225,23 +250,11 @@ export const itwProximityMachine = setup({
         }
       }
     },
-    QRCodeGenerationError: {
-      description: "Display the QR code generation error",
-      on: {
-        close: {
-          target: "ClosePresentation"
-        },
-        retry: {
-          target: "StartingProximityFlow"
-        }
-      }
-    },
     ClosePresentation: {
       description: "Close the proximity presentation flow",
       invoke: {
         src: "closeProximityFlow",
         onDone: {
-          actions: assign({ isProximityFlowStarted: false }),
           target: "Idle"
         }
         // TODO: Handle any potential error scenario.

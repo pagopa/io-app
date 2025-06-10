@@ -33,6 +33,29 @@ PODS:
   - hermes-engine (0.78.2):
     - hermes-engine/Pre-built (= 0.78.2)
   - hermes-engine/Pre-built (0.78.2)
+  - IoReactNativeProximity (0.5.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - IOWalletProximity (~> 1.2.1)
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - IOWalletProximity (1.2.2)
   - jail-monkey (2.8.0):
     - React-Core
   - JOSESwift (3.0.0)
@@ -65,7 +88,7 @@ PODS:
   - MixpanelReactNative (2.4.1):
     - Mixpanel-swift (= 4.2.0)
     - React-Core
-  - NitroModules (0.25.2):
+  - NitroModules (0.26.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2259,6 +2282,7 @@ DEPENDENCIES:
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
+  - "IoReactNativeProximity (from `../node_modules/@pagopa/io-react-native-proximity`)"
   - jail-monkey (from `../node_modules/jail-monkey`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
   - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
@@ -2377,6 +2401,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - IOWalletProximity
     - JOSESwift
     - lottie-ios
     - Mixpanel-swift
@@ -2416,6 +2441,8 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-2025-01-13-RNv0.78.0-a942ef374897d85da38e9c8904574f8376555388
+  IoReactNativeProximity:
+    :path: "../node_modules/@pagopa/io-react-native-proximity"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
   lottie-react-native:
@@ -2652,13 +2679,15 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   hermes-engine: 2771b98fb813fdc6f92edd7c9c0035ecabf9fee7
+  IoReactNativeProximity: a126281d19a4f0e83026710c758438970bc6f461
+  IOWalletProximity: 55d5527de91a971dbcdbdda1838860c9860683ac
   jail-monkey: 1846061ac12e861ac5a8ec7197b0daa775b83733
   JOSESwift: 7784b1b844194d0f534eb6ac4fba5af683bccc79
   lottie-ios: a881093fab623c467d3bce374367755c272bdd59
   lottie-react-native: 35b7c1125a01f847fa5905d380e54951132d2450
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
   MixpanelReactNative: 37259ace491ca9d927c0f81498e6577a32a69f43
-  NitroModules: 40b44e1471d346ade022ff61bf98298cbb9cfed7
+  NitroModules: adeac66ad4e677f43056f98a0d3aa1af6e93776a
   pagopa-io-react-native-cieid: fbec2a09807357509e986e1ae831c38e559d4ac2
   pagopa-io-react-native-crypto: 9fc27db71785efd281454fd0e0d023c4ce1594d0
   pagopa-io-react-native-http-client: b2620097b64752b290374f7d2aab64e537f89f03
