@@ -53,9 +53,7 @@ const startAuthFlow = async ({
   });
 
   // When issuing an L3 PID, we should not provide an IDP hint
-  const idpHint = isL3IssuanceEnabled
-    ? undefined
-    : getIdpHint(identification, env);
+  const idpHint = getIdpHint(identification, env, isL3IssuanceEnabled);
 
   const { issuerUrl, credentialType } = startFlow();
 
@@ -241,9 +239,17 @@ const SPID_IDP_HINTS: { [key: string]: string } = {
  * In production for SPID the hint is retrieved from the IDP ID via the {@link getSpidProductionIdpHint} function,
  * for CIE the hint is always the same and it's defined in the {@link CIE_HINT_PROD} constant.
  * @param idCtx the identification context which contains the mode and the IDP ID if the mode is SPID
+ * @param env the environment currently in use
+ * @param isL3 flag that indicates that we need to issue an L3 PID
  */
-const getIdpHint = (idCtx: IdentificationContext, env: Env) => {
+const getIdpHint = (idCtx: IdentificationContext, env: Env, isL3: boolean) => {
+  if (isL3) {
+    // When issuing an L3 PID, we should not provide an IDP hint
+    return undefined;
+  }
+
   const isSpidMode = idCtx.mode === "spid";
+
   if (env.type === "pre") {
     return isSpidMode ? SPID_HINT_TEST : CIE_HINT_TEST;
   } else {
