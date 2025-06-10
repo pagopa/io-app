@@ -78,6 +78,8 @@ const IdPayBarcodeResultScreen = () => {
             onPress: navigateToInitiativeDetails
           }}
           pictogram="umbrella"
+          enableAnimatedPictogram
+          loop
         />
       ),
       barcode => (
