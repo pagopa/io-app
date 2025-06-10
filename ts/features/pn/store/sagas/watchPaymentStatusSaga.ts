@@ -24,9 +24,7 @@ export function* watchPaymentStatusForMixpanelTracking(
 ) {
   const messageId = action.payload;
   const currentFiscalCode = yield* select(profileFiscalCodeSelector);
-  const message = yield* select(state =>
-    pnMessageFromIdSelector(state, messageId)
-  );
+  const message = yield* select(pnMessageFromIdSelector, messageId);
   const payments = yield* call(
     paymentsFromPNMessagePot,
     currentFiscalCode,

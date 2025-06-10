@@ -1,7 +1,5 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { call, take } from "redux-saga/effects";
-import { expectSaga, testSaga } from "redux-saga-test-plan";
-import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
+import { testSaga } from "redux-saga-test-plan";
 import {
   testable,
   watchPaymentStatusForMixpanelTracking
@@ -11,13 +9,13 @@ import {
   startPNPaymentStatusTracking
 } from "../../actions";
 import { UIMessageId } from "../../../../messages/types";
-import {
-  toSpecificError,
-  updatePaymentForMessage
-} from "../../../../messages/store/actions";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
-import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
-import * as analytics from "../../../analytics";
+import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
+import { paymentsFromPNMessagePot } from "../../../utils";
+import { pnMessageFromIdSelector } from "../../reducers";
+import { getRptIdStringFromPayment } from "../../../utils/rptId";
+import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
+import { paymentStatisticsForMessageUncachedSelector } from "../../../../messages/store/reducers/payments";
+import { trackPNPaymentStatus } from "../../../analytics";
 
 describe("watchPaymentStatusSaga", () => {
   afterEach(() => {
@@ -25,85 +23,75 @@ describe("watchPaymentStatusSaga", () => {
   });
 
   const messageId = "01JWZGTJWM2SVHKW4WRPA0KQNQ" as UIMessageId;
-  const paymentId = "0123456789012345678901234567890";
-  const serviceId = "01JWZHBN0APWE62V06M6G5W373" as ServiceId;
+  const paymentId1 = "0123456789012345678901234567890";
+  const paymentId2 = "0123456789012345678901234567891";
+  const paymentId3 = "0123456789012345678901234567892";
+  const paymentId4 = "0123456789012345678901234567893";
+  const paymentId5 = "0123456789012345678901234567894";
+  const paymentId6 = "0123456789012345678901234567895";
+  const taxId = "01234567890";
 
-  const reducer = () => ({
-    entities: {
-      messages: {
-        thirdPartyById: {
-          [messageId]: pot.some({
-            third_party_message: {
-              details: {
-                subject: "",
-                iun: "",
-                notificationStatusHistory: [],
-                recipients: [
-                  {
-                    denomination: "Hello, World! 123",
-                    recipientType: "",
-                    payment: {
-                      noticeCode: "12345678901234567890",
-                      creditorTaxId: "01234567890"
-                    },
-                    taxId: "12345678901"
-                  },
-                  {
-                    denomination: "Hello, World! 123",
-                    recipientType: "",
-                    payment: {
-                      noticeCode: "12345678901234567891",
-                      creditorTaxId: "01234567890"
-                    },
-                    taxId: "12345678901"
-                  },
-                  {
-                    denomination: "Hello, World! 123",
-                    recipientType: "",
-                    payment: {
-                      noticeCode: "12345678901234567892",
-                      creditorTaxId: "01234567890"
-                    },
-                    taxId: "12345678901"
-                  },
-                  {
-                    denomination: "Hello, World! 123",
-                    recipientType: "",
-                    payment: {
-                      noticeCode: "12345678901234567893",
-                      creditorTaxId: "01234567890"
-                    },
-                    taxId: "12345678901"
-                  },
-                  {
-                    denomination: "Hello, World! 123",
-                    recipientType: "",
-                    payment: {
-                      noticeCode: "12345678901234567894",
-                      creditorTaxId: "01234567890"
-                    },
-                    taxId: "12345678901"
-                  },
-                  {
-                    denomination: "Hello, World! 123",
-                    recipientType: "",
-                    payment: {
-                      noticeCode: "12345678901234567895",
-                      creditorTaxId: "01234567890"
-                    },
-                    taxId: "12345678901"
-                  }
-                ]
-              }
-            }
-          })
-        }
+  const pnMessage = {
+    subject: "",
+    iun: "",
+    notificationStatusHistory: [],
+    recipients: [
+      {
+        denomination: "Hello, World! 123",
+        recipientType: "",
+        payment: {
+          noticeCode: paymentId1.slice(11, 31),
+          creditorTaxId: paymentId1.slice(0, 11)
+        },
+        taxId
+      },
+      {
+        denomination: "Hello, World! 123",
+        recipientType: "",
+        payment: {
+          noticeCode: paymentId2.slice(11, 31),
+          creditorTaxId: paymentId2.slice(0, 11)
+        },
+        taxId
+      },
+      {
+        denomination: "Hello, World! 123",
+        recipientType: "",
+        payment: {
+          noticeCode: paymentId3.slice(11, 31),
+          creditorTaxId: paymentId3.slice(0, 11)
+        },
+        taxId
+      },
+      {
+        denomination: "Hello, World! 123",
+        recipientType: "",
+        payment: {
+          noticeCode: paymentId4.slice(11, 31),
+          creditorTaxId: paymentId4.slice(0, 11)
+        },
+        taxId
+      },
+      {
+        denomination: "Hello, World! 123",
+        recipientType: "",
+        payment: {
+          noticeCode: paymentId5.slice(11, 31),
+          creditorTaxId: paymentId5.slice(0, 11)
+        },
+        taxId
+      },
+      {
+        denomination: "Hello, World! 123",
+        recipientType: "",
+        payment: {
+          noticeCode: paymentId6.slice(11, 31),
+          creditorTaxId: paymentId6.slice(0, 11)
+        },
+        taxId
       }
-    },
-    profile: pot.some({
-      fiscal_code: "12345678901"
-    })
-  });
+    ]
+  };
 
   describe("watchPaymentStatusForMixpanelTracking", () => {
     it("should follow proper flow", () => {
@@ -112,12 +100,24 @@ describe("watchPaymentStatusSaga", () => {
         startPNPaymentStatusTracking(messageId)
       )
         .next()
+        .select(profileFiscalCodeSelector)
+        .next(taxId)
+        .select(pnMessageFromIdSelector, messageId)
+        .next(pnMessage)
+        .call(paymentsFromPNMessagePot, taxId, pnMessage)
+        .next(pnMessage.recipients.map(rec => rec.payment))
         .race({
           polling: call(
             testable!.generateSENDMessagePaymentStatistics,
             messageId,
-            0,
-            []
+            6,
+            pnMessage.recipients
+              .slice(0, 5)
+              .map(rec =>
+                getRptIdStringFromPayment(
+                  rec.payment as NotificationPaymentInfo
+                )
+              )
           ),
           cancelAction: take(cancelPNPaymentStatusTracking)
         })
@@ -126,157 +126,84 @@ describe("watchPaymentStatusSaga", () => {
     });
   });
 
-  describe("trackPaymentUpdates", () => {
-    const paymentId2 = "0123456789012345678901234567891";
-    const paymentId3 = "0123456789012345678901234567892";
-    const paymentId4 = "0123456789012345678901234567893";
-    const paymentId5 = "0123456789012345678901234567894";
-    const requestAction1 = updatePaymentForMessage.request({
-      messageId,
-      paymentId,
-      serviceId
+  describe("generateSENDMessagePaymentStatistics", () => {
+    it("should do nothing if payment count is zero", () => {
+      testSaga(testable!.generateSENDMessagePaymentStatistics, messageId, 0, [
+        paymentId1
+      ])
+        .next()
+        .isDone();
     });
-    const requestAction2 = updatePaymentForMessage.request({
-      messageId,
-      paymentId: paymentId2,
-      serviceId
+    it("should do nothing if payment Ids is an empty array", () => {
+      testSaga(testable!.generateSENDMessagePaymentStatistics, messageId, 1, [])
+        .next()
+        .isDone();
     });
-    const requestAction3 = updatePaymentForMessage.request({
-      messageId,
-      paymentId: paymentId3,
-      serviceId
-    });
-    const requestAction4 = updatePaymentForMessage.request({
-      messageId,
-      paymentId: paymentId4,
-      serviceId
-    });
-    const requestAction5 = updatePaymentForMessage.request({
-      messageId,
-      paymentId: paymentId5,
-      serviceId
-    });
-
-    const successAction1 = updatePaymentForMessage.success({
-      messageId,
-      paymentId,
-      serviceId,
-      paymentData: {
-        amount: 100
-      } as PaymentInfoResponse
-    });
-    const failureAction2 = updatePaymentForMessage.failure({
-      messageId,
-      paymentId: paymentId2,
-      serviceId,
-      reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
-    });
-    const failureAction3 = updatePaymentForMessage.failure({
-      messageId,
-      paymentId: paymentId3,
-      serviceId,
-      reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
-    });
-    const failureAction4 = updatePaymentForMessage.failure({
-      messageId,
-      paymentId: paymentId4,
-      serviceId,
-      reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
-    });
-    const failureAction5 = updatePaymentForMessage.failure({
-      messageId,
-      paymentId: paymentId5,
-      serviceId,
-      reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
-    });
-    it("should call 'trackPNPaymentStatus' with proper parameters, reporting data from only the first five payments (the ones shown by the UI)", async () => {
-      const spyOnMockedTrackPNPaymentStatus = jest
-        .spyOn(analytics, "trackPNPaymentStatus")
-        .mockImplementation();
-
-      await expectSaga(
+    it("should keep waiting if payments are not ready", () => {
+      const paymentIds = [
+        paymentId1,
+        paymentId2,
+        paymentId3,
+        paymentId4,
+        paymentId5
+      ];
+      testSaga(
         testable!.generateSENDMessagePaymentStatistics,
         messageId,
-        0,
-        []
+        6,
+        paymentIds
       )
-        .withReducer(reducer)
-        .dispatch(requestAction1)
-        .dispatch(requestAction2)
-        .dispatch(requestAction3)
-        .dispatch(requestAction4)
-        .dispatch(requestAction5)
-        .dispatch(
-          updatePaymentForMessage.request({
-            messageId,
-            paymentId: "0123456789012345678901234567895",
-            serviceId
-          })
+        .next()
+        .select(
+          paymentStatisticsForMessageUncachedSelector,
+          messageId,
+          6,
+          paymentIds
         )
-        .dispatch(successAction1)
-        .dispatch(failureAction2)
-        .dispatch(failureAction3)
-        .dispatch(failureAction4)
-        .dispatch(failureAction5)
-        .dispatch(
-          updatePaymentForMessage.failure({
-            messageId,
-            paymentId: "0123456789012345678901234567895",
-            serviceId,
-            reason: toSpecificError(Detail_v2Enum.CANALE_BUSTA_ERRATA)
-          })
-        )
-        .run();
-      expect(spyOnMockedTrackPNPaymentStatus.mock.calls.length).toBe(1);
-      expect(spyOnMockedTrackPNPaymentStatus.mock.calls[0].length).toBe(1);
-      expect(spyOnMockedTrackPNPaymentStatus.mock.calls[0][0]).toEqual({
+        .next(undefined)
+        .delay(500)
+        .next()
+        .select(
+          paymentStatisticsForMessageUncachedSelector,
+          messageId,
+          6,
+          paymentIds
+        );
+    });
+    it("should call tracking method when payments are ready", () => {
+      const paymentIds = [
+        paymentId1,
+        paymentId2,
+        paymentId3,
+        paymentId4,
+        paymentId5
+      ];
+      const paymentStatistics = {
         paymentCount: 6,
         unpaidCount: 1,
         paidCount: 1,
-        errorCount: 0,
+        errorCount: 1,
         expiredCount: 1,
         revokedCount: 1,
-        ongoingCount: 1
-      });
-    });
-    it("should keep listening for payments when not all of them have finished processing", async () => {
-      const spyOnMockedTrackPNPaymentStatus = jest
-        .spyOn(analytics, "trackPNPaymentStatus")
-        .mockImplementation();
-
-      await expectSaga(
+        ongoingCount: 0
+      };
+      testSaga(
         testable!.generateSENDMessagePaymentStatistics,
         messageId,
-        0,
-        []
+        6,
+        paymentIds
       )
-        .withReducer(reducer)
-        .dispatch(requestAction1)
-        .dispatch(requestAction2)
-        .dispatch(requestAction3)
-        .dispatch(requestAction4)
-        .dispatch(requestAction5)
-        .dispatch(
-          updatePaymentForMessage.request({
-            messageId,
-            paymentId: "0123456789012345678901234567895",
-            serviceId
-          })
+        .next()
+        .select(
+          paymentStatisticsForMessageUncachedSelector,
+          messageId,
+          6,
+          paymentIds
         )
-        .dispatch(successAction1)
-        .dispatch(failureAction2)
-        .dispatch(failureAction3)
-        .dispatch(failureAction4)
-        .dispatch(
-          updatePaymentForMessage.failure({
-            messageId,
-            paymentId: "0123456789012345678901234567895",
-            serviceId,
-            reason: toSpecificError(Detail_v2Enum.CANALE_BUSTA_ERRATA)
-          })
-        )
-        .run(250);
-      expect(spyOnMockedTrackPNPaymentStatus.mock.calls.length).toBe(0);
+        .next(paymentStatistics)
+        .call(trackPNPaymentStatus, paymentStatistics)
+        .next()
+        .isDone();
     });
   });
 });
