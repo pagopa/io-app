@@ -230,6 +230,8 @@ const CgnMerchantsListByCategory = () => {
             accessibilityLabel: I18n.t("global.buttons.retry"),
             onPress: initLoadingLists
           }}
+          enableAnimatedPictogram
+          loop
         />
       ) : (
         <Animated.FlatList
