@@ -1,23 +1,14 @@
-import * as O from "fp-ts/lib/Option";
-import { flow } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { isWalletInstanceAttestationValid } from "../../../common/utils/itwAttestationUtils";
+import { type WiaFormat } from "../../../common/utils/itwTypesUtils";
 
-/* Selector to get the wallet instance attestation */
+/**
+ * @deprecated Use {@link itwMakeWalletInstanceAttestationSelector} instead
+ *
+ * Selector to get the wallet instance attestation
+ */
 export const itwWalletInstanceAttestationSelector = (state: GlobalState) =>
   state.features.itWallet.walletInstance.attestation;
-
-/* Selector to check if the attestation is valid */
-export const itwIsWalletInstanceAttestationValidSelector = createSelector(
-  itwWalletInstanceAttestationSelector,
-  flow(
-    O.fromNullable,
-    O.map(isWalletInstanceAttestationValid),
-    O.getOrElse(() => false)
-  )
-);
 
 /* Selector to get the wallet instance status */
 export const itwWalletInstanceStatusSelector = (state: GlobalState) =>
@@ -29,3 +20,26 @@ export const itwWalletInstanceStatusSelector = (state: GlobalState) =>
  */
 export const itwIsWalletInstanceStatusFailureSelector = (state: GlobalState) =>
   pot.isError(state.features.itWallet.walletInstance.status);
+
+/**
+ * Selector to get the Wallet Attestation in the given format
+ */
+const itwMakeWalletInstanceAttestationSelector =
+  (format: WiaFormat) => (state: GlobalState) =>
+    state.features.itWallet.walletInstance.walletAttestation?.[format];
+
+/**
+ * Selector to get the Wallet Attestation in JWT format
+ */
+export const itwWalletInstanceAttestationJwtSelector =
+  itwMakeWalletInstanceAttestationSelector("jwt");
+/**
+ * Selector to get the Wallet Attestation in SD-JWT format
+ */
+export const itwWalletInstanceAttestationSdJwtSelector =
+  itwMakeWalletInstanceAttestationSelector("dc+sd-jwt");
+/**
+ * Selector to get the Wallet Attestation in MDOC CBOR format
+ */
+export const itwWalletInstanceAttestationMdocSelector =
+  itwMakeWalletInstanceAttestationSelector("mso_mdoc");

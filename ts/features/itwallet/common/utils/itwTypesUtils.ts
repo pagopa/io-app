@@ -3,6 +3,7 @@ import {
   Trust,
   WalletInstance
 } from "@pagopa/io-react-native-wallet";
+import { WalletInstanceAttestation } from "@pagopa/io-react-native-wallet-v2";
 
 /**
  * Alias type for the return type of the start issuance flow operation.
@@ -105,3 +106,9 @@ export type ItwCredentialStatus =
   | ItwJwtCredentialStatus;
 
 export type ItwAuthLevel = "L2" | "L3";
+
+export type WalletInstanceAttestation = Awaited<
+  ReturnType<typeof WalletInstanceAttestation.getAttestation>
+>;
+
+export type WiaFormat = WalletInstanceAttestation[number]["format"];
