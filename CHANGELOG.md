@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0-rc.4](https://github.com/pagopa/io-app/compare/3.7.0-rc.3...3.7.0-rc.4) (2025-06-09)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2298](https://pagopa.atlassian.net/browse/SIW-2298)] Elimination local FF for L3 ([#6986](https://github.com/pagopa/io-app/issues/6986)) ([43b0099](https://github.com/pagopa/io-app/commit/43b0099bd14005d87b20ceb86cda1d5028c51caf))
+
+
+### Bug Fixes
+
+* [[IOAPPX-498](https://pagopa.atlassian.net/browse/IOAPPX-498)] Document picker not opening ([#7061](https://github.com/pagopa/io-app/issues/7061)) ([c81c0e6](https://github.com/pagopa/io-app/commit/c81c0e6b3960529efe1b58459ef2179a16a76815))
+
+
+### Chores
+
+* [[IOBP-1734](https://pagopa.atlassian.net/browse/IOBP-1734)] Add CdC mixpanel tracking events ([#7060](https://github.com/pagopa/io-app/issues/7060)) ([9954a45](https://github.com/pagopa/io-app/commit/9954a450ab5c2b2ed3de11b1c2e0d20afcddbb13))
+* [[IOPLT-1106](https://pagopa.atlassian.net/browse/IOPLT-1106)] Specify the `space` value in the `Stack...` components if it is not already set ([#7051](https://github.com/pagopa/io-app/issues/7051)) ([4d09e6a](https://github.com/pagopa/io-app/commit/4d09e6a967584879a8ac8ba2d3bc81e82a71223b))
+
 ## [3.7.0-rc.3](https://github.com/pagopa/io-app/compare/3.7.0-rc.2...3.7.0-rc.3) (2025-06-06)
 
 
