@@ -8,6 +8,7 @@ import { useServicePreferenceByChannel } from "../../../services/details/hooks/u
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import { CDC_ROUTES } from "../navigation/routes";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import * as analytics from "../analytics";
 /**
  * Hook to handle the CDC activation/deactivation
  */
@@ -18,6 +19,7 @@ const useCdcActivation = () => {
 
   const subscribeHandler = useCallback(() => {
     dispatch(loadAvailableBonuses.request());
+    analytics.trackCdcRequestStart();
     navigation.navigate(CDC_ROUTES.CDC_MAIN, {
       screen: CDC_ROUTES.CDC_INFORMATION_TOS
     });

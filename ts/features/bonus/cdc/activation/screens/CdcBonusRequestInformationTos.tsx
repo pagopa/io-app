@@ -11,12 +11,18 @@ import { ID_CDC_TYPE } from "../../../common/utils";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import { cdcCtaConfigSelector } from "../../store/selectors/remoteConfig";
 import { getDeviceId } from "../../../../../utils/device";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import * as analytics from "../../analytics";
 
 const CdcBonusRequestInformationTos = () => {
   const cdcInfo = useIOSelector(availableBonusTypesSelectorFromId(ID_CDC_TYPE));
   const { startFIMSAuthenticationFlow } =
     useFIMSRemoteServiceConfiguration("cdc-onboarding");
   const ctaConfig = useIOSelector(cdcCtaConfigSelector);
+
+  useOnFirstRender(() => {
+    analytics.trackCdcRequestIntro();
+  });
 
   if (cdcInfo === undefined) {
     return null;
@@ -30,11 +36,11 @@ const CdcBonusRequestInformationTos = () => {
       IOToast.error(I18n.t("global.genericError"));
       return;
     }
-
     const url = new URL(ctaConfig.url);
     if (ctaConfig.includeDeviceId) {
       url.searchParams.set("device", getDeviceId());
     }
+    analytics.trackCdcRequestIntroContinue();
     startFIMSAuthenticationFlow(I18n.t("bonus.cdc.request"), url.toString());
   };
 
