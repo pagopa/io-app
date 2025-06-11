@@ -1654,7 +1654,7 @@
           "title": "Autorisierung verweigert",
           "subtitle": "Vergewissere dich, dass du die Anweisungen deiner Bank oder Zahlungsapp korrekt befolgt hast.",
           "primaryAction": "Schließen",
-          "secondaryAction": "Mehr erfahren",
+          "secondaryAction": "Was kannst du tun?",
           "bottomSheet": {
             "title": "Was ist zu tun, wenn das Hinzufügen der Methode fehlschlägt?",
             "description": "**Kredit- oder Debitkarte** Bitte erkundige dich bei deiner Bank. Die häufigsten Fälle sind: \n- deine Karte ist nicht für Online-Einkäufe freigeschaltet.\n- du hast den 3DS-Dienst noch nicht aktiviert: Dies ist ein Sicherheitssystem für Online-Zahlungen.\n- deine Karte wurde gesperrt oder blockiert.\n- du hast deine Karte 'pausiert'.\n**Andere Methoden** Wende dich an den Support der Zahlungsmethode und frage nach dem Grund für die Ablehnung."
@@ -2241,7 +2241,7 @@
         "PAYMENT_CANCELED": {
           "title": "Die ausstellende Körperschaft hat diese Zahlungsmitteilung zurückgezogen",
           "subtitle": "Wende dich für weitere Informationen an die Körperschaft.",
-          "action": "Scopri di più"
+          "action": "Mehr erfahren"
         },
         "PAYMENT_DUPLICATED": {
           "title": "Diese Zahlungsmitteilung wurde bereits bezahlt!"
