@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import {
   canShowMorePaymentsLink,
   extractPNOptInMessageInfoIfAvailable,
+  maxVisiblePaymentCount,
   notificationStatusToTimelineStatus,
   shouldUseBottomSheetForPayments
 } from "..";
@@ -244,6 +245,12 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
     }
   }
 ];
+
+describe("maxVisiblePaymentCount", () => {
+  it("should return 5", () => {
+    expect(maxVisiblePaymentCount).toBe(5);
+  });
+});
 
 describe("isPNOptInMessage", () => {
   isPNOptInMessageTestInput.forEach(testData => {

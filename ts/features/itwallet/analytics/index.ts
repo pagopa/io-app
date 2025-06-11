@@ -200,9 +200,7 @@ type ItwOfflineBanner = {
   use_case: "starting_app" | "foreground" | "background";
 };
 
-type ItwOfflineRicaricaAppIO = {
-  source: "bottom_sheet" | "banner";
-};
+export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
 
 // #region SCREEN VIEW EVENTS
 export const trackWalletDataShare = (properties: ItwWalletDataShare) => {
@@ -581,9 +579,9 @@ export function trackCredentialCardModal(credential: MixPanelCredential) {
   );
 }
 
-export function trackItwOfflineRicaricaAppIO({
-  source
-}: ItwOfflineRicaricaAppIO) {
+export function trackItwOfflineRicaricaAppIO(
+  source: ItwOfflineRicaricaAppIOSource
+) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_OFFLINE_RICARICA_APP_IO,
     buildEventProperties("UX", "action", {
