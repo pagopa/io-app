@@ -545,7 +545,7 @@
             "description": "Help the IO team to monitor the functioning of the app"
           },
           "screen": {
-            "title": "Your data on IO",
+            "title": "Your usage data",
             "description": "Sharing your data helps us improve your experience and provide you with targeted assistance.",
             "why": {
               "description": {
@@ -578,7 +578,7 @@
             "cta": {
               "shareData": "Share",
               "dontShareData": "Please don't share data",
-              "dontShare": "Not now"
+              "dontShare": "Please don't share data"
             },
             "confirmToast": "Preferences updated!"
           },
@@ -1831,7 +1831,7 @@
           "title": "Autorizzazione negata",
           "subtitle": "Controlla di aver seguito correttamente le istruzioni della tua banca o app di pagamento.",
           "primaryAction": "Chiudi",
-          "secondaryAction": "Scopri di più",
+          "secondaryAction": "What can you do?",
           "bottomSheet": {
             "title": "Cosa fare se l’aggiunta del metodo non va a buon fine?",
             "description": "**Carta di credito o debito**\n\nTi invitiamo a verificare con la tua banca. I casi più frequenti sono:\n\n1. La tua carta non è abilitata agli acquisti online.\n2. Non hai ancora attivato il servizio 3DS: si tratta di un sistema di sicurezza legato ai pagamenti online.\n3. La tua carta è stata sospesa o bloccata.\n4. Hai messo 'in pausa' la tua carta.\n\n\n**Altri metodi**\n\nContatta l'assistenza del tuo metodo e chiedi il motivo del rifiuto."
@@ -2447,9 +2447,9 @@
           "subtitle": "Contatta l’Ente per maggiori informazioni."
         },
         "PAYMENT_CANCELED": {
-          "title": "L’Ente Creditore ha revocato questo avviso",
-          "subtitle": "Contatta l’Ente per maggiori informazioni.",
-          "action": "Scopri di più"
+          "title": "The Creditor Entity has revoked this notice",
+          "subtitle": "Please contact the Entity for more information.",
+          "action": "What can you do?"
         },
         "PAYMENT_DUPLICATED": {
           "title": "Questo avviso è stato già pagato!"

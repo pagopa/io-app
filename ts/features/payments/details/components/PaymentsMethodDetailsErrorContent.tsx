@@ -33,6 +33,8 @@ const PaymentsMethodDetailsErrorContent = ({ walletId }: Props) => {
         ),
         onPress: handleOnRetry
       }}
+      enableAnimatedPictogram
+      loop
     />
   );
 };
