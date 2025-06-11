@@ -4936,7 +4936,7 @@
         "back_online": {
           "alert": {
             "content": "Sei di nuovo online. Per usare tutti i servizi ",
-            "action": "ricarica app IO"
+            "action": "ricarica l'app IO"
           }
         },
         "action": "Ricarica l'app IO",
