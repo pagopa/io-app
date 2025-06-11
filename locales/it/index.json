@@ -1834,7 +1834,7 @@
           "title": "Autorizzazione negata",
           "subtitle": "Controlla di aver seguito correttamente le istruzioni della tua banca o app di pagamento.",
           "primaryAction": "Chiudi",
-          "secondaryAction": "Scopri di più",
+          "secondaryAction": "Cosa puoi fare?",
           "bottomSheet": {
             "title": "Cosa fare se l’aggiunta del metodo non va a buon fine?",
             "description": "**Carta di credito o debito**\n\nTi invitiamo a verificare con la tua banca. I casi più frequenti sono:\n\n1. La tua carta non è abilitata agli acquisti online.\n2. Non hai ancora attivato il servizio 3DS: si tratta di un sistema di sicurezza legato ai pagamenti online.\n3. La tua carta è stata sospesa o bloccata.\n4. Hai messo 'in pausa' la tua carta.\n\n\n**Altri metodi**\n\nContatta l'assistenza del tuo metodo e chiedi il motivo del rifiuto."
@@ -2452,7 +2452,7 @@
         "PAYMENT_CANCELED": {
           "title": "L’Ente Creditore ha revocato questo avviso",
           "subtitle": "Contatta l’Ente per maggiori informazioni.",
-          "action": "Scopri di più"
+          "action": "Cosa puoi fare?"
         },
         "PAYMENT_DUPLICATED": {
           "title": "Questo avviso è stato già pagato!"
@@ -5010,6 +5010,12 @@
             "title": "Servizi dell’app limitati",
             "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
             "footerAction": "Ricarica l'app IO"
+          }
+        },
+        "back_online": {
+          "alert": {
+            "content": "Sei di nuovo online. Per usare tutti i servizi ",
+            "action": "ricarica l'app IO"
           }
         },
         "action": "Ricarica l'app IO",
