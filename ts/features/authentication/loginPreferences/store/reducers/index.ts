@@ -24,7 +24,10 @@ const loginPreferencesReducer = (
 ): LoginPreferencesState => {
   switch (action.type) {
     case getType(loginSuccess):
-      return loginPreferencesInitialState;
+      return {
+        ...loginPreferencesInitialState,
+        activeSessionLoginLocalFlag: state.activeSessionLoginLocalFlag
+      };
     case getType(closeSessionExpirationBanner):
       return {
         ...state,
