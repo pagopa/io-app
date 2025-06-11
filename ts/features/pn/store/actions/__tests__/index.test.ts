@@ -48,7 +48,7 @@ describe("PN actions", () => {
 
       expect(action).toEqual({
         type: "PN_START_TRACKING_PAYMENT_STATUS",
-        payload: { messageId }
+        payload: messageId
       });
     });
   });

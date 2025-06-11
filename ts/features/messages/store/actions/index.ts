@@ -9,7 +9,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { UIMessage, UIMessageDetails, UIMessageId } from "../../types";
 import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { MessageListCategory } from "../../types/messageListCategory";
 import {
@@ -28,8 +28,6 @@ import {
   startProcessingMessageArchivingAction,
   toggleScheduledMessageArchivingAction
 } from "./archiving";
-
-export type ThirdPartyMessageActions = ActionType<typeof loadThirdPartyMessage>;
 
 export type RequestGetMessageDataActionType = {
   messageId: UIMessageId;
@@ -106,7 +104,7 @@ export const loadMessageDetails = createAsyncAction(
   "MESSAGE_DETAILS_LOAD_FAILURE"
 )<{ id: UIMessageId }, UIMessageDetails, { id: string; error: Error }>();
 
-export type Filter = { getArchived?: boolean };
+type Filter = { getArchived?: boolean };
 
 // generic error used by all pagination actions
 export type MessagesFailurePayload = {
@@ -255,35 +253,52 @@ export type UpdatePaymentForMessageRequest = {
 export type UpdatePaymentForMessageSuccess = {
   messageId: UIMessageId;
   paymentId: string;
-  paymentData: PaymentRequestsGetResponse;
+  paymentData: PaymentInfoResponse;
   serviceId: ServiceId;
 };
+
+export type PaymentError = GenericError | SpecificError | TimeoutError;
+export type GenericError = { type: "generic"; message: string };
+export type SpecificError = { type: "specific"; details: Detail_v2Enum };
+export type TimeoutError = { type: "timeout" };
+
+export const isGenericError = (error: PaymentError): error is GenericError =>
+  error.type === "generic";
+export const isSpecificError = (error: PaymentError): error is SpecificError =>
+  error.type === "specific";
+export const isTimeoutError = (error: PaymentError): error is TimeoutError =>
+  error.type === "timeout";
+
+export const toGenericError = (message: string): PaymentError => ({
+  type: "generic",
+  message
+});
+export const toSpecificError = (details: Detail_v2Enum): PaymentError => ({
+  type: "specific",
+  details
+});
+export const toTimeoutError = (): PaymentError => ({ type: "timeout" });
 
 export type UpdatePaymentForMessageFailure = {
   messageId: UIMessageId;
   paymentId: string;
-  details: Detail_v2Enum;
+  reason: PaymentError;
   serviceId: ServiceId;
 };
-
-export type UpdatePaymentForMessageCancel =
-  ReadonlyArray<UpdatePaymentForMessageRequest>;
 
 export const updatePaymentForMessage = createAsyncAction(
   "UPDATE_PAYMENT_FOR_MESSAGE_REQUEST",
   "UPDATE_PAYMENT_FOR_MESSAGE_SUCCESS",
-  "UPDATE_PAYMENT_FOR_MESSAGE_FAILURE",
-  "UPDATE_PAYMENT_FOR_MESSAGE_CANCEL"
+  "UPDATE_PAYMENT_FOR_MESSAGE_FAILURE"
 )<
   UpdatePaymentForMessageRequest,
   UpdatePaymentForMessageSuccess,
-  UpdatePaymentForMessageFailure,
-  UpdatePaymentForMessageCancel
+  UpdatePaymentForMessageFailure
 >();
 
-export const cancelQueuedPaymentUpdates = createAction(
+export const cancelQueuedPaymentUpdates = createStandardAction(
   "CANCEL_QUEUED_PAYMENT_UPDATES"
-);
+)<{ messageId: UIMessageId }>();
 
 export const startPaymentStatusTracking = createStandardAction(
   "MESSAGES_START_TRACKING_PAYMENT_STATUS"
@@ -292,17 +307,16 @@ export const cancelPaymentStatusTracking = createStandardAction(
   "MESSAGES_CANCEL_PAYMENT_STATUS_TRACKING"
 )<void>();
 
-export const addUserSelectedPaymentRptId = createAction(
-  "MESSAGES_ADD_USER_SELECTED_PAYMENT_RPTID",
-  resolve => (paymentId: string) => resolve({ paymentId })
-);
+export const addUserSelectedPaymentRptId = createStandardAction(
+  "MESSAGES_ADD_USER_SELECTED_PAYMENT_RPTID"
+)<string>(); // PaymentId
 
 export const setShownMessageCategoryAction = createStandardAction(
   "SET_SHOWN_MESSAGE_CATEGORY"
 )<MessageListCategory>();
 
 export const requestAutomaticMessagesRefresh = createStandardAction(
-  "REQUEST_AUOMATIC_MESSAGE_REFRESH"
+  "REQUEST_AUTOMATIC_MESSAGE_REFRESH"
 )<MessageListCategory>();
 
 export type MessagesActions = ActionType<
