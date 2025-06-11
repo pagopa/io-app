@@ -38,6 +38,8 @@ export const itwEidIssuanceMachine = setup({
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToCredentialCatalog: notImplemented,
+    navigateToCiePreparationScreen: notImplemented,
+    navigateToCiePinPreparationScreen: notImplemented,
     navigateToCiePinScreen: notImplemented,
     navigateToCieReadCardScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
@@ -97,7 +99,8 @@ export const itwEidIssuanceMachine = setup({
     hasIntegrityKeyTag: ({ context }) => context.integrityKeyTag !== undefined,
     hasValidWalletInstanceAttestation: notImplemented,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
-    isReissuing: ({ context }) => context.isReissuing
+    isReissuing: ({ context }) => context.isReissuing,
+    isL3FeaturesEnabled: ({ context }) => context.isL3FeaturesEnabled || false
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -334,7 +337,7 @@ export const itwEidIssuanceMachine = setup({
               }
             ],
             "go-to-cie-warning": {
-              target: "CieWarning"
+              target: "CieWarning.ModeSelection"
             },
             back: [
               {
@@ -350,10 +353,25 @@ export const itwEidIssuanceMachine = setup({
         CieWarning: {
           description: "Navigates to and handles the CIE warning screen.",
           entry: "navigateToCieWarningScreen",
-          on: {
-            back: {
-              target: "ModeSelection"
+          initial: "ModeSelection",
+          states: {
+            ModeSelection: {
+              on: {
+                back: "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+              }
             },
+            PreparationCie: {
+              on: {
+                back: "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie"
+              }
+            },
+            PreparationPin: {
+              on: {
+                back: "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
+              }
+            }
+          },
+          on: {
             close: {
               actions: ["closeIssuance"]
             }
@@ -489,8 +507,61 @@ export const itwEidIssuanceMachine = setup({
         CiePin: {
           description:
             "This state handles the entire CIE + pin identification flow",
-          initial: "InsertingCardPin",
+          initial: "EvaluateInitialState",
           states: {
+            EvaluateInitialState: {
+              always: [
+                {
+                  guard: "isL3FeaturesEnabled",
+                  target: "PreparationCie"
+                },
+                { target: "InsertingCardPin" }
+              ]
+            },
+            PreparationCie: {
+              description:
+                "This state handles the CIE preparation screen, where the user is informed about the CIE card",
+              entry: "navigateToCiePreparationScreen",
+              on: {
+                next: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
+                },
+                "go-to-cie-warning": {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CieWarning.PreparationCie"
+                },
+                back: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                },
+                close: {
+                  actions: ["closeIssuance"]
+                }
+              }
+            },
+            PreparationPin: {
+              description:
+                "This state handles the CIE PIN preparation screen, where the user is informed about the CIE PIN",
+              entry: "navigateToCiePinPreparationScreen",
+              on: {
+                next: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CiePin.InsertingCardPin"
+                },
+                "go-to-cie-warning": {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CieWarning.PreparationPin"
+                },
+                back: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie"
+                },
+                close: {
+                  actions: ["closeIssuance"]
+                }
+              }
+            },
             InsertingCardPin: {
               entry: [
                 assign(() => ({ authenticationContext: undefined })), // Reset the authentication context, otherwise retries will use stale data
@@ -521,10 +592,17 @@ export const itwEidIssuanceMachine = setup({
                     }))
                   }
                 ],
-                back: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
-                }
+                back: [
+                  {
+                    guard: "isL3FeaturesEnabled",
+                    target:
+                      "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
+                  },
+                  {
+                    target:
+                      "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                  }
+                ]
               }
             },
             RequestingNfcActivation: {

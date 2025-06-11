@@ -2,12 +2,15 @@ import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
+import { isTestEnv } from "../../../../utils/environment";
 import { Action } from "../../../../store/actions/types";
 import { UIMessageDetails, UIMessageId } from "../../types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   foldK,
+  isError,
   isLoading,
+  isReady,
   isUndefined,
   remoteError,
   remoteLoading,
@@ -17,11 +20,15 @@ import {
 } from "../../../../common/model/RemoteValue";
 import {
   addUserSelectedPaymentRptId,
+  cancelQueuedPaymentUpdates,
+  isGenericError,
+  isSpecificError,
+  isTimeoutError,
+  PaymentError,
   reloadAllMessages,
   updatePaymentForMessage
 } from "../actions";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { isProfileEmailValidatedSelector } from "../../../settings/common/store/selectors";
 import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
 import {
@@ -29,6 +36,12 @@ import {
   duplicateSetAndRemove,
   getRptIdStringFromPaymentData
 } from "../../utils";
+import {
+  isExpiredPaymentFromDetailV2Enum,
+  isOngoingPaymentFromDetailV2Enum,
+  isPaidPaymentFromDetailV2Enum,
+  isRevokedPaymentFromDetailV2Enum
+} from "../../../../utils/payment";
 import { messagePaymentDataSelector } from "./detailsById";
 
 export type MultiplePaymentState = {
@@ -37,10 +50,28 @@ export type MultiplePaymentState = {
 };
 
 export type SinglePaymentState = {
-  [key: string]:
-    | RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>
-    | undefined;
+  [key: string]: RemoteValue<PaymentInfoResponse, PaymentError> | undefined;
 };
+
+export type PaymentStatistics = {
+  paymentCount: number;
+  unpaidCount: number;
+  paidCount: number;
+  errorCount: number;
+  expiredCount: number;
+  revokedCount: number;
+  ongoingCount: number;
+};
+
+const initialPaymentStatistics = (paymentCount: number): PaymentStatistics => ({
+  paymentCount,
+  unpaidCount: 0,
+  paidCount: 0,
+  errorCount: 0,
+  expiredCount: 0,
+  revokedCount: 0,
+  ongoingCount: 0
+});
 
 export const initialState: MultiplePaymentState = {
   userSelectedPayments: new Set<string>()
@@ -76,26 +107,25 @@ export const paymentsReducer = (
         ...state,
         [action.payload.messageId]: {
           ...state[action.payload.messageId],
-          [action.payload.paymentId]: remoteError(action.payload.details)
+          [action.payload.paymentId]: remoteError(action.payload.reason)
         }
       };
-    case getType(updatePaymentForMessage.cancel):
-      return action.payload.reduce<MultiplePaymentState>(
-        (previousState, queuedUpdateActionPayload) => ({
-          ...previousState,
-          [queuedUpdateActionPayload.messageId]: {
-            ...previousState[queuedUpdateActionPayload.messageId],
-            [queuedUpdateActionPayload.paymentId]: undefined
+    case getType(cancelQueuedPaymentUpdates): {
+      const messageId = action.payload.messageId;
+      const messagePayments = state[messageId];
+      return messagePayments != null
+        ? {
+            ...state,
+            [messageId]: purgePaymentsWithIncompleteData(messagePayments)
           }
-        }),
-        state
-      );
+        : state;
+    }
     case getType(addUserSelectedPaymentRptId):
       return {
         ...state,
         userSelectedPayments: duplicateSetAndAdd(
           state.userSelectedPayments,
-          action.payload.paymentId
+          action.payload
         )
       };
     case getType(reloadAllMessages.request):
@@ -103,20 +133,6 @@ export const paymentsReducer = (
   }
   return state;
 };
-
-const paymentStateSelector = (
-  state: GlobalState,
-  messageId: UIMessageId,
-  paymentId: string
-) =>
-  pipe(
-    state.entities.messages.payments[messageId],
-    O.fromNullable,
-    O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
-    O.getOrElse<RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>>(
-      () => remoteUndefined
-    )
-  );
 
 export const shouldUpdatePaymentSelector = (
   state: GlobalState,
@@ -128,7 +144,7 @@ export const paymentStatusForUISelector = (
   state: GlobalState,
   messageId: UIMessageId,
   paymentId: string
-): RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum> =>
+): RemoteValue<PaymentInfoResponse, PaymentError> =>
   pipe(paymentStateSelector(state, messageId, paymentId), remoteValue =>
     isLoading(remoteValue) ? remoteUndefined : remoteValue
   );
@@ -192,3 +208,107 @@ export const isPaymentsButtonVisibleSelector = (
     paymentsButtonStateSelector(state, messageId),
     status => status !== "hidden"
   );
+
+const paymentStateSelector = (
+  state: GlobalState,
+  messageId: UIMessageId,
+  paymentId: string
+) =>
+  pipe(
+    state.entities.messages.payments[messageId],
+    O.fromNullable,
+    O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
+    O.getOrElse<RemoteValue<PaymentInfoResponse, PaymentError>>(
+      () => remoteUndefined
+    )
+  );
+
+const purgePaymentsWithIncompleteData = (state: SinglePaymentState) => {
+  const isTimeoutOrGenericError = (input: RemoteValue<unknown, PaymentError>) =>
+    isError(input) &&
+    (isTimeoutError(input.error) || isGenericError(input.error));
+
+  return Object.entries(state).reduce((acc, [key, value]) => {
+    if (value == null || isLoading(value) || isTimeoutOrGenericError(value)) {
+      return { ...acc, [key]: undefined };
+    }
+    return { ...acc, [key]: value };
+  }, {} as SinglePaymentState);
+};
+
+export const paymentStatisticsForMessageUncachedSelector = (
+  state: GlobalState,
+  messageId: UIMessageId,
+  paymentCount: number,
+  paymentIds: ReadonlyArray<string>
+): PaymentStatistics | undefined => {
+  try {
+    return paymentIds.reduce((accumulator, paymentId) => {
+      const paymentStatus = paymentStateSelector(state, messageId, paymentId);
+      if (isReady(paymentStatus)) {
+        return {
+          ...accumulator,
+          unpaidCount: accumulator.unpaidCount + 1
+        };
+      } else if (isError(paymentStatus)) {
+        return paymentErrorToPaymentStatistics(
+          accumulator,
+          paymentStatus.error
+        );
+      } else {
+        throw Error("Data is not ready");
+      }
+    }, initialPaymentStatistics(paymentCount));
+  } catch (e) {
+    return undefined;
+  }
+};
+
+const paymentErrorToPaymentStatistics = (
+  accumulator: PaymentStatistics,
+  paymentError: PaymentError
+): PaymentStatistics => {
+  if (isSpecificError(paymentError)) {
+    const details = paymentError.details;
+    if (isPaidPaymentFromDetailV2Enum(details)) {
+      return {
+        ...accumulator,
+        paidCount: accumulator.paidCount + 1
+      };
+    } else if (isExpiredPaymentFromDetailV2Enum(details)) {
+      return {
+        ...accumulator,
+        expiredCount: accumulator.expiredCount + 1
+      };
+    } else if (isRevokedPaymentFromDetailV2Enum(details)) {
+      return {
+        ...accumulator,
+        revokedCount: accumulator.revokedCount + 1
+      };
+    } else if (isOngoingPaymentFromDetailV2Enum(details)) {
+      return {
+        ...accumulator,
+        ongoingCount: accumulator.ongoingCount + 1
+      };
+    } else {
+      return {
+        ...accumulator,
+        errorCount: accumulator.errorCount + 1
+      };
+    }
+  } else {
+    return {
+      ...accumulator,
+      errorCount: accumulator.errorCount + 1
+    };
+  }
+};
+
+export const testable = isTestEnv
+  ? {
+      initialPaymentStatistics,
+      paymentErrorToPaymentStatistics,
+      paymentStateSelector,
+      purgePaymentsWithIncompleteData
+    }
+  : undefined;

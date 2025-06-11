@@ -35,7 +35,6 @@ export const ItwCredentialCard = ({
 
   const borderColorMap = useBorderColorByStatus();
   const statusTagProps = tagPropsByStatus[status];
-
   const { titleColor, titleOpacity, colorScheme } = useMemo<StyleProps>(() => {
     const isValid = validCredentialStatuses.includes(status);
     const theme = getThemeColorByCredentialType(credentialType);

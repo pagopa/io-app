@@ -119,8 +119,8 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100154990
-        versionName "3.7.0.1"
+        versionCode 100154994
+        versionName "3.7.0.5"
         multiDexEnabled true
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
@@ -214,6 +214,8 @@ dependencies {
     implementation 'com.google.android.play:review:2.0.2'  
     // Kotlin extensions for Play In-App Review API  
     implementation 'com.google.android.play:review-ktx:2.0.2'  
+    // Required for gif on Android
+    implementation 'com.facebook.fresco:animated-gif:3.6.0'
 }
 
 // Add the following line to the bottom of the file:

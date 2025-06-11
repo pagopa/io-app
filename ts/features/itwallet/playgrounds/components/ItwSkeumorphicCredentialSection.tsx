@@ -21,6 +21,13 @@ const credentialsWithCard: ReadonlyArray<string> = [
 
 export const ItwSkeumorphicCredentialSection = () => {
   const [valuesHidden, setValuesHidden] = useState(false);
+
+  const L2Credentials = Object.entries(ItwStoredCredentialsMocks)
+    .filter(([key]) => key !== "L3")
+    .map(([_, value]) => value as StoredCredential)
+    .filter(({ credentialType }) =>
+      credentialsWithCard.includes(credentialType)
+    );
   return (
     <View>
       <ListItemHeader label="Skeumorphic credential card" />
@@ -32,17 +39,13 @@ export const ItwSkeumorphicCredentialSection = () => {
         }}
       />
       <VStack space={16}>
-        {Object.values(ItwStoredCredentialsMocks)
-          .filter(({ credentialType }) =>
-            credentialsWithCard.includes(credentialType)
-          )
-          .map(credential => (
-            <ItwSkeumorphicCredentialItem
-              key={credential.credentialType}
-              credential={credential}
-              valuesHidden={valuesHidden}
-            />
-          ))}
+        {L2Credentials.map(l2Credential => (
+          <ItwSkeumorphicCredentialItem
+            key={l2Credential.credentialType}
+            credential={l2Credential}
+            valuesHidden={valuesHidden}
+          />
+        ))}
       </VStack>
     </View>
   );
