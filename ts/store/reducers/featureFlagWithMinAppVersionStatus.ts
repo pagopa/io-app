@@ -101,22 +101,7 @@ export const isPropertyWithMinAppVersionEnabled = <
             optionalConfig
           )
         ),
-        O.chainNullableK(lp => lp.min_app_version),
-        O.map(mav => (Platform.OS === "ios" ? mav.ios : mav.android)),
-        O.chain(semVer =>
-          pipe(
-            semVer,
-            PatternString(`^(?!0(.0)*$)\\d+(\\.\\d+)*$`).decode,
-            E.fold(
-              _ => O.none,
-              v => O.some(v)
-            )
-          )
-        ),
-        O.fold(
-          () => false,
-          v => isVersionSupported(v, getAppVersion())
-        )
+        isMinAppVersionSupported
       )
   );
 
@@ -151,3 +136,28 @@ function getObjectWithMinAppVersion<T extends KeysWithMinAppVersion<Config>>(
     )
   );
 }
+
+type RemoteConfigMinAppVersion = O.Option<ObjectWithMinAppVersion>;
+
+export const isMinAppVersionSupported = (
+  minAppVersionOption: RemoteConfigMinAppVersion
+): boolean =>
+  pipe(
+    minAppVersionOption,
+    O.chainNullableK(config => config?.min_app_version),
+    O.map(mav => (Platform.OS === "ios" ? mav.ios : mav.android)),
+    O.chain(semVer =>
+      pipe(
+        semVer,
+        PatternString(`^(?!0(.0)*$)\\d+(\\.\\d+)*$`).decode,
+        E.fold(
+          _ => O.none,
+          v => O.some(v)
+        )
+      )
+    ),
+    O.fold(
+      () => false,
+      v => isVersionSupported(v, getAppVersion())
+    )
+  );
