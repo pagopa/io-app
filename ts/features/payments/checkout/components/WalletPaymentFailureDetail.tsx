@@ -252,11 +252,13 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
         };
       case "PAYMENT_CANCELED":
         return {
-          pictogram: "stopSecurity",
+          pictogram: "error",
           title: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.title"),
           subtitle: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.subtitle"),
           action: closeAction,
-          secondaryAction: discoverMoreAction
+          secondaryAction: discoverMoreAction,
+          enableAnimatedPictogram: true,
+          loop: false
         };
       case "PAYMENT_DUPLICATED":
         return {

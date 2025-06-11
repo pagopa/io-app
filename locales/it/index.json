@@ -2449,7 +2449,7 @@
         "PAYMENT_CANCELED": {
           "title": "L’Ente Creditore ha revocato questo avviso",
           "subtitle": "Contatta l’Ente per maggiori informazioni.",
-          "action": "Scopri di più"
+          "action": "Cosa puoi fare?"
         },
         "PAYMENT_DUPLICATED": {
           "title": "Questo avviso è stato già pagato!"
