@@ -32,7 +32,8 @@ import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
-  preferencesPnTestEnvironmentSetEnabled
+  preferencesPnTestEnvironmentSetEnabled,
+  setUseMessagePaymentInfoV2
 } from "../../../../store/actions/persistedPreferences";
 import { clearCache } from "../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -43,6 +44,7 @@ import {
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
   isIdPayLocallyEnabledSelector,
+  isMessagePaymentInfoV2Selector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../../../store/reducers/persistedPreferences";
@@ -442,6 +444,7 @@ const DeveloperTestEnvironmentSection = ({
 }) => {
   const dispatch = useIODispatch();
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
+  const messagePaymentInfoV2 = useIOSelector(isMessagePaymentInfoV2Selector);
   const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
   const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
   const isActiveSessionLoginLocallyEnabled = useIOSelector(
@@ -483,6 +486,10 @@ const DeveloperTestEnvironmentSection = ({
     }
   };
 
+  const onMessagePaymentInfoV2Toggle = (enabled: boolean) => {
+    dispatch(setUseMessagePaymentInfoV2(enabled));
+  };
+
   const onPnEnvironmentToggle = (enabled: boolean) => {
     dispatch(
       preferencesPnTestEnvironmentSetEnabled({ isPnTestEnabled: enabled })
@@ -507,6 +514,11 @@ const DeveloperTestEnvironmentSection = ({
       value: isPagoPATestEnabled,
       onSwitchValueChange: onPagoPAEnvironmentToggle,
       disabled: isLocalEnv
+    },
+    {
+      label: "Message Payments V2",
+      value: messagePaymentInfoV2,
+      onSwitchValueChange: onMessagePaymentInfoV2Toggle
     },
     {
       label: I18n.t("profile.main.pnEnvironment.pnEnv"),
