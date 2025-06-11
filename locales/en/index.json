@@ -4933,6 +4933,12 @@
             "footerAction": "Ricarica l'app IO"
           }
         },
+        "back_online": {
+          "alert": {
+            "content": "Sei di nuovo online. Per usare tutti i servizi ",
+            "action": "ricarica l'app IO"
+          }
+        },
         "action": "Ricarica l'app IO",
         "failure": "Nessuna connessione. Collegati a internet e riprova."
       },
