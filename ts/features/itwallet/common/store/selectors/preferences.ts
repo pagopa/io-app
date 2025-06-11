@@ -95,10 +95,7 @@ export const itwIsFiscalCodeWhitelistedSelector = (state: GlobalState) =>
  * @param state - The global state of the application.
  * @returns A boolean indicating whether L3 is enabled and the fiscal code is whitelisted.
  */
-export const itwIsL3EnabledSelector = (state: GlobalState) =>
-  (state.features.itWallet.preferences.isL3Enabled ||
-    state.features.itWallet.preferences.isFiscalCodeWhitelisted) ??
-  false;
+export const itwIsL3EnabledSelector = (state: GlobalState) => false;
 
 /**
  * Returns whether offline banner is hidden. Defaults to false.

@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import * as O from "fp-ts/lib/Option";
 import { mixpanelTrack } from "../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
@@ -8,6 +9,8 @@ import { IdentificationContext } from "../machine/eid/context";
 import { IssuanceFailure } from "../machine/eid/failure";
 import {
   ItwCredentialStatus,
+  ItwJwtCredentialStatus,
+  StoredCredential,
   WalletInstanceRevocationReason
 } from "../common/utils/itwTypesUtils";
 import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
@@ -17,6 +20,7 @@ import {
   resetOfflineAccessReason,
   setOfflineAccessReason
 } from "../../ingress/store/actions";
+import { getCredentialStatus } from "../common/utils/itwCredentialStatusUtils";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -131,11 +135,21 @@ type TrackITWalletSpidIDPSelected = { idp: string };
 
 type TrackItWalletCieCardReadingFailure = { reason: string };
 
+export type ItwCredentialMixpanelStatus =
+  | "not_available"
+  | "valid"
+  | "not_valid"
+  | "expiring"
+  | "expired"
+  | "expiring_verification"
+  | "verification_expired"
+  | "unknown";
+
 export type ItwStatus = "not_active" | "L2" | "L3";
-export type ItwId = "not_available" | "valid" | "not_valid";
-export type ItwPg = "not_available" | "valid" | "not_valid" | "expiring";
-export type ItwTs = "not_available" | "valid" | "not_valid" | "expiring";
-export type ItwCed = "not_available" | "valid" | "not_valid" | "expiring";
+export type ItwId = "not_available" | "valid" | "expiring" | "expired";
+export type ItwPg = ItwCredentialMixpanelStatus;
+export type ItwTs = ItwCredentialMixpanelStatus;
+export type ItwCed = ItwCredentialMixpanelStatus;
 
 /**
  * This map is used to map the eid credential status to the MixPanel eid credential status
@@ -147,7 +161,7 @@ export type ItwCed = "not_available" | "valid" | "not_valid" | "expiring";
  * jwtExpiring: expiring_verification
  * unknown: unknown
  */
-export const ID_STATUS_MAP: Record<
+export const CREDENTIALS_STATUS_MAP: Record<
   ItwCredentialStatus,
   | "valid"
   | "not_valid"
@@ -965,6 +979,38 @@ export const updatePropertiesWalletRevoked = (state: GlobalState) => {
     property: "ITW_STATUS_V2",
     value: "not_active"
   });
+};
+
+/**
+ * Maps a given Optional StoredCredential to the corresponding Mixpanel tracking status.
+ * Returns "not_available" if the credential is missing or its status cannot be determined.
+ */
+export const getCredentialMixpanelStatus = (
+  credential: O.Option<StoredCredential>
+): ItwPg | ItwTs | ItwCed => {
+  if (!credential || O.isNone(credential)) {
+    return "not_available";
+  }
+  const status = getCredentialStatus(credential.value);
+  return CREDENTIALS_STATUS_MAP[status];
+};
+
+/**
+ * Maps an eID status to its corresponding Mixpanel tracking status.
+ */
+export const mapEidStatusToMixpanel = (
+  status: ItwJwtCredentialStatus
+): ItwId => {
+  switch (status) {
+    case "valid":
+      return "valid";
+    case "jwtExpired":
+      return "expired";
+    case "jwtExpiring":
+      return "expiring";
+    default:
+      return "not_available";
+  }
 };
 
 // #endregion PROFILE AND SUPER PROPERTIES UPDATE

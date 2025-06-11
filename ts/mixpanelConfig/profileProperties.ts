@@ -15,15 +15,17 @@ import { idpSelector } from "../features/authentication/common/store/selectors";
 import { tosVersionSelector } from "../features/settings/common/store/selectors/index.ts";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
+  getCredentialMixpanelStatus,
   ItwCed,
   ItwId,
   ItwPg,
   ItwStatus,
-  ItwTs
+  ItwTs,
+  mapEidStatusToMixpanel
 } from "../features/itwallet/analytics";
 import {
   itwCredentialsByTypeSelector,
-  itwCredentialsSelector
+  itwCredentialsEidStatusSelector
 } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
@@ -149,20 +151,22 @@ const walletStatusHandler = (state: GlobalState): ItwStatus => {
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {
-  const credentialsState = itwCredentialsSelector(state);
-  return O.isSome(credentialsState.eid) ? "valid" : "not_available";
+  const eidStatus = itwCredentialsEidStatusSelector(state);
+  return eidStatus !== undefined
+    ? mapEidStatusToMixpanel(eidStatus)
+    : "not_available";
 };
 const pgStatusHandler = (state: GlobalState): ItwPg => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
-  return credentialsByType.MDL ? "valid" : "not_available";
+  return getCredentialMixpanelStatus(credentialsByType.MDL);
 };
 const tsStatusHandler = (state: GlobalState): ItwTs => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
-  return credentialsByType.EuropeanHealthInsuranceCard
-    ? "valid"
-    : "not_available";
+  return getCredentialMixpanelStatus(
+    credentialsByType.EuropeanHealthInsuranceCard
+  );
 };
 const cedStatusHandler = (state: GlobalState): ItwCed => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
-  return credentialsByType.EuropeanDisabilityCard ? "valid" : "not_available";
+  return getCredentialMixpanelStatus(credentialsByType.EuropeanDisabilityCard);
 };
