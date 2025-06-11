@@ -545,7 +545,7 @@
             "description": "Aiuta il team di IO a monitorare il funzionamento dell’app"
           },
           "screen": {
-            "title": "I tuoi dati su IO",
+            "title": "I tuoi dati di utilizzo",
             "description": "Se condividi i tuoi dati, ci aiuti a migliorare la tua esperienza su IO e a fornirti assistenza mirata.",
             "why": {
               "description": {
@@ -578,7 +578,7 @@
             "cta": {
               "shareData": "Condividi",
               "dontShareData": "Non condividere i dati",
-              "dontShare": "Non ora"
+              "dontShare": "Non condividere"
             },
             "confirmToast": "Preferenze aggiornate!"
           },
@@ -4222,6 +4222,7 @@
       }
     },
     "itWallet": {
+      "title": "IT-WALLET",
       "credentialName": {
         "eid": "Identità Digitale",
         "mdl": "Patente di guida",
@@ -4441,6 +4442,22 @@
                 "primaryAction": "Ho capito",
                 "secondaryAction": "Non trovo il PIN della CIE"
               }
+            },
+            "preparationScreen": {
+              "cie": {
+                "title": "Prepara la tua carta di identità elettronica (CIE)",
+                "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
+                "buttonLink": "Cos'è la CIE?",
+                "primaryAction": "Ho pronta la CIE",
+                "secondaryAction": "Non ho la CIE"
+              },
+              "ciePin": {
+                "title": "Prepara il PIN della tua carta di identità \nelettronica (CIE)",
+                "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell'identità.",
+                "buttonLink": "Cos'è il PIN della CIE?",
+                "primaryAction": "Ho pronto il PIN",
+                "secondaryAction": "Non trovo il PIN della CIE"
+              }
             }
           }
         },
@@ -4599,7 +4616,8 @@
         "alerts": {
           "statusAction": "Cosa posso fare?",
           "mdl": {
-            "content": "Puoi usare la tua Patente su IO solo in Italia esclusivamente per dimostrare l'abilitazione alla guida in caso di controlli delle Forze dell'ordine."
+            "content": "Puoi usare la tua Patente su IO solo in Italia esclusivamente per dimostrare l'abilitazione alla guida in caso di controlli delle Forze dell'ordine.",
+            "contentL3": "La tua Patente su IO ha lo stesso valore legale del documento fisico, solo sul territorio italiano."
           },
           "ehc": {
             "content": "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
@@ -4705,7 +4723,8 @@
           "trustmark": "Mostra certificato di autenticità",
           "openPdf": "Mostra documento",
           "shareButton": "Salva o condividi",
-          "fiscalCode": "Il tuo Codice Fiscale"
+          "fiscalCode": "Il tuo Codice Fiscale",
+          "showQRCode": "Mostra QR Code di verifica"
         },
         "eid": {
           "verificationExpired": {

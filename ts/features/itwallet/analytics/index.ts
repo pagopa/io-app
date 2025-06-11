@@ -152,7 +152,7 @@ export type ItwTs = ItwCredentialMixpanelStatus;
 export type ItwCed = ItwCredentialMixpanelStatus;
 
 /**
- * This map is used to map the eid credential status to the MixPanel eid credential status
+ * This map is used to map the credentials status to the MixPanel credential status (not for eID)
  * valid: valid
  * invalid: not_valid
  * expired: expired

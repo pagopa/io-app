@@ -478,7 +478,6 @@
             "description": "Unterstütze das IO-Team bei der Überwachung der Funktionsweise der App"
           },
           "screen": {
-            "title": "Deine Daten auf IO",
             "description": "Wenn du deine Daten weitergibst, hilfst du uns, dein IO-Erlebnis zu verbessern und dir gezielte Unterstützung zu bieten.",
             "why": {
               "description": {
@@ -510,8 +509,7 @@
             "profileSettings": "Du kannst deine Wahl jederzeit unter Einstellungen > Datenschutz und Nutzungsbedingungen ändern",
             "cta": {
               "shareData": "Daten freigeben",
-              "dontShareData": "Daten nicht freigeben",
-              "dontShare": "Jetzt nicht"
+              "dontShareData": "Daten nicht freigeben"
             },
             "confirmToast": "Einstellungen aktualisiert!"
           },

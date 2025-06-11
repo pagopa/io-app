@@ -38,6 +38,8 @@ const IdPayCompletionScreen = () => {
         onPress: handleClosePress
       }}
       pictogram="success"
+      enableAnimatedPictogram
+      loop={false}
     />
   );
 };
