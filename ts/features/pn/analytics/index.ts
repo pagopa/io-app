@@ -21,6 +21,13 @@ export interface TrackPNPaymentStatus {
   ongoingCount: number;
 }
 
+export type PNServiceStatus = "active" | "not_active" | "unknown";
+
+export const booleanOrUndefinedToPNServiceStatus = (
+  active: boolean | undefined
+): PNServiceStatus =>
+  active != null ? (active ? "active" : "not_active") : "unknown";
+
 const pnServiceActivationStatusBoolToString = (activated?: boolean) =>
   activated ? "activated" : "deactivated";
 
