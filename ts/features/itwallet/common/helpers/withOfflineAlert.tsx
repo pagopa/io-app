@@ -46,7 +46,6 @@ import {
  *
  * @param offlineAccessReason - The specific reason for the offline state, used to
  *                             determine the content and behavior of the modal
- * @param handleAppRestart - The function to handle the app restart
  * @returns An object with the bottom sheet modal controller (present, dismiss) and the modal component
  */
 const useOfflineAlertDetailModal = (
