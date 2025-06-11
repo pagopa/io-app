@@ -7,6 +7,7 @@ import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus"
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
 import { StoredCredential } from "../../features/itwallet/common/utils/itwTypesUtils";
+import { ServicesState } from "../../features/services/common/store/reducers";
 
 // eslint-disable-next-line functional/no-let
 let mockIsMixpanelInitialized = true;
@@ -103,6 +104,7 @@ describe("profileProperties", () => {
               NOTIFICATION_PERMISSION: notificationPermissionTuple[1],
               NOTIFICATION_TOKEN: notificationTokenTuple[1],
               SAVED_PAYMENT_METHOD: 0,
+              SEND_STATUS: "active",
               SERVICE_CONFIGURATION: "AUTO",
               TOS_ACCEPTED_VERSION: 1,
               TRACKING: "accepted",
@@ -155,6 +157,18 @@ const generateMockedGlobalState = (
           userMethods: pot.none
         }
       },
+      services: {
+        details: {
+          preferencesById: {
+            "01G40DWQGKY5GRWSNM4303VNRP": pot.some({
+              kind: "success",
+              value: {
+                inbox: true
+              }
+            })
+          }
+        }
+      } as unknown as ServicesState,
       wallet: {
         cards: {},
         placeholders: {
@@ -177,6 +191,11 @@ const generateMockedGlobalState = (
       reminder_status: pushReminder,
       service_preferences_settings: {
         mode: "AUTO"
+      }
+    }),
+    remoteConfig: O.some({
+      pn: {
+        notificationServiceId: "01G40DWQGKY5GRWSNM4303VNRP"
       }
     })
   } as GlobalState);
