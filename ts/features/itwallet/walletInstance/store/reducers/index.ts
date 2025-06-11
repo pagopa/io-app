@@ -16,22 +16,16 @@ import {
 } from "../actions";
 import {
   WalletInstanceStatus,
-  WiaFormat
+  WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
 import { NetworkError } from "../../../../../utils/errors";
 import { isDevEnv } from "../../../../../utils/environment";
 
 export type ItwWalletInstanceState = {
   /**
-   * @deprecated Will be removed in future releases
-   *
-   * Legacy Wallet Attestation in JWT format
-   */
-  attestation: string | undefined;
-  /**
    * The new Wallet Attestation in multiple formats
    */
-  walletAttestation: Record<WiaFormat, string> | undefined;
+  attestation: WalletInstanceAttestations | undefined;
   /**
    * The Wallet Instance status fetched from the Wallet Provider backend
    */
@@ -40,7 +34,6 @@ export type ItwWalletInstanceState = {
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
-  walletAttestation: undefined,
   status: pot.none
 };
 
@@ -58,7 +51,7 @@ const migrations: MigrationManifest = {
       status: prevState.status ? pot.some(prevState.status) : pot.none
     };
   },
-  // Add the new Wallet Attestation in different formats
+  // Move the old Wallet Attestation into the new structure
   "1": state => {
     const prevState = state as PersistedState & {
       attestation: string | undefined;
@@ -66,7 +59,9 @@ const migrations: MigrationManifest = {
     };
     return {
       ...prevState,
-      walletAttestation: undefined
+      attestation: {
+        jwt: prevState.attestation
+      }
     };
   }
 };
@@ -77,24 +72,9 @@ const reducer = (
 ): ItwWalletInstanceState => {
   switch (action.type) {
     case getType(itwWalletInstanceAttestationStore): {
-      // Legacy attestation
-      if (typeof action.payload === "string") {
-        return {
-          ...state,
-          status: pot.none,
-          attestation: action.payload
-        };
-      }
       return {
-        ...state,
         status: pot.none,
-        walletAttestation: action.payload.reduce(
-          (acc, { format, wallet_attestation }) => ({
-            ...acc,
-            [format]: wallet_attestation
-          }),
-          {} as Record<WiaFormat, string>
-        )
+        attestation: action.payload
       };
     }
 

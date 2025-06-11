@@ -14,14 +14,14 @@ import {
  * TODO: [SIW-2530] Remove it after transitioning and after ensuring the new Issuer APIs are backward compatible.
  */
 export class IoReactNativeWalletProxy {
-  WalletInstanceAttestation(useNewAPI: boolean) {
-    return useNewAPI
+  WalletInstanceAttestation(newApiEnabled: boolean) {
+    return newApiEnabled
       ? WalletInstanceAttestation
       : _legacy_WalletInstanceAttestation;
   }
 
-  Credential(useNewAPI: boolean) {
-    return useNewAPI ? Credential : _legacy_Credential;
+  Credential(newApiEnabled: boolean) {
+    return newApiEnabled ? Credential : _legacy_Credential;
   }
 }
 

@@ -14,7 +14,7 @@ import { NetworkError } from "../../../../../utils/errors";
  */
 export const itwWalletInstanceAttestationStore = createStandardAction(
   "ITW_WALLET_INSTANCE_ATTESTATION_STORE"
-)<string | WalletInstanceAttestations>();
+)<WalletInstanceAttestations>();
 
 /**
  * This action handles the Wallet Instance Status fetch

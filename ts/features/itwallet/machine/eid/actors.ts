@@ -79,7 +79,7 @@ export const createEidIssuanceActorsImplementation = (
   }),
 
   getWalletAttestation: fromPromise<
-    string | WalletInstanceAttestations,
+    WalletInstanceAttestations,
     GetWalletAttestationActorParams
   >(({ input }) => {
     const sessionToken = sessionTokenSelector(store.getState());

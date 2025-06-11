@@ -22,12 +22,8 @@ import {
   updateITWStatusAndIDProperties
 } from "../../analytics";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import {
-  itwWalletInstanceAttestationJwtSelector,
-  itwWalletInstanceAttestationSelector
-} from "../../walletInstance/store/selectors";
+import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwSetAuthLevel } from "../../common/store/actions/preferences.ts";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -244,11 +240,8 @@ export const createEidIssuanceActionsImplementation = (
     () => {
       const state = store.getState();
       const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(state);
-      const isL3Enabled = itwIsL3EnabledSelector(state);
-
-      const walletInstanceAttestation = isL3Enabled
-        ? itwWalletInstanceAttestationJwtSelector(state)
-        : itwWalletInstanceAttestationSelector(state);
+      const walletInstanceAttestation =
+        itwWalletInstanceAttestationSelector(state);
 
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),

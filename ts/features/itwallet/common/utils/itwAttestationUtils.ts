@@ -46,43 +46,67 @@ export const registerWalletInstance = async (
  * Getter for the wallet attestation binded to the wallet instance created with the given hardwareKeyTag.
  * @param hardwareKeyTag - the hardware key tag of the wallet instance
  * @param sessionToken - the session token to use for the API calls
- * @return the wallet attestation and the related key tag
+ * @param newApiEnabled - enable v1.0 API - TODO: [SIW-2530] Remove after transitioning to API 1.0
+ * @return the wallet attestation in multiple formats
  */
 export const getAttestation = async (
   hardwareKeyTag: string,
   sessionToken: SessionToken,
-  useNewAPI: boolean = false // TODO: [SIW-2530] Remove after transitioning to API 1.0
-): Promise<string | WalletInstanceAttestations> => {
+  newApiEnabled: boolean = false
+): Promise<WalletInstanceAttestations> => {
   const integrityContext = getIntegrityContext(hardwareKeyTag);
 
   await regenerateCryptoKey(WIA_KEYTAG);
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
   const appFetch = createItWalletFetch(itwWalletProviderBaseUrl, sessionToken);
 
-  return await ioRNWProxy.WalletInstanceAttestation(useNewAPI).getAttestation({
-    wiaCryptoContext,
-    integrityContext,
-    walletProviderBaseUrl: itwWalletProviderBaseUrl,
-    appFetch
-  });
+  const attestation = await ioRNWProxy
+    .WalletInstanceAttestation(newApiEnabled)
+    .getAttestation({
+      wiaCryptoContext,
+      integrityContext,
+      walletProviderBaseUrl: itwWalletProviderBaseUrl,
+      appFetch
+    });
+
+  // Handle legacy attestation format
+  if (typeof attestation === "string") {
+    return { jwt: attestation };
+  }
+
+  return attestation.reduce(
+    (acc, { format, wallet_attestation }) => ({
+      ...acc,
+      [format]: wallet_attestation
+    }),
+    {} as WalletInstanceAttestations
+  );
 };
 
 /**
  * Checks if the Wallet Instance Attestation needs to be requested by
  * checking the expiry date
  * @param attestation - the Wallet Instance Attestation to validate
+ * @param newApiEnabled - enable v1.0 API - TODO: [SIW-2530] Remove after transitioning to API 1.0
  * @returns true if the Wallet Instance Attestation is expired or not present
  */
 export const isWalletInstanceAttestationValid = (
   attestation: string,
-  useNewAPI: boolean = false // TODO: [SIW-2530] Remove after transitioning to API 1.0
+  newApiEnabled: boolean = false
 ): boolean => {
-  const { payload } = ioRNWProxy
-    .WalletInstanceAttestation(useNewAPI)
-    .decode(attestation);
-  const expiryDate = new Date(payload.exp * 1000);
-  const now = new Date();
-  return now < expiryDate;
+  // To keep things simple we store the old and new attestation under the same key,
+  // so we might end up with a valid old attestation for the new flow.
+  // We let decoding fail and catch the error to force the correct attestation to be fetched again.
+  try {
+    const { payload } = ioRNWProxy
+      .WalletInstanceAttestation(newApiEnabled)
+      .decode(attestation);
+    const expiryDate = new Date(payload.exp * 1000);
+    const now = new Date();
+    return now < expiryDate;
+  } catch {
+    return false;
+  }
 };
 
 /**
