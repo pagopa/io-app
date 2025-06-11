@@ -4,13 +4,11 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isCdcAppVersionSupportedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { useServicePreferenceByChannel } from "../../../services/details/hooks/useServicePreference";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import { CDC_ROUTES } from "../navigation/routes";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import * as analytics from "../analytics";
 /**
- * Hook to handle the CDC activation/deactivation
+ * Hook to handle the CDC flow request
  */
 const useCdcActivation = () => {
   const navigation = useIONavigation();
@@ -32,45 +30,25 @@ const useCdcActivation = () => {
 
 /**
  * This hook determines and returns the appropriate primary action prop
- * for activating and deactivating the CDC service.
+ * for activating the CDC service.
  */
-export const useSpecialCtaCdc = (
-  serviceId: ServiceId
-): IOScrollViewActions["primary"] | undefined => {
+export const useSpecialCtaCdc = ():
+  | IOScrollViewActions["primary"]
+  | undefined => {
   const isCdcEnabled = useIOSelector(isCdcAppVersionSupportedSelector);
 
   const { subscribeHandler } = useCdcActivation();
 
-  const { isLoadingServicePreferenceByChannel, servicePreferenceByChannel } =
-    useServicePreferenceByChannel("inbox", serviceId);
-
-  const loading = isLoadingServicePreferenceByChannel;
-
-  // If the inbox channel is enabled, then the special service is active
-  const isServiceActive = servicePreferenceByChannel ?? false;
-
   return useMemo(() => {
-    // if cdc is not enabled or the inbox channel is undefined
-    // then the special service is not available
-    if (!isCdcEnabled || servicePreferenceByChannel === undefined) {
+    // if cdc is not enabled then the CTA is not available
+    if (!isCdcEnabled) {
       return undefined;
     }
 
-    if (!isServiceActive) {
-      return {
-        label: I18n.t("bonus.cdc.request"),
-        loading,
-        onPress: subscribeHandler,
-        testID: "service-activate-bonus-button"
-      };
-    }
-
-    return undefined;
-  }, [
-    isCdcEnabled,
-    loading,
-    isServiceActive,
-    servicePreferenceByChannel,
-    subscribeHandler
-  ]);
+    return {
+      label: I18n.t("bonus.cdc.request"),
+      onPress: subscribeHandler,
+      testID: "service-activate-bonus-button"
+    };
+  }, [isCdcEnabled, subscribeHandler]);
 };
