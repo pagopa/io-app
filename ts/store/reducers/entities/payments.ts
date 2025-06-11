@@ -9,6 +9,7 @@ import { paymentCompletedSuccess } from "../../../features/payments/checkout/sto
 import { GlobalState } from "../types";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
 import {
+  isSpecificError,
   updatePaymentForMessage,
   UpdatePaymentForMessageFailure
 } from "../../../features/messages/store/actions";
@@ -71,7 +72,9 @@ const paymentByRptIdStateFromUpdatePaymentForMessageFailure = (
   state: PaymentByRptIdState
 ): PaymentByRptIdState => {
   // Only paid payments are tracked from the reducer, ignore the others
-  const isPaidPayment = isPaidPaymentFromDetailV2Enum(payload.details);
+  const isPaidPayment =
+    isSpecificError(payload.reason) &&
+    isPaidPaymentFromDetailV2Enum(payload.reason.details);
   if (!isPaidPayment) {
     return state;
   }
