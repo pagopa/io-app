@@ -1,14 +1,14 @@
 {
   "global": {
     "autoLogin": true,
-    "allowRandomValues" : false
+    "allowRandomValues": false
   },
   "profile": {
     "attrs": {
       "name": "Gian Maria"
     }
   },
-  "messages":{
+  "messages": {
     "paymentsCount": 1,
     "paymentInvalidAfterDueDateWithValidDueDateCount": 1,
     "paymentInvalidAfterDueDateWithExpiredDueDateCount": 1,
@@ -23,13 +23,12 @@
     "allowRandomValues": false
   },
   "wallet": {
-    "useLegacyRptIdVerificationSystem": true,
     "payment": {
       "amount": 2222,
       "pspFeeAmount": 100
     },
     "methods": {
-      "walletCreditCardCount":1
+      "walletCreditCardCount": 1
     }
   },
   "features": {
