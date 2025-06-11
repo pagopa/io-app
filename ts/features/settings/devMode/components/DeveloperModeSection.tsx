@@ -51,6 +51,8 @@ import { getDeviceId } from "../../../../utils/device";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { ITW_PLAYGROUND_ROUTES } from "../../../itwallet/playgrounds/navigation/routes.ts";
+import { isActiveSessionLoginLocallyEnabledSelector } from "../../../authentication/loginPreferences/store/selectors/index.ts";
+import { setActiveSessionLoginLocalFlag } from "../../../authentication/loginPreferences/store/actions/index.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -442,6 +444,9 @@ const DeveloperTestEnvironmentSection = ({
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
   const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
+  const isActiveSessionLoginLocallyEnabled = useIOSelector(
+    isActiveSessionLoginLocallyEnabledSelector
+  );
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -489,6 +494,10 @@ const DeveloperTestEnvironmentSection = ({
     handleShowModal();
   };
 
+  const onActiveSessionLoginToggle = (enabled: boolean) => {
+    dispatch(setActiveSessionLoginLocalFlag(enabled));
+  };
+
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
       label: I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
@@ -509,6 +518,11 @@ const DeveloperTestEnvironmentSection = ({
       description: I18n.t("profile.main.idpay.idpayTestAlert"),
       value: isIdPayTestEnabled,
       onSwitchValueChange: onIdPayTestToggle
+    },
+    {
+      label: I18n.t("profile.main.loginEnvironment.activeSession.switchTitle"),
+      value: isActiveSessionLoginLocallyEnabled,
+      onSwitchValueChange: onActiveSessionLoginToggle
     }
   ];
 
