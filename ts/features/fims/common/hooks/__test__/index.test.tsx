@@ -618,6 +618,11 @@ const renderFromServiceIdHook = (
             [storeServiceId]: servicePot
           }
         }
+      },
+      fims: {
+        sso: {
+          shareiOSCookies: true
+        }
       }
     }
   } as GlobalState;
@@ -635,6 +640,11 @@ const renderFromAuthenticationFlowHook = (
           dataById: {
             [storeServiceId]: servicePot
           }
+        }
+      },
+      fims: {
+        sso: {
+          shareiOSCookies: true
         }
       }
     }
@@ -660,7 +670,14 @@ const renderFromRemoteConfigurationHook = (
           ios: "0.0.0.0"
         }
       }
-    })
+    }),
+    features: {
+      fims: {
+        sso: {
+          shareiOSCookies: true
+        }
+      }
+    }
   } as GlobalState;
   return genericRender(
     () => FromRemoteConfigurationHookWrapper(hookConfigurationId),
@@ -671,7 +688,15 @@ const renderFromRemoteConfigurationHook = (
 const renderFromServiceDataHook = (
   internalServiceData: FIMSServiceData | undefined
 ) => {
-  const appState = {} as GlobalState;
+  const appState = {
+    features: {
+      fims: {
+        sso: {
+          shareiOSCookies: true
+        }
+      }
+    }
+  } as GlobalState;
   return genericRender(
     () => FromServiceDataHookWrapper(internalServiceData),
     appState
