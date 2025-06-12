@@ -4893,23 +4893,23 @@
                 "label": "Step 3",
                 "value": "Consenti l’utilizzo del Bluetooth"
               }
-            },  
+            },
             "actions": {
               "primary": "Apri impostazioni",
               "secondary": "Continua"
             }
           },
           "permissionsRequired": {
-              "alert": {
-                "title":  "È richiesto l’accesso al Bluetooth per continuare",
-                "message":"Vai a Impostazioni e modifica le preferenze, poi riprova.",
-                "text": "Ho capito"
-              }
+            "alert": {
+              "title": "È richiesto l’accesso al Bluetooth per continuare",
+              "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
+              "text": "Ho capito"
+            }
           },
           "bluetoothRequired": {
             "alert": {
-              "title":  "È richiesto l’utilizzo del Bluetooth per continuare",
-              "message":"Vai a Impostazioni e modifica le preferenze, poi riprova.",
+              "title": "È richiesto l’utilizzo del Bluetooth per continuare",
+              "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
               "text": "Ho capito"
             }
           },
@@ -4923,7 +4923,7 @@
               }
             }
           }
-      }
+        }
       },
       "trustmark": {
         "description": "Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.",

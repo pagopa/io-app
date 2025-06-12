@@ -55,10 +55,7 @@
       "nov",
       "dic"
     ],
-    "meridian": [
-      "am",
-      "pm"
-    ],
+    "meridian": ["am", "pm"],
     "time": {
       "minutes": {
         "zero": "0 minuti",
@@ -4873,7 +4870,7 @@
                 "label": "Step 4",
                 "value": "Consenti l’accesso a Bluetooth"
               }
-            },  
+            },
             "actions": {
               "primary": "Apri impostazioni",
               "secondary": "Continua"
@@ -4896,7 +4893,7 @@
                 "label": "Step 3",
                 "value": "Consenti l’utilizzo del Bluetooth"
               }
-            },  
+            },
             "actions": {
               "primary": "Apri impostazioni",
               "secondary": "Continua"
@@ -4904,15 +4901,15 @@
           },
           "permissionsRequired": {
             "alert": {
-              "title":  "È richiesto l’accesso al Bluetooth per continuare",
-              "message":"Vai a Impostazioni e modifica le preferenze, poi riprova.",
+              "title": "È richiesto l’accesso al Bluetooth per continuare",
+              "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
               "text": "Ho capito"
             }
           },
           "bluetoothRequired": {
             "alert": {
-              "title":  "È richiesto l’utilizzo del Bluetooth per continuare",
-              "message":"Vai a Impostazioni e modifica le preferenze, poi riprova.",
+              "title": "È richiesto l’utilizzo del Bluetooth per continuare",
+              "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
               "text": "Ho capito"
             }
           },
