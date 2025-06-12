@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0-rc.7](https://github.com/pagopa/io-app/compare/3.7.0-rc.6...3.7.0-rc.7) (2025-06-12)
+
+
+### Bug Fixes
+
+* [[IOAPPX-499](https://pagopa.atlassian.net/browse/IOAPPX-499)] Ensure barcode scanner is re-enabled after closing file picker ([#7062](https://github.com/pagopa/io-app/issues/7062)) ([5f3ed46](https://github.com/pagopa/io-app/commit/5f3ed4685000872517f44c428dc83adfc066fe80))
+
 ## [3.7.0-rc.6](https://github.com/pagopa/io-app/compare/3.7.0-rc.5...3.7.0-rc.6) (2025-06-11)
 
 
