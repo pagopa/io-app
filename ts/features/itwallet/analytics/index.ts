@@ -146,10 +146,10 @@ export type ItwCredentialMixpanelStatus =
   | "unknown";
 
 export type ItwStatus = "not_active" | "L2" | "L3";
-export type ItwId = "not_available" | "valid" | "expiring" | "expired";
-export type ItwPg = ItwCredentialMixpanelStatus;
-export type ItwTs = ItwCredentialMixpanelStatus;
-export type ItwCed = ItwCredentialMixpanelStatus;
+export type ItwId = Extract<
+  ItwCredentialMixpanelStatus,
+  "not_available" | "valid" | "expiring" | "expired"
+>;
 
 /**
  * This map is used to map the credentials status to the MixPanel credential status (not for eID)
@@ -163,13 +163,7 @@ export type ItwCed = ItwCredentialMixpanelStatus;
  */
 export const CREDENTIAL_STATUS_MAP: Record<
   ItwCredentialStatus,
-  | "valid"
-  | "not_valid"
-  | "expiring"
-  | "expired"
-  | "expiring_verification"
-  | "verification_expired"
-  | "unknown"
+  ItwCredentialMixpanelStatus
 > = {
   valid: "valid",
   invalid: "not_valid",
@@ -985,7 +979,7 @@ export const updatePropertiesWalletRevoked = (state: GlobalState) => {
  */
 export const getCredentialMixpanelStatus = (
   credential: O.Option<StoredCredential>
-): ItwPg | ItwTs | ItwCed => {
+): ItwCredentialMixpanelStatus => {
   if (!credential || O.isNone(credential)) {
     return "not_available";
   }

@@ -16,11 +16,9 @@ import { tosVersionSelector } from "../features/settings/common/store/selectors/
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
   getCredentialMixpanelStatus,
-  ItwCed,
+  ItwCredentialMixpanelStatus,
   ItwId,
-  ItwPg,
   ItwStatus,
-  ItwTs,
   mapEidStatusToMixpanel
 } from "../features/itwallet/analytics";
 import {
@@ -56,9 +54,9 @@ type ProfileProperties = {
   TRACKING: MixpanelOptInTrackingType;
   ITW_STATUS_V2: ItwStatus;
   ITW_ID_V2: ItwId;
-  ITW_PG_V2: ItwPg;
-  ITW_TS_V2: ItwTs;
-  ITW_CED_V2: ItwCed;
+  ITW_PG_V2: ItwCredentialMixpanelStatus;
+  ITW_TS_V2: ItwCredentialMixpanelStatus;
+  ITW_CED_V2: ItwCredentialMixpanelStatus;
   SAVED_PAYMENT_METHOD: number;
   CGN_STATUS: TrackCgnStatus;
   WELFARE_STATUS: ReadonlyArray<string>;
@@ -156,17 +154,17 @@ const idStatusHandler = (state: GlobalState): ItwId => {
     ? mapEidStatusToMixpanel(eidStatus)
     : "not_available";
 };
-const pgStatusHandler = (state: GlobalState): ItwPg => {
+const pgStatusHandler = (state: GlobalState): ItwCredentialMixpanelStatus => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
   return getCredentialMixpanelStatus(credentialsByType.MDL);
 };
-const tsStatusHandler = (state: GlobalState): ItwTs => {
+const tsStatusHandler = (state: GlobalState): ItwCredentialMixpanelStatus => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
   return getCredentialMixpanelStatus(
     credentialsByType.EuropeanHealthInsuranceCard
   );
 };
-const cedStatusHandler = (state: GlobalState): ItwCed => {
+const cedStatusHandler = (state: GlobalState): ItwCredentialMixpanelStatus => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
   return getCredentialMixpanelStatus(credentialsByType.EuropeanDisabilityCard);
 };
