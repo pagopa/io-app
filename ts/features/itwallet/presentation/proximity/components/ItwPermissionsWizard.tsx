@@ -1,12 +1,7 @@
-import { View, StyleSheet } from "react-native";
-import {
-  IconButton,
-  IOVisualCostants,
-  ListItemInfo
-} from "@pagopa/io-app-design-system";
-import I18n from "../../../../../i18n";
+import { ListItemInfo } from "@pagopa/io-app-design-system";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 
 type Props = {
   title: string;
@@ -24,16 +19,13 @@ export const ItwPermissionsWizard = ({
   actions,
   listItemHeaderLabel,
   onClose
-}: Props) => (
-  <View style={styles.container}>
-    <View style={styles.header}>
-      <IconButton
-        color="neutral"
-        icon="closeLarge"
-        onPress={onClose}
-        accessibilityLabel={I18n.t("global.buttons.close")}
-      />
-    </View>
+}: Props) => {
+  useHeaderSecondLevel({
+    title: "",
+    goBack: onClose
+  });
+
+  return (
     <IOScrollViewWithListItems
       title={title}
       subtitle={subtitle}
@@ -41,18 +33,5 @@ export const ItwPermissionsWizard = ({
       renderItems={listItems}
       actions={actions}
     />
-  </View>
-);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  header: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
-    paddingVertical: 16
-  }
-});
+  );
+};
