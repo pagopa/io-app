@@ -5,6 +5,15 @@ import { itwCredentialsStateMigrations } from "../migrations";
 jest.mock("@pagopa/io-react-native-wallet");
 
 describe("ITW credentials reducer migrations", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
+
   it("should migrate from 0 to 1", () => {
     const basePersistedGlobalStateAt0 = {
       eid: { _tag: "Some", value: {} },
