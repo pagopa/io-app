@@ -8,7 +8,7 @@ import { ItwPresentationCredentialCardModalNavigationParams } from "../presentat
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
-import { ItwProximityParamsList } from "../presentation/proximity/navigation/itwProximityParamsList.ts";
+import { ItwProximityParamsList } from "../presentation/proximity/navigation/ItwProximityParamsList.ts";
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
