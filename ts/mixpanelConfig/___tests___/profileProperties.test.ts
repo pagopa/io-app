@@ -148,21 +148,8 @@ describe("profileProperties", () => {
         settings_version: 0
       }
     });
-    const generatePreferencesId = (
-      pnServicePreference: ServicePreferencePot
-    ) => ({
-      features: {
-        services: {
-          details: {
-            preferencesById: {
-              pnServiceId: pnServicePreference
-            }
-          }
-        }
-      }
-    });
     const sendStatusGlobalStatuses = [
-      /* [
+      [
         {
           remoteConfig: O.none
         },
@@ -175,136 +162,116 @@ describe("profileProperties", () => {
           })
         },
         "unknown"
-      ], */
-      [generatePreferencesId(pot.none), "unknown"]
-      /* [generatePreferencesId(pot.noneLoading), "unknown"],
-      [
-        generatePreferencesId(
-          pot.noneUpdating(generatePNServicePreferences(true))
-        ),
-        "unknown"
       ],
+      [pot.none, "unknown"],
+      [pot.noneLoading, "unknown"],
+      [pot.noneUpdating(generatePNServicePreferences(true)), "unknown"],
+      [pot.noneError({ id: pnServiceId, kind: "timeout" }), "unknown"],
+      [pot.some(generatePNServicePreferences(false)), "not_active"],
+      [pot.some(generatePNServicePreferences(true)), "active"],
+      [pot.someLoading(generatePNServicePreferences(false)), "not_active"],
+      [pot.someLoading(generatePNServicePreferences(true)), "active"],
       [
-        generatePreferencesId(
-          pot.noneError({ id: pnServiceId, kind: "timeout" })
-        ),
-        "unknown"
-      ],
-      [
-        generatePreferencesId(pot.some(generatePNServicePreferences(false))),
-        "not_active"
-      ],
-      [
-        generatePreferencesId(pot.some(generatePNServicePreferences(true))),
-        "active"
-      ],
-      [
-        generatePreferencesId(
-          pot.someLoading(generatePNServicePreferences(false))
+        pot.someUpdating(
+          generatePNServicePreferences(false),
+          generatePNServicePreferences(false)
         ),
         "not_active"
       ],
       [
-        generatePreferencesId(
-          pot.someLoading(generatePNServicePreferences(true))
-        ),
-        "active"
-      ],
-      [
-        generatePreferencesId(
-          pot.someUpdating(
-            generatePNServicePreferences(false),
-            generatePNServicePreferences(false)
-          )
+        pot.someUpdating(
+          generatePNServicePreferences(false),
+          generatePNServicePreferences(true)
         ),
         "not_active"
       ],
       [
-        generatePreferencesId(
-          pot.someUpdating(
-            generatePNServicePreferences(false),
-            generatePNServicePreferences(true)
-          )
+        pot.someUpdating(
+          generatePNServicePreferences(true),
+          generatePNServicePreferences(false)
         ),
+        "active"
+      ],
+      [
+        pot.someUpdating(
+          generatePNServicePreferences(true),
+          generatePNServicePreferences(true)
+        ),
+        "active"
+      ],
+      [
+        pot.someError(generatePNServicePreferences(false), {
+          id: pnServiceId,
+          kind: "timeout"
+        }),
         "not_active"
       ],
       [
-        generatePreferencesId(
-          pot.someUpdating(
-            generatePNServicePreferences(true),
-            generatePNServicePreferences(false)
-          )
-        ),
+        pot.someError(generatePNServicePreferences(true), {
+          id: pnServiceId,
+          kind: "timeout"
+        }),
         "active"
-      ],
-      [
-        generatePreferencesId(
-          pot.someUpdating(
-            generatePNServicePreferences(true),
-            generatePNServicePreferences(true)
-          )
-        ),
-        "active"
-      ],
-      [
-        generatePreferencesId(
-          pot.someError(generatePNServicePreferences(false), {
-            id: pnServiceId,
-            kind: "timeout"
-          })
-        ),
-        "not_active"
-      ],
-      [
-        generatePreferencesId(
-          pot.someError(generatePNServicePreferences(true), {
-            id: pnServiceId,
-            kind: "timeout"
-          })
-        ),
-        "active"
-      ] */
+      ]
     ] as const;
-    sendStatusGlobalStatuses.forEach(
-      ([sendStatusGlobalStatus, expectedSendStatus]) => {
-        it(`should report 'SEND_STATUS' as '${expectedSendStatus}' for modified state ${JSON.stringify(
-          sendStatusGlobalStatus
-        )}`, async () => {
-          mockIsMixpanelInitialized = true;
-          const status = generateMockedGlobalState(
-            undefined,
-            undefined,
-            undefined,
-            sendStatusGlobalStatus as unknown as GlobalState
-          );
+    sendStatusGlobalStatuses.forEach(([testData, expectedSendStatus]) => {
+      it(`should report 'SEND_STATUS' as '${expectedSendStatus}' for input data ${JSON.stringify(
+        testData
+      )}`, async () => {
+        mockIsMixpanelInitialized = true;
+        const status = generateMockedGlobalState(
+          undefined,
+          undefined,
+          undefined
+        );
 
-          jest
-            .spyOn(BIOMETRICS, "getBiometricsType")
-            .mockImplementation(() => Promise.resolve("FACE_ID"));
-          jest
-            .spyOn(PUSHUTILS, "checkNotificationPermissions")
-            .mockImplementation(() => Promise.resolve(false));
+        const testStatus = (
+          "remoteConfig" in testData
+            ? { ...status, ...testData }
+            : {
+                ...status,
+                features: {
+                  ...status.features,
+                  services: {
+                    ...status.features.services,
+                    details: {
+                      ...status.features.services.details,
+                      preferencesById: {
+                        ...status.features.services.details.preferencesById,
+                        [pnServiceId]: testData
+                      }
+                    }
+                  }
+                }
+              }
+        ) as GlobalState;
 
-          await updateMixpanelProfileProperties(status);
+        jest
+          .spyOn(BIOMETRICS, "getBiometricsType")
+          .mockImplementation(() => Promise.resolve("FACE_ID"));
+        jest
+          .spyOn(PUSHUTILS, "checkNotificationPermissions")
+          .mockImplementation(() => Promise.resolve(false));
 
-          expect(mockedSet.mock.calls.length).toBe(1);
-          expect(mockedSet.mock.calls[0].length).toBe(1);
-          expect(mockedSet.mock.calls[0][0]).toEqual({
-            ...generateBaseProfileProperties(),
-            SEND_STATUS: expectedSendStatus
-          });
+        await updateMixpanelProfileProperties(testStatus);
+
+        expect(mockedSet.mock.calls.length).toBe(1);
+        expect(mockedSet.mock.calls[0].length).toBe(1);
+        expect(mockedSet.mock.calls[0][0]).toEqual({
+          ...generateBaseProfileProperties(),
+          SEND_STATUS: expectedSendStatus
         });
-      }
-    );
+      });
+    });
   });
-  /* nit("should not do anything if 'isMixpanelInstanceInitialized' returns 'false'", async () => {
+  it("should not do anything if 'isMixpanelInstanceInitialized' returns 'false'", async () => {
     mockIsMixpanelInitialized = false;
     const fakeState = {} as GlobalState;
 
     await updateMixpanelProfileProperties(fakeState);
 
     expect(mockedSet.mock.calls.length).toBe(0);
-  }); */
+  });
 });
 
 const generateMockedGlobalState = (
