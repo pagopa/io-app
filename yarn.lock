@@ -3978,9 +3978,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet-v2@file:pagopa-io-react-native-wallet-2.0.0.tgz::locator=italia-app%40workspace%3A.":
-  version: 2.0.0
-  resolution: "@pagopa/io-react-native-wallet-v2@file:pagopa-io-react-native-wallet-2.0.0.tgz::locator=italia-app%40workspace%3A."
+"@pagopa/io-react-native-wallet-v2@npm:@pagopa/io-react-native-wallet@next":
+  version: 2.0.0-next.0
+  resolution: "@pagopa/io-react-native-wallet@npm:2.0.0-next.0"
   dependencies:
     dcql: ^0.2.21
     js-base64: ^3.7.7
@@ -3996,7 +3996,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": "*"
     react: "*"
     react-native: "*"
-  checksum: dba197dd74386e500f2e8eba5bc8df67a339f9dab39be180c14939f2250b10f9034b0454cdaa1d3a2887d7ef1acf056ec8ab560410925c62d0aedb87421a4ae1
+  checksum: 959b3d31acdd12d004453eabb8a214074d26e9b9a02c6ac29bc10013d4afd71d2db378f622c0e1744bb7941b703642c5ff1dbe2bd812da103dedb6d0fba45457
   languageName: node
   linkType: hard
 
@@ -13161,7 +13161,7 @@ __metadata:
     "@pagopa/io-react-native-login-utils": ^1.0.9
     "@pagopa/io-react-native-secure-storage": ^0.2.0
     "@pagopa/io-react-native-wallet": ^0.30.0
-    "@pagopa/io-react-native-wallet-v2": "file:pagopa-io-react-native-wallet-2.0.0.tgz"
+    "@pagopa/io-react-native-wallet-v2": "npm:@pagopa/io-react-native-wallet@next"
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.0.0
     "@pagopa/react-native-cie": ^1.4.2
