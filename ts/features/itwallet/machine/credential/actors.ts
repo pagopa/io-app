@@ -9,6 +9,7 @@ import { getCredentialStatusAttestation } from "../../common/utils/itwCredential
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { Env } from "../../common/utils/environment";
 import { type Context } from "./context";
 
 export type GetWalletAttestationActorOutput = Awaited<
@@ -31,7 +32,16 @@ export type ObtainCredentialActorOutput = Awaited<
 
 export type ObtainStatusAttestationActorInput = Pick<Context, "credential">;
 
-export default (store: ReturnType<typeof useIOStore>) => {
+/**
+ * Creates the actors for the eid issuance machine
+ * @param env - The environment to use for the IT Wallet API calls
+ * @param store the IOStore
+ * @returns the actors
+ */
+export const createCredentialIssuanceActorsImplementation = (
+  env: Env,
+  store: ReturnType<typeof useIOStore>
+) => {
   const getWalletAttestation = fromPromise<GetWalletAttestationActorOutput>(
     async () => {
       const sessionToken = sessionTokenSelector(store.getState());
@@ -41,6 +51,7 @@ export default (store: ReturnType<typeof useIOStore>) => {
       assert(O.isSome(integrityKeyTag), "integriyKeyTag is not present");
 
       return await itwAttestationUtils.getAttestation(
+        env,
         integrityKeyTag.value,
         sessionToken
       );
@@ -57,6 +68,7 @@ export default (store: ReturnType<typeof useIOStore>) => {
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
 
     return await credentialIssuanceUtils.requestCredential({
+      env,
       credentialType,
       walletInstanceAttestation
     });
@@ -88,6 +100,7 @@ export default (store: ReturnType<typeof useIOStore>) => {
     assert(O.isSome(eid), "eID is undefined");
 
     return await credentialIssuanceUtils.obtainCredential({
+      env,
       credentialType,
       walletInstanceAttestation,
       requestedCredential,
