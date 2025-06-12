@@ -8,6 +8,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { WIA_KEYTAG } from "../../common/utils/itwCryptoContextUtils";
+import { Env } from "../../common/utils/environment";
 
 /**
  * Returns the document number for a credential, if applicable
@@ -21,10 +22,17 @@ export const getCredentialDocumentNumber = (
   return documentNumberClaim?.value as string;
 };
 
+/**
+ * Generates the trustmark URL for a credential.
+ * @param env - The environment to use for the verifier base URL
+ * @param walletInstanceAttestation - The wallet instance attestation
+ * @param credential - The credential to generate the trustmark for
+ * @returns the trustmark URL
+ */
 export const getCredentialTrustmark = async (
+  { VERIFIER_BASE_URL }: Env,
   walletInstanceAttestation: string,
-  credential: StoredCredential,
-  verifierUrl: string
+  credential: StoredCredential
 ) => {
   /**
    * Create the crypto context for the WIA
@@ -50,6 +58,6 @@ export const getCredentialTrustmark = async (
   return {
     jwt,
     expirationTime,
-    url: `${verifierUrl}?tm=${jwt}`
+    url: `${VERIFIER_BASE_URL}?tm=${jwt}`
   };
 };
