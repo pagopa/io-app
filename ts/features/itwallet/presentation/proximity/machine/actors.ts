@@ -1,3 +1,5 @@
+import { constUndefined } from "fp-ts/lib/function";
+import { fromCallback, fromPromise } from "xstate";
 import { Platform } from "react-native";
 import {
   checkMultiple,
@@ -7,13 +9,24 @@ import {
   RESULTS
 } from "react-native-permissions";
 import BluetoothStateManager from "react-native-bluetooth-state-manager";
-import { fromPromise } from "xstate";
-import { Proximity } from "@pagopa/io-react-native-proximity";
-import { constUndefined } from "fp-ts/lib/function";
+import {
+  Proximity,
+  parseError,
+  parseVerifierRequest
+} from "@pagopa/io-react-native-proximity";
+import { ProximityEvents } from "./events";
 
 export type StartProximityFlowInput = {
   isRestarting?: boolean;
 } | void;
+
+export type GetQrCodeStringActorOutput = Awaited<
+  ReturnType<typeof Proximity.getQrCodeString>
+>;
+
+export type SendErrorResponseActorOutput = Awaited<
+  ReturnType<typeof Proximity.sendErrorResponse>
+>;
 
 export const createProximityActorsImplementation = () => {
   const checkPermissions = fromPromise<boolean, void>(async () => {
@@ -72,19 +85,93 @@ export const createProximityActorsImplementation = () => {
     }
   );
 
-  const generateQRCodeString = fromPromise<string, void>(async () =>
-    Proximity.getQrCodeString()
+  const generateQrCodeString = fromPromise<GetQrCodeStringActorOutput, void>(
+    Proximity.getQrCodeString
   );
 
-  const closeProximityFlow = fromPromise<void, void>(async () => {
-    await Proximity.close();
-  });
+  const proximityCommunicationLogic = fromCallback<ProximityEvents>(
+    ({ receive, sendBack }) => {
+      const handleDeviceConnecting = () => {
+        sendBack({ type: "device-connecting" });
+      };
+
+      const handleDeviceConnected = () => {
+        sendBack({ type: "device-connected" });
+      };
+
+      const handleDeviceDisconnected = () => {
+        sendBack({ type: "device-error", payload: "Device disconnected" });
+      };
+
+      const handleError = (
+        eventPayload: Proximity.EventsPayload["onError"]
+      ) => {
+        const { error } = eventPayload ?? {};
+        sendBack({ type: "device-error", payload: parseError(error) });
+      };
+
+      const handleDocumentRequestReceived = (
+        eventPayload: Proximity.EventsPayload["onDocumentRequestReceived"]
+      ) => {
+        const { data } = eventPayload ?? {};
+
+        if (data === undefined) {
+          sendBack({
+            type: "device-error",
+            error: "Missing required data"
+          });
+          return;
+        }
+
+        const parsedRequest = parseVerifierRequest(JSON.parse(data));
+
+        sendBack({
+          type: "device-document-request-received",
+          proximityDetails: [], // TODO: [SIW-2429]
+          verifierRequest: parsedRequest
+        });
+      };
+
+      Proximity.addListener("onDeviceConnecting", handleDeviceConnecting);
+      Proximity.addListener("onDeviceConnected", handleDeviceConnected);
+      Proximity.addListener(
+        "onDocumentRequestReceived",
+        handleDocumentRequestReceived
+      );
+      Proximity.addListener("onDeviceDisconnected", handleDeviceDisconnected);
+      Proximity.addListener("onError", handleError);
+
+      receive(event => {
+        if (event.type === "back") {
+          sendBack({ type: "close" });
+        }
+      });
+
+      return () => {
+        // Cleanup function
+        Proximity.removeListener("onDeviceConnected");
+        Proximity.removeListener("onDeviceConnecting");
+        Proximity.removeListener("onDeviceDisconnected");
+        Proximity.removeListener("onDocumentRequestReceived");
+        Proximity.removeListener("onError");
+        void Proximity.close();
+      };
+    }
+  );
+
+  const terminateProximitySession = fromPromise<SendErrorResponseActorOutput>(
+    () => Proximity.sendErrorResponse(Proximity.ErrorCode.SESSION_TERMINATED)
+  );
+
+  const closeProximityFlow = fromPromise<boolean>(Proximity.close);
 
   return {
     checkPermissions,
     checkBluetoothIsActive,
     startProximityFlow,
-    generateQRCodeString,
-    closeProximityFlow
+    generateQrCodeString,
+    closeProximityFlow,
+    proximityCommunicationLogic,
+    terminateProximitySession
   };
 };

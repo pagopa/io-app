@@ -1,3 +1,4 @@
+import * as O from "fp-ts/Option";
 import { StateFrom } from "xstate";
 import { ItwProximityMachine } from "./machine";
 import { ItwPresentationTags } from "./tags";
@@ -22,5 +23,11 @@ export const selectIsQRCodeGenerationError = (snapshot: MachineSnapshot) =>
 export const selectShouldPresentQRCodeBottomSheet = (
   snapshot: MachineSnapshot
 ) =>
-  snapshot.matches("DisplayQRCode") ||
+  snapshot.matches({ DeviceCommunication: "DisplayQrCode" }) ||
   snapshot.matches({ GenerateQRCode: "QRCodeGenerationError" });
+
+export const selectFailureOption = (snapshot: MachineSnapshot) =>
+  O.fromNullable(snapshot.context.failure);
+
+export const selectProximityDetails = (snapshot: MachineSnapshot) =>
+  snapshot.context.proximityDetails;

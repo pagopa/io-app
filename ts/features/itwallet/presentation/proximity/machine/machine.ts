@@ -1,8 +1,9 @@
-import { assign, fromPromise, setup } from "xstate";
+import { assign, fromCallback, fromPromise, sendTo, setup } from "xstate";
 import { InitialContext, Context } from "./context";
-import { RemoteEvents } from "./events";
+import { ProximityEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
-import { StartProximityFlowInput } from "./actors";
+import { GetQrCodeStringActorOutput, StartProximityFlowInput } from "./actors";
+import { mapEventToFailure, ProximityFailureType } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -11,13 +12,16 @@ const notImplemented = () => {
 export const itwProximityMachine = setup({
   types: {
     context: {} as Context,
-    events: {} as RemoteEvents
+    events: {} as ProximityEvents
   },
   actions: {
+    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     setQRCodeGenerationError: assign({ isQRCodeGenerationError: true }),
     navigateToGrantPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
-    closePresentation: notImplemented
+    navigateToFailureScreen: notImplemented,
+    navigateToClaimsDisclosureScreen: notImplemented,
+    closeProximity: notImplemented
   },
   actors: {
     checkPermissions: fromPromise<boolean, void>(notImplemented),
@@ -25,8 +29,12 @@ export const itwProximityMachine = setup({
     startProximityFlow: fromPromise<void, StartProximityFlowInput>(
       notImplemented
     ),
-    generateQRCodeString: fromPromise<string, void>(notImplemented),
-    closeProximityFlow: fromPromise<void, void>(notImplemented)
+    generateQrCodeString: fromPromise<GetQrCodeStringActorOutput, void>(
+      notImplemented
+    ),
+    closeProximityFlow: fromPromise<boolean>(notImplemented),
+    proximityCommunicationLogic: fromCallback<ProximityEvents>(notImplemented),
+    terminateProximitySession: fromPromise<boolean>(notImplemented)
   }
 }).createMachine({
   id: "itwProximityMachine",
@@ -200,13 +208,13 @@ export const itwProximityMachine = setup({
           tags: [ItwPresentationTags.Loading],
           description: "Generate the QR string",
           invoke: {
-            src: "generateQRCodeString",
+            src: "generateQrCodeString",
             onDone: {
               actions: assign(({ event }) => ({
                 qrCodeString: event.output,
                 isQRCodeGenerationError: false
               })),
-              target: "#itwProximityMachine.DisplayQRCode"
+              target: "#itwProximityMachine.DeviceCommunication"
             },
             onError: {
               actions: "setQRCodeGenerationError",
@@ -242,14 +250,6 @@ export const itwProximityMachine = setup({
         }
       }
     },
-    DisplayQRCode: {
-      description: "Display the QR Code",
-      on: {
-        close: {
-          target: "ClosePresentation"
-        }
-      }
-    },
     ClosePresentation: {
       description: "Close the proximity presentation flow",
       invoke: {
@@ -258,6 +258,94 @@ export const itwProximityMachine = setup({
           target: "Idle"
         }
         // TODO: Handle any potential error scenario.
+      }
+    },
+    DeviceCommunication: {
+      initial: "DisplayQrCode",
+      description:
+        "Manages the communication lifecycle between the device and the verifier",
+      invoke: {
+        id: "proximityCommunicationLogic",
+        src: "proximityCommunicationLogic"
+      },
+      on: {
+        "device-connecting": {
+          target: "DeviceCommunication.Connecting"
+        },
+        "device-connected": {
+          target: "DeviceCommunication.Connected"
+        },
+        "device-document-request-received": {
+          actions: assign(({ event }) => ({
+            proximityDetails: event.proximityDetails,
+            verifierRequest: event.verifierRequest
+          })),
+          target: "DeviceCommunication.ClaimsDisclosure"
+        },
+        "device-error": {
+          actions: assign({
+            failure: ({ event }) => ({
+              type: ProximityFailureType.RELYING_PARTY_GENERIC,
+              reason: event.payload
+            })
+          }),
+          target: "Failure"
+        },
+        close: {
+          target: "DeviceCommunication.Closing"
+        }
+      },
+      states: {
+        DisplayQrCode: {
+          description:
+            "Displays the QR code to initiate proximity communication",
+          on: {
+            dismiss: {
+              target: "#itwProximityMachine.Idle"
+            }
+          }
+        },
+        Connecting: {
+          entry: "navigateToClaimsDisclosureScreen",
+          description:
+            "Initiates the connection between the device and the verifier"
+        },
+        Connected: {
+          description:
+            "The device has successfully established a connection with the verifier"
+        },
+        ClaimsDisclosure: {
+          description: "Displays the requested claims",
+          on: {
+            back: {
+              actions: sendTo("proximityCommunicationLogic", { type: "back" })
+            }
+          }
+        },
+        Closing: {
+          description: "Terminates the proximity session with the verifier",
+          invoke: {
+            id: "terminateProximitySession",
+            src: "terminateProximitySession",
+            onDone: {
+              actions: "closeProximity",
+              target: "#itwProximityMachine.Idle"
+            },
+            onError: {
+              actions: "closeProximity",
+              target: "#itwProximityMachine.Idle"
+            }
+          }
+        }
+      }
+    },
+    Failure: {
+      entry: "navigateToFailureScreen",
+      description: "This state is reached when an error occurs",
+      on: {
+        close: {
+          actions: "closeProximity"
+        }
       }
     }
   }
