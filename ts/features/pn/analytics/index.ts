@@ -10,16 +10,7 @@ import {
   numberToYesNoOnThreshold
 } from "../../../utils/analytics";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
-
-export interface TrackPNPaymentStatus {
-  paymentCount: number;
-  unpaidCount: number;
-  paidCount: number;
-  errorCount: number;
-  expiredCount: number;
-  revokedCount: number;
-  ongoingCount: number;
-}
+import { PaymentStatistics } from "../../messages/store/reducers/payments";
 
 export type PNServiceStatus = "active" | "not_active" | "unknown";
 
@@ -234,7 +225,7 @@ export function trackPNPaymentStatus({
   expiredCount,
   revokedCount,
   ongoingCount
-}: TrackPNPaymentStatus) {
+}: PaymentStatistics) {
   void mixpanelTrack(
     "PN_PAYMENT_STATUS",
     buildEventProperties("TECH", undefined, {

@@ -1,20 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import {
-  RouteProp,
-  useFocusEffect,
-  useNavigation,
-  useRoute
-} from "@react-navigation/native";
+import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isStrictSome } from "../../../utils/pot";
 import {
   cancelPreviousAttachmentDownload,
@@ -52,7 +46,6 @@ type MessageDetailsRouteProps = RouteProp<
 
 export const MessageDetailsScreen = () => {
   const dispatch = useIODispatch();
-  const navigation = useNavigation();
   const route = useRoute<MessageDetailsRouteProps>();
 
   const { messageId, serviceId, firstTimeOpening } = route.params;
@@ -62,36 +55,33 @@ export const MessageDetailsScreen = () => {
     pnMessageFromIdSelector(state, messageId)
   );
   const payments = paymentsFromPNMessagePot(currentFiscalCode, messagePot);
-
-  const goBack = useCallback(() => {
-    dispatch(cancelPreviousAttachmentDownload());
-    dispatch(cancelQueuedPaymentUpdates());
-    dispatch(cancelPNPaymentStatusTracking());
-    navigation.goBack();
-  }, [dispatch, navigation]);
+  const paymentsCount = payments?.length ?? 0;
 
   useHeaderSecondLevel({
     title: "",
-    goBack,
     supportRequest: true
   });
 
-  useOnFirstRender(() => {
+  useEffect(() => {
     dispatch(startPNPaymentStatusTracking(messageId));
 
     if (isStrictSome(messagePot)) {
-      const paymentCount = payments?.length ?? 0;
       const isCancelled = isCancelledFromPNMessagePot(messagePot);
       const containsF24 = containsF24FromPNMessagePot(messagePot);
 
       trackPNUxSuccess(
-        paymentCount,
+        paymentsCount,
         firstTimeOpening,
         isCancelled,
         containsF24
       );
     }
-  });
+    return () => {
+      dispatch(cancelPreviousAttachmentDownload());
+      dispatch(cancelQueuedPaymentUpdates({ messageId }));
+      dispatch(cancelPNPaymentStatusTracking());
+    };
+  }, [dispatch, firstTimeOpening, messageId, messagePot, paymentsCount]);
 
   const store = useIOStore();
   useFocusEffect(

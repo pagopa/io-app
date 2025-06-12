@@ -32,7 +32,8 @@ import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
-  preferencesPnTestEnvironmentSetEnabled
+  preferencesPnTestEnvironmentSetEnabled,
+  setUseMessagePaymentInfoV2
 } from "../../../../store/actions/persistedPreferences";
 import { clearCache } from "../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -43,6 +44,7 @@ import {
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
   isIdPayLocallyEnabledSelector,
+  isMessagePaymentInfoV2Selector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../../../store/reducers/persistedPreferences";
@@ -51,6 +53,8 @@ import { getDeviceId } from "../../../../utils/device";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { ITW_PLAYGROUND_ROUTES } from "../../../itwallet/playgrounds/navigation/routes.ts";
+import { isActiveSessionLoginLocallyEnabledSelector } from "../../../authentication/loginPreferences/store/selectors/index.ts";
+import { setActiveSessionLoginLocalFlag } from "../../../authentication/loginPreferences/store/actions/index.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -440,8 +444,12 @@ const DeveloperTestEnvironmentSection = ({
 }) => {
   const dispatch = useIODispatch();
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
+  const messagePaymentInfoV2 = useIOSelector(isMessagePaymentInfoV2Selector);
   const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
   const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
+  const isActiveSessionLoginLocallyEnabled = useIOSelector(
+    isActiveSessionLoginLocallyEnabledSelector
+  );
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -478,6 +486,10 @@ const DeveloperTestEnvironmentSection = ({
     }
   };
 
+  const onMessagePaymentInfoV2Toggle = (enabled: boolean) => {
+    dispatch(setUseMessagePaymentInfoV2(enabled));
+  };
+
   const onPnEnvironmentToggle = (enabled: boolean) => {
     dispatch(
       preferencesPnTestEnvironmentSetEnabled({ isPnTestEnabled: enabled })
@@ -487,6 +499,10 @@ const DeveloperTestEnvironmentSection = ({
   const onIdPayTestToggle = (enabled: boolean) => {
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled: enabled }));
     handleShowModal();
+  };
+
+  const onActiveSessionLoginToggle = (enabled: boolean) => {
+    dispatch(setActiveSessionLoginLocalFlag(enabled));
   };
 
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
@@ -500,6 +516,11 @@ const DeveloperTestEnvironmentSection = ({
       disabled: isLocalEnv
     },
     {
+      label: "Message Payments V2",
+      value: messagePaymentInfoV2,
+      onSwitchValueChange: onMessagePaymentInfoV2Toggle
+    },
+    {
       label: I18n.t("profile.main.pnEnvironment.pnEnv"),
       value: isPnTestEnabled,
       onSwitchValueChange: onPnEnvironmentToggle
@@ -509,6 +530,11 @@ const DeveloperTestEnvironmentSection = ({
       description: I18n.t("profile.main.idpay.idpayTestAlert"),
       value: isIdPayTestEnabled,
       onSwitchValueChange: onIdPayTestToggle
+    },
+    {
+      label: I18n.t("profile.main.loginEnvironment.activeSession.switchTitle"),
+      value: isActiveSessionLoginLocallyEnabled,
+      onSwitchValueChange: onActiveSessionLoginToggle
     }
   ];
 

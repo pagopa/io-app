@@ -73,4 +73,18 @@ describe("itWalletReducer migrations", () => {
       preferences: { requestedCredentials: {}, authLevel: "L2" }
     });
   });
+
+  it("should migrate the store to version 4", async () => {
+    const previousState = {
+      _persist: { version: 3, rehydrated: false },
+      preferences: { requestedCredentials: {}, authLevel: "L2" }
+    };
+
+    const newState = await migrate(previousState, 4);
+    expect(newState).toEqual({
+      _persist: { version: 3, rehydrated: false },
+      preferences: { requestedCredentials: {}, authLevel: "L2" },
+      environment: { env: "prod" }
+    });
+  });
 });
