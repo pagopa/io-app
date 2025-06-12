@@ -12,7 +12,8 @@ import {
   isPremiumMessagesOptInOutEnabledSelector,
   landingScreenBannerOrderSelector,
   pnMessagingServiceIdSelector,
-  pnPrivacyUrlsSelector
+  pnPrivacyUrlsSelector,
+  fimsServiceIdInCookieDisabledListSelector
 } from "../remoteConfig";
 import * as appVersion from "../../../../utils/appVersion";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -583,4 +584,83 @@ describe("pnPrivacyUrlsSelector", () => {
       expect(output).toEqual(result);
     });
   }
+});
+
+describe("fimsServiceIdInCookieDisabledListSelector", () => {
+  const mockServiceId = "service1" as ServiceId;
+  const mockDisabledServiceId = "service2" as ServiceId;
+
+  it("should return true when remote config is not available (default behavior)", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+
+    const result = fimsServiceIdInCookieDisabledListSelector(
+      state,
+      mockServiceId
+    );
+    expect(result).toBe(true);
+  });
+
+  it("should return true when iOSCookieDisabledServiceIds is not defined", () => {
+    const state = {
+      remoteConfig: O.some({
+        fims: {}
+      })
+    } as GlobalState;
+
+    const result = fimsServiceIdInCookieDisabledListSelector(
+      state,
+      mockServiceId
+    );
+    expect(result).toBe(true);
+  });
+
+  it("should return true when serviceId is not in the disabled list", () => {
+    const state = {
+      remoteConfig: O.some({
+        fims: {
+          iOSCookieDisabledServiceIds: [mockDisabledServiceId]
+        }
+      })
+    } as GlobalState;
+
+    const result = fimsServiceIdInCookieDisabledListSelector(
+      state,
+      mockServiceId
+    );
+    expect(result).toBe(true);
+  });
+
+  it("should return false when serviceId is in the disabled list", () => {
+    const state = {
+      remoteConfig: O.some({
+        fims: {
+          iOSCookieDisabledServiceIds: [mockServiceId]
+        }
+      })
+    } as GlobalState;
+
+    const result = fimsServiceIdInCookieDisabledListSelector(
+      state,
+      mockServiceId
+    );
+    expect(result).toBe(false);
+  });
+
+  it("should handle empty disabled services list", () => {
+    const state = {
+      remoteConfig: O.some({
+        fims: {
+          iOSCookieDisabledServiceIds: []
+        }
+      })
+    } as GlobalState;
+
+    const result = fimsServiceIdInCookieDisabledListSelector(
+      state,
+      mockServiceId
+    );
+    expect(result).toBe(true);
+  });
 });
