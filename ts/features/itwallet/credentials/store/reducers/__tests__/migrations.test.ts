@@ -3,13 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { SdJwt } from "@pagopa/io-react-native-wallet";
 import { itwCredentialsStateMigrations } from "../migrations";
 
-jest.mock("@pagopa/io-react-native-wallet", () => ({
-  ...jest.requireActual("@pagopa/io-react-native-wallet"),
-  SdJwt: {
-    ...jest.requireActual("@pagopa/io-react-native-wallet").SdJwt,
-    decode: jest.fn()
-  }
-}));
+jest.mock("@pagopa/io-react-native-wallet");
 
 describe("ITW credentials reducer migrations", () => {
   it("should migrate from 0 to 1", () => {
