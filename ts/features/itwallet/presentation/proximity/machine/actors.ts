@@ -11,36 +11,28 @@ import { fromPromise } from "xstate";
 import { Proximity } from "@pagopa/io-react-native-proximity";
 import { constUndefined } from "fp-ts/lib/function";
 
+const PERMISSIONS_TO_CHECK: Array<Permission> =
+  Platform.OS === "android"
+    ? Platform.Version >= 31
+      ? [
+          PERMISSIONS.ANDROID.BLUETOOTH_SCAN,
+          PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
+          PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE
+        ] // Android 12 and above: Request new Bluetooth permissions along with location.
+      : [PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION] // Android 9 to Android 11: Only location permission is required for BLE.
+    : [PERMISSIONS.IOS.BLUETOOTH]; // iOS permissions required are Bluetooth and location.
+
 export type StartProximityFlowInput = {
   isRestarting?: boolean;
 } | void;
 
 export const createProximityActorsImplementation = () => {
   const checkPermissions = fromPromise<boolean, void>(async () => {
-    // eslint-disable-next-line functional/no-let
-    let permissionsToCheck: Array<Permission>;
-
-    if (Platform.OS === "android") {
-      if (Platform.Version >= 31) {
-        // Android 12 and above: Request new Bluetooth permissions along with location.
-        permissionsToCheck = [
-          PERMISSIONS.ANDROID.BLUETOOTH_SCAN,
-          PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
-          PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE
-        ];
-      } else {
-        // Android 9 to Android 11: Only location permission is required for BLE.
-        permissionsToCheck = [PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION];
-      }
-    } else {
-      // iOS permissions required are Bluetooth and location.
-      permissionsToCheck = [PERMISSIONS.IOS.BLUETOOTH];
-    }
     // Check current permission status
-    const statuses = await checkMultiple(permissionsToCheck);
+    const statuses = await checkMultiple(PERMISSIONS_TO_CHECK);
 
     // Filter out already granted permissions
-    const permissionsToRequest = permissionsToCheck.filter(
+    const permissionsToRequest = PERMISSIONS_TO_CHECK.filter(
       permission => statuses[permission] !== RESULTS.GRANTED
     );
 
