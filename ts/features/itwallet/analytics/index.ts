@@ -161,7 +161,7 @@ export type ItwCed = ItwCredentialMixpanelStatus;
  * jwtExpiring: expiring_verification
  * unknown: unknown
  */
-export const CREDENTIALS_STATUS_MAP: Record<
+export const CREDENTIAL_STATUS_MAP: Record<
   ItwCredentialStatus,
   | "valid"
   | "not_valid"
@@ -990,7 +990,7 @@ export const getCredentialMixpanelStatus = (
     return "not_available";
   }
   const status = getCredentialStatus(credential.value);
-  return CREDENTIALS_STATUS_MAP[status];
+  return CREDENTIAL_STATUS_MAP[status];
 };
 
 /**
