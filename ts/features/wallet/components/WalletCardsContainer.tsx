@@ -19,11 +19,8 @@ import {
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
 import { ItwUpgradeBanner } from "../../itwallet/common/components/ItwUpgradeBanner";
-<<<<<<< SIW-2221-new-wallet-design
 import { ItwWalletCardsWrapper } from "../../itwallet/common/components/ItwWalletCardsWrapper";
-=======
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
->>>>>>> master
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
@@ -86,12 +83,8 @@ const WalletCardsContainer = () => {
  * Renders the banners that are displayed at the top of the wallet screen
  */
 const WalletBannersContainer = () => (
-<<<<<<< SIW-2221-new-wallet-design
   <View>
-=======
-  <VStack>
     <ItwEnvironmentAlert />
->>>>>>> master
     <ItwUpgradeBanner />
     <ItwWalletNotAvailableBanner />
     <ItwDiscoveryBannerStandalone />
