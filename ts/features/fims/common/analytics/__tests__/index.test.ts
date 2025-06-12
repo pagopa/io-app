@@ -66,7 +66,8 @@ describe("trackAuthenticationStart", () => {
             organization_name: organizationName,
             service_id: referenceServiceId,
             service_name: serviceName,
-            source
+            source,
+            shareiOSCookies: true
           });
         })
       )

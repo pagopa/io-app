@@ -150,7 +150,8 @@ describe("index", () => {
               serviceId,
               organizationFiscalCode: service.organization.fiscal_code,
               organizationName: service.organization.name,
-              serviceName: service.name
+              serviceName: service.name,
+              shareiOSCookies: true
             }
           : {
               serviceId
@@ -181,7 +182,8 @@ describe("index", () => {
               : undefined,
             serviceId: service.id,
             serviceName: pot.isSome(servicePot) ? service.name : undefined,
-            source: MESSAGES_ROUTES.MESSAGE_DETAIL
+            source: MESSAGES_ROUTES.MESSAGE_DETAIL,
+            shareiOSCookies: true
           }
         });
       });
@@ -189,7 +191,8 @@ describe("index", () => {
     it(`should call 'navigation.navigate' with proper parameters for unmatching service id and return proper service data for analytics`, () => {
       const hookServiceId = "01JMEZB6QNR7KKDEFRR6WZEH6F" as ServiceId;
       const expectedServiceData = {
-        serviceId: hookServiceId
+        serviceId: hookServiceId,
+        shareiOSCookies: true
       };
 
       renderFromServiceIdHook(hookServiceId, pot.some(service), serviceId);
@@ -213,7 +216,8 @@ describe("index", () => {
           organizationName: undefined,
           serviceId: hookServiceId,
           serviceName: undefined,
-          source: MESSAGES_ROUTES.MESSAGE_DETAIL
+          source: MESSAGES_ROUTES.MESSAGE_DETAIL,
+          shareiOSCookies: true
         }
       });
     });
@@ -263,7 +267,8 @@ describe("index", () => {
               : undefined,
             serviceId: service.id,
             serviceName: pot.isSome(servicePot) ? service.name : undefined,
-            source: MESSAGES_ROUTES.MESSAGE_DETAIL
+            source: MESSAGES_ROUTES.MESSAGE_DETAIL,
+            shareiOSCookies: true
           }
         });
       });
@@ -290,7 +295,8 @@ describe("index", () => {
           organizationName: undefined,
           serviceId: callbackServiceId,
           serviceName: undefined,
-          source: MESSAGES_ROUTES.MESSAGE_DETAIL
+          source: MESSAGES_ROUTES.MESSAGE_DETAIL,
+          shareiOSCookies: true
         }
       });
     });
@@ -312,7 +318,8 @@ describe("index", () => {
         serviceId: configuration.service_id,
         organizationFiscalCode: configuration.organization_fiscal_code,
         organizationName: configuration.organization_name,
-        serviceName: configuration.service_name
+        serviceName: configuration.service_name,
+        shareiOSCookies: true
       });
       expect(authenticationCallback).toBeDefined();
 
@@ -332,7 +339,8 @@ describe("index", () => {
           organizationName: configuration.organization_name,
           serviceId: configuration.service_id,
           serviceName: configuration.service_name,
-          source: MESSAGES_ROUTES.MESSAGE_DETAIL
+          source: MESSAGES_ROUTES.MESSAGE_DETAIL,
+          shareiOSCookies: true
         }
       });
     });
@@ -367,7 +375,8 @@ describe("index", () => {
         organizationFiscalCode: "01234567891",
         organizationName: "Organization name",
         serviceId: "01JMFDP73MT43B4507XXQB0105" as ServiceId,
-        serviceName: "Service name"
+        serviceName: "Service name",
+        shareiOSCookies: true
       };
       const url = "iosso://https://relyingParty.url/login";
 
@@ -390,7 +399,8 @@ describe("index", () => {
           organizationName: innerServiceData.organizationName,
           serviceId: innerServiceData.serviceId,
           serviceName: innerServiceData.serviceName,
-          source: MESSAGES_ROUTES.MESSAGE_DETAIL
+          source: MESSAGES_ROUTES.MESSAGE_DETAIL,
+          shareiOSCookies: true
         }
       });
     });
@@ -420,7 +430,8 @@ describe("index", () => {
         organizationFiscalCode: configuration.organization_fiscal_code,
         organizationName: configuration.organization_name,
         serviceId: configuration.service_id,
-        serviceName: configuration.service_name
+        serviceName: configuration.service_name,
+        shareiOSCookies: true
       });
     });
     it(`should return 'undefined' when the configuration id does not match`, () => {
@@ -492,7 +503,8 @@ describe("index", () => {
             ? service.organization.name
             : undefined,
           serviceId: service.id,
-          serviceName: pot.isSome(servicePot) ? service.name : undefined
+          serviceName: pot.isSome(servicePot) ? service.name : undefined,
+          shareiOSCookies: true
         });
       });
     });
@@ -506,6 +518,11 @@ describe("index", () => {
                 [serviceId]: pot.some(service)
               }
             }
+          },
+          fims: {
+            sso: {
+              shareiOSCookies: true
+            }
           }
         }
       } as GlobalState;
@@ -516,7 +533,8 @@ describe("index", () => {
       );
 
       expect(internalServiceData).toEqual({
-        serviceId: callbackServiceId
+        serviceId: callbackServiceId,
+        shareiOSCookies: true
       });
     });
   });
@@ -526,7 +544,8 @@ describe("index", () => {
         organizationFiscalCode: "01234567891",
         organizationName: "Organization name",
         serviceId: "01JMFG3E20JFQH6HAQD9BDRB19" as ServiceId,
-        serviceName: "Service name"
+        serviceName: "Service name",
+        shareiOSCookies: true
       };
 
       renderFromServiceDataHook(internalServiceData);
@@ -548,7 +567,8 @@ describe("index", () => {
           organizationName: internalServiceData.organizationName,
           serviceId: internalServiceData.serviceId,
           serviceName: internalServiceData.serviceName,
-          source: MESSAGES_ROUTES.MESSAGE_DETAIL
+          source: MESSAGES_ROUTES.MESSAGE_DETAIL,
+          shareiOSCookies: true
         }
       });
     });

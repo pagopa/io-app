@@ -15,6 +15,7 @@ exports[`fimsReducer should match snapshot 1`] = `
     "currentFlowState": "idle",
     "relyingPartyServiceId": undefined,
     "relyingPartyUrl": undefined,
+    "shareiOSCookies": undefined,
     "ssoData": {
       "kind": "PotNone",
     },
