@@ -151,19 +151,17 @@ export const fimsServiceConfiguration = createSelector(
  * false if it is in the list.
  * If no configuration is available, returns true by default (cookies are shared).
  */
-export const fimsServiceIdInCookieDisabledListSelector = createSelector(
-  [
+export const fimsServiceIdInCookieDisabledListSelector = (
+  state: GlobalState,
+  serviceId: ServiceId
+): boolean =>
+  pipe(
+    state,
     remoteConfigSelector,
-    (_state: GlobalState, serviceId: ServiceId) => serviceId
-  ],
-  (remoteConfig, serviceId: ServiceId): boolean =>
-    pipe(
-      remoteConfig,
-      O.chainNullableK(config => config.fims.iOSCookieDisabledServiceIds),
-      O.map(serviceIds => !serviceIds.includes(serviceId)),
-      O.getOrElse(() => true)
-    )
-);
+    O.chainNullableK(config => config.fims.iOSCookieDisabledServiceIds),
+    O.map(serviceIds => !serviceIds.includes(serviceId)),
+    O.getOrElse(() => true)
+  );
 
 export const oidcProviderDomainSelector = (state: GlobalState) =>
   pipe(
