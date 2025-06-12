@@ -74,12 +74,16 @@ export const updateMixpanelProfileProperties = async (
   forceUpdateFor?: PropertyToUpdate<ProfileProperties>
 ) => {
   try {
+    console.log(`=== 000`);
     if (!isMixpanelInstanceInitialized()) {
+      console.log(`=== 000a`);
       return;
     }
+    console.log(`=== 001`);
     const notificationsEnabled = await checkNotificationPermissions();
+    console.log(`=== 001a`);
     const pnServiceEnabled = isPnServiceEnabled(state);
-
+    console.log(`=== 001b`);
     const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
     const CGN_STATUS = cgnStatusHandler(state);
     const FONT_PREFERENCE = fontPreferenceSelector(state);
@@ -100,7 +104,7 @@ export const updateMixpanelProfileProperties = async (
     const TOS_ACCEPTED_VERSION = tosVersionHandler(state);
     const TRACKING = mixpanelOptInHandler(state);
     const WELFARE_STATUS = welfareStatusHandler(state);
-
+    console.log(`=== 002`);
     const profilePropertiesObject: ProfileProperties = {
       BIOMETRIC_TECHNOLOGY,
       CGN_STATUS,
@@ -122,16 +126,17 @@ export const updateMixpanelProfileProperties = async (
       TRACKING,
       WELFARE_STATUS
     };
-
+    console.log(`=== 003`);
     if (forceUpdateFor) {
       forceUpdate<keyof ProfileProperties>(
         profilePropertiesObject,
         forceUpdateFor
       );
     }
-
+    console.log(`=== 004`);
     getPeople()?.set(profilePropertiesObject);
   } catch (e) {
+    console.log(`=== EXCEPTION ${e}`);
     sendExceptionToSentry(e, "updateMixpanelProfileProperties");
   }
 };
