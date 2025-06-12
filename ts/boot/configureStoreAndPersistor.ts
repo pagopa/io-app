@@ -62,7 +62,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 44;
+const CURRENT_REDUX_STORE_VERSION = 45;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -550,7 +550,24 @@ const migrations: MigrationManifest = {
   },
   // Remove isItwOfflineAccessEnabled from persistedPreferences
   "44": (state: PersistedState) =>
-    omit(state, "persistedPreferences.isItwOfflineAccessEnabled")
+    omit(state, "persistedPreferences.isItwOfflineAccessEnabled"),
+  // Add useMessagePaymentInfoV2 to persistedPreferences
+  "45": (state: PersistedState) => {
+    // Be aware that 'typedState' is not the entire content of 'state'.
+    // We cast it to a partial type to represent the legacy part
+    // that we want to convert but the instance of 'state' contains
+    // all of the persisted data (which is later spread)
+    const typedState = state as {
+      persistedPreferences: object;
+    };
+    return {
+      ...state,
+      persistedPreferences: {
+        ...typedState.persistedPreferences,
+        useMessagePaymentInfoV2: false
+      }
+    };
+  }
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
