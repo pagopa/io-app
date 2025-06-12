@@ -10,7 +10,6 @@ import * as PUSHUTILS from "../../features/pushNotifications/utils";
 import { StoredCredential } from "../../features/itwallet/common/utils/itwTypesUtils";
 import { ServicesState } from "../../features/services/common/store/reducers";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { ServicePreferencePot } from "../../features/services/details/store/reducers";
 import { ServicePreferenceResponse } from "../../features/services/details/types/ServicePreferenceResponse";
 
 // eslint-disable-next-line functional/no-let
