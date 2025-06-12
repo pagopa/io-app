@@ -183,7 +183,7 @@ describe("index", () => {
             serviceId: service.id,
             serviceName: pot.isSome(servicePot) ? service.name : undefined,
             source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-            shareiOSCookies: true
+            shareiOSCookies: pot.isSome(servicePot) ? true : undefined
           }
         });
       });
@@ -191,8 +191,7 @@ describe("index", () => {
     it(`should call 'navigation.navigate' with proper parameters for unmatching service id and return proper service data for analytics`, () => {
       const hookServiceId = "01JMEZB6QNR7KKDEFRR6WZEH6F" as ServiceId;
       const expectedServiceData = {
-        serviceId: hookServiceId,
-        shareiOSCookies: true
+        serviceId: hookServiceId
       };
 
       renderFromServiceIdHook(hookServiceId, pot.some(service), serviceId);
@@ -217,7 +216,7 @@ describe("index", () => {
           serviceId: hookServiceId,
           serviceName: undefined,
           source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-          shareiOSCookies: true
+          shareiOSCookies: undefined
         }
       });
     });
@@ -268,20 +267,21 @@ describe("index", () => {
             serviceId: service.id,
             serviceName: pot.isSome(servicePot) ? service.name : undefined,
             source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-            shareiOSCookies: true
+            shareiOSCookies: pot.isSome(servicePot) ? true : undefined
           }
         });
       });
     });
     it(`should call 'navigation.navigate' with proper parameters for unmatching service id and return proper service data for analytics`, () => {
+      const hookServiceId = "01JMEZB6QNR7KKDEFRR6WZEH6F" as ServiceId;
+
       renderFromAuthenticationFlowHook(pot.some(service), serviceId);
 
       expect(authenticationCallbackWithServiceId).toBeDefined();
 
       const label = "A label";
-      const callbackServiceId = "01JMEZB6QNR7KKDEFRR6WZEH6F" as ServiceId;
       const url = "iosso://https://relyingParty.url/login";
-      authenticationCallbackWithServiceId!(label, callbackServiceId, url);
+      authenticationCallbackWithServiceId!(label, hookServiceId, url);
 
       expect(mockNavigate.mock.calls.length).toBe(1);
       expect(mockNavigate.mock.calls[0].length).toBe(2);
@@ -293,10 +293,10 @@ describe("index", () => {
           ctaText: label,
           organizationFiscalCode: undefined,
           organizationName: undefined,
-          serviceId: callbackServiceId,
+          serviceId: hookServiceId,
           serviceName: undefined,
           source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-          shareiOSCookies: true
+          shareiOSCookies: undefined
         }
       });
     });
@@ -479,6 +479,9 @@ describe("index", () => {
     ].forEach(servicePot => {
       it(`should return proper service data for matching service id and service data of type ${servicePot.kind}`, () => {
         const state = {
+          appState: { appState: "active" },
+          navigation: {},
+          authentication: {},
           features: {
             services: {
               details: {
@@ -486,46 +489,76 @@ describe("index", () => {
                   [serviceId]: servicePot
                 }
               }
+            },
+            fims: {
+              sso: {
+                shareiOSCookies: true
+              }
             }
-          }
-        } as GlobalState;
+          },
+          remoteConfig: O.some({
+            fims: {
+              iOSCookieDisabledServiceIds: []
+            }
+          })
+        } as unknown as GlobalState;
 
         const internalServiceData = testable!.serviceDataFromServiceId(
           serviceId,
           state
         );
 
-        expect(internalServiceData).toEqual({
-          organizationFiscalCode: pot.isSome(servicePot)
-            ? service.organization.fiscal_code
-            : undefined,
-          organizationName: pot.isSome(servicePot)
-            ? service.organization.name
-            : undefined,
-          serviceId: service.id,
-          serviceName: pot.isSome(servicePot) ? service.name : undefined,
-          shareiOSCookies: true
-        });
+        expect(internalServiceData).toEqual(
+          pot.isSome(servicePot)
+            ? {
+                organizationFiscalCode: service.organization.fiscal_code,
+                organizationName: service.organization.name,
+                serviceId: service.id,
+                serviceName: service.name,
+                shareiOSCookies: true
+              }
+            : {
+                serviceId: service.id
+              }
+        );
       });
     });
     it(`should return proper service data for unmatching service id`, () => {
       const callbackServiceId = "01JMFFSRBHTN09A6CFM0MTXFP6" as ServiceId;
       const state = {
+        appState: { appState: "active" },
+        navigation: {},
+        authentication: {},
         features: {
           services: {
             details: {
               dataById: {
                 [serviceId]: pot.some(service)
               }
-            }
-          },
-          fims: {
-            sso: {
-              shareiOSCookies: true
+            },
+            fims: {
+              sso: {
+                shareiOSCookies: true
+              }
             }
           }
-        }
-      } as GlobalState;
+        },
+        remoteConfig: O.some({
+          cgn: {
+            enabled: false
+          },
+          fims: {
+            services: [],
+            iOSCookieDisabledServiceIds: []
+          },
+          itw: {
+            min_app_version: {
+              android: "0.0.0.0",
+              ios: "0.0.0.0"
+            }
+          }
+        })
+      } as unknown as GlobalState;
 
       const internalServiceData = testable!.serviceDataFromServiceId(
         callbackServiceId,
@@ -533,8 +566,7 @@ describe("index", () => {
       );
 
       expect(internalServiceData).toEqual({
-        serviceId: callbackServiceId,
-        shareiOSCookies: true
+        serviceId: callbackServiceId
       });
     });
   });
