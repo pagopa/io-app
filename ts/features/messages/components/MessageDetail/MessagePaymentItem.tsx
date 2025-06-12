@@ -15,20 +15,19 @@ import {
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import { updatePaymentForMessage } from "../../store/actions";
+import {
+  isSpecificError,
+  PaymentError,
+  updatePaymentForMessage
+} from "../../store/actions";
 import {
   canNavigateToPaymentFromMessageSelector,
   paymentStatusForUISelector,
   shouldUpdatePaymentSelector
 } from "../../store/reducers/payments";
 import { UIMessageId } from "../../types";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
-import {
-  RemoteValue,
-  fold,
-  isError
-} from "../../../../common/model/RemoteValue";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
+import { RemoteValue, fold } from "../../../../common/model/RemoteValue";
 import { format } from "../../../../utils/dates";
 import {
   cleanTransactionDescription,
@@ -43,7 +42,10 @@ import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { trackPNPaymentStart } from "../../../pn/analytics";
-import { computeAndTrackPaymentStart } from "./detailsUtils";
+import {
+  computeAndTrackPaymentStart,
+  shouldUpdatePaymentUponReturning
+} from "./detailsUtils";
 
 type MessagePaymentItemProps = {
   hideExpirationDate?: boolean;
@@ -63,10 +65,12 @@ type ProcessedPaymentUIData = {
   badgeText: string;
 };
 
-const paymentNoticeStatusFromDetailV2Enum = (
-  detail: Detail_v2Enum
+const paymentNoticeStatusFromPaymentError = (
+  reason: PaymentError
 ): Exclude<PaymentNoticeStatus, "default"> => {
-  const errorType = getV2ErrorMainType(detail);
+  const errorType = isSpecificError(reason)
+    ? getV2ErrorMainType(reason.details)
+    : reason.type;
   switch (errorType) {
     case "REVOKED":
       return "revoked";
@@ -77,15 +81,13 @@ const paymentNoticeStatusFromDetailV2Enum = (
     case "DUPLICATED":
       return "paid";
   }
-  // Here EC (an error on the ente-side) is treated like a generic
-  // ERROR since it is later specialized in the payment flow
   return "error";
 };
 
-const processedUIPaymentFromDetailV2Enum = (
-  detail: Detail_v2Enum
+const processedUIPaymentFromPaymentError = (
+  reason: PaymentError
 ): ProcessedPaymentUIData =>
-  pipe(detail, paymentNoticeStatusFromDetailV2Enum, paymentNoticeStatus => ({
+  pipe(reason, paymentNoticeStatusFromPaymentError, paymentNoticeStatus => ({
     paymentNoticeStatus,
     badgeText: getBadgeTextByPaymentNoticeStatus(paymentNoticeStatus)
   }));
@@ -106,7 +108,7 @@ const modulePaymentNoticeForUndefinedOrLoadingPayment = () => (
 const modulePaymentNoticeFromPaymentStatus = (
   hideExpirationDate: boolean,
   noticeNumber: string,
-  paymentStatus: RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>,
+  paymentStatus: RemoteValue<PaymentInfoResponse, PaymentError>,
   paymentCallback: () => void
 ) =>
   fold(
@@ -128,10 +130,10 @@ const modulePaymentNoticeFromPaymentStatus = (
         O.toUndefined
       );
       const description = cleanTransactionDescription(
-        payablePayment.causaleVersamento
+        payablePayment.description
       );
       const formattedAmount = pipe(
-        payablePayment.importoSingoloVersamento,
+        payablePayment.amount,
         centsToAmount,
         formatNumberAmount,
         formattedAmountNumber => `${formattedAmountNumber} €`
@@ -153,7 +155,7 @@ const modulePaymentNoticeFromPaymentStatus = (
       const formattedPaymentNoticeNumber =
         formatPaymentNoticeNumber(noticeNumber);
       const { paymentNoticeStatus, badgeText } =
-        processedUIPaymentFromDetailV2Enum(processedPaymentDetails);
+        processedUIPaymentFromPaymentError(processedPaymentDetails);
       return (
         <ModulePaymentNotice
           title={I18n.t("features.messages.payments.noticeCode")}
@@ -197,9 +199,11 @@ export const MessagePaymentItem = ({
   );
 
   const startPaymentCallback = useCallback(() => {
+    const updatePaymentUponReturning =
+      shouldUpdatePaymentUponReturning(paymentStatusForUI);
     initializeAndNavigateToWalletForPayment(
       rptId,
-      isError(paymentStatusForUI),
+      updatePaymentUponReturning,
       canNavigateToPayment,
       dispatch,
       () => {
@@ -232,7 +236,7 @@ export const MessagePaymentItem = ({
       });
       dispatch(updateAction);
     }
-  }, [dispatch, messageId, isPNPayment, rptId, serviceId, shouldUpdatePayment]);
+  }, [dispatch, messageId, rptId, serviceId, shouldUpdatePayment]);
   return (
     <View>
       {!noSpaceOnTop && <VSpacer size={index > 0 ? 8 : 24} />}

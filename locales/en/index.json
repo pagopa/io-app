@@ -623,6 +623,11 @@
         "idpayTest": "IDPay",
         "idpayTestAlert": "This change requires app reboot"
       },
+      "loginEnvironment": {
+        "activeSession": {
+          "switchTitle": "Active session login"
+        }
+      },
       "experimentalEnvironment": "Experimental interface",
       "newScanSection": "New 'Scan' feature",
       "sessionRefresh": "Activate Session Refresh",
@@ -4931,6 +4936,12 @@
             "title": "Servizi dell’app limitati",
             "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
             "footerAction": "Ricarica l'app IO"
+          }
+        },
+        "back_online": {
+          "alert": {
+            "content": "Sei di nuovo online. Per usare tutti i servizi ",
+            "action": "ricarica l'app IO"
           }
         },
         "action": "Ricarica l'app IO",

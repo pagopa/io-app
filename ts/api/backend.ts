@@ -1,6 +1,4 @@
 import * as t from "io-ts";
-
-import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
 import {
   ApiHeaderJson,
   composeHeaderProducers,
@@ -12,20 +10,14 @@ import {
   IResponseType,
   ResponseDecoder
 } from "@pagopa/ts-commons/lib/requests";
-import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import _ from "lodash";
 import { v4 as uuid } from "uuid";
 import { withoutUndefinedValues } from "@pagopa/ts-commons/lib/types";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
   AbortUserDataProcessingT,
-  activatePaymentDefaultDecoder,
-  ActivatePaymentT,
   createOrUpdateInstallationDefaultDecoder,
   CreateOrUpdateInstallationT,
-  getActivationStatusDefaultDecoder,
-  GetActivationStatusT,
   getPaymentInfoDefaultDecoder,
   GetPaymentInfoT,
   getServicePreferencesDefaultDecoder,
@@ -52,10 +44,12 @@ import {
   GetUserMessagesT,
   GetUserMessageT,
   startEmailValidationProcessDefaultDecoder,
-  abortUserDataProcessingDefaultDecoder
+  abortUserDataProcessingDefaultDecoder,
+  GetPaymentInfoV2T,
+  getPaymentInfoV2DefaultDecoder
 } from "../../definitions/backend/requestTypes";
 import { SessionToken } from "../types/SessionToken";
-import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
+import { defaultRetryingFetch } from "../utils/fetch";
 import {
   tokenHeaderProducer,
   withBearerToken as withToken
@@ -66,19 +60,6 @@ import {
   getSessionStateDefaultDecoder,
   GetSessionStateT
 } from "../../definitions/session_manager/requestTypes";
-
-/**
- * We will retry for as many times when polling for a payment ID.
- * The total maximum time we are going to wait will be:
- *
- * PAYMENT_ID_MAX_POLLING_RETRIES * PAYMENT_ID_RETRY_DELAY
- */
-const PAYMENT_ID_MAX_POLLING_RETRIES = 180;
-
-/**
- * How much time to wait between retries when polling for a payment ID
- */
-const PAYMENT_ID_RETRY_DELAY = 1000 as Millisecond;
 
 //
 // Other helper types
@@ -152,7 +133,7 @@ export function BackendClient(
   const getServicePreferenceT: GetServicePreferencesT = {
     method: "get",
     url: params => `/api/v1/services/${params.service_id}/preferences`,
-    query: _ => ({}),
+    query: _q1 => ({}),
     headers: tokenHeaderProducer,
     response_decoder: getServicePreferencesDefaultDecoder()
   };
@@ -161,14 +142,14 @@ export function BackendClient(
     method: "post",
     url: params => `/api/v1/services/${params.service_id}/preferences`,
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    query: _ => ({}),
+    query: _q2 => ({}),
     body: body => JSON.stringify(body.body),
     response_decoder: upsertServicePreferencesDefaultDecoder()
   };
 
   const getMessagesT: GetUserMessagesT = {
     method: "get",
-    url: _ => "/api/v1/messages",
+    url: _q3 => "/api/v1/messages",
     query: params => {
       const {
         maximum_id,
@@ -212,14 +193,14 @@ export function BackendClient(
     method: "get",
     url: ({ id }) => `/api/v1/third-party-messages/${id}`,
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    query: _ => ({}),
+    query: _q4 => ({}),
     response_decoder: getThirdPartyMessageDefaultDecoder()
   };
 
   const getThirdPartyMessagePreconditionT: GetThirdPartyMessagePreconditionT = {
     method: "get",
     url: ({ id }) => `/api/v1/third-party-messages/${id}/precondition`,
-    query: _ => ({}),
+    query: _q5 => ({}),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     response_decoder: getThirdPartyMessagePreconditionDefaultDecoder()
   };
@@ -227,7 +208,7 @@ export function BackendClient(
   const upsertMessageStatusAttributesT: UpsertMessageStatusAttributesT = {
     method: "put",
     url: params => `/api/v1/messages/${params.id}/message-status`,
-    query: _ => ({}),
+    query: _q6 => ({}),
     body: params => JSON.stringify(params.body),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     response_decoder: upsertMessageStatusAttributesDefaultDecoder()
@@ -236,7 +217,7 @@ export function BackendClient(
   const getProfileT: GetUserProfileT = {
     method: "get",
     url: () => "/api/v1/profile",
-    query: _ => ({}),
+    query: _q7 => ({}),
     headers: tokenHeaderProducer,
     response_decoder: getUserProfileDefaultDecoder()
   };
@@ -245,7 +226,7 @@ export function BackendClient(
     method: "post",
     url: () => "/api/v1/profile",
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    query: _ => ({}),
+    query: _q8 => ({}),
     body: p => JSON.stringify(p.body),
     response_decoder: updateProfileDefaultDecoder()
   };
@@ -253,16 +234,16 @@ export function BackendClient(
   const postStartEmailValidationProcessT: StartEmailValidationProcessT = {
     method: "post",
     url: () => "/api/v1/email-validation-process",
-    query: _ => ({}),
+    query: _q9 => ({}),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    body: _ => JSON.stringify({}),
+    body: _b1 => JSON.stringify({}),
     response_decoder: startEmailValidationProcessDefaultDecoder()
   };
 
   const getUserDataProcessingT: GetUserDataProcessingT = {
     method: "get",
     url: ({ choice }) => `/api/v1/user-data-processing/${choice}`,
-    query: _ => ({}),
+    query: _q10 => ({}),
     headers: tokenHeaderProducer,
     response_decoder: getUserDataProcessingDefaultDecoder()
   };
@@ -270,16 +251,16 @@ export function BackendClient(
   const postUserDataProcessingT: UpsertUserDataProcessingT = {
     method: "post",
     url: () => `/api/v1/user-data-processing`,
-    query: _ => ({}),
+    query: _q11 => ({}),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    body: _ => JSON.stringify(_.body),
+    body: inputData => JSON.stringify(inputData.body),
     response_decoder: upsertUserDataProcessingDefaultDecoder()
   };
 
   const deleteUserDataProcessingT: AbortUserDataProcessingT = {
     method: "delete",
     url: ({ choice }) => `/api/v1/user-data-processing/${choice}`,
-    query: _ => ({}),
+    query: _q12 => ({}),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     response_decoder: abortUserDataProcessingDefaultDecoder()
   };
@@ -288,7 +269,7 @@ export function BackendClient(
     method: "put",
     url: params => `/api/v1/installations/${params.installationID}`,
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    query: _ => ({}),
+    query: _q13 => ({}),
     body: p => JSON.stringify(p.body),
     response_decoder: createOrUpdateInstallationDefaultDecoder()
   };
@@ -297,8 +278,8 @@ export function BackendClient(
     method: "post",
     url: () => "/logout",
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    query: _ => ({}),
-    body: _ => JSON.stringify({}),
+    query: _q14 => ({}),
+    body: _b3 => JSON.stringify({}),
     response_decoder: baseResponseDecoder(SuccessResponse)
   };
 
@@ -306,26 +287,19 @@ export function BackendClient(
     method: "get",
     url: ({ rptId, test }) => `/api/v1/payment-requests/${rptId}?test=${test}`,
     headers: tokenHeaderProducer,
-    query: _ => ({}),
+    query: _q15 => ({}),
     response_decoder: getPaymentInfoDefaultDecoder()
   };
 
-  const attivaRptT: ActivatePaymentT = {
-    method: "post",
-    url: ({ test }) => `/api/v1/payment-activations?test=${test}`,
-    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    query: () => ({}),
-    body: ({ body }) => JSON.stringify(body),
-    response_decoder: activatePaymentDefaultDecoder()
-  };
-
-  const getPaymentIdT: GetActivationStatusT = {
+  const getPaymentInfoV2T: GetPaymentInfoV2T = {
     method: "get",
-    url: ({ codiceContestoPagamento, test }) =>
-      `/api/v1/payment-activations/${codiceContestoPagamento}?test=${test}`,
-    headers: tokenHeaderProducer,
-    query: () => ({}),
-    response_decoder: getActivationStatusDefaultDecoder()
+    url: ({ ["rptId"]: rptId }) => `/api/v1/payment-info/${rptId}`,
+    headers: ({ ["Bearer"]: Bearer }) => ({
+      Authorization: Bearer,
+      "Content-Type": "application/json"
+    }),
+    query: ({ ["test"]: test }) => withoutUndefinedValues({ ["test"]: test }),
+    response_decoder: getPaymentInfoV2DefaultDecoder()
   };
 
   const withBearerToken = withToken(token);
@@ -369,26 +343,9 @@ export function BackendClient(
     getVerificaRpt: withBearerToken(
       createFetchRequestForApi(verificaRptT, options)
     ),
-    postAttivaRpt: withBearerToken(
-      createFetchRequestForApi(attivaRptT, options)
+    getPaymentInfoV2: withBearerToken(
+      createFetchRequestForApi(getPaymentInfoV2T, options)
     ),
-    getPaymentId: () => {
-      // since we could abort the polling a new constantPollingFetch and DeferredPromise are created
-      const shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
-      const shouldAbort = shouldAbortPaymentIdPollingRequest.e1;
-      const fetchPolling = constantPollingFetch(
-        shouldAbort,
-        PAYMENT_ID_MAX_POLLING_RETRIES,
-        PAYMENT_ID_RETRY_DELAY
-      );
-      const request = withBearerToken(
-        createFetchRequestForApi(getPaymentIdT, {
-          ...options,
-          fetchApi: fetchPolling
-        })
-      );
-      return Tuple2(shouldAbortPaymentIdPollingRequest, request);
-    },
     startEmailValidationProcess: withBearerToken(
       createFetchRequestForApi(postStartEmailValidationProcessT, options)
     ),
