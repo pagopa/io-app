@@ -6,7 +6,7 @@ import {
   requestMultiple,
   RESULTS
 } from "react-native-permissions";
-import { BluetoothStateManager } from "react-native-bluetooth-state-manager";
+import BluetoothStateManager from "react-native-bluetooth-state-manager";
 import { fromPromise } from "xstate";
 import { Proximity } from "@pagopa/io-react-native-proximity";
 import { constUndefined } from "fp-ts/lib/function";
