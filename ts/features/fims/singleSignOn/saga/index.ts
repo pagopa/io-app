@@ -8,7 +8,8 @@ import {
 } from "../store/actions";
 import {
   fimsCtaTextSelector,
-  fimsRelyingPartyUrlIfFastLoginSelector
+  fimsRelyingPartyUrlIfFastLoginSelector,
+  fimsShareiOSCookiesSelector
 } from "../store/selectors";
 import { handleFimsAbortOrCancel } from "./handleFimsAbortOrCancel";
 import { handleFimsGetConsentsList } from "./handleFimsGetConsentsList";
@@ -31,11 +32,13 @@ export function* watchFimsSSOSaga(): SagaIterator {
   const fimsRelyingPartyUrl = yield* select(
     fimsRelyingPartyUrlIfFastLoginSelector
   );
+  const fimsShareiOSCookies = yield* select(fimsShareiOSCookiesSelector);
   if (fimsCtaText && fimsRelyingPartyUrl) {
     yield* put(
       fimsGetConsentsListAction.request({
         ctaText: fimsCtaText,
-        ctaUrl: fimsRelyingPartyUrl
+        ctaUrl: fimsRelyingPartyUrl,
+        shareiOSCookies: fimsShareiOSCookies
       })
     );
   }

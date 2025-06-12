@@ -145,6 +145,26 @@ export const fimsServiceConfiguration = createSelector(
     )
 );
 
+/**
+ * Checks if a service should share iOS cookies in the FIMS flow.
+ * Returns true if the serviceId is NOT in the iOSCookieDisabledServiceIds list,
+ * false if it is in the list.
+ * If no configuration is available, returns true by default (cookies are shared).
+ */
+export const fimsServiceIdInCookieDisabledListSelector = createSelector(
+  [
+    remoteConfigSelector,
+    (_state: GlobalState, serviceId: ServiceId) => serviceId
+  ],
+  (remoteConfig, serviceId: ServiceId): boolean =>
+    pipe(
+      remoteConfig,
+      O.chainNullableK(config => config.fims.iOSCookieDisabledServiceIds),
+      O.map(serviceIds => !serviceIds.includes(serviceId)),
+      O.getOrElse(() => true)
+    )
+);
+
 export const oidcProviderDomainSelector = (state: GlobalState) =>
   pipe(
     state,

@@ -38,6 +38,7 @@ export type FimsSSOState = {
   currentFlowState: FimsFlowStateTags;
   relyingPartyServiceId?: ServiceId;
   relyingPartyUrl?: string;
+  shareiOSCookies?: boolean;
 };
 
 const INITIAL_STATE: FimsSSOState = {
@@ -45,7 +46,8 @@ const INITIAL_STATE: FimsSSOState = {
   ctaText: undefined,
   currentFlowState: "idle",
   relyingPartyServiceId: undefined,
-  relyingPartyUrl: undefined
+  relyingPartyUrl: undefined,
+  shareiOSCookies: undefined
 };
 
 const reducer = (
@@ -69,7 +71,8 @@ const reducer = (
         currentFlowState: "consents",
         ssoData: pot.noneLoading,
         relyingPartyServiceId: undefined,
-        relyingPartyUrl: action.payload.ctaUrl
+        relyingPartyUrl: action.payload.ctaUrl,
+        shareiOSCookies: action.payload.shareiOSCookies
       };
     case getType(fimsGetConsentsListAction.success):
       return {

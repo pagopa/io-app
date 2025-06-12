@@ -19,7 +19,10 @@ import {
 import { FIMS_ROUTES } from "../navigation";
 import { removeFIMSPrefixFromUrl } from "../../singleSignOn/utils";
 import { isTestEnv } from "../../../../utils/environment";
-import { fimsServiceConfiguration } from "../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  fimsServiceConfiguration,
+  fimsServiceIdInCookieDisabledListSelector
+} from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 
 export type FIMSServiceData = {
@@ -27,6 +30,7 @@ export type FIMSServiceData = {
   organizationName?: string;
   serviceId: ServiceId;
   serviceName?: string;
+  shareiOSCookies?: boolean;
 };
 
 export const useAutoFetchingServiceByIdPot = (serviceId: ServiceId) => {
@@ -115,12 +119,17 @@ const serviceDataFromServiceId = (
   state: GlobalState
 ): FIMSServiceData => {
   const service = serviceDetailsByIdSelector(state, serviceId);
+  const shareiOSCookies = fimsServiceIdInCookieDisabledListSelector(
+    state,
+    serviceId
+  );
   return service != null
     ? {
         organizationFiscalCode: service.organization.fiscal_code,
         organizationName: service.organization.name,
         serviceId: service.id,
-        serviceName: service.name
+        serviceName: service.name,
+        shareiOSCookies
       }
     : { serviceId };
 };
@@ -130,12 +139,19 @@ const serviceDataFromConfigurationId = (
   state: GlobalState
 ): FIMSServiceData | undefined => {
   const serviceConfiguration = fimsServiceConfiguration(state, configurationId);
+  const shareiOSCookies = serviceConfiguration
+    ? fimsServiceIdInCookieDisabledListSelector(
+        state,
+        serviceConfiguration.service_id as ServiceId
+      )
+    : false;
   return serviceConfiguration != null
     ? {
         organizationFiscalCode: serviceConfiguration.organization_fiscal_code,
         organizationName: serviceConfiguration.organization_name,
         serviceId: serviceConfiguration.service_id as ServiceId,
-        serviceName: serviceConfiguration.service_name
+        serviceName: serviceConfiguration.service_name,
+        shareiOSCookies
       }
     : undefined;
 };
@@ -163,7 +179,6 @@ const navigateToFIMSAuthorizationFlow = (
 ): void => {
   const navigationState = navigation.getState();
   const source = navigationState.routes[navigationState.index].name;
-
   const sanitizedUrl = removeFIMSPrefixFromUrl(url);
   navigation.navigate(FIMS_ROUTES.MAIN, {
     screen: FIMS_ROUTES.CONSENTS,
@@ -174,7 +189,8 @@ const navigateToFIMSAuthorizationFlow = (
       organizationName: serviceData.organizationName,
       serviceId: serviceData.serviceId,
       serviceName: serviceData.serviceName,
-      source
+      source,
+      shareiOSCookies: serviceData.shareiOSCookies
     }
   });
 };
