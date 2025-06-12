@@ -4999,6 +4999,33 @@
           "description": "L’unico Wallet di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
           "action": "Ottieni IT-Wallet"
         }
+      },
+      "playgrounds": {
+        "environment": {
+          "toggle": {
+            "pre": {
+              "value": "Set environment to PRE",
+              "description": "Use pre-production environment. A proxy may be required to access services. This action will reset IT-Wallet state."
+            },
+            "prod": {
+              "value": "Set environment to PROD",
+              "description": "Use production environment. This action will reset IT-Wallet state."
+            }
+          },
+          "alert": {
+            "title": "Set environment to [{{environment}}]",
+            "content": "You are about to access the IT-Wallet test environment.\nThe \"Documenti su IO\" feature, if active, will be automatically disabled."
+          },
+          "banner": {
+            "content": "You are in the IT-Wallet test environment.",
+            "action": "How does it work?"
+          },
+          "bottom_sheet": {
+            "title": "IT-Wallet test environment",
+            "content": "If you had \"Documenti su IO\" enabled, the feature has been automatically disabled.\nTo re-enable it, exit the test environment and enable Documents on IO again.",
+            "action": "Exit test environment"
+          }
+        }
       }
     }
   },
