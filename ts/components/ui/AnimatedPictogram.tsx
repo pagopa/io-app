@@ -1,5 +1,10 @@
+import {
+  IOPictograms,
+  IOPictogramSizeScale,
+  Pictogram
+} from "@pagopa/io-app-design-system";
 import LottieView, { LottieViewProps } from "lottie-react-native";
-import { IOPictogramSizeScale } from "@pagopa/io-app-design-system";
+import { useReducedMotion } from "react-native-reanimated";
 
 /* Animated Pictograms */
 import empty from "../../../assets/animated-pictograms/Empty.json";
@@ -38,18 +43,46 @@ export type AnimatedPictogram = {
   loop: LottieViewProps["loop"];
 };
 
+const staticPictogramsMap: Record<IOAnimatedPictograms, IOPictograms> = {
+  welcome: "hello",
+  empty: "empty",
+  scanCardiOS: "nfcScaniOS",
+  scanCardAndroid: "nfcScanAndroid",
+  umbrella: "umbrella",
+  error: "accessDenied",
+  fatalError: "fatalError",
+  lock: "passcode",
+  search: "searchLens",
+  success: "success",
+  warning: "attention",
+  waiting: "ended"
+};
+
+/* Compared to the static pictograms, the animated pictograms
+  seems slightly smaller, so we need to scale them a little to
+  uniform the perceived size */
+const sizeMultiplier = 1.25;
+
 export const AnimatedPictogram = ({
   name,
   size,
   loop = true
-}: AnimatedPictogram) => (
-  <LottieView
-    autoPlay={true}
-    loop={loop}
-    style={{
-      width: size,
-      height: size
-    }}
-    source={IOAnimatedPictogramsAssets[name]}
-  />
-);
+}: AnimatedPictogram) => {
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return <Pictogram name={staticPictogramsMap[name]} size={size} />;
+  }
+
+  return (
+    <LottieView
+      autoPlay={true}
+      loop={loop}
+      style={{
+        width: size * sizeMultiplier,
+        height: size * sizeMultiplier
+      }}
+      source={IOAnimatedPictogramsAssets[name]}
+    />
+  );
+};
