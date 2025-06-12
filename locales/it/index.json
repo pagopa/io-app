@@ -623,6 +623,11 @@
         "idpayTest": "IDPay",
         "idpayTestAlert": "La modifica richiede il riavvio dell'app"
       },
+      "loginEnvironment": {
+        "activeSession": {
+          "switchTitle": "Login a sessione attiva"
+        }
+      },
       "trial": {
         "titleSection": "Partecipa alla sperimentazione"
       },

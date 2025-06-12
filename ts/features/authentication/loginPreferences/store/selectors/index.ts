@@ -53,3 +53,16 @@ export const isSessionExpirationBannerRenderableSelector = createSelector(
       O.getOrElse(() => false)
     )
 );
+
+/**
+ * Even if the activeSessionLogin has its own folder under features,
+ * we preferd to keep the loginPreferences selectors here
+ * because they are related to the login preferences in the app.
+ *
+ * In the future, once the activeSessionLogin feature is more mature,
+ * this local feature flag selector and the related actions and state
+ * have to be removed.
+ */
+export const isActiveSessionLoginLocallyEnabledSelector = (
+  state: GlobalState
+) => state.features.loginFeatures.loginPreferences.activeSessionLoginLocalFlag;

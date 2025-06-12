@@ -623,6 +623,11 @@
         "idpayTest": "IDPay",
         "idpayTestAlert": "This change requires app reboot"
       },
+      "loginEnvironment": {
+        "activeSession": {
+          "switchTitle": "Active session login"
+        }
+      },
       "experimentalEnvironment": "Experimental interface",
       "newScanSection": "New 'Scan' feature",
       "sessionRefresh": "Activate Session Refresh",
