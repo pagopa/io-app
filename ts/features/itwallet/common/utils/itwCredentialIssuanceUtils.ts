@@ -6,10 +6,6 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import { v4 as uuidv4 } from "uuid";
 import {
-  itWalletIssuanceRedirectUri,
-  itwEaaProviderBaseUrl
-} from "../../../../config";
-import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
   WIA_KEYTAG
@@ -19,13 +15,23 @@ import {
   RequestObject,
   StoredCredential
 } from "./itwTypesUtils";
+import { Env } from "./environment";
 
 export type RequestCredentialParams = {
+  env: Env;
   credentialType: string;
   walletInstanceAttestation: string;
 };
 
+/**
+ * Requests a credential from the issuer.
+ * @param env - The environment to use for the wallet provider base URL
+ * @param credentialType - The type of credential to request
+ * @param walletInstanceAttestation - The wallet instance attestation
+ * @returns The credential request object
+ */
 export const requestCredential = async ({
+  env,
   credentialType,
   walletInstanceAttestation
 }: RequestCredentialParams) => {
@@ -34,7 +40,7 @@ export const requestCredential = async ({
 
   // Evaluate issuer trust
   const { issuerConf } = await Credential.Issuance.evaluateIssuerTrust(
-    itwEaaProviderBaseUrl
+    env.WALLET_EAA_PROVIDER_BASE_URL
   );
 
   // Start user authorization
@@ -45,7 +51,7 @@ export const requestCredential = async ({
       credentialType,
       {
         walletInstanceAttestation,
-        redirectUri: `${itWalletIssuanceRedirectUri}`,
+        redirectUri: `${env.ISSUANCE_REDIRECT_URI}`,
         wiaCryptoContext
       }
     );
@@ -67,6 +73,7 @@ export const requestCredential = async ({
 };
 
 export type ObtainCredentialParams = {
+  env: Env;
   credentialType: string;
   walletInstanceAttestation: string;
   requestedCredential: RequestObject;
@@ -77,7 +84,21 @@ export type ObtainCredentialParams = {
   issuerConf: IssuerConfiguration;
 };
 
+/**
+ * Obtains a credential from the issuer.
+ * @param env - The environment to use for the wallet provider base URL
+ * @param credentialType - The type of credential to request
+ * @param requestedCredential - The requested credential
+ * @param pid - The PID credential
+ * @param walletInstanceAttestation - The wallet instance attestation
+ * @param clientId - The client ID
+ * @param codeVerifier - The code verifier
+ * @param credentialDefinition - The credential definition
+ * @param issuerConf - The issuer configuration
+ * @returns The obtained credential
+ */
 export const obtainCredential = async ({
+  env,
   credentialType,
   requestedCredential,
   pid,
@@ -111,7 +132,7 @@ export const obtainCredential = async ({
     issuerConf,
     code,
     clientId,
-    `${itWalletIssuanceRedirectUri}`,
+    `${env.ISSUANCE_REDIRECT_URI}`,
     codeVerifier,
     {
       walletInstanceAttestation,
