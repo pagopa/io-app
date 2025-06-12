@@ -1,5 +1,6 @@
 import { getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { mixpanelTrack } from "../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
@@ -974,18 +975,20 @@ export const updatePropertiesWalletRevoked = (state: GlobalState) => {
 };
 
 /**
- * Maps a given Optional StoredCredential to the corresponding Mixpanel tracking status.
+ * Maps a given Optional StoredCredential or undefined to the corresponding Mixpanel tracking status.
  * Returns "not_available" if the credential is missing or its status cannot be determined.
  */
 export const getCredentialMixpanelStatus = (
-  credential: O.Option<StoredCredential>
-): ItwCredentialMixpanelStatus => {
-  if (!credential || O.isNone(credential)) {
-    return "not_available";
-  }
-  const status = getCredentialStatus(credential.value);
-  return CREDENTIAL_STATUS_MAP[status];
-};
+  credential: O.Option<StoredCredential> | undefined
+): ItwCredentialMixpanelStatus =>
+  pipe(
+    O.fromNullable(credential),
+    O.flatten,
+    O.fold(
+      () => "not_available" as const,
+      cred => CREDENTIAL_STATUS_MAP[getCredentialStatus(cred)]
+    )
+  );
 
 /**
  * Maps an eID status to its corresponding Mixpanel tracking status.
