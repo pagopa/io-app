@@ -20,6 +20,7 @@ import {
   itwIntegrityServiceStatusSelector
 } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
+import { Env } from "../../common/utils/environment";
 import type {
   AuthenticationContext,
   CieContext,
@@ -42,7 +43,14 @@ export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
 };
 
+/**
+ * Creates the actors for the eid issuance machine
+ * @param env - The environment to use for the IT Wallet API calls
+ * @param store the IOStore
+ * @returns the actors
+ */
 export const createEidIssuanceActorsImplementation = (
+  env: Env,
   store: ReturnType<typeof useIOStore>
 ) => ({
   createWalletInstance: fromPromise<string>(async () => {
@@ -69,7 +77,7 @@ export const createEidIssuanceActorsImplementation = (
     );
 
     const hardwareKeyTag = await getIntegrityHardwareKeyTag();
-    await registerWalletInstance(hardwareKeyTag, sessionToken);
+    await registerWalletInstance(env, hardwareKeyTag, sessionToken);
 
     return hardwareKeyTag;
   }),
@@ -80,7 +88,7 @@ export const createEidIssuanceActorsImplementation = (
       assert(sessionToken, "sessionToken is undefined");
       assert(input.integrityKeyTag, "integrityKeyTag is undefined");
 
-      return getAttestation(input.integrityKeyTag, sessionToken);
+      return getAttestation(env, input.integrityKeyTag, sessionToken);
     }
   ),
 
@@ -104,6 +112,7 @@ export const createEidIssuanceActorsImplementation = (
       assert(input.identification, "identification is undefined");
 
       const authenticationContext = await issuanceUtils.startAuthFlow({
+        env,
         walletAttestation: input.walletInstanceAttestation,
         identification: input.identification,
         isL3IssuanceEnabled: input.isL3IssuanceEnabled || false
@@ -154,6 +163,6 @@ export const createEidIssuanceActorsImplementation = (
     }
     assert(sessionToken, "sessionToken is undefined");
 
-    await revokeCurrentWalletInstance(sessionToken, integrityKeyTag.value);
+    await revokeCurrentWalletInstance(env, sessionToken, integrityKeyTag.value);
   })
 });
