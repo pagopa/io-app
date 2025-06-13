@@ -105,3 +105,9 @@ export type ItwCredentialStatus =
   | ItwJwtCredentialStatus;
 
 export type ItwAuthLevel = "L2" | "L3";
+
+export type WalletInstanceAttestations = {
+  jwt: string;
+  "dc+sd-jwt"?: string;
+  mso_mdoc?: string;
+};

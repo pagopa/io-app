@@ -2,24 +2,33 @@ import {
   IOButton,
   ListItemHeader,
   ListItemInfo,
-  ListItemNav
+  ListItemNav,
+  VSpacer
 } from "@pagopa/io-app-design-system";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { useCallback } from "react";
+import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwIsL3EnabledSelector } from "../../../../features/itwallet/common/store/selectors/preferences";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { itwSetFiscalCodeWhitelisted } from "../../common/store/actions/preferences";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { CredentialL3Key } from "../../common/utils/itwMocksUtils";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import { ITW_PLAYGROUND_ROUTES } from "../navigation/routes";
+import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
 
 export const ItwL3Section = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const dispatch = useIODispatch();
 
   const isFiscalCodeWhitelisted = useIOSelector(itwIsL3EnabledSelector);
+  const isITWalletInstanceValid = useIOSelector(
+    itwLifecycleIsITWalletValidSelector
+  );
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const navigation = useIONavigation();
 
@@ -39,6 +48,27 @@ export const ItwL3Section = () => {
     });
   };
 
+  const confirmL3Disabled = () => {
+    Alert.alert(
+      I18n.t("features.itWallet.playgrounds.walletL3.alert.title"),
+      I18n.t("features.itWallet.playgrounds.walletL3.alert.content"),
+      [
+        { text: I18n.t("global.buttons.cancel"), style: "cancel" },
+        {
+          text: I18n.t("global.buttons.confirm"),
+          style: "destructive",
+          onPress: () => {
+            if (isITWalletInstanceValid) {
+              dispatch(itwLifecycleWalletReset());
+            }
+            dispatch(itwSetFiscalCodeWhitelisted(false));
+          }
+        }
+      ],
+      { cancelable: true }
+    );
+  };
+
   return (
     <View>
       <ListItemHeader label="IT Wallet (L3)" />
@@ -51,10 +81,9 @@ export const ItwL3Section = () => {
         color="danger"
         label="Disable L3"
         disabled={!isFiscalCodeWhitelisted}
-        onPress={() => {
-          dispatch(itwSetFiscalCodeWhitelisted(false));
-        }}
+        onPress={confirmL3Disabled}
       />
+      <VSpacer size={24} />
       <ListItemHeader label="IT Wallet (L3) screens" />
       <ListItemNav
         value="Discovery L3"

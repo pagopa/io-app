@@ -14,12 +14,21 @@ import {
   itwWalletInstanceAttestationStore,
   itwUpdateWalletInstanceStatus
 } from "../actions";
-import { WalletInstanceStatus } from "../../../common/utils/itwTypesUtils";
+import {
+  WalletInstanceStatus,
+  WalletInstanceAttestations
+} from "../../../common/utils/itwTypesUtils";
 import { NetworkError } from "../../../../../utils/errors";
 import { isDevEnv } from "../../../../../utils/environment";
 
 export type ItwWalletInstanceState = {
-  attestation: string | undefined;
+  /**
+   * The new Wallet Attestation in multiple formats
+   */
+  attestation: WalletInstanceAttestations | undefined;
+  /**
+   * The Wallet Instance status fetched from the Wallet Provider backend
+   */
   status: pot.Pot<WalletInstanceStatus, NetworkError>;
 };
 
@@ -28,11 +37,11 @@ export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   status: pot.none
 };
 
-const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 0;
+const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 1;
 
-const migrations: MigrationManifest = {
+export const migrations: MigrationManifest = {
   // Convert status into a pot for better async handling
-  "0": (state): ItwWalletInstanceState & PersistedState => {
+  "0": state => {
     const prevState = state as PersistedState & {
       attestation: string | undefined;
       status: WalletInstanceStatus | undefined;
@@ -40,6 +49,19 @@ const migrations: MigrationManifest = {
     return {
       ...prevState,
       status: prevState.status ? pot.some(prevState.status) : pot.none
+    };
+  },
+  // Move the old Wallet Attestation into the new structure
+  "1": state => {
+    const prevState = state as PersistedState & {
+      attestation: string | undefined;
+      status: pot.Pot<WalletInstanceStatus, NetworkError>;
+    };
+    return {
+      ...prevState,
+      attestation: {
+        jwt: prevState.attestation
+      }
     };
   }
 };

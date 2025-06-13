@@ -3,7 +3,10 @@ import {
   createStandardAction,
   createAsyncAction
 } from "typesafe-actions";
-import { WalletInstanceStatus } from "../../../common/utils/itwTypesUtils";
+import {
+  WalletInstanceAttestations,
+  WalletInstanceStatus
+} from "../../../common/utils/itwTypesUtils";
 import { NetworkError } from "../../../../../utils/errors";
 
 /**
@@ -11,7 +14,7 @@ import { NetworkError } from "../../../../../utils/errors";
  */
 export const itwWalletInstanceAttestationStore = createStandardAction(
   "ITW_WALLET_INSTANCE_ATTESTATION_STORE"
-)<string>();
+)<WalletInstanceAttestations>();
 
 /**
  * This action handles the Wallet Instance Status fetch

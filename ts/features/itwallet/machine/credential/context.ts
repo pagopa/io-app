@@ -4,13 +4,14 @@ import { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
 import {
   IssuerConfiguration,
   StoredCredential,
-  RequestObject
+  RequestObject,
+  WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { CredentialIssuanceFailure } from "./failure";
 
 export type Context = {
   wiaCryptoContext: CryptoContext | undefined;
-  walletInstanceAttestation: string | undefined;
+  walletInstanceAttestation: WalletInstanceAttestations | undefined;
   credentialType: string | undefined;
   issuerConf: IssuerConfiguration | undefined;
   clientId: string | undefined;

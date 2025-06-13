@@ -1,4 +1,7 @@
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import {
+  StoredCredential,
+  WalletInstanceAttestations
+} from "../../common/utils/itwTypesUtils";
 import { TrustmarkFailure } from "./failure";
 
 export type Context = {
@@ -9,7 +12,7 @@ export type Context = {
   /**
    * The wallet instance attestation to be used to get the trustmark
    */
-  walletInstanceAttestation?: string;
+  walletInstanceAttestation?: WalletInstanceAttestations;
   /**
    * The credential to get the trustmark for
    */

@@ -11,7 +11,7 @@ export const createItwTrustmarkGuardsImplementation = () => ({
 
   hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
     pipe(
-      O.fromNullable(context.walletInstanceAttestation),
+      O.fromNullable(context.walletInstanceAttestation?.jwt),
       O.map(isWalletInstanceAttestationValid),
       O.getOrElse(() => false)
     )

@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { isItwCredential } from "../../../common/utils/itwCredentialUtils";
 
 /**
  * The wallet instance is not active and there is no associated integrity key tag.
@@ -30,3 +31,14 @@ export const itwLifecycleIsValidSelector = (state: GlobalState) =>
 export const itwLifecycleIsOperationalOrValid = (state: GlobalState) =>
   itwLifecycleIsOperationalSelector(state) ||
   itwLifecycleIsValidSelector(state);
+
+/**
+ * The wallet instance is a **valid IT-Wallet instance**. This means the eID
+ * is a PID L3 credential, that is only issued in the context of IT-Wallet.
+ */
+export const itwLifecycleIsITWalletValidSelector = ({
+  features: { itWallet }
+}: GlobalState) =>
+  O.isSome(itWallet.issuance.integrityKeyTag) &&
+  O.isSome(itWallet.credentials.eid) &&
+  isItwCredential(itWallet.credentials.eid.value.credential);

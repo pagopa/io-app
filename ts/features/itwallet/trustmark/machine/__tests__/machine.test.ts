@@ -13,6 +13,7 @@ import {
   GetWalletAttestationActorOutput
 } from "../actors";
 import { itwTrustmarkMachine } from "../machine";
+import { type Context } from "../context";
 
 const onInit = jest.fn();
 const storeWalletInstanceAttestation = jest.fn();
@@ -62,7 +63,7 @@ describe("itwTrustmarkMachine", () => {
     jest.setSystemTime(1732099618000);
 
     onInit.mockImplementation(() => ({
-      walletInstanceAttestation: "T_WIA",
+      walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl
     }));
 
@@ -87,9 +88,9 @@ describe("itwTrustmarkMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("RefreshingTrustmark");
-    expect(actor.getSnapshot().context).toStrictEqual({
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
       credentialType: "MDL",
-      walletInstanceAttestation: "T_WIA",
+      walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -115,9 +116,9 @@ describe("itwTrustmarkMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual({
       DisplayingTrustmark: "Idle"
     });
-    expect(actor.getSnapshot().context).toStrictEqual({
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
       credentialType: "MDL",
-      walletInstanceAttestation: "T_WIA",
+      walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl,
       trustmarkUrl: "T_URL",
       expirationDate: new Date(1732099618000 + 10 * 1000),
@@ -134,9 +135,9 @@ describe("itwTrustmarkMachine", () => {
     jest.advanceTimersByTime(11 * 1000);
 
     expect(actor.getSnapshot().value).toStrictEqual("RefreshingTrustmark");
-    expect(actor.getSnapshot().context).toStrictEqual({
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
       credentialType: "MDL",
-      walletInstanceAttestation: "T_WIA",
+      walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl,
       trustmarkUrl: undefined,
       expirationDate: undefined,
@@ -155,12 +156,12 @@ describe("itwTrustmarkMachine", () => {
     jest.setSystemTime(1732099618000);
 
     onInit.mockImplementation(() => ({
-      walletInstanceAttestation: "T_WIA",
+      walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl
     }));
 
     getWalletAttestationActor.mockImplementation(() =>
-      Promise.resolve("T_WIA_UPDATED")
+      Promise.resolve({ jwt: "T_WIA_UPDATED" })
     );
 
     const actor = createActor(mockedMachine, {
@@ -176,9 +177,9 @@ describe("itwTrustmarkMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual(
       "ObtainingWalletInstanceAttestation"
     );
-    expect(actor.getSnapshot().context).toStrictEqual({
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
       credentialType: "MDL",
-      walletInstanceAttestation: "T_WIA",
+      walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -206,8 +207,8 @@ describe("itwTrustmarkMachine", () => {
     );
 
     expect(actor.getSnapshot().value).toStrictEqual("RefreshingTrustmark");
-    expect(actor.getSnapshot().context).toStrictEqual({
-      walletInstanceAttestation: "T_WIA_UPDATED",
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
+      walletInstanceAttestation: { jwt: "T_WIA_UPDATED" },
       credentialType: "MDL",
       credential: ItwStoredCredentialsMocks.mdl
     });
@@ -222,7 +223,7 @@ describe("itwTrustmarkMachine", () => {
     jest.setSystemTime(1732099618000);
 
     onInit.mockImplementation(() => ({
-      walletInstanceAttestation: "T_WIA",
+      walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl
     }));
 
@@ -245,9 +246,9 @@ describe("itwTrustmarkMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual(
       "ObtainingWalletInstanceAttestation"
     );
-    expect(actor.getSnapshot().context).toStrictEqual({
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
       credentialType: "MDL",
-      walletInstanceAttestation: "T_WIA",
+      walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -277,7 +278,7 @@ describe("itwTrustmarkMachine", () => {
     jest.setSystemTime(1732099618000);
 
     onInit.mockImplementation(() => ({
-      walletInstanceAttestation: "T_WIA",
+      walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl
     }));
 
@@ -298,9 +299,9 @@ describe("itwTrustmarkMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("RefreshingTrustmark");
-    expect(actor.getSnapshot().context).toStrictEqual({
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
       credentialType: "MDL",
-      walletInstanceAttestation: "T_WIA",
+      walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -322,9 +323,9 @@ describe("itwTrustmarkMachine", () => {
     );
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
-    expect(actor.getSnapshot().context).toStrictEqual({
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
       credentialType: "MDL",
-      walletInstanceAttestation: "T_WIA",
+      walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl,
       attempts: 1,
       failure: expect.anything(),

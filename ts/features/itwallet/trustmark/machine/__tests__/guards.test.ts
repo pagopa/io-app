@@ -38,24 +38,24 @@ describe("itwTrustmarkMachine guards", () => {
       expect(
         hasValidWalletInstanceAttestation({
           context: {
-            walletInstanceAttestation: wia,
+            walletInstanceAttestation: { jwt: wia },
             credentialType: "MDL"
           }
         })
       ).toBe(expected);
     });
 
-    it("throws if the WIA is not valid", () => {
+    it("returns false if the WIA is not valid", () => {
       const { hasValidWalletInstanceAttestation } =
         createItwTrustmarkGuardsImplementation();
-      expect(() =>
+      expect(
         hasValidWalletInstanceAttestation({
           context: {
-            walletInstanceAttestation: "not a WIA",
+            walletInstanceAttestation: { jwt: "not a WIA" },
             credentialType: "MDL"
           }
         })
-      ).toThrow();
+      ).toEqual(false);
     });
   });
 });

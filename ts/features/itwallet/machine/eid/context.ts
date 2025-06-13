@@ -2,7 +2,10 @@ import {
   type AuthorizationDetail,
   type Credential
 } from "@pagopa/io-react-native-wallet";
-import { type StoredCredential } from "../../common/utils/itwTypesUtils";
+import type {
+  WalletInstanceAttestations,
+  StoredCredential
+} from "../../common/utils/itwTypesUtils";
 import { IssuanceFailure } from "./failure";
 
 export type IdentificationContext =
@@ -32,7 +35,7 @@ export type CieContext = {
 };
 
 export type Context = {
-  walletInstanceAttestation: string | undefined;
+  walletInstanceAttestation: WalletInstanceAttestations | undefined;
   integrityKeyTag: string | undefined;
   cieContext: CieContext | undefined;
   identification: IdentificationContext | undefined;

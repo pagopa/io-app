@@ -7,7 +7,6 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { getWalletInstanceStatus } from "../../../common/utils/itwAttestationUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwIntegrityServiceStatusSelector } from "../../../issuance/store/selectors";
-import { itwIsWalletInstanceAttestationValidSelector } from "../../../walletInstance/store/selectors";
 
 import { checkIntegrityServiceReadySaga } from "../checkIntegrityServiceReadySaga";
 import {
@@ -60,7 +59,6 @@ describe("checkWalletInstanceStateSaga", () => {
       .withState(store)
       .provide([
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
-        [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [matchers.select(itwIntegrityServiceStatusSelector), "ready"],
         [matchers.call.fn(getWalletInstanceStatus), { is_revoked: false }],
         [matchers.call.fn(checkIntegrityServiceReadySaga), true]
@@ -90,7 +88,6 @@ describe("checkWalletInstanceStateSaga", () => {
       .withState(store)
       .provide([
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
-        [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [matchers.call.fn(getWalletInstanceStatus), { is_revoked: true }],
         [matchers.call.fn(checkIntegrityServiceReadySaga), true]
       ])
@@ -119,7 +116,6 @@ describe("checkWalletInstanceStateSaga", () => {
       .withState(store)
       .provide([
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
-        [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [matchers.call.fn(getWalletInstanceStatus), { is_revoked: false }],
         [matchers.call.fn(checkIntegrityServiceReadySaga), true]
       ])
@@ -148,7 +144,6 @@ describe("checkWalletInstanceStateSaga", () => {
       .withState(store)
       .provide([
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
-        [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [matchers.call.fn(getWalletInstanceStatus), { is_revoked: true }],
         [matchers.call.fn(checkIntegrityServiceReadySaga), true]
       ])
