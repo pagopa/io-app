@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { SessionToken } from "../../../../types/SessionToken";
 import { trackLoginSpidError } from "../analytics/spidAnalytics";
-import { apiUrlPrefix, spidRelayState } from "../../../../config";
+import { apiLoginUrlPrefix, spidRelayState } from "../../../../config";
 import { IdpData } from "../../../../../definitions/content/IdpData";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
 /**
@@ -91,7 +91,7 @@ export const extractLoginResult = (
 
 /** for a given idp id get the relative login uri */
 export const getIdpLoginUri = (idpId: string, level: number) =>
-  `${apiUrlPrefix}/login?authLevel=SpidL${level}&entityID=${idpId}&RelayState=${spidRelayState}`;
+  `${apiLoginUrlPrefix}/login?authLevel=SpidL${level}&entityID=${idpId}&RelayState=${spidRelayState}`;
 
 /**
  * Extract the login result from the given url.

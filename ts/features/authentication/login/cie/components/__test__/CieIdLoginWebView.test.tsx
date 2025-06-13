@@ -32,7 +32,7 @@ jest.mock("@react-navigation/native", () => ({
   })
 }));
 jest.mock("../../../../../../config", () => ({
-  apiUrlPrefix: API_PREFIX_URL
+  apiLoginUrlPrefix: API_PREFIX_URL
 }));
 
 jest.mock("../../../../../../hooks/useHeaderSecondLevel", () => ({
