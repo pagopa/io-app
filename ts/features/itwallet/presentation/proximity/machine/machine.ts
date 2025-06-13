@@ -215,6 +215,7 @@ export const itwProximityMachine = setup({
           }
         },
         QRCodeGenerationError: {
+          tags: [ItwPresentationTags.Presenting],
           description: "Display the QR code generation error",
           on: {
             close: {
@@ -243,6 +244,7 @@ export const itwProximityMachine = setup({
       }
     },
     DisplayQRCode: {
+      tags: [ItwPresentationTags.Presenting],
       description: "Display the QR Code",
       on: {
         close: {

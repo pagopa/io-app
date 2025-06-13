@@ -21,6 +21,4 @@ export const selectIsQRCodeGenerationError = (snapshot: MachineSnapshot) =>
 
 export const selectShouldPresentQRCodeBottomSheet = (
   snapshot: MachineSnapshot
-) =>
-  snapshot.matches("DisplayQRCode") ||
-  snapshot.matches({ GenerateQRCode: "QRCodeGenerationError" });
+) => snapshot.hasTag(ItwPresentationTags.Presenting);

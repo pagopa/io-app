@@ -1,3 +1,4 @@
 export enum ItwPresentationTags {
-  Loading = "Loading"
+  Loading = "Loading",
+  Presenting = "Presenting"
 }
