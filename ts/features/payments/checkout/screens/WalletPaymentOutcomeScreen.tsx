@@ -55,7 +55,7 @@ type WalletPaymentOutcomeRouteProps = RouteProp<
   "PAYMENT_CHECKOUT_OUTCOME"
 >;
 
-const REFETCH_LATEST_RECEIPTS_DELAY_MS = 3000;
+export const REFETCH_LATEST_RECEIPTS_DELAY_MS = 3000;
 
 const WalletPaymentOutcomeScreen = () => {
   useAvoidHardwareBackButton();
