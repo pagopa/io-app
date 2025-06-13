@@ -191,7 +191,7 @@ describe("itwEidIssuanceMachine", () => {
         undefined
       )
     );
-    expect(actor.getSnapshot().context).toMatchObject({
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       walletInstanceAttestation: { jwt: T_WIA },
       integrityKeyTag: T_INTEGRITY_KEY
     });
@@ -1454,7 +1454,7 @@ describe("itwEidIssuanceMachine", () => {
 
     actor.send({ type: "start", isL3: true });
 
-    expect(actor.getSnapshot().context).toMatchObject({
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       isL3FeaturesEnabled: true
     });
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
