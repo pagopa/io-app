@@ -15,6 +15,7 @@ import {
   handleFimsBackNavigation,
   handleFimsResourcesDeallocation
 } from "../sagaUtils";
+import { fimsShareiOSCookiesSelector } from "../../store/selectors";
 
 describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
   describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
@@ -48,6 +49,8 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
+        .select(fimsShareiOSCookiesSelector)
+        .next(true)
         .call(
           LoginUtils.openAuthenticationSession,
           "https://relyingParty.url/inAppBrowserLandingPage",
@@ -89,11 +92,13 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
+        .select(fimsShareiOSCookiesSelector)
+        .next(false)
         .call(
           LoginUtils.openAuthenticationSession,
           "https://relyingParty.url/inAppBrowserLandingPage",
           "iossoapi",
-          true
+          false
         )
         .next()
         .call(handleFimsBackNavigation)
@@ -229,6 +234,8 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
+        .select(fimsShareiOSCookiesSelector)
+        .next(true)
         .call(
           LoginUtils.openAuthenticationSession,
           "https://relyingParty.url/inAppBrowserLandingPage",

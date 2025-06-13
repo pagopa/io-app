@@ -28,6 +28,7 @@ import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
 import {
   fimsCtaTextSelector,
+  fimsShareiOSCookiesSelector,
   relyingPartyServiceIdSelector
 } from "../store/selectors";
 import { trackInAppBrowserOpening } from "../../common/analytics";
@@ -101,12 +102,13 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
   yield* call(handleFimsResourcesDeallocation);
   yield* call(computeAndTrackInAppBrowserOpening);
 
+  const shareiOSCookies = yield* select(fimsShareiOSCookiesSelector);
   try {
     yield* call(
       openAuthenticationSession,
       inAppBrowserRedirectUrl,
       "iossoapi",
-      true
+      shareiOSCookies
     );
   } catch (error: unknown) {
     yield* call(handleInAppBrowserErrorIfNeeded, error);
