@@ -98,7 +98,7 @@ export const createEidIssuanceActorsImplementation = (
       env,
       input.integrityKeyTag,
       sessionToken,
-      input.isL3IssuanceEnabled || false
+      input.isL3IssuanceEnabled
     );
   }),
 
