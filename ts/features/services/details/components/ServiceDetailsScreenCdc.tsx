@@ -5,19 +5,13 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useSpecialCtaCdc } from "../../../bonus/cdc/hooks/useSpecialCtaCdc";
 import { ServiceDetailsScreenBase } from "../types";
 import { getServiceActionsProps } from "../utils";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-
-export type ServiceDetailsScreenCdcProps = ServiceDetailsScreenBase & {
-  serviceId: ServiceId;
-};
 
 export const ServiceDetailsScreenCdc = ({
   children,
-  serviceId,
   ctas,
   onPressCta,
   title = ""
-}: ServiceDetailsScreenCdcProps) => {
+}: ServiceDetailsScreenBase) => {
   const theme = useIOTheme();
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
@@ -29,7 +23,7 @@ export const ServiceDetailsScreenCdc = ({
     title
   });
 
-  const specialActionProps = useSpecialCtaCdc(serviceId);
+  const specialActionProps = useSpecialCtaCdc();
 
   const actions = getServiceActionsProps(specialActionProps, ctas, onPressCta);
 

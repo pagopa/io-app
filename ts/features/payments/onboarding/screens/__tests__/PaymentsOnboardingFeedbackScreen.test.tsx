@@ -1,26 +1,28 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
-import configureMockStore from "redux-mock-store";
 import { createStore } from "redux";
-import { appReducer } from "../../../../../store/reducers";
+import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import * as hooks from "../../../../../store/hooks";
+import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { WalletOnboardingOutcomeEnum } from "../../types/OnboardingOutcomeEnum";
-import { PaymentsOnboardingFeedbackScreen } from "../PaymentsOnboardingFeedbackScreen";
-import * as analytics from "../../analytics";
+import { openWebUrl } from "../../../../../utils/url";
+import { usePaymentFailureSupportModal } from "../../../checkout/hooks/usePaymentFailureSupportModal";
 import { getPaymentsWalletUserMethods } from "../../../wallet/store/actions";
-import * as hooks from "../../../../../store/hooks";
+import * as analytics from "../../analytics";
+import { usePaymentOnboardingAuthErrorBottomSheet } from "../../components/PaymentsOnboardingAuthErrorBottomSheet";
 import {
   selectPaymentOnboardingMethods,
   selectPaymentOnboardingRptIdToResume,
   selectPaymentOnboardingSelectedMethod
 } from "../../store/selectors";
-import { usePaymentOnboardingAuthErrorBottomSheet } from "../../components/PaymentsOnboardingAuthErrorBottomSheet";
-import { usePaymentFailureSupportModal } from "../../../checkout/hooks/usePaymentFailureSupportModal";
+import { WalletOnboardingOutcomeEnum } from "../../types/OnboardingOutcomeEnum";
+import { PaymentsOnboardingFeedbackScreen } from "../PaymentsOnboardingFeedbackScreen";
 
 jest.mock("../../analytics");
-
+const ASSISTANCE_URL =
+  "https://assistenza.ioapp.it/hc/it/articles/35337442750225-Non-riesco-ad-aggiungere-un-metodo-di-pagamento";
 const mockNavigation = {
   popToTop: jest.fn(),
   reset: jest.fn(),
@@ -65,6 +67,10 @@ const mockBottomSheet = {
 );
 (usePaymentFailureSupportModal as jest.Mock).mockReturnValue(mockBottomSheet);
 
+jest.mock("../../../../../utils/url", () => ({
+  openWebUrl: jest.fn()
+}));
+
 const globalState = appReducer(undefined, applicationChangeState("active"));
 const mockStore = configureMockStore<GlobalState>();
 const state = mockStore(globalState);
@@ -99,7 +105,7 @@ describe("PaymentsOnboardingFeedbackScreen", () => {
     );
   });
 
-  it("should present a bottom sheet for AUTH_ERROR outcome", () => {
+  it("should open assistance url for AUTH_ERROR outcome", () => {
     const { getByTestId } = renderComponent(
       WalletOnboardingOutcomeEnum.AUTH_ERROR
     );
@@ -108,7 +114,8 @@ describe("PaymentsOnboardingFeedbackScreen", () => {
     );
 
     fireEvent.press(secondaryButton);
-    expect(mockBottomSheet.present).toHaveBeenCalled();
+    expect(openWebUrl).toHaveBeenCalledTimes(1);
+    expect(openWebUrl).toHaveBeenCalledWith(ASSISTANCE_URL);
   });
 
   it("should track onboarding analytics on first render", () => {
