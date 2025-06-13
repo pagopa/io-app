@@ -26,7 +26,7 @@ export const itwProximityMachine = setup({
       notImplemented
     ),
     generateQRCodeString: fromPromise<string, void>(notImplemented),
-    closeProximityFlow: fromPromise<void, void>(notImplemented)
+    closeProximityFlow: fromPromise<boolean, void>(notImplemented)
   }
 }).createMachine({
   id: "itwProximityMachine",

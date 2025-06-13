@@ -64,13 +64,11 @@ export const createProximityActorsImplementation = () => {
     }
   );
 
-  const generateQRCodeString = fromPromise<string, void>(async () =>
-    Proximity.getQrCodeString()
+  const generateQRCodeString = fromPromise<string, void>(
+    Proximity.getQrCodeString
   );
 
-  const closeProximityFlow = fromPromise<void, void>(async () => {
-    await Proximity.close();
-  });
+  const closeProximityFlow = fromPromise<boolean, void>(Proximity.close);
 
   return {
     checkPermissions,
