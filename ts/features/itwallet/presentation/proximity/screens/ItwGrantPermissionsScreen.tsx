@@ -4,11 +4,11 @@ import { Alert, Platform } from "react-native";
 import I18n from "../../../../../i18n";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { openAppSettings } from "../../../../../utils/appSettings";
-import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { ItwProximityMachineContext } from "../machine/provider";
 import { selectIsPermissionsRequiredState } from "../machine/selectors";
-import { ItwPermissionsWizard } from "../components/ItwPermissionsWizard";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 
 export const ItwGrantPermissionsScreen = () => {
   const navigation = useIONavigation();
@@ -17,7 +17,10 @@ export const ItwGrantPermissionsScreen = () => {
     selectIsPermissionsRequiredState
   );
 
-  useHardwareBackButton(() => true);
+  useHeaderSecondLevel({
+    title: "",
+    goBack: navigation.goBack
+  });
 
   useEffect(() => {
     if (isPermissionRequiredState) {
@@ -105,7 +108,7 @@ export const ItwGrantPermissionsScreen = () => {
   };
 
   return (
-    <ItwPermissionsWizard
+    <IOScrollViewWithListItems
       title={I18n.t(
         "features.itWallet.presentation.proximity.grantPermissions.title"
       )}
@@ -115,9 +118,8 @@ export const ItwGrantPermissionsScreen = () => {
       listItemHeaderLabel={I18n.t(
         "features.itWallet.presentation.proximity.grantPermissions.listItems.title"
       )}
-      listItems={listItems}
+      renderItems={listItems}
       actions={actions}
-      onClose={navigation.goBack}
     />
   );
 };

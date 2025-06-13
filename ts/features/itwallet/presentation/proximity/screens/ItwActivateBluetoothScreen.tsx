@@ -2,12 +2,13 @@ import { Alert, Platform } from "react-native";
 import { ListItemInfo } from "@pagopa/io-app-design-system";
 import { useEffect, useMemo } from "react";
 import I18n from "../../../../../i18n";
-import { ItwPermissionsWizard } from "../components/ItwPermissionsWizard";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { ItwProximityMachineContext } from "../machine/provider";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { openBluetoothPreferences } from "../utils";
 import { selectIsBluetoothRequiredState } from "../machine/selectors";
+import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 
 export const ItwActivateBluetoothScreen = () => {
   const navigation = useIONavigation();
@@ -15,6 +16,11 @@ export const ItwActivateBluetoothScreen = () => {
   const isBluetoothRequiredState = ItwProximityMachineContext.useSelector(
     selectIsBluetoothRequiredState
   );
+
+  useHeaderSecondLevel({
+    title: "",
+    goBack: navigation.goBack
+  });
 
   useEffect(() => {
     if (isBluetoothRequiredState) {
@@ -93,7 +99,7 @@ export const ItwActivateBluetoothScreen = () => {
   };
 
   return (
-    <ItwPermissionsWizard
+    <IOScrollViewWithListItems
       title={I18n.t(
         "features.itWallet.presentation.proximity.activateBluetooth.title"
       )}
@@ -103,9 +109,8 @@ export const ItwActivateBluetoothScreen = () => {
       listItemHeaderLabel={I18n.t(
         "features.itWallet.presentation.proximity.activateBluetooth.listItems.title"
       )}
-      listItems={listItems}
+      renderItems={listItems}
       actions={actions}
-      onClose={navigation.goBack}
     />
   );
 };
