@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
-import { Body, VStack } from "@pagopa/io-app-design-system";
-import { View } from "react-native";
+import { Body, IOVisualCostants, VStack } from "@pagopa/io-app-design-system";
+import { Dimensions, View } from "react-native";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { ItwProximityMachineContext } from "../machine/provider";
 import {
@@ -10,7 +10,10 @@ import {
   selectShouldPresentQRCodeBottomSheet
 } from "../machine/selectors";
 import I18n from "../../../../../i18n";
-import { ItwEngagementQRCode } from "../components/ItwEngagementQRCode";
+import { ItwRetryableQRCode } from "../../../common/components/ItwRetryableQRCode";
+
+const QR_WIDTH =
+  Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
 
 export const useItwPresentQRCode = () => {
   const qrCodeString =
@@ -39,10 +42,19 @@ export const useItwPresentQRCode = () => {
             "features.itWallet.presentation.proximity.mdl.bottomSheet.body"
           )}
         </Body>
-        <ItwEngagementQRCode
-          qrCodeString={qrCodeString}
-          isQRCodeGenerationError={isQRCodeGenerationError}
-          isLoading={isLoading}
+        <ItwRetryableQRCode
+          value={qrCodeString}
+          size={QR_WIDTH}
+          correctionLevel="Q"
+          shouldRetry={isQRCodeGenerationError}
+          retryIcon="warningFilled"
+          retryDescription={I18n.t(
+            "features.itWallet.presentation.proximity.mdl.bottomSheet.error.message"
+          )}
+          retryLabel={I18n.t(
+            "features.itWallet.presentation.proximity.mdl.bottomSheet.error.action"
+          )}
+          isRetrying={isLoading}
           onRetry={handleRetry}
         />
         {/* Dummy View used to add space */}
