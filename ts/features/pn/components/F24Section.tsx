@@ -36,9 +36,7 @@ export const F24Section = ({
         label={I18n.t("features.pn.details.f24Section.title")}
         iconName={"folder"}
       />
-      <Body color="grey-850">
-        {I18n.t("features.pn.details.f24Section.description")}
-      </Body>
+      <Body>{I18n.t("features.pn.details.f24Section.description")}</Body>
       <VSpacer size={24} />
       {f24Count === 1 && (
         <MessageDetailsAttachmentItem

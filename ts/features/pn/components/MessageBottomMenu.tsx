@@ -1,24 +1,27 @@
-import { IOColors, IOVisualCostants } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOVisualCostants,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import { ContactsListItem } from "../../messages/components/MessageDetail/ContactsListItem";
-import { useIOSelector } from "../../../store/hooks";
-import { serviceMetadataByIdSelector } from "../../services/details/store/reducers";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
+import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
+import I18n from "../../../i18n";
+import { useIOSelector } from "../../../store/hooks";
+import { ContactsListItem } from "../../messages/components/MessageDetail/ContactsListItem";
 import {
   ShowMoreListItem,
   ShowMoreSection
 } from "../../messages/components/MessageDetail/ShowMoreListItem";
 import { UIMessageId } from "../../messages/types";
-import I18n from "../../../i18n";
-import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { formatPaymentNoticeNumber } from "../../payments/common/utils";
-import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
+import { serviceMetadataByIdSelector } from "../../services/details/store/reducers";
 import { TimelineListItem } from "./TimelineListItem";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: IOColors["grey-50"],
     paddingBottom: "95%",
     marginBottom: "-95%",
     paddingHorizontal: IOVisualCostants.appMarginDefault,
@@ -137,6 +140,8 @@ export const MessageBottomMenu = ({
   payments,
   serviceId
 }: MessageBottomMenuProps) => {
+  const theme = useIOTheme();
+
   const serviceMetadata = useIOSelector(state =>
     serviceMetadataByIdSelector(state, serviceId)
   );
@@ -152,7 +157,12 @@ export const MessageBottomMenu = ({
     [isCancelled, iun, messageId, paidNoticeCodes, payments]
   );
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: IOColors[theme["appBackground-secondary"]] }
+      ]}
+    >
       <TimelineListItem history={history} />
       {(serviceMetadata?.email || serviceMetadata?.phone) && (
         <ContactsListItem
