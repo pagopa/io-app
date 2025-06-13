@@ -1,6 +1,6 @@
 import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import Animated, {
   LinearTransition,
   useAnimatedRef
