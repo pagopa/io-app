@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0-canary.7137](https://github.com/pagopa/io-app/compare/3.7.0-rc.7...3.7.0-canary.7137) (2025-06-13)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2498](https://pagopa.atlassian.net/browse/SIW-2498)] Add IT Wallet environments ([#7053](https://github.com/pagopa/io-app/issues/7053)) ([dda7f92](https://github.com/pagopa/io-app/commit/dda7f92dac1f1e104155ff75e0bc6c4de36b0630))
+
+
+### Chores
+
+* [[IOPLT-1169](https://pagopa.atlassian.net/browse/IOPLT-1169)] Add static version to `AnimatedPictogram` when `reduceMotion` is enabled ([#7071](https://github.com/pagopa/io-app/issues/7071)) ([098fdec](https://github.com/pagopa/io-app/commit/098fdecd504d2140a945459259caaba2ebc02472))
+* change api login host ([cb7a2da](https://github.com/pagopa/io-app/commit/cb7a2dae179db200b58a4262778a2444b231a578))
+* remove unwanted webview dependency ([3f29ee7](https://github.com/pagopa/io-app/commit/3f29ee762fe5123f063955ef90131599aaa451d3))
+* restore dev lib ([43db8f8](https://github.com/pagopa/io-app/commit/43db8f806c2f143abf25ac6494e25d92570abbba))
+* use the right login-utils version ([ab400c0](https://github.com/pagopa/io-app/commit/ab400c0a74ef45a7b8b4f86a35fbf833b4e120de))
+
 ## [3.7.0-rc.7](https://github.com/pagopa/io-app/compare/3.7.0-rc.6...3.7.0-rc.7) (2025-06-12)
 
 
