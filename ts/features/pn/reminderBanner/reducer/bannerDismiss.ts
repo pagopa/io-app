@@ -63,18 +63,20 @@ export const persistedPnBannerDismissReducer = persistReducer(
   persistConfig,
   pnBannerDismissReducer
 );
+export const isPnServiceEnabled = (state: GlobalState) => {
+  const pnServiceId = pnMessagingServiceIdSelector(state);
+  return pot.getOrElse(
+    servicePreferenceByChannelPotSelector(state, pnServiceId, "inbox"),
+    undefined
+  );
+};
 export const isPnActivationReminderBannerRenderableSelector = (
   state: GlobalState
 ) => {
-  const pnServiceId = pnMessagingServiceIdSelector(state);
-
   const hasBannerBeenDismissed =
     state.features.pn.bannerDismiss.dismissed === true;
   const isPnRemoteEnabled = isPnRemoteEnabledSelector(state);
-  const isPnInboxEnabled = pot.getOrElse(
-    servicePreferenceByChannelPotSelector(state, pnServiceId, "inbox"),
-    false
-  );
+  const isPnInboxEnabled = isPnServiceEnabled(state) ?? false;
 
   return isPnRemoteEnabled && !hasBannerBeenDismissed && !isPnInboxEnabled;
 };
