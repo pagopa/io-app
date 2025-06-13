@@ -87,6 +87,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
       }
     }, [credentialType, isPendingReview, dispatch])
   );
+  
   useFocusEffect(
     // eslint-disable-next-line arrow-body-style
     useCallback(() => {
