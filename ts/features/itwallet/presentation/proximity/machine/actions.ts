@@ -9,12 +9,26 @@ export const createProximityActionsImplementation = (
       screen: ITW_ROUTES.PROXIMITY.DEVICE_PERMISSIONS
     });
   },
+
   navigateToBluetoothActivationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.PROXIMITY.BLUETOOTH_ACTIVATION
     });
   },
-  closePresentation: () => {
+
+  navigateToClaimsDisclosureScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PROXIMITY.CLAIMS_DISCLOSURE
+    });
+  },
+
+  navigateToFailureScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PROXIMITY.FAILURE
+    });
+  },
+
+  closeProximity: () => {
     navigation.popToTop();
   }
 });

@@ -54,6 +54,8 @@ import {
 } from "../presentation/proximity/machine/provider.tsx";
 import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/ItwGrantPermissionsScreen.tsx";
 import { ItwActivateBluetoothScreen } from "../presentation/proximity/screens/ItwActivateBluetoothScreen.tsx";
+import { ItwProximityClaimsDisclosureScreen } from "../presentation/proximity/screens/ItwProximityClaimsDisclosureScreen.tsx";
+import { ItwProximityFailureScreen } from "../presentation/proximity/screens/ItwProximityFailureScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -73,7 +75,7 @@ const InnerNavigator = () => {
   const eidIssuanceMachineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialIssuanceMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
-  const itwProximityMachineRef = ItwProximityMachineContext.useActorRef();
+  const proximityMachineRef = ItwProximityMachineContext.useActorRef();
 
   return (
     <Stack.Navigator
@@ -86,7 +88,7 @@ const InnerNavigator = () => {
           // Since the back event is accepted only by specific states, we can safely send a back event to each machine
           eidIssuanceMachineRef.send({ type: "back" });
           credentialIssuanceMachineRef.send({ type: "back" });
-          itwProximityMachineRef.send({ type: "back" });
+          proximityMachineRef.send({ type: "back" });
         }
       }}
     >
@@ -268,7 +270,7 @@ const InnerNavigator = () => {
         component={ItwPresentationEidVerificationExpiredScreen}
         options={{ headerShown: false }}
       />
-      {/*  Proximity's flow routes */}
+      {/* Proximity's flow routes */}
       <Stack.Group screenOptions={hiddenHeader}>
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.DEVICE_PERMISSIONS}
@@ -277,6 +279,14 @@ const InnerNavigator = () => {
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.BLUETOOTH_ACTIVATION}
           component={ItwActivateBluetoothScreen}
+        />
+        <Stack.Screen
+          name={ITW_ROUTES.PROXIMITY.CLAIMS_DISCLOSURE}
+          component={ItwProximityClaimsDisclosureScreen}
+        />
+        <Stack.Screen
+          name={ITW_ROUTES.PROXIMITY.FAILURE}
+          component={ItwProximityFailureScreen}
         />
       </Stack.Group>
     </Stack.Navigator>

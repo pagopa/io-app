@@ -1,4 +1,5 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { Body, VStack } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
@@ -50,15 +51,17 @@ export const useItwPresentQRCode = () => {
       </VStack>
     ),
     onDismiss: () => {
-      machineRef.send({ type: "close" });
+      machineRef.send({ type: "dismiss" });
     }
   });
 
-  useEffect(() => {
-    if (shouldPresentQRCodeBottomSheet) {
-      present();
-    }
-  }, [shouldPresentQRCodeBottomSheet, present]);
+  useFocusEffect(
+    useCallback(() => {
+      if (shouldPresentQRCodeBottomSheet) {
+        present();
+      }
+    }, [shouldPresentQRCodeBottomSheet, present])
+  );
 
   return {
     bottomSheet,
