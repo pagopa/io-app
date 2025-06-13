@@ -8,6 +8,9 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
       "_tag": "None",
     },
   },
+  "environment": {
+    "env": "prod",
+  },
   "identification": {
     "hasNfcFeature": {
       "kind": "PotNone",
