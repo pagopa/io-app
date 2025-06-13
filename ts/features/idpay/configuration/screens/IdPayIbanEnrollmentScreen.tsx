@@ -1,7 +1,6 @@
 import { FeatureInfo, RadioGroup, VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import { ComponentProps, useCallback, useEffect, useState } from "react";
-import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -45,7 +44,7 @@ export const IdPayIbanEnrollmentScreen = () => {
   const enrolledIban =
     IdPayConfigurationMachineContext.useSelector(selectEnrolledIban);
 
-  const [selectedIban, setSelectedIban] = useState<IbanDTO | undefined>();
+  const [selectedIban, setSelectedIban] = useState<string | undefined>();
 
   useFocusEffect(
     useCallback(() => {
@@ -61,19 +60,22 @@ export const IdPayIbanEnrollmentScreen = () => {
 
   useEffect(() => {
     if (enrolledIban) {
-      setSelectedIban(enrolledIban);
+      setSelectedIban(enrolledIban.iban);
     }
   }, [enrolledIban]);
 
   const handleSelectIban = useCallback(
-    (iban: IbanDTO) => {
+    (iban: string) => {
       setSelectedIban(iban);
 
       if (isIbanOnly) {
-        machine.send({ type: "enroll-iban", iban });
+        const ibanObject = ibanList.find(el => el.iban === iban);
+        if (ibanObject) {
+          machine.send({ type: "enroll-iban", iban: ibanObject });
+        }
       }
     },
-    [isIbanOnly, machine]
+    [ibanList, isIbanOnly, machine]
   );
 
   const handleBackPress = () => {
@@ -82,7 +84,10 @@ export const IdPayIbanEnrollmentScreen = () => {
 
   const handleContinuePress = () => {
     if (selectedIban !== undefined) {
-      machine.send({ type: "enroll-iban", iban: selectedIban });
+      const selectedIbanObject = ibanList.find(el => el.iban === selectedIban);
+      if (selectedIbanObject) {
+        machine.send({ type: "enroll-iban", iban: selectedIbanObject });
+      }
     }
   };
 
@@ -142,12 +147,12 @@ export const IdPayIbanEnrollmentScreen = () => {
       description={I18n.t("idpay.configuration.iban.enrollment.subTitle")}
     >
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
-        <RadioGroup<IbanDTO>
+        <RadioGroup<string>
           type="radioListItem"
           key="check_income"
           items={Array.from(ibanList, el => ({
             ...el,
-            id: el,
+            id: el.iban,
             value: el.iban,
             description: el.description
           }))}
