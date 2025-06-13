@@ -4847,6 +4847,82 @@
             "subtitle": "Continua sul sito dell'ente.",
             "cta": "Continua sul sito dell'ente"
           }
+        },
+        "proximity": {
+          "grantPermissions": {
+            "title": "Consenti a IO di accedere al Bluetooth",
+            "subtitle": "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.",
+            "listItems": {
+              "title": "Ecco come:",
+              "step1": {
+                "label": "Step 1",
+                "value": "Vai su \"Impostazioni\""
+              },
+              "step2": {
+                "label": "Step 2",
+                "value": "Seleziona \"App\""
+              },
+              "step3": {
+                "label": "Step 3",
+                "value": "Seleziona \"IO\""
+              },
+              "step4": {
+                "label": "Step 4",
+                "value": "Consenti l’accesso a Bluetooth"
+              }
+            },
+            "actions": {
+              "primary": "Apri impostazioni",
+              "secondary": "Continua"
+            }
+          },
+          "activateBluetooth": {
+            "title": "Attiva il Bluetooth per continuare",
+            "subtitle": "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.",
+            "listItems": {
+              "title": "Ecco come:",
+              "step1": {
+                "label": "Step 1",
+                "value": "Vai su \"Impostazioni\""
+              },
+              "step2": {
+                "label": "Step 2",
+                "value": "Seleziona \"Bluetooth\""
+              },
+              "step3": {
+                "label": "Step 3",
+                "value": "Consenti l’utilizzo del Bluetooth"
+              }
+            },
+            "actions": {
+              "primary": "Apri impostazioni",
+              "secondary": "Continua"
+            }
+          },
+          "permissionsRequired": {
+            "alert": {
+              "title": "È richiesto l’accesso al Bluetooth per continuare",
+              "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
+              "text": "Ho capito"
+            }
+          },
+          "bluetoothRequired": {
+            "alert": {
+              "title": "È richiesto l’utilizzo del Bluetooth per continuare",
+              "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
+              "text": "Ho capito"
+            }
+          },
+          "mdl": {
+            "bottomSheet": {
+              "title": "Patente di guida",
+              "body": "Mostra il QR Code in caso di controlli o altre necessità.",
+              "error": {
+                "message": "Abbiamo avuto un problema nel generare il QR Code.",
+                "action": "Prova di nuovo"
+              }
+            }
+          }
         }
       },
       "trustmark": {
