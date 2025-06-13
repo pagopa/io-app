@@ -256,8 +256,10 @@ export const itwProximityMachine = setup({
         src: "closeProximityFlow",
         onDone: {
           target: "Idle"
+        },
+        onError: {
+          // TODO: Handle any potential error scenario.
         }
-        // TODO: Handle any potential error scenario.
       }
     }
   }
