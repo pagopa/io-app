@@ -2733,7 +2733,10 @@
     },
     "search": {
       "emptyState": {
-        "title": "Enter at least three letters"
+        "title": "Enter at least three letters",
+        "a11y":{
+          "noneFound": "Nessun messaggio trovato"
+        }
       },
       "input": {
         "cancel": "Cancel",
