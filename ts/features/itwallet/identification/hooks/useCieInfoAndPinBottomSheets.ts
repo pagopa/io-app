@@ -1,7 +1,7 @@
-import I18n from "../../../../i18n.ts";
-import { CieWarningType } from "../screens/ItwIdentificationCieWarningScreen.tsx";
-import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet.tsx";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
+import I18n from "../../../../i18n";
+import { CieWarningType } from "../screens/ItwIdentificationCieWarningScreen";
+import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 /**
  * Hook that manages the two bottom sheets used in the CIE identification flow:
