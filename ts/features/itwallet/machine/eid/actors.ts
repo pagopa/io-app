@@ -23,6 +23,7 @@ import {
   itwIntegrityServiceStatusSelector
 } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
+import { Env } from "../../common/utils/environment";
 import type {
   AuthenticationContext,
   CieContext,
@@ -46,7 +47,14 @@ export type GetWalletAttestationActorParams = {
   isL3IssuanceEnabled?: boolean;
 };
 
+/**
+ * Creates the actors for the eid issuance machine
+ * @param env - The environment to use for the IT Wallet API calls
+ * @param store the IOStore
+ * @returns the actors
+ */
 export const createEidIssuanceActorsImplementation = (
+  env: Env,
   store: ReturnType<typeof useIOStore>
 ) => ({
   createWalletInstance: fromPromise<string>(async () => {
@@ -73,7 +81,7 @@ export const createEidIssuanceActorsImplementation = (
     );
 
     const hardwareKeyTag = await getIntegrityHardwareKeyTag();
-    await registerWalletInstance(hardwareKeyTag, sessionToken);
+    await registerWalletInstance(env, hardwareKeyTag, sessionToken);
 
     return hardwareKeyTag;
   }),
@@ -87,6 +95,7 @@ export const createEidIssuanceActorsImplementation = (
     assert(input.integrityKeyTag, "integrityKeyTag is undefined");
 
     return getAttestation(
+      env,
       input.integrityKeyTag,
       sessionToken,
       input.isL3IssuanceEnabled || false
@@ -113,6 +122,7 @@ export const createEidIssuanceActorsImplementation = (
       assert(input.identification, "identification is undefined");
 
       const authenticationContext = await issuanceUtils.startAuthFlow({
+        env,
         walletAttestation: input.walletInstanceAttestation,
         identification: input.identification,
         isL3IssuanceEnabled: input.isL3IssuanceEnabled || false
@@ -163,6 +173,6 @@ export const createEidIssuanceActorsImplementation = (
     }
     assert(sessionToken, "sessionToken is undefined");
 
-    await revokeCurrentWalletInstance(sessionToken, integrityKeyTag.value);
+    await revokeCurrentWalletInstance(env, sessionToken, integrityKeyTag.value);
   })
 });

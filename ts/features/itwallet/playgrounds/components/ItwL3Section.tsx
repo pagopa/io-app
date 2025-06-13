@@ -1,8 +1,8 @@
 import {
+  IOButton,
   ListItemHeader,
   ListItemInfo,
-  ListItemNav,
-  ListItemSwitch
+  ListItemNav
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { useCallback } from "react";
@@ -14,7 +14,6 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { CredentialL3Key } from "../../common/utils/itwMocksUtils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_PLAYGROUND_ROUTES } from "../navigation/routes";
-import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 
 export const ItwL3Section = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -47,20 +46,21 @@ export const ItwL3Section = () => {
         label={"Fiscal code whitelisted"}
         value={isFiscalCodeWhitelisted ? "YES" : "NO"}
       />
-      <ListItemSwitch
-        label="Disable L3 ( this is only for testing purposes to return to L2 )"
-        value={isFiscalCodeWhitelisted}
-        onSwitchValueChange={() => {
-          dispatch(itwLifecycleStoresReset());
+      <IOButton
+        variant="solid"
+        color="danger"
+        label="Disable L3"
+        disabled={!isFiscalCodeWhitelisted}
+        onPress={() => {
           dispatch(itwSetFiscalCodeWhitelisted(false));
         }}
       />
+      <ListItemHeader label="IT Wallet (L3) screens" />
       <ListItemNav
         value="Discovery L3"
         description="Navigate to the Discovery L3 info screen"
         onPress={navigateToTosL3Screen}
       />
-      <ListItemHeader label="L3 credentials" />
       <ListItemNav
         value="Driving License L3"
         description="Navigate to the Driving License detail screen"
