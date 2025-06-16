@@ -3,7 +3,8 @@ import {
   Divider,
   HSpacer,
   IOSkeleton,
-  IOToast
+  IOToast,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/core";
 import { RouteProp } from "@react-navigation/native";
@@ -108,13 +109,16 @@ export const IdPayOperationsListScreen = () => {
         />
       )}
       ListHeaderComponent={
-        <Body>
-          {I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
-          )}
-          <HSpacer size={4} />
-          {lastUpdateComponent}
-        </Body>
+        <>
+          <Body>
+            {I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
+            )}
+            <HSpacer size={4} />
+            {lastUpdateComponent}
+          </Body>
+          <VSpacer size={16} />
+        </>
       }
       contentContainerStyle={{
         paddingBottom: 120,
