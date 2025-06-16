@@ -2734,7 +2734,7 @@
     "search": {
       "emptyState": {
         "title": "Enter at least three letters",
-        "a11y":{
+        "a11y": {
           "noneFound": "Nessun messaggio trovato"
         }
       },
