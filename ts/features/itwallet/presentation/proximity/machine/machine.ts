@@ -2,7 +2,7 @@ import { assign, fromCallback, fromPromise, sendTo, setup } from "xstate";
 import { InitialContext, Context } from "./context";
 import { ProximityEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
-import { GetQrCodeStringActorOutput, StartProximityFlowInput } from "./actors";
+import { StartProximityFlowInput } from "./actors";
 import { mapEventToFailure, ProximityFailureType } from "./failure";
 
 const notImplemented = () => {
@@ -29,10 +29,8 @@ export const itwProximityMachine = setup({
     startProximityFlow: fromPromise<void, StartProximityFlowInput>(
       notImplemented
     ),
-    generateQrCodeString: fromPromise<GetQrCodeStringActorOutput, void>(
-      notImplemented
-    ),
-    closeProximityFlow: fromPromise<boolean>(notImplemented),
+    generateQrCodeString: fromPromise<string, void>(notImplemented),
+    closeProximityFlow: fromPromise<boolean, void>(notImplemented),
     proximityCommunicationLogic: fromCallback<ProximityEvents>(notImplemented),
     terminateProximitySession: fromPromise<boolean>(notImplemented)
   }
@@ -223,6 +221,7 @@ export const itwProximityMachine = setup({
           }
         },
         QRCodeGenerationError: {
+          tags: [ItwPresentationTags.Presenting],
           description: "Display the QR code generation error",
           on: {
             close: {
@@ -256,8 +255,10 @@ export const itwProximityMachine = setup({
         src: "closeProximityFlow",
         onDone: {
           target: "Idle"
+        },
+        onError: {
+          // TODO: Handle any potential error scenario.
         }
-        // TODO: Handle any potential error scenario.
       }
     },
     DeviceCommunication: {
@@ -297,6 +298,7 @@ export const itwProximityMachine = setup({
       },
       states: {
         DisplayQrCode: {
+          tags: [ItwPresentationTags.Presenting],
           description:
             "Displays the QR code to initiate proximity communication",
           on: {

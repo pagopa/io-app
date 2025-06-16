@@ -9,7 +9,7 @@ import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ComponentProps, useContext } from "react";
-import { Image } from "react-native";
+import { Image, ImageStyle, StyleProp } from "react-native";
 import Animated, {
   useAnimatedRef,
   useSharedValue
@@ -17,7 +17,10 @@ import Animated, {
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import {
+  IOScrollView,
+  IOScrollViewActions
+} from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -32,7 +35,8 @@ type OwnProps = {
   onConfirm?: () => void;
   onCancel?: () => void;
   primaryCtaText: string;
-  secondaryAction: SecondaryAction;
+  secondaryAction?: SecondaryAction;
+  imageStyle?: StyleProp<ImageStyle>;
 };
 
 type SecondaryAction = { type: "back"; text: string };
@@ -99,6 +103,7 @@ const imageHeight: number = 270;
 const BonusInformationComponent = (props: Props) => {
   const { showModal, hideModal } = useContext(LightModalContext);
   const bonusType = props.bonus;
+  const { imageStyle: imageProps } = props;
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusType[getRemoteLocale()];
 
@@ -132,7 +137,7 @@ const BonusInformationComponent = (props: Props) => {
   };
 
   const backButtonProps = {
-    label: props.secondaryAction.text,
+    label: props.secondaryAction?.text ?? "",
     fullWidth: true,
     onPress: props.onBack ?? constNull
   };
@@ -150,6 +155,17 @@ const BonusInformationComponent = (props: Props) => {
   const maybeBonusTos = maybeNotNullyString(bonusTypeLocalizedContent.tos_url);
   const maybeHeroImage = maybeNotNullyString(bonusType.hero_image);
 
+  const actions: IOScrollViewActions = props.secondaryAction
+    ? {
+        type: "TwoButtons",
+        primary: props.onConfirm ? requestButtonProps : cancelButtonProps,
+        secondary: backButtonProps
+      }
+    : {
+        type: "SingleButton",
+        primary: requestButtonProps
+      };
+
   return (
     <IOScrollView
       animatedRef={animatedScrollViewRef}
@@ -159,22 +175,20 @@ const BonusInformationComponent = (props: Props) => {
         type: "base",
         title: bonusTypeLocalizedContent.title
       }}
-      actions={{
-        type: "TwoButtons",
-        primary: props.onConfirm ? requestButtonProps : cancelButtonProps,
-        secondary: backButtonProps
-      }}
+      actions={actions}
     >
       {O.isSome(maybeHeroImage) && (
         <>
           <Image
             accessibilityIgnoresInvertColors
             source={{ uri: maybeHeroImage.value }}
-            style={{
-              width: "100%",
-              height: imageHeight,
-              resizeMode: "stretch"
-            }}
+            style={
+              imageProps ?? {
+                width: "100%",
+                height: imageHeight,
+                resizeMode: "stretch"
+              }
+            }
           />
           <VSpacer size={24} />
         </>

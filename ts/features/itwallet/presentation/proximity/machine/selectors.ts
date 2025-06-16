@@ -22,9 +22,7 @@ export const selectIsQRCodeGenerationError = (snapshot: MachineSnapshot) =>
 
 export const selectShouldPresentQRCodeBottomSheet = (
   snapshot: MachineSnapshot
-) =>
-  snapshot.matches({ DeviceCommunication: "DisplayQrCode" }) ||
-  snapshot.matches({ GenerateQRCode: "QRCodeGenerationError" });
+) => snapshot.hasTag(ItwPresentationTags.Presenting);
 
 export const selectFailureOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.failure);
