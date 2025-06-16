@@ -1,20 +1,18 @@
 import {
   Body,
-  ContentWrapper,
   Divider,
   HSpacer,
   IOSkeleton,
-  IOToast,
-  VSpacer
+  IOToast
 } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/core";
 import { RouteProp } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useRef } from "react";
-import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
+import { ActivityIndicator } from "react-native";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { IOListViewWithLargeHeader } from "../../../../components/ui/IOListViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -35,7 +33,7 @@ const TimelineLoader = () => (
   <ActivityIndicator
     animating={true}
     size={"large"}
-    style={styles.activityIndicator}
+    style={{ padding: 12 }}
     color={customVariables.brandPrimary}
     accessible={true}
     accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
@@ -97,19 +95,11 @@ export const IdPayOperationsListScreen = () => {
     )
   );
 
-  const operationList = isFirstLoading ? (
-    <FlatList
-      contentContainerStyle={styles.listContainer}
-      data={Array.from({ length: 10 })}
-      keyExtractor={(_, index) => `placeholder${index}`}
-      renderItem={() => <IdPayTimelineOperationListItem isLoading={true} />}
-      onRefresh={refresh}
-      refreshing={isRefreshing}
-    />
-  ) : (
-    <FlatList
-      contentContainerStyle={styles.listContainer}
+  return (
+    <IOListViewWithLargeHeader
+      skeleton={<IdPayTimelineOperationListItem isLoading />}
       data={timeline}
+      loading={isFirstLoading}
       keyExtractor={item => item.operationId}
       renderItem={({ item }) => (
         <IdPayTimelineOperationListItem
@@ -117,25 +107,7 @@ export const IdPayOperationsListScreen = () => {
           onPress={() => showOperationDetailsBottomSheet(item)}
         />
       )}
-      ItemSeparatorComponent={() => <Divider />}
-      onEndReached={fetchNextPage}
-      onEndReachedThreshold={0.5}
-      onRefresh={refresh}
-      refreshing={isRefreshing}
-      ListFooterComponent={isUpdating ? <TimelineLoader /> : null}
-    />
-  );
-
-  return (
-    <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
-        )
-      }}
-    >
-      <ContentWrapper>
-        <VSpacer size={8} />
+      ListHeaderComponent={
         <Body>
           {I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
@@ -143,20 +115,24 @@ export const IdPayOperationsListScreen = () => {
           <HSpacer size={4} />
           {lastUpdateComponent}
         </Body>
-      </ContentWrapper>
-      <VSpacer size={16} />
-      {operationList}
+      }
+      contentContainerStyle={{
+        paddingBottom: 120,
+        paddingHorizontal: customVariables.contentPadding
+      }}
+      ItemSeparatorComponent={() => <Divider />}
+      onEndReached={fetchNextPage}
+      onEndReachedThreshold={0.5}
+      onRefresh={refresh}
+      refreshing={isRefreshing}
+      ListFooterComponent={isUpdating ? <TimelineLoader /> : null}
+      title={{
+        label: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
+        )
+      }}
+    >
       {detailsBottomSheet.bottomSheet}
-    </IOScrollViewWithLargeHeader>
+    </IOListViewWithLargeHeader>
   );
 };
-
-const styles = StyleSheet.create({
-  activityIndicator: {
-    padding: 12
-  },
-  listContainer: {
-    paddingBottom: 120,
-    paddingHorizontal: customVariables.contentPadding
-  }
-});
