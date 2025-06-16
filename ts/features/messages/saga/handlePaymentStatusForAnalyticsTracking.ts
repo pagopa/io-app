@@ -2,11 +2,11 @@ import { call, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import {
   cancelPaymentStatusTracking,
+  isSpecificError,
   startPaymentStatusTracking,
   updatePaymentForMessage
 } from "../store/actions";
 import { serviceDetailsByIdSelector } from "../../services/details/store/reducers";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import {
   isExpiredPaymentFromDetailV2Enum,
   isOngoingPaymentFromDetailV2Enum,
@@ -14,28 +14,7 @@ import {
   isRevokedPaymentFromDetailV2Enum
 } from "../../../utils/payment";
 import { trackPaymentStatus } from "../analytics";
-
-type PayablePayment = {
-  kind: "Payable";
-};
-type ProcessedPayment = {
-  kind: "Processed";
-  details: Detail_v2Enum;
-};
-export type PaymentStatus = PayablePayment | ProcessedPayment;
-
-export const payablePayment: PayablePayment = {
-  kind: "Payable"
-};
-export const processedPayment = (details: Detail_v2Enum): ProcessedPayment => ({
-  kind: "Processed",
-  details
-});
-
-export const foldPaymentStatus =
-  <T>(payable: () => T, processed: (details: Detail_v2Enum) => T) =>
-  (input: PaymentStatus) =>
-    input.kind === "Payable" ? payable() : processed(input.details);
+import { isTestEnv } from "../../../utils/environment";
 
 export function* handlePaymentStatusForAnalyticsTracking(
   _: ActionType<typeof startPaymentStatusTracking>
@@ -48,10 +27,7 @@ export function* handlePaymentStatusForAnalyticsTracking(
 
 function* trackPaymentUpdates() {
   do {
-    const messagePaymentUpdateResult: ActionType<
-      | typeof updatePaymentForMessage.success
-      | typeof updatePaymentForMessage.failure
-    > = yield* take([
+    const messagePaymentUpdateResult = yield* take([
       updatePaymentForMessage.success,
       updatePaymentForMessage.failure
     ]);
@@ -83,17 +59,22 @@ export const paymentStatusFromPaymentUpdateResult = (
   >
 ) => {
   if (isActionOf(updatePaymentForMessage.failure, action)) {
-    const failureReason = action.payload.details;
-    if (isExpiredPaymentFromDetailV2Enum(failureReason)) {
-      return "expired";
-    } else if (isRevokedPaymentFromDetailV2Enum(failureReason)) {
-      return "revoked";
-    } else if (isPaidPaymentFromDetailV2Enum(failureReason)) {
-      return "paid";
-    } else if (isOngoingPaymentFromDetailV2Enum(failureReason)) {
-      return "inprogress";
+    const failureReason = action.payload.reason;
+    if (isSpecificError(failureReason)) {
+      const details = failureReason.details;
+      if (isExpiredPaymentFromDetailV2Enum(details)) {
+        return "expired";
+      } else if (isRevokedPaymentFromDetailV2Enum(details)) {
+        return "revoked";
+      } else if (isPaidPaymentFromDetailV2Enum(details)) {
+        return "paid";
+      } else if (isOngoingPaymentFromDetailV2Enum(details)) {
+        return "inprogress";
+      }
     }
     return "error";
   }
   return "unpaid";
 };
+
+export const testable = isTestEnv ? { trackPaymentUpdates } : undefined;

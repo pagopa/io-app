@@ -545,7 +545,7 @@
             "description": "Aiuta il team di IO a monitorare il funzionamento dell’app"
           },
           "screen": {
-            "title": "I tuoi dati su IO",
+            "title": "I tuoi dati di utilizzo",
             "description": "Se condividi i tuoi dati, ci aiuti a migliorare la tua esperienza su IO e a fornirti assistenza mirata.",
             "why": {
               "description": {
@@ -578,7 +578,7 @@
             "cta": {
               "shareData": "Condividi",
               "dontShareData": "Non condividere i dati",
-              "dontShare": "Non ora"
+              "dontShare": "Non condividere"
             },
             "confirmToast": "Preferenze aggiornate!"
           },
@@ -622,6 +622,11 @@
       "idpay": {
         "idpayTest": "IDPay",
         "idpayTestAlert": "La modifica richiede il riavvio dell'app"
+      },
+      "loginEnvironment": {
+        "activeSession": {
+          "switchTitle": "Login a sessione attiva"
+        }
       },
       "trial": {
         "titleSection": "Partecipa alla sperimentazione"
@@ -1831,7 +1836,7 @@
           "title": "Autorizzazione negata",
           "subtitle": "Controlla di aver seguito correttamente le istruzioni della tua banca o app di pagamento.",
           "primaryAction": "Chiudi",
-          "secondaryAction": "Scopri di più",
+          "secondaryAction": "Cosa puoi fare?",
           "bottomSheet": {
             "title": "Cosa fare se l’aggiunta del metodo non va a buon fine?",
             "description": "**Carta di credito o debito**\n\nTi invitiamo a verificare con la tua banca. I casi più frequenti sono:\n\n1. La tua carta non è abilitata agli acquisti online.\n2. Non hai ancora attivato il servizio 3DS: si tratta di un sistema di sicurezza legato ai pagamenti online.\n3. La tua carta è stata sospesa o bloccata.\n4. Hai messo 'in pausa' la tua carta.\n\n\n**Altri metodi**\n\nContatta l'assistenza del tuo metodo e chiedi il motivo del rifiuto."
@@ -2449,7 +2454,7 @@
         "PAYMENT_CANCELED": {
           "title": "L’Ente Creditore ha revocato questo avviso",
           "subtitle": "Contatta l’Ente per maggiori informazioni.",
-          "action": "Scopri di più"
+          "action": "Cosa puoi fare?"
         },
         "PAYMENT_DUPLICATED": {
           "title": "Questo avviso è stato già pagato!"
@@ -4933,6 +4938,12 @@
             "footerAction": "Ricarica l'app IO"
           }
         },
+        "back_online": {
+          "alert": {
+            "content": "Sei di nuovo online. Per usare tutti i servizi ",
+            "action": "ricarica l'app IO"
+          }
+        },
         "action": "Ricarica l'app IO",
         "failure": "Nessuna connessione. Collegati a internet e riprova."
       },
@@ -4941,6 +4952,33 @@
           "title": "IT-Wallet per\ni tuoi documenti",
           "description": "L’unico Wallet di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
           "action": "Ottieni IT-Wallet"
+        }
+      },
+      "playgrounds": {
+        "environment": {
+          "toggle": {
+            "pre": {
+              "value": "Imposta l'ambiente su PRE",
+              "description": "Usa l'ambiente pre-produzione. Potrebbe essere necessario un proxy per accedere ai servizi. Questa azione reimposta lo stato di IT-Wallet."
+            },
+            "prod": {
+              "value": "Imposta l'ambiente su PROD",
+              "description": "Usa l'ambiente di produzione. Questa azione reimposta lo stato di IT-Wallet."
+            }
+          },
+          "alert": {
+            "title": "Imposta l'ambiente su [{{environment}}]",
+            "content": "Stai per accedere all'ambiente di test dedicato a IT-Wallet.\nLa funzionalità Documenti su IO, se attiva, verrà automaticamente disattivata."
+          },
+          "banner": {
+            "content": "Ti trovi nell’ambiente di test dell’app dedicato a IT-Wallet.",
+            "action": "Come funziona?"
+          },
+          "bottom_sheet": {
+            "title": "Ambiente di test IT-Wallet",
+            "content": "Se avevi attivato Documenti su IO, la funzionalità è stata disattivata automaticamente.\nPer riattivarla, esci dall’ambiente di test e attiva di nuovo Documenti su IO.",
+            "action": "Esci dall'ambiente di test"
+          }
         }
       }
     }

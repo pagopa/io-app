@@ -60,6 +60,8 @@ const ErrorComponent = () => {
         label: I18n.t("global.buttons.close"),
         onPress: onCancel
       }}
+      enableAnimatedPictogram
+      loop
     />
   );
 };

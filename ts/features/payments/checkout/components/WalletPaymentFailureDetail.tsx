@@ -112,7 +112,9 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     title: I18n.t("wallet.payment.failure.GENERIC_ERROR.title"),
     subtitle: I18n.t("wallet.payment.failure.GENERIC_ERROR.subtitle"),
     action: closeAction,
-    secondaryAction: contactSupportAction
+    secondaryAction: contactSupportAction,
+    enableAnimatedPictogram: true,
+    loop: true
   };
 
   const discoverMoreAction: OperationResultScreenContentProps["action"] = {
@@ -185,7 +187,9 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           pictogram: "fatalError",
           title: I18n.t("wallet.payment.failure.PAYMENT_UNAVAILABLE.title"),
           action: contactSupportAction,
-          secondaryAction: closeAction
+          secondaryAction: closeAction,
+          enableAnimatedPictogram: true,
+          loop: false
         };
       case "PAYMENT_DATA_ERROR":
         return {
@@ -248,11 +252,13 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
         };
       case "PAYMENT_CANCELED":
         return {
-          pictogram: "stopSecurity",
+          pictogram: "error",
           title: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.title"),
           subtitle: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.subtitle"),
           action: closeAction,
-          secondaryAction: discoverMoreAction
+          secondaryAction: discoverMoreAction,
+          enableAnimatedPictogram: true,
+          loop: false
         };
       case "PAYMENT_DUPLICATED":
         return {
@@ -277,7 +283,9 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
             "wallet.payment.failure.PAYMENT_VERIFY_GENERIC_ERROR.subtitle"
           ),
           action: closeAction,
-          secondaryAction: contactSupportAction
+          secondaryAction: contactSupportAction,
+          enableAnimatedPictogram: true,
+          loop: true
         };
       case "PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR":
         return {
@@ -298,7 +306,9 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
             "wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.subtitle"
           ),
           action: closeAction,
-          secondaryAction: contactSupportAction
+          secondaryAction: contactSupportAction,
+          enableAnimatedPictogram: true,
+          loop: true
         };
 
       default:

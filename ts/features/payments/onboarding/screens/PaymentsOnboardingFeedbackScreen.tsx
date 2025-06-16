@@ -3,10 +3,15 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import {
+  IOAnimatedPictograms,
+  IOAnimatedPictogramsAssets
+} from "../../../../components/ui/AnimatedPictogram";
 import I18n from "../../../../i18n";
+import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -18,11 +23,14 @@ import {
   useIOStore
 } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { openWebUrl } from "../../../../utils/url";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
+import { usePaymentFailureSupportModal } from "../../checkout/hooks/usePaymentFailureSupportModal";
 import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 import * as analytics from "../analytics";
-import { usePaymentOnboardingAuthErrorBottomSheet } from "../components/PaymentsOnboardingAuthErrorBottomSheet";
 import { PaymentsOnboardingParamsList } from "../navigation/params";
 import { paymentsResetRptIdToResume } from "../store/actions";
 import {
@@ -34,10 +42,7 @@ import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
 } from "../types/OnboardingOutcomeEnum";
-import { usePaymentFailureSupportModal } from "../../checkout/hooks/usePaymentFailureSupportModal";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
+import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -49,19 +54,26 @@ type PaymentsOnboardingFeedbackScreenRouteProps = RouteProp<
   "PAYMENT_ONBOARDING_RESULT_FEEDBACK"
 >;
 
-export const pictogramByOutcome: Record<WalletOnboardingOutcome, IOPictograms> =
-  {
-    [WalletOnboardingOutcomeEnum.SUCCESS]: "success",
-    [WalletOnboardingOutcomeEnum.GENERIC_ERROR]: "umbrella",
-    [WalletOnboardingOutcomeEnum.AUTH_ERROR]: "accessDenied",
-    [WalletOnboardingOutcomeEnum.TIMEOUT]: "time",
-    [WalletOnboardingOutcomeEnum.CANCELED_BY_USER]: "trash",
-    [WalletOnboardingOutcomeEnum.INVALID_SESSION]: "umbrella",
-    [WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED]: "success",
-    [WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND]: "attention",
-    [WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING]: "attention",
-    [WalletOnboardingOutcomeEnum.BE_KO]: "umbrella"
-  };
+export const pictogramByOutcome: Record<
+  WalletOnboardingOutcome,
+  IOPictograms | IOAnimatedPictograms
+> = {
+  [WalletOnboardingOutcomeEnum.SUCCESS]: "success",
+  [WalletOnboardingOutcomeEnum.GENERIC_ERROR]: "umbrella",
+  [WalletOnboardingOutcomeEnum.AUTH_ERROR]: "error",
+  [WalletOnboardingOutcomeEnum.TIMEOUT]: "time",
+  [WalletOnboardingOutcomeEnum.CANCELED_BY_USER]: "trash",
+  [WalletOnboardingOutcomeEnum.INVALID_SESSION]: "umbrella",
+  [WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED]: "success",
+  [WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND]: "attention",
+  [WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING]: "attention",
+  [WalletOnboardingOutcomeEnum.BE_KO]: "umbrella"
+};
+
+const PAYMENT_AUTHORIZATION_DENIED_ERROR = "PAYMENT_AUTHORIZATION_DENIED_ERROR";
+
+const ASSISTANCE_URL =
+  "https://assistenza.ioapp.it/hc/it/articles/35337442750225-Non-riesco-ad-aggiungere-un-metodo-di-pagamento";
 
 const PaymentsOnboardingFeedbackScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -77,7 +89,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
 
   const rptIdToResume = useIOSelector(selectPaymentOnboardingRptIdToResume);
   const { startPaymentFlow } = usePagoPaPayment();
-  const { bottomSheet, present } = usePaymentOnboardingAuthErrorBottomSheet();
+
   const supportModal = usePaymentFailureSupportModal({
     outcome,
     isOnboarding: true
@@ -169,6 +181,17 @@ const PaymentsOnboardingFeedbackScreen = () => {
     supportModal.present();
   };
 
+  const { name: routeName } = useRoute();
+
+  const onPress = () => {
+    trackHelpCenterCtaTapped(
+      PAYMENT_AUTHORIZATION_DENIED_ERROR,
+      ASSISTANCE_URL,
+      routeName
+    );
+    openWebUrl(ASSISTANCE_URL);
+  };
+
   const renderSecondaryAction = () => {
     switch (outcome) {
       case WalletOnboardingOutcomeEnum.AUTH_ERROR:
@@ -177,7 +200,8 @@ const PaymentsOnboardingFeedbackScreen = () => {
           accessibilityLabel: I18n.t(
             `wallet.onboarding.outcome.AUTH_ERROR.secondaryAction`
           ),
-          onPress: present,
+          icon: "instruction" as const,
+          onPress,
           testID: "wallet-onboarding-secondary-action-button"
         };
       case WalletOnboardingOutcomeEnum.BE_KO:
@@ -202,14 +226,29 @@ const PaymentsOnboardingFeedbackScreen = () => {
     )
   );
 
+  const hasAnimation = (value: IOPictograms | IOAnimatedPictograms): boolean =>
+    value in IOAnimatedPictogramsAssets;
+
+  const animationProps = hasAnimation(pictogramByOutcome[outcome])
+    ? {
+        enableAnimatedPictogram: true as const,
+        loop: pictogramByOutcome[outcome] === "umbrella",
+        pictogram: pictogramByOutcome[outcome] as IOAnimatedPictograms
+      }
+    : {
+        pictogram: pictogramByOutcome[outcome] as IOPictograms,
+        enableAnimatedPictogram: false as const,
+        loop: undefined
+      };
+
   return (
     <View style={{ flex: 1 }}>
       <OperationResultScreenContent
+        {...animationProps}
         title={I18n.t(`wallet.onboarding.outcome.${outcomeEnumKey}.title`)}
         subtitle={I18n.t(
           `wallet.onboarding.outcome.${outcomeEnumKey}.subtitle`
         )}
-        pictogram={pictogramByOutcome[outcome]}
         action={{
           label: actionButtonLabel,
           accessibilityLabel: actionButtonLabel,
@@ -218,7 +257,6 @@ const PaymentsOnboardingFeedbackScreen = () => {
         }}
         secondaryAction={renderSecondaryAction()}
       />
-      {bottomSheet}
       {supportModal.bottomSheet}
     </View>
   );
