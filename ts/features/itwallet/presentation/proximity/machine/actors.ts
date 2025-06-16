@@ -14,6 +14,8 @@ import {
   parseError,
   parseVerifierRequest
 } from "@pagopa/io-react-native-proximity";
+import { getProximityDetails } from "../utils/itwProximityPresentationUtils";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ProximityEvents } from "./events";
 
 const PERMISSIONS_TO_CHECK: Array<Permission> =
@@ -34,6 +36,10 @@ export type StartProximityFlowInput = {
 export type SendErrorResponseActorOutput = Awaited<
   ReturnType<typeof Proximity.sendErrorResponse>
 >;
+
+export type ProximityCommunicationLogicActorInput = {
+  credentialsByType: Record<string, StoredCredential>;
+};
 
 export const createProximityActorsImplementation = () => {
   const checkPermissions = fromPromise<boolean, void>(async () => {
@@ -77,69 +83,73 @@ export const createProximityActorsImplementation = () => {
     Proximity.getQrCodeString
   );
 
-  const proximityCommunicationLogic = fromCallback<ProximityEvents>(
-    ({ sendBack }) => {
-      const handleDeviceConnecting = () => {
-        sendBack({ type: "device-connecting" });
-      };
+  const proximityCommunicationLogic = fromCallback<
+    ProximityEvents,
+    ProximityCommunicationLogicActorInput
+  >(({ input, sendBack }) => {
+    const handleDeviceConnecting = () => {
+      sendBack({ type: "device-connecting" });
+    };
 
-      const handleDeviceConnected = () => {
-        sendBack({ type: "device-connected" });
-      };
+    const handleDeviceConnected = () => {
+      sendBack({ type: "device-connected" });
+    };
 
-      const handleDeviceDisconnected = () => {
-        sendBack({ type: "device-error", payload: "Device disconnected" });
-      };
+    const handleDeviceDisconnected = () => {
+      sendBack({ type: "device-error", payload: "Device disconnected" });
+    };
 
-      const handleError = (
-        eventPayload: Proximity.EventsPayload["onError"]
-      ) => {
-        const { error } = eventPayload ?? {};
-        sendBack({ type: "device-error", payload: parseError(error) });
-      };
+    const handleError = (eventPayload: Proximity.EventsPayload["onError"]) => {
+      const { error } = eventPayload ?? {};
+      sendBack({ type: "device-error", payload: parseError(error) });
+    };
 
-      const handleDocumentRequestReceived = (
-        eventPayload: Proximity.EventsPayload["onDocumentRequestReceived"]
-      ) => {
-        const { data } = eventPayload ?? {};
+    const handleDocumentRequestReceived = (
+      eventPayload: Proximity.EventsPayload["onDocumentRequestReceived"]
+    ) => {
+      const { data } = eventPayload ?? {};
 
-        if (data === undefined) {
-          sendBack({
-            type: "device-error",
-            error: "Missing required data"
-          });
-          return;
-        }
-
-        const parsedRequest = parseVerifierRequest(JSON.parse(data));
-
+      if (data === undefined) {
         sendBack({
-          type: "device-document-request-received",
-          proximityDetails: [], // TODO: [SIW-2429]
-          verifierRequest: parsedRequest
+          type: "device-error",
+          error: "Missing required data"
         });
-      };
+        return;
+      }
 
-      Proximity.addListener("onDeviceConnecting", handleDeviceConnecting);
-      Proximity.addListener("onDeviceConnected", handleDeviceConnected);
-      Proximity.addListener(
-        "onDocumentRequestReceived",
-        handleDocumentRequestReceived
+      const parsedRequest = parseVerifierRequest(JSON.parse(data));
+
+      const proximityDetails = getProximityDetails(
+        parsedRequest.request,
+        input.credentialsByType
       );
-      Proximity.addListener("onDeviceDisconnected", handleDeviceDisconnected);
-      Proximity.addListener("onError", handleError);
 
-      return () => {
-        // Cleanup function
-        Proximity.removeListener("onDeviceConnected");
-        Proximity.removeListener("onDeviceConnecting");
-        Proximity.removeListener("onDeviceDisconnected");
-        Proximity.removeListener("onDocumentRequestReceived");
-        Proximity.removeListener("onError");
-        void Proximity.close();
-      };
-    }
-  );
+      sendBack({
+        type: "device-document-request-received",
+        proximityDetails,
+        verifierRequest: parsedRequest
+      });
+    };
+
+    Proximity.addListener("onDeviceConnecting", handleDeviceConnecting);
+    Proximity.addListener("onDeviceConnected", handleDeviceConnected);
+    Proximity.addListener(
+      "onDocumentRequestReceived",
+      handleDocumentRequestReceived
+    );
+    Proximity.addListener("onDeviceDisconnected", handleDeviceDisconnected);
+    Proximity.addListener("onError", handleError);
+
+    return () => {
+      // Cleanup function
+      Proximity.removeListener("onDeviceConnected");
+      Proximity.removeListener("onDeviceConnecting");
+      Proximity.removeListener("onDeviceDisconnected");
+      Proximity.removeListener("onDocumentRequestReceived");
+      Proximity.removeListener("onError");
+      void Proximity.close();
+    };
+  });
 
   const terminateProximitySession = fromPromise<SendErrorResponseActorOutput>(
     () => Proximity.sendErrorResponse(Proximity.ErrorCode.SESSION_TERMINATED)
@@ -150,10 +160,10 @@ export const createProximityActorsImplementation = () => {
   return {
     checkPermissions,
     checkBluetoothIsActive,
-    startProximityFlow,
-    generateQrCodeString,
     closeProximityFlow,
+    generateQrCodeString,
     proximityCommunicationLogic,
+    startProximityFlow,
     terminateProximitySession
   };
 };

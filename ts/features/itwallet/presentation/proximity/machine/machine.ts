@@ -4,6 +4,7 @@ import { ProximityEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
 import {
   SendErrorResponseActorOutput,
+  ProximityCommunicationLogicActorInput,
   StartProximityFlowInput
 } from "./actors";
 import { mapEventToFailure, ProximityFailureType } from "./failure";
@@ -18,6 +19,7 @@ export const itwProximityMachine = setup({
     events: {} as ProximityEvents
   },
   actions: {
+    onInit: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     setQRCodeGenerationError: assign({ isQRCodeGenerationError: true }),
     navigateToGrantPermissionsScreen: notImplemented,
@@ -34,7 +36,10 @@ export const itwProximityMachine = setup({
     ),
     generateQrCodeString: fromPromise<string, void>(notImplemented),
     closeProximityFlow: fromPromise<boolean, void>(notImplemented),
-    proximityCommunicationLogic: fromCallback<ProximityEvents>(notImplemented),
+    proximityCommunicationLogic: fromCallback<
+      ProximityEvents,
+      ProximityCommunicationLogicActorInput
+    >(notImplemented),
     terminateProximitySession:
       fromPromise<SendErrorResponseActorOutput>(notImplemented)
   }
@@ -42,6 +47,7 @@ export const itwProximityMachine = setup({
   id: "itwProximityMachine",
   context: { ...InitialContext },
   initial: "Idle",
+  entry: "onInit",
   states: {
     Idle: {
       description:
@@ -271,7 +277,10 @@ export const itwProximityMachine = setup({
         "Manages the communication lifecycle between the device and the verifier",
       invoke: {
         id: "proximityCommunicationLogic",
-        src: "proximityCommunicationLogic"
+        src: "proximityCommunicationLogic",
+        input: ({ context }) => ({
+          credentialsByType: context.credentialsByType
+        })
       },
       on: {
         "device-connecting": {
