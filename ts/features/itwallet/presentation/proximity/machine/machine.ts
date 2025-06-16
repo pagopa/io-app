@@ -2,7 +2,10 @@ import { assign, fromCallback, fromPromise, setup } from "xstate";
 import { InitialContext, Context } from "./context";
 import { ProximityEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
-import { StartProximityFlowInput } from "./actors";
+import {
+  SendErrorResponseActorOutput,
+  StartProximityFlowInput
+} from "./actors";
 import { mapEventToFailure, ProximityFailureType } from "./failure";
 
 const notImplemented = () => {
@@ -32,7 +35,8 @@ export const itwProximityMachine = setup({
     generateQrCodeString: fromPromise<string, void>(notImplemented),
     closeProximityFlow: fromPromise<boolean, void>(notImplemented),
     proximityCommunicationLogic: fromCallback<ProximityEvents>(notImplemented),
-    terminateProximitySession: fromPromise<boolean>(notImplemented)
+    terminateProximitySession:
+      fromPromise<SendErrorResponseActorOutput>(notImplemented)
   }
 }).createMachine({
   id: "itwProximityMachine",
