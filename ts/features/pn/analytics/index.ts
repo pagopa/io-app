@@ -12,6 +12,13 @@ import {
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { PaymentStatistics } from "../../messages/store/reducers/payments";
 
+export type PNServiceStatus = "active" | "not_active" | "unknown";
+
+export const booleanOrUndefinedToPNServiceStatus = (
+  active: boolean | undefined
+): PNServiceStatus =>
+  active != null ? (active ? "active" : "not_active") : "unknown";
+
 const pnServiceActivationStatusBoolToString = (activated?: boolean) =>
   activated ? "activated" : "deactivated";
 
