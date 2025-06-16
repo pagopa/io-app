@@ -78,7 +78,7 @@ export const createProximityActorsImplementation = () => {
   );
 
   const proximityCommunicationLogic = fromCallback<ProximityEvents>(
-    ({ receive, sendBack }) => {
+    ({ sendBack }) => {
       const handleDeviceConnecting = () => {
         sendBack({ type: "device-connecting" });
       };
@@ -128,12 +128,6 @@ export const createProximityActorsImplementation = () => {
       );
       Proximity.addListener("onDeviceDisconnected", handleDeviceDisconnected);
       Proximity.addListener("onError", handleError);
-
-      receive(event => {
-        if (event.type === "back") {
-          sendBack({ type: "close" });
-        }
-      });
 
       return () => {
         // Cleanup function

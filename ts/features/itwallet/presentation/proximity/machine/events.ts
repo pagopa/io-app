@@ -17,10 +17,6 @@ export type Continue = {
   type: "continue";
 };
 
-export type Dismiss = {
-  type: "dismiss";
-};
-
 export type Retry = {
   type: "retry";
 };
@@ -49,7 +45,6 @@ export type ProximityEvents =
   | Back
   | Continue
   | Close
-  | Dismiss
   | Retry
   | DeviceConnecting
   | DeviceConnected

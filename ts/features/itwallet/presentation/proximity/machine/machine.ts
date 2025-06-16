@@ -1,4 +1,4 @@
-import { assign, fromCallback, fromPromise, sendTo, setup } from "xstate";
+import { assign, fromCallback, fromPromise, setup } from "xstate";
 import { InitialContext, Context } from "./context";
 import { ProximityEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
@@ -291,9 +291,6 @@ export const itwProximityMachine = setup({
             })
           }),
           target: "Failure"
-        },
-        close: {
-          target: "DeviceCommunication.Closing"
         }
       },
       states: {
@@ -302,7 +299,7 @@ export const itwProximityMachine = setup({
           description:
             "Displays the QR code to initiate proximity communication",
           on: {
-            dismiss: {
+            close: {
               target: "#itwProximityMachine.Idle"
             }
           }
@@ -320,7 +317,7 @@ export const itwProximityMachine = setup({
           description: "Displays the requested claims",
           on: {
             back: {
-              actions: sendTo("proximityCommunicationLogic", { type: "back" })
+              target: "#itwProximityMachine.DeviceCommunication.Closing"
             }
           }
         },
