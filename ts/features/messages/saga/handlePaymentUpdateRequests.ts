@@ -17,6 +17,7 @@ import {
   cancelQueuedPaymentUpdates,
   PaymentError,
   toGenericError,
+  toReasonString,
   toSpecificError,
   toTimeoutError,
   updatePaymentForMessage
@@ -31,6 +32,8 @@ import { readablePrivacyReport } from "../../../utils/reporters";
 import { PaymentInfoResponse } from "../../../../definitions/backend/PaymentInfoResponse";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { isTestEnv } from "../../../utils/environment";
+import { mixpanelTrack } from "../../../mixpanel";
+import { buildEventProperties } from "../../../utils/analytics";
 
 const PaymentUpdateWorkerCount = 5;
 
@@ -101,6 +104,12 @@ function* paymentUpdateRequestWorker(
       });
     } catch (e) {
       const reason = yield* call(unknownErrorToPaymentError, e);
+      void mixpanelTrack(
+        "MESSAGE_PAYMENT_FAILURE",
+        buildEventProperties("TECH", undefined, {
+          reason: toReasonString(reason)
+        })
+      );
       const failureAction = updatePaymentForMessage.failure({
         messageId,
         paymentId,
