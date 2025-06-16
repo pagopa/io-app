@@ -55,6 +55,8 @@ type WalletPaymentOutcomeRouteProps = RouteProp<
   "PAYMENT_CHECKOUT_OUTCOME"
 >;
 
+export const REFETCH_LATEST_RECEIPTS_DELAY_MS = 3000;
+
 const WalletPaymentOutcomeScreen = () => {
   useAvoidHardwareBackButton();
   const { requestFeedback } = useAppFeedbackContext();
@@ -131,7 +133,13 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleClose = () => {
-    dispatch(getPaymentsLatestReceiptAction.request());
+    // Workaround: this delay-based refetch is used until the API to fetch receipt details by notice code becomes available.
+    // The timeout allows enough time for the payment processing to complete before refetching the latest receipts.
+    // This ensures that when the user navigates back to the receipts list, the updated list is displayed.
+    setTimeout(() => {
+      dispatch(getPaymentsLatestReceiptAction.request());
+    }, REFETCH_LATEST_RECEIPTS_DELAY_MS);
+
     if (
       onSuccessAction === "showHome" ||
       onSuccessAction === "showTransaction"
