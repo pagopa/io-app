@@ -4936,7 +4936,10 @@
               "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
               "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
             ],
-            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}})."
+            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
+            "alert": {
+              "message": "Non potrai completare la verifica del documento."
+            }
           },
           "relyingParty": {
             "genericError": {

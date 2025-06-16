@@ -12,6 +12,7 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.
 import I18n from "../../../../../i18n.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import { selectProximityDetails } from "../machine/selectors.ts";
@@ -72,9 +73,14 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
 
-  const goBack = () => machineRef.send({ type: "back" });
+  const dismissalDialog = useItwDismissalDialog({
+    handleDismiss: () => machineRef.send({ type: "back" }),
+    customBodyMessage: I18n.t(
+      "features.itWallet.presentation.proximity.selectiveDisclosure.alert.message"
+    )
+  });
 
-  useHeaderSecondLevel({ title: "", goBack });
+  useHeaderSecondLevel({ title: "", goBack: dismissalDialog.show });
 
   return (
     <ForceScrollDownView
@@ -89,7 +95,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
           },
           secondary: {
             label: I18n.t("global.buttons.cancel"),
-            onPress: goBack
+            onPress: dismissalDialog.show
           }
         }
       }}
