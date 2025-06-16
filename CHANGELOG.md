@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0-rc.7](https://github.com/pagopa/io-app/compare/3.7.0-rc.6...3.7.0-rc.7) (2025-06-12)
+
+
+### Bug Fixes
+
+* [[IOAPPX-499](https://pagopa.atlassian.net/browse/IOAPPX-499)] Ensure barcode scanner is re-enabled after closing file picker ([#7062](https://github.com/pagopa/io-app/issues/7062)) ([5f3ed46](https://github.com/pagopa/io-app/commit/5f3ed4685000872517f44c428dc83adfc066fe80))
+
+## [3.7.0-rc.6](https://github.com/pagopa/io-app/compare/3.7.0-rc.5...3.7.0-rc.6) (2025-06-11)
+
+
+### Features
+
+* [[IOCOM-2301](https://pagopa.atlassian.net/browse/IOCOM-2301),[IOCOM-2414](https://pagopa.atlassian.net/browse/IOCOM-2414)] Message payments V2 ([#7054](https://github.com/pagopa/io-app/issues/7054)) ([38ee8aa](https://github.com/pagopa/io-app/commit/38ee8aa383bdb1f5c28b1062946cd18b1849e67e))
+
+
+### Chores
+
+* [[IOPID-2944](https://pagopa.atlassian.net/browse/IOPID-2944)] Add remote and local `activeSessionLogin` feature flags ([#7059](https://github.com/pagopa/io-app/issues/7059)) ([08ae802](https://github.com/pagopa/io-app/commit/08ae802e04fa37d4270b800376ece061f03a0c0f))
+* **IT Wallet:** [[SIW-2533](https://pagopa.atlassian.net/browse/SIW-2533)] Add back online alert within offline wallet ([#7066](https://github.com/pagopa/io-app/issues/7066)) ([dd752e5](https://github.com/pagopa/io-app/commit/dd752e574575c1712ad42d12319d428e43d6ba1d))
+
+## [3.7.0-rc.5](https://github.com/pagopa/io-app/compare/3.7.0-rc.4...3.7.0-rc.5) (2025-06-10)
+
 ## [3.7.0-rc.4](https://github.com/pagopa/io-app/compare/3.7.0-rc.3...3.7.0-rc.4) (2025-06-09)
 
 
