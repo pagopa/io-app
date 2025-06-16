@@ -72,7 +72,9 @@ export const useItwPresentQRCode = () => {
       if (shouldPresentQRCodeBottomSheet) {
         present();
       }
-    }, [shouldPresentQRCodeBottomSheet, present])
+
+      return dismiss;
+    }, [dismiss, present, shouldPresentQRCodeBottomSheet])
   );
 
   return {
