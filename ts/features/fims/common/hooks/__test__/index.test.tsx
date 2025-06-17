@@ -151,10 +151,11 @@ describe("index", () => {
               organizationFiscalCode: service.organization.fiscal_code,
               organizationName: service.organization.name,
               serviceName: service.name,
-              ephemeralSessionOniOS: true
+              ephemeralSessionOniOS: false
             }
           : {
-              serviceId
+              serviceId,
+              ephemeralSessionOniOS: false
             };
 
         renderFromServiceIdHook(serviceId, servicePot, serviceId);
@@ -183,7 +184,7 @@ describe("index", () => {
             serviceId: service.id,
             serviceName: pot.isSome(servicePot) ? service.name : undefined,
             source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-            ephemeralSessionOniOS: pot.isSome(servicePot) ? true : undefined
+            ephemeralSessionOniOS: false
           }
         });
       });
@@ -191,7 +192,8 @@ describe("index", () => {
     it(`should call 'navigation.navigate' with proper parameters for unmatching service id and return proper service data for analytics`, () => {
       const hookServiceId = "01JMEZB6QNR7KKDEFRR6WZEH6F" as ServiceId;
       const expectedServiceData = {
-        serviceId: hookServiceId
+        serviceId: hookServiceId,
+        ephemeralSessionOniOS: false
       };
 
       renderFromServiceIdHook(hookServiceId, pot.some(service), serviceId);
@@ -216,7 +218,7 @@ describe("index", () => {
           serviceId: hookServiceId,
           serviceName: undefined,
           source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-          ephemeralSessionOniOS: undefined
+          ephemeralSessionOniOS: false
         }
       });
     });
@@ -267,7 +269,7 @@ describe("index", () => {
             serviceId: service.id,
             serviceName: pot.isSome(servicePot) ? service.name : undefined,
             source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-            ephemeralSessionOniOS: pot.isSome(servicePot) ? true : undefined
+            ephemeralSessionOniOS: false
           }
         });
       });
@@ -296,7 +298,7 @@ describe("index", () => {
           serviceId: hookServiceId,
           serviceName: undefined,
           source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-          ephemeralSessionOniOS: undefined
+          ephemeralSessionOniOS: false
         }
       });
     });
@@ -319,7 +321,7 @@ describe("index", () => {
         organizationFiscalCode: configuration.organization_fiscal_code,
         organizationName: configuration.organization_name,
         serviceName: configuration.service_name,
-        ephemeralSessionOniOS: true
+        ephemeralSessionOniOS: false
       });
       expect(authenticationCallback).toBeDefined();
 
@@ -340,7 +342,7 @@ describe("index", () => {
           serviceId: configuration.service_id,
           serviceName: configuration.service_name,
           source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-          ephemeralSessionOniOS: true
+          ephemeralSessionOniOS: false
         }
       });
     });
@@ -431,7 +433,7 @@ describe("index", () => {
         organizationName: configuration.organization_name,
         serviceId: configuration.service_id,
         serviceName: configuration.service_name,
-        ephemeralSessionOniOS: true
+        ephemeralSessionOniOS: false
       });
     });
     it(`should return 'undefined' when the configuration id does not match`, () => {
@@ -492,7 +494,7 @@ describe("index", () => {
             },
             fims: {
               sso: {
-                ephemeralSessionOniOS: true
+                ephemeralSessionOniOS: false
               }
             }
           },
@@ -515,10 +517,11 @@ describe("index", () => {
                 organizationName: service.organization.name,
                 serviceId: service.id,
                 serviceName: service.name,
-                ephemeralSessionOniOS: true
+                ephemeralSessionOniOS: false
               }
             : {
-                serviceId: service.id
+                serviceId: service.id,
+                ephemeralSessionOniOS: false
               }
         );
       });
@@ -538,7 +541,7 @@ describe("index", () => {
             },
             fims: {
               sso: {
-                ephemeralSessionOniOS: true
+                ephemeralSessionOniOS: false
               }
             }
           }
@@ -566,7 +569,8 @@ describe("index", () => {
       );
 
       expect(internalServiceData).toEqual({
-        serviceId: callbackServiceId
+        serviceId: callbackServiceId,
+        ephemeralSessionOniOS: false
       });
     });
   });

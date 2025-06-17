@@ -13,9 +13,9 @@ exports[`fimsReducer should match snapshot 1`] = `
   "sso": {
     "ctaText": undefined,
     "currentFlowState": "idle",
+    "ephemeralSessionOniOS": false,
     "relyingPartyServiceId": undefined,
     "relyingPartyUrl": undefined,
-    "shareiOSCookies": undefined,
     "ssoData": {
       "kind": "PotNone",
     },

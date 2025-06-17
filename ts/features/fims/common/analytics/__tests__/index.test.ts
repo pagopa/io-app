@@ -44,7 +44,7 @@ describe("trackAuthenticationStart", () => {
           serviceName ? "defined   " : "undefined "
         } service name`, () => {
           const source = MESSAGES_ROUTES.MESSAGE_DETAIL;
-          const shareiOSCookies = true;
+          const ephemeralSessionOniOS = true;
           const mixpanelTrackMock = generateMixpanelTrackMock();
           void trackAuthenticationStart(
             referenceServiceId,
@@ -53,7 +53,7 @@ describe("trackAuthenticationStart", () => {
             organizationFiscalCode,
             referenceCtaLabel,
             source,
-            shareiOSCookies
+            ephemeralSessionOniOS
           );
           expect(mixpanelTrackMock.mock.calls.length).toBe(1);
           expect(mixpanelTrackMock.mock.calls[0].length).toBe(2);
@@ -67,7 +67,7 @@ describe("trackAuthenticationStart", () => {
             service_id: referenceServiceId,
             service_name: serviceName,
             source,
-            shareiOSCookies: true
+            ephemeralSessionOniOS: true
           });
         })
       )

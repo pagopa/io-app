@@ -13,7 +13,7 @@ export const trackAuthenticationStart = (
   organizationFiscalCode: string | undefined,
   ctaLabel: string,
   source: string,
-  shareiOSCookies: boolean | undefined
+  ephemeralSessionOniOS: boolean
 ) => {
   const eventName = `FIMS_START`;
   const props = buildEventProperties("UX", "action", {
@@ -23,7 +23,7 @@ export const trackAuthenticationStart = (
     organization_fiscal_code: organizationFiscalCode,
     fims_label: ctaLabel,
     source,
-    shareiOSCookies
+    ephemeralSessionOniOS
   });
   void mixpanelTrack(eventName, props);
 };

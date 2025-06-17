@@ -602,18 +602,6 @@ describe("fimsServiceIdInCookieDisabledListSelector", () => {
     expect(result).toBe(false);
   });
 
-  it("should return false when fims config is not available", () => {
-    const state = {
-      remoteConfig: O.some({})
-    } as GlobalState;
-
-    const result = fimsServiceIdInCookieDisabledListSelector(
-      state,
-      testServiceId
-    );
-    expect(result).toBe(false);
-  });
-
   it("should return false when iOSCookieDisabledServiceIds is not available", () => {
     const state = {
       remoteConfig: O.some({
