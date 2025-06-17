@@ -1,14 +1,11 @@
 import { Body, H6, VSpacer } from "@pagopa/io-app-design-system";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import { ComponentProps, ReactElement, useCallback } from "react";
 import { View } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { IdPayInstrumentInitiativesList } from "../../../idpay/wallet/components/IdPayInstrumentInitiativesList";
 import {
@@ -30,7 +27,7 @@ type Props = {
 const WalletDetailsPaymentMethodInitiatives = (
   props: Props
 ): ReactElement | null => {
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation = useIONavigation();
   const idWalletString = props.paymentMethod.walletId;
 
   const dispatch = useIODispatch();
