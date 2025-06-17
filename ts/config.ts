@@ -49,7 +49,6 @@ const DEFAULT_SENTRY_DSN =
 
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
-export const apiLoginUrlPrefix: string = Config.API_LOGIN_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
 export const mixpanelUrl = pipe(

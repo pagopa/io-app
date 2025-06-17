@@ -528,9 +528,3 @@ export const trackCTAPressed = (
   });
   void mixpanelTrack(eventName, props);
 };
-
-export const trackMessagePaymentFailure = (reason: string) => {
-  const eventName = "MESSAGE_PAYMENT_FAILURE";
-  const props = buildEventProperties("KO", undefined, { reason });
-  void mixpanelTrack(eventName, props);
-};

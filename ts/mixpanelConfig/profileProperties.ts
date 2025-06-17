@@ -30,11 +30,6 @@ import { itwAuthLevelSelector } from "../features/itwallet/common/store/selector
 import { fontPreferenceSelector } from "../store/reducers/persistedPreferences.ts";
 import { sendExceptionToSentry } from "../utils/sentryUtils.ts";
 import {
-  booleanOrUndefinedToPNServiceStatus,
-  PNServiceStatus
-} from "../features/pn/analytics/index.ts";
-import { isPnServiceEnabled } from "../features/pn/reminderBanner/reducer/bannerDismiss.ts";
-import {
   cgnStatusHandler,
   loginSessionConfigHandler,
   mixpanelOptInHandler,
@@ -48,25 +43,24 @@ import {
 } from "./mixpanelPropertyUtils";
 
 type ProfileProperties = {
-  BIOMETRIC_TECHNOLOGY: BiometricsType;
-  CGN_STATUS: TrackCgnStatus;
-  FONT_PREFERENCE: string;
-  ITW_CED_V2: ItwCed;
-  ITW_ID_V2: ItwId;
-  ITW_PG_V2: ItwPg;
-  ITW_STATUS_V2: ItwStatus;
-  ITW_TS_V2: ItwTs;
-  LOGIN_METHOD: string;
   LOGIN_SESSION: LoginSessionDuration;
+  LOGIN_METHOD: string;
+  TOS_ACCEPTED_VERSION: number | string;
+  BIOMETRIC_TECHNOLOGY: BiometricsType;
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
   NOTIFICATION_PERMISSION: NotificationPermissionType;
   NOTIFICATION_TOKEN: NotificationTokenType;
-  SAVED_PAYMENT_METHOD: number;
-  SEND_STATUS: PNServiceStatus;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
-  TOS_ACCEPTED_VERSION: number | string;
   TRACKING: MixpanelOptInTrackingType;
+  ITW_STATUS_V2: ItwStatus;
+  ITW_ID_V2: ItwId;
+  ITW_PG_V2: ItwPg;
+  ITW_TS_V2: ItwTs;
+  ITW_CED_V2: ItwCed;
+  SAVED_PAYMENT_METHOD: number;
+  CGN_STATUS: TrackCgnStatus;
   WELFARE_STATUS: ReadonlyArray<string>;
+  FONT_PREFERENCE: string;
 };
 
 export const updateMixpanelProfileProperties = async (
@@ -77,50 +71,45 @@ export const updateMixpanelProfileProperties = async (
     if (!isMixpanelInstanceInitialized()) {
       return;
     }
-    const notificationsEnabled = await checkNotificationPermissions();
-    const pnServiceEnabled = isPnServiceEnabled(state);
-
+    const LOGIN_SESSION = loginSessionConfigHandler(state);
+    const LOGIN_METHOD = loginMethodHandler(state);
+    const TOS_ACCEPTED_VERSION = tosVersionHandler(state);
     const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
-    const CGN_STATUS = cgnStatusHandler(state);
-    const FONT_PREFERENCE = fontPreferenceSelector(state);
-    const ITW_CED_V2 = cedStatusHandler(state);
+    const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
+    const notificationsEnabled = await checkNotificationPermissions();
+    const NOTIFICATION_TOKEN = getNotificationTokenType(state);
+    const SERVICE_CONFIGURATION = serviceConfigHandler(state);
+    const TRACKING = mixpanelOptInHandler(state);
+    const ITW_STATUS_V2 = walletStatusHandler(state);
     const ITW_ID_V2 = idStatusHandler(state);
     const ITW_PG_V2 = pgStatusHandler(state);
-    const ITW_STATUS_V2 = walletStatusHandler(state);
     const ITW_TS_V2 = tsStatusHandler(state);
-    const LOGIN_METHOD = loginMethodHandler(state);
-    const LOGIN_SESSION = loginSessionConfigHandler(state);
-    const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
-    const NOTIFICATION_PERMISSION =
-      getNotificationPermissionType(notificationsEnabled);
-    const NOTIFICATION_TOKEN = getNotificationTokenType(state);
+    const ITW_CED_V2 = cedStatusHandler(state);
     const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
-    const SEND_STATUS = booleanOrUndefinedToPNServiceStatus(pnServiceEnabled);
-    const SERVICE_CONFIGURATION = serviceConfigHandler(state);
-    const TOS_ACCEPTED_VERSION = tosVersionHandler(state);
-    const TRACKING = mixpanelOptInHandler(state);
+    const CGN_STATUS = cgnStatusHandler(state);
     const WELFARE_STATUS = welfareStatusHandler(state);
+    const FONT_PREFERENCE = fontPreferenceSelector(state);
 
     const profilePropertiesObject: ProfileProperties = {
+      LOGIN_SESSION,
+      LOGIN_METHOD,
+      TOS_ACCEPTED_VERSION,
       BIOMETRIC_TECHNOLOGY,
-      CGN_STATUS,
-      FONT_PREFERENCE,
-      ITW_CED_V2,
+      NOTIFICATION_CONFIGURATION,
+      NOTIFICATION_PERMISSION:
+        getNotificationPermissionType(notificationsEnabled),
+      NOTIFICATION_TOKEN,
+      SERVICE_CONFIGURATION,
+      TRACKING,
+      ITW_STATUS_V2,
       ITW_ID_V2,
       ITW_PG_V2,
-      ITW_STATUS_V2,
       ITW_TS_V2,
-      LOGIN_METHOD,
-      LOGIN_SESSION,
-      NOTIFICATION_CONFIGURATION,
-      NOTIFICATION_PERMISSION,
-      NOTIFICATION_TOKEN,
+      ITW_CED_V2,
       SAVED_PAYMENT_METHOD,
-      SEND_STATUS,
-      SERVICE_CONFIGURATION,
-      TOS_ACCEPTED_VERSION,
-      TRACKING,
-      WELFARE_STATUS
+      CGN_STATUS,
+      WELFARE_STATUS,
+      FONT_PREFERENCE
     };
 
     if (forceUpdateFor) {

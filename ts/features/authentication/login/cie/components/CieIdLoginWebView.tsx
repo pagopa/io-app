@@ -20,7 +20,7 @@ import { loggedInAuthSelector } from "../../../common/store/selectors";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { isDevEnv } from "../../../../../utils/environment";
 import { onLoginUriChanged } from "../../../common/utils/login";
-import { apiLoginUrlPrefix } from "../../../../../config";
+import { apiUrlPrefix } from "../../../../../config";
 import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
 import { IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
 import {
@@ -258,7 +258,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
       const webViewHttpError = error as WebViewHttpErrorEvent;
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
-        if (url.includes(apiLoginUrlPrefix) || statusCode !== 403) {
+        if (url.includes(apiUrlPrefix) || statusCode !== 403) {
           navigateToCieIdAuthenticationError();
         }
       } else {

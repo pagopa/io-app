@@ -1,11 +1,13 @@
 import { Body, H6, VSpacer } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { ComponentProps, ReactElement, useCallback } from "react";
 import { View } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { IdPayInstrumentInitiativesList } from "../../../idpay/wallet/components/IdPayInstrumentInitiativesList";
 import {
@@ -13,7 +15,6 @@ import {
   idPayInitiativesFromInstrumentRefreshStop
 } from "../../../idpay/wallet/store/actions";
 import { idPayEnabledInitiativesFromInstrumentSelector } from "../../../idpay/wallet/store/reducers";
-import { PaymentsMethodDetailsRoutes } from "../navigation/routes";
 
 type Props = {
   paymentMethod: WalletInfo;
@@ -27,7 +28,7 @@ type Props = {
 const WalletDetailsPaymentMethodInitiatives = (
   props: Props
 ): ReactElement | null => {
-  const navigation = useIONavigation();
+  const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
   const idWalletString = props.paymentMethod.walletId;
 
   const dispatch = useIODispatch();
@@ -50,14 +51,8 @@ const WalletDetailsPaymentMethodInitiatives = (
   );
 
   const navigateToPairableInitiativesList = () =>
-    navigation.navigate({
-      name: PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR,
-      params: {
-        screen: PaymentsMethodDetailsRoutes.IDPAY_INITIATIVE_DETAILS_LIST,
-        params: {
-          idWallet: idWalletString
-        }
-      }
+    navigation.navigate(ROUTES.WALLET_IDPAY_INITIATIVE_LIST, {
+      idWallet: idWalletString
     });
 
   return initiativesList.length > 0 ? (
