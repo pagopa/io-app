@@ -408,9 +408,6 @@ export function* initializeApplicationSaga(
   // watch FCI saga
   yield* fork(watchFciSaga, sessionToken, keyInfo);
 
-  // Start watching for cgn actions
-  yield* fork(watchBonusCgnSaga, sessionToken);
-
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken; // Needs further investigation
 
@@ -655,6 +652,9 @@ export function* initializeApplicationSaga(
 
   // Here we can be sure that the session information is loaded and valid
   const bpdToken = maybeSessionInformation.value.bpdToken as string;
+
+  // Start watching for cgn actions
+  yield* fork(watchBonusCgnSaga, sessionToken);
 
   const pnEnabled: ReturnType<typeof isPnRemoteEnabledSelector> = yield* select(
     isPnRemoteEnabledSelector
