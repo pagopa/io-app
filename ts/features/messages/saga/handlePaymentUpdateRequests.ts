@@ -15,9 +15,9 @@ import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../../api/backend";
 import {
   cancelQueuedPaymentUpdates,
+  isGenericError,
   PaymentError,
   toGenericError,
-  toReasonString,
   toSpecificError,
   toTimeoutError,
   updatePaymentForMessage
@@ -32,8 +32,7 @@ import { readablePrivacyReport } from "../../../utils/reporters";
 import { PaymentInfoResponse } from "../../../../definitions/backend/PaymentInfoResponse";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { isTestEnv } from "../../../utils/environment";
-import { mixpanelTrack } from "../../../mixpanel";
-import { buildEventProperties } from "../../../utils/analytics";
+import { trackMessagePaymentFailure } from "../analytics";
 
 const PaymentUpdateWorkerCount = 5;
 
@@ -104,12 +103,7 @@ function* paymentUpdateRequestWorker(
       });
     } catch (e) {
       const reason = yield* call(unknownErrorToPaymentError, e);
-      void mixpanelTrack(
-        "MESSAGE_PAYMENT_FAILURE",
-        buildEventProperties("TECH", undefined, {
-          reason: toReasonString(reason)
-        })
-      );
+      yield* call(trackPaymentErrorIfNeeded, reason);
       const failureAction = updatePaymentForMessage.failure({
         messageId,
         paymentId,
@@ -260,10 +254,17 @@ const unknownErrorToString = (e: unknown): string => {
   return "Unknown error with no data";
 };
 
+const trackPaymentErrorIfNeeded = (error: PaymentError) => {
+  if (isGenericError(error)) {
+    trackMessagePaymentFailure(error.message);
+  }
+};
+
 export const testable = isTestEnv
   ? {
       legacyGetVerificaRpt,
       paymentUpdateRequestWorker,
+      trackPaymentErrorIfNeeded,
       unknownErrorToPaymentError,
       unknownErrorToString,
       updatePaymentInfo

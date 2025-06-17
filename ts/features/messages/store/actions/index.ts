@@ -279,18 +279,6 @@ export const toSpecificError = (details: Detail_v2Enum): PaymentError => ({
 });
 export const toTimeoutError = (): PaymentError => ({ type: "timeout" });
 
-export const toReasonString = (error: PaymentError) => {
-  switch (error.type) {
-    case "generic":
-      return error.message;
-    case "specific":
-      return `${error.details}`;
-    case "timeout":
-      return "timeout";
-  }
-  return "error type unknown";
-};
-
 export type UpdatePaymentForMessageFailure = {
   messageId: UIMessageId;
   paymentId: string;
