@@ -371,6 +371,7 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: T_WIA,
+      isL3FeaturesEnabled: false,
       identification: {
         mode: "cieId",
         level: "L2"
