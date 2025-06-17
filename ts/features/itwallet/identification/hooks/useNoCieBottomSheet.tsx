@@ -78,9 +78,7 @@ export const useNoCieBottomSheet = () => {
     )
   });
 
-  return {
-    noCieBottomSheet
-  };
+  return noCieBottomSheet;
 };
 
 const styles = StyleSheet.create({

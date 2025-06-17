@@ -66,7 +66,7 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
 
   const { cieInfoBottomSheet, pinBottomSheet } = useCieInfoAndPinBottomSheets();
 
-  const { noCieBottomSheet } = useNoCieBottomSheet();
+  const noCieBottomSheet = useNoCieBottomSheet();
   useFocusEffect(trackItWalletIDMethod);
 
   const handleCiePinPress = useCallback(() => {

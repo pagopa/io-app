@@ -23,6 +23,14 @@ type ScreenProps = IOStackNavigationRouteProps<
   "ITW_IDENTIFICATION_CIE_WARNING"
 >;
 
+const cieFaqUrls: Record<CieWarningType, string> = {
+  noPin:
+    "https://assistenza.ioapp.it/hc/it/articles/30724125085713-Ho-dimenticato-il-PIN-della-CIE",
+  // TODO: update the URL when the new one is available
+  noCie:
+    "https://assistenza.ioapp.it/hc/it/articles/30724116346129-Cos-%C3%A8-la-CIE-e-come-richiederla"
+};
+
 export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const { warning } = params.route.params;
@@ -45,14 +53,6 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
 
   const goToL2Identification = () => {
     machineRef.send({ type: "go-to-l2-identification" });
-  };
-
-  const cieFaqUrls: Record<CieWarningType, string> = {
-    noPin:
-      "https://assistenza.ioapp.it/hc/it/articles/30724125085713-Ho-dimenticato-il-PIN-della-CIE",
-    // TODO: update the URL when the new one is available
-    noCie:
-      "https://assistenza.ioapp.it/hc/it/articles/30724116346129-Cos-%C3%A8-la-CIE-e-come-richiederla"
   };
 
   const getOperationResultScreenContentProps =
