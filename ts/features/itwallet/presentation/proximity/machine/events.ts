@@ -40,9 +40,14 @@ export type DeviceDocumentRequestReceived = {
   verifierRequest: VerifierRequest;
 };
 
+export type Consent = {
+  type: "holder-consent";
+};
+
 export type ProximityEvents =
   | Start
   | Back
+  | Consent
   | Continue
   | Close
   | Retry

@@ -11,11 +11,17 @@ import {
 import BluetoothStateManager from "react-native-bluetooth-state-manager";
 import {
   Proximity,
+  type VerifierRequest,
   parseError,
   parseVerifierRequest
 } from "@pagopa/io-react-native-proximity";
-import { getProximityDetails } from "../utils/itwProximityPresentationUtils";
+import {
+  generateAcceptedFields,
+  getDocuments,
+  getProximityDetails
+} from "../utils/itwProximityPresentationUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { assert } from "../../../../../utils/assert";
 import { ProximityEvents } from "./events";
 
 const PERMISSIONS_TO_CHECK: Array<Permission> =
@@ -40,6 +46,15 @@ export type SendErrorResponseActorOutput = Awaited<
 export type ProximityCommunicationLogicActorInput = {
   credentialsByType: Record<string, StoredCredential>;
 };
+
+export type SendDocumentsActorInput = {
+  credentialsByType: Record<string, StoredCredential>;
+  verifiedRequest?: VerifierRequest;
+};
+
+export type SendDocumentsActorOutput = Awaited<
+  ReturnType<typeof Proximity.sendResponse>
+>;
 
 export const createProximityActorsImplementation = () => {
   const checkPermissions = fromPromise<boolean, void>(async () => {
@@ -151,6 +166,25 @@ export const createProximityActorsImplementation = () => {
     };
   });
 
+  const sendDocuments = fromPromise<
+    SendDocumentsActorOutput,
+    SendDocumentsActorInput
+  >(async ({ input }) => {
+    const { credentialsByType, verifiedRequest } = input;
+    assert(verifiedRequest, "Missing required verifiedRequest");
+
+    const documents = getDocuments(verifiedRequest.request, credentialsByType);
+    // Currently we accept all the fields requested by the verifier app
+    const acceptedFields = generateAcceptedFields(verifiedRequest.request);
+
+    const generatedResponse = await Proximity.generateResponse(
+      documents,
+      acceptedFields
+    );
+
+    return Proximity.sendResponse(generatedResponse);
+  });
+
   const terminateProximitySession = fromPromise<SendErrorResponseActorOutput>(
     () => Proximity.sendErrorResponse(Proximity.ErrorCode.SESSION_TERMINATED)
   );
@@ -163,6 +197,7 @@ export const createProximityActorsImplementation = () => {
     closeProximityFlow,
     generateQrCodeString,
     proximityCommunicationLogic,
+    sendDocuments,
     startProximityFlow,
     terminateProximitySession
   };

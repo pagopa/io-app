@@ -1,4 +1,8 @@
-import { type VerifierRequest } from "@pagopa/io-react-native-proximity";
+import {
+  AcceptedFields,
+  Proximity,
+  type VerifierRequest
+} from "@pagopa/io-react-native-proximity";
 import {
   ParsedCredential,
   StoredCredential
@@ -37,4 +41,56 @@ export const getProximityDetails = (
         claimsToDisplay: parseClaims(parsedCredential)
       };
     }
+  );
+
+export const getDocuments = (
+  request: VerifierRequest["request"],
+  credentialsByType: Record<string, StoredCredential | undefined>
+): Array<Proximity.Document> =>
+  Object.entries(request).reduce<Array<Proximity.Document>>(
+    (acc, [credentialKey]) => {
+      const storedCredential = credentialsByType[credentialKey];
+
+      if (!storedCredential) {
+        return acc;
+      }
+
+      const { credential, credentialType, keyTag } = storedCredential;
+
+      return [
+        ...acc,
+        {
+          alias: keyTag,
+          docType: credentialType,
+          issuerSignedContent: credential
+        }
+      ];
+    },
+    []
+  );
+
+interface NestedBooleanMap {
+  [key: string]: boolean | NestedBooleanMap;
+}
+
+const acceptAllFields = <T extends NestedBooleanMap>(input: T): T =>
+  Object.entries(input).reduce((acc, [key, value]) => {
+    if (typeof value === "boolean") {
+      return { ...acc, [key]: true };
+    } else if (typeof value === "object" && value !== null) {
+      return { ...acc, [key]: acceptAllFields(value) };
+    } else {
+      return { ...acc, [key]: value };
+    }
+  }, {} as T);
+
+export const generateAcceptedFields = (
+  request: VerifierRequest["request"]
+): AcceptedFields =>
+  Object.entries(request).reduce(
+    (acc, [credentialKey, { isAuthenticated, ...namespaces }]) => ({
+      ...acc,
+      [credentialKey]: acceptAllFields(namespaces)
+    }),
+    {}
   );

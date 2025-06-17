@@ -5,6 +5,8 @@ import { ItwPresentationTags } from "./tags";
 import {
   SendErrorResponseActorOutput,
   ProximityCommunicationLogicActorInput,
+  SendDocumentsActorInput,
+  SendDocumentsActorOutput,
   StartProximityFlowInput
 } from "./actors";
 import { mapEventToFailure, ProximityFailureType } from "./failure";
@@ -26,6 +28,7 @@ export const itwProximityMachine = setup({
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
+    navigateToSendDocumentsResponseScreen: notImplemented,
     closeProximity: notImplemented
   },
   actors: {
@@ -41,7 +44,11 @@ export const itwProximityMachine = setup({
       ProximityCommunicationLogicActorInput
     >(notImplemented),
     terminateProximitySession:
-      fromPromise<SendErrorResponseActorOutput>(notImplemented)
+      fromPromise<SendErrorResponseActorOutput>(notImplemented),
+    sendDocuments: fromPromise<
+      SendDocumentsActorOutput,
+      SendDocumentsActorInput
+    >(notImplemented)
   }
 }).createMachine({
   id: "itwProximityMachine",
@@ -329,8 +336,31 @@ export const itwProximityMachine = setup({
         ClaimsDisclosure: {
           description: "Displays the requested claims",
           on: {
+            "holder-consent": {
+              target:
+                "#itwProximityMachine.DeviceCommunication.SendingDocuments"
+            },
             back: {
               target: "#itwProximityMachine.DeviceCommunication.Closing"
+            }
+          }
+        },
+        SendingDocuments: {
+          tags: [ItwPresentationTags.Loading],
+          entry: "navigateToSendDocumentsResponseScreen",
+          description: "Sends the required documents to the verifier app",
+          invoke: {
+            id: "sendDocuments",
+            src: "sendDocuments",
+            input: ({ context }) => ({
+              credentialsByType: context.credentialsByType,
+              verifiedRequest: context.verifierRequest
+            }),
+            onDone: {
+              // TODO: [SIW-2430]
+            },
+            onError: {
+              // TODO: [SIW-2431]
             }
           }
         },
