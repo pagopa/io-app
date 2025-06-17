@@ -201,14 +201,14 @@ describe("handlePaymentUpdateRequests", () => {
         })
         .throw(error)
         .call(testable!.unknownErrorToPaymentError, error)
-        .next()
+        .next(paymentError)
         .call(testable!.trackPaymentErrorIfNeeded, paymentError)
         .next()
         .put(
           updatePaymentForMessage.failure({
             messageId,
             paymentId,
-            reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO),
+            reason: paymentError,
             serviceId
           })
         )
