@@ -29,7 +29,6 @@
 		97F089B39469411991377615 /* DMMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 875B0C3A5326413494A9311A /* DMMono-Medium.ttf */; };
 		A5C4E8CE93074865A66DFAC1 /* TitilliumSansPro-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 015E4FBE7D1D4C2485C73321 /* TitilliumSansPro-SemiboldItalic.otf */; };
 		B551AC412DA55A0E00A4E30F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B551AC402DA55A0E00A4E30F /* AppDelegate.swift */; };
-		B572E1E42DC12161009BA244 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		B57C5DCD2D8B12A500173EF4 /* AppReviewModule.m in Sources */ = {isa = PBXBuildFile; fileRef = B57C5DCC2D8B129A00173EF4 /* AppReviewModule.m */; };
 		B57C5DCF2D8B12DC00173EF4 /* AppReviewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57C5DCE2D8B12D200173EF4 /* AppReviewModule.swift */; };
 		B7B71EAAE496484488FE3751 /* Titillio-Extrabold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 59423B676D254801BFAA4C5E /* Titillio-Extrabold.otf */; };
@@ -341,7 +340,6 @@
 				16471906574A44719FD557C5 /* TitilliumSansPro-BoldItalic.otf in Resources */,
 				8D51BCD77547410BBC7E6050 /* TitilliumSansPro-Italic.otf in Resources */,
 				1024B7E387E34295AFBA19B6 /* TitilliumSansPro-LightItalic.otf in Resources */,
-				B572E1E42DC12161009BA244 /* Images.xcassets in Resources */,
 				A5C4E8CE93074865A66DFAC1 /* TitilliumSansPro-SemiboldItalic.otf in Resources */,
 				45678F6126F1401FB03B1B02 /* TitilliumSansPro-ThinItalic.otf in Resources */,
 				13F005FA91AA4EF5BAD12096 /* Titillio-Black.otf in Resources */,
@@ -387,6 +385,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/IOWalletProximity/IOWalletProximity.framework/IOWalletProximity",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskAnswerBotProvidersSDK/AnswerBotProvidersSDK.framework/AnswerBotProvidersSDK",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskAnswerBotSDK/AnswerBotSDK.framework/AnswerBotSDK",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatProvidersSDK/ChatProvidersSDK.framework/ChatProvidersSDK",
@@ -402,6 +401,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IOWalletProximity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnswerBotProvidersSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnswerBotSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChatProvidersSDK.framework",
@@ -569,7 +569,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 0;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
@@ -607,7 +607,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 0;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
@@ -850,7 +850,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 0;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = M2X5YQ4BJ7;
