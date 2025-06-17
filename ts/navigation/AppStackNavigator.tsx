@@ -29,11 +29,7 @@ import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
-import {
-  isBackendStatusLoadedSelector,
-  isCGNEnabledAfterLoadSelector,
-  isCGNEnabledSelector
-} from "../store/reducers/backendStatus/remoteConfig";
+import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import {
   IONavigationDarkTheme,
