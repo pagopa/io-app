@@ -34,20 +34,20 @@ export type FimsErrorStateType = {
 
 export type FimsSSOState = {
   ssoData: pot.Pot<Consent, FimsErrorStateType>;
+  ephemeralSessionOniOS: boolean;
   ctaText?: string;
   currentFlowState: FimsFlowStateTags;
   relyingPartyServiceId?: ServiceId;
   relyingPartyUrl?: string;
-  shareiOSCookies?: boolean;
 };
 
 const INITIAL_STATE: FimsSSOState = {
   ssoData: pot.none,
+  ephemeralSessionOniOS: false,
   ctaText: undefined,
   currentFlowState: "idle",
   relyingPartyServiceId: undefined,
-  relyingPartyUrl: undefined,
-  shareiOSCookies: undefined
+  relyingPartyUrl: undefined
 };
 
 const reducer = (
@@ -72,7 +72,7 @@ const reducer = (
         ssoData: pot.noneLoading,
         relyingPartyServiceId: undefined,
         relyingPartyUrl: action.payload.ctaUrl,
-        shareiOSCookies: action.payload.shareiOSCookies
+        ephemeralSessionOniOS: action.payload.ephemeralSessionOniOS
       };
     case getType(fimsGetConsentsListAction.success):
       return {

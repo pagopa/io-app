@@ -151,7 +151,7 @@ describe("index", () => {
               organizationFiscalCode: service.organization.fiscal_code,
               organizationName: service.organization.name,
               serviceName: service.name,
-              shareiOSCookies: true
+              ephemeralSessionOniOS: true
             }
           : {
               serviceId
@@ -183,7 +183,7 @@ describe("index", () => {
             serviceId: service.id,
             serviceName: pot.isSome(servicePot) ? service.name : undefined,
             source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-            shareiOSCookies: pot.isSome(servicePot) ? true : undefined
+            ephemeralSessionOniOS: pot.isSome(servicePot) ? true : undefined
           }
         });
       });
@@ -216,7 +216,7 @@ describe("index", () => {
           serviceId: hookServiceId,
           serviceName: undefined,
           source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-          shareiOSCookies: undefined
+          ephemeralSessionOniOS: undefined
         }
       });
     });
@@ -267,7 +267,7 @@ describe("index", () => {
             serviceId: service.id,
             serviceName: pot.isSome(servicePot) ? service.name : undefined,
             source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-            shareiOSCookies: pot.isSome(servicePot) ? true : undefined
+            ephemeralSessionOniOS: pot.isSome(servicePot) ? true : undefined
           }
         });
       });
@@ -296,7 +296,7 @@ describe("index", () => {
           serviceId: hookServiceId,
           serviceName: undefined,
           source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-          shareiOSCookies: undefined
+          ephemeralSessionOniOS: undefined
         }
       });
     });
@@ -319,7 +319,7 @@ describe("index", () => {
         organizationFiscalCode: configuration.organization_fiscal_code,
         organizationName: configuration.organization_name,
         serviceName: configuration.service_name,
-        shareiOSCookies: true
+        ephemeralSessionOniOS: true
       });
       expect(authenticationCallback).toBeDefined();
 
@@ -340,7 +340,7 @@ describe("index", () => {
           serviceId: configuration.service_id,
           serviceName: configuration.service_name,
           source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-          shareiOSCookies: true
+          ephemeralSessionOniOS: true
         }
       });
     });
@@ -376,7 +376,7 @@ describe("index", () => {
         organizationName: "Organization name",
         serviceId: "01JMFDP73MT43B4507XXQB0105" as ServiceId,
         serviceName: "Service name",
-        shareiOSCookies: true
+        ephemeralSessionOniOS: true
       };
       const url = "iosso://https://relyingParty.url/login";
 
@@ -400,7 +400,7 @@ describe("index", () => {
           serviceId: innerServiceData.serviceId,
           serviceName: innerServiceData.serviceName,
           source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-          shareiOSCookies: true
+          ephemeralSessionOniOS: true
         }
       });
     });
@@ -431,7 +431,7 @@ describe("index", () => {
         organizationName: configuration.organization_name,
         serviceId: configuration.service_id,
         serviceName: configuration.service_name,
-        shareiOSCookies: true
+        ephemeralSessionOniOS: true
       });
     });
     it(`should return 'undefined' when the configuration id does not match`, () => {
@@ -492,7 +492,7 @@ describe("index", () => {
             },
             fims: {
               sso: {
-                shareiOSCookies: true
+                ephemeralSessionOniOS: true
               }
             }
           },
@@ -515,7 +515,7 @@ describe("index", () => {
                 organizationName: service.organization.name,
                 serviceId: service.id,
                 serviceName: service.name,
-                shareiOSCookies: true
+                ephemeralSessionOniOS: true
               }
             : {
                 serviceId: service.id
@@ -538,7 +538,7 @@ describe("index", () => {
             },
             fims: {
               sso: {
-                shareiOSCookies: true
+                ephemeralSessionOniOS: true
               }
             }
           }
@@ -577,7 +577,7 @@ describe("index", () => {
         organizationName: "Organization name",
         serviceId: "01JMFG3E20JFQH6HAQD9BDRB19" as ServiceId,
         serviceName: "Service name",
-        shareiOSCookies: true
+        ephemeralSessionOniOS: true
       };
 
       renderFromServiceDataHook(internalServiceData);
@@ -600,7 +600,7 @@ describe("index", () => {
           serviceId: internalServiceData.serviceId,
           serviceName: internalServiceData.serviceName,
           source: MESSAGES_ROUTES.MESSAGE_DETAIL,
-          shareiOSCookies: true
+          ephemeralSessionOniOS: true
         }
       });
     });
@@ -653,7 +653,7 @@ const renderFromServiceIdHook = (
       },
       fims: {
         sso: {
-          shareiOSCookies: true
+          ephemeralSessionOniOS: true
         }
       }
     }
@@ -676,7 +676,7 @@ const renderFromAuthenticationFlowHook = (
       },
       fims: {
         sso: {
-          shareiOSCookies: true
+          ephemeralSessionOniOS: true
         }
       }
     }
@@ -706,7 +706,7 @@ const renderFromRemoteConfigurationHook = (
     features: {
       fims: {
         sso: {
-          shareiOSCookies: true
+          ephemeralSessionOniOS: true
         }
       }
     }
@@ -724,7 +724,7 @@ const renderFromServiceDataHook = (
     features: {
       fims: {
         sso: {
-          shareiOSCookies: true
+          ephemeralSessionOniOS: true
         }
       }
     }

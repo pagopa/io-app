@@ -9,7 +9,7 @@ import {
 import {
   fimsCtaTextSelector,
   fimsRelyingPartyUrlIfFastLoginSelector,
-  fimsShareiOSCookiesSelector
+  fimsEphemeralSessionOniOSSelector
 } from "../store/selectors";
 import { handleFimsAbortOrCancel } from "./handleFimsAbortOrCancel";
 import { handleFimsGetConsentsList } from "./handleFimsGetConsentsList";
@@ -32,13 +32,15 @@ export function* watchFimsSSOSaga(): SagaIterator {
   const fimsRelyingPartyUrl = yield* select(
     fimsRelyingPartyUrlIfFastLoginSelector
   );
-  const fimsShareiOSCookies = yield* select(fimsShareiOSCookiesSelector);
+  const ephemeralSessionOniOS = yield* select(
+    fimsEphemeralSessionOniOSSelector
+  );
   if (fimsCtaText && fimsRelyingPartyUrl) {
     yield* put(
       fimsGetConsentsListAction.request({
         ctaText: fimsCtaText,
         ctaUrl: fimsRelyingPartyUrl,
-        shareiOSCookies: fimsShareiOSCookies
+        ephemeralSessionOniOS
       })
     );
   }

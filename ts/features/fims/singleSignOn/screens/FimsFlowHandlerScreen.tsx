@@ -53,7 +53,7 @@ export type FimsFlowHandlerScreenRouteParams = {
   source: string;
   /* This indicates if the in-app browser on iOS must
    * share the cookies. If true, a native popup will appear to the user. */
-  shareiOSCookies: boolean | undefined;
+  ephemeralSessionOniOS: boolean;
 };
 
 type FimsFlowHandlerScreenRouteProps = IOStackNavigationRouteProps<
@@ -72,7 +72,7 @@ export const FimsFlowHandlerScreen = (
     serviceId,
     serviceName,
     source,
-    shareiOSCookies
+    ephemeralSessionOniOS
   } = props.route.params;
   const dispatch = useIODispatch();
 
@@ -114,10 +114,14 @@ export const FimsFlowHandlerScreen = (
         organizationFiscalCode,
         ctaText,
         source,
-        shareiOSCookies
+        ephemeralSessionOniOS
       );
       dispatch(
-        fimsGetConsentsListAction.request({ ctaText, ctaUrl, shareiOSCookies })
+        fimsGetConsentsListAction.request({
+          ctaText,
+          ctaUrl,
+          ephemeralSessionOniOS
+        })
       );
     } else if (requiresAppUpdate) {
       trackAuthenticationError(
@@ -138,7 +142,7 @@ export const FimsFlowHandlerScreen = (
     serviceId,
     serviceName,
     source,
-    shareiOSCookies
+    ephemeralSessionOniOS
   ]);
 
   if (requiresAppUpdate) {

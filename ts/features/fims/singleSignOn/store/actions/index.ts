@@ -10,7 +10,7 @@ import { FimsErrorStateType } from "../reducers";
 type FimsGetConsentsListRequestType = {
   ctaText: string;
   ctaUrl: string;
-  shareiOSCookies?: boolean;
+  ephemeralSessionOniOS: boolean;
 };
 
 type FimsAcceptConsentsRequestType = {

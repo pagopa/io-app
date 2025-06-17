@@ -15,7 +15,7 @@ import {
   handleFimsBackNavigation,
   handleFimsResourcesDeallocation
 } from "../sagaUtils";
-import { fimsShareiOSCookiesSelector } from "../../store/selectors";
+import { fimsEphemeralSessionOniOSSelector } from "../../store/selectors";
 
 describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
   describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
@@ -49,8 +49,8 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
-        .select(fimsShareiOSCookiesSelector)
-        .next(true)
+        .select(fimsEphemeralSessionOniOSSelector)
+        .next(false)
         .call(
           LoginUtils.openAuthenticationSession,
           "https://relyingParty.url/inAppBrowserLandingPage",
@@ -92,8 +92,8 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
-        .select(fimsShareiOSCookiesSelector)
-        .next(false)
+        .select(fimsEphemeralSessionOniOSSelector)
+        .next(true)
         .call(
           LoginUtils.openAuthenticationSession,
           "https://relyingParty.url/inAppBrowserLandingPage",
@@ -234,8 +234,8 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
-        .select(fimsShareiOSCookiesSelector)
-        .next(true)
+        .select(fimsEphemeralSessionOniOSSelector)
+        .next(false)
         .call(
           LoginUtils.openAuthenticationSession,
           "https://relyingParty.url/inAppBrowserLandingPage",

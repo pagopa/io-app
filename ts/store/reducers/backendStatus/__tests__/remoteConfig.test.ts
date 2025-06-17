@@ -587,22 +587,34 @@ describe("pnPrivacyUrlsSelector", () => {
 });
 
 describe("fimsServiceIdInCookieDisabledListSelector", () => {
-  const mockServiceId = "service1" as ServiceId;
-  const mockDisabledServiceId = "service2" as ServiceId;
+  const testServiceId = "01JMHVSD7JGCNJF36TX0JM0JF3" as ServiceId;
+  const anotherServiceId = "02JMHVSD7JGCNJF36TX0JM0JF4" as ServiceId;
 
-  it("should return true when remote config is not available (default behavior)", () => {
+  it("should return false when remote config is not available", () => {
     const state = {
       remoteConfig: O.none
     } as GlobalState;
 
     const result = fimsServiceIdInCookieDisabledListSelector(
       state,
-      mockServiceId
+      testServiceId
     );
-    expect(result).toBe(true);
+    expect(result).toBe(false);
   });
 
-  it("should return true when iOSCookieDisabledServiceIds is not defined", () => {
+  it("should return false when fims config is not available", () => {
+    const state = {
+      remoteConfig: O.some({})
+    } as GlobalState;
+
+    const result = fimsServiceIdInCookieDisabledListSelector(
+      state,
+      testServiceId
+    );
+    expect(result).toBe(false);
+  });
+
+  it("should return false when iOSCookieDisabledServiceIds is not available", () => {
     const state = {
       remoteConfig: O.some({
         fims: {}
@@ -611,55 +623,59 @@ describe("fimsServiceIdInCookieDisabledListSelector", () => {
 
     const result = fimsServiceIdInCookieDisabledListSelector(
       state,
-      mockServiceId
-    );
-    expect(result).toBe(true);
-  });
-
-  it("should return true when serviceId is not in the disabled list", () => {
-    const state = {
-      remoteConfig: O.some({
-        fims: {
-          iOSCookieDisabledServiceIds: [mockDisabledServiceId]
-        }
-      })
-    } as GlobalState;
-
-    const result = fimsServiceIdInCookieDisabledListSelector(
-      state,
-      mockServiceId
-    );
-    expect(result).toBe(true);
-  });
-
-  it("should return false when serviceId is in the disabled list", () => {
-    const state = {
-      remoteConfig: O.some({
-        fims: {
-          iOSCookieDisabledServiceIds: [mockServiceId]
-        }
-      })
-    } as GlobalState;
-
-    const result = fimsServiceIdInCookieDisabledListSelector(
-      state,
-      mockServiceId
+      testServiceId
     );
     expect(result).toBe(false);
   });
 
-  it("should handle empty disabled services list", () => {
+  it("should return false when serviceId is not in the disabled list", () => {
     const state = {
       remoteConfig: O.some({
         fims: {
-          iOSCookieDisabledServiceIds: []
+          iOSCookieDisabledServiceIds: [anotherServiceId]
         }
       })
     } as GlobalState;
 
     const result = fimsServiceIdInCookieDisabledListSelector(
       state,
-      mockServiceId
+      testServiceId
+    );
+    expect(result).toBe(false);
+  });
+
+  it("should return true when serviceId is in the disabled list", () => {
+    const state = {
+      remoteConfig: O.some({
+        fims: {
+          iOSCookieDisabledServiceIds: [testServiceId]
+        }
+      })
+    } as GlobalState;
+
+    const result = fimsServiceIdInCookieDisabledListSelector(
+      state,
+      testServiceId
+    );
+    expect(result).toBe(true);
+  });
+
+  it("should return true when serviceId is in a list with multiple disabled services", () => {
+    const state = {
+      remoteConfig: O.some({
+        fims: {
+          iOSCookieDisabledServiceIds: [
+            anotherServiceId,
+            testServiceId,
+            "03JMHVSD7JGCNJF36TX0JM0JF5" as ServiceId
+          ]
+        }
+      })
+    } as GlobalState;
+
+    const result = fimsServiceIdInCookieDisabledListSelector(
+      state,
+      testServiceId
     );
     expect(result).toBe(true);
   });

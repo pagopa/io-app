@@ -19,7 +19,7 @@ const organizationName = "Organization name";
 const serviceId = "01JMFHJBNP8R55CJZX2G52Q1P2" as ServiceId;
 const serviceName = "Service name";
 const source = "MESSAGE_DETAIL";
-const shareiOSCookies = true;
+const ephemeralSessionOniOS = true;
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -47,7 +47,7 @@ describe("FimsFlowHandlerScreen", () => {
       organizationFiscalCode,
       label,
       source,
-      shareiOSCookies
+      ephemeralSessionOniOS
     );
     expect(mockDispatch.mock.calls.length).toBe(1);
     expect(mockDispatch.mock.calls[0].length).toBe(1);
@@ -55,7 +55,7 @@ describe("FimsFlowHandlerScreen", () => {
       fimsGetConsentsListAction.request({
         ctaText: label,
         ctaUrl,
-        shareiOSCookies
+        ephemeralSessionOniOS
       })
     );
   });
@@ -115,7 +115,7 @@ const renderComponent = (minAppVersion: string) => {
       serviceId,
       serviceName,
       source,
-      shareiOSCookies
+      ephemeralSessionOniOS
     },
     store
   );

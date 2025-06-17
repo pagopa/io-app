@@ -30,7 +30,7 @@ export type FIMSServiceData = {
   organizationName?: string;
   serviceId: ServiceId;
   serviceName?: string;
-  shareiOSCookies?: boolean;
+  ephemeralSessionOniOS: boolean;
 };
 
 export const useAutoFetchingServiceByIdPot = (serviceId: ServiceId) => {
@@ -119,7 +119,7 @@ const serviceDataFromServiceId = (
   state: GlobalState
 ): FIMSServiceData => {
   const service = serviceDetailsByIdSelector(state, serviceId);
-  const shareiOSCookies = fimsServiceIdInCookieDisabledListSelector(
+  const ephemeralSessionOniOS = fimsServiceIdInCookieDisabledListSelector(
     state,
     serviceId
   );
@@ -129,9 +129,9 @@ const serviceDataFromServiceId = (
         organizationName: service.organization.name,
         serviceId: service.id,
         serviceName: service.name,
-        shareiOSCookies
+        ephemeralSessionOniOS
       }
-    : { serviceId };
+    : { serviceId, ephemeralSessionOniOS: false };
 };
 
 const serviceDataFromConfigurationId = (
@@ -139,7 +139,7 @@ const serviceDataFromConfigurationId = (
   state: GlobalState
 ): FIMSServiceData | undefined => {
   const serviceConfiguration = fimsServiceConfiguration(state, configurationId);
-  const shareiOSCookies = serviceConfiguration
+  const ephemeralSessionOniOS = serviceConfiguration
     ? fimsServiceIdInCookieDisabledListSelector(
         state,
         serviceConfiguration.service_id as ServiceId
@@ -151,7 +151,7 @@ const serviceDataFromConfigurationId = (
         organizationName: serviceConfiguration.organization_name,
         serviceId: serviceConfiguration.service_id as ServiceId,
         serviceName: serviceConfiguration.service_name,
-        shareiOSCookies
+        ephemeralSessionOniOS
       }
     : undefined;
 };
@@ -190,7 +190,7 @@ const navigateToFIMSAuthorizationFlow = (
       serviceId: serviceData.serviceId,
       serviceName: serviceData.serviceName,
       source,
-      shareiOSCookies: serviceData.shareiOSCookies
+      ephemeralSessionOniOS: serviceData.ephemeralSessionOniOS
     }
   });
 };
