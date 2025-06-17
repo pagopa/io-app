@@ -1,32 +1,38 @@
 import _ from "lodash";
-import * as O from "fp-ts/lib/Option";
 import { SdJwt } from "@pagopa/io-react-native-wallet";
 import { itwCredentialsStateMigrations } from "../migrations";
 
-jest.mock("@pagopa/io-react-native-wallet", () => ({
-  ...jest.requireActual("@pagopa/io-react-native-wallet"),
-  SdJwt: {
-    ...jest.requireActual("@pagopa/io-react-native-wallet").SdJwt,
-    decode: jest.fn()
-  }
-}));
+jest.mock("@pagopa/io-react-native-wallet");
 
 describe("ITW credentials reducer migrations", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
+
   it("should migrate from 0 to 1", () => {
     const basePersistedGlobalStateAt0 = {
-      eid: O.some({}),
-      credentials: [O.some({}), O.some({}), O.none],
+      eid: { _tag: "Some", value: {} },
+      credentials: [
+        { _tag: "Some", value: {} },
+        { _tag: "Some", value: {} },
+        { _tag: "None" }
+      ],
       _persist: {
         version: 0,
         rehydrated: false
       }
     };
     const persistedStateAt1 = _.merge(undefined, basePersistedGlobalStateAt0, {
-      eid: O.some({ storedStatusAttestation: undefined }),
+      eid: { _tag: "Some", value: { storedStatusAttestation: undefined } },
       credentials: [
-        O.some({ storedStatusAttestation: undefined }),
-        O.some({ storedStatusAttestation: undefined }),
-        O.none
+        { _tag: "Some", value: { storedStatusAttestation: undefined } },
+        { _tag: "Some", value: { storedStatusAttestation: undefined } },
+        { _tag: "None" }
       ]
     });
 
@@ -48,11 +54,11 @@ describe("ITW credentials reducer migrations", () => {
     } as any);
 
     const basePersistedGlobalStateAt1 = {
-      eid: O.some({ storedStatusAttestation: undefined }),
+      eid: { _tag: "Some", value: { storedStatusAttestation: undefined } },
       credentials: [
-        O.some({ storedStatusAttestation: undefined }),
-        O.some({ storedStatusAttestation: undefined }),
-        O.none
+        { _tag: "Some", value: { storedStatusAttestation: undefined } },
+        { _tag: "Some", value: { storedStatusAttestation: undefined } },
+        { _tag: "None" }
       ],
       _persist: {
         version: 0,
@@ -60,29 +66,38 @@ describe("ITW credentials reducer migrations", () => {
       }
     };
     const persistedStateAt2 = _.merge(undefined, basePersistedGlobalStateAt1, {
-      eid: O.some({
-        storedStatusAttestation: undefined,
-        jwt: {
-          expiration: "2024-06-12T11:33:20.000Z",
-          issuedAt: "2024-06-11T18:53:20.000Z"
+      eid: {
+        _tag: "Some",
+        value: {
+          storedStatusAttestation: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
         }
-      }),
+      },
       credentials: [
-        O.some({
-          storedStatusAttestation: undefined,
-          jwt: {
-            expiration: "2024-06-12T11:33:20.000Z",
-            issuedAt: "2024-06-11T18:53:20.000Z"
+        {
+          _tag: "Some",
+          value: {
+            storedStatusAttestation: undefined,
+            jwt: {
+              expiration: "2024-06-12T11:33:20.000Z",
+              issuedAt: "2024-06-11T18:53:20.000Z"
+            }
           }
-        }),
-        O.some({
-          storedStatusAttestation: undefined,
-          jwt: {
-            expiration: "2024-06-12T11:33:20.000Z",
-            issuedAt: "2024-06-11T18:53:20.000Z"
+        },
+        {
+          _tag: "Some",
+          value: {
+            storedStatusAttestation: undefined,
+            jwt: {
+              expiration: "2024-06-12T11:33:20.000Z",
+              issuedAt: "2024-06-11T18:53:20.000Z"
+            }
           }
-        }),
-        O.none
+        },
+        { _tag: "None" }
       ]
     });
 
