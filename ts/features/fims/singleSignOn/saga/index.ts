@@ -32,10 +32,10 @@ export function* watchFimsSSOSaga(): SagaIterator {
   const fimsRelyingPartyUrl = yield* select(
     fimsRelyingPartyUrlIfFastLoginSelector
   );
-  const ephemeralSessionOniOS = yield* select(
-    fimsEphemeralSessionOniOSSelector
-  );
   if (fimsCtaText && fimsRelyingPartyUrl) {
+    const ephemeralSessionOniOS = yield* select(
+      fimsEphemeralSessionOniOSSelector
+    );
     yield* put(
       fimsGetConsentsListAction.request({
         ctaText: fimsCtaText,
