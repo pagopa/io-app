@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0-canary.7117](https://github.com/pagopa/io-app/compare/3.7.0-rc.7...3.7.0-canary.7117) (2025-06-17)
+
+
+### Features
+
+* [[IOCOM-2353](https://pagopa.atlassian.net/browse/IOCOM-2353)] SEND service status profile property ([#7075](https://github.com/pagopa/io-app/issues/7075)) ([39617ca](https://github.com/pagopa/io-app/commit/39617ca378a696d17f362d574365878d877d9871))
+* **IT Wallet:** [[SIW-2498](https://pagopa.atlassian.net/browse/SIW-2498)] Add IT Wallet environments ([#7053](https://github.com/pagopa/io-app/issues/7053)) ([dda7f92](https://github.com/pagopa/io-app/commit/dda7f92dac1f1e104155ff75e0bc6c4de36b0630))
+
+
+### Bug Fixes
+
+* [[IOBP-1695](https://pagopa.atlassian.net/browse/IOBP-1695)] PAYMENT_HOME mixpanel event dispatched too many times ([#7082](https://github.com/pagopa/io-app/issues/7082)) ([6cc640c](https://github.com/pagopa/io-app/commit/6cc640cc9e95f9d068453951b23ca4c23d43dc8a))
+* [[IOBP-1750](https://pagopa.atlassian.net/browse/IOBP-1750)] Replace radio group id property in IBAN list item ([#7078](https://github.com/pagopa/io-app/issues/7078)) ([a3e2f6d](https://github.com/pagopa/io-app/commit/a3e2f6d0e493a56a3c478f7fd7b3795921be8823))
+* [[IOBP-1751](https://pagopa.atlassian.net/browse/IOBP-1751)] IDPay VirtualizedLists should never be nested inside plain ScrollViews ([#7083](https://github.com/pagopa/io-app/issues/7083)) ([96c4177](https://github.com/pagopa/io-app/commit/96c4177e5395e8887ce1a1fe8e35a1beea0ed0df))
+
+
+### Chores
+
+* [[IOBP-1739](https://pagopa.atlassian.net/browse/IOBP-1739)] Add refetch latest receipts delay after closing the payment flow ([#7080](https://github.com/pagopa/io-app/issues/7080)) ([cac9db0](https://github.com/pagopa/io-app/commit/cac9db0222771321341105a84186633121d07ec6))
+* [[IOBP-1746](https://pagopa.atlassian.net/browse/IOBP-1746)] Update cdc TOS ([#7072](https://github.com/pagopa/io-app/issues/7072)) ([2e501e7](https://github.com/pagopa/io-app/commit/2e501e73f6acd173a916f8cbee870866de2abde2))
+* [[IOPLT-1169](https://pagopa.atlassian.net/browse/IOPLT-1169)] Add static version to `AnimatedPictogram` when `reduceMotion` is enabled ([#7071](https://github.com/pagopa/io-app/issues/7071)) ([098fdec](https://github.com/pagopa/io-app/commit/098fdecd504d2140a945459259caaba2ebc02472))
+
 ## [3.7.0-rc.7](https://github.com/pagopa/io-app/compare/3.7.0-rc.6...3.7.0-rc.7) (2025-06-12)
 
 
