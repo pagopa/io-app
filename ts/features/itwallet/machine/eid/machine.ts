@@ -358,6 +358,7 @@ export const itwEidIssuanceMachine = setup({
               {
                 guard: ({ event }) => event.mode === "cieId",
                 actions: assign(() => ({
+                  isL3FeaturesEnabled: false,
                   identification: {
                     mode: "cieId",
                     level: "L2"
