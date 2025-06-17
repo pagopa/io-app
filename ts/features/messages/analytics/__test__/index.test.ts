@@ -2,6 +2,7 @@ import {
   trackCTAFrontMatterDecodingError,
   trackMessageNotificationParsingFailure,
   trackMessageNotificationTap,
+  trackMessagePaymentFailure,
   trackOpenMessage
 } from "..";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -245,6 +246,29 @@ describe("index", () => {
 
       expect(spiedOnMixpanelTrack.mock.calls.length).toBe(0);
       expect(spiedOnEnqueueMixpanelEvent.mock.calls.length).toBe(0);
+    });
+  });
+
+  describe("trackMessagePaymentFailure", () => {
+    it("should call 'mixpanelTrack' with proper parameters", () => {
+      const reason = "A reason";
+      const spyOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation((_event, _properties) => undefined);
+
+      trackMessagePaymentFailure(reason);
+
+      expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spyOnMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spyOnMixpanelTrack.mock.calls[0][0]).toBe(
+        "MESSAGE_PAYMENT_FAILURE"
+      );
+      expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "KO",
+        event_type: undefined,
+        flow: undefined,
+        reason
+      });
     });
   });
 });
