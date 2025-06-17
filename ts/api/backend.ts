@@ -293,9 +293,9 @@ export function BackendClient(
 
   const getPaymentInfoV2T: GetPaymentInfoV2T = {
     method: "get",
-    url: ({ rptId, test }) => `/api/v1/payment-info/${rptId}?test=${test}`,
+    url: ({ ["rptId"]: rptId }) => `/api/v1/payment-info/${rptId}`,
     headers: tokenHeaderProducer,
-    query: _q16 => ({}),
+    query: ({ ["test"]: test }) => withoutUndefinedValues({ ["test"]: test }),
     response_decoder: getPaymentInfoV2DefaultDecoder()
   };
 
