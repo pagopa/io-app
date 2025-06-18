@@ -24,7 +24,8 @@ import {
 import { useItwSendAuthorizationErrorResponse } from "../hooks/useItwSendAuthorizationErrorResponse.tsx";
 
 const zendeskAssistanceErrors = [
-  RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE
+  RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE,
+  RemoteFailureType.UNEXPECTED
 ];
 
 export const ItwRemoteFailureScreen = () => {
@@ -70,12 +71,24 @@ const ContentView = ({ failure }: ContentViewProps) => {
       switch (failure.type) {
         case RemoteFailureType.UNEXPECTED:
           return {
-            title: I18n.t("features.itWallet.generic.error.title"),
-            subtitle: I18n.t("features.itWallet.generic.error.body"),
-            pictogram: "workInProgress",
+            title: I18n.t(
+              "features.itWallet.presentation.remote.unexpectedErrorScreen.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.unexpectedErrorScreen.subtitle"
+            ),
+            pictogram: "umbrella",
             action: {
-              label: I18n.t("global.buttons.close"),
+              label: I18n.t(
+                "features.itWallet.presentation.remote.unexpectedErrorScreen.primaryAction"
+              ),
               onPress: closeMachine
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.unexpectedErrorScreen.secondaryAction"
+              ),
+              onPress: failureSupportModal.present
             }
           };
         case RemoteFailureType.WALLET_INACTIVE:

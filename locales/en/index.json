@@ -4809,6 +4809,12 @@
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
           },
+          "unexpectedErrorScreen": {
+            "title": "Un problema non permette di continuare",
+            "subtitle": "Si è verificato un errore tecnico che ha impedito l'accesso ai servizi dell'ente, riprova. Se il problema persiste, contatta l'assistenza.",
+            "primaryAction": "Ho capito",
+            "secondaryAction": "Mostra dettagli"
+          },
           "relyingParty": {
             "genericError": {
               "title": "Comunicazione interrotta",
