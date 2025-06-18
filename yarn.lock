@@ -3968,6 +3968,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pagopa/io-react-native-proximity@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@pagopa/io-react-native-proximity@npm:0.6.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 52ed752ff4e0a09fdc56e169baedbe483e9e37d6008007eaecc7a93d934e0d30ef7fe0f33c94c583b9a586da54e162f83741f3e7caeae03c6b74c2ba37b4c9b9
+  languageName: node
+  linkType: hard
+
 "@pagopa/io-react-native-secure-storage@npm:^0.2.0":
   version: 0.2.0
   resolution: "@pagopa/io-react-native-secure-storage@npm:0.2.0"
@@ -13137,6 +13147,7 @@ __metadata:
     "@pagopa/io-react-native-integrity": ^0.3.2
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": ^1.1.0
+    "@pagopa/io-react-native-proximity": ^0.6.0
     "@pagopa/io-react-native-secure-storage": ^0.2.0
     "@pagopa/io-react-native-wallet": ^0.30.0
     "@pagopa/io-react-native-zendesk": ^0.3.30
@@ -13253,6 +13264,7 @@ __metadata:
     react-native-background-timer: 2.1.1
     react-native-barcode-builder: ^2.0.0
     react-native-blob-util: 0.15.0
+    react-native-bluetooth-state-manager: ^1.3.5
     react-native-bundle-visualizer: ^2.2.1
     react-native-calendar-events: 2.2.0
     react-native-config: ^1.4.5
@@ -17747,6 +17759,16 @@ __metadata:
     base-64: 0.1.0
     glob: ^7.1.6
   checksum: d99afa57264ddb0bbbdc3bfa6ee936b5811b56c5a78e7b286bbbe44f90560aa8023ec826f73cd150222b834b69961f5244761a460cc17d475a5dfe8792c041f3
+  languageName: node
+  linkType: hard
+
+"react-native-bluetooth-state-manager@npm:^1.3.5":
+  version: 1.3.5
+  resolution: "react-native-bluetooth-state-manager@npm:1.3.5"
+  peerDependencies:
+    prop-types: "*"
+    react-native: ">= 0.44"
+  checksum: 29901dcdc7234155ea76f1ed4c778b8dca01b7e46cdfbb3e18e4913fbf44a54b6b0ab117d15d55d42201343d20e89c9bb37b076c688467e11c5b43efd9c1fcc5
   languageName: node
   linkType: hard
 
