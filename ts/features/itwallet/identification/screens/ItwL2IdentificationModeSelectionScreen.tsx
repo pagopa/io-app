@@ -25,7 +25,7 @@ export type ItwL2IdentificationNavigationParams = {
 export type ItwL2IdentificationModeSelectionScreenProps =
   IOStackNavigationRouteProps<
     ItwParamsList,
-    "ITW_IDENTIFICATION_LEVEL_SELECTION_L2"
+    "ITW_IDENTIFICATION_MODE_SELECTION_L2"
   >;
 
 export const ItwL2IdentificationModeSelectionScreen = (

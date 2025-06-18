@@ -48,34 +48,33 @@ export const useNoCieBottomSheet = () => {
             </View>
           ))}
         </View>
+        <FooterActions
+          fixed={false}
+          actions={{
+            type: "TwoButtons",
+            primary: {
+              label: I18n.t(
+                "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
+              ),
+              accessibilityLabel: I18n.t(
+                "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
+              ),
+              onPress: navigateToL2Identification
+            },
+            secondary: {
+              label: I18n.t(
+                "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
+              ),
+              accessibilityLabel: I18n.t(
+                "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
+              ),
+              onPress: () => noCieBottomSheet.dismiss()
+            }
+          }}
+        />
       </>
     ),
-    snapPoint: [660],
-    footer: (
-      <FooterActions
-        actions={{
-          type: "TwoButtons",
-          primary: {
-            label: I18n.t(
-              "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
-            ),
-            accessibilityLabel: I18n.t(
-              "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
-            ),
-            onPress: navigateToL2Identification
-          },
-          secondary: {
-            label: I18n.t(
-              "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
-            ),
-            accessibilityLabel: I18n.t(
-              "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
-            ),
-            onPress: () => noCieBottomSheet.dismiss()
-          }
-        }}
-      />
-    )
+    snapPoint: [660]
   });
 
   return noCieBottomSheet;

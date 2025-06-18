@@ -113,7 +113,7 @@ const renderComponent = (isL3FeaturesEnabled = false, eidReissuing = false) => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     WrappedComponent,
-    ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L2,
+    ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2,
     { eidReissuing },
     store
   );

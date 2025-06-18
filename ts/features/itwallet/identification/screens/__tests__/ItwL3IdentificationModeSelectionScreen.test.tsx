@@ -77,7 +77,7 @@ const renderComponent = (isL3FeaturesEnabled = true) => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     WrappedComponent,
-    ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L3,
+    ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L3,
     {},
     store
   );

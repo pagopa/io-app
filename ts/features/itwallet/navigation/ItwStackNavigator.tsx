@@ -120,11 +120,11 @@ const InnerNavigator = () => {
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L2}
+        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2}
         component={ItwL2IdentificationModeSelectionScreen}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.LEVEl_SELECTION.L3}
+        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L3}
         component={ItwL3IdentificationModeSelectionScreen}
       />
       <Stack.Screen
