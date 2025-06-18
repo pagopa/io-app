@@ -3680,6 +3680,11 @@
           "a11y": {
             "cardStatus": "Card status: {{status}}"
           }
+        },
+        "empty": {
+          "title": "You haven't activated the National Youth Card yet",
+          "subtitle": "Activate it now to access all the opportunities dedicated to you. Just a few steps!",
+          "activateCta": "Activate"
         }
       },
       "activation": {
