@@ -36,7 +36,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>0</string>
+    <string>1</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
@@ -69,9 +69,9 @@
     <key>NSAppleMusicUsageDescription</key>
     <string>The app needs NSAppleMusicUsageDescription permission</string>
     <key>NSBluetoothAlwaysUsageDescription</key>
-    <string>The app needs NSBluetoothAlwaysUsageDescription permission</string>
+    <string>IO richiede l'accesso al Bluetooth per completare la verifica dei documenti</string>
     <key>NSBluetoothPeripheralUsageDescription</key>
-    <string>The app needs NSBluetoothPeripheralUsageDescription permission</string>
+    <string>IO richiede l'accesso al Bluetooth per completare la verifica dei documenti</string>
     <key>NSCalendarsUsageDescription</key>
     <string>So that you’ll be able to add deadlines to your calendar and set a reminder.</string>
     <key>NSCameraUsageDescription</key>

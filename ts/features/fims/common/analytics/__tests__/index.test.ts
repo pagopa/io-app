@@ -27,6 +27,7 @@ const organizationNames = [undefined, "organization name"];
 const referenceReason = "The reason";
 const referenceServiceId = "01J9RSWBB4VSHVRJSY33XGA6YH" as ServiceId;
 const serviceNames = [undefined, "service name"];
+const ephemeralSessionsOniOS = [true, false];
 
 describe("trackAuthenticationStart", () => {
   beforeEach(() => {
@@ -36,37 +37,41 @@ describe("trackAuthenticationStart", () => {
   organizationFiscalCodes.forEach(organizationFiscalCode =>
     organizationNames.forEach(organizationName =>
       serviceNames.forEach(serviceName =>
-        it(`should match event name, and expected parameters for ${
-          organizationFiscalCode ? "defined   " : "undefined "
-        } organization fiscal code, ${
-          organizationName ? "defined   " : "undefined "
-        } organization name, ${
-          serviceName ? "defined   " : "undefined "
-        } service name`, () => {
-          const source = MESSAGES_ROUTES.MESSAGE_DETAIL;
-          const mixpanelTrackMock = generateMixpanelTrackMock();
-          void trackAuthenticationStart(
-            referenceServiceId,
-            serviceName,
-            organizationName,
-            organizationFiscalCode,
-            referenceCtaLabel,
-            source
-          );
-          expect(mixpanelTrackMock.mock.calls.length).toBe(1);
-          expect(mixpanelTrackMock.mock.calls[0].length).toBe(2);
-          expect(mixpanelTrackMock.mock.calls[0][0]).toBe("FIMS_START");
-          expect(mixpanelTrackMock.mock.calls[0][1]).toEqual({
-            event_category: "UX",
-            event_type: "action",
-            fims_label: referenceCtaLabel,
-            organization_fiscal_code: organizationFiscalCode,
-            organization_name: organizationName,
-            service_id: referenceServiceId,
-            service_name: serviceName,
-            source
-          });
-        })
+        ephemeralSessionsOniOS.forEach(ephemeralSessionOniOS =>
+          it(`should match event name, and expected parameters for ${
+            organizationFiscalCode ? "defined   " : "undefined "
+          } organization fiscal code, ${
+            organizationName ? "defined   " : "undefined "
+          } organization name, ${
+            serviceName ? "defined   " : "undefined "
+          } service name, ephemeralSessionOniOS: ${ephemeralSessionOniOS}`, () => {
+            const source = MESSAGES_ROUTES.MESSAGE_DETAIL;
+            const mixpanelTrackMock = generateMixpanelTrackMock();
+            void trackAuthenticationStart(
+              referenceServiceId,
+              serviceName,
+              organizationName,
+              organizationFiscalCode,
+              referenceCtaLabel,
+              source,
+              ephemeralSessionOniOS
+            );
+            expect(mixpanelTrackMock.mock.calls.length).toBe(1);
+            expect(mixpanelTrackMock.mock.calls[0].length).toBe(2);
+            expect(mixpanelTrackMock.mock.calls[0][0]).toBe("FIMS_START");
+            expect(mixpanelTrackMock.mock.calls[0][1]).toEqual({
+              event_category: "UX",
+              event_type: "action",
+              fims_label: referenceCtaLabel,
+              organization_fiscal_code: organizationFiscalCode,
+              organization_name: organizationName,
+              service_id: referenceServiceId,
+              service_name: serviceName,
+              source,
+              ephemeralSessionOniOS
+            });
+          })
+        )
       )
     )
   );
