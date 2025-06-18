@@ -214,18 +214,22 @@ const EmailValidationSendEmailScreen = () => {
       // send validation email KO
       if (pot.isError(emailValidation.sendEmailValidationRequest)) {
         IOToast.error(I18n.t("global.actions.retry"));
-        AccessibilityInfo.announceForAccessibility(
-          I18n.t("global.actions.retry")
-        );
+        setTimeout(() => {
+          AccessibilityInfo.announceForAccessibility(
+            I18n.t("global.actions.retry")
+          );
+        }, 300);
 
         setShowCountdown(false);
       }
       // send validation email OK
       if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
         IOToast.success(I18n.t("email.newvalidate.toast"));
-        AccessibilityInfo.announceForAccessibility(
-          I18n.t("email.newvalidate.toast")
-        );
+        setTimeout(() => {
+          AccessibilityInfo.announceForAccessibility(
+            I18n.t("email.newvalidate.toast")
+          );
+        }, 300);
         setShowCountdown(true);
       }
     }

@@ -206,9 +206,30 @@ const EmailInsertScreen = () => {
     return I18n.t("email.newinsert.alert.description1");
   }, [isFirstOnboarding, isOnboarding, isProfileEmailAlreadyTaken]);
 
-  const errorMessage = I18n.t("email.newinsert.alert.invalidemail");
-  const errorMessageA11y = I18n.t("email.newinsert.alert.invalidemaila11y");
-  const errorMessageGenericA11y = `${errorMessage} ${errorMessageA11y}`;
+  const invalidEmailLabel = I18n.t("email.newinsert.alert.invalidemail");
+  const invalidEmailA11Y = I18n.t("email.newinsert.alert.invalidemaila11y");
+  const validEmailLabel = I18n.t("email.newinsert.alert.validemaila11y");
+
+  /** Returns the accessibility error label to be announced when the email is not valid.
+   * If the email is valid, it returns undefined.
+   * If the email is not valid, it returns a string with the error message.
+   */
+  const getAccessibilityErrorLabel = (): string | undefined =>
+    pipe(
+      email,
+      O.fold(
+        () => `${invalidEmailA11Y} ${invalidEmailLabel}`,
+        value => {
+          if (!validator.isEmail(value)) {
+            return `${invalidEmailA11Y} ${invalidEmailLabel}`;
+          }
+          if (areSameEmails) {
+            return `${invalidEmailA11Y} ${sameEmailsErrorRender()}`;
+          }
+          return undefined;
+        }
+      )
+    );
 
   /** validate email returning two possible values:
    * - _true_,      if email is valid.
@@ -220,40 +241,24 @@ const EmailInsertScreen = () => {
       pipe(
         email,
         O.fold(
-          () => {
-            const errMessage = I18n.t("email.newinsert.alert.invalidemail");
-
-            AccessibilityInfo.announceForAccessibility(errorMessageGenericA11y);
-
-            return {
-              isValid: false,
-              errorMessage: errMessage
-            };
-          },
+          () => ({
+            isValid: false,
+            errorMessage: invalidEmailLabel
+          }),
           value => {
             if (!validator.isEmail(value)) {
-              const errMessage = I18n.t("email.newinsert.alert.invalidemail");
-              AccessibilityInfo.announceForAccessibility(
-                errorMessageGenericA11y
-              );
-
               return {
                 isValid: false,
-                errorMessage: errMessage
+                errorMessage: invalidEmailLabel
               };
             }
             if (areSameEmails) {
               const errMessage = sameEmailsErrorRender();
-              AccessibilityInfo.announceForAccessibility(
-                `${errMessage} ${errorMessageA11y}`
-              );
 
               return { isValid: false, errorMessage: errMessage };
             }
             // If the instered email is valid the error is resetted
-            AccessibilityInfo.announceForAccessibility(
-              I18n.t("email.newinsert.alert.validemaila11y")
-            );
+            AccessibilityInfo.announceForAccessibility(validEmailLabel);
 
             return true;
           }
@@ -262,9 +267,9 @@ const EmailInsertScreen = () => {
     [
       areSameEmails,
       email,
-      errorMessageA11y,
-      errorMessageGenericA11y,
-      sameEmailsErrorRender
+      invalidEmailLabel,
+      sameEmailsErrorRender,
+      validEmailLabel
     ]
   );
 
@@ -512,8 +517,9 @@ const EmailInsertScreen = () => {
               }}
               accessibilityLabel={I18n.t("email.newinsert.label")}
               placeholder={I18n.t("email.newinsert.label")}
+              accessibilityErrorLabel={getAccessibilityErrorLabel()}
               onValidate={isValidEmail}
-              errorMessage={I18n.t("email.newinsert.alert.invalidemail")}
+              errorMessage={invalidEmailLabel}
               value={pipe(
                 email,
                 O.getOrElse(() => EMPTY_EMAIL)
