@@ -249,3 +249,11 @@ jest.mock("uuid", () => ({
       .join("");
   }
 }));
+
+jest.mock("react-native-bluetooth-state-manager", () =>({
+  getState: jest.fn().mockResolvedValue(true)
+}));
+
+jest.mock("@pagopa/io-react-native-proximity", ()=>({
+  Proximity: jest.fn()
+}));
