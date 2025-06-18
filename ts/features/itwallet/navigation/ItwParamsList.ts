@@ -9,6 +9,7 @@ import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/scree
 import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/screens/ItwIdentificationCieWarningScreen";
 import { ItwL2IdentificationNavigationParams } from "../identification/screens/ItwL2IdentificationModeSelectionScreen";
 import { ItwProximityParamsList } from "../presentation/proximity/navigation/ItwProximityParamsList.ts";
+import { ItwPlaygroundParamsList } from "../playgrounds/navigation/ItwPlaygroundParamsList.ts";
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
@@ -68,4 +69,5 @@ export type ItwParamsList = {
   // OTHERS
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
   [ITW_ROUTES.WALLET_REVOCATION_SCREEN]: undefined;
-} & ItwProximityParamsList;
+} & ItwProximityParamsList &
+  ItwPlaygroundParamsList;
