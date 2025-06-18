@@ -37,33 +37,23 @@ export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   status: pot.none
 };
 
+type MigrationState = PersistedState & Record<string, any>;
+
 const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 1;
 
 export const migrations: MigrationManifest = {
   // Convert status into a pot for better async handling
-  "0": state => {
-    const prevState = state as PersistedState & {
-      attestation: string | undefined;
-      status: WalletInstanceStatus | undefined;
-    };
-    return {
-      ...prevState,
-      status: prevState.status ? pot.some(prevState.status) : pot.none
-    };
-  },
+  "0": (state: MigrationState) => ({
+    ...state,
+    status: state.status ? pot.some(state.status) : pot.none
+  }),
   // Move the old Wallet Attestation into the new structure
-  "1": state => {
-    const prevState = state as PersistedState & {
-      attestation: string | undefined;
-      status: pot.Pot<WalletInstanceStatus, NetworkError>;
-    };
-    return {
-      ...prevState,
-      attestation: {
-        jwt: prevState.attestation
-      }
-    };
-  }
+  "1": (state: MigrationState) => ({
+    ...state,
+    attestation: {
+      jwt: state.attestation
+    }
+  })
 };
 
 const reducer = (
