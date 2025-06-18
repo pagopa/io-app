@@ -56,6 +56,8 @@ import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/Itw
 import { ItwActivateBluetoothScreen } from "../presentation/proximity/screens/ItwActivateBluetoothScreen.tsx";
 import { ItwProximityClaimsDisclosureScreen } from "../presentation/proximity/screens/ItwProximityClaimsDisclosureScreen.tsx";
 import { ItwProximityFailureScreen } from "../presentation/proximity/screens/ItwProximityFailureScreen.tsx";
+import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
+import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -287,6 +289,17 @@ const InnerNavigator = () => {
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.FAILURE}
           component={ItwProximityFailureScreen}
+        />
+      </Stack.Group>
+      {/* Playground's routes */}
+      <Stack.Group screenOptions={hiddenHeader}>
+        <Stack.Screen
+          name={ITW_ROUTES.PLAYGROUNDS.LANDING}
+          component={ItwPlayground}
+        />
+        <Stack.Screen
+          name={ITW_ROUTES.PLAYGROUNDS.CREDENTIAL_DETAIL}
+          component={ItwL3CredentialDetailScreen}
         />
       </Stack.Group>
     </Stack.Navigator>

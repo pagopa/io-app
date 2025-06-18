@@ -26,6 +26,8 @@ export const fimsCtaTextSelector = (state: GlobalState) =>
   state.features.fims.sso.ctaText;
 export const relyingPartyServiceIdSelector = (state: GlobalState) =>
   state.features.fims.sso.relyingPartyServiceId;
+export const fimsEphemeralSessionOniOSSelector = (state: GlobalState) =>
+  state.features.fims.sso.ephemeralSessionOniOS;
 
 export const fimsPartialAbortUrl = (state: GlobalState) =>
   pipe(state, fimsConsentsDataSelector, abortUrlFromConsentsPot, O.toUndefined);

@@ -134,7 +134,7 @@ export const itwTrustmarkMachine = setup({
         src: "getCredentialTrustmarkActor",
         input: ({ context }) => ({
           credential: context.credential,
-          walletInstanceAttestation: context.walletInstanceAttestation
+          walletInstanceAttestation: context.walletInstanceAttestation?.jwt
         }),
         onDone: {
           target: "DisplayingTrustmark",

@@ -34,6 +34,7 @@ export type FimsErrorStateType = {
 
 export type FimsSSOState = {
   ssoData: pot.Pot<Consent, FimsErrorStateType>;
+  ephemeralSessionOniOS: boolean;
   ctaText?: string;
   currentFlowState: FimsFlowStateTags;
   relyingPartyServiceId?: ServiceId;
@@ -42,6 +43,7 @@ export type FimsSSOState = {
 
 const INITIAL_STATE: FimsSSOState = {
   ssoData: pot.none,
+  ephemeralSessionOniOS: false,
   ctaText: undefined,
   currentFlowState: "idle",
   relyingPartyServiceId: undefined,
@@ -69,7 +71,8 @@ const reducer = (
         currentFlowState: "consents",
         ssoData: pot.noneLoading,
         relyingPartyServiceId: undefined,
-        relyingPartyUrl: action.payload.ctaUrl
+        relyingPartyUrl: action.payload.ctaUrl,
+        ephemeralSessionOniOS: action.payload.ephemeralSessionOniOS
       };
     case getType(fimsGetConsentsListAction.success):
       return {

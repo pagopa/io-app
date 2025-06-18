@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0-rc.2](https://github.com/pagopa/io-app/compare/3.8.0-rc.1...3.8.0-rc.2) (2025-06-18)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2395](https://pagopa.atlassian.net/browse/SIW-2395)] Store Wallet Attestation in multiple formats ([#7077](https://github.com/pagopa/io-app/issues/7077)) ([24b8e5c](https://github.com/pagopa/io-app/commit/24b8e5cc8d6cbf8f1c3590639e4f3364c86b9294))
+* [[IOBP-1744](https://pagopa.atlassian.net/browse/IOBP-1744)] Add the possibility to disable FIMS iOS cookie sharing ([#7074](https://github.com/pagopa/io-app/issues/7074)) ([283f66a](https://github.com/pagopa/io-app/commit/283f66abc1bd0f4c85108df6a21aa6be782f7ce9)), closes [/github.com/pagopa/io-services-metadata/blob/b4b3724d10b3645b2d7f5790c49cc0d7bb831ef2/status/backend.json#L55](https://github.com/pagopa//github.com/pagopa/io-services-metadata/blob/b4b3724d10b3645b2d7f5790c49cc0d7bb831ef2/status/backend.json/issues/L55) [/github.com/pagopa/io-dev-api-server/blob/3236722f6a72f034d5b4067417e368a4a7a0c0d0/src/payloads/backend.ts#L77](https://github.com/pagopa//github.com/pagopa/io-dev-api-server/blob/3236722f6a72f034d5b4067417e368a4a7a0c0d0/src/payloads/backend.ts/issues/L77)
+* [[IOCOM-2152](https://pagopa.atlassian.net/browse/IOCOM-2152)] empty message search results should be announced ([#7081](https://github.com/pagopa/io-app/issues/7081)) ([e009468](https://github.com/pagopa/io-app/commit/e009468cf148a18c863df0f9e22c98c4a4d0db7b))
+
+
+### Bug Fixes
+
+* **iOS:** [[SIW-2558](https://pagopa.atlassian.net/browse/SIW-2558)] Restore `Images.xcassets` reference in `project.pbxproj` ([#7091](https://github.com/pagopa/io-app/issues/7091)) ([4e95479](https://github.com/pagopa/io-app/commit/4e9547950f2b432ff0fd466ce37eb2b3f6d9b932))
+
+## [3.8.0-rc.1](https://github.com/pagopa/io-app/compare/3.8.0-rc.0...3.8.0-rc.1) (2025-06-17)
+
+
+### Features
+
+* [[SIW-2426](https://pagopa.atlassian.net/browse/SIW-2426),[SIW-2422](https://pagopa.atlassian.net/browse/SIW-2422)] Bluetooth proximity presentation ([#7057](https://github.com/pagopa/io-app/issues/7057)) ([c114acb](https://github.com/pagopa/io-app/commit/c114acba887657bf1433b1dcc60bdbf96acbd314))
+
+
+### Bug Fixes
+
+* [[IOBP-1755](https://pagopa.atlassian.net/browse/IOBP-1755)] IDPay missing initiative details route  ([#7089](https://github.com/pagopa/io-app/issues/7089)) ([b73373c](https://github.com/pagopa/io-app/commit/b73373c5646f69a31cf408974603ec6bf843d4eb))
+
+
+### Chores
+
+* [[IOCOM-2413](https://pagopa.atlassian.net/browse/IOCOM-2413)] SEND banner CTA screen hero picture update ([#7088](https://github.com/pagopa/io-app/issues/7088)) ([12d0add](https://github.com/pagopa/io-app/commit/12d0addb4e771a67e52e56703d0bb546c38a2d7b))
+
 ## [3.8.0-rc.0](https://github.com/pagopa/io-app/compare/3.7.0-rc.7...3.8.0-rc.0) (2025-06-17)
 
 
