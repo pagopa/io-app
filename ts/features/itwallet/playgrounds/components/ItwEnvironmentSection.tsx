@@ -20,7 +20,7 @@ export const ItwEnvironmentSection = () => {
     env: envObject
   });
 
-  const toggleEnvionment = (selected: EnvType) => {
+  const toggleEnvironment = (selected: EnvType) => {
     Alert.alert(
       I18n.t("features.itWallet.playgrounds.environment.alert.title", {
         environment: selected.toUpperCase()
@@ -71,7 +71,7 @@ export const ItwEnvironmentSection = () => {
         key="itw_environment"
         items={envRadioItems()}
         selectedItem={selectedEnv}
-        onPress={toggleEnvionment}
+        onPress={toggleEnvironment}
       />
     </View>
   );

@@ -155,7 +155,7 @@ export const itwCredentialIssuanceMachine = setup({
         src: "requestCredential",
         input: ({ context }) => ({
           credentialType: context.credentialType,
-          walletInstanceAttestation: context.walletInstanceAttestation
+          walletInstanceAttestation: context.walletInstanceAttestation?.jwt
         }),
         onDone: {
           target: "DisplayingTrustIssuer",
@@ -201,7 +201,7 @@ export const itwCredentialIssuanceMachine = setup({
             src: "obtainCredential",
             input: ({ context }) => ({
               credentialType: context.credentialType,
-              walletInstanceAttestation: context.walletInstanceAttestation,
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
               clientId: context.clientId,
               codeVerifier: context.codeVerifier,
               credentialDefinition: context.credentialDefinition,

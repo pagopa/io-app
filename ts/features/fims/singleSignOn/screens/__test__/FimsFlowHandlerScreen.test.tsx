@@ -19,6 +19,7 @@ const organizationName = "Organization name";
 const serviceId = "01JMFHJBNP8R55CJZX2G52Q1P2" as ServiceId;
 const serviceName = "Service name";
 const source = "MESSAGE_DETAIL";
+const ephemeralSessionOniOS = true;
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -45,12 +46,17 @@ describe("FimsFlowHandlerScreen", () => {
       organizationName,
       organizationFiscalCode,
       label,
-      source
+      source,
+      ephemeralSessionOniOS
     );
     expect(mockDispatch.mock.calls.length).toBe(1);
     expect(mockDispatch.mock.calls[0].length).toBe(1);
     expect(mockDispatch.mock.calls[0][0]).toEqual(
-      fimsGetConsentsListAction.request({ ctaText: label, ctaUrl })
+      fimsGetConsentsListAction.request({
+        ctaText: label,
+        ctaUrl,
+        ephemeralSessionOniOS
+      })
     );
   });
   it("should call 'trackAuthenticationError' upon first rendering if an app update is required", () => {
@@ -108,7 +114,8 @@ const renderComponent = (minAppVersion: string) => {
       organizationName,
       serviceId,
       serviceName,
-      source
+      source,
+      ephemeralSessionOniOS
     },
     store
   );
