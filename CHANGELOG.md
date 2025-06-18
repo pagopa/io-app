@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0-rc.1](https://github.com/pagopa/io-app/compare/3.8.0-rc.0...3.8.0-rc.1) (2025-06-17)
+
+
+### Features
+
+* [[SIW-2426](https://pagopa.atlassian.net/browse/SIW-2426),[SIW-2422](https://pagopa.atlassian.net/browse/SIW-2422)] Bluetooth proximity presentation ([#7057](https://github.com/pagopa/io-app/issues/7057)) ([c114acb](https://github.com/pagopa/io-app/commit/c114acba887657bf1433b1dcc60bdbf96acbd314))
+
+
+### Bug Fixes
+
+* [[IOBP-1755](https://pagopa.atlassian.net/browse/IOBP-1755)] IDPay missing initiative details route  ([#7089](https://github.com/pagopa/io-app/issues/7089)) ([b73373c](https://github.com/pagopa/io-app/commit/b73373c5646f69a31cf408974603ec6bf843d4eb))
+
+
+### Chores
+
+* [[IOCOM-2413](https://pagopa.atlassian.net/browse/IOCOM-2413)] SEND banner CTA screen hero picture update ([#7088](https://github.com/pagopa/io-app/issues/7088)) ([12d0add](https://github.com/pagopa/io-app/commit/12d0addb4e771a67e52e56703d0bb546c38a2d7b))
+
 ## [3.8.0-rc.0](https://github.com/pagopa/io-app/compare/3.7.0-rc.7...3.8.0-rc.0) (2025-06-17)
 
 
