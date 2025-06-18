@@ -296,7 +296,8 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       <ListItemNav
         accessibilityLabel={`${value} ${description} ${
           topElement?.badgeProps?.text
-            ? "status: " + topElement.badgeProps?.text
+            ? I18n.t("profile.main.privacy.status") +
+              topElement.badgeProps?.text
             : ""
         }`}
         value={value}

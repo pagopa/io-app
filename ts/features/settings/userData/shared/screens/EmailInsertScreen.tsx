@@ -18,6 +18,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
+  AccessibilityInfo,
   Alert,
   Keyboard,
   KeyboardAvoidingView,
@@ -81,6 +82,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "email.insert.help.content"
 };
 
+// resolve https://pagopa.atlassian.net/browse/IOPID-3000 https://pagopa.atlassian.net/browse/IOPID-3001
+
 /**
  * A screen to allow user to insert an email address.
  */
@@ -118,7 +121,7 @@ const EmailInsertScreen = () => {
   const isProfileEmailAlreadyTaken = useIOSelector(
     isProfileEmailAlreadyTakenSelector
   );
-  const [errorMessage, setErrorMessage] = useState("");
+
   const flow = getFlowType(isOnboarding, isFirstOnboarding);
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   // This reference is used to prevent the refresh visual glitch
@@ -203,6 +206,10 @@ const EmailInsertScreen = () => {
     return I18n.t("email.newinsert.alert.description1");
   }, [isFirstOnboarding, isOnboarding, isProfileEmailAlreadyTaken]);
 
+  const errorMessage = I18n.t("email.newinsert.alert.invalidemail");
+  const errorMessageA11y = I18n.t("email.newinsert.alert.invalidemaila11y");
+  const errorMessageGenericA11y = `${errorMessage} ${errorMessageA11y}`;
+
   /** validate email returning two possible values:
    * - _true_,      if email is valid.
    * - _false_,     if email has been already changed from the user and it is not
@@ -215,7 +222,8 @@ const EmailInsertScreen = () => {
         O.fold(
           () => {
             const errMessage = I18n.t("email.newinsert.alert.invalidemail");
-            setErrorMessage(errMessage);
+
+            AccessibilityInfo.announceForAccessibility(errorMessageGenericA11y);
 
             return {
               isValid: false,
@@ -225,7 +233,9 @@ const EmailInsertScreen = () => {
           value => {
             if (!validator.isEmail(value)) {
               const errMessage = I18n.t("email.newinsert.alert.invalidemail");
-              setErrorMessage(errMessage);
+              AccessibilityInfo.announceForAccessibility(
+                errorMessageGenericA11y
+              );
 
               return {
                 isValid: false,
@@ -234,18 +244,28 @@ const EmailInsertScreen = () => {
             }
             if (areSameEmails) {
               const errMessage = sameEmailsErrorRender();
-              setErrorMessage(errMessage);
+              AccessibilityInfo.announceForAccessibility(
+                `${errMessage} ${errorMessageA11y}`
+              );
 
               return { isValid: false, errorMessage: errMessage };
             }
             // If the instered email is valid the error is resetted
-            setErrorMessage("");
+            AccessibilityInfo.announceForAccessibility(
+              I18n.t("email.newinsert.alert.validemaila11y")
+            );
 
             return true;
           }
         )
       ),
-    [areSameEmails, email, sameEmailsErrorRender]
+    [
+      areSameEmails,
+      email,
+      errorMessageA11y,
+      errorMessageGenericA11y,
+      sameEmailsErrorRender
+    ]
   );
 
   const continueOnPress = () => {
@@ -491,7 +511,6 @@ const EmailInsertScreen = () => {
                 inputMode: "email"
               }}
               accessibilityLabel={I18n.t("email.newinsert.label")}
-              accessibilityHint={errorMessage}
               placeholder={I18n.t("email.newinsert.label")}
               onValidate={isValidEmail}
               errorMessage={I18n.t("email.newinsert.alert.invalidemail")}
