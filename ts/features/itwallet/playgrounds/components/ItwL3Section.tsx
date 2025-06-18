@@ -18,8 +18,8 @@ import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
-import { ITW_PLAYGROUND_ROUTES } from "../navigation/routes";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 export const ItwL3Section = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -40,8 +40,8 @@ export const ItwL3Section = () => {
   }, [machineRef]);
 
   const handleCredentialPress = (credentialType: CredentialL3Key) => {
-    navigation.navigate(ITW_PLAYGROUND_ROUTES.MAIN, {
-      screen: ITW_PLAYGROUND_ROUTES.CREDENTIAL_DETAIL,
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PLAYGROUNDS.CREDENTIAL_DETAIL,
       params: {
         credentialType
       }
