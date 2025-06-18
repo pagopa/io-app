@@ -234,14 +234,17 @@ export const IOScrollView = ({
     }
   );
 
-  const opacityTransition = useAnimatedStyle(() => ({
-    opacity: interpolate(
+  const opacityTransition = useAnimatedStyle(() => {
+    const interpolatedOpacity = interpolate(
       scrollPositionPercentage.value,
       [0, gradientOpacityScrollTrigger, 1],
       [1, 1, 0],
       Extrapolation.CLAMP
-    )
-  }));
+    );
+    return {
+      opacity: Number.isNaN(interpolatedOpacity) ? 0 : interpolatedOpacity
+    };
+  });
 
   const ignoreSafeAreaMargin = useMemo(() => {
     if (alertProps !== undefined) {
