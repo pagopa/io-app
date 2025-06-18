@@ -5058,6 +5058,12 @@
             "content": "Se avevi attivato Documenti su IO, la funzionalità è stata disattivata automaticamente.\nPer riattivarla, esci dall’ambiente di test e attiva di nuovo Documenti su IO.",
             "action": "Esci dall'ambiente di test"
           }
+        },
+        "walletL3": {
+          "alert": {
+            "title": "Disattiva IT-Wallet L3",
+            "content": "Se avevi attivato IT-Wallet, il portafoglio sarà resettato e tutti i documenti rimossi."
+          }
         }
       }
     }
