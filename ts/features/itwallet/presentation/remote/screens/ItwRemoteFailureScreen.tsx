@@ -71,23 +71,15 @@ const ContentView = ({ failure }: ContentViewProps) => {
       switch (failure.type) {
         case RemoteFailureType.UNEXPECTED:
           return {
-            title: I18n.t(
-              "features.itWallet.presentation.remote.unexpectedErrorScreen.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.presentation.remote.unexpectedErrorScreen.subtitle"
-            ),
+            title: I18n.t(`${i18nNs}.unexpectedErrorScreen.title`),
+            subtitle: I18n.t(`${i18nNs}.unexpectedErrorScreen.subtitle`),
             pictogram: "umbrella",
             action: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.unexpectedErrorScreen.primaryAction"
-              ),
+              label: I18n.t(`${i18nNs}.unexpectedErrorScreen.primaryAction`),
               onPress: closeMachine
             },
             secondaryAction: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.unexpectedErrorScreen.secondaryAction"
-              ),
+              label: I18n.t(`${i18nNs}.unexpectedErrorScreen.secondaryAction`),
               onPress: failureSupportModal.present
             }
           };
