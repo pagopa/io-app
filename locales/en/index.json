@@ -5104,6 +5104,12 @@
             "content": "If you had \"Documenti su IO\" enabled, the feature has been automatically disabled.\nTo re-enable it, exit the test environment and enable Documents on IO again.",
             "action": "Exit test environment"
           }
+        },
+        "walletL3": {
+          "alert": {
+            "title": "Disable IT Wallet L3",
+            "content": "If you had IT-Wallet enabled, the wallet will be reset and all documents removed."
+          }
         }
       }
     }

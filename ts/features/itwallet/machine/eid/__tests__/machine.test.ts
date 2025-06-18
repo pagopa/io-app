@@ -3,7 +3,10 @@ import _ from "lodash";
 import { assign, createActor, fromPromise, StateFrom } from "xstate";
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import {
+  StoredCredential,
+  WalletInstanceAttestations
+} from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
   GetWalletAttestationActorParams,
@@ -110,7 +113,7 @@ describe("itwEidIssuanceMachine", () => {
       createWalletInstance: fromPromise<string>(createWalletInstance),
       revokeWalletInstance: fromPromise<void>(revokeWalletInstance),
       getWalletAttestation: fromPromise<
-        string,
+        WalletInstanceAttestations,
         GetWalletAttestationActorParams
       >(getWalletAttestation),
       getCieStatus: fromPromise<CieContext>(getCieStatus),
@@ -165,7 +168,9 @@ describe("itwEidIssuanceMachine", () => {
     createWalletInstance.mockImplementation(() =>
       Promise.resolve(T_INTEGRITY_KEY)
     );
-    getWalletAttestation.mockImplementation(() => Promise.resolve(T_WIA));
+    getWalletAttestation.mockImplementation(() =>
+      Promise.resolve({ jwt: T_WIA })
+    );
 
     actor.send({ type: "accept-tos" });
 
@@ -184,13 +189,15 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() =>
       expect(storeWalletInstanceAttestation).toHaveBeenCalledWith(
         expect.objectContaining({
-          context: expect.objectContaining({ walletInstanceAttestation: T_WIA })
+          context: expect.objectContaining({
+            walletInstanceAttestation: { jwt: T_WIA }
+          })
         }),
         undefined
       )
     );
-    expect(actor.getSnapshot().context).toMatchObject({
-      walletInstanceAttestation: T_WIA,
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+      walletInstanceAttestation: { jwt: T_WIA },
       integrityKeyTag: T_INTEGRITY_KEY
     });
 
@@ -258,7 +265,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
-      walletInstanceAttestation: T_WIA,
+      walletInstanceAttestation: { jwt: T_WIA },
       identification: {
         mode: "spid",
         level: "L2",
@@ -309,7 +316,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
-      walletInstanceAttestation: T_WIA,
+      walletInstanceAttestation: { jwt: T_WIA },
       identification: {
         mode: "spid",
         level: "L2",
@@ -344,7 +351,7 @@ describe("itwEidIssuanceMachine", () => {
       value: { UserIdentification: "L2Identification" },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA
+        walletInstanceAttestation: { jwt: T_WIA }
       }
     } as MachineSnapshot);
 
@@ -370,7 +377,8 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
-      walletInstanceAttestation: T_WIA,
+      walletInstanceAttestation: { jwt: T_WIA },
+
       isL3FeaturesEnabled: false,
       identification: {
         mode: "cieId",
@@ -418,7 +426,7 @@ describe("itwEidIssuanceMachine", () => {
       value: { UserIdentification: "L3Identification" },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA,
+        walletInstanceAttestation: { jwt: T_WIA },
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true
@@ -457,7 +465,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
-      walletInstanceAttestation: T_WIA,
+      walletInstanceAttestation: { jwt: T_WIA },
       identification: undefined,
       cieContext: {
         isNFCEnabled: true,
@@ -485,7 +493,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
-      walletInstanceAttestation: T_WIA,
+      walletInstanceAttestation: { jwt: T_WIA },
       identification: {
         mode: "ciePin",
         level: "L3",
@@ -546,7 +554,7 @@ describe("itwEidIssuanceMachine", () => {
       },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA,
+        walletInstanceAttestation: { jwt: T_WIA },
         cieContext: {
           isNFCEnabled: false,
           isCIEAuthenticationSupported: true
@@ -577,7 +585,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
-      walletInstanceAttestation: T_WIA,
+      walletInstanceAttestation: { jwt: T_WIA },
       identification: {
         mode: "ciePin",
         level: "L3",
@@ -606,7 +614,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
-      walletInstanceAttestation: T_WIA,
+      walletInstanceAttestation: { jwt: T_WIA },
       identification: {
         mode: "ciePin",
         level: "L3",
@@ -656,7 +664,7 @@ describe("itwEidIssuanceMachine", () => {
       Promise.resolve(T_INTEGRITY_KEY)
     );
     getWalletAttestation.mockImplementation(() =>
-      Promise.resolve({ walletAttestation: T_WIA })
+      Promise.resolve({ jwt: T_WIA })
     );
 
     actor.send({ type: "accept-tos" });
@@ -681,7 +689,7 @@ describe("itwEidIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA
+        walletInstanceAttestation: { jwt: T_WIA }
       }
     } as MachineSnapshot);
 
@@ -708,7 +716,7 @@ describe("itwEidIssuanceMachine", () => {
       Promise.resolve(T_INTEGRITY_KEY)
     );
     getWalletAttestation.mockImplementation(() =>
-      Promise.resolve({ walletAttestation: T_WIA })
+      Promise.resolve({ jwt: T_WIA })
     );
 
     actor.send({ type: "accept-tos" });
@@ -1046,7 +1054,7 @@ describe("itwEidIssuanceMachine", () => {
     const initialContext = {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
-      walletInstanceAttestation: T_WIA
+      walletInstanceAttestation: { jwt: T_WIA }
     };
 
     const actor = createActor(mockedMachine);
@@ -1112,7 +1120,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
-      walletInstanceAttestation: T_WIA,
+      walletInstanceAttestation: { jwt: T_WIA },
       isReissuing: true,
       identification: {
         mode: "spid",
@@ -1165,7 +1173,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
-      walletInstanceAttestation: T_WIA,
+      walletInstanceAttestation: { jwt: T_WIA },
       isReissuing: true,
       identification: {
         mode: "spid",
@@ -1278,7 +1286,7 @@ describe("itwEidIssuanceMachine", () => {
       value: "TosAcceptance",
       context: {
         integrityKeyTag: undefined,
-        walletInstanceAttestation: T_WIA
+        walletInstanceAttestation: { jwt: T_WIA }
       }
     } as MachineSnapshot);
 
@@ -1309,7 +1317,7 @@ describe("itwEidIssuanceMachine", () => {
         context: {
           ...InitialContext,
           integrityKeyTag: T_INTEGRITY_KEY,
-          walletInstanceAttestation: T_WIA
+          walletInstanceAttestation: { jwt: T_WIA }
         }
       } as MachineSnapshot
     );
@@ -1348,7 +1356,7 @@ describe("itwEidIssuanceMachine", () => {
       value: { UserIdentification: "L3Identification" },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA,
+        walletInstanceAttestation: { jwt: T_WIA },
         isL3FeaturesEnabled: true
       }
     } as MachineSnapshot);
@@ -1396,7 +1404,7 @@ describe("itwEidIssuanceMachine", () => {
       value: { UserIdentification: "L3Identification" },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA,
+        walletInstanceAttestation: { jwt: T_WIA },
         isL3FeaturesEnabled: true,
         cieContext: {
           isNFCEnabled: true,
@@ -1464,7 +1472,7 @@ describe("itwEidIssuanceMachine", () => {
 
     actor.send({ type: "start", isL3: true });
 
-    expect(actor.getSnapshot().context).toMatchObject({
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       isL3FeaturesEnabled: true
     });
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
