@@ -5,4 +5,6 @@ export type ItwPlaygroundParamsList = {
   [ITW_PLAYGROUND_ROUTES.MAIN]: undefined;
   [ITW_PLAYGROUND_ROUTES.LANDING]: undefined;
   [ITW_PLAYGROUND_ROUTES.CREDENTIAL_DETAIL]: ItwL3CredentialDetailScreenNavigationParams;
+  [ITW_PLAYGROUND_ROUTES.DEVICE_PERMISSIONS]: undefined;
+  [ITW_PLAYGROUND_ROUTES.BLUETOOTH_ACTIVATION]: undefined;
 };
