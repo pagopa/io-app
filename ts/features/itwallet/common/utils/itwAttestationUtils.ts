@@ -1,8 +1,7 @@
 import {
   createCryptoContextFor,
   IntegrityContext,
-  WalletInstance,
-  WalletInstanceAttestation
+  WalletInstance
 } from "@pagopa/io-react-native-wallet";
 import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
@@ -12,6 +11,8 @@ import {
   generateIntegrityHardwareKeyTag,
   getIntegrityContext
 } from "./itwIntegrityUtils";
+import { WalletInstanceAttestations } from "./itwTypesUtils.ts";
+import { ioRNWProxy } from "./itwIoReactNativeWalletProxy.ts";
 import { Env } from "./environment.ts";
 
 /**
@@ -52,13 +53,15 @@ export const registerWalletInstance = async (
  * @param env - The environment to use for the wallet provider base URL
  * @param hardwareKeyTag - the hardware key tag of the wallet instance
  * @param sessionToken - the session token to use for the API calls
- * @return the wallet attestation and the related key tag
+ * @param newApiEnabled - enable v1.0 API - TODO: [SIW-2530] Remove after transitioning to API 1.0
+ * @return the wallet attestation in multiple formats
  */
 export const getAttestation = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
   hardwareKeyTag: string,
-  sessionToken: SessionToken
-): Promise<string> => {
+  sessionToken: SessionToken,
+  newApiEnabled: boolean = false
+): Promise<WalletInstanceAttestations> => {
   const integrityContext = getIntegrityContext(hardwareKeyTag);
 
   await regenerateCryptoKey(WIA_KEYTAG);
@@ -69,27 +72,53 @@ export const getAttestation = async (
     WALLET_PROVIDER_BASE_URL
   );
 
-  return await WalletInstanceAttestation.getAttestation({
-    wiaCryptoContext,
-    integrityContext,
-    walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
-    appFetch
-  });
+  const attestation = await ioRNWProxy
+    .WalletInstanceAttestation(newApiEnabled)
+    .getAttestation({
+      wiaCryptoContext,
+      integrityContext,
+      walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
+      appFetch
+    });
+
+  // Handle legacy attestation format
+  if (typeof attestation === "string") {
+    return { jwt: attestation };
+  }
+
+  return attestation.reduce(
+    (acc, { format, wallet_attestation }) => ({
+      ...acc,
+      [format]: wallet_attestation
+    }),
+    {} as WalletInstanceAttestations
+  );
 };
 
 /**
  * Checks if the Wallet Instance Attestation needs to be requested by
  * checking the expiry date
  * @param attestation - the Wallet Instance Attestation to validate
+ * @param newApiEnabled - enable v1.0 API - TODO: [SIW-2530] Remove after transitioning to API 1.0
  * @returns true if the Wallet Instance Attestation is expired or not present
  */
 export const isWalletInstanceAttestationValid = (
-  attestation: string
+  attestation: string,
+  newApiEnabled: boolean = false
 ): boolean => {
-  const { payload } = WalletInstanceAttestation.decode(attestation);
-  const expiryDate = new Date(payload.exp * 1000);
-  const now = new Date();
-  return now < expiryDate;
+  // To keep things simple we store the old and new attestation under the same key,
+  // so we might end up with a valid old attestation for the new flow.
+  // We let decoding fail and catch the error to force the correct attestation to be fetched again.
+  try {
+    const { payload } = ioRNWProxy
+      .WalletInstanceAttestation(newApiEnabled)
+      .decode(attestation);
+    const expiryDate = new Date(payload.exp * 1000);
+    const now = new Date();
+    return now < expiryDate;
+  } catch {
+    return false;
+  }
 };
 
 /**

@@ -2,6 +2,62 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0-rc.2](https://github.com/pagopa/io-app/compare/3.8.0-rc.1...3.8.0-rc.2) (2025-06-18)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2395](https://pagopa.atlassian.net/browse/SIW-2395)] Store Wallet Attestation in multiple formats ([#7077](https://github.com/pagopa/io-app/issues/7077)) ([24b8e5c](https://github.com/pagopa/io-app/commit/24b8e5cc8d6cbf8f1c3590639e4f3364c86b9294))
+* [[IOBP-1744](https://pagopa.atlassian.net/browse/IOBP-1744)] Add the possibility to disable FIMS iOS cookie sharing ([#7074](https://github.com/pagopa/io-app/issues/7074)) ([283f66a](https://github.com/pagopa/io-app/commit/283f66abc1bd0f4c85108df6a21aa6be782f7ce9)), closes [/github.com/pagopa/io-services-metadata/blob/b4b3724d10b3645b2d7f5790c49cc0d7bb831ef2/status/backend.json#L55](https://github.com/pagopa//github.com/pagopa/io-services-metadata/blob/b4b3724d10b3645b2d7f5790c49cc0d7bb831ef2/status/backend.json/issues/L55) [/github.com/pagopa/io-dev-api-server/blob/3236722f6a72f034d5b4067417e368a4a7a0c0d0/src/payloads/backend.ts#L77](https://github.com/pagopa//github.com/pagopa/io-dev-api-server/blob/3236722f6a72f034d5b4067417e368a4a7a0c0d0/src/payloads/backend.ts/issues/L77)
+* [[IOCOM-2152](https://pagopa.atlassian.net/browse/IOCOM-2152)] empty message search results should be announced ([#7081](https://github.com/pagopa/io-app/issues/7081)) ([e009468](https://github.com/pagopa/io-app/commit/e009468cf148a18c863df0f9e22c98c4a4d0db7b))
+
+
+### Bug Fixes
+
+* **iOS:** [[SIW-2558](https://pagopa.atlassian.net/browse/SIW-2558)] Restore `Images.xcassets` reference in `project.pbxproj` ([#7091](https://github.com/pagopa/io-app/issues/7091)) ([4e95479](https://github.com/pagopa/io-app/commit/4e9547950f2b432ff0fd466ce37eb2b3f6d9b932))
+
+## [3.8.0-rc.1](https://github.com/pagopa/io-app/compare/3.8.0-rc.0...3.8.0-rc.1) (2025-06-17)
+
+
+### Features
+
+* [[SIW-2426](https://pagopa.atlassian.net/browse/SIW-2426),[SIW-2422](https://pagopa.atlassian.net/browse/SIW-2422)] Bluetooth proximity presentation ([#7057](https://github.com/pagopa/io-app/issues/7057)) ([c114acb](https://github.com/pagopa/io-app/commit/c114acba887657bf1433b1dcc60bdbf96acbd314))
+
+
+### Bug Fixes
+
+* [[IOBP-1755](https://pagopa.atlassian.net/browse/IOBP-1755)] IDPay missing initiative details route  ([#7089](https://github.com/pagopa/io-app/issues/7089)) ([b73373c](https://github.com/pagopa/io-app/commit/b73373c5646f69a31cf408974603ec6bf843d4eb))
+
+
+### Chores
+
+* [[IOCOM-2413](https://pagopa.atlassian.net/browse/IOCOM-2413)] SEND banner CTA screen hero picture update ([#7088](https://github.com/pagopa/io-app/issues/7088)) ([12d0add](https://github.com/pagopa/io-app/commit/12d0addb4e771a67e52e56703d0bb546c38a2d7b))
+
+## [3.8.0-rc.0](https://github.com/pagopa/io-app/compare/3.7.0-rc.7...3.8.0-rc.0) (2025-06-17)
+
+
+### Features
+
+* [[IOCOM-2353](https://pagopa.atlassian.net/browse/IOCOM-2353)] SEND service status profile property ([#7075](https://github.com/pagopa/io-app/issues/7075)) ([39617ca](https://github.com/pagopa/io-app/commit/39617ca378a696d17f362d574365878d877d9871))
+* **IT Wallet:** [[SIW-2498](https://pagopa.atlassian.net/browse/SIW-2498)] Add IT Wallet environments ([#7053](https://github.com/pagopa/io-app/issues/7053)) ([dda7f92](https://github.com/pagopa/io-app/commit/dda7f92dac1f1e104155ff75e0bc6c4de36b0630))
+
+
+### Bug Fixes
+
+* [[IOBP-1695](https://pagopa.atlassian.net/browse/IOBP-1695)] PAYMENT_HOME mixpanel event dispatched too many times ([#7082](https://github.com/pagopa/io-app/issues/7082)) ([6cc640c](https://github.com/pagopa/io-app/commit/6cc640cc9e95f9d068453951b23ca4c23d43dc8a))
+* [[IOBP-1750](https://pagopa.atlassian.net/browse/IOBP-1750)] Replace radio group id property in IBAN list item ([#7078](https://github.com/pagopa/io-app/issues/7078)) ([a3e2f6d](https://github.com/pagopa/io-app/commit/a3e2f6d0e493a56a3c478f7fd7b3795921be8823))
+* [[IOBP-1751](https://pagopa.atlassian.net/browse/IOBP-1751)] IDPay VirtualizedLists should never be nested inside plain ScrollViews ([#7083](https://github.com/pagopa/io-app/issues/7083)) ([96c4177](https://github.com/pagopa/io-app/commit/96c4177e5395e8887ce1a1fe8e35a1beea0ed0df))
+* [[IOCOM-2439](https://pagopa.atlassian.net/browse/IOCOM-2439)] Message's eCommerce API ([#7087](https://github.com/pagopa/io-app/issues/7087)) ([bbb991b](https://github.com/pagopa/io-app/commit/bbb991b10c3b3fad8e7e31279b5c5a301dbec38b))
+
+
+### Chores
+
+* [[IOPID-3127](https://pagopa.atlassian.net/browse/IOPID-3127)] Update io-react-native-login-utils ([#7055](https://github.com/pagopa/io-app/issues/7055)) ([4e842f3](https://github.com/pagopa/io-app/commit/4e842f3c26cc70c29500342b130a437a7477aab6)), closes [/github.com/pagopa/io-app/pull/7055/files#diff-8cf30b709a866dcd52110f3b09388811e31649432aed91eea32f63279c0ed955](https://github.com/pagopa//github.com/pagopa/io-app/pull/7055/files/issues/diff-8cf30b709a866dcd52110f3b09388811e31649432aed91eea32f63279c0ed955)
+* **IT Wallet:** [[SIW-2535](https://pagopa.atlassian.net/browse/SIW-2535)] Add tests for `credentials` reducer migrations ([#7067](https://github.com/pagopa/io-app/issues/7067)) ([b19205a](https://github.com/pagopa/io-app/commit/b19205abb3de332eee77d8a66d039f22d397e235))
+* [[IOBP-1739](https://pagopa.atlassian.net/browse/IOBP-1739)] Add refetch latest receipts delay after closing the payment flow ([#7080](https://github.com/pagopa/io-app/issues/7080)) ([cac9db0](https://github.com/pagopa/io-app/commit/cac9db0222771321341105a84186633121d07ec6))
+* [[IOBP-1746](https://pagopa.atlassian.net/browse/IOBP-1746)] Update cdc TOS ([#7072](https://github.com/pagopa/io-app/issues/7072)) ([2e501e7](https://github.com/pagopa/io-app/commit/2e501e73f6acd173a916f8cbee870866de2abde2))
+* [[IOPLT-1169](https://pagopa.atlassian.net/browse/IOPLT-1169)] Add static version to `AnimatedPictogram` when `reduceMotion` is enabled ([#7071](https://github.com/pagopa/io-app/issues/7071)) ([098fdec](https://github.com/pagopa/io-app/commit/098fdecd504d2140a945459259caaba2ebc02472))
+
 ## [3.7.0-rc.7](https://github.com/pagopa/io-app/compare/3.7.0-rc.6...3.7.0-rc.7) (2025-06-12)
 
 

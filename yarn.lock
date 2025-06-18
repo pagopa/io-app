@@ -3968,6 +3968,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pagopa/io-react-native-proximity@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@pagopa/io-react-native-proximity@npm:0.6.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 52ed752ff4e0a09fdc56e169baedbe483e9e37d6008007eaecc7a93d934e0d30ef7fe0f33c94c583b9a586da54e162f83741f3e7caeae03c6b74c2ba37b4c9b9
+  languageName: node
+  linkType: hard
+
 "@pagopa/io-react-native-secure-storage@npm:^0.2.0":
   version: 0.2.0
   resolution: "@pagopa/io-react-native-secure-storage@npm:0.2.0"
@@ -3975,6 +3985,28 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: ccc31bf2b6fd04dd9fe68ccd3416752ce19c8fc91c07cb42a6e574ccc8e6784e04647224da8c67a5cce8e5488a408a8b0072df4e9c945ba73c9730a2236f8680
+  languageName: node
+  linkType: hard
+
+"@pagopa/io-react-native-wallet-v2@npm:@pagopa/io-react-native-wallet@next":
+  version: 2.0.0-next.0
+  resolution: "@pagopa/io-react-native-wallet@npm:2.0.0-next.0"
+  dependencies:
+    dcql: ^0.2.21
+    js-base64: ^3.7.7
+    js-sha256: ^0.9.0
+    jsonpath-plus: ^10.2.0
+    parse-url: ^9.2.0
+    react-native-url-polyfill: ^2.0.0
+    react-native-uuid: ^2.0.1
+    uuid: ^11.0.3
+    zod: ^3.21.4
+  peerDependencies:
+    "@pagopa/io-react-native-crypto": "*"
+    "@pagopa/io-react-native-jwt": "*"
+    react: "*"
+    react-native: "*"
+  checksum: 959b3d31acdd12d004453eabb8a214074d26e9b9a02c6ac29bc10013d4afd71d2db378f622c0e1744bb7941b703642c5ff1dbe2bd812da103dedb6d0fba45457
   languageName: node
   linkType: hard
 
@@ -13137,8 +13169,10 @@ __metadata:
     "@pagopa/io-react-native-integrity": ^0.3.2
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": ^1.1.0
+    "@pagopa/io-react-native-proximity": ^0.6.0
     "@pagopa/io-react-native-secure-storage": ^0.2.0
     "@pagopa/io-react-native-wallet": ^0.30.0
+    "@pagopa/io-react-native-wallet-v2": "npm:@pagopa/io-react-native-wallet@next"
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.0.0
     "@pagopa/react-native-cie": ^1.4.2
@@ -13253,6 +13287,7 @@ __metadata:
     react-native-background-timer: 2.1.1
     react-native-barcode-builder: ^2.0.0
     react-native-blob-util: 0.15.0
+    react-native-bluetooth-state-manager: ^1.3.5
     react-native-bundle-visualizer: ^2.2.1
     react-native-calendar-events: 2.2.0
     react-native-config: ^1.4.5
@@ -17747,6 +17782,16 @@ __metadata:
     base-64: 0.1.0
     glob: ^7.1.6
   checksum: d99afa57264ddb0bbbdc3bfa6ee936b5811b56c5a78e7b286bbbe44f90560aa8023ec826f73cd150222b834b69961f5244761a460cc17d475a5dfe8792c041f3
+  languageName: node
+  linkType: hard
+
+"react-native-bluetooth-state-manager@npm:^1.3.5":
+  version: 1.3.5
+  resolution: "react-native-bluetooth-state-manager@npm:1.3.5"
+  peerDependencies:
+    prop-types: "*"
+    react-native: ">= 0.44"
+  checksum: 29901dcdc7234155ea76f1ed4c778b8dca01b7e46cdfbb3e18e4913fbf44a54b6b0ab117d15d55d42201343d20e89c9bb37b076c688467e11c5b43efd9c1fcc5
   languageName: node
   linkType: hard
 
