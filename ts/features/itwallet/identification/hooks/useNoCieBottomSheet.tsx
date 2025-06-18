@@ -1,8 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import {
-  FooterActions,
+  IOButton,
   Pictogram,
-  VSpacer
+  VSpacer,
+  VStack
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -24,12 +25,42 @@ export const useNoCieBottomSheet = () => {
     machineRef.send({ type: "go-to-l2-identification" });
     noCieBottomSheet.dismiss();
   };
+
+  const Footer = () => {
+    return (
+      <VStack space={12}>
+        <IOButton
+          variant="solid"
+          label={I18n.t(
+            "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
+          )}
+          accessibilityLabel={I18n.t(
+            "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
+          )}
+          onPress={navigateToL2Identification}
+        />
+        <View style={{ alignSelf: "center" }}>
+          <IOButton
+            variant="link"
+            label={I18n.t(
+              "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
+            )}
+            accessibilityLabel={I18n.t(
+              "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
+            )}
+            onPress={() => noCieBottomSheet.dismiss()}
+          />
+        </View>
+      </VStack>
+    );
+  };
+
   const noCieBottomSheet = useIOBottomSheetModal({
     title: I18n.t(
       "features.itWallet.identification.l3.mode.bottomSheet.noCie.title"
     ),
     component: (
-      <>
+      <View style={{ flex: 1 }}>
         <IOMarkdown
           content={I18n.t(
             "features.itWallet.identification.l3.mode.bottomSheet.noCie.description"
@@ -48,33 +79,11 @@ export const useNoCieBottomSheet = () => {
             </View>
           ))}
         </View>
-        <FooterActions
-          fixed={false}
-          actions={{
-            type: "TwoButtons",
-            primary: {
-              label: I18n.t(
-                "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
-              ),
-              accessibilityLabel: I18n.t(
-                "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
-              ),
-              onPress: navigateToL2Identification
-            },
-            secondary: {
-              label: I18n.t(
-                "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
-              ),
-              accessibilityLabel: I18n.t(
-                "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
-              ),
-              onPress: () => noCieBottomSheet.dismiss()
-            }
-          }}
-        />
-      </>
-    ),
-    snapPoint: [660]
+        <VSpacer size={24} />
+        <Footer />
+        <VSpacer size={12} />
+      </View>
+    )
   });
 
   return noCieBottomSheet;
