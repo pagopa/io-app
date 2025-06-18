@@ -230,21 +230,20 @@ export const IOScrollView = ({
       const scrollPercentage = scrollPosition / maxScrollHeight;
 
       scrollPositionAbsolute.value = scrollPosition;
-      scrollPositionPercentage.value = scrollPercentage;
+      scrollPositionPercentage.value = Number.isNaN(scrollPercentage)
+        ? 0
+        : scrollPercentage;
     }
   );
 
-  const opacityTransition = useAnimatedStyle(() => {
-    const interpolatedOpacity = interpolate(
+  const opacityTransition = useAnimatedStyle(() => ({
+    opacity: interpolate(
       scrollPositionPercentage.value,
       [0, gradientOpacityScrollTrigger, 1],
       [1, 1, 0],
       Extrapolation.CLAMP
-    );
-    return {
-      opacity: Number.isNaN(interpolatedOpacity) ? 0 : interpolatedOpacity
-    };
-  });
+    )
+  }));
 
   const ignoreSafeAreaMargin = useMemo(() => {
     if (alertProps !== undefined) {
