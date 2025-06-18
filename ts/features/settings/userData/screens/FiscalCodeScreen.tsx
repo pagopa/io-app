@@ -87,11 +87,13 @@ const FiscalCodeScreen = () => {
       faqCategories={FAQ_CATEGORIES}
     >
       <VSpacer size={8} />
+      {/* resolve https://pagopa.atlassian.net/browse/IOPID-2998 */}
       {fiscalCode && (
         <View
           accessible
           accessibilityLabel={I18n.t(
-            "profile.fiscalCode.accessibility.fiscalCodeHint"
+            "profile.fiscalCode.accessibility.fiscalCodeHint",
+            { fiscalCode: "" }
           )}
           style={[
             styles.card,

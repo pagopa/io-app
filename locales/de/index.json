@@ -328,7 +328,7 @@
   "profile": {
     "fiscalCode": {
       "accessibility": {
-        "fiscalCodeHint": "Bild des Strichcodes deiner Steuernummer",
+        "fiscalCodeHint": "Bild des Strichcodes deiner Steuernummer {{fiscalCode}}",
         "unavailable": "Nicht verfügbar"
       },
       "title": "Deine persönlichen Dokumente",

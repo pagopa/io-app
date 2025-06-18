@@ -385,7 +385,7 @@
   "profile": {
     "fiscalCode": {
       "accessibility": {
-        "fiscalCodeHint": "Immagine del codice a barre del tuo codice fiscale",
+        "fiscalCodeHint": "Immagine del codice a barre del tuo codice fiscale {{fiscalCode}}",
         "unavailable": "Non disponibile"
       },
       "title": "I tuoi documenti personali",
@@ -1272,7 +1272,8 @@
         "invalidemail": "Inserisci un indirizzo email valido",
         "modaltitle": "Questa email è già in uso",
         "modaldescription": "Può succedere se condividi lo stesso indirizzo con un familiare",
-        "modalbutton": "Usa un’altra email"
+        "modalbutton": "Usa un’altra email",
+        "validemail": "L'indirizzo email inserito è valido"
       }
     },
     "edit": {

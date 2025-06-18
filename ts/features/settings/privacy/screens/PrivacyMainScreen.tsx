@@ -59,6 +59,9 @@ type PrivacyNavListItem = {
  * - send a request to delete his profile
  * - send a request to export all his data
  */
+
+// resolve https://pagopa.atlassian.net/browse/IOPID-3008
+// resolve https://pagopa.atlassian.net/browse/IOPID-3009
 const PrivacyMainScreen = ({ navigation }: Props) => {
   const dispatch = useIODispatch();
 
@@ -291,7 +294,11 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       item: { value, description, onPress, topElement, testID }
     }: ListRenderItemInfo<PrivacyNavListItem>) => (
       <ListItemNav
-        accessibilityLabel={value}
+        accessibilityLabel={`${value} ${description} ${
+          topElement?.badgeProps?.text
+            ? "status: " + topElement.badgeProps?.text
+            : ""
+        }`}
         value={value}
         description={description}
         onPress={onPress}
