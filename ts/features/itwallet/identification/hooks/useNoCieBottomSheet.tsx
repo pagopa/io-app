@@ -26,34 +26,32 @@ export const useNoCieBottomSheet = () => {
     noCieBottomSheet.dismiss();
   };
 
-  const Footer = () => {
-    return (
-      <VStack space={12}>
+  const Footer = () => (
+    <VStack space={12}>
+      <IOButton
+        variant="solid"
+        label={I18n.t(
+          "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
+        )}
+        accessibilityLabel={I18n.t(
+          "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
+        )}
+        onPress={navigateToL2Identification}
+      />
+      <View style={{ alignSelf: "center" }}>
         <IOButton
-          variant="solid"
+          variant="link"
           label={I18n.t(
-            "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
+            "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
           )}
           accessibilityLabel={I18n.t(
-            "features.itWallet.identification.l3.mode.bottomSheet.noCie.primaryAction"
+            "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
           )}
-          onPress={navigateToL2Identification}
+          onPress={() => noCieBottomSheet.dismiss()}
         />
-        <View style={{ alignSelf: "center" }}>
-          <IOButton
-            variant="link"
-            label={I18n.t(
-              "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
-            )}
-            accessibilityLabel={I18n.t(
-              "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
-            )}
-            onPress={() => noCieBottomSheet.dismiss()}
-          />
-        </View>
-      </VStack>
-    );
-  };
+      </View>
+    </VStack>
+  );
 
   const noCieBottomSheet = useIOBottomSheetModal({
     title: I18n.t(
