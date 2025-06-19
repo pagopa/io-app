@@ -7,9 +7,10 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback } from "react";
+import { ComponentProps, useCallback, useMemo } from "react";
 import { StatusBar } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import { AlertEdgeToEdge } from "@pagopa/io-app-design-system/lib/typescript/components/alert/AlertEdgeToEdge";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
 import { startApplicationInitialization } from "../../../../store/actions/application";
@@ -23,6 +24,7 @@ import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import {
+  ItwOfflineRicaricaAppIOSource,
   trackItwOfflineBanner,
   trackItwOfflineBottomSheet,
   trackItwOfflineReloadFailure,
@@ -49,33 +51,11 @@ import {
 const useOfflineAlertDetailModal = (
   offlineAccessReason: OfflineAccessReasonEnum
 ) => {
-  const toast = useIOToast();
   const dispatch = useIODispatch();
-  const isConnected = useIOSelector(isConnectedSelector);
-
-  const handleAppRestart = useCallback(() => {
-    if (isConnected) {
-      trackItwOfflineRicaricaAppIO({
-        source: "bottom_sheet"
-      });
-      // Reset the offline access reason.
-      // Since this state is `undefined` when the user is online,
-      // the startup saga will proceed without blocking.
-      dispatch(resetOfflineAccessReason());
-      // Dispatch this action to mount the correct navigator.
-      dispatch(startupLoadSuccess(StartupStatusEnum.INITIAL));
-      // restart startup saga
-      dispatch(startApplicationInitialization());
-    } else {
-      toast.error(I18n.t("features.itWallet.offline.failure"));
-      trackItwOfflineReloadFailure();
-    }
-  }, [dispatch, isConnected, toast]);
+  const handleAppRestart = useAppRestartAction("bottom_sheet");
 
   const navigateOnAuthPage = useCallback(() => {
-    trackItwOfflineRicaricaAppIO({
-      source: "bottom_sheet"
-    });
+    trackItwOfflineRicaricaAppIO("bottom_sheet");
     // Reset the offline access reason.
     // Since this state is `undefined` when the user is online,
     // the startup saga will proceed without blocking.
@@ -140,8 +120,10 @@ const OfflineAlertWrapper = ({
   offlineAccessReason,
   children
 }: React.PropsWithChildren<OfflineAlertWrapperProps>) => {
-  const detailModal = useOfflineAlertDetailModal(offlineAccessReason);
   const { name } = useRoute();
+
+  const isConnected = useIOSelector(isConnectedSelector);
+  const handleAppRestart = useAppRestartAction("banner");
 
   useOnFirstRender(() => {
     trackItwOfflineBanner({
@@ -151,24 +133,40 @@ const OfflineAlertWrapper = ({
     });
   });
 
+  const detailModal = useOfflineAlertDetailModal(offlineAccessReason);
+
   const openBottomSheet = useCallback(() => {
     detailModal.present();
     trackItwOfflineBottomSheet();
   }, [detailModal]);
 
+  const alertProps: ComponentProps<typeof AlertEdgeToEdge> = useMemo(() => {
+    if (
+      offlineAccessReason === OfflineAccessReasonEnum.DEVICE_OFFLINE &&
+      isConnected
+    ) {
+      return {
+        content: I18n.t(`features.itWallet.offline.back_online.alert.content`),
+        action: I18n.t(`features.itWallet.offline.back_online.alert.action`),
+        variant: "success",
+        onPress: handleAppRestart
+      };
+    }
+
+    return {
+      content: I18n.t(
+        `features.itWallet.offline.${offlineAccessReason}.alert.content`
+      ),
+      action: I18n.t(
+        `features.itWallet.offline.${offlineAccessReason}.alert.action`
+      ),
+      variant: "info",
+      onPress: openBottomSheet
+    };
+  }, [offlineAccessReason, isConnected, openBottomSheet, handleAppRestart]);
+
   return (
-    <AlertEdgeToEdgeWrapper
-      alertProps={{
-        content: I18n.t(
-          `features.itWallet.offline.${offlineAccessReason}.alert.content`
-        ),
-        action: I18n.t(
-          `features.itWallet.offline.${offlineAccessReason}.alert.action`
-        ),
-        variant: "info",
-        onPress: openBottomSheet
-      }}
-    >
+    <AlertEdgeToEdgeWrapper alertProps={alertProps}>
       <StatusBar
         barStyle="dark-content"
         backgroundColor={IOColors["info-100"]}
@@ -177,6 +175,35 @@ const OfflineAlertWrapper = ({
       {detailModal.bottomSheet}
     </AlertEdgeToEdgeWrapper>
   );
+};
+
+/**
+ * Hook that creates and manages a function to restart the application.
+ *
+ * @param source - The source of the app restart action, for analytics purposes
+ * @returns A function to restart the application
+ */
+const useAppRestartAction = (source: ItwOfflineRicaricaAppIOSource) => {
+  const toast = useIOToast();
+  const dispatch = useIODispatch();
+  const isConnected = useIOSelector(isConnectedSelector);
+
+  return useCallback(() => {
+    if (isConnected) {
+      trackItwOfflineRicaricaAppIO(source);
+      // Reset the offline access reason.
+      // Since this state is `undefined` when the user is online,
+      // the startup saga will proceed without blocking.
+      dispatch(resetOfflineAccessReason());
+      // Dispatch this action to mount the correct navigator.
+      dispatch(startupLoadSuccess(StartupStatusEnum.INITIAL));
+      // restart startup saga
+      dispatch(startApplicationInitialization());
+    } else {
+      toast.error(I18n.t("features.itWallet.offline.failure"));
+      trackItwOfflineReloadFailure();
+    }
+  }, [dispatch, isConnected, toast, source]);
 };
 
 /**

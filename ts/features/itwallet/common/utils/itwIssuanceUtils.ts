@@ -1,23 +1,19 @@
 import { generate } from "@pagopa/io-react-native-crypto";
+import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
   AuthorizationDetail,
   createCryptoContextFor,
   Credential
 } from "@pagopa/io-react-native-wallet";
-import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import { v4 as uuidv4 } from "uuid";
-import {
-  itWalletIssuanceRedirectUri,
-  itwIdpHintTest,
-  itwPidProviderBaseUrl
-} from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
-import { StoredCredential } from "./itwTypesUtils";
+import { Env } from "./environment";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
+import { StoredCredential } from "./itwTypesUtils";
 
 type AccessToken = Awaited<
   ReturnType<typeof Credential.Issuance.authorizeAccess>
@@ -28,6 +24,7 @@ type IssuerConf = Parameters<Credential.Issuance.ObtainCredential>[0];
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
 type StartAuthFlowParams = {
+  env: Env;
   walletAttestation: string;
   identification: IdentificationContext;
   isL3: boolean;
@@ -38,23 +35,25 @@ type StartAuthFlowParams = {
  * proceeding with the authentication process to get the `authUrl` and other parameters needed later.
  * After completing the initial authentication flow and obtaining the redirectAuthUrl from the WebView (CIE + PIN & SPID) or Browser (CIEID),
  * the flow must be completed by invoking `completeAuthFlow`.
+ * @param env - The environment to use for the wallet provider base URL
  * @param walletAttestation - The wallet attestation.
  * @param identification - The identification context.
  * @param isL3 flag that indicates that we need to issue an L3 PID
  * @returns Authentication params to use when completing the flow.
  */
 const startAuthFlow = async ({
+  env,
   walletAttestation,
   identification,
   isL3
 }: StartAuthFlowParams) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
-    issuerUrl: itwPidProviderBaseUrl,
+    issuerUrl: env.WALLET_PID_PROVIDER_BASE_URL,
     credentialType: CREDENTIAL_TYPE
   });
 
   // When issuing an L3 PID, we should not provide an IDP hint
-  const idpHint = isL3 ? undefined : getIdpHint(identification);
+  const idpHint = getIdpHint(identification, env, isL3);
 
   const { issuerUrl, credentialType } = startFlow();
 
@@ -70,7 +69,7 @@ const startAuthFlow = async ({
       credentialType,
       {
         walletInstanceAttestation: walletAttestation,
-        redirectUri: itWalletIssuanceRedirectUri,
+        redirectUri: env.ISSUANCE_REDIRECT_URI,
         wiaCryptoContext
       }
     );
@@ -89,7 +88,7 @@ const startAuthFlow = async ({
     clientId,
     codeVerifier,
     credentialDefinition,
-    redirectUri: itWalletIssuanceRedirectUri
+    redirectUri: env.ISSUANCE_REDIRECT_URI
   };
 };
 
@@ -204,7 +203,7 @@ const getPid = async ({
   };
 };
 
-export { startAuthFlow, completeAuthFlow, getPid };
+export { completeAuthFlow, getPid, startAuthFlow };
 
 /**
  * Consts for the IDP hints in test for SPID and CIE and in production for CIE.
@@ -240,10 +239,18 @@ const SPID_IDP_HINTS: { [key: string]: string } = {
  * In production for SPID the hint is retrieved from the IDP ID via the {@link getSpidProductionIdpHint} function,
  * for CIE the hint is always the same and it's defined in the {@link CIE_HINT_PROD} constant.
  * @param idCtx the identification context which contains the mode and the IDP ID if the mode is SPID
+ * @param env the environment currently in use
+ * @param isL3 flag that indicates that we need to issue an L3 PID
  */
-const getIdpHint = (idCtx: IdentificationContext) => {
+const getIdpHint = (idCtx: IdentificationContext, env: Env, isL3: boolean) => {
+  if (isL3) {
+    // When issuing an L3 PID, we should not provide an IDP hint
+    return undefined;
+  }
+
   const isSpidMode = idCtx.mode === "spid";
-  if (itwIdpHintTest) {
+
+  if (env.type === "pre") {
     return isSpidMode ? SPID_HINT_TEST : CIE_HINT_TEST;
   } else {
     return isSpidMode ? getSpidProductionIdpHint(idCtx.idpId) : CIE_HINT_PROD;

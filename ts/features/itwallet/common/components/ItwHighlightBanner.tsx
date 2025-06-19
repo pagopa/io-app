@@ -36,6 +36,7 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
 import I18n from "../../../../i18n";
+import { itwGradientColors } from "../utils/constants.ts";
 
 type Props = {
   title: string;
@@ -192,19 +193,7 @@ const AnimatedLinearGradient = ({
       start={animatedStart}
       end={animatedEnd}
       mode="repeat"
-      colors={[
-        "#0B3EE3",
-        "#234FFF",
-        "#436FFF",
-        "#2F5EFF",
-        "#1E53FF",
-        "#1848F0",
-        "#0B3EE3",
-        "#1F4DFF",
-        "#2A5CFF",
-        "#1943E8",
-        "#0B3EE3"
-      ]}
+      colors={itwGradientColors}
     />
   );
 };

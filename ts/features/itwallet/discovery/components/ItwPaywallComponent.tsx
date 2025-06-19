@@ -42,7 +42,10 @@ import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { itwGradientColors } from "../../common/utils/constants.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors";
+import { selectIsLoading } from "../../machine/eid/selectors";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 const markdownRules = {
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
@@ -80,6 +83,7 @@ export const ItwPaywallComponent = ({
   onContinuePress
 }: ItwPaywallComponentProps) => {
   const { tos_url } = useIOSelector(tosConfigSelector);
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
   const theme = useIOTheme();
 
@@ -132,6 +136,7 @@ export const ItwPaywallComponent = ({
           onPress: handleScrollToHighlights
         },
         primary: {
+          loading: isLoading,
           label: I18n.t("features.itWallet.discovery.paywall.primaryAction"),
           onPress: onContinuePress
         }
@@ -213,19 +218,7 @@ const BackgroundGradient = () => {
           start={vec(0, height / 2)}
           end={vec(width, 0)}
           mode="repeat"
-          colors={[
-            "#0B3EE3",
-            "#234FFF",
-            "#436FFF",
-            "#2F5EFF",
-            "#1E53FF",
-            "#1848F0",
-            "#0B3EE3",
-            "#1F4DFF",
-            "#2A5CFF",
-            "#1943E8",
-            "#0B3EE3"
-          ]}
+          colors={itwGradientColors}
         />
       </RoundedRect>
     </Canvas>

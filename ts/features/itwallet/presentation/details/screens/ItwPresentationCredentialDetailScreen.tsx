@@ -1,7 +1,12 @@
-import { ContentWrapper, VSpacer, VStack } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  Optional,
+  VSpacer,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import I18n from "../../../../../i18n.ts";
 import {
@@ -34,7 +39,6 @@ import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase.tsx";
-import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
 import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus.tsx";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
@@ -42,6 +46,11 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
 import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
+import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
+import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
+import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
+import { selectIsLoading } from "../../proximity/machine/selectors.ts";
+import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -57,6 +66,7 @@ type Props = IOStackNavigationRouteProps<
  */
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
+  const { bottomSheet, dismiss } = useItwPresentQRCode();
   const { credentialType } = route.params;
   const credentialOption = useIOSelector(
     itwCredentialByTypeSelector(credentialType)
@@ -78,13 +88,26 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
     }, [credentialType, isPendingReview, dispatch])
   );
 
+  useFocusEffect(
+    // eslint-disable-next-line arrow-body-style
+    useCallback(() => {
+      /**
+       * Dismiss the bottom sheet when this screen is no longer in focus.
+       */
+      return dismiss;
+    }, [dismiss])
+  );
+
   if (O.isNone(credentialOption)) {
     // If the credential is not found, we render a screen that allows the user to request that credential.
     return <ItwCredentialNotFound credentialType={credentialType} />;
   }
 
   return (
-    <ItwPresentationCredentialDetail credential={credentialOption.value} />
+    <>
+      <ItwPresentationCredentialDetail credential={credentialOption.value} />
+      {bottomSheet}
+    </>
   );
 };
 
@@ -95,12 +118,15 @@ type ItwPresentationCredentialDetailProps = {
 /**
  * Component that renders the credential detail content.
  */
-const ItwPresentationCredentialDetail = ({
+export const ItwPresentationCredentialDetail = ({
   credential
 }: ItwPresentationCredentialDetailProps) => {
+  const itwProximityMachineRef = ItwProximityMachineContext.useActorRef();
+  const isCheckingPermissions =
+    ItwProximityMachineContext.useSelector(selectIsLoading);
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-
+  const isL3Credential = isItwCredential(credential.credential);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -146,6 +172,50 @@ const ItwPresentationCredentialDetail = ({
     );
   };
 
+  const ctaProps = useMemo<Optional<CredentialCtaProps>>(() => {
+    const { parsedCredential } = credential;
+    const credentialType = credential.credentialType;
+    const contentClaim = parsedCredential[WellKnownClaim.content];
+
+    if (credentialType === CredentialType.DRIVING_LICENSE && isL3Credential) {
+      return {
+        label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
+        icon: "qrCode",
+        iconPosition: "end",
+        loading: isCheckingPermissions,
+        onPress: () => itwProximityMachineRef.send({ type: "start" })
+      };
+    }
+
+    // If the "content" claim exists, return a CTA to view and download it.
+    if (contentClaim) {
+      return {
+        label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
+        icon: "docPaymentTitle",
+        onPress: () => {
+          if (CREDENTIALS_MAP[credentialType] === "ITW_TS_V2") {
+            trackWalletCredentialShowFAC_SIMILE();
+          }
+
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
+            params: {
+              attachmentClaim: contentClaim
+            }
+          });
+        }
+      };
+    }
+
+    return undefined;
+  }, [
+    credential,
+    isL3Credential,
+    navigation,
+    isCheckingPermissions,
+    itwProximityMachineRef
+  ]);
+
   if (status === "unknown") {
     return <ItwPresentationCredentialUnknownStatus credential={credential} />;
   }
@@ -155,8 +225,6 @@ const ItwPresentationCredentialDetail = ({
       <ItwPresentationCredentialVerificationExpired credential={credential} />
     );
   }
-
-  const ctaProps = getCtaProps(credential, navigation);
 
   return (
     <ItwPresentationDetailsScreenBase
@@ -171,44 +239,15 @@ const ItwPresentationCredentialDetail = ({
           <ItwPresentationCredentialStatusAlert credential={credential} />
           <ItwPresentationCredentialInfoAlert credential={credential} />
           <ItwPresentationClaimsSection credential={credential} />
-          <ItwCredentialTrustmark
-            credential={credential}
-            onPress={handleTrustmarkPress}
-          />
+          {!isL3Credential && (
+            <ItwCredentialTrustmark
+              credential={credential}
+              onPress={handleTrustmarkPress}
+            />
+          )}
           <ItwPresentationDetailsFooter credential={credential} />
         </VStack>
       </ContentWrapper>
     </ItwPresentationDetailsScreenBase>
   );
-};
-
-const getCtaProps = (
-  credential: StoredCredential,
-  navigation: ReturnType<typeof useIONavigation>
-): CredentialCtaProps | undefined => {
-  const { parsedCredential } = credential;
-
-  const onPress = () => {
-    if (CREDENTIALS_MAP[credential.credentialType] === "ITW_TS_V2") {
-      trackWalletCredentialShowFAC_SIMILE();
-    }
-
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
-      params: {
-        attachmentClaim: parsedCredential[WellKnownClaim.content]
-      }
-    });
-  };
-
-  // If the "content" claim exists, return a CTA to view and download it.
-  if (parsedCredential[WellKnownClaim.content]) {
-    return {
-      label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
-      icon: "docPaymentTitle",
-      onPress
-    };
-  }
-
-  return undefined;
 };

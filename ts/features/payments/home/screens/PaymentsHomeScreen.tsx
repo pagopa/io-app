@@ -1,9 +1,11 @@
+import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import Animated, {
   LinearTransition,
   useAnimatedRef
 } from "react-native-reanimated";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   IOScrollView,
   IOScrollViewActions
@@ -81,16 +83,22 @@ const PaymentsHomeScreen = () => {
 
   /* CODE RELATED TO THE HEADER -- END */
 
-  useEffect(() => {
-    if (!isLoading) {
-      setIsRefreshing(false);
-      analytics.trackPaymentsHome({
-        saved_payment_method:
-          paymentAnalyticsData?.savedPaymentMethods?.length ?? 0,
-        payments_home_status: paymentAnalyticsData?.paymentsHomeStatus
-      });
-    }
-  }, [isLoading, paymentAnalyticsData]);
+  useFocusEffect(
+    useCallback(() => {
+      if (!isLoading) {
+        setIsRefreshing(false);
+        analytics.trackPaymentsHome({
+          saved_payment_method:
+            paymentAnalyticsData?.savedPaymentMethods?.length ?? 0,
+          payments_home_status: paymentAnalyticsData?.paymentsHomeStatus
+        });
+      }
+    }, [
+      isLoading,
+      paymentAnalyticsData?.paymentsHomeStatus,
+      paymentAnalyticsData?.savedPaymentMethods?.length
+    ])
+  );
 
   const handleRefreshPaymentsHome = () => {
     if (isRefreshing || isLoading || cannotRefresh) {
@@ -141,6 +149,7 @@ const PaymentsHomeScreen = () => {
 
   return (
     <IOScrollView
+      includeContentMargins={false}
       excludeSafeAreaMargins={true}
       animatedRef={scrollViewContentRef}
       refreshControlProps={{
@@ -182,7 +191,11 @@ const PaymentsHomeScreenContent = () => {
 
   return (
     <>
-      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoadingFirstTime} />
+      <ContentWrapper>
+        <PaymentsHomeUserMethodsList
+          enforcedLoadingState={isLoadingFirstTime}
+        />
+      </ContentWrapper>
       <PaymentsHomeTransactionsList enforcedLoadingState={isLoadingFirstTime} />
     </>
   );

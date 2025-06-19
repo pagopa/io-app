@@ -62,6 +62,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "sso": {
       "ctaText": undefined,
       "currentFlowState": "idle",
+      "ephemeralSessionOniOS": false,
       "relyingPartyServiceId": undefined,
       "relyingPartyUrl": undefined,
       "ssoData": {
@@ -131,6 +132,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "_tag": "None",
       },
     },
+    "environment": {
+      "env": "prod",
+    },
     "identification": {
       "hasNfcFeature": {
         "kind": "PotNone",
@@ -185,6 +189,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "userFromSuccessLogin": false,
     },
     "loginPreferences": {
+      "activeSessionLoginLocalFlag": false,
       "showSessionExpirationBanner": true,
     },
     "nativeLogin": {

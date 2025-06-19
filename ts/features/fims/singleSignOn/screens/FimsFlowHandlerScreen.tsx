@@ -51,6 +51,9 @@ export type FimsFlowHandlerScreenRouteParams = {
   /* This is the entry point from which the FIMS's flow
    * has been starded (e.g., the screen's route name) */
   source: string;
+  /* This indicates if the in-app browser on iOS must
+   * share the cookies. If true, a native popup will appear to the user. */
+  ephemeralSessionOniOS: boolean;
 };
 
 type FimsFlowHandlerScreenRouteProps = IOStackNavigationRouteProps<
@@ -68,7 +71,8 @@ export const FimsFlowHandlerScreen = (
     organizationName,
     serviceId,
     serviceName,
-    source
+    source,
+    ephemeralSessionOniOS
   } = props.route.params;
   const dispatch = useIODispatch();
 
@@ -109,9 +113,16 @@ export const FimsFlowHandlerScreen = (
         organizationName,
         organizationFiscalCode,
         ctaText,
-        source
+        source,
+        ephemeralSessionOniOS
       );
-      dispatch(fimsGetConsentsListAction.request({ ctaText, ctaUrl }));
+      dispatch(
+        fimsGetConsentsListAction.request({
+          ctaText,
+          ctaUrl,
+          ephemeralSessionOniOS
+        })
+      );
     } else if (requiresAppUpdate) {
       trackAuthenticationError(
         undefined,
@@ -130,7 +141,8 @@ export const FimsFlowHandlerScreen = (
     requiresAppUpdate,
     serviceId,
     serviceName,
-    source
+    source,
+    ephemeralSessionOniOS
   ]);
 
   if (requiresAppUpdate) {

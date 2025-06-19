@@ -154,7 +154,8 @@ const TimelineItem = ({
 );
 
 export const Timeline = ({ data = [] }: TimelineProps) => (
-  <>
+  // Additional margin needed to allow proper scrolling of the timeline
+  <View collapsable={false} style={{ marginBottom: 96 }}>
     {data.map((item, i) => (
       <TimelineItem
         key={i}
@@ -163,5 +164,5 @@ export const Timeline = ({ data = [] }: TimelineProps) => (
         isLast={i === data.length - 1}
       />
     ))}
-  </>
+  </View>
 );

@@ -22,7 +22,7 @@ import { MessageDetailsTagBox } from "../../messages/components/MessageDetail/Me
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
 import { UIMessageId } from "../../messages/types";
 import {
-  maxVisiblePaymentCountGenerator,
+  maxVisiblePaymentCount,
   shouldUseBottomSheetForPayments
 } from "../utils";
 import { MessageDetailsContent } from "./MessageDetailsContent";
@@ -33,7 +33,7 @@ import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 import { MessageFooter } from "./MessageFooter";
 import { MessageCancelledContent } from "./MessageCancelledContent";
 
-type MessageDetailsProps = {
+export type MessageDetailsProps = {
   message: PNMessage;
   messageId: UIMessageId;
   serviceId: ServiceId;
@@ -58,7 +58,6 @@ export const MessageDetails = ({
     useFooterActionsMeasurements();
 
   const attachmentList = SEP.left(partitionedAttachments);
-  const maxVisiblePaymentCount = maxVisiblePaymentCountGenerator();
 
   const isCancelled = message.isCancelled ?? false;
   const completedPaymentNoticeCodes = isCancelled

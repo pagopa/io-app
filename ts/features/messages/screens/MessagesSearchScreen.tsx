@@ -6,25 +6,26 @@ import {
   SearchInputRef,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   FlatList,
   ListRenderItemInfo,
   Platform,
+  View,
   ViewStyle
 } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../i18n";
-import { EmptyList } from "../components/Search/EmptyList";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../store/hooks";
-import { UIMessage } from "../types";
-import { WrappedListItemMessage } from "../components/Home/WrappedListItemMessage";
 import {
   trackMessageSearchClosing,
   trackMessageSearchPage
 } from "../analytics";
+import { WrappedListItemMessage } from "../components/Home/WrappedListItemMessage";
+import { EmptyList } from "../components/Search/EmptyList";
+import { UIMessage } from "../types";
 import { getMessageSearchResult } from "./searchUtils";
 
 const INPUT_PADDING: IOSpacingScale = 16;
@@ -68,7 +69,19 @@ export const MessagesSearchScreen = () => {
       );
     }
 
-    return <VSpacer size={16} />;
+    return (
+      <View
+        accessible={true}
+        accessibilityLabel={I18n.t("messages.search.emptyState.a11y.noneFound")}
+        importantForAccessibility="yes"
+        style={{
+          minHeight: "50%"
+        }}
+      >
+        {/* the spacer here is required to make the View accessible via external keyboard  */}
+        <VSpacer size={16} />
+      </View>
+    );
   };
 
   const handleCancel = useCallback(() => {

@@ -3,6 +3,17 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
 import { trackCTAPressed, trackPaymentStart } from "../../analytics";
 import { CTA } from "../../../../types/LocalizedCTAs";
+import {
+  isError,
+  isReady,
+  RemoteValue
+} from "../../../../common/model/RemoteValue";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
+import {
+  isGenericError,
+  isTimeoutError,
+  PaymentError
+} from "../../store/actions";
 
 export const computeAndTrackCTAPressAnalytics = (
   isFirstCTA: boolean,
@@ -33,3 +44,10 @@ export const computeAndTrackPaymentStart = (
     service?.organization.fiscal_code
   );
 };
+
+export const shouldUpdatePaymentUponReturning = (
+  payment: RemoteValue<PaymentInfoResponse, PaymentError>
+) =>
+  isReady(payment) ||
+  (isError(payment) &&
+    (isGenericError(payment.error) || isTimeoutError(payment.error)));

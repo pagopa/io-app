@@ -1,30 +1,30 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs, assertEvent, assign } from "xstate";
 import * as O from "fp-ts/lib/Option";
+import { ActionArgs, assertEvent, assign } from "xstate";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
-import { itwCredentialsStore } from "../../credentials/store/actions";
-import {
-  itwRemoveIntegrityKeyTag,
-  itwStoreIntegrityKeyTag
-} from "../../issuance/store/actions";
-import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
+import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import {
   trackItwDeactivated,
   trackSaveCredentialSuccess,
   updateITWStatusAndIDProperties
 } from "../../analytics";
-import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwSetAuthLevel } from "../../common/store/actions/preferences.ts";
+import { itwCredentialsStore } from "../../credentials/store/actions";
 import { itwL2CredentialSelector } from "../../credentials/store/selectors/index.ts";
+import {
+  itwRemoveIntegrityKeyTag,
+  itwStoreIntegrityKeyTag
+} from "../../issuance/store/actions";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
+import { ITW_ROUTES } from "../../navigation/routes";
+import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
+import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { Context } from "./context.ts";
 import { EidIssuanceEvents } from "./events.ts";
 
@@ -48,9 +48,15 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToIdentificationModeScreen: () => {
+  navigateToL3IdentificationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L3
+    });
+  },
+
+  navigateToL2IdentificationScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2,
       params: { eidReissuing: false }
     });
   },
@@ -129,6 +135,18 @@ export const createEidIssuanceActionsImplementation = (
           }
         }
       ]
+    });
+  },
+
+  navigateToCiePreparationScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN
+    });
+  },
+
+  navigateToCiePinPreparationScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN
     });
   },
 

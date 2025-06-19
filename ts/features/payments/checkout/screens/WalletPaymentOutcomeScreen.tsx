@@ -55,6 +55,8 @@ type WalletPaymentOutcomeRouteProps = RouteProp<
   "PAYMENT_CHECKOUT_OUTCOME"
 >;
 
+export const REFETCH_LATEST_RECEIPTS_DELAY_MS = 3000;
+
 const WalletPaymentOutcomeScreen = () => {
   useAvoidHardwareBackButton();
   const { requestFeedback } = useAppFeedbackContext();
@@ -131,7 +133,13 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleClose = () => {
-    dispatch(getPaymentsLatestReceiptAction.request());
+    // Workaround: this delay-based refetch is used until the API to fetch receipt details by notice code becomes available.
+    // The timeout allows enough time for the payment processing to complete before refetching the latest receipts.
+    // This ensures that when the user navigates back to the receipts list, the updated list is displayed.
+    setTimeout(() => {
+      dispatch(getPaymentsLatestReceiptAction.request());
+    }, REFETCH_LATEST_RECEIPTS_DELAY_MS);
+
     if (
       onSuccessAction === "showHome" ||
       onSuccessAction === "showTransaction"
@@ -301,6 +309,7 @@ const WalletPaymentOutcomeScreen = () => {
           : undefined
     });
   };
+
   // eslint-disable-next-line complexity
   const getPropsForOutcome = (): OperationResultScreenContentProps => {
     switch (outcome) {
@@ -311,7 +320,9 @@ const WalletPaymentOutcomeScreen = () => {
             amount: paymentAmount
           }),
           subtitle: I18n.t("wallet.payment.outcome.SUCCESS.subtitle"),
-          action: closeSuccessAction
+          action: closeSuccessAction,
+          enableAnimatedPictogram: true,
+          loop: false
         };
       case WalletPaymentOutcomeEnum.GENERIC_ERROR:
       default:
@@ -319,14 +330,17 @@ const WalletPaymentOutcomeScreen = () => {
           pictogram: "umbrella",
           title: I18n.t("wallet.payment.outcome.GENERIC_ERROR.title"),
           subtitle: I18n.t("wallet.payment.outcome.GENERIC_ERROR.subtitle"),
-          action: closeFailureAction
+          action: closeFailureAction,
+          enableAnimatedPictogram: true
         };
       case WalletPaymentOutcomeEnum.AUTH_ERROR:
         return {
-          pictogram: "accessDenied",
+          pictogram: "error",
           title: I18n.t("wallet.payment.outcome.AUTH_ERROR.title"),
           subtitle: I18n.t("wallet.payment.outcome.AUTH_ERROR.subtitle"),
-          action: closeFailureAction
+          action: closeFailureAction,
+          enableAnimatedPictogram: true,
+          loop: false
         };
       case WalletPaymentOutcomeEnum.INVALID_DATA:
         return {
@@ -372,10 +386,12 @@ const WalletPaymentOutcomeScreen = () => {
         };
       case WalletPaymentOutcomeEnum.EXCESSIVE_AMOUNT:
         return {
-          pictogram: "accessDenied",
+          pictogram: "error",
           title: I18n.t("wallet.payment.outcome.EXCESSIVE_AMOUNT.title"),
           subtitle: I18n.t("wallet.payment.outcome.EXCESSIVE_AMOUNT.subtitle"),
-          action: closeFailureAction
+          action: closeFailureAction,
+          enableAnimatedPictogram: true,
+          loop: false
         };
       case WalletPaymentOutcomeEnum.INVALID_METHOD:
         return {
@@ -447,12 +463,14 @@ const WalletPaymentOutcomeScreen = () => {
         };
       case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
         return {
-          pictogram: "accessDenied",
+          pictogram: "error",
           title: I18n.t("wallet.payment.outcome.PAYPAL_REMOVED_ERROR.title"),
           subtitle: I18n.t(
             "wallet.payment.outcome.PAYPAL_REMOVED_ERROR.subtitle"
           ),
-          action: closeFailureAction
+          action: closeFailureAction,
+          enableAnimatedPictogram: true,
+          loop: false
         };
       case WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER:
         return {
@@ -498,7 +516,8 @@ const WalletPaymentOutcomeScreen = () => {
           title: I18n.t("wallet.payment.outcome.BE_NODE_KO.title"),
           subtitle: I18n.t("wallet.payment.outcome.BE_NODE_KO.subtitle"),
           action: closeFailureAction,
-          secondaryAction: contactSupportAction
+          secondaryAction: contactSupportAction,
+          enableAnimatedPictogram: true
         };
       case WalletPaymentOutcomeEnum.PSP_ERROR:
         return {
@@ -515,7 +534,8 @@ const WalletPaymentOutcomeScreen = () => {
           subtitle: I18n.t(
             "wallet.payment.outcome.AUTH_REQUEST_ERROR.subtitle"
           ),
-          action: closeFailureAction
+          action: closeFailureAction,
+          enableAnimatedPictogram: true
         };
     }
   };
