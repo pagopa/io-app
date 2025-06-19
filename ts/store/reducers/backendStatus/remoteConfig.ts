@@ -113,6 +113,15 @@ export const isCGNEnabledSelector = (state: GlobalState) =>
     O.getOrElse(() => false)
   );
 
+/**
+ * Return true if CGN is enabled, but only after backend status is loaded.
+ * This prevents CGN from being disabled by default when backend status is not yet loaded.
+ */
+export const isCGNEnabledAfterLoadSelector = createSelector(
+  [isBackendStatusLoadedSelector, isCGNEnabledSelector],
+  (isLoaded, isEnabled) => (isLoaded ? isEnabled : true)
+);
+
 export const fimsRequiresAppUpdateSelector = (state: GlobalState) =>
   pipe(
     state,
