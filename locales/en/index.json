@@ -3680,6 +3680,11 @@
           "a11y": {
             "cardStatus": "Card status: {{status}}"
           }
+        },
+        "empty": {
+          "title": "You haven't activated the National Youth Card yet",
+          "subtitle": "Activate it now to access all the opportunities dedicated to you. Just a few steps!",
+          "activateCta": "Activate"
         }
       },
       "activation": {
@@ -4817,6 +4822,12 @@
             "subtitle": "È un passaggio di verifica necessario per continuare ad usare IT-Wallet e per autenticarti.",
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
+          },
+          "unexpectedErrorScreen": {
+            "title": "Un problema non permette di continuare",
+            "subtitle": "Si è verificato un errore tecnico che ha impedito l'accesso ai servizi dell'ente, riprova. Se il problema persiste, contatta l'assistenza.",
+            "primaryAction": "Ho capito",
+            "secondaryAction": "Mostra dettagli"
           },
           "relyingParty": {
             "genericError": {

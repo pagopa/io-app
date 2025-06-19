@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0-rc.3](https://github.com/pagopa/io-app/compare/3.8.0-rc.2...3.8.0-rc.3) (2025-06-18)
+
+
+### Bug Fixes
+
+* [[IOAPPX-500](https://pagopa.atlassian.net/browse/IOAPPX-500)] IOScrollView interpolated opacity check of NaN values ([#7094](https://github.com/pagopa/io-app/issues/7094)) ([7421de1](https://github.com/pagopa/io-app/commit/7421de12ef2c694645b01cd5f9b2fa2873eb82a8))
+* **playground:** [[SIW-2573](https://pagopa.atlassian.net/browse/SIW-2573)] Fix crash in Documents on IO Playground section ([#7093](https://github.com/pagopa/io-app/issues/7093)) ([679395a](https://github.com/pagopa/io-app/commit/679395ab55fb84ae867760b8b4176d01c74e18b7))
+
 ## [3.8.0-rc.2](https://github.com/pagopa/io-app/compare/3.8.0-rc.1...3.8.0-rc.2) (2025-06-18)
 
 
