@@ -4,7 +4,6 @@ import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-
 import {
   ReactNode,
   useCallback,
@@ -22,7 +21,6 @@ import {
   useCameraDevice,
   useCodeScanner
 } from "react-native-vision-camera";
-import { usePrevious } from "../../../utils/hooks/usePrevious";
 import { AnimatedCameraMarker } from "../components/AnimatedCameraMarker";
 import {
   BarcodeFormat,
@@ -153,7 +151,7 @@ export const retrieveNextBarcode = (barcodes: Array<Code>): O.Option<Code> =>
 /**
  * Delay for reactivating the QR scanner after a scan
  */
-const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
+const QRCODE_SCANNER_REACTIVATION_TIME_MS = 3000;
 
 export const useIOBarcodeCameraScanner = ({
   onBarcodeSuccess,
@@ -168,7 +166,6 @@ export const useIOBarcodeCameraScanner = ({
     [barcodeFormats]
   );
 
-  const prevDisabled = usePrevious(isDisabled);
   const device = useCameraDevice("back", {
     physicalDevices: ["wide-angle-camera"]
   });
@@ -210,6 +207,7 @@ export const useIOBarcodeCameraScanner = ({
       ),
     [acceptedFormats, barcodeTypes]
   );
+
   /**
    * Handles the scanned barcodes and calls the callbacks for the results
    */
@@ -218,16 +216,8 @@ export const useIOBarcodeCameraScanner = ({
       pipe(
         retrieveNextBarcode(codes),
         O.map(detectedBarcode => {
-          // This will fix a bug on lower-end devices
-          // in which the latest frame would be scanned
-          // multiple times due to races conditions during
-          // the camera disactivation.
-          if (prevDisabled || isDisabled) {
-            return;
-          }
-
-          if (isResting || isLoading) {
-            // Barcode scanner is momentarily disabled, skip
+          if (isResting || isLoading || isDisabled) {
+            // Barcode scanner is disabled, skip
             return;
           }
           // After a scan (even if not successful) the decoding is disabled for a while
@@ -248,7 +238,6 @@ export const useIOBarcodeCameraScanner = ({
         })
       ),
     [
-      prevDisabled,
       isDisabled,
       isResting,
       isLoading,

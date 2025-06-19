@@ -4,6 +4,8 @@ import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUt
 import { itwSetIntegrityServiceStatus } from "../../issuance/store/actions";
 import { itwIntegrityServiceStatusSelector } from "../../issuance/store/selectors";
 import { sendExceptionToSentry } from "../../../../utils/sentryUtils.ts";
+import { selectItwEnv } from "../../common/store/selectors/environment.ts";
+import { getEnv } from "../../common/utils/environment.ts";
 
 /**
  * Checks if the integrity service is ready by checking its current status and waiting for updates if needed.
@@ -57,8 +59,10 @@ export function* warmUpIntegrityServiceSaga(): Generator<
   ReduxSagaEffect,
   void
 > {
+  const env = getEnv(yield* select(selectItwEnv));
+
   try {
-    const isReady: boolean = yield* call(ensureIntegrityServiceIsReady);
+    const isReady: boolean = yield* call(ensureIntegrityServiceIsReady, env);
     yield* put(itwSetIntegrityServiceStatus(isReady ? "ready" : "unavailable"));
   } catch (e) {
     yield* put(itwSetIntegrityServiceStatus("error"));

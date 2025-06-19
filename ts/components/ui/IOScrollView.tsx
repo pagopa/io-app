@@ -230,7 +230,9 @@ export const IOScrollView = ({
       const scrollPercentage = scrollPosition / maxScrollHeight;
 
       scrollPositionAbsolute.value = scrollPosition;
-      scrollPositionPercentage.value = scrollPercentage;
+      scrollPositionPercentage.value = Number.isNaN(scrollPercentage)
+        ? 0
+        : scrollPercentage;
     }
   );
 

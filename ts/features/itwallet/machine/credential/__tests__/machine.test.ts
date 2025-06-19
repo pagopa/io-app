@@ -187,7 +187,9 @@ describe("itwCredentialIssuanceMachine", () => {
 
   it("Should obtain a credential with a valid status attestation", async () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
-    getWalletAttestation.mockImplementation(() => Promise.resolve(T_WIA));
+    getWalletAttestation.mockImplementation(() =>
+      Promise.resolve({ jwt: T_WIA })
+    );
     requestCredential.mockImplementation(() =>
       Promise.resolve({
         clientId: T_CLIENT_ID,
@@ -230,7 +232,9 @@ describe("itwCredentialIssuanceMachine", () => {
     await waitFor(() =>
       expect(storeWalletInstanceAttestation).toHaveBeenCalledWith(
         expect.objectContaining({
-          context: expect.objectContaining({ walletInstanceAttestation: T_WIA })
+          context: expect.objectContaining({
+            walletInstanceAttestation: { jwt: T_WIA }
+          })
         }),
         undefined
       )
@@ -238,7 +242,7 @@ describe("itwCredentialIssuanceMachine", () => {
     await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      walletInstanceAttestation: T_WIA,
+      walletInstanceAttestation: { jwt: T_WIA },
       clientId: T_CLIENT_ID,
       codeVerifier: T_CODE_VERIFIER,
       credentialDefinition: T_CREDENTIAL_DEFINITION,
@@ -325,10 +329,12 @@ describe("itwCredentialIssuanceMachine", () => {
 
   it("Should skip WIA obtainment if still valid", async () => {
     onInit.mockImplementation(() => ({
-      walletInstanceAttestation: T_WIA
+      walletInstanceAttestation: { jwt: T_WIA }
     }));
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
-    getWalletAttestation.mockImplementation(() => Promise.resolve(T_WIA));
+    getWalletAttestation.mockImplementation(() =>
+      Promise.resolve({ jwt: T_WIA })
+    );
     requestCredential.mockImplementation(() =>
       Promise.resolve({
         clientId: T_CLIENT_ID,
@@ -349,9 +355,9 @@ describe("itwCredentialIssuanceMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().context).toStrictEqual({
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
-      walletInstanceAttestation: T_WIA
+      walletInstanceAttestation: { jwt: T_WIA }
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
@@ -375,7 +381,7 @@ describe("itwCredentialIssuanceMachine", () => {
       expect(storeWalletInstanceAttestation).not.toHaveBeenCalledWith(
         expect.objectContaining({
           context: expect.objectContaining({
-            walletInstanceAttestation: T_WIA
+            walletInstanceAttestation: { jwt: T_WIA }
           })
         }),
         undefined
@@ -473,7 +479,7 @@ describe("itwCredentialIssuanceMachine", () => {
 
   it("Should go to failure if credential request fails", async () => {
     onInit.mockImplementation(() => ({
-      walletInstanceAttestation: T_WIA
+      walletInstanceAttestation: { jwt: T_WIA }
     }));
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
 

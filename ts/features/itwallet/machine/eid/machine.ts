@@ -1,6 +1,9 @@
 import _ from "lodash";
 import { and, assertEvent, assign, fromPromise, not, setup } from "xstate";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import {
+  StoredCredential,
+  WalletInstanceAttestations
+} from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { assert } from "../../../../utils/assert.ts";
 import {
@@ -81,9 +84,10 @@ export const itwEidIssuanceMachine = setup({
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
     revokeWalletInstance: fromPromise<void>(notImplemented),
-    getWalletAttestation: fromPromise<string, GetWalletAttestationActorParams>(
-      notImplemented
-    ),
+    getWalletAttestation: fromPromise<
+      WalletInstanceAttestations,
+      GetWalletAttestationActorParams
+    >(notImplemented),
     getCieStatus: fromPromise<CieContext>(notImplemented),
     requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
       notImplemented
@@ -241,7 +245,10 @@ export const itwEidIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "getWalletAttestation",
-        input: ({ context }) => ({ integrityKeyTag: context.integrityKeyTag }),
+        input: ({ context }) => ({
+          integrityKeyTag: context.integrityKeyTag,
+          isL3IssuanceEnabled: context.isL3FeaturesEnabled
+        }),
         onDone: [
           {
             guard: "isReissuing",
@@ -390,7 +397,8 @@ export const itwEidIssuanceMachine = setup({
               invoke: {
                 src: "startAuthFlow",
                 input: ({ context }) => ({
-                  walletInstanceAttestation: context.walletInstanceAttestation,
+                  walletInstanceAttestation:
+                    context.walletInstanceAttestation?.jwt,
                   isL3IssuanceEnabled: context.isL3FeaturesEnabled,
                   identification: context.identification
                 }),
@@ -465,7 +473,8 @@ export const itwEidIssuanceMachine = setup({
               invoke: {
                 src: "startAuthFlow",
                 input: ({ context }) => ({
-                  walletInstanceAttestation: context.walletInstanceAttestation,
+                  walletInstanceAttestation:
+                    context.walletInstanceAttestation?.jwt,
                   identification: context.identification
                 }),
                 onDone: {
@@ -630,7 +639,8 @@ export const itwEidIssuanceMachine = setup({
               invoke: {
                 src: "startAuthFlow",
                 input: ({ context }) => ({
-                  walletInstanceAttestation: context.walletInstanceAttestation,
+                  walletInstanceAttestation:
+                    context.walletInstanceAttestation?.jwt,
                   identification: context.identification,
                   isL3IssuanceEnabled: context.isL3FeaturesEnabled
                 }),
@@ -692,7 +702,7 @@ export const itwEidIssuanceMachine = setup({
             input: ({ context }) => ({
               identification: context.identification,
               authenticationContext: context.authenticationContext,
-              walletInstanceAttestation: context.walletInstanceAttestation
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),

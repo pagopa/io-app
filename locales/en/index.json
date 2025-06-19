@@ -2733,7 +2733,10 @@
     },
     "search": {
       "emptyState": {
-        "title": "Enter at least three letters"
+        "title": "Enter at least three letters",
+        "a11y": {
+          "noneFound": "Nessun messaggio trovato"
+        }
       },
       "input": {
         "cancel": "Cancel",
@@ -3677,6 +3680,11 @@
           "a11y": {
             "cardStatus": "Card status: {{status}}"
           }
+        },
+        "empty": {
+          "title": "You haven't activated the National Youth Card yet",
+          "subtitle": "Activate it now to access all the opportunities dedicated to you. Just a few steps!",
+          "activateCta": "Activate"
         }
       },
       "activation": {
@@ -4809,6 +4817,12 @@
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
           },
+          "unexpectedErrorScreen": {
+            "title": "Un problema non permette di continuare",
+            "subtitle": "Si è verificato un errore tecnico che ha impedito l'accesso ai servizi dell'ente, riprova. Se il problema persiste, contatta l'assistenza.",
+            "primaryAction": "Ho capito",
+            "secondaryAction": "Mostra dettagli"
+          },
           "relyingParty": {
             "genericError": {
               "title": "Comunicazione interrotta",
@@ -4846,6 +4860,82 @@
             "title": "Fatto!",
             "subtitle": "Continua sul sito dell'ente.",
             "cta": "Continua sul sito dell'ente"
+          }
+        },
+        "proximity": {
+          "grantPermissions": {
+            "title": "Consenti a IO di accedere al Bluetooth",
+            "subtitle": "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.",
+            "listItems": {
+              "title": "Ecco come:",
+              "step1": {
+                "label": "Step 1",
+                "value": "Vai su \"Impostazioni\""
+              },
+              "step2": {
+                "label": "Step 2",
+                "value": "Seleziona \"App\""
+              },
+              "step3": {
+                "label": "Step 3",
+                "value": "Seleziona \"IO\""
+              },
+              "step4": {
+                "label": "Step 4",
+                "value": "Consenti l’accesso a Bluetooth"
+              }
+            },
+            "actions": {
+              "primary": "Apri impostazioni",
+              "secondary": "Continua"
+            }
+          },
+          "activateBluetooth": {
+            "title": "Attiva il Bluetooth per continuare",
+            "subtitle": "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.",
+            "listItems": {
+              "title": "Ecco come:",
+              "step1": {
+                "label": "Step 1",
+                "value": "Vai su \"Impostazioni\""
+              },
+              "step2": {
+                "label": "Step 2",
+                "value": "Seleziona \"Bluetooth\""
+              },
+              "step3": {
+                "label": "Step 3",
+                "value": "Consenti l’utilizzo del Bluetooth"
+              }
+            },
+            "actions": {
+              "primary": "Apri impostazioni",
+              "secondary": "Continua"
+            }
+          },
+          "permissionsRequired": {
+            "alert": {
+              "title": "È richiesto l’accesso al Bluetooth per continuare",
+              "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
+              "text": "Ho capito"
+            }
+          },
+          "bluetoothRequired": {
+            "alert": {
+              "title": "È richiesto l’utilizzo del Bluetooth per continuare",
+              "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
+              "text": "Ho capito"
+            }
+          },
+          "mdl": {
+            "bottomSheet": {
+              "title": "Patente di guida",
+              "body": "Mostra il QR Code in caso di controlli o altre necessità.",
+              "error": {
+                "message": "Abbiamo avuto un problema nel generare il QR Code.",
+                "action": "Prova di nuovo"
+              }
+            }
           }
         }
       },
@@ -4952,6 +5042,39 @@
           "title": "IT-Wallet per\ni tuoi documenti",
           "description": "L’unico Wallet di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
           "action": "Ottieni IT-Wallet"
+        }
+      },
+      "playgrounds": {
+        "environment": {
+          "toggle": {
+            "pre": {
+              "value": "Set environment to PRE",
+              "description": "Use pre-production environment. A proxy may be required to access services. This action will reset IT-Wallet state."
+            },
+            "prod": {
+              "value": "Set environment to PROD",
+              "description": "Use production environment. This action will reset IT-Wallet state."
+            }
+          },
+          "alert": {
+            "title": "Set environment to [{{environment}}]",
+            "content": "You are about to access the IT-Wallet test environment.\nThe \"Documenti su IO\" feature, if active, will be automatically disabled."
+          },
+          "banner": {
+            "content": "You are in the IT-Wallet test environment.",
+            "action": "How does it work?"
+          },
+          "bottom_sheet": {
+            "title": "IT-Wallet test environment",
+            "content": "If you had \"Documenti su IO\" enabled, the feature has been automatically disabled.\nTo re-enable it, exit the test environment and enable Documents on IO again.",
+            "action": "Exit test environment"
+          }
+        },
+        "walletL3": {
+          "alert": {
+            "title": "Disable IT Wallet L3",
+            "content": "If you had IT-Wallet enabled, the wallet will be reset and all documents removed."
+          }
         }
       }
     }

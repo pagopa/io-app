@@ -2733,7 +2733,10 @@
     },
     "search": {
       "emptyState": {
-        "title": "Inserisci almeno tre caratteri"
+        "title": "Inserisci almeno tre caratteri",
+        "a11y": {
+          "noneFound": "Nessun messaggio trovato"
+        }
       },
       "input": {
         "cancel": "Annulla",
@@ -3677,6 +3680,11 @@
           "a11y": {
             "cardStatus": "Stato della carta: {{status}}"
           }
+        },
+        "empty": {
+          "title": "Non hai ancora attivato Carta Giovani Nazionale",
+          "subtitle": "Attivala ora per accedere a tutte le opportunità a te dedicate. Bastano pochi passaggi!",
+          "activateCta": "Attiva"
         }
       },
       "activation": {
@@ -4809,6 +4817,12 @@
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
           },
+          "unexpectedErrorScreen": {
+            "title": "Un problema non permette di continuare",
+            "subtitle": "Si è verificato un errore tecnico che ha impedito l'accesso ai servizi dell'ente, riprova. Se il problema persiste, contatta l'assistenza.",
+            "primaryAction": "Ho capito",
+            "secondaryAction": "Mostra dettagli"
+          },
           "relyingParty": {
             "genericError": {
               "title": "Comunicazione interrotta",
@@ -4846,6 +4860,82 @@
             "title": "Fatto!",
             "subtitle": "Continua sul sito dell'ente.",
             "cta": "Continua sul sito dell'ente"
+          }
+        },
+        "proximity": {
+          "grantPermissions": {
+            "title": "Consenti a IO di accedere al Bluetooth",
+            "subtitle": "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.",
+            "listItems": {
+              "title": "Ecco come:",
+              "step1": {
+                "label": "Step 1",
+                "value": "Vai su \"Impostazioni\""
+              },
+              "step2": {
+                "label": "Step 2",
+                "value": "Seleziona \"App\""
+              },
+              "step3": {
+                "label": "Step 3",
+                "value": "Seleziona \"IO\""
+              },
+              "step4": {
+                "label": "Step 4",
+                "value": "Consenti l’accesso a Bluetooth"
+              }
+            },
+            "actions": {
+              "primary": "Apri impostazioni",
+              "secondary": "Continua"
+            }
+          },
+          "activateBluetooth": {
+            "title": "Attiva il Bluetooth per continuare",
+            "subtitle": "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.",
+            "listItems": {
+              "title": "Ecco come:",
+              "step1": {
+                "label": "Step 1",
+                "value": "Vai su \"Impostazioni\""
+              },
+              "step2": {
+                "label": "Step 2",
+                "value": "Seleziona \"Bluetooth\""
+              },
+              "step3": {
+                "label": "Step 3",
+                "value": "Consenti l’utilizzo del Bluetooth"
+              }
+            },
+            "actions": {
+              "primary": "Apri impostazioni",
+              "secondary": "Continua"
+            }
+          },
+          "permissionsRequired": {
+            "alert": {
+              "title": "È richiesto l’accesso al Bluetooth per continuare",
+              "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
+              "text": "Ho capito"
+            }
+          },
+          "bluetoothRequired": {
+            "alert": {
+              "title": "È richiesto l’utilizzo del Bluetooth per continuare",
+              "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
+              "text": "Ho capito"
+            }
+          },
+          "mdl": {
+            "bottomSheet": {
+              "title": "Patente di guida",
+              "body": "Mostra il QR Code in caso di controlli o altre necessità.",
+              "error": {
+                "message": "Abbiamo avuto un problema nel generare il QR Code.",
+                "action": "Prova di nuovo"
+              }
+            }
           }
         }
       },
@@ -4952,6 +5042,39 @@
           "title": "IT-Wallet per\ni tuoi documenti",
           "description": "L’unico Wallet di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
           "action": "Ottieni IT-Wallet"
+        }
+      },
+      "playgrounds": {
+        "environment": {
+          "toggle": {
+            "pre": {
+              "value": "Imposta l'ambiente su PRE",
+              "description": "Usa l'ambiente pre-produzione. Potrebbe essere necessario un proxy per accedere ai servizi. Questa azione reimposta lo stato di IT-Wallet."
+            },
+            "prod": {
+              "value": "Imposta l'ambiente su PROD",
+              "description": "Usa l'ambiente di produzione. Questa azione reimposta lo stato di IT-Wallet."
+            }
+          },
+          "alert": {
+            "title": "Imposta l'ambiente su [{{environment}}]",
+            "content": "Stai per accedere all'ambiente di test dedicato a IT-Wallet.\nLa funzionalità Documenti su IO, se attiva, verrà automaticamente disattivata."
+          },
+          "banner": {
+            "content": "Ti trovi nell’ambiente di test dell’app dedicato a IT-Wallet.",
+            "action": "Come funziona?"
+          },
+          "bottom_sheet": {
+            "title": "Ambiente di test IT-Wallet",
+            "content": "Se avevi attivato Documenti su IO, la funzionalità è stata disattivata automaticamente.\nPer riattivarla, esci dall’ambiente di test e attiva di nuovo Documenti su IO.",
+            "action": "Esci dall'ambiente di test"
+          }
+        },
+        "walletL3": {
+          "alert": {
+            "title": "Disattiva IT-Wallet L3",
+            "content": "Se avevi attivato IT-Wallet, il portafoglio sarà resettato e tutti i documenti rimossi."
+          }
         }
       }
     }
