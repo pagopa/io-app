@@ -1,6 +1,3 @@
-// Unit tests for convertReferenceLinksToInline function
-// Assumes a testing framework like Jest or similar
-
 import { convertReferenceLinksToInline } from "../markdownRenderer";
 
 describe("convertReferenceLinksToInline", () => {
