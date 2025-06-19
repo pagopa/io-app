@@ -1,4 +1,10 @@
-import { Alert, Body, IOButton, VStack } from "@pagopa/io-app-design-system";
+import {
+  Alert,
+  Body,
+  IOButton,
+  VSpacer,
+  VStack
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -46,6 +52,7 @@ export const ItwEnvironmentAlert = () => {
 
   return (
     <>
+      <VSpacer />
       <Alert
         testID="itwEnvironmentAlertTestID"
         variant="warning"

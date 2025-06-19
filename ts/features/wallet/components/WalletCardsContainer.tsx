@@ -1,5 +1,5 @@
 import { ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
@@ -82,14 +82,14 @@ const WalletCardsContainer = () => {
 /**
  * Renders the banners that are displayed at the top of the wallet screen
  */
-const WalletBannersContainer = () => (
+const WalletBannersContainer = memo(() => (
   <View>
     <ItwEnvironmentAlert />
     <ItwUpgradeBanner />
     <ItwWalletNotAvailableBanner />
     <ItwDiscoveryBannerStandalone />
   </View>
-);
+));
 
 /**
  * Skeleton for the wallet cards container
@@ -133,13 +133,16 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   }
 
   return (
-    <WalletCardsCategoryContainer
-      key={`cards_category_other`}
-      testID={`otherWalletCardsContainerTestID`}
-      cards={cards}
-      header={sectionHeader}
-      bottomElement={<WalletCardsCategoryRetryErrorBanner />}
-    />
+    <>
+      {!sectionHeader && <VSpacer size={24} />}
+      <WalletCardsCategoryContainer
+        key={`cards_category_other`}
+        testID={`otherWalletCardsContainerTestID`}
+        cards={cards}
+        header={sectionHeader}
+        bottomElement={<WalletCardsCategoryRetryErrorBanner />}
+      />
+    </>
   );
 });
 
