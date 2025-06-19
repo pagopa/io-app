@@ -288,6 +288,15 @@ const EmailInsertScreen = () => {
       if (isFirstOnboarding) {
         trackSendValidationEmail(flow);
       }
+    } else {
+      const message = getAccessibilityErrorLabel();
+      if (message) {
+        setTimeout(() => {
+          AccessibilityInfo.announceForAccessibilityWithOptions(message, {
+            queue: true
+          });
+        }, 300);
+      }
     }
   };
 
