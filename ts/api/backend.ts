@@ -294,10 +294,7 @@ export function BackendClient(
   const getPaymentInfoV2T: GetPaymentInfoV2T = {
     method: "get",
     url: ({ ["rptId"]: rptId }) => `/api/v1/payment-info/${rptId}`,
-    headers: ({ ["Bearer"]: Bearer }) => ({
-      Authorization: Bearer,
-      "Content-Type": "application/json"
-    }),
+    headers: tokenHeaderProducer,
     query: ({ ["test"]: test }) => withoutUndefinedValues({ ["test"]: test }),
     response_decoder: getPaymentInfoV2DefaultDecoder()
   };

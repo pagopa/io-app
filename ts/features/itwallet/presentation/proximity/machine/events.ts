@@ -17,6 +17,10 @@ export type Continue = {
   type: "continue";
 };
 
+export type Dismiss = {
+  type: "dismiss";
+};
+
 export type Retry = {
   type: "retry";
 };
@@ -31,7 +35,7 @@ export type DeviceConnected = {
 
 export type DeviceError = {
   type: "device-error";
-  payload: string;
+  payload: Error;
 };
 
 export type DeviceDocumentRequestReceived = {
@@ -50,6 +54,7 @@ export type ProximityEvents =
   | Consent
   | Continue
   | Close
+  | Dismiss
   | Retry
   | DeviceConnecting
   | DeviceConnected

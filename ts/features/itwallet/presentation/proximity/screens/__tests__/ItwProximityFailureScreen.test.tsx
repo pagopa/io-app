@@ -14,7 +14,7 @@ describe("ItwProximityFailureScreen", () => {
   test.each<ProximityFailure>([
     {
       type: ProximityFailureType.RELYING_PARTY_GENERIC,
-      reason: "Generic error"
+      reason: new Error("RP generic error")
     }
   ])("should render failure screen for $type", failure => {
     expect(renderComponent(failure)).toMatchSnapshot();

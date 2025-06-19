@@ -9,7 +9,7 @@ export enum ProximityFailureType {
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
  */
 export type ReasonTypeByFailure = {
-  [ProximityFailureType.RELYING_PARTY_GENERIC]: string;
+  [ProximityFailureType.RELYING_PARTY_GENERIC]: Error;
   [ProximityFailureType.UNEXPECTED]: unknown;
 };
 

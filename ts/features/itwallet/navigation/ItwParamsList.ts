@@ -1,5 +1,4 @@
 import { ItwDiscoveryInfoScreenNavigationParams } from "../discovery/screens/ItwDiscoveryInfoScreen";
-import { ItwIdentificationModeSelectionScreenNavigationParams } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import { ItwCieWrongCiePinScreenNavigationParams } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import { ItwIssuanceCredentialAsyncContinuationNavigationParams } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialTrustIssuerNavigationParams } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
@@ -7,8 +6,10 @@ import { ItwPresentationCredentialAttachmentNavigationParams } from "../presenta
 import { ItwPresentationCredentialCardModalNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
-import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
+import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/screens/ItwIdentificationCieWarningScreen";
+import { ItwL2IdentificationNavigationParams } from "../identification/screens/ItwL2IdentificationModeSelectionScreen";
 import { ItwProximityParamsList } from "../presentation/proximity/navigation/ItwProximityParamsList.ts";
+import { ItwPlaygroundParamsList } from "../playgrounds/navigation/ItwPlaygroundParamsList.ts";
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
@@ -22,8 +23,9 @@ export type ItwParamsList = {
   [ITW_ROUTES.DISCOVERY.IPZS_PRIVACY]: undefined;
   [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]: undefined;
   // IDENTIFICATION
-  [ITW_ROUTES.IDENTIFICATION
-    .MODE_SELECTION]: ItwIdentificationModeSelectionScreenNavigationParams;
+  [ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
+    .L2]: ItwL2IdentificationNavigationParams;
+  [ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L3]: undefined;
   // IDENTIFICATION ERRORS
   [ITW_ROUTES.IDENTIFICATION
     .CIE_WARNING]: ItwIdentificationCieWarningScreenNavigationParams;
@@ -67,4 +69,5 @@ export type ItwParamsList = {
   // OTHERS
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
   [ITW_ROUTES.WALLET_REVOCATION_SCREEN]: undefined;
-} & ItwProximityParamsList;
+} & ItwProximityParamsList &
+  ItwPlaygroundParamsList;

@@ -22,6 +22,7 @@ import {
 } from "../utils/itwProximityPresentationUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { assert } from "../../../../../utils/assert";
+import { getError } from "../../../../../utils/errors";
 import { ProximityEvents } from "./events";
 
 const PERMISSIONS_TO_CHECK: Array<Permission> =
@@ -111,7 +112,10 @@ export const createProximityActorsImplementation = () => {
     };
 
     const handleDeviceDisconnected = () => {
-      sendBack({ type: "device-error", payload: "Device disconnected" });
+      sendBack({
+        type: "device-error",
+        payload: new Error("Device disconnected")
+      });
     };
 
     const handleError = (eventPayload: Proximity.EventsPayload["onError"]) => {
@@ -124,26 +128,27 @@ export const createProximityActorsImplementation = () => {
     ) => {
       const { data } = eventPayload ?? {};
 
-      if (data === undefined) {
+      try {
+        assert(data, "Missing required data");
+
+        const parsedRequest = parseVerifierRequest(JSON.parse(data));
+
+        const proximityDetails = getProximityDetails(
+          parsedRequest.request,
+          input.credentialsByType
+        );
+
+        sendBack({
+          type: "device-document-request-received",
+          proximityDetails,
+          verifierRequest: parsedRequest
+        });
+      } catch (e) {
         sendBack({
           type: "device-error",
-          error: "Missing required data"
+          payload: getError(e)
         });
-        return;
       }
-
-      const parsedRequest = parseVerifierRequest(JSON.parse(data));
-
-      const proximityDetails = getProximityDetails(
-        parsedRequest.request,
-        input.credentialsByType
-      );
-
-      sendBack({
-        type: "device-document-request-received",
-        proximityDetails,
-        verifierRequest: parsedRequest
-      });
     };
 
     Proximity.addListener("onDeviceConnecting", handleDeviceConnecting);
