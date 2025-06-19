@@ -7,7 +7,12 @@ import {
   RelyingPartyConfiguration,
   DcqlQuery
 } from "../utils/itwRemoteTypeUtils";
-import { RequestObject } from "../../../common/utils/itwTypesUtils";
+import {
+  RequestObject,
+  WalletInstanceAttestations
+} from "../../../common/utils/itwTypesUtils";
+import { Env } from "../../../common/utils/environment";
+import { getAttestation } from "../../../common/utils/itwAttestationUtils";
 import { useIOStore } from "../../../../../store/hooks";
 import { itwCredentialsSelector } from "../../../credentials/store/selectors";
 import {
@@ -15,7 +20,12 @@ import {
   getInvalidCredentials
 } from "../utils/itwRemotePresentationUtils";
 import { assert } from "../../../../../utils/assert";
+import { itwIntegrityKeyTagSelector } from "../../../issuance/store/selectors";
+import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
+import { itwRemotePresentationCredentialsSelector } from "../store/selectors";
 import { InvalidCredentialsStatusError } from "./failure";
+
+const NEW_API_ENABLED = true; // TODO: [SIW-2530] Remove after transitioning to API 1.0
 
 export type EvaluateRelyingPartyTrustInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
@@ -50,6 +60,7 @@ export type SendAuthorizationResponseOutput = {
 };
 
 export const createRemoteActorsImplementation = (
+  env: Env,
   store: ReturnType<typeof useIOStore>
 ) => {
   const evaluateRelyingPartyTrust = fromPromise<
@@ -107,19 +118,11 @@ export const createRemoteActorsImplementation = (
       }
     );
 
-    const { eid, credentials } = itwCredentialsSelector(store.getState());
+    const credentialsSdJwt = itwRemotePresentationCredentialsSelector(
+      store.getState()
+    );
 
     assert(requestObject.dcql_query, "Missing required DCQL query");
-    assert(O.isSome(eid), "Missing PID");
-
-    // Prepare credentials to evaluate the Relying Party request
-    // TODO: add the Wallet Attestation in SD-JWT format
-    const credentialsSdJwt: Array<[string, string]> = [
-      [eid.value.keyTag, eid.value.credential],
-      ...credentials
-        .filter(O.isSome)
-        .map(c => [c.value.keyTag, c.value.credential] as [string, string])
-    ];
 
     // Evaluate the DCQL query against the credentials contained in the Wallet
     const result = Credential.Presentation.evaluateDcqlQuery(
@@ -127,6 +130,8 @@ export const createRemoteActorsImplementation = (
       requestObject.dcql_query as DcqlQuery
     );
 
+    // TODO: refactor after migrating to Credential Data Model 1.0
+    const { credentials, eid } = itwCredentialsSelector(store.getState());
     const credentialsByType = Object.fromEntries(
       credentials
         .concat(eid)
@@ -195,10 +200,23 @@ export const createRemoteActorsImplementation = (
     };
   });
 
+  const getWalletAttestation = fromPromise<WalletInstanceAttestations>(() => {
+    const sessionToken = sessionTokenSelector(store.getState());
+    const integrityKeyTag = O.toUndefined(
+      itwIntegrityKeyTagSelector(store.getState())
+    );
+
+    assert(sessionToken, "sessionToken is undefined");
+    assert(integrityKeyTag, "integrityKeyTag is undefined");
+
+    return getAttestation(env, integrityKeyTag, sessionToken, NEW_API_ENABLED);
+  });
+
   return {
     evaluateRelyingPartyTrust,
     getRequestObject,
     getPresentationDetails,
-    sendAuthorizationResponse
+    sendAuthorizationResponse,
+    getWalletAttestation
   };
 };

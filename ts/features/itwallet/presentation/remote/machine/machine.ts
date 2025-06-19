@@ -1,4 +1,5 @@
 import { and, assign, fromPromise, not, setup } from "xstate";
+import { type WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils";
 import { InitialContext, Context } from "./context";
 import { mapEventToFailure, RemoteFailureType } from "./failure";
 import { RemoteEvents } from "./events";
@@ -31,7 +32,9 @@ export const itwRemoteMachine = setup({
     navigateToIdentificationModeScreen: notImplemented,
     navigateToAuthResponseScreen: notImplemented,
     navigateToBarcodeScanScreen: notImplemented,
-    closePresentation: notImplemented
+    closePresentation: notImplemented,
+    storeWalletInstanceAttestation: notImplemented,
+    handleSessionExpired: notImplemented
   },
   actors: {
     evaluateRelyingPartyTrust: fromPromise<
@@ -49,12 +52,16 @@ export const itwRemoteMachine = setup({
     sendAuthorizationResponse: fromPromise<
       SendAuthorizationResponseOutput,
       SendAuthorizationResponseInput
-    >(notImplemented)
+    >(notImplemented),
+    getWalletAttestation:
+      fromPromise<WalletInstanceAttestations>(notImplemented)
   },
   guards: {
     isWalletActive: notImplemented,
     isL3Enabled: notImplemented,
-    isEidExpired: notImplemented
+    isEidExpired: notImplemented,
+    isSessionExpired: notImplemented,
+    hasValidWalletInstanceAttestation: notImplemented
   }
 }).createMachine({
   id: "itwRemoteMachine",
@@ -105,9 +112,45 @@ export const itwRemoteMachine = setup({
           target: "Failure"
         },
         {
+          target: "CheckingWalletInstanceAttestation"
+        }
+      ]
+    },
+    CheckingWalletInstanceAttestation: {
+      description: "Check the validity of the Wallet Attestation to present",
+      tags: [ItwPresentationTags.Loading],
+      always: [
+        {
+          guard: not("hasValidWalletInstanceAttestation"),
+          target: "ObtainingWalletInstanceAttestation"
+        },
+        {
           target: "EvaluatingRelyingPartyTrust"
         }
       ]
+    },
+    ObtainingWalletInstanceAttestation: {
+      description:
+        "Fetch a new Wallet Attestation and store it in the global state",
+      tags: [ItwPresentationTags.Loading],
+      invoke: {
+        src: "getWalletAttestation",
+        onDone: {
+          target: "EvaluatingRelyingPartyTrust",
+          actions: "storeWalletInstanceAttestation"
+        },
+        onError: [
+          {
+            guard: "isSessionExpired",
+            actions: "handleSessionExpired",
+            target: "Idle"
+          },
+          {
+            target: "Failure",
+            actions: "setFailure"
+          }
+        ]
+      }
     },
     EvaluatingRelyingPartyTrust: {
       tags: [ItwPresentationTags.Loading],
