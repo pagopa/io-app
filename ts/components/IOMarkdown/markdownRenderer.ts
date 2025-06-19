@@ -90,7 +90,7 @@ function integrateParent<T extends AnyTxtNode>(
  * 2. The link definition: [label]: URL "optional title"
  *
  * This function finds all link definitions, then replaces all reference-style
- * links with their corresponding inline format: [text](URL "optional title")
+ * links with their corresponding inline format: [text](URL)
  *
  * @param {string} markdownText - The markdown text containing reference-style links
  * @returns {string} The markdown text with reference-style links converted to inline links
@@ -105,7 +105,7 @@ function integrateParent<T extends AnyTxtNode>(
  *
  * const output = convertReferenceLinksToInline(input);
  * // Result:
- * // Check out [Google](https://google.com "Search Engine") and [GitHub](https://github.com).
+ * // Check out [Google](https://google.com) and [GitHub](https://github.com).
  */
 export const convertReferenceLinksToInline = (markdownText: string): string => {
   // First, extract all link definitions [label]: URL "optional title"
@@ -131,7 +131,7 @@ export const convertReferenceLinksToInline = (markdownText: string): string => {
   // Remove all link definitions from the text
   const noLinkDefResult = markdownText.replace(linkDefRegex, "");
 
-  // Replace reference-style links [text][label] with inline links [text](url "title")
+  // Replace reference-style links [text][label] with inline links [text](url)
   const refLinkRegex = /\[([^\]]+)\]\s*\[([^\]]*)\]/g;
 
   return noLinkDefResult.replace(refLinkRegex, (fullMatch, linkText, label) => {
