@@ -60,8 +60,6 @@ type PrivacyNavListItem = {
  * - send a request to export all his data
  */
 
-// resolve https://pagopa.atlassian.net/browse/IOPID-3008
-// resolve https://pagopa.atlassian.net/browse/IOPID-3009
 const PrivacyMainScreen = ({ navigation }: Props) => {
   const dispatch = useIODispatch();
 

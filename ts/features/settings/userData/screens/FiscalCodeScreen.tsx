@@ -87,7 +87,6 @@ const FiscalCodeScreen = () => {
       faqCategories={FAQ_CATEGORIES}
     >
       <VSpacer size={8} />
-      {/* resolve https://pagopa.atlassian.net/browse/IOPID-2998 */}
       {fiscalCode && (
         <View
           accessible

@@ -82,8 +82,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "email.insert.help.content"
 };
 
-// resolve https://pagopa.atlassian.net/browse/IOPID-3000 https://pagopa.atlassian.net/browse/IOPID-3001
-
 /**
  * A screen to allow user to insert an email address.
  */

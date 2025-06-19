@@ -33,7 +33,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.preferences.contextualHelpContent"
 };
 
-// resolve https://pagopa.atlassian.net/browse/IOPID-3002
 const PreferencesScreen = () => {
   const navigation = useIONavigation();
   const titleRef = useRef<View>(null);
