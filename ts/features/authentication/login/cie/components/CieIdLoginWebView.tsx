@@ -82,7 +82,6 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const loggedInAuth = useIOSelector(loggedInAuthSelector, _isEqual);
   const apiLoginUrlPrefix = useIOSelector(remoteApiLoginUrlPrefixSelector);
   const loginUri = getCieIDLoginUri(spidLevel, isUat, apiLoginUrlPrefix);
-  const [isLoadingWebView, setIsLoadingWebView] = useState(false);
   const navigateToCieIdAuthenticationError = useCallback(() => {
     navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
@@ -271,14 +270,14 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const { showAlert } = useOnboardingAbortAlert();
 
   const headerProps: HeaderSecondLevelHookProps = useMemo(() => {
-    if (webviewSource && !isLoadingWebView) {
+    if (webviewSource) {
       return { title: "", goBack: () => showAlert(navigateToLandingScreen) };
     }
     return {
       title: "",
       canGoBack: false
     };
-  }, [isLoadingWebView, navigateToLandingScreen, showAlert, webviewSource]);
+  }, [navigateToLandingScreen, showAlert, webviewSource]);
 
   useHeaderSecondLevel(headerProps);
 
@@ -295,15 +294,9 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
           startInLoadingState={true}
           userAgent={defaultUserAgent}
           javaScriptEnabled={true}
-          renderLoading={() => {
-            if (webView.current) {
-              setIsLoadingWebView(true);
-            }
-            return (
-              <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
-            );
-          }}
-          onLoadEnd={() => setIsLoadingWebView(false)}
+          renderLoading={() => (
+            <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
+          )}
           originWhitelist={originSchemasWhiteList}
           onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
           onHttpError={handleLoadingError}
