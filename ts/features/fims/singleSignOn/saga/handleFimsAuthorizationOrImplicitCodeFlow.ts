@@ -28,6 +28,7 @@ import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
 import {
   fimsCtaTextSelector,
+  fimsEphemeralSessionOniOSSelector,
   relyingPartyServiceIdSelector
 } from "../store/selectors";
 import { trackInAppBrowserOpening } from "../../common/analytics";
@@ -101,12 +102,15 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
   yield* call(handleFimsResourcesDeallocation);
   yield* call(computeAndTrackInAppBrowserOpening);
 
+  const ephemeralSessionOniOS = yield* select(
+    fimsEphemeralSessionOniOSSelector
+  );
   try {
     yield* call(
       openAuthenticationSession,
       inAppBrowserRedirectUrl,
       "iossoapi",
-      true
+      !ephemeralSessionOniOS
     );
   } catch (error: unknown) {
     yield* call(handleInAppBrowserErrorIfNeeded, error);

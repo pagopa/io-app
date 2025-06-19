@@ -17,7 +17,6 @@ import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrong
 import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import ItwCieIdLoginScreen from "../identification/screens/cieId/ItwCieIdLoginScreen";
 import { ItwIdentificationIdpSelectionScreen } from "../identification/screens/ItwIdentificationIdpSelectionScreen";
-import { ItwIdentificationModeSelectionScreen } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import ItwSpidIdpLoginScreen from "../identification/screens/spid/ItwSpidIdpLoginScreen";
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialFailureScreen } from "../issuance/screens/ItwIssuanceCredentialFailureScreen";
@@ -41,19 +40,23 @@ import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/detail
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
-import { ItwCiePreparationScreen } from "../identification/screens/cie/ItwCiePreparationScreen.tsx";
-import { ItwCiePinPreparationScreen } from "../identification/screens/cie/ItwCiePinPreparationScreen.tsx";
+import { ItwCiePreparationScreen } from "../identification/screens/cie/ItwCiePreparationScreen";
+import { ItwCiePinPreparationScreen } from "../identification/screens/cie/ItwCiePinPreparationScreen";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { useIOSelector } from "../../../store/hooks";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
-import { ItwIdentificationCieWarningScreen } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
+import { ItwIdentificationCieWarningScreen } from "../identification/screens/ItwIdentificationCieWarningScreen";
+import { ItwL3IdentificationModeSelectionScreen } from "../identification/screens/ItwL3IdentificationModeSelectionScreen";
+import { ItwL2IdentificationModeSelectionScreen } from "../identification/screens/ItwL2IdentificationModeSelectionScreen";
 import {
   ItwProximityMachineContext,
   ItwProximityMachineProvider
 } from "../presentation/proximity/machine/provider.tsx";
 import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/ItwGrantPermissionsScreen.tsx";
 import { ItwActivateBluetoothScreen } from "../presentation/proximity/screens/ItwActivateBluetoothScreen.tsx";
+import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
+import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -119,8 +122,12 @@ const InnerNavigator = () => {
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
-        component={ItwIdentificationModeSelectionScreen}
+        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2}
+        component={ItwL2IdentificationModeSelectionScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L3}
+        component={ItwL3IdentificationModeSelectionScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE_WARNING}
@@ -277,6 +284,17 @@ const InnerNavigator = () => {
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.BLUETOOTH_ACTIVATION}
           component={ItwActivateBluetoothScreen}
+        />
+      </Stack.Group>
+      {/* Playground's routes */}
+      <Stack.Group screenOptions={hiddenHeader}>
+        <Stack.Screen
+          name={ITW_ROUTES.PLAYGROUNDS.LANDING}
+          component={ItwPlayground}
+        />
+        <Stack.Screen
+          name={ITW_ROUTES.PLAYGROUNDS.CREDENTIAL_DETAIL}
+          component={ItwL3CredentialDetailScreen}
         />
       </Stack.Group>
     </Stack.Navigator>
