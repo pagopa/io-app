@@ -29,7 +29,7 @@ import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
-import { isCGNEnabledSelector } from "../store/reducers/backendStatus/remoteConfig";
+import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import {
   IONavigationDarkTheme,
@@ -101,7 +101,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   const dispatch = useIODispatch();
   const store = useIOStore();
 
-  const cgnEnabled = useIOSelector(isCGNEnabledSelector);
+  const cgnEnabled = useIOSelector(isCGNEnabledAfterLoadSelector);
 
   // Dark/Light Mode
   const { themeType } = useIOThemeContext();

@@ -3680,6 +3680,11 @@
           "a11y": {
             "cardStatus": "Stato della carta: {{status}}"
           }
+        },
+        "empty": {
+          "title": "Non hai ancora attivato Carta Giovani Nazionale",
+          "subtitle": "Attivala ora per accedere a tutte le opportunità a te dedicate. Bastano pochi passaggi!",
+          "activateCta": "Attiva"
         }
       },
       "activation": {
