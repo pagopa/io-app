@@ -33,7 +33,7 @@ import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 import { MessageFooter } from "./MessageFooter";
 import { MessageCancelledContent } from "./MessageCancelledContent";
 
-type MessageDetailsProps = {
+export type MessageDetailsProps = {
   message: PNMessage;
   messageId: UIMessageId;
   serviceId: ServiceId;
