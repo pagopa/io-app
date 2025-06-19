@@ -52,9 +52,7 @@ export const getDocuments = (
     (acc, [credentialKey]) => {
       const storedCredential = credentialsByType[credentialKey];
 
-      if (!storedCredential) {
-        return acc;
-      }
+      assert(storedCredential, "Credential not found in the wallet");
 
       const { credential, credentialType, keyTag } = storedCredential;
 
