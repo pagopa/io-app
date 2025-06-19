@@ -40,7 +40,7 @@ const PreferencesScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      setAccessibilityFocus(titleRef, 300 as Millisecond);
+      setAccessibilityFocus(titleRef, 400 as Millisecond);
     }, [])
   );
 
