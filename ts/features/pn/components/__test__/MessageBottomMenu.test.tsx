@@ -9,6 +9,13 @@ import { NotificationPaymentInfo } from "../../../../../definitions/pn/Notificat
 import { UIMessageId } from "../../../messages/types";
 import { NotificationStatusHistory } from "../../../../../definitions/pn/NotificationStatusHistory";
 
+jest.mock("rn-qr-generator", () => ({}));
+jest.mock("react-native-screenshot-prevent", () => ({}));
+
+jest.mock("../TimelineListItem");
+jest.mock("../../../messages/components/MessageDetail/ContactsListItem");
+jest.mock("../../../messages/components/MessageDetail/ShowMoreListItem");
+
 describe("MessageBottomMenu", () => {
   it("should match snapshot, no history, undefined payments, undefined cancelled, undefined paid notice codes", () => {
     const component = renderComponent([]);
