@@ -113,6 +113,15 @@ export const isCGNEnabledSelector = (state: GlobalState) =>
     O.getOrElse(() => false)
   );
 
+/**
+ * Return true if CGN is enabled, but only after backend status is loaded.
+ * This prevents CGN from being disabled by default when backend status is not yet loaded.
+ */
+export const isCGNEnabledAfterLoadSelector = createSelector(
+  [isBackendStatusLoadedSelector, isCGNEnabledSelector],
+  (isLoaded, isEnabled) => (isLoaded ? isEnabled : true)
+);
+
 export const fimsRequiresAppUpdateSelector = (state: GlobalState) =>
   pipe(
     state,
@@ -144,6 +153,24 @@ export const fimsServiceConfiguration = createSelector(
       O.toUndefined
     )
 );
+
+/**
+ * Checks if a service should share iOS cookies in the FIMS flow.
+ * Returns true if the serviceId is in the iOSCookieDisabledServiceIds list,
+ * false if it's not in the list.
+ * If no configuration is available, returns false by default (cookies are shared).
+ */
+export const fimsServiceIdInCookieDisabledListSelector = (
+  state: GlobalState,
+  serviceId: ServiceId
+): boolean =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.chainNullableK(config => config.fims.iOSCookieDisabledServiceIds),
+    O.map(serviceIds => serviceIds.includes(serviceId)),
+    O.getOrElse(() => false)
+  );
 
 export const oidcProviderDomainSelector = (state: GlobalState) =>
   pipe(
