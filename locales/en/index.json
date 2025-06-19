@@ -2733,7 +2733,10 @@
     },
     "search": {
       "emptyState": {
-        "title": "Enter at least three letters"
+        "title": "Enter at least three letters",
+        "a11y": {
+          "noneFound": "Nessun messaggio trovato"
+        }
       },
       "input": {
         "cancel": "Cancel",
@@ -3677,6 +3680,11 @@
           "a11y": {
             "cardStatus": "Card status: {{status}}"
           }
+        },
+        "empty": {
+          "title": "You haven't activated the National Youth Card yet",
+          "subtitle": "Activate it now to access all the opportunities dedicated to you. Just a few steps!",
+          "activateCta": "Activate"
         }
       },
       "activation": {
@@ -4809,6 +4817,12 @@
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
           },
+          "unexpectedErrorScreen": {
+            "title": "Un problema non permette di continuare",
+            "subtitle": "Si è verificato un errore tecnico che ha impedito l'accesso ai servizi dell'ente, riprova. Se il problema persiste, contatta l'assistenza.",
+            "primaryAction": "Ho capito",
+            "secondaryAction": "Mostra dettagli"
+          },
           "relyingParty": {
             "genericError": {
               "title": "Comunicazione interrotta",
@@ -5054,6 +5068,12 @@
             "title": "IT-Wallet test environment",
             "content": "If you had \"Documenti su IO\" enabled, the feature has been automatically disabled.\nTo re-enable it, exit the test environment and enable Documents on IO again.",
             "action": "Exit test environment"
+          }
+        },
+        "walletL3": {
+          "alert": {
+            "title": "Disable IT Wallet L3",
+            "content": "If you had IT-Wallet enabled, the wallet will be reset and all documents removed."
           }
         }
       }

@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0-rc.3](https://github.com/pagopa/io-app/compare/3.8.0-rc.2...3.8.0-rc.3) (2025-06-18)
+
+
+### Bug Fixes
+
+* [[IOAPPX-500](https://pagopa.atlassian.net/browse/IOAPPX-500)] IOScrollView interpolated opacity check of NaN values ([#7094](https://github.com/pagopa/io-app/issues/7094)) ([7421de1](https://github.com/pagopa/io-app/commit/7421de12ef2c694645b01cd5f9b2fa2873eb82a8))
+* **playground:** [[SIW-2573](https://pagopa.atlassian.net/browse/SIW-2573)] Fix crash in Documents on IO Playground section ([#7093](https://github.com/pagopa/io-app/issues/7093)) ([679395a](https://github.com/pagopa/io-app/commit/679395ab55fb84ae867760b8b4176d01c74e18b7))
+
+## [3.8.0-rc.2](https://github.com/pagopa/io-app/compare/3.8.0-rc.1...3.8.0-rc.2) (2025-06-18)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2395](https://pagopa.atlassian.net/browse/SIW-2395)] Store Wallet Attestation in multiple formats ([#7077](https://github.com/pagopa/io-app/issues/7077)) ([24b8e5c](https://github.com/pagopa/io-app/commit/24b8e5cc8d6cbf8f1c3590639e4f3364c86b9294))
+* [[IOBP-1744](https://pagopa.atlassian.net/browse/IOBP-1744)] Add the possibility to disable FIMS iOS cookie sharing ([#7074](https://github.com/pagopa/io-app/issues/7074)) ([283f66a](https://github.com/pagopa/io-app/commit/283f66abc1bd0f4c85108df6a21aa6be782f7ce9)), closes [/github.com/pagopa/io-services-metadata/blob/b4b3724d10b3645b2d7f5790c49cc0d7bb831ef2/status/backend.json#L55](https://github.com/pagopa//github.com/pagopa/io-services-metadata/blob/b4b3724d10b3645b2d7f5790c49cc0d7bb831ef2/status/backend.json/issues/L55) [/github.com/pagopa/io-dev-api-server/blob/3236722f6a72f034d5b4067417e368a4a7a0c0d0/src/payloads/backend.ts#L77](https://github.com/pagopa//github.com/pagopa/io-dev-api-server/blob/3236722f6a72f034d5b4067417e368a4a7a0c0d0/src/payloads/backend.ts/issues/L77)
+* [[IOCOM-2152](https://pagopa.atlassian.net/browse/IOCOM-2152)] empty message search results should be announced ([#7081](https://github.com/pagopa/io-app/issues/7081)) ([e009468](https://github.com/pagopa/io-app/commit/e009468cf148a18c863df0f9e22c98c4a4d0db7b))
+
+
+### Bug Fixes
+
+* **iOS:** [[SIW-2558](https://pagopa.atlassian.net/browse/SIW-2558)] Restore `Images.xcassets` reference in `project.pbxproj` ([#7091](https://github.com/pagopa/io-app/issues/7091)) ([4e95479](https://github.com/pagopa/io-app/commit/4e9547950f2b432ff0fd466ce37eb2b3f6d9b932))
+
 ## [3.8.0-rc.1](https://github.com/pagopa/io-app/compare/3.8.0-rc.0...3.8.0-rc.1) (2025-06-17)
 
 
