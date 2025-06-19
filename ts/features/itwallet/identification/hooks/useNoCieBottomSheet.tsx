@@ -27,7 +27,7 @@ export const useNoCieBottomSheet = () => {
   };
 
   const Footer = () => (
-    <VStack space={12}>
+    <VStack space={16}>
       <IOButton
         variant="solid"
         label={I18n.t(
