@@ -26,10 +26,10 @@ const mockCredential: StoredCredential = {
 };
 
 describe("getProximityDetails", () => {
-  it("should skip claims not present in parsedCredential", () => {
+  it("should throw if credential is not found", () => {
     const parsedRequest = {
       request: {
-        [mockCredentialType]: {
+        unknown_credential: {
           "org.iso.18013.5.1": {
             unknown_field: true,
             family_name: true
@@ -39,27 +39,10 @@ describe("getProximityDetails", () => {
       }
     } as unknown as VerifierRequest;
 
-    const credentials: Record<string, StoredCredential> = {
-      [mockCredentialType]: mockCredential
-    };
-
-    const result = getProximityDetails(parsedRequest.request, credentials);
-
-    expect(result).toEqual([
-      {
-        credentialType: mockCredentialType,
-        claimsToDisplay: [
-          {
-            id: "family_name",
-            label: "Family name",
-            value: "ROSSI"
-          }
-        ]
-      }
-    ]);
+    expect(() => getProximityDetails(parsedRequest.request, {})).toThrow();
   });
 
-  it("should group requested claims in parsedCredential", () => {
+  it("should return parsed claims for a valid request", () => {
     const parsedRequest = {
       request: {
         [mockCredentialType]: {

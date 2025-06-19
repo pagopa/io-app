@@ -312,7 +312,7 @@ export const itwProximityMachine = setup({
           description:
             "Displays the QR code to initiate proximity communication",
           on: {
-            close: {
+            dismiss: {
               target: "#itwProximityMachine.Idle"
             }
           }
@@ -356,7 +356,8 @@ export const itwProximityMachine = setup({
       description: "This state is reached when an error occurs",
       on: {
         close: {
-          actions: "closeProximity"
+          actions: "closeProximity",
+          target: "Idle"
         }
       }
     }

@@ -63,7 +63,7 @@ export const useItwPresentQRCode = () => {
       </VStack>
     ),
     onDismiss: () => {
-      machineRef.send({ type: "close" });
+      machineRef.send({ type: "dismiss" });
     }
   });
 
