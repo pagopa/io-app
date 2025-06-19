@@ -9,15 +9,15 @@ import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import {
-  ItwIdentificationModeSelectionScreen,
-  ItwIdentificationModeSelectionScreenProps
-} from "../ItwIdentificationModeSelectionScreen";
+  ItwL2IdentificationModeSelectionScreen,
+  ItwL2IdentificationModeSelectionScreenProps
+} from "../ItwL2IdentificationModeSelectionScreen";
 
 jest.mock("../../../../../config", () => ({
   itwEnabled: true
 }));
 
-describe("ItwIdentificationModeSelectionScreen", () => {
+describe("ItwL2IdentificationModeSelectionScreen", () => {
   beforeEach(() => {
     // Default mock for no disabled methods
     jest
@@ -34,28 +34,12 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     expect(component).toBeTruthy();
   });
 
-  describe("DefaultIdentificationView (L3 disabled)", () => {
+  describe("L2IdentificationView (L3 disabled)", () => {
     it("should show all authentication methods when none are disabled", () => {
       const component = renderComponent();
 
-      expect(component.queryByTestId("Spid")).not.toBeNull();
-      expect(component.queryByTestId("CiePin")).not.toBeNull();
       expect(component.queryByTestId("CieID")).not.toBeNull();
-    });
-
-    it("should not show CiePin method when it is disabled", () => {
-      jest
-        .spyOn(
-          remoteConfigSelectors,
-          "itwDisabledIdentificationMethodsSelector"
-        )
-        .mockReturnValue(["CiePin"]);
-
-      const component = renderComponent();
-
       expect(component.queryByTestId("Spid")).not.toBeNull();
-      expect(component.queryByTestId("CiePin")).toBeNull();
-      expect(component.queryByTestId("CieID")).not.toBeNull();
     });
 
     it("should not show SPID method when it is disabled", () => {
@@ -68,8 +52,6 @@ describe("ItwIdentificationModeSelectionScreen", () => {
 
       const component = renderComponent();
 
-      expect(component.queryByTestId("Spid")).toBeNull();
-      expect(component.queryByTestId("CiePin")).not.toBeNull();
       expect(component.queryByTestId("CieID")).not.toBeNull();
     });
 
@@ -84,21 +66,7 @@ describe("ItwIdentificationModeSelectionScreen", () => {
       const component = renderComponent();
 
       expect(component.queryByTestId("Spid")).not.toBeNull();
-      expect(component.queryByTestId("CiePin")).not.toBeNull();
       expect(component.queryByTestId("CieID")).toBeNull();
-    });
-  });
-
-  describe("L3IdentificationView (L3 enabled)", () => {
-    it("should render L3 view with appropriate elements", () => {
-      const component = renderComponent(true);
-
-      expect(component.queryByTestId("l3-identification-view")).not.toBeNull();
-      expect(component.queryByTestId("l3-primary-action")).not.toBeNull();
-      expect(component.queryByTestId("l3-cie-pin-header")).not.toBeNull();
-      expect(component.queryByTestId("l3-cie-id-header")).not.toBeNull();
-      expect(component.queryByTestId("l3-cie-id-nav")).not.toBeNull();
-      expect(component.queryByTestId("Spid")).toBeNull();
     });
   });
 });
@@ -110,19 +78,19 @@ const renderComponent = (isL3FeaturesEnabled = false, eidReissuing = false) => {
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   const WrappedComponent = (
-    props: ItwIdentificationModeSelectionScreenProps
+    props: ItwL2IdentificationModeSelectionScreenProps
   ) => {
     const logic = itwEidIssuanceMachine.provide({
       actions: {
         onInit: jest.fn(),
-        navigateToIdentificationModeScreen: () => undefined
+        navigateToL2IdentificationScreen: () => undefined
       }
     });
 
     const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
     const snapshot: typeof initialSnapshot = {
       ...initialSnapshot,
-      value: { UserIdentification: "ModeSelection" },
+      value: { UserIdentification: "L2Identification" },
       context: {
         ...initialSnapshot.context,
         isL3FeaturesEnabled,
@@ -138,14 +106,14 @@ const renderComponent = (isL3FeaturesEnabled = false, eidReissuing = false) => {
         logic={logic}
         options={{ snapshot }}
       >
-        <ItwIdentificationModeSelectionScreen {...props} />
+        <ItwL2IdentificationModeSelectionScreen {...props} />
       </ItwEidIssuanceMachineContext.Provider>
     );
   };
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     WrappedComponent,
-    ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+    ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2,
     { eidReissuing },
     store
   );

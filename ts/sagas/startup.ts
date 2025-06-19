@@ -647,7 +647,6 @@ export function* initializeApplicationSaga(
   //
   // User is autenticated, session token is valid
   //
-
   // Start wathing new wallet sagas
   yield* fork(watchWalletSaga);
 

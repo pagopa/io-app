@@ -3683,6 +3683,11 @@
           "a11y": {
             "cardStatus": "Stato della carta: {{status}}"
           }
+        },
+        "empty": {
+          "title": "Non hai ancora attivato Carta Giovani Nazionale",
+          "subtitle": "Attivala ora per accedere a tutte le opportunità a te dedicate. Bastano pochi passaggi!",
+          "activateCta": "Attiva"
         }
       },
       "activation": {
@@ -4408,22 +4413,41 @@
       },
       "identification": {
         "cieWarning": {
-          "primaryAction": "Scopri cosa puoi fare",
-          "closeAction": "Chiudi",
           "noPin": {
-            "title": "Non puoi continuare senza il PIN della CIE",
-            "subtitle": "Se hai registrato un contatto di recupero quando hai richiesto la CIE, puoi reimpostare il PIN con l’app CieID.\n\n In alternativa, rivolgiti al tuo Comune per recuperare il PIN della tua carta."
+            "toCieFAQ": {
+              "title": "Non puoi continuare senza il PIN della CIE",
+              "subtitle": "Se hai registrato un contatto di recupero quando hai richiesto la CIE, puoi reimpostare il PIN con l’app CieID.\n\n In alternativa, rivolgiti al tuo Comune per recuperare il PIN della tua carta.",
+              "primaryAction": "Scopri cosa puoi fare",
+              "closeAction": "Chiudi"
+            },
+            "toL2Identification": {
+              "title": "Continua senza i vantaggi di IT-Wallet",
+              "subtitle": "Se non hai il PIN della CIE, puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
+              "primaryAction": "Continua senza IT-Wallet",
+              "closeAction": "Torna indietro"
+            }
           },
           "noCie": {
-            "title": "Non puoi continuare senza la carta di identità elettronica (CIE)",
-            "subtitle": "Per ottenere i vantaggi di IT-Wallet è necessario autenticarsi con la CIE.\n\n Richiedere la CIE è facile e veloce, scopri cosa puoi fare."
+            "toCieFAQ": {
+              "title": "Non puoi continuare senza la carta di identità elettronica (CIE)",
+              "subtitle": "Per ottenere i vantaggi di IT-Wallet è necessario autenticarsi con la CIE.\n\n Richiedere la CIE è facile e veloce, scopri cosa puoi fare.",
+              "primaryAction": "Scopri cosa puoi fare",
+              "closeAction": "Chiudi"
+            },
+            "toL2Identification": {
+              "title": "Continua senza i vantaggi di IT-Wallet",
+              "subtitle": "Se non hai la CIE, puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
+              "primaryAction": "Continua senza IT-Wallet",
+              "closeAction": "Torna indietro"
+            }
           }
         },
         "l3": {
           "mode": {
             "title": "Verifica la tua identità con CIE",
             "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet.",
-            "action": "Inizia",
+            "primaryAction": "Inizia",
+            "secondaryAction": "Non ho la CIE",
             "ciePin": {
               "header": "Avrai bisogno di:",
               "card": "La tua carta d’identità elettronica (CIE)",
@@ -4451,6 +4475,33 @@
                 "title": "PIN della CIE",
                 "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE;\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
                 "primaryAction": "Ho capito",
+                "secondaryAction": "Non trovo il PIN della CIE"
+              },
+              "noCie": {
+                "title": "Se non hai la CIE puoi \ncontinuare senza i vantaggi di IT-Wallet",
+                "description": "Puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
+                "content": {
+                  "firstAttention": "Non potrai usare la Patente come documento d'identità",
+                  "secondAttention": "Non potrai usare IT-Wallet per accedere ai servizi digitali della PA",
+                  "thirdAttention": "Non potrai ottenere i nuovi documenti disponibili solo con IT-Wallet"
+                },
+                "primaryAction": "Continua senza IT-Wallet",
+                "secondaryAction": "Torna indietro"
+              }
+            },
+            "preparationScreen": {
+              "cie": {
+                "title": "Prepara la tua carta di identità elettronica (CIE)",
+                "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
+                "buttonLink": "Cos'è la CIE?",
+                "primaryAction": "Ho pronta la CIE",
+                "secondaryAction": "Non ho la CIE"
+              },
+              "ciePin": {
+                "title": "Prepara il PIN della tua carta di identità \nelettronica (CIE)",
+                "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell'identità.",
+                "buttonLink": "Cos'è il PIN della CIE?",
+                "primaryAction": "Ho pronto il PIN",
                 "secondaryAction": "Non trovo il PIN della CIE"
               }
             },
@@ -4814,6 +4865,12 @@
             "subtitle": "È un passaggio di verifica necessario per continuare ad usare IT-Wallet e per autenticarti.",
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
+          },
+          "unexpectedErrorScreen": {
+            "title": "Un problema non permette di continuare",
+            "subtitle": "Si è verificato un errore tecnico che ha impedito l'accesso ai servizi dell'ente, riprova. Se il problema persiste, contatta l'assistenza.",
+            "primaryAction": "Ho capito",
+            "secondaryAction": "Mostra dettagli"
           },
           "relyingParty": {
             "genericError": {
