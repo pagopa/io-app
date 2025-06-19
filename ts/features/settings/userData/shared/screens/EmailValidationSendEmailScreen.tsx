@@ -6,7 +6,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { useRef, useCallback, useEffect, useState } from "react";
-import { AccessibilityInfo, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import {
   IOPictogramSizeScale,
   Pictogram,
@@ -67,8 +67,6 @@ export type SendEmailValidationScreenProp = {
   isFciEditEmailFlow?: boolean;
   isEditingEmailMode?: boolean;
 };
-
-// resolve https://pagopa.atlassian.net/browse/IOPID-3017
 
 const EmailValidationSendEmailScreen = () => {
   const props =
@@ -214,22 +212,12 @@ const EmailValidationSendEmailScreen = () => {
       // send validation email KO
       if (pot.isError(emailValidation.sendEmailValidationRequest)) {
         IOToast.error(I18n.t("global.actions.retry"));
-        setTimeout(() => {
-          AccessibilityInfo.announceForAccessibility(
-            I18n.t("global.actions.retry")
-          );
-        }, 300);
 
         setShowCountdown(false);
       }
       // send validation email OK
       if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
         IOToast.success(I18n.t("email.newvalidate.toast"));
-        setTimeout(() => {
-          AccessibilityInfo.announceForAccessibility(
-            I18n.t("email.newvalidate.toast")
-          );
-        }, 300);
         setShowCountdown(true);
       }
     }
