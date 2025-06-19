@@ -212,7 +212,6 @@ const EmailValidationSendEmailScreen = () => {
       // send validation email KO
       if (pot.isError(emailValidation.sendEmailValidationRequest)) {
         IOToast.error(I18n.t("global.actions.retry"));
-
         setShowCountdown(false);
       }
       // send validation email OK
