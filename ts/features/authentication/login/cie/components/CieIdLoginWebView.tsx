@@ -296,7 +296,9 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
           userAgent={defaultUserAgent}
           javaScriptEnabled={true}
           renderLoading={() => {
-            setIsLoadingWebView(true);
+            if (webView.current) {
+              setIsLoadingWebView(true);
+            }
             return (
               <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
             );
