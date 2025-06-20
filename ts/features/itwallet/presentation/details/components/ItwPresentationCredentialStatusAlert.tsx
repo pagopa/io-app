@@ -26,7 +26,7 @@ const excludedCredentialTypes = [
   CredentialType.DEGREE_CERTIFICATES
 ] as const;
 
-type ExcludedCredentialTypes = typeof excludedCredentialTypes[number];
+type ExcludedCredentialTypes = (typeof excludedCredentialTypes)[number];
 
 /**
  * This component renders an alert related to the credential status (expiring or invalid).
@@ -94,7 +94,10 @@ const DocumentExpiringAlert = ({ credential }: Props) => {
   const expireDays = getCredentialExpireDays(credential.parsedCredential);
 
   const bottomSheetNs = `features.itWallet.presentation.bottomSheets.${
-    credential.credentialType as Exclude<CredentialType, ExcludedCredentialTypes>
+    credential.credentialType as Exclude<
+      CredentialType,
+      ExcludedCredentialTypes
+    >
   }.expiring` as const;
 
   const bottomSheet = useIOBottomSheetModal({
