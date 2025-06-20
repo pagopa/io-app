@@ -34,6 +34,7 @@ import { CieIdLoginProps } from "../../cie/components/CieIdLoginWebView";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
+import { IOScrollView } from "../../../../../components/ui/IOScrollView";
 
 export enum Identifier {
   SPID = "SPID",
@@ -111,20 +112,22 @@ const OptInScreen = () => {
   };
 
   return (
-    <GradientScrollView
+    <IOScrollView
       testID="container-test"
-      primaryActionProps={{
-        label: I18n.t("authentication.opt_in.button_accept_lv"),
-        accessibilityLabel: I18n.t("authentication.opt_in.button_accept_lv"),
-        onPress: () => navigateToIdpPage(true),
-        testID: "accept-button-test"
-      }}
-      secondaryActionProps={{
-        label: I18n.t("authentication.opt_in.button_decline_lv"),
-        accessibilityLabel: I18n.t("authentication.opt_in.button_decline_lv"),
-        onPress: () => navigateToIdpPage(false),
-        testID: "decline-button-test",
-        variant: "link"
+      actions={{
+        type: "TwoButtons",
+        primary: {
+          label: I18n.t("authentication.opt_in.button_accept_lv"),
+          accessibilityLabel: I18n.t("authentication.opt_in.button_accept_lv"),
+          onPress: () => navigateToIdpPage(true),
+          testID: "accept-button-test"
+        },
+        secondary: {
+          label: I18n.t("authentication.opt_in.button_decline_lv"),
+          accessibilityLabel: I18n.t("authentication.opt_in.button_decline_lv"),
+          onPress: () => navigateToIdpPage(false),
+          testID: "decline-button-test"
+        }
       }}
     >
       <ContentWrapper>
@@ -186,7 +189,7 @@ const OptInScreen = () => {
         />
       </ContentWrapper>
       {securitySuggestionBottomSheet}
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 
