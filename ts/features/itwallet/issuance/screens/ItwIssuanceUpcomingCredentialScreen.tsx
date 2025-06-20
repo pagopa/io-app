@@ -12,13 +12,13 @@ export const ItwIssuanceUpcomingCredentialScreen = () => {
   return (
     <OperationResultScreenContent
       pictogram="workInProgress"
-      title={I18n.t("features.itWallet.issuance.credentialUpcoming.title")}
+      title={I18n.t("features.itWallet.issuance.upcomingCredential.title")}
       subtitle={I18n.t(
-        "features.itWallet.issuance.credentialUpcoming.subtitle"
+        "features.itWallet.issuance.upcomingCredential.subtitle"
       )}
       action={{
         label: I18n.t(
-          "features.itWallet.issuance.credentialUpcoming.primaryAction"
+          "features.itWallet.issuance.upcomingCredential.primaryAction"
         ),
         onPress: navigation.goBack
       }}

@@ -4662,7 +4662,7 @@
           "title": "Aggiungi il documento al Portafoglio",
           "subtitle": "Per usare i documenti su IO, prima aggiungili al Portafoglio. È facile e veloce."
         },
-        "credentialUpcoming": {
+        "upcomingCredential": {
           "title": "Documento in arrivo",
           "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
           "primaryAction": "Ho capito"
