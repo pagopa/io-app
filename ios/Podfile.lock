@@ -11,6 +11,29 @@ PODS:
   - hermes-engine (0.78.2):
     - hermes-engine/Pre-built (= 0.78.2)
   - hermes-engine/Pre-built (0.78.2)
+  - IoReactNativeProximity (0.6.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - IOWalletProximity (~> 1.2.2)
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - IOWalletProximity (1.2.2)
   - jail-monkey (2.8.0):
     - React-Core
   - JOSESwift (3.0.0)
@@ -151,7 +174,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - pagopa-io-react-native-login-utils (1.0.9):
+  - pagopa-io-react-native-login-utils (1.1.0):
     - React-Core
   - pagopa-io-react-native-secure-storage (0.2.0):
     - DoubleConversion
@@ -1876,6 +1899,8 @@ PODS:
     - React-utils (= 0.78.2)
   - ReactNativeExceptionHandler (2.10.8):
     - React
+  - RNBluetoothStateManager (1.3.5):
+    - React-Core
   - RNCalendarEvents (2.2.0):
     - React
   - RNCAsyncStorage (2.0.0):
@@ -2171,11 +2196,11 @@ PODS:
   - Sentry/HybridSDK (8.49.0)
   - SocketRocket (0.7.1)
   - SwiftCBOR (0.5.0)
-  - VisionCamera (4.6.4):
-    - VisionCamera/Core (= 4.6.4)
-    - VisionCamera/React (= 4.6.4)
-  - VisionCamera/Core (4.6.4)
-  - VisionCamera/React (4.6.4):
+  - VisionCamera (4.7.0):
+    - VisionCamera/Core (= 4.7.0)
+    - VisionCamera/React (= 4.7.0)
+  - VisionCamera/Core (4.7.0)
+  - VisionCamera/React (4.7.0):
     - React-Core
   - Yoga (0.0.0)
   - ZendeskAnswerBotProvidersSDK (6.0.0):
@@ -2213,6 +2238,7 @@ DEPENDENCIES:
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
+  - "IoReactNativeProximity (from `../node_modules/@pagopa/io-react-native-proximity`)"
   - jail-monkey (from `../node_modules/jail-monkey`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
   - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
@@ -2305,6 +2331,7 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
+  - RNBluetoothStateManager (from `../node_modules/react-native-bluetooth-state-manager`)
   - RNCalendarEvents (from `../node_modules/react-native-calendar-events`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
@@ -2330,6 +2357,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - IOWalletProximity
     - JOSESwift
     - lottie-ios
     - Mixpanel-swift
@@ -2367,6 +2395,8 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-2025-01-13-RNv0.78.0-a942ef374897d85da38e9c8904574f8376555388
+  IoReactNativeProximity:
+    :path: "../node_modules/@pagopa/io-react-native-proximity"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
   lottie-react-native:
@@ -2547,6 +2577,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeExceptionHandler:
     :path: "../node_modules/react-native-exception-handler"
+  RNBluetoothStateManager:
+    :path: "../node_modules/react-native-bluetooth-state-manager"
   RNCalendarEvents:
     :path: "../node_modules/react-native-calendar-events"
   RNCAsyncStorage:
@@ -2600,6 +2632,8 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   hermes-engine: 2771b98fb813fdc6f92edd7c9c0035ecabf9fee7
+  IoReactNativeProximity: 3efb5d2d87ea676bfd962fc710e81da1726f5dee
+  IOWalletProximity: 55d5527de91a971dbcdbdda1838860c9860683ac
   jail-monkey: 1846061ac12e861ac5a8ec7197b0daa775b83733
   JOSESwift: 7784b1b844194d0f534eb6ac4fba5af683bccc79
   lottie-ios: a881093fab623c467d3bce374367755c272bdd59
@@ -2611,7 +2645,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-http-client: b2620097b64752b290374f7d2aab64e537f89f03
   pagopa-io-react-native-integrity: 6d5ea10255884e516422e09c5cd937d4dbaa8f27
   pagopa-io-react-native-jwt: 0ac1bc58dbd1e40277c4c9086af7898438a7ea45
-  pagopa-io-react-native-login-utils: 74e61211dc61332979344fdb8a5c4d7eaae40aed
+  pagopa-io-react-native-login-utils: a493266f15ae2476ce629469658d81e93981b273
   pagopa-io-react-native-secure-storage: 90b255f9597712d45a1087b6c10c1ab45c3dff79
   pagopa-react-native-zendesk: 6b72253f8f7cc89054dfaeb5f3ff3b652a3c34fe
   RCT-Folly: e78785aa9ba2ed998ea4151e314036f6c49e6d82
@@ -2693,6 +2727,7 @@ SPEC CHECKSUMS:
   ReactCodegen: 99ea3536c05be3c18d0c517acb56b5a6d726fc7b
   ReactCommon: 865ebe76504a95e115b6229dd00a31e56d2d4bfe
   ReactNativeExceptionHandler: 6a2aace92f300a745c8b04461b9a99edd1d26cd6
+  RNBluetoothStateManager: 929f132d0dacf65cb4767a11e2803e47fdda9e73
   RNCalendarEvents: f90f73666b6bcbb3cc8a491ffbb5e48c0db3de37
   RNCAsyncStorage: 40367e8d25522dca9c3513c7b9815a184669bd97
   RNCClipboard: 47593431a9e763a71950798683b28f691f16b98d
@@ -2703,7 +2738,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 92e89a04cd0d1c77f383a55d14c15e7f423f4c00
   RNI18n: 11ec5086508673ef71b5b567da3e8bcca8a926e1
   RNKeychain: e593cdad28fe4365dbfa703d25560d765a16bc52
-  RNPermissions: e65447d4a83dc5882f35fe277d163fc8ebb22a8b
+  RNPermissions: d26bad65a4dcb0a360a6a3c5c8f54bf43017e578
   RNQrGenerator: 60eab4f7c9e3f09db78029636fe356dca5cb585f
   RNReactNativeHapticFeedback: f9cfb40676f21a52e9e172648d033f539156a5ec
   RNReanimated: eccbdd305c2e2e9ea6569aa1be95c24a8904be8b
@@ -2715,7 +2750,7 @@ SPEC CHECKSUMS:
   Sentry: 5eda2559a20fa0c377b695ed9d7c178a47122891
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SwiftCBOR: aa87349b4ccddd19f861aa544f7c27d43dee5772
-  VisionCamera: f56eaedde0d3fa095143b78374d29e89e71735f9
+  VisionCamera: c5c07db74721d37f4c9f8331ad1f8da7b2539995
   Yoga: 66a9a23a82dd4081b393babe509967097759b3d6
   ZendeskAnswerBotProvidersSDK: 2f3d0e38acdbd4507862b4e4a7b28d3764072854
   ZendeskAnswerBotSDK: de9759a504d4a262c453784e9c6d9d6907ad2222
@@ -2730,6 +2765,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: b512cfc74b6bf8490e589f02cf52e27ed4f2bebe
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: 014e7c91b040cdb7b26feb5be55ceb0d0dd1f8a1
+PODFILE CHECKSUM: 8438bb137fd0525eaa0580e05f2eba688e5788b8
 
 COCOAPODS: 1.15.2

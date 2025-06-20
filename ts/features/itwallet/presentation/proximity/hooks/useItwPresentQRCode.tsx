@@ -1,0 +1,79 @@
+import { useCallback, useEffect } from "react";
+import { Body, IOVisualCostants, VStack } from "@pagopa/io-app-design-system";
+import { Dimensions, View } from "react-native";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { ItwProximityMachineContext } from "../machine/provider";
+import {
+  selectIsLoading,
+  selectIsQRCodeGenerationError,
+  selectQRCodeString,
+  selectShouldPresentQRCodeBottomSheet
+} from "../machine/selectors";
+import I18n from "../../../../../i18n";
+import { ItwRetryableQRCode } from "../../../common/components/ItwRetryableQRCode";
+
+const QR_WIDTH =
+  Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
+
+export const useItwPresentQRCode = () => {
+  const qrCodeString =
+    ItwProximityMachineContext.useSelector(selectQRCodeString);
+  const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
+  const isQRCodeGenerationError = ItwProximityMachineContext.useSelector(
+    selectIsQRCodeGenerationError
+  );
+  const machineRef = ItwProximityMachineContext.useActorRef();
+  const shouldPresentQRCodeBottomSheet = ItwProximityMachineContext.useSelector(
+    selectShouldPresentQRCodeBottomSheet
+  );
+
+  const handleRetry = useCallback(() => {
+    machineRef.send({ type: "retry" });
+  }, [machineRef]);
+
+  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
+    title: I18n.t(
+      "features.itWallet.presentation.proximity.mdl.bottomSheet.title"
+    ),
+    component: (
+      <VStack space={24}>
+        <Body>
+          {I18n.t(
+            "features.itWallet.presentation.proximity.mdl.bottomSheet.body"
+          )}
+        </Body>
+        <ItwRetryableQRCode
+          value={qrCodeString}
+          size={QR_WIDTH}
+          correctionLevel="Q"
+          shouldRetry={isQRCodeGenerationError}
+          retryIcon="warningFilled"
+          retryDescription={I18n.t(
+            "features.itWallet.presentation.proximity.mdl.bottomSheet.error.message"
+          )}
+          retryLabel={I18n.t(
+            "features.itWallet.presentation.proximity.mdl.bottomSheet.error.action"
+          )}
+          isRetrying={isLoading}
+          onRetry={handleRetry}
+        />
+        {/* Dummy View used to add space */}
+        <View />
+      </VStack>
+    ),
+    onDismiss: () => {
+      machineRef.send({ type: "close" });
+    }
+  });
+
+  useEffect(() => {
+    if (shouldPresentQRCodeBottomSheet) {
+      present();
+    }
+  }, [shouldPresentQRCodeBottomSheet, present]);
+
+  return {
+    bottomSheet,
+    dismiss
+  };
+};

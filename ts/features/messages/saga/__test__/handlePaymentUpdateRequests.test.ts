@@ -23,8 +23,12 @@ import {
   isPagoPATestEnabledSelector
 } from "../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import * as MIXPANEL from "../../../../mixpanel";
 
 describe("handlePaymentUpdateRequests", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   const messageId = "01JWXM7Q90CX4S57P855JZ63PC" as UIMessageId;
   const paymentId = "0123456789012345678901234567890";
   const serviceId = "01JWXM8C2NJT15SC930ZKGCRDB" as ServiceId;
@@ -169,6 +173,9 @@ describe("handlePaymentUpdateRequests", () => {
         serviceId
       });
       const error = Error(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO);
+      const paymentError = toSpecificError(
+        Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+      );
 
       testSaga(
         testable!.paymentUpdateRequestWorker,
@@ -194,12 +201,14 @@ describe("handlePaymentUpdateRequests", () => {
         })
         .throw(error)
         .call(testable!.unknownErrorToPaymentError, error)
-        .next(toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO))
+        .next(paymentError)
+        .call(testable!.trackPaymentErrorIfNeeded, paymentError)
+        .next()
         .put(
           updatePaymentForMessage.failure({
             messageId,
             paymentId,
-            reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO),
+            reason: paymentError,
             serviceId
           })
         )
@@ -663,6 +672,48 @@ describe("handlePaymentUpdateRequests", () => {
     it("should return Error's message for Error value", () => {
       const output = testable!.unknownErrorToString(Error("This is a test"));
       expect(output).toEqual("This is a test");
+    });
+  });
+
+  describe("trackPaymentErrorIfNeeded", () => {
+    it("should track an anlytics event for a generic error", () => {
+      const spyOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation((_event, _properties) => undefined);
+
+      testable!.trackPaymentErrorIfNeeded(toGenericError("An error"));
+
+      expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spyOnMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spyOnMixpanelTrack.mock.calls[0][0]).toBe(
+        "MESSAGE_PAYMENT_FAILURE"
+      );
+      expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "KO",
+        event_type: undefined,
+        flow: undefined,
+        reason: "An error"
+      });
+    });
+    it("should not track an anlytics event for a specific error", () => {
+      const spyOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation((_event, _properties) => undefined);
+
+      testable!.trackPaymentErrorIfNeeded(
+        toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO)
+      );
+
+      expect(spyOnMixpanelTrack.mock.calls.length).toBe(0);
+    });
+    it("should not track an anlytics event for a timeout error", () => {
+      const spyOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation((_event, _properties) => undefined);
+
+      testable!.trackPaymentErrorIfNeeded(toTimeoutError());
+
+      expect(spyOnMixpanelTrack.mock.calls.length).toBe(0);
     });
   });
 });

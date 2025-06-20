@@ -39,8 +39,10 @@ export const createEidIssuanceGuardsImplementation = (
 
   hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
     pipe(
-      O.fromNullable(context.walletInstanceAttestation),
-      O.map(isWalletInstanceAttestationValid),
+      O.fromNullable(context.walletInstanceAttestation?.jwt),
+      O.map(wia =>
+        isWalletInstanceAttestationValid(wia, context.isL3FeaturesEnabled)
+      ),
       O.getOrElse(() => false)
     )
 });
