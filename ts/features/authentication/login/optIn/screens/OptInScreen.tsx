@@ -4,7 +4,6 @@ import {
   Badge,
   ContentWrapper,
   FeatureInfo,
-  GradientScrollView,
   H3,
   Pictogram,
   VSpacer
