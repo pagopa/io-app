@@ -3,6 +3,7 @@ PODS:
   - boost (1.84.0)
   - BVLinearGradient (2.5.6):
     - React
+  - CieSDK (0.1.11)
   - DoubleConversion (1.1.6)
   - fast_float (6.1.4)
   - FBLazyVector (0.78.2)
@@ -11,6 +12,28 @@ PODS:
   - hermes-engine (0.78.2):
     - hermes-engine/Pre-built (= 0.78.2)
   - hermes-engine/Pre-built (0.78.2)
+  - IoReactNativeCie (1.0.0):
+    - CieSDK (~> 0.1.11)
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - IoReactNativeProximity (0.6.0):
     - DoubleConversion
     - glog
@@ -1456,6 +1479,8 @@ PODS:
     - React
   - react-native-blob-util (0.15.0):
     - React-Core
+  - react-native-cie (1.4.2):
+    - React
   - react-native-config (1.4.5):
     - react-native-config/App (= 1.4.5)
   - react-native-config/App (1.4.5):
@@ -2238,6 +2263,7 @@ DEPENDENCIES:
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
+  - "IoReactNativeCie (from `../node_modules/@pagopa/io-react-native-cie`)"
   - "IoReactNativeProximity (from `../node_modules/@pagopa/io-react-native-proximity`)"
   - jail-monkey (from `../node_modules/jail-monkey`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
@@ -2284,6 +2310,7 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-background-timer (from `../node_modules/react-native-background-timer`)
   - react-native-blob-util (from `../node_modules/react-native-blob-util`)
+  - "react-native-cie (from `../node_modules/@pagopa/react-native-cie`)"
   - react-native-config (from `../node_modules/react-native-config`)
   - "react-native-cookies (from `../node_modules/@react-native-cookies/cookies`)"
   - "react-native-document-picker (from `../node_modules/@react-native-documents/picker`)"
@@ -2357,6 +2384,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - CieSDK
     - IOWalletProximity
     - JOSESwift
     - lottie-ios
@@ -2395,6 +2423,8 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-2025-01-13-RNv0.78.0-a942ef374897d85da38e9c8904574f8376555388
+  IoReactNativeCie:
+    :path: "../node_modules/@pagopa/io-react-native-cie"
   IoReactNativeProximity:
     :path: "../node_modules/@pagopa/io-react-native-proximity"
   jail-monkey:
@@ -2483,6 +2513,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-background-timer"
   react-native-blob-util:
     :path: "../node_modules/react-native-blob-util"
+  react-native-cie:
+    :path: "../node_modules/@pagopa/react-native-cie"
   react-native-config:
     :path: "../node_modules/react-native-config"
   react-native-cookies:
@@ -2626,12 +2658,14 @@ SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   BVLinearGradient: 44fd36b87f318e7933c4c91a6991442a5e3f5bcf
+  CieSDK: ad23ec4b2f86c1e505030e68105ea509443d6706
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
   FBLazyVector: e32d34492c519a2194ec9d7f5e7a79d11b73f91c
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   hermes-engine: 2771b98fb813fdc6f92edd7c9c0035ecabf9fee7
+  IoReactNativeCie: cf0fad39bcaa457952dd07504fc52dc0b8a20b3c
   IoReactNativeProximity: 3efb5d2d87ea676bfd962fc710e81da1726f5dee
   IOWalletProximity: 55d5527de91a971dbcdbdda1838860c9860683ac
   jail-monkey: 1846061ac12e861ac5a8ec7197b0daa775b83733
@@ -2680,6 +2714,7 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: 6a39463c32ce831c4c2aa8469273114d894b6be9
   react-native-background-timer: 007ff829f79644caf2ed013e22f0563560336f86
   react-native-blob-util: ce2014444133bd568c054bf58eece8375ae5ef3c
+  react-native-cie: e6c22aa3ad137534ca809cedf1e5258398e97cf8
   react-native-config: e588441fd919c50e75a1ae023763f760b5e3adfe
   react-native-cookies: d648ab7025833b977c0b19e142503034f5f29411
   react-native-document-picker: c780d87965984ba151680826bc2175c0536ff173
