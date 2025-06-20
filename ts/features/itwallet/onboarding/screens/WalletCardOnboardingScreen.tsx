@@ -112,9 +112,9 @@ const ItwCredentialOnboardingSection = () => {
   const selectedCredentialOption =
     ItwCredentialIssuanceMachineContext.useSelector(selectCredentialTypeOption);
 
-  // Show incoming credentials only if L3 is enabled and env is "pre"
-  const shouldShowIncoming = isL3Enabled && env === "pre";
-  const displayedCredentials = shouldShowIncoming
+  // Show coming soon credentials only if L3 is enabled and env is "pre"
+  const shouldShowComingSoon = isL3Enabled && env === "pre";
+  const displayedCredentials = shouldShowComingSoon
     ? [...availableCredentials, ...comingSoonCredentials]
     : [...availableCredentials];
 
