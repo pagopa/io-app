@@ -4106,7 +4106,7 @@
           "active": "Già presente",
           "unavailable": "Non disponibile",
           "requested": "In corso",
-          "comingSoon": "In arrivo"
+          "upcoming": "In arrivo"
         },
         "options": {
           "cgn": "Carta Giovani Nazionale",
@@ -4662,7 +4662,7 @@
           "title": "Aggiungi il documento al Portafoglio",
           "subtitle": "Per usare i documenti su IO, prima aggiungili al Portafoglio. È facile e veloce."
         },
-        "credentialComingSoon": {
+        "credentialUpcoming": {
           "title": "Documento in arrivo",
           "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
           "primaryAction": "Ho capito"

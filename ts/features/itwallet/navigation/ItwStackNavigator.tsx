@@ -57,7 +57,7 @@ import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/Itw
 import { ItwActivateBluetoothScreen } from "../presentation/proximity/screens/ItwActivateBluetoothScreen.tsx";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
 import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
-import { ItwIssuanceCredentialComingSoonScreen } from "../issuance/screens/ItwIssuanceCredentialComingSoonScreen";
+import { ItwIssuanceUpcomingCredentialScreen } from "../issuance/screens/ItwIssuanceUpcomingCredentialScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -235,8 +235,8 @@ const InnerNavigator = () => {
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_COMING_SOON}
-        component={ItwIssuanceCredentialComingSoonScreen}
+        name={ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL}
+        component={ItwIssuanceUpcomingCredentialScreen}
         options={hiddenHeader}
       />
       {/* CREDENTIAL PRESENTATION */}

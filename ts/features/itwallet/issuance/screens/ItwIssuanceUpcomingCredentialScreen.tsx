@@ -3,7 +3,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
-export const ItwIssuanceCredentialComingSoonScreen = () => {
+export const ItwIssuanceUpcomingCredentialScreen = () => {
   const navigation = useIONavigation();
 
   useHeaderSecondLevel({
@@ -12,13 +12,13 @@ export const ItwIssuanceCredentialComingSoonScreen = () => {
   return (
     <OperationResultScreenContent
       pictogram="workInProgress"
-      title={I18n.t("features.itWallet.issuance.credentialComingSoon.title")}
+      title={I18n.t("features.itWallet.issuance.credentialUpcoming.title")}
       subtitle={I18n.t(
-        "features.itWallet.issuance.credentialComingSoon.subtitle"
+        "features.itWallet.issuance.credentialUpcoming.subtitle"
       )}
       action={{
         label: I18n.t(
-          "features.itWallet.issuance.credentialComingSoon.primaryAction"
+          "features.itWallet.issuance.credentialUpcoming.primaryAction"
         ),
         onPress: navigation.goBack
       }}

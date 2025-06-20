@@ -56,7 +56,7 @@ const availableCredentials = [
 ] as const;
 
 // Credentials that will be available in the future
-const comingSoonCredentials = [CredentialType.DEGREE_CERTIFICATES];
+const upcomingCredentials = [CredentialType.DEGREE_CERTIFICATES];
 
 const activeBadge: Badge = {
   variant: "success",
@@ -112,18 +112,18 @@ const ItwCredentialOnboardingSection = () => {
   const selectedCredentialOption =
     ItwCredentialIssuanceMachineContext.useSelector(selectCredentialTypeOption);
 
-  // Show coming soon credentials only if L3 is enabled and env is "pre"
-  const shouldShowComingSoon = isL3Enabled && env === "pre";
-  const displayedCredentials = shouldShowComingSoon
-    ? [...availableCredentials, ...comingSoonCredentials]
+  // Show upcoming credentials only if L3 is enabled and env is "pre"
+  const shouldShowUpcoming = isL3Enabled && env === "pre";
+  const displayedCredentials = shouldShowUpcoming
+    ? [...availableCredentials, ...upcomingCredentials]
     : [...availableCredentials];
 
   const beginCredentialIssuance = useOfflineToastGuard(
     useCallback(
       (type: CredentialType) => {
-        if (comingSoonCredentials.includes(type)) {
+        if (upcomingCredentials.includes(type)) {
           navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_COMING_SOON
+            screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
           });
         } else {
           machineRef.send({
@@ -150,7 +150,7 @@ const ItwCredentialOnboardingSection = () => {
             isActive={itwCredentialsTypes.includes(type)}
             isDisabled={remotelyDisabledCredentials.includes(type)}
             isRequested={requestedCredentials.includes(type)}
-            isComingSoon={comingSoonCredentials.includes(type)}
+            isUpcoming={upcomingCredentials.includes(type)}
             isCredentialIssuancePending={isCredentialIssuancePending}
             isSelectedCredential={pipe(
               selectedCredentialOption,
