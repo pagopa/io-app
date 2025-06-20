@@ -2,6 +2,7 @@ import { ProximityEvents } from "./events.ts";
 
 export enum ProximityFailureType {
   RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
+  INVALID_REQUESTED_DOCUMENTS = "INVALID_REQUESTED_DOCUMENTS",
   UNEXPECTED = "UNEXPECTED"
 }
 
@@ -10,6 +11,7 @@ export enum ProximityFailureType {
  */
 export type ReasonTypeByFailure = {
   [ProximityFailureType.RELYING_PARTY_GENERIC]: Error;
+  [ProximityFailureType.INVALID_REQUESTED_DOCUMENTS]: unknown;
   [ProximityFailureType.UNEXPECTED]: unknown;
 };
 
