@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0-rc.4](https://github.com/pagopa/io-app/compare/3.8.0-rc.3...3.8.0-rc.4) (2025-06-19)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2219](https://pagopa.atlassian.net/browse/SIW-2219),[SIW-2275](https://pagopa.atlassian.net/browse/SIW-2275),[SIW-2277](https://pagopa.atlassian.net/browse/SIW-2277),[SIW-2278](https://pagopa.atlassian.net/browse/SIW-2278)] Handle L2 and L3 identification flow ([#6997](https://github.com/pagopa/io-app/issues/6997)) ([f9ed023](https://github.com/pagopa/io-app/commit/f9ed0234a27d379f1730aa8d4c67ee2bb59fd7e0))
+
+
+### Bug Fixes
+
+* [[IOBP-1752](https://pagopa.atlassian.net/browse/IOBP-1752)] Deeplink of CGN and payments infinite loading ([#7090](https://github.com/pagopa/io-app/issues/7090)) ([02ae085](https://github.com/pagopa/io-app/commit/02ae085bf2905502a99d0d69dd63a1a74426c95f))
+* [[IOCOM-2408](https://pagopa.atlassian.net/browse/IOCOM-2408)] Proper scroll on SEND timeline ([#7096](https://github.com/pagopa/io-app/issues/7096)) ([c75fce8](https://github.com/pagopa/io-app/commit/c75fce8d0221027bfe8e1d02d88d053f066762f9))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2493](https://pagopa.atlassian.net/browse/SIW-2493)] New failure screen for unexpected errors in remote presentation flow ([#7095](https://github.com/pagopa/io-app/issues/7095)) ([7879ee1](https://github.com/pagopa/io-app/commit/7879ee148ae966f06dff646bb96a9c96aab2fcc5))
+* **IT Wallet:** [[SIW-2536](https://pagopa.atlassian.net/browse/SIW-2536)] Decouple `credentials` reducer migrations from store structure types ([#7068](https://github.com/pagopa/io-app/issues/7068)) ([0f8b8e3](https://github.com/pagopa/io-app/commit/0f8b8e380c6764603742df288ede77901aa32bba))
+
 ## [3.8.0-rc.3](https://github.com/pagopa/io-app/compare/3.8.0-rc.2...3.8.0-rc.3) (2025-06-18)
 
 

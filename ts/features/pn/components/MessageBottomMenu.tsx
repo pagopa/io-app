@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   }
 });
 
-type MessageBottomMenuProps = {
+export type MessageBottomMenuProps = {
   history: NotificationStatusHistory;
   isCancelled?: boolean;
   iun: string;
