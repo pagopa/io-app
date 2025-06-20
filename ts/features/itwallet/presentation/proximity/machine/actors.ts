@@ -179,7 +179,7 @@ export const createProximityActorsImplementation = () => {
     assert(verifiedRequest, "Missing required verifiedRequest");
 
     const documents = getDocuments(verifiedRequest.request, credentialsByType);
-    // Currently we accept all the fields requested by the verifier app
+    // We accept all the fields requested by the verifier app
     const acceptedFields = generateAcceptedFields(verifiedRequest.request);
 
     const generatedResponse = await Proximity.generateResponse(

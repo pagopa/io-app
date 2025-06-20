@@ -13,6 +13,10 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 describe("ItwProximityFailureScreen", () => {
   test.each<ProximityFailure>([
     {
+      type: ProximityFailureType.INVALID_REQUESTED_DOCUMENTS,
+      reason: new Error("Invalid requested documents")
+    },
+    {
       type: ProximityFailureType.RELYING_PARTY_GENERIC,
       reason: new Error("RP generic error")
     }

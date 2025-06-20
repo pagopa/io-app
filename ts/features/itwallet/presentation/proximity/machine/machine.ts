@@ -28,7 +28,6 @@ export const itwProximityMachine = setup({
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
-    navigateToSendDocumentsResponseScreen: notImplemented,
     closeProximity: notImplemented
   },
   actors: {
@@ -347,7 +346,6 @@ export const itwProximityMachine = setup({
         },
         SendingDocuments: {
           tags: [ItwPresentationTags.Loading],
-          entry: "navigateToSendDocumentsResponseScreen",
           description: "Sends the required documents to the verifier app",
           invoke: {
             id: "sendDocuments",
@@ -360,7 +358,13 @@ export const itwProximityMachine = setup({
               // TODO: [SIW-2430]
             },
             onError: {
-              // TODO: [SIW-2431]
+              actions: assign({
+                failure: ({ event }) => ({
+                  type: ProximityFailureType.INVALID_REQUESTED_DOCUMENTS,
+                  reason: event.error
+                })
+              }),
+              target: "#itwProximityMachine.Failure"
             }
           }
         },
