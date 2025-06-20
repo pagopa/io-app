@@ -56,6 +56,7 @@ import {
 import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/ItwGrantPermissionsScreen.tsx";
 import { ItwActivateBluetoothScreen } from "../presentation/proximity/screens/ItwActivateBluetoothScreen.tsx";
 import { ItwProximityClaimsDisclosureScreen } from "../presentation/proximity/screens/ItwProximityClaimsDisclosureScreen.tsx";
+import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximity/screens/ItwProximitySendDocumentsResponseScreen.tsx";
 import { ItwProximityFailureScreen } from "../presentation/proximity/screens/ItwProximityFailureScreen.tsx";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
 import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
@@ -290,6 +291,10 @@ const InnerNavigator = () => {
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.CLAIMS_DISCLOSURE}
           component={ItwProximityClaimsDisclosureScreen}
+        />
+        <Stack.Screen
+          name={ITW_ROUTES.PROXIMITY.SEND_DOCUMENTS_RESPONSE}
+          component={ItwProximitySendDocumentsResponseScreen}
         />
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.FAILURE}
