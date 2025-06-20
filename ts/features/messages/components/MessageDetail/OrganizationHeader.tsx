@@ -1,8 +1,10 @@
 import {
   Avatar,
   Body,
+  BodySmall,
+  IOColors,
   IOSpacingScale,
-  BodySmall
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
@@ -23,17 +25,15 @@ export type OrganizationHeaderProps = {
 };
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
-const AVATAR_MARGIN_LEFT: IOSpacingScale = 16;
 
 const styles = StyleSheet.create({
   item: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: ITEM_PADDING_VERTICAL
-  },
-  itemAvatar: {
-    marginLeft: AVATAR_MARGIN_LEFT
+    paddingVertical: ITEM_PADDING_VERTICAL,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderTopWidth: StyleSheet.hairlineWidth
   }
 });
 
@@ -44,6 +44,8 @@ export const OrganizationHeader = ({
   organizationName,
   serviceName
 }: OrganizationHeaderProps) => {
+  const theme = useIOTheme();
+
   const navigation = useIONavigation();
   const paymentData = useIOSelector(state =>
     messagePaymentDataSelector(state, messageId)
@@ -59,11 +61,11 @@ export const OrganizationHeader = ({
     [navigation, serviceId]
   );
   return (
-    <View style={styles.item}>
+    <View
+      style={[styles.item, { borderColor: IOColors[theme["divider-default"]] }]}
+    >
       <View style={{ flex: 1 }}>
-        <Body weight="Semibold" color="grey-700">
-          {organizationName}
-        </Body>
+        <Body weight="Semibold">{organizationName}</Body>
         <BodySmall
           asLink
           accessibilityRole="button"
@@ -74,7 +76,7 @@ export const OrganizationHeader = ({
           {serviceName}
         </BodySmall>
       </View>
-      <View style={styles.itemAvatar}>
+      <View>
         {paymentData ? (
           <AvatarDouble backgroundLogoUri={logoUri} />
         ) : (
