@@ -7,7 +7,7 @@ import {
   OTPInput,
   Pictogram
 } from "@pagopa/io-app-design-system";
-import { CieManager, type NfcEvent } from "@pagopa/io-react-native-cie";
+import { CieManager, NfcEvent } from "@pagopa/io-react-native-cie";
 import { createRef, useEffect, useState } from "react";
 import {
   Alert,
