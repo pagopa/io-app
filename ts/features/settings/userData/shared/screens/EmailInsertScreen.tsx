@@ -184,6 +184,7 @@ const EmailInsertScreen = () => {
 
   const [areSameEmails, setAreSameEmails] = useState(false);
   const [email, setEmail] = useState(getEmail(optionEmail));
+  const timeout = useRef<number | null>(null);
 
   useEffect(() => {
     if (areSameEmails) {
@@ -289,7 +290,8 @@ const EmailInsertScreen = () => {
     } else {
       const message = getAccessibilityErrorLabel();
       if (message) {
-        setTimeout(() => {
+        // eslint-disable-next-line functional/immutable-data
+        timeout.current = setTimeout(() => {
           AccessibilityInfo.announceForAccessibilityWithOptions(message, {
             queue: true
           });
@@ -382,6 +384,11 @@ const EmailInsertScreen = () => {
         }
       });
     }
+    return () => {
+      if (timeout.current !== null) {
+        clearTimeout(timeout.current);
+      }
+    };
   }, [isOnboarding, navigation, userNavigateToEmailValidationScreen]);
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
