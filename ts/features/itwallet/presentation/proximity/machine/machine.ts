@@ -348,6 +348,7 @@ export const itwProximityMachine = setup({
         },
         SendingDocuments: {
           tags: [ItwPresentationTags.Loading],
+          entry: "navigateToSendDocumentsResponseScreen",
           description: "Sends the required documents to the verifier app",
           invoke: {
             id: "sendDocuments",
