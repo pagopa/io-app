@@ -1,15 +1,16 @@
 import _ from "lodash";
 import { and, assertEvent, assign, fromPromise, not, setup } from "xstate";
+import { assert } from "../../../../utils/assert";
 import {
   StoredCredential,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
+import { ItwCredentialUpgradeMachine } from "../../upgrade/machine/machine";
 import { ItwTags } from "../tags";
-import { assert } from "../../../../utils/assert.ts";
 import {
   GetWalletAttestationActorParams,
-  type RequestEidActorParams,
-  StartAuthFlowActorParams
+  StartAuthFlowActorParams,
+  type RequestEidActorParams
 } from "./actors";
 import {
   AuthenticationContext,
@@ -95,7 +96,8 @@ export const itwEidIssuanceMachine = setup({
     ),
     startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
       notImplemented
-    )
+    ),
+    credentialUpgradeMachine: {} as ItwCredentialUpgradeMachine
   },
   guards: {
     issuedEidMatchesAuthenticatedUser: notImplemented,
@@ -105,7 +107,8 @@ export const itwEidIssuanceMachine = setup({
     hasValidWalletInstanceAttestation: notImplemented,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
     isReissuing: ({ context }) => context.isReissuing,
-    isL3FeaturesEnabled: ({ context }) => context.isL3FeaturesEnabled || false
+    isL3: ({ context }) => context.isL3,
+    hasL2Credentials: ({ context }) => context.l2Credentials.length > 0
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -133,9 +136,7 @@ export const itwEidIssuanceMachine = setup({
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
-          actions: assign(({ event }) => ({
-            isL3FeaturesEnabled: event.isL3
-          })),
+          actions: assign(({ event }) => ({ isL3: event.isL3 ?? false })),
           target: "TosAcceptance"
         },
         close: {
@@ -248,7 +249,7 @@ export const itwEidIssuanceMachine = setup({
         src: "getWalletAttestation",
         input: ({ context }) => ({
           integrityKeyTag: context.integrityKeyTag,
-          isL3IssuanceEnabled: context.isL3FeaturesEnabled
+          isL3IssuanceEnabled: context.isL3
         }),
         onDone: [
           {
@@ -312,7 +313,7 @@ export const itwEidIssuanceMachine = setup({
         EvaluateIdentificationLevel: {
           always: [
             {
-              guard: "isL3FeaturesEnabled",
+              guard: "isL3",
               target: "L3Identification"
             },
             {
@@ -330,9 +331,7 @@ export const itwEidIssuanceMachine = setup({
                 target: "CiePin"
               },
               {
-                guard: ({ event, context }) =>
-                  event.mode === "cieId" &&
-                  context.isL3FeaturesEnabled === true,
+                guard: and([({ event }) => event.mode === "cieId", "isL3"]),
                 actions: assign(() => ({
                   identification: {
                     mode: "cieId",
@@ -380,7 +379,7 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.Idle"
               },
               {
-                guard: "isL3FeaturesEnabled",
+                guard: "isL3",
                 target: "L3Identification"
               },
               {
@@ -435,7 +434,7 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  isL3IssuanceEnabled: context.isL3FeaturesEnabled,
+                  isL3IssuanceEnabled: context.isL3,
                   identification: context.identification
                 }),
                 onDone: {
@@ -663,7 +662,7 @@ export const itwEidIssuanceMachine = setup({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
                   identification: context.identification,
-                  isL3IssuanceEnabled: context.isL3FeaturesEnabled
+                  isL3: context.isL3
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -769,6 +768,11 @@ export const itwEidIssuanceMachine = setup({
                 ]
               },
               {
+                guard: and(["isL3", "hasL2Credentials"]),
+                actions: ["storeEidCredential", "trackWalletInstanceCreation"],
+                target: "#itwEidIssuanceMachine.CredentialsUpgrade"
+              },
+              {
                 actions: ["storeEidCredential", "trackWalletInstanceCreation"],
                 target: "#itwEidIssuanceMachine.Success"
               }
@@ -777,6 +781,24 @@ export const itwEidIssuanceMachine = setup({
               actions: ["closeIssuance"]
             }
           }
+        }
+      }
+    },
+    CredentialsUpgrade: {
+      tags: [ItwTags.Upgrading],
+      description:
+        "This state upgrades the credentials to L3. It is only reached when the user has L2 credentials and is issuing an L3 PID",
+      invoke: {
+        src: "credentialUpgradeMachine",
+        input: ({ context }) => ({
+          credentials: context.l2Credentials
+        }),
+        onDone: {
+          target: "#itwEidIssuanceMachine.Success"
+        },
+        onError: {
+          actions: "setFailure",
+          target: "#itwEidIssuanceMachine.Failure"
         }
       }
     },

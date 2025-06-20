@@ -6,6 +6,9 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../store/hooks";
 import { selectItwEnv } from "../common/store/selectors/environment";
 import { getEnv } from "../common/utils/environment";
+import { createCredentialUpgradeActionsImplementation } from "../upgrade/machine/actions";
+import { createCredentialUpgradeActorsImplementation } from "../upgrade/machine/actors";
+import { itwCredentialUpgradeMachine } from "../upgrade/machine/machine";
 import { createCredentialIssuanceActionsImplementation } from "./credential/actions";
 import { createCredentialIssuanceActorsImplementation } from "./credential/actors";
 import { createCredentialIssuanceGuardsImplementation } from "./credential/guards";
@@ -31,15 +34,22 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
   const store = useIOStore();
   const navigation = useIONavigation();
   const toast = useIOToast();
-
   const env = pipe(useIOSelector(selectItwEnv), getEnv);
+
+  const credentialUpgradeMachine = itwCredentialUpgradeMachine.provide({
+    actions: createCredentialUpgradeActionsImplementation(store),
+    actors: createCredentialUpgradeActorsImplementation()
+  });
 
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
     guards: createEidIssuanceGuardsImplementation(store, {
       bypassIdentityMatch: itwBypassIdentityMatch
     }),
     actions: createEidIssuanceActionsImplementation(navigation, store, toast),
-    actors: createEidIssuanceActorsImplementation(env, store)
+    actors: {
+      ...createEidIssuanceActorsImplementation(env, store),
+      credentialUpgradeMachine
+    }
   });
 
   const credentialIssuanceMachine = itwCredentialIssuanceMachine.provide({
