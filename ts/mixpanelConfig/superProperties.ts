@@ -1,5 +1,4 @@
 import { Appearance, ColorSchemeName } from "react-native";
-import * as O from "fp-ts/Option";
 import {
   isMixpanelInstanceInitialized,
   registerSuperProperties
@@ -21,15 +20,15 @@ import { GlobalState } from "../store/reducers/types";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
-  ItwCed,
+  getCredentialMixpanelStatus,
+  ItwCredentialMixpanelStatus,
   ItwId,
-  ItwPg,
   ItwStatus,
-  ItwTs
+  mapEidStatusToMixpanel
 } from "../features/itwallet/analytics";
 import {
   itwCredentialsByTypeSelector,
-  itwCredentialsSelector
+  itwCredentialsEidStatusSelector
 } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
@@ -63,9 +62,9 @@ type SuperProperties = {
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   ITW_STATUS_V2: ItwStatus;
   ITW_ID_V2: ItwId;
-  ITW_PG_V2: ItwPg;
-  ITW_TS_V2: ItwTs;
-  ITW_CED_V2: ItwCed;
+  ITW_PG_V2: ItwCredentialMixpanelStatus;
+  ITW_TS_V2: ItwCredentialMixpanelStatus;
+  ITW_CED_V2: ItwCredentialMixpanelStatus;
   SAVED_PAYMENT_METHOD?: number;
   CGN_STATUS: TrackCgnStatus;
   WELFARE_STATUS: ReadonlyArray<string>;
@@ -148,22 +147,24 @@ const walletStatusHandler = (state: GlobalState): ItwStatus => {
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {
-  const credentialsState = itwCredentialsSelector(state);
-  return O.isSome(credentialsState.eid) ? "valid" : "not_available";
-};
-const pgStatusHandler = (state: GlobalState): ItwPg => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
-  return credentialsByType.MDL ? "valid" : "not_available";
-};
-const tsStatusHandler = (state: GlobalState): ItwTs => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
-  return credentialsByType.EuropeanHealthInsuranceCard
-    ? "valid"
+  const eidStatus = itwCredentialsEidStatusSelector(state);
+  return eidStatus !== undefined
+    ? mapEidStatusToMixpanel(eidStatus)
     : "not_available";
 };
-const cedStatusHandler = (state: GlobalState): ItwCed => {
+const pgStatusHandler = (state: GlobalState): ItwCredentialMixpanelStatus => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
-  return credentialsByType.EuropeanDisabilityCard ? "valid" : "not_available";
+  return getCredentialMixpanelStatus(credentialsByType.MDL);
+};
+const tsStatusHandler = (state: GlobalState): ItwCredentialMixpanelStatus => {
+  const credentialsByType = itwCredentialsByTypeSelector(state);
+  return getCredentialMixpanelStatus(
+    credentialsByType.EuropeanHealthInsuranceCard
+  );
+};
+const cedStatusHandler = (state: GlobalState): ItwCredentialMixpanelStatus => {
+  const credentialsByType = itwCredentialsByTypeSelector(state);
+  return getCredentialMixpanelStatus(credentialsByType.EuropeanDisabilityCard);
 };
 const offlineStatusHandler = (state: GlobalState): ConnectivityStatus => {
   const isConnected = isConnectedSelector(state);
