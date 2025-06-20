@@ -27,7 +27,10 @@ import {
   trackStartAddNewCredential
 } from "../../analytics";
 import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
-import { itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences";
+import {
+  itwIsL3EnabledSelector,
+  itwRequestedCredentialsSelector
+} from "../../common/store/selectors/preferences";
 import {
   isItwEnabledSelector,
   itwDisabledCredentialsSelector
@@ -42,13 +45,18 @@ import {
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwOnboardingModuleCredential } from "../components/ItwOnboardingModuleCredential";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard.ts";
+import { ITW_ROUTES } from "../../navigation/routes";
+import { selectItwEnv } from "../../common/store/selectors/environment";
 
-// List of available credentials to show to the user
+// Credentials that can be actively requested and obtained by the user
 const availableCredentials = [
   CredentialType.DRIVING_LICENSE,
   CredentialType.EUROPEAN_DISABILITY_CARD,
   CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
 ] as const;
+
+// Credentials that will be available in the future
+const incomingCredentials = [CredentialType.DEGREE_CERTIFICATES];
 
 const activeBadge: Badge = {
   variant: "success",
@@ -89,28 +97,43 @@ const WalletCardOnboardingScreen = () => {
 
 const ItwCredentialOnboardingSection = () => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const navigation = useIONavigation();
+
   const remotelyDisabledCredentials = useIOSelector(
     itwDisabledCredentialsSelector
   );
   const requestedCredentials = useIOSelector(itwRequestedCredentialsSelector);
+  const env = useIOSelector(selectItwEnv);
+  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
+  const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
 
   const isCredentialIssuancePending =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const selectedCredentialOption =
     ItwCredentialIssuanceMachineContext.useSelector(selectCredentialTypeOption);
 
-  const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
+  // Show incoming credentials only if L3 is enabled and env is "pre"
+  const shouldShowIncoming = isL3Enabled && env === "pre";
+  const displayedCredentials = shouldShowIncoming
+    ? [...availableCredentials, ...incomingCredentials]
+    : [...availableCredentials];
 
   const beginCredentialIssuance = useOfflineToastGuard(
     useCallback(
-      (type: string) => {
-        machineRef.send({
-          type: "select-credential",
-          credentialType: type,
-          skipNavigation: true
-        });
+      (type: CredentialType) => {
+        if (incomingCredentials.includes(type)) {
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_INCOMING
+          });
+        } else {
+          machineRef.send({
+            type: "select-credential",
+            credentialType: type,
+            skipNavigation: true
+          });
+        }
       },
-      [machineRef]
+      [machineRef, navigation]
     )
   );
 
@@ -120,13 +143,14 @@ const ItwCredentialOnboardingSection = () => {
         label={I18n.t("features.wallet.onboarding.sections.itw")}
       />
       <VStack space={8}>
-        {availableCredentials.map(type => (
+        {displayedCredentials.map(type => (
           <ItwOnboardingModuleCredential
             key={`itw_credential_${type}`}
             type={type}
             isActive={itwCredentialsTypes.includes(type)}
             isDisabled={remotelyDisabledCredentials.includes(type)}
             isRequested={requestedCredentials.includes(type)}
+            isIncoming={incomingCredentials.includes(type)}
             isCredentialIssuancePending={isCredentialIssuancePending}
             isSelectedCredential={pipe(
               selectedCredentialOption,
