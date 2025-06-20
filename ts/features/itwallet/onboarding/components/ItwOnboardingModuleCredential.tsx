@@ -12,7 +12,7 @@ type Props = {
   isCredentialIssuancePending: boolean;
   isRequested: boolean;
   isSelectedCredential: boolean;
-  isIncoming: boolean;
+  isComingSoon: boolean;
 };
 
 const credentialIconByType: Record<string, IOIcons> = {
@@ -37,9 +37,9 @@ const requestedBadge: Badge = {
   text: I18n.t("features.wallet.onboarding.badge.requested")
 };
 
-const incomingBadge: Badge = {
+const comingSoonBadge: Badge = {
   variant: "default",
-  text: I18n.t("features.wallet.onboarding.badge.incoming")
+  text: I18n.t("features.wallet.onboarding.badge.comingSoon")
 };
 
 const ItwOnboardingModuleCredential = ({
@@ -48,7 +48,7 @@ const ItwOnboardingModuleCredential = ({
   isActive,
   isDisabled,
   isRequested,
-  isIncoming,
+  isComingSoon,
   isSelectedCredential,
   isCredentialIssuancePending
 }: Props) => {
@@ -62,11 +62,11 @@ const ItwOnboardingModuleCredential = ({
     if (isRequested) {
       return requestedBadge;
     }
-    if (isIncoming) {
-      return incomingBadge;
+    if (isComingSoon) {
+      return comingSoonBadge;
     }
     return undefined;
-  }, [isActive, isDisabled, isRequested, isIncoming]);
+  }, [isActive, isDisabled, isRequested, isComingSoon]);
 
   const handleOnPress = () => {
     onPress(type);
