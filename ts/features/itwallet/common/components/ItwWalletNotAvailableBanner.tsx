@@ -42,7 +42,7 @@ export const ItwWalletNotAvailableBanner = withWalletCategoryFilter(
 const styles = StyleSheet.create({
   bannerContainer: {
     padding: IOAlertSpacing[1],
-    marginTop: 16,
+    marginVertical: 16,
     backgroundColor: IOColors["grey-50"],
     borderRadius: 8,
     alignItems: "center",

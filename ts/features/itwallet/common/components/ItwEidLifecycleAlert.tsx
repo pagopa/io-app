@@ -109,10 +109,7 @@ export const ItwEidLifecycleAlert = ({
     };
 
     return (
-      <View
-        style={{ marginVertical: 16 }}
-        testID={`itwEidLifecycleAlertTestID`}
-      >
+      <View style={{ marginBottom: 16 }} testID={`itwEidLifecycleAlertTestID`}>
         <Alert {...alertProps[eidStatus]} />
       </View>
     );

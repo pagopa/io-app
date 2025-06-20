@@ -111,8 +111,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         </View>
       )}
       <VStack space={16}>
-        {/* Dummy View used to add space */}
-        <View />
         <ItwOfflineWalletBanner />
         <WalletCardsCategoryContainer
           key={`cards_category_itw`}
@@ -141,7 +139,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 8,
+    paddingVertical: 16,
     marginHorizontal: -8
   }
 });

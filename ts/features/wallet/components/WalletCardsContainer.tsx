@@ -1,4 +1,4 @@
-import { ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
+import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 import { memo, useMemo } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
@@ -72,7 +72,10 @@ const WalletCardsContainer = () => {
   ]);
 
   return (
-    <Animated.View style={{ flex: 1 }} layout={LinearTransition.duration(200)}>
+    <Animated.View
+      style={{ flex: 1, paddingTop: 16 }}
+      layout={LinearTransition.duration(200)}
+    >
       <WalletBannersContainer />
       {walletContent}
     </Animated.View>
@@ -83,12 +86,14 @@ const WalletCardsContainer = () => {
  * Renders the banners that are displayed at the top of the wallet screen
  */
 const WalletBannersContainer = memo(() => (
-  <View>
+  <VStack>
     <ItwEnvironmentAlert />
     <ItwUpgradeBanner />
     <ItwWalletNotAvailableBanner />
     <ItwDiscoveryBannerStandalone />
-  </View>
+    {/* Dummy view wich adds a spacer in case one of the above banners is rendered */}
+    <View />
+  </VStack>
 ));
 
 /**
@@ -96,7 +101,6 @@ const WalletBannersContainer = memo(() => (
  */
 const WalletCardsContainerSkeleton = () => (
   <>
-    <VSpacer />
     <WalletCardSkeleton testID="walletCardSkeletonTestID_1" cardProps={{}} />
     <WalletCardSkeleton testID="walletCardSkeletonTestID_2" cardProps={{}} />
     <WalletCardSkeleton testID="walletCardSkeletonTestID_3" cardProps={{}} />
@@ -133,16 +137,13 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   }
 
   return (
-    <>
-      {!sectionHeader && <VSpacer size={24} />}
-      <WalletCardsCategoryContainer
-        key={`cards_category_other`}
-        testID={`otherWalletCardsContainerTestID`}
-        cards={cards}
-        header={sectionHeader}
-        bottomElement={<WalletCardsCategoryRetryErrorBanner />}
-      />
-    </>
+    <WalletCardsCategoryContainer
+      key={`cards_category_other`}
+      testID={`otherWalletCardsContainerTestID`}
+      cards={cards}
+      header={sectionHeader}
+      bottomElement={<WalletCardsCategoryRetryErrorBanner />}
+    />
   );
 });
 

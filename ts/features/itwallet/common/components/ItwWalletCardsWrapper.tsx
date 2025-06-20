@@ -33,6 +33,9 @@ const styles = StyleSheet.create({
       android: IOVisualCostants.appMarginDefault + 0.1,
       default: IOVisualCostants.appMarginDefault
     }),
+    // This negative margin was added to avoid the white strip
+    // caused by the space between the wallet content and the app header
+    marginTop: -16,
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     backgroundColor: WALLET_L3_BG_COLOR,
     borderBottomEndRadius: 16,

@@ -1,4 +1,3 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -21,15 +20,12 @@ export const ItwUpgradeBanner = () => {
     });
 
   return (
-    <>
-      <VSpacer />
-      <ItwHighlightBanner
-        testID="itwUpgradeBannerTestID"
-        title={I18n.t("features.itWallet.upgrade.banner.title")}
-        description={I18n.t("features.itWallet.upgrade.banner.description")}
-        action={I18n.t("features.itWallet.upgrade.banner.action")}
-        onPress={handleOnPress}
-      />
-    </>
+    <ItwHighlightBanner
+      testID="itwUpgradeBannerTestID"
+      title={I18n.t("features.itWallet.upgrade.banner.title")}
+      description={I18n.t("features.itWallet.upgrade.banner.description")}
+      action={I18n.t("features.itWallet.upgrade.banner.action")}
+      onPress={handleOnPress}
+    />
   );
 };
