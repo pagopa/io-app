@@ -1479,8 +1479,6 @@ PODS:
     - React
   - react-native-blob-util (0.15.0):
     - React-Core
-  - react-native-cie (1.4.2):
-    - React
   - react-native-config (1.4.5):
     - react-native-config/App (= 1.4.5)
   - react-native-config/App (1.4.5):
@@ -2310,7 +2308,6 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-background-timer (from `../node_modules/react-native-background-timer`)
   - react-native-blob-util (from `../node_modules/react-native-blob-util`)
-  - "react-native-cie (from `../node_modules/@pagopa/react-native-cie`)"
   - react-native-config (from `../node_modules/react-native-config`)
   - "react-native-cookies (from `../node_modules/@react-native-cookies/cookies`)"
   - "react-native-document-picker (from `../node_modules/@react-native-documents/picker`)"
@@ -2513,8 +2510,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-background-timer"
   react-native-blob-util:
     :path: "../node_modules/react-native-blob-util"
-  react-native-cie:
-    :path: "../node_modules/@pagopa/react-native-cie"
   react-native-config:
     :path: "../node_modules/react-native-config"
   react-native-cookies:
@@ -2714,7 +2709,6 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: 6a39463c32ce831c4c2aa8469273114d894b6be9
   react-native-background-timer: 007ff829f79644caf2ed013e22f0563560336f86
   react-native-blob-util: ce2014444133bd568c054bf58eece8375ae5ef3c
-  react-native-cie: e6c22aa3ad137534ca809cedf1e5258398e97cf8
   react-native-config: e588441fd919c50e75a1ae023763f760b5e3adfe
   react-native-cookies: d648ab7025833b977c0b19e142503034f5f29411
   react-native-document-picker: c780d87965984ba151680826bc2175c0536ff173
