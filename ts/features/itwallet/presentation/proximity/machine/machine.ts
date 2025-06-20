@@ -28,6 +28,8 @@ export const itwProximityMachine = setup({
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
+    navigateToSendDocumentsResponseScreen: notImplemented,
+    navigateToWallet: notImplemented,
     closeProximity: notImplemented
   },
   actors: {
@@ -355,7 +357,7 @@ export const itwProximityMachine = setup({
               verifiedRequest: context.verifierRequest
             }),
             onDone: {
-              // TODO: [SIW-2430]
+              target: "#itwProximityMachine.Success"
             },
             onError: {
               actions: assign({
@@ -382,6 +384,14 @@ export const itwProximityMachine = setup({
               target: "#itwProximityMachine.Idle"
             }
           }
+        }
+      }
+    },
+    Success: {
+      description: "The documents have been successfully sent to the Verifier",
+      on: {
+        close: {
+          actions: "navigateToWallet"
         }
       }
     },
