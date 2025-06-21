@@ -257,7 +257,7 @@ To enter the IO app without physically using the Electronic Identity Card, you m
         },
         {
           "height": NaN,
-          "paddingBottom": undefined,
+          "paddingBottom": NaN,
         },
       ]
     }
@@ -1276,7 +1276,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         },
         {
           "height": NaN,
-          "paddingBottom": undefined,
+          "paddingBottom": NaN,
         },
       ]
     }
@@ -2347,7 +2347,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
         },
         {
           "height": NaN,
-          "paddingBottom": undefined,
+          "paddingBottom": NaN,
         },
       ]
     }
@@ -2702,7 +2702,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
         },
         {
           "height": NaN,
-          "paddingBottom": undefined,
+          "paddingBottom": NaN,
         },
       ]
     }
