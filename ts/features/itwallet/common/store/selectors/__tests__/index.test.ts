@@ -1,4 +1,5 @@
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import {
   isItwDiscoveryBannerRenderableSelector,
   itwOfflineAccessAvailableSelector,
@@ -186,15 +187,15 @@ describe("itwShouldRenderL3UpgradeBannerSelector", () => {
   });
 
   it.each`
-    itwEnabled | offlineAccessReason                       | isL3Enabled | authLevel    | expected
-    ${true}    | ${undefined}                              | ${true}     | ${undefined} | ${true}
-    ${true}    | ${undefined}                              | ${true}     | ${"L2"}      | ${true}
-    ${true}    | ${undefined}                              | ${false}    | ${"L2"}      | ${false}
-    ${true}    | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${"L2"}      | ${false}
-    ${false}   | ${undefined}                              | ${true}     | ${"L2"}      | ${true}
+    itwEnabled | offlineAccessReason                       | isL3Enabled | eid       | expected
+    ${true}    | ${undefined}                              | ${true}     | ${O.none} | ${true}
+    ${true}    | ${undefined}                              | ${true}     | ${O.none} | ${true}
+    ${true}    | ${undefined}                              | ${false}    | ${O.none} | ${false}
+    ${true}    | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${O.none} | ${false}
+    ${false}   | ${undefined}                              | ${true}     | ${O.none} | ${true}
   `(
-    "should return $expected when offlineAccessReason is $offlineAccessReason, isL3Enabled is $isL3Enabled, authLevel is $authLevel",
-    ({ offlineAccessReason, isL3Enabled, authLevel, expected }) => {
+    "should return $expected when offlineAccessReason is $offlineAccessReason, isL3Enabled is $isL3Enabled, eid is $eid",
+    ({ offlineAccessReason, isL3Enabled, eid, expected }) => {
       jest
         .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
         .mockReturnValue(true);
@@ -205,8 +206,8 @@ describe("itwShouldRenderL3UpgradeBannerSelector", () => {
         .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
         .mockReturnValue(isL3Enabled);
       jest
-        .spyOn(preferencesSelectors, "itwAuthLevelSelector")
-        .mockReturnValue(authLevel);
+        .spyOn(credentialsSelectors, "itwCredentialsEidSelector")
+        .mockReturnValue(eid);
 
       expect(
         itwShouldRenderL3UpgradeBannerSelector({} as unknown as GlobalState)
