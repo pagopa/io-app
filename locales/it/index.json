@@ -837,15 +837,6 @@
         "body": "Per la tua sicurezza, di tanto in tanto dobbiamo verificare la tua identità",
         "linkButtonLabel": "Leggi come fare"
       },
-      "cie_unsupported": {
-        "title": "Non puoi entrare con CIE",
-        "body": "Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE).",
-        "button": "Ho capito",
-        "nfc_problem": "Per leggere la CIE è necessario un dispositivo con chip NFC.",
-        "os_problem": "È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori.",
-        "nfc_alert": "Il tuo dispositivo non ha l'NFC.",
-        "os_alert": "Il sistema operativo del dispositivo non è aggiornato."
-      },
       "cie_bottom_sheet": {
         "title": "Come vuoi entrare?",
         "module_cie_pin": {
