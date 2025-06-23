@@ -44,7 +44,6 @@ const removeUserFromEvent = <T extends ErrorEvent | TransactionEvent>(
 const removeHttpClientError = <T extends ErrorEvent | TransactionEvent>(
   event: T
 ): T | null => {
-  // console.log(JSON.stringify(event));
   // Modify or drop the event here
   if (
     event.exception?.values?.[0]?.value?.match(/HTTPClientError/) ||
