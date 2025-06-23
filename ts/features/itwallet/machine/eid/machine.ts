@@ -134,7 +134,8 @@ export const itwEidIssuanceMachine = setup({
       on: {
         start: {
           actions: assign(({ event }) => ({
-            isL3FeaturesEnabled: event.isL3
+            isL3FeaturesEnabled: event.isL3,
+            showCiePinForL2: !event.isL3
           })),
           target: "TosAcceptance"
         },
@@ -363,6 +364,10 @@ export const itwEidIssuanceMachine = setup({
                 target: "Spid"
               },
               {
+                guard: ({ event }) => event.mode === "ciePin",
+                target: "CiePin"
+              },
+              {
                 guard: ({ event }) => event.mode === "cieId",
                 actions: assign(() => ({
                   isL3FeaturesEnabled: false,
@@ -553,8 +558,17 @@ export const itwEidIssuanceMachine = setup({
         CiePin: {
           description:
             "This state handles the entire CIE + pin identification flow",
-          initial: "PreparationCie",
+          initial: "EvaluateInitialState",
           states: {
+            EvaluateInitialState: {
+              always: [
+                {
+                  guard: "isL3FeaturesEnabled",
+                  target: "PreparationCie"
+                },
+                { target: "InsertingCardPin" }
+              ]
+            },
             PreparationCie: {
               description:
                 "This state handles the CIE preparation screen, where the user is informed about the CIE card",

@@ -17,6 +17,10 @@ import { useIOSelector } from "../../../../store/hooks";
 import { itwDisabledIdentificationMethodsSelector } from "../../common/store/selectors/remoteConfig";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
+import {
+  isCIEAuthenticationSupportedSelector,
+  showCiePinSelector
+} from "../../machine/eid/selectors";
 
 export type ItwL2IdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -48,6 +52,11 @@ export const ItwL2IdentificationModeSelectionScreen = (
     trackItWalletIDMethodSelected({ ITW_ID_method: "spid" });
   }, [machineRef]);
 
+  const handleCiePinPress = useCallback(() => {
+    machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin" });
+  }, [machineRef]);
+
   const handleCieIdPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
     trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
@@ -56,6 +65,11 @@ export const ItwL2IdentificationModeSelectionScreen = (
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
+  const isCieAuthenticationSupported = ItwEidIssuanceMachineContext.useSelector(
+    isCIEAuthenticationSupportedSelector
+  );
+  const showCiePin =
+    ItwEidIssuanceMachineContext.useSelector(showCiePinSelector);
 
   const isSpidDisabled = useMemo(
     () => disabledIdentificationMethods.includes("SPID"),
@@ -63,6 +77,10 @@ export const ItwL2IdentificationModeSelectionScreen = (
   );
   const isCieIdDisabled = useMemo(
     () => disabledIdentificationMethods.includes("CieID"),
+    [disabledIdentificationMethods]
+  );
+  const isCiePinDisabled = useMemo(
+    () => disabledIdentificationMethods.includes("CiePin"),
     [disabledIdentificationMethods]
   );
 
@@ -88,6 +106,19 @@ export const ItwL2IdentificationModeSelectionScreen = (
               testID="Spid"
               icon="spid"
               onPress={handleSpidPress}
+            />
+          )}
+          {isCieAuthenticationSupported && !isCiePinDisabled && showCiePin && (
+            <ModuleNavigation
+              title={I18n.t(
+                "features.itWallet.identification.mode.method.ciePin.title"
+              )}
+              subtitle={I18n.t(
+                "features.itWallet.identification.mode.method.ciePin.subtitle"
+              )}
+              testID="CiePin"
+              icon="fiscalCodeIndividual"
+              onPress={handleCiePinPress}
             />
           )}
           {!isCieIdDisabled && (
