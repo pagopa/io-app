@@ -70,7 +70,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       [eidInfoBottomSheet.dismiss]
     )
   );
-
   const sectionHeader = useMemo((): Optional<ListItemHeader> => {
     if (isNewItwRenderable) {
       return;
