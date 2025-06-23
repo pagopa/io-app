@@ -1,5 +1,5 @@
 import {
-  ButtonSolid,
+  IOButton,
   IOColors,
   IOPictograms,
   IOText,
@@ -256,7 +256,8 @@ export const CiePlayground = () => {
           <ListItemHeader label="Insert card PIN" />
           <OTPInput secret value={code} length={8} onValueChange={setCode} />
         </View>
-        <ButtonSolid
+        <IOButton
+          variant="solid"
           label={status === "reading" ? "Stop reading" : "Start reading"}
           disabled={code.length !== 8}
           onPress={() =>
