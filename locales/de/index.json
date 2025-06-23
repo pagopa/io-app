@@ -3687,9 +3687,11 @@
             "contentBottom": "###### Wie funktioniert das?\n\nDeine **Identität wird bei der Aktivierung über SPID oder CIE verifiziert**.",
             "triggerLabel": "Was ist das?",
             "alert": {
-              "valid": "Die letzte Überprüfung ist vom {{date}}.",
-              "expiring": "Überprüfe deine Identität bis {{date}}.",
-              "expired": "Für die weitere Nutzung von Dokumente in IO ist ein kurzer Überprüfungsschritt erforderlich."
+              "documents": {
+                "valid": "Die letzte Überprüfung ist vom {{date}}.",
+                "expiring": "Überprüfe deine Identität bis {{date}}.",
+                "expired": "Für die weitere Nutzung von Dokumente in IO ist ein kurzer Überprüfungsschritt erforderlich."
+              }
             }
           },
           "MDL": {

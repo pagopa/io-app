@@ -4254,7 +4254,8 @@
       },
       "wallet": {
         "active": "Attivo",
-        "inactive": "Non attivo"
+        "inactive": "Non attivo",
+        "header": "Mostra identità"
       },
       "card": {
         "status": {
@@ -4623,6 +4624,11 @@
             }
           }
         },
+        "emptyWallet": {
+          "itwReadyBanner": {
+            "content": "Premi 'Aggiungi al Portafoglio' per aggiungere un documento al tuo Portafoglio di IO."
+          }
+        },
         "credentialResult": {
           "toast": "Fatto!"
         },
@@ -4706,10 +4712,18 @@
             "contentBottom": "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE.",
             "triggerLabel": "Cos'è?",
             "alert": {
-              "valid": "L'ultima verifica è del {{date}}.",
-              "expiring": "Verifica la tua identità entro il {{date}}.",
-              "expired": "È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.",
-              "action": "Inizia"
+              "documents": {
+                "valid": "L'ultima verifica è del {{date}}.",
+                "expiring": "Verifica la tua identità entro il {{date}}.",
+                "expired": "È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.",
+                "action": "Inizia"
+              },
+              "itw": {
+                "valid": "L'ultima verifica della tua identità è del {{date}}.",
+                "expiring": "Verifica la tua identità per continuare ad usare IT-Wallet entro il {{date}}.",
+                "expired": "Verifica la tua identità per continuare ad usare IT-Wallet.",
+                "action": "Inizia la verifica"
+              }
             }
           },
           "MDL": {
@@ -5016,6 +5030,14 @@
           "title": "Si è verificato un errore imprevisto",
           "subtitle": "Non è stato possibile disattivare il servizio. Riprova."
         }
+      },
+      "eidDetail": {
+        "title": "La mia identità",
+        "content": "Hai ottenuto IT-Wallet verificando i dati della tua identità con CIE. Ti consente di autenticarti ai servizi online.",
+        "header": {
+          "title": "I dati della mia identità"
+        },
+        "cta": "Disattiva IT-Wallet"
       },
       "feedback": {
         "banner": {
