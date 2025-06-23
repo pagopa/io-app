@@ -55,8 +55,8 @@ export const useMessageReminder = (
     // prompt an alert to inform that his calendar permissions could have been turned off
     if (!permissionGranted) {
       Alert.alert(
-        "",
         I18n.t("messages.cta.calendarPermDenied.title"),
+        undefined,
         [
           {
             text: I18n.t("messages.cta.calendarPermDenied.cancel"),
