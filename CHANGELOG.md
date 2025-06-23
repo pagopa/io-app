@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0-canary.7146](https://github.com/pagopa/io-app/compare/3.8.0-rc.5...3.8.0-canary.7146) (2025-06-23)
+
+
+### Features
+
+* [[SIW-2221](https://pagopa.atlassian.net/browse/SIW-2221)] New Wallet L3 design ([#6991](https://github.com/pagopa/io-app/issues/6991)) ([16eee59](https://github.com/pagopa/io-app/commit/16eee595e17d3cca6e6a3533ad0ef9b379ce5835))
+
+
+### Chores
+
+* [[IOPLT-0000](https://pagopa.atlassian.net/browse/IOPLT-0000)] Removes Sentry HttpClientErrors ([#7045](https://github.com/pagopa/io-app/issues/7045)) ([ce1ce97](https://github.com/pagopa/io-app/commit/ce1ce976df957a69be21d9590424f196bade360f))
+
 ## [3.8.0-rc.5](https://github.com/pagopa/io-app/compare/3.8.0-rc.4...3.8.0-rc.5) (2025-06-20)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "3.8.0-canary.7145",
+  "version": "3.8.0-canary.7146",
   "private": true,
   "scripts": {
     "start": "react-native start",
