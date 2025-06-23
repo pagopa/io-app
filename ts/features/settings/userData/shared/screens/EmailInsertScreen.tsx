@@ -256,7 +256,6 @@ const EmailInsertScreen = () => {
 
               return { isValid: false, errorMessage: errMessage };
             }
-            // If the instered email is valid the error is resetted
             AccessibilityInfo.announceForAccessibility(validEmailLabel);
 
             return true;
