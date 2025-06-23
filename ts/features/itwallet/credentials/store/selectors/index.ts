@@ -100,6 +100,16 @@ export const itwIsWalletEmptySelector = createSelector(
   itwCredentialsSelector,
   ({ credentials }) => credentials.length === 0
 );
+/**
+ * Returns whether the wallet has at least 2 credentials.
+ * The eID is not considered, only other (Q)EAAs.
+ *
+ * Note: this selector does not check the wallet validity.
+ */
+export const itwHasWalletAtLeastTwoCredentialsSelector = createSelector(
+  itwCredentialsSelector,
+  ({ credentials }) => credentials.length >= 2
+);
 
 /**
  * Get the credential status and the error message corresponding to the status attestation error, if present.

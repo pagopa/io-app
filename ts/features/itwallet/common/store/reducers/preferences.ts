@@ -117,13 +117,18 @@ const reducer = (
     case getType(itwLifecycleStoresReset):
       // When the wallet is being reset, we need to persist only the preferences:
       // - claimValuesHidden
-      // - isWalletInstanceRemotelyActive ->
-      //  (the correct value will be set in the saga related to the wallet deactivation, but we should avoid to have this value undefined)
-      const { claimValuesHidden, isWalletInstanceRemotelyActive } = state;
+      // - isWalletInstanceRemotelyActive: the correct value will be set in the saga related to the wallet deactivation
+      // - isFiscalCodeWhitelisted: avoids to have the value undefined after a wallet reset
+      const {
+        claimValuesHidden,
+        isWalletInstanceRemotelyActive,
+        isFiscalCodeWhitelisted
+      } = state;
       return {
         ...itwPreferencesInitialState,
         claimValuesHidden,
-        isWalletInstanceRemotelyActive
+        isWalletInstanceRemotelyActive,
+        isFiscalCodeWhitelisted
       };
 
     case getType(itwSetFiscalCodeWhitelisted): {
