@@ -1,6 +1,9 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
+  itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector,
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
@@ -9,8 +12,8 @@ import {
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
+import { isItwCredential } from "../../utils/itwCredentialUtils";
 import {
-  itwAuthLevelSelector,
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
   itwIsL3EnabledSelector,
@@ -103,15 +106,35 @@ export const itwShouldRenderOfflineBannerSelector = (state: GlobalState) =>
   itwLifecycleIsValidSelector(state) &&
   !itwIsOfflineBannerHiddenSelector(state);
 
+const isItwCredentialSelector = (state: GlobalState) =>
+  pipe(
+    itwCredentialsEidSelector(state),
+    O.map(eid => isItwCredential(eid.credential)),
+    O.getOrElse(() => false)
+  );
+
 /**
  * Returns if the L3 upgrade banner should be rendered. The banner is rendered if:
  * - The user has online access (not available in the mini-app)
  * - The IT Wallet feature flag is enabled
  * - The L3 feature flag is enabled
- * - The wallet is not already with L3 auth
+ * - Isn't ITW Credential
  */
 export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
   !offlineAccessReasonSelector(state) &&
   isItwEnabledSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  itwAuthLevelSelector(state) !== "L3";
+  !isItwCredentialSelector(state);
+
+/**
+ * Returns whether the new IT-Wallet variant should be rendered.
+ * - The IT Wallet feature flag is enabled
+ * - The wallet is not offline
+ * - The L3 feature flag is enabled
+ * - Is ITW Credential
+ */
+export const itwShouldRenderNewITWalletSelector = (state: GlobalState) =>
+  isItwEnabledSelector(state) &&
+  !offlineAccessReasonSelector(state) &&
+  itwIsL3EnabledSelector(state) &&
+  isItwCredentialSelector(state);
