@@ -4,8 +4,10 @@ import { ItwIssuanceActions } from "../../../issuance/store/actions";
 import { ItwLifecycleActions } from "../../../lifecycle/store/actions";
 import { ItwWalletInstanceActions } from "../../../walletInstance/store/actions";
 import { ItwPreferencesActions } from "./preferences";
+import { ItwEnvironmentActions } from "./environment";
 
 export type ItwActions =
+  | ItwEnvironmentActions
   | ItwIdentificationActions
   | ItwIssuanceActions
   | ItwLifecycleActions

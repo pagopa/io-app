@@ -28,7 +28,7 @@ import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { Dispatch } from "../../../../store/actions/types";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   cgnMerchantVersionSelector,
   isCGNEnabledSelector
@@ -65,6 +65,8 @@ import {
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../utils/constants";
 import { canEycaCardBeShown } from "../utils/eyca";
+import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
+import { cgnActivationStart } from "../store/actions/activation";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -85,6 +87,7 @@ function getLogoUris(card: Card | undefined, eycaDetails: EycaDetailsState) {
 const CgnDetailScreen = (props: Props): ReactElement => {
   const navigation =
     useNavigation<IOStackNavigationProp<CgnDetailsParamsList, "CGN_DETAILS">>();
+  const dispatch = useIODispatch();
 
   // to display EYCA info component the CGN initiative needs to be enabled by remote
   const canDisplayEycaDetails =
@@ -112,6 +115,11 @@ const CgnDetailScreen = (props: Props): ReactElement => {
 
   const currentProfile = useIOSelector(profileSelector);
 
+  const startCgnActiviation = () => {
+    dispatch(loadAvailableBonuses.request());
+    dispatch(cgnActivationStart());
+  };
+
   if (pot.isError(props.potCgnDetails)) {
     // subText is a blank space to avoid default value when it is undefined
     return (
@@ -128,6 +136,8 @@ const CgnDetailScreen = (props: Props): ReactElement => {
           label: I18n.t("global.buttons.retry"),
           onPress: loadCGN
         }}
+        enableAnimatedPictogram
+        loop
       />
     );
   }
@@ -181,6 +191,25 @@ const CgnDetailScreen = (props: Props): ReactElement => {
 
     return undefined;
   })();
+
+  if (!props.cgnDetails) {
+    return (
+      <OperationResultScreenContent
+        pictogram="cardFavourite"
+        isHeaderVisible
+        title={I18n.t("bonus.cgn.detail.empty.title")}
+        subtitle={I18n.t("bonus.cgn.detail.empty.subtitle")}
+        action={{
+          label: I18n.t("bonus.cgn.detail.empty.activateCta"),
+          onPress: startCgnActiviation
+        }}
+        secondaryAction={{
+          label: I18n.t("global.buttons.close"),
+          onPress: navigation.goBack
+        }}
+      />
+    );
+  }
 
   return (
     <BonusCardScreenComponent

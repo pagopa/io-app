@@ -7,7 +7,6 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { getWalletInstanceStatus } from "../../../common/utils/itwAttestationUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwIntegrityServiceStatusSelector } from "../../../issuance/store/selectors";
-import { itwIsWalletInstanceAttestationValidSelector } from "../../../walletInstance/store/selectors";
 
 import { checkIntegrityServiceReadySaga } from "../checkIntegrityServiceReadySaga";
 import {
@@ -48,7 +47,10 @@ describe("checkWalletInstanceStateSaga", () => {
             integrityServiceStatus: "ready",
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           },
-          credentials: { eid: O.none, credentials: [] }
+          credentials: { eid: O.none, credentials: [] },
+          environment: {
+            env: "prod"
+          }
         }
       }
     };
@@ -57,7 +59,6 @@ describe("checkWalletInstanceStateSaga", () => {
       .withState(store)
       .provide([
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
-        [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [matchers.select(itwIntegrityServiceStatusSelector), "ready"],
         [matchers.call.fn(getWalletInstanceStatus), { is_revoked: false }],
         [matchers.call.fn(checkIntegrityServiceReadySaga), true]
@@ -75,7 +76,10 @@ describe("checkWalletInstanceStateSaga", () => {
           issuance: {
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           },
-          credentials: { eid: O.none, credentials: [] }
+          credentials: { eid: O.none, credentials: [] },
+          environment: {
+            env: "prod"
+          }
         }
       }
     };
@@ -84,7 +88,6 @@ describe("checkWalletInstanceStateSaga", () => {
       .withState(store)
       .provide([
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
-        [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [matchers.call.fn(getWalletInstanceStatus), { is_revoked: true }],
         [matchers.call.fn(checkIntegrityServiceReadySaga), true]
       ])
@@ -101,7 +104,10 @@ describe("checkWalletInstanceStateSaga", () => {
           issuance: {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
           },
-          credentials: { eid: O.some({} as StoredCredential), credentials: [] }
+          credentials: { eid: O.some({} as StoredCredential), credentials: [] },
+          environment: {
+            env: "prod"
+          }
         }
       }
     };
@@ -110,7 +116,6 @@ describe("checkWalletInstanceStateSaga", () => {
       .withState(store)
       .provide([
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
-        [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [matchers.call.fn(getWalletInstanceStatus), { is_revoked: false }],
         [matchers.call.fn(checkIntegrityServiceReadySaga), true]
       ])
@@ -127,7 +132,10 @@ describe("checkWalletInstanceStateSaga", () => {
           issuance: {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
           },
-          credentials: { eid: O.some({} as StoredCredential), credentials: [] }
+          credentials: { eid: O.some({} as StoredCredential), credentials: [] },
+          environment: {
+            env: "prod"
+          }
         }
       }
     };
@@ -136,7 +144,6 @@ describe("checkWalletInstanceStateSaga", () => {
       .withState(store)
       .provide([
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
-        [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [matchers.call.fn(getWalletInstanceStatus), { is_revoked: true }],
         [matchers.call.fn(checkIntegrityServiceReadySaga), true]
       ])

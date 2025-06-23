@@ -240,7 +240,7 @@ exports[`OnboardingNavigator renders all routes (snapshot) 1`] = `
                             }
                           >
                             <Text
-                              accessibilityLabel="Your data on IO"
+                              accessibilityLabel="Your usage data"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -260,7 +260,7 @@ exports[`OnboardingNavigator renders all routes (snapshot) 1`] = `
                               }
                               testID="share-data-component-title"
                             >
-                              Your data on IO
+                              Your usage data
                             </Text>
                           </View>
                           <View
@@ -1505,7 +1505,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                               }
                             />
                             <View
-                              accessibilityLabel="Not now"
+                              accessibilityLabel="Please don't share data"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1626,7 +1626,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                                       ]
                                     }
                                   >
-                                    Not now
+                                    Please don't share data
                                   </Text>
                                 </View>
                               </View>
@@ -1797,7 +1797,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Your data on IO"
+                              accessibilityLabel="Your usage data"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -1837,7 +1837,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                                   ]
                                 }
                               >
-                                Your data on IO
+                                Your usage data
                               </Text>
                             </View>
                             <View

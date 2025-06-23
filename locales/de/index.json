@@ -478,7 +478,6 @@
             "description": "Unterstütze das IO-Team bei der Überwachung der Funktionsweise der App"
           },
           "screen": {
-            "title": "Deine Daten auf IO",
             "description": "Wenn du deine Daten weitergibst, hilfst du uns, dein IO-Erlebnis zu verbessern und dir gezielte Unterstützung zu bieten.",
             "why": {
               "description": {
@@ -510,8 +509,7 @@
             "profileSettings": "Du kannst deine Wahl jederzeit unter Einstellungen > Datenschutz und Nutzungsbedingungen ändern",
             "cta": {
               "shareData": "Daten freigeben",
-              "dontShareData": "Daten nicht freigeben",
-              "dontShare": "Jetzt nicht"
+              "dontShareData": "Daten nicht freigeben"
             },
             "confirmToast": "Einstellungen aktualisiert!"
           },
@@ -693,15 +691,6 @@
           "label": "Vorstellung von IO",
           "hint": "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
         }
-      },
-      "cie_unsupported": {
-        "title": "Du kannst dich nicht mit CIE anmelden",
-        "body": "Das von dir verwendete Gerät unterstützt den Zugang mit einer elektronischen Identitätskarte (CIE) nicht.",
-        "button": "Verstanden",
-        "nfc_problem": "Zum Lesen der CIE ist ein Gerät mit NFC-Chip erforderlich.",
-        "os_problem": "Ein Betriebssystem mit Android 6.0 oder iOS 13 oder höher ist erforderlich.",
-        "nfc_alert": "Dein Gerät verfügt nicht über NFC.",
-        "os_alert": "Das Betriebssystem des Geräts ist nicht auf dem neuesten Stand."
       },
       "cie_bottom_sheet": {
         "title": "Wie willst du dich anmelden?",
@@ -1656,7 +1645,7 @@
           "title": "Autorisierung verweigert",
           "subtitle": "Vergewissere dich, dass du die Anweisungen deiner Bank oder Zahlungsapp korrekt befolgt hast.",
           "primaryAction": "Schließen",
-          "secondaryAction": "Mehr erfahren",
+          "secondaryAction": "Was kannst du tun?",
           "bottomSheet": {
             "title": "Was ist zu tun, wenn das Hinzufügen der Methode fehlschlägt?",
             "description": "**Kredit- oder Debitkarte** Bitte erkundige dich bei deiner Bank. Die häufigsten Fälle sind: \n- deine Karte ist nicht für Online-Einkäufe freigeschaltet.\n- du hast den 3DS-Dienst noch nicht aktiviert: Dies ist ein Sicherheitssystem für Online-Zahlungen.\n- deine Karte wurde gesperrt oder blockiert.\n- du hast deine Karte 'pausiert'.\n**Andere Methoden** Wende dich an den Support der Zahlungsmethode und frage nach dem Grund für die Ablehnung."
@@ -2243,7 +2232,7 @@
         "PAYMENT_CANCELED": {
           "title": "Die ausstellende Körperschaft hat diese Zahlungsmitteilung zurückgezogen",
           "subtitle": "Wende dich für weitere Informationen an die Körperschaft.",
-          "action": "Scopri di più"
+          "action": "Mehr erfahren"
         },
         "PAYMENT_DUPLICATED": {
           "title": "Diese Zahlungsmitteilung wurde bereits bezahlt!"
@@ -3690,9 +3679,11 @@
             "contentBottom": "###### Wie funktioniert das?\n\nDeine **Identität wird bei der Aktivierung über SPID oder CIE verifiziert**.",
             "triggerLabel": "Was ist das?",
             "alert": {
-              "valid": "Die letzte Überprüfung ist vom {{date}}.",
-              "expiring": "Überprüfe deine Identität bis {{date}}.",
-              "expired": "Für die weitere Nutzung von Dokumente in IO ist ein kurzer Überprüfungsschritt erforderlich."
+              "documents": {
+                "valid": "Die letzte Überprüfung ist vom {{date}}.",
+                "expiring": "Überprüfe deine Identität bis {{date}}.",
+                "expired": "Für die weitere Nutzung von Dokumente in IO ist ein kurzer Überprüfungsschritt erforderlich."
+              }
             }
           },
           "MDL": {

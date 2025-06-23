@@ -119,8 +119,8 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100154991
-        versionName "3.7.0.2"
+        versionCode 100155002
+        versionName "3.8.0.5"
         multiDexEnabled true
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
@@ -214,7 +214,20 @@ dependencies {
     implementation 'com.google.android.play:review:2.0.2'  
     // Kotlin extensions for Play In-App Review API  
     implementation 'com.google.android.play:review-ktx:2.0.2'  
+    // Required for gif on Android
+    implementation 'com.facebook.fresco:animated-gif:3.6.0'
 }
 
+/**
+This is required to fix the issue with the bouncycastle library caused by io-react-native-cbor and io-react-native-proximity libraries.
+*/
+configurations.all {
+    c -> c.resolutionStrategy.eachDependency {
+        DependencyResolveDetails dependency ->
+             if (dependency.requested.group == 'org.bouncycastle') {
+                dependency.useTarget 'org.bouncycastle:bcprov-jdk18on:1.77'
+            }
+    }
+}
 // Add the following line to the bottom of the file:
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin

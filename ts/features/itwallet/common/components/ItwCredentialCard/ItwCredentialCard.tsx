@@ -12,9 +12,11 @@ import {
 } from "../../utils/itwCredentialUtils";
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
+import { itwShouldRenderNewITWalletSelector } from "../../store/selectors";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
+import { ItwCardValidityCheckMark } from "./ItwCardValidityCheckMark";
 
 export type ItwCredentialCard = {
   credentialType: string;
@@ -32,10 +34,10 @@ export const ItwCredentialCard = ({
   credentialType
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
+  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWalletSelector);
 
   const borderColorMap = useBorderColorByStatus();
   const statusTagProps = tagPropsByStatus[status];
-
   const { titleColor, titleOpacity, colorScheme } = useMemo<StyleProps>(() => {
     const isValid = validCredentialStatuses.includes(status);
     const theme = getThemeColorByCredentialType(credentialType);
@@ -92,6 +94,9 @@ export const ItwCredentialCard = ({
             {getCredentialNameFromType(credentialType, "").toUpperCase()}
           </IOText>
           {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
+          {!statusTagProps && isNewItwRenderable && (
+            <ItwCardValidityCheckMark />
+          )}
         </HStack>
       </View>
       <DigitalVersionBadge

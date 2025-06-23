@@ -7,17 +7,18 @@ import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import { useState } from "react";
 import { Alert, Linking, View } from "react-native";
-import DocumentPicker, {
-  DocumentPickerOptions,
-  DocumentPickerResponse,
-  NonEmptyArray,
-  types
-} from "@react-native-documents/picker";
 import {
   launchImageLibrary,
   ImagePickerResponse,
   ImageLibraryOptions
 } from "react-native-image-picker";
+import {
+  DocumentPickerOptions,
+  DocumentPickerResponse,
+  NonEmptyArray,
+  pick,
+  types
+} from "@react-native-documents/picker";
 import I18n from "../../../i18n";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import {
@@ -224,7 +225,7 @@ const useIOBarcodeFileReader = ({
   const showDocumentPicker = async () => {
     setIsLoading(true);
     await pipe(
-      TE.tryCatch(() => DocumentPicker.pick(documentPickerOptions), E.toError),
+      TE.tryCatch(() => pick(documentPickerOptions), E.toError),
       TE.map(onDocumentSelected),
       TE.mapLeft(() => setIsLoading(false))
     )();

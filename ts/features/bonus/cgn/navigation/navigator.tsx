@@ -56,6 +56,7 @@ export const CgnActivationNavigator = () => (
   >
     <ActivationStack.Screen
       name={CGN_ROUTES.ACTIVATION.INFORMATION_TOS}
+      options={{ headerShown: false }}
       component={CgnInformationScreen}
     />
     <ActivationStack.Screen

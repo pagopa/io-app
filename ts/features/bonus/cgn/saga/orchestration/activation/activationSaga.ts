@@ -35,6 +35,11 @@ function* cgnActivationWorkUnit() {
   });
 }
 
+const INITIAL_SCREENS_TO_WALLET_HOME: ReadonlyArray<string> = [
+  ITW_ROUTES.ONBOARDING,
+  CGN_ROUTES.DETAILS.DETAILS
+];
+
 /**
  * This saga handles the CGN activation workflow
  */
@@ -56,7 +61,10 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
     if (initialScreen?.name === BONUS_ROUTES.BONUS_AVAILABLE_LIST) {
       yield* call(navigateBack);
       yield* call(navigateToCgnDetails);
-    } else if (initialScreen?.name === ITW_ROUTES.ONBOARDING) {
+    } else if (
+      initialScreen?.name &&
+      INITIAL_SCREENS_TO_WALLET_HOME.includes(initialScreen.name)
+    ) {
       yield* call(
         NavigationService.dispatchNavigationAction,
         CommonActions.reset({

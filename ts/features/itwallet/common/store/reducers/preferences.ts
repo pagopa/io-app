@@ -11,8 +11,7 @@ import {
   itwSetFiscalCodeWhitelisted,
   itwSetReviewPending,
   itwSetWalletInstanceRemotelyActive,
-  itwUnflagCredentialAsRequested,
-  itwSetL3LocallyEnabled
+  itwUnflagCredentialAsRequested
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
@@ -35,10 +34,6 @@ export type ItwPreferencesState = {
   // Indicates whether the user has an already active wallet instance
   // but the actual local wallet is not active
   isWalletInstanceRemotelyActive?: boolean;
-  // TEMPORARY LOCAL FF - TO BE REPLACED WITH REMOTE FF (SIW-2195)
-  // Indicates whether the L3 is enabled, which allows to use the new IT Wallet
-  // features for users with L3 authentication level
-  isL3Enabled?: boolean;
   // Indicates whether the fiscal code is whitelisted for L3 features
   isFiscalCodeWhitelisted?: boolean;
   // Indicates whether the offline banner should be hidden
@@ -119,25 +114,21 @@ const reducer = (
       };
     }
 
-    case getType(itwSetL3LocallyEnabled): {
-      return {
-        ...state,
-        isL3Enabled: action.payload
-      };
-    }
     case getType(itwLifecycleStoresReset):
       // When the wallet is being reset, we need to persist only the preferences:
       // - claimValuesHidden
-      // - isL3Enabled
-      // - isWalletInstanceRemotelyActive ->
-      //  (the correct value will be set in the saga related to the wallet deactivation, but we should avoid to have this value undefined)
-      const { claimValuesHidden, isL3Enabled, isWalletInstanceRemotelyActive } =
-        state;
+      // - isWalletInstanceRemotelyActive: the correct value will be set in the saga related to the wallet deactivation
+      // - isFiscalCodeWhitelisted: avoids to have the value undefined after a wallet reset
+      const {
+        claimValuesHidden,
+        isWalletInstanceRemotelyActive,
+        isFiscalCodeWhitelisted
+      } = state;
       return {
         ...itwPreferencesInitialState,
         claimValuesHidden,
-        isL3Enabled,
-        isWalletInstanceRemotelyActive
+        isWalletInstanceRemotelyActive,
+        isFiscalCodeWhitelisted
       };
 
     case getType(itwSetFiscalCodeWhitelisted): {

@@ -31,7 +31,7 @@ export const IdPayInstrumentInitiativesScreen = () => {
   const { idWallet } =
     useRoute<
       Route<
-        "WALLET_IDPAY_INITIATIVE_LIST",
+        "IDPAY_INITIATIVE_DETAILS_LIST",
         IdPayInstrumentInitiativesScreenRouteParams
       >
     >().params;

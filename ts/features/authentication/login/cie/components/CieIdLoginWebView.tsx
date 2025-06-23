@@ -20,7 +20,6 @@ import { loggedInAuthSelector } from "../../../common/store/selectors";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { isDevEnv } from "../../../../../utils/environment";
 import { onLoginUriChanged } from "../../../common/utils/login";
-import { apiUrlPrefix } from "../../../../../config";
 import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
 import { IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
 import {
@@ -35,6 +34,7 @@ import {
 } from "../utils/cie";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 
 export type WebViewLoginNavigationProps = {
   spidLevel: SpidLevel;
@@ -80,9 +80,9 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const dispatch = useIODispatch();
   const [authenticatedUrl, setAuthenticatedUrl] = useState<string | null>(null);
   const loggedInAuth = useIOSelector(loggedInAuthSelector, _isEqual);
-  const loginUri = getCieIDLoginUri(spidLevel, isUat);
-  const [isLoadingWebView, setIsLoadingWebView] = useState(false);
-
+  const apiLoginUrlPrefix = useIOSelector(remoteApiLoginUrlPrefixSelector);
+  const loginUri = getCieIDLoginUri(spidLevel, isUat, apiLoginUrlPrefix);
+  const [isLoadingWebView, setIsLoadingWebView] = useState(true);
   const navigateToCieIdAuthenticationError = useCallback(() => {
     navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
@@ -258,14 +258,14 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
       const webViewHttpError = error as WebViewHttpErrorEvent;
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
-        if (url.includes(apiUrlPrefix) || statusCode !== 403) {
+        if (url.includes(apiLoginUrlPrefix) || statusCode !== 403) {
           navigateToCieIdAuthenticationError();
         }
       } else {
         navigateToCieIdAuthenticationError();
       }
     },
-    [navigateToCieIdAuthenticationError]
+    [apiLoginUrlPrefix, navigateToCieIdAuthenticationError]
   );
 
   const { showAlert } = useOnboardingAbortAlert();
@@ -295,12 +295,9 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
           startInLoadingState={true}
           userAgent={defaultUserAgent}
           javaScriptEnabled={true}
-          renderLoading={() => {
-            setIsLoadingWebView(true);
-            return (
-              <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
-            );
-          }}
+          renderLoading={() => (
+            <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
+          )}
           onLoadEnd={() => setIsLoadingWebView(false)}
           originWhitelist={originSchemasWhiteList}
           onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}

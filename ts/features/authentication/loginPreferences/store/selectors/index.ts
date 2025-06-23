@@ -6,6 +6,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { sessionInfoSelector } from "../../../common/store/selectors";
 import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
+import { apiLoginUrlPrefix } from "../../../../../config";
 
 /**
  * This selector returns a boolean that indicates whether to show
@@ -51,5 +52,33 @@ export const isSessionExpirationBannerRenderableSelector = createSelector(
           differenceInDays(expirationDate, new Date()) <= threshold
       ),
       O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Even if the activeSessionLogin has its own folder under features,
+ * we preferd to keep the loginPreferences selectors here
+ * because they are related to the login preferences in the app.
+ *
+ * In the future, once the activeSessionLogin feature is more mature,
+ * this local feature flag selector and the related actions and state
+ * have to be removed.
+ */
+export const isActiveSessionLoginLocallyEnabledSelector = (
+  state: GlobalState
+) => state.features.loginFeatures.loginPreferences.activeSessionLoginLocalFlag;
+
+/**
+ * This selector returns the remote API login URL prefix.
+ * If the remote config does not provide a login URL,
+ * it falls back to the default API login URL prefix.
+ */
+export const remoteApiLoginUrlPrefixSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.chain(config => O.fromNullable(config.loginConfig?.loginUrl)),
+      O.getOrElse(() => apiLoginUrlPrefix)
     )
 );
