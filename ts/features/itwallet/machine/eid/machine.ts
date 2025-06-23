@@ -134,8 +134,7 @@ export const itwEidIssuanceMachine = setup({
       on: {
         start: {
           actions: assign(({ event }) => ({
-            isL3FeaturesEnabled: event.isL3,
-            showCiePinForL2: !event.isL3
+            isL3FeaturesEnabled: event.isL3
           })),
           target: "TosAcceptance"
         },
