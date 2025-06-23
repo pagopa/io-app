@@ -49,7 +49,6 @@ const removeHttpClientError = <T extends ErrorEvent | TransactionEvent>(
     event.exception?.values?.[0]?.value?.match(/HTTPClientError/) ||
     event.exception?.values?.[0]?.value?.match(/HTTP Client Error/)
   ) {
-    // Don't send user's email address
     return null;
   }
   return event;
