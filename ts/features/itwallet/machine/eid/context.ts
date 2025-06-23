@@ -46,8 +46,6 @@ export type Context = {
   // Flag to check if IT Wallet L3 features are enabled and thus we should allow to request
   // a PID credential and upgrade the existing credentials to L3
   isL3FeaturesEnabled: boolean | undefined;
-  // Temporary flag to check if the CiePin option should be displayed in the L2 identification mode selection screen
-  showCiePinForL2: boolean | undefined;
 };
 
 export const InitialContext: Context = {
@@ -59,6 +57,5 @@ export const InitialContext: Context = {
   eid: undefined,
   failure: undefined,
   isReissuing: false,
-  isL3FeaturesEnabled: undefined,
-  showCiePinForL2: true
+  isL3FeaturesEnabled: undefined
 };

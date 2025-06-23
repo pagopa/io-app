@@ -23,9 +23,6 @@ export const isCIEAuthenticationSupportedSelector = (
   snapshot: MachineSnapshot
 ) => snapshot.context.cieContext?.isCIEAuthenticationSupported || false;
 
-export const showCiePinSelector = (snapshot: MachineSnapshot) =>
-  snapshot.context.showCiePinForL2 || false;
-
 export const selectIdentification = (snapshot: MachineSnapshot) =>
   snapshot.context.identification;
 

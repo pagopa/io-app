@@ -19,7 +19,7 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import {
   isCIEAuthenticationSupportedSelector,
-  showCiePinSelector
+  isL3FeaturesEnabledSelector
 } from "../../machine/eid/selectors";
 
 export type ItwL2IdentificationNavigationParams = {
@@ -68,8 +68,9 @@ export const ItwL2IdentificationModeSelectionScreen = (
   const isCieAuthenticationSupported = ItwEidIssuanceMachineContext.useSelector(
     isCIEAuthenticationSupportedSelector
   );
-  const showCiePin =
-    ItwEidIssuanceMachineContext.useSelector(showCiePinSelector);
+  const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
 
   const isSpidDisabled = useMemo(
     () => disabledIdentificationMethods.includes("SPID"),
@@ -108,19 +109,21 @@ export const ItwL2IdentificationModeSelectionScreen = (
               onPress={handleSpidPress}
             />
           )}
-          {isCieAuthenticationSupported && !isCiePinDisabled && showCiePin && (
-            <ModuleNavigation
-              title={I18n.t(
-                "features.itWallet.identification.mode.method.ciePin.title"
-              )}
-              subtitle={I18n.t(
-                "features.itWallet.identification.mode.method.ciePin.subtitle"
-              )}
-              testID="CiePin"
-              icon="fiscalCodeIndividual"
-              onPress={handleCiePinPress}
-            />
-          )}
+          {isCieAuthenticationSupported &&
+            !isCiePinDisabled &&
+            !isL3FeaturesEnabled && (
+              <ModuleNavigation
+                title={I18n.t(
+                  "features.itWallet.identification.mode.method.ciePin.title"
+                )}
+                subtitle={I18n.t(
+                  "features.itWallet.identification.mode.method.ciePin.subtitle"
+                )}
+                testID="CiePin"
+                icon="fiscalCodeIndividual"
+                onPress={handleCiePinPress}
+              />
+            )}
           {!isCieIdDisabled && (
             <ModuleNavigation
               title={I18n.t(
