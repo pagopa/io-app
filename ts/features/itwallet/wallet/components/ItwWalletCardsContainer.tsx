@@ -1,6 +1,5 @@
 import {
   Icon,
-  IOButton,
   ListItemHeader,
   Optional,
   VStack
@@ -26,9 +25,9 @@ import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBann
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
 import { itwShouldRenderNewITWalletSelector } from "../../common/store/selectors";
-import { ItwBadge } from "../../common/components/ItwBadge";
 import { ItwEidDetail } from "../../common/components/ItwEidDetail";
 import { ItwOfflineWalletBanner } from "../../common/components/ItwOfflineWalletBanner.tsx";
+import { ItwWalletID } from "../../common/components/ItwWalletID.tsx";
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWalletSelector);
@@ -101,13 +100,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     <>
       {isNewItwRenderable && (
         <View style={styles.itwHeader}>
-          <ItwBadge variant="outlined" />
-          <IOButton
-            color="contrast"
-            variant="link"
-            label={I18n.t("features.itWallet.wallet.header")}
-            onPress={eidInfoBottomSheet.present}
-          />
+          <ItwWalletID onShow={eidInfoBottomSheet.present} />
         </View>
       )}
       <VStack space={16}>
@@ -136,10 +129,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
 const styles = StyleSheet.create({
   itwHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 16,
+    marginTop: 16,
     marginHorizontal: -8
   }
 });

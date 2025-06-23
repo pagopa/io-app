@@ -4251,8 +4251,11 @@
       },
       "wallet": {
         "active": "Attivo",
-        "inactive": "Non attivo",
-        "header": "Mostra identità"
+        "inactive": "Non attivo"
+      },
+      "walletID": {
+        "title": "IT-Wallet ID",
+        "show": "Mostra"
       },
       "card": {
         "status": {
@@ -4485,22 +4488,6 @@
                 },
                 "primaryAction": "Continua senza IT-Wallet",
                 "secondaryAction": "Torna indietro"
-              }
-            },
-            "preparationScreen": {
-              "cie": {
-                "title": "Prepara la tua carta di identità elettronica (CIE)",
-                "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
-                "buttonLink": "Cos'è la CIE?",
-                "primaryAction": "Ho pronta la CIE",
-                "secondaryAction": "Non ho la CIE"
-              },
-              "ciePin": {
-                "title": "Prepara il PIN della tua carta di identità \nelettronica (CIE)",
-                "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell'identità.",
-                "buttonLink": "Cos'è il PIN della CIE?",
-                "primaryAction": "Ho pronto il PIN",
-                "secondaryAction": "Non trovo il PIN della CIE"
               }
             },
             "preparationScreen": {
