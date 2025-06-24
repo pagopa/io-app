@@ -25,3 +25,8 @@ export const itwGradientColors = [
   "#1943E8",
   "#0B3EE3"
 ];
+/**
+ * IT-Wallet ID brand colors
+ */
+export const IT_WALLET_ID_BG_LIGHT = "#DBE0FF";
+export const IT_WALLET_ID_BG = "#A8B4FF";

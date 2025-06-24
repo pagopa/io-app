@@ -1,9 +1,4 @@
-import {
-  Icon,
-  ListItemHeader,
-  Optional,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { ListItemHeader, Optional, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -25,9 +20,9 @@ import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBann
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
 import { itwShouldRenderNewITWalletSelector } from "../../common/store/selectors";
-import { ItwEidDetail } from "../../common/components/ItwEidDetail";
 import { ItwOfflineWalletBanner } from "../../common/components/ItwOfflineWalletBanner.tsx";
 import { ItwWalletID } from "../../common/components/ItwWalletID.tsx";
+import { ITW_ROUTES } from "../../navigation/routes.ts";
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWalletSelector);
@@ -49,18 +44,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   });
 
   const eidInfoBottomSheet = useIOBottomSheetModal({
-    title: isNewItwRenderable ? (
-      // TODO: Replace with IT-Wallet logo
-      <Icon name="navWallet" color="blueIO-500" size={32} />
-    ) : (
-      <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />
-    ),
+    title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
     // Navigation does not seem to work when the bottom sheet's component is not inline
-    component: isNewItwRenderable ? (
-      <ItwEidDetail navigation={navigation} />
-    ) : (
-      <ItwEidInfoBottomSheetContent navigation={navigation} />
-    )
+    component: <ItwEidInfoBottomSheetContent navigation={navigation} />
   });
 
   useFocusEffect(
@@ -99,7 +85,13 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     <>
       {isNewItwRenderable && (
         <View style={styles.itwHeader}>
-          <ItwWalletID onShow={eidInfoBottomSheet.present} />
+          <ItwWalletID
+            onShow={() =>
+              navigation.navigate(ITW_ROUTES.MAIN, {
+                screen: ITW_ROUTES.PRESENTATION.PID_DETAIL
+              })
+            }
+          />
         </View>
       )}
       <VStack space={16}>

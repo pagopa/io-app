@@ -3,11 +3,13 @@ import { IOColors } from "@pagopa/io-app-design-system";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { getCredentialNameFromType } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";
+import { IT_WALLET_ID_BG_LIGHT } from "./constants";
 
 export type CredentialTheme = {
   backgroundColor: string;
   textColor: string;
   statusBarStyle: StatusBarStyle;
+  variant?: HeaderSecondLevelHookProps["variant"];
 };
 
 export const getThemeColorByCredentialType = (
@@ -18,9 +20,10 @@ export const getThemeColorByCredentialType = (
     case CredentialType.PID:
     default:
       return {
-        backgroundColor: "#295699",
+        backgroundColor: withL3Design ? IT_WALLET_ID_BG_LIGHT : "#295699",
         textColor: "#032D5C",
-        statusBarStyle: "light-content"
+        statusBarStyle: "light-content",
+        variant: withL3Design ? "neutral" : "contrast"
       };
     case CredentialType.DRIVING_LICENSE:
       return {
@@ -47,25 +50,15 @@ export const getHeaderPropsByCredentialType = (
   credentialType: string,
   withL3Design: boolean
 ): HeaderSecondLevelHookProps => {
-  const { backgroundColor } = getThemeColorByCredentialType(
+  const { backgroundColor, variant } = getThemeColorByCredentialType(
     credentialType,
     withL3Design
   );
 
-  switch (credentialType) {
-    case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
-      return {
-        title: getCredentialNameFromType(credentialType),
-        supportRequest: true,
-        variant: "neutral",
-        backgroundColor
-      };
-    default:
-      return {
-        title: getCredentialNameFromType(credentialType),
-        supportRequest: true,
-        variant: "contrast",
-        backgroundColor
-      };
-  }
+  return {
+    title: getCredentialNameFromType(credentialType, "", withL3Design),
+    supportRequest: true,
+    variant,
+    backgroundColor
+  };
 };
