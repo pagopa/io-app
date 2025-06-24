@@ -52,7 +52,6 @@ const startAuthFlow = async ({
     credentialType: CREDENTIAL_TYPE
   });
 
-  // When issuing an L3 PID, we should not provide an IDP hint
   const idpHint = getIdpHint(identification, env, false);
 
   const { issuerUrl, credentialType } = startFlow();

@@ -48,7 +48,7 @@ const startAuthFlow = async ({
   identification
 }: StartAuthFlowParams) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
-    issuerUrl: env.WALLET_PID_PROVIDER_BASE_URL,
+    issuerUrl: new URL("1-0", env.WALLET_PID_PROVIDER_BASE_URL).toString(), // TODO: [SIW-2530] Move "1-0" to WALLET_PID_PROVIDER_BASE_URL after migrating to the new API
     credentialType: CREDENTIAL_TYPE
   });
 

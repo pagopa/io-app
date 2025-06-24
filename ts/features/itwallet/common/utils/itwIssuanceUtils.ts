@@ -10,6 +10,9 @@ import { Env } from "./environment";
 import * as IssuanceUtilsV1 from "./itwIssuanceUtils.v1";
 import * as IssuanceUtilsV2 from "./itwIssuanceUtils.v2";
 
+// TODO: [SIW-2530] After fully migrating to the new API, move the content of itwIssuanceUtils.v2
+// to itwIssuanceUtils, then delete itwIssuanceUtils.v1 and itwIssuanceUtils.v2
+
 type StartAuthFlowParams = {
   env: Env;
   walletAttestation: string;
@@ -30,8 +33,8 @@ type StartAuthFlowParams = {
  */
 const startAuthFlow = async (params: StartAuthFlowParams) =>
   params.isL3IssuanceEnabled
-    ? IssuanceUtilsV1.startAuthFlow(params)
-    : IssuanceUtilsV2.startAuthFlow(params);
+    ? IssuanceUtilsV2.startAuthFlow(params)
+    : IssuanceUtilsV1.startAuthFlow(params);
 
 type CompleteAuthFlowParams = {
   callbackUrl: string;
