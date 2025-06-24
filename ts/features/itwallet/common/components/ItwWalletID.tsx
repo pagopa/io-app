@@ -14,6 +14,7 @@ import {
   LinearGradient
 } from "@shopify/react-native-skia";
 import I18n from "../../../../i18n";
+import { IT_WALLET_ID_LOGO } from "../utils/constants";
 
 type Props = {
   onShow: () => void;
@@ -23,7 +24,7 @@ export const ItwWalletID = memo(({ onShow }: Props) => (
   <View style={styles.itwWalletID}>
     <BackgroundGradient />
     <HStack>
-      <Icon name="sparkles" color="blueIO-500" />
+      <Icon name={IT_WALLET_ID_LOGO} color="blueIO-500" />
       <Body weight="Semibold" color="grey-850">
         {I18n.t("features.itWallet.walletID.title")}
       </Body>

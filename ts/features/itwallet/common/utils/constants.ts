@@ -1,4 +1,4 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, IOIcons } from "@pagopa/io-app-design-system";
 
 /**
  * Defines the number of asterisks used to mask the value of claims in the credential details
@@ -30,3 +30,7 @@ export const itwGradientColors = [
  */
 export const IT_WALLET_ID_BG_LIGHT = "#DBE0FF";
 export const IT_WALLET_ID_BG = "#A8B4FF";
+/**
+ * IT-Wallet ID logo
+ */
+export const IT_WALLET_ID_LOGO: IOIcons = "sparkles";
