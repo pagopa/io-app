@@ -58,7 +58,7 @@ export const getHeaderPropsByCredentialType = (
   return {
     title: getCredentialNameFromType(credentialType, "", withL3Design),
     supportRequest: true,
-    variant,
+    variant: variant ?? "contrast",
     backgroundColor
   };
 };
