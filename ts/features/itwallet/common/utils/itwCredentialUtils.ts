@@ -100,7 +100,7 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
 export const isItwCredential = (sdJwt: string): boolean =>
   pipe(
     E.tryCatch(() => decode(sdJwt), E.toError),
-    E.map(({ protectedHeader }) => protectedHeader.typ !== "dc+sd-jwt"),
+    E.map(({ protectedHeader }) => protectedHeader.typ === "dc+sd-jwt"),
     E.getOrElse(() => false)
   );
 
