@@ -55,10 +55,7 @@
       "Nov",
       "Dec"
     ],
-    "meridian": [
-      "am",
-      "pm"
-    ],
+    "meridian": ["am", "pm"],
     "time": {
       "minutes": {
         "zero": "0 minutes",
