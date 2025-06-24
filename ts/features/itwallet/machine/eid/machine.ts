@@ -249,7 +249,7 @@ export const itwEidIssuanceMachine = setup({
         src: "getWalletAttestation",
         input: ({ context }) => ({
           integrityKeyTag: context.integrityKeyTag,
-          isL3IssuanceEnabled: context.isL3
+          isL3IssuanceEnabled: false // TODO this is a temporary fix, we should use context.isL3FeaturesEnabled when the new issuance flow is completed
         }),
         onDone: [
           {
