@@ -333,7 +333,8 @@ describe("isPnActivationReminderBannerRenderableSelector", () => {
     }
   );
 
-  it("should handle an error state for isPnInboxEnabled, treating it as 'false' ", () => {
+  it("should handle an error state for isPnInboxEnabled, treating it as 'true' ", () => {
+    // this is to avoid "uncertain" renders
     const state = {
       features: {
         pn: {
@@ -362,6 +363,6 @@ describe("isPnActivationReminderBannerRenderableSelector", () => {
 
     expect(
       bannerDismiss.isPnActivationReminderBannerRenderableSelector(state)
-    ).toBe(true);
+    ).toBe(false);
   });
 });
