@@ -63,9 +63,8 @@ const activeBadge: Badge = {
   text: I18n.t("features.wallet.onboarding.badge.active")
 };
 
-// Helper function to check if a credential type is upcoming
-const isUpcomingCredential = (type: CredentialType): boolean =>
-  (upcomingCredentials as readonly CredentialType[]).includes(type);
+const isUpcomingCredential = (type: string): boolean =>
+  upcomingCredentials.includes(type as any);
 
 const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
@@ -124,7 +123,7 @@ const ItwCredentialOnboardingSection = () => {
 
   const beginCredentialIssuance = useOfflineToastGuard(
     useCallback(
-      (type: CredentialType) => {
+      (type: string) => {
         if (isUpcomingCredential(type)) {
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
