@@ -642,10 +642,17 @@ export const itwEidIssuanceMachine = setup({
                     }))
                   }
                 ],
-                back: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
-                }
+                back: [
+                  {
+                    guard: "isL3FeaturesEnabled",
+                    target:
+                      "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
+                  },
+                  {
+                    target:
+                      "#itwEidIssuanceMachine.UserIdentification.L2Identification"
+                  }
+                ]
               }
             },
             RequestingNfcActivation: {
