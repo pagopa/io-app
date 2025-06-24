@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0-canary.7150](https://github.com/pagopa/io-app/compare/3.8.0-rc.6...3.8.0-canary.7150) (2025-06-24)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2618](https://pagopa.atlassian.net/browse/SIW-2618)] Obtaining eID through L3 identification ([#7106](https://github.com/pagopa/io-app/issues/7106)) ([35ed3ab](https://github.com/pagopa/io-app/commit/35ed3ab5c31414feb2611f8f8f29620894f8bb6b))
+* [[IOCOM-2450](https://pagopa.atlassian.net/browse/IOCOM-2450)] SEND banner optimistic render fix ([#7107](https://github.com/pagopa/io-app/issues/7107)) ([e61cd58](https://github.com/pagopa/io-app/commit/e61cd58fa1140aa53c6e78bafeb5da0ee9488881))
+
 ## [3.8.0-rc.6](https://github.com/pagopa/io-app/compare/3.8.0-rc.5...3.8.0-rc.6) (2025-06-23)
 
 
