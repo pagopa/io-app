@@ -1,8 +1,15 @@
 import {
+  AuthorizationDetail as _legacy_AuthorizationDetail,
+  Credential as _legacy_Credential,
+  Trust as _legacy_Trust,
+  WalletInstance as _legacy_WalletInstance
+} from "@pagopa/io-react-native-wallet";
+import {
+  AuthorizationDetail,
   Credential,
   Trust,
   WalletInstance
-} from "@pagopa/io-react-native-wallet";
+} from "@pagopa/io-react-native-wallet-v2";
 
 /**
  * Alias type for the return type of the start issuance flow operation.
@@ -28,10 +35,33 @@ export type RpEntityConfiguration =
 
 /**
  * Alias for the IssuerConfiguration type
+ * TODO: [SIW-2530]: remove the legacy type
  */
 export type IssuerConfiguration = Awaited<
-  ReturnType<typeof Credential.Issuance.evaluateIssuerTrust>
+  ReturnType<
+    | Credential.Issuance.EvaluateIssuerTrust
+    | _legacy_Credential.Issuance.EvaluateIssuerTrust
+  >
 >["issuerConf"];
+
+/**
+ * Alias for the AuthorizationDetail type
+ * TODO: [SIW-2530]: remove the legacy type
+ */
+export type CredentialAuthDetail =
+  | AuthorizationDetail
+  | _legacy_AuthorizationDetail;
+
+/**
+ * Alias for the AccessToken type
+ * TODO: [SIW-2530]: remove the legacy type
+ */
+export type CredentialAccessToken = Awaited<
+  ReturnType<
+    | Credential.Issuance.AuthorizeAccess
+    | _legacy_Credential.Issuance.AuthorizeAccess
+  >
+>["accessToken"];
 
 /**
  * Alias for the ParseCredential type
@@ -81,6 +111,7 @@ export type StoredCredential = {
   format: string;
   parsedCredential: ParsedCredential;
   credentialType: string;
+  credentialConfigurationId?: string;
   issuerConf: IssuerConfiguration;
   storedStatusAttestation?: StoredStatusAttestation;
   /**

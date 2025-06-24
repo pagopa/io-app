@@ -151,14 +151,16 @@ export const createEidIssuanceActorsImplementation = (
 
       const authParams = await issuanceUtils.completeAuthFlow({
         ...input.authenticationContext,
-        walletAttestation: input.walletInstanceAttestation
+        walletAttestation: input.walletInstanceAttestation,
+        isL3IssuanceEnabled: true
       });
 
       trackItwRequest(input.identification.mode);
 
       return issuanceUtils.getPid({
         ...authParams,
-        ...input.authenticationContext
+        ...input.authenticationContext,
+        isL3IssuanceEnabled: true
       });
     }
   ),
