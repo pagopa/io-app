@@ -1,3 +1,4 @@
+import * as O from "fp-ts/Option";
 import { StateFrom } from "xstate";
 import { ItwProximityMachine } from "./machine";
 import { ItwPresentationTags } from "./tags";
@@ -22,3 +23,9 @@ export const selectIsQRCodeGenerationError = (snapshot: MachineSnapshot) =>
 export const selectShouldPresentQRCodeBottomSheet = (
   snapshot: MachineSnapshot
 ) => snapshot.hasTag(ItwPresentationTags.Presenting);
+
+export const selectFailureOption = (snapshot: MachineSnapshot) =>
+  O.fromNullable(snapshot.context.failure);
+
+export const selectProximityDetails = (snapshot: MachineSnapshot) =>
+  snapshot.context.proximityDetails;

@@ -838,15 +838,6 @@
         "body": "We need to check your identity from time to time for security reasons",
         "linkButtonLabel": "Read more"
       },
-      "cie_unsupported": {
-        "title": "You cannot use CIE",
-        "body": "The device you are using does not support access with Electronic ID Card (CIE).",
-        "button": "I get it",
-        "nfc_problem": "To read the CIE, a device with NFC chip is required.",
-        "os_problem": "An Android 6.0 or iOS 13 or higher operating system is required.",
-        "nfc_alert": "Your device does not have NFC.",
-        "os_alert": "The device's operating system is not up-to-date."
-      },
       "cie_bottom_sheet": {
         "title": "How do you want to login?",
         "module_cie_pin": {
@@ -4743,6 +4734,12 @@
               "title": "Carta europea della disabilità su IO: documento in scadenza",
               "content": "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
             }
+          },
+          "org.iso.18013.5.1.mDL": {
+            "expiring": {
+              "title": "Patente su IO: documento in scadenza",
+              "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nDovrai effettuare una visita medica con un medico abilitato e completare il pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\n - La Patente di guida in scadenza o scaduta \n - Un documento di identità \n - Il Codice fiscale \n - Una foto recente formato tessera"
+            }
           }
         },
         "credentialDetails": {
@@ -4998,6 +4995,31 @@
                 "message": "Abbiamo avuto un problema nel generare il QR Code.",
                 "action": "Prova di nuovo"
               }
+            }
+          },
+          "loadingScreen": {
+            "title": "In attesa di connessione per la verifica...",
+            "subtitle": "Attendi qualche secondo..."
+          },
+          "selectiveDisclosure": {
+            "title": "Dati richiesti",
+            "subtitle": "Saranno mostrati a **{{relyingParty}}** per completare la verifica dei documenti richiesti.",
+            "requiredClaims": "Dati necessari",
+            "purpose": "Finalità: Identificazione",
+            "disclaimer": [
+              "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
+              "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
+            ],
+            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
+            "alert": {
+              "message": "Non potrai completare la verifica del documento."
+            }
+          },
+          "relyingParty": {
+            "genericError": {
+              "title": "Verifica interrotta",
+              "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
+              "primaryAction": "Chiudi"
             }
           }
         }
