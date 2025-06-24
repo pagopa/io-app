@@ -21,8 +21,7 @@ import {
   preferencesIdPayTestSetEnabled,
   preferencesExperimentalDesignEnabled,
   preferencesFontSet,
-  TypefaceChoice,
-  setUseMessagePaymentInfoV2
+  TypefaceChoice
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
@@ -34,7 +33,6 @@ export type PersistedPreferencesState = Readonly<{
   preferredLanguage?: Locales;
   wasServiceAlertDisplayedOnce?: boolean;
   isPagoPATestEnabled: boolean;
-  useMessagePaymentInfoV2: boolean;
   // TODO: create transformer for Option objects and use Option instead of pot
   //       https://www.pivotaltracker.com/story/show/170998374
   isCustomEmailChannelEnabled: pot.Pot<boolean, undefined>;
@@ -58,7 +56,6 @@ export const initialPreferencesState: PersistedPreferencesState = {
   preferredLanguage: undefined,
   wasServiceAlertDisplayedOnce: false,
   isPagoPATestEnabled: false,
-  useMessagePaymentInfoV2: false,
   isCustomEmailChannelEnabled: pot.none,
   continueWithRootOrJailbreak: false,
   isMixpanelEnabled: null,
@@ -106,12 +103,6 @@ export default function preferencesReducer(
     return {
       ...state,
       isPagoPATestEnabled: action.payload.isPagoPATestEnabled
-    };
-  }
-  if (isActionOf(setUseMessagePaymentInfoV2, action)) {
-    return {
-      ...state,
-      useMessagePaymentInfoV2: action.payload
     };
   }
   if (isActionOf(customEmailChannelSetEnabled, action)) {
@@ -179,9 +170,6 @@ export default function preferencesReducer(
 // Selectors
 export const isPagoPATestEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isPagoPATestEnabled;
-
-export const isMessagePaymentInfoV2Selector = (state: GlobalState) =>
-  state.persistedPreferences.useMessagePaymentInfoV2;
 
 export const wasServiceAlertDisplayedOnceSelector = (state: GlobalState) =>
   state.persistedPreferences.wasServiceAlertDisplayedOnce;
