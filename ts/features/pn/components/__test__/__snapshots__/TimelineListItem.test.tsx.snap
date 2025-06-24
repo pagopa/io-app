@@ -565,1758 +565,204 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                           }
                         >
                           <View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  28
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Nov
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 0
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      {
-                                        "opacity": 0,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#BBC2D6",
-                                        "borderWidth": 0,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                28
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Pagata
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  19:55
-                                </Text>
+                              <View>
+                                Pagata
+                              </View>
+                              <View>
+                                Nov
+                              </View>
+                              <View>
+                                default
+                              </View>
+                              <View>
+                                19:55
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  25
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Oct
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 1
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#BBC2D6",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                25
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Consegnata
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  17:50
-                                </Text>
+                              <View>
+                                Consegnata
+                              </View>
+                              <View>
+                                Oct
+                              </View>
+                              <View>
+                                default
+                              </View>
+                              <View>
+                                17:50
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  23
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Sep
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 2
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#BBC2D6",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                23
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Invio in corso
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  15:45
-                                </Text>
+                              <View>
+                                Invio in corso
+                              </View>
+                              <View>
+                                Sep
+                              </View>
+                              <View>
+                                default
+                              </View>
+                              <View>
+                                15:45
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  20
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Aug
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 3
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#BBC2D6",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                20
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  REFUSED
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  13:40
-                                </Text>
+                              <View>
+                                REFUSED
+                              </View>
+                              <View>
+                                Aug
+                              </View>
+                              <View>
+                                default
+                              </View>
+                              <View>
+                                13:40
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  18
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Jul
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 4
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#BBC2D6",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                18
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Depositata
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  11:35
-                                </Text>
+                              <View>
+                                Depositata
+                              </View>
+                              <View>
+                                Jul
+                              </View>
+                              <View>
+                                default
+                              </View>
+                              <View>
+                                11:35
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  13
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Jun
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 5
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#BBC2D6",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                13
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  IN VALIDATION
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  09:30
-                                </Text>
+                              <View>
+                                IN VALIDATION
+                              </View>
+                              <View>
+                                Jun
+                              </View>
+                              <View>
+                                default
+                              </View>
+                              <View>
+                                09:30
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  10
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  May
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 6
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#FFCB46",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                10
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Annullata
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  07:25
-                                </Text>
+                              <View>
+                                Annullata
+                              </View>
+                              <View>
+                                May
+                              </View>
+                              <View>
+                                cancelled
+                              </View>
+                              <View>
+                                07:25
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  07
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Apr
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 7
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#FF4040",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                07
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Destinatario irreperibile
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  05:20
-                                </Text>
+                              <View>
+                                Destinatario irreperibile
+                              </View>
+                              <View>
+                                Apr
+                              </View>
+                              <View>
+                                unreachable
+                              </View>
+                              <View>
+                                05:20
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  03
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Mar
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 8
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#6BCFFB",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                03
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Perfezionata per decorrenza termini
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  03:15
-                                </Text>
+                              <View>
+                                Perfezionata per decorrenza termini
+                              </View>
+                              <View>
+                                Mar
+                              </View>
+                              <View>
+                                effective
+                              </View>
+                              <View>
+                                03:15
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  01
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Feb
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 9
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#6CC66A",
-                                        "borderWidth": 0,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      {
-                                        "opacity": 0,
-                                      },
-                                    ]
-                                  }
-                                />
+                              <View>
+                                01
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Avvenuto accesso
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  01:10
-                                </Text>
+                              <View>
+                                Avvenuto accesso
+                              </View>
+                              <View>
+                                Feb
+                              </View>
+                              <View>
+                                viewed
+                              </View>
+                              <View>
+                                01:10
                               </View>
                             </View>
                             <View
@@ -2914,1758 +1360,204 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                           }
                         >
                           <View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  28
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Nov
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 0
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      {
-                                        "opacity": 0,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#BBC2D6",
-                                        "borderWidth": 0,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                28
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Pagata
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  19:55
-                                </Text>
+                              <View>
+                                Pagata
+                              </View>
+                              <View>
+                                Nov
+                              </View>
+                              <View>
+                                default
+                              </View>
+                              <View>
+                                19:55
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  25
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Oct
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 1
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#BBC2D6",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                25
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Consegnata
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  17:50
-                                </Text>
+                              <View>
+                                Consegnata
+                              </View>
+                              <View>
+                                Oct
+                              </View>
+                              <View>
+                                default
+                              </View>
+                              <View>
+                                17:50
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  23
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Sep
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 2
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#BBC2D6",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                23
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Invio in corso
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  15:45
-                                </Text>
+                              <View>
+                                Invio in corso
+                              </View>
+                              <View>
+                                Sep
+                              </View>
+                              <View>
+                                default
+                              </View>
+                              <View>
+                                15:45
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  20
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Aug
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 3
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#BBC2D6",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                20
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  REFUSED
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  13:40
-                                </Text>
+                              <View>
+                                REFUSED
+                              </View>
+                              <View>
+                                Aug
+                              </View>
+                              <View>
+                                default
+                              </View>
+                              <View>
+                                13:40
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  18
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Jul
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 4
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#BBC2D6",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                18
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Depositata
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  11:35
-                                </Text>
+                              <View>
+                                Depositata
+                              </View>
+                              <View>
+                                Jul
+                              </View>
+                              <View>
+                                default
+                              </View>
+                              <View>
+                                11:35
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  13
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Jun
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 5
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#BBC2D6",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                13
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  IN VALIDATION
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  09:30
-                                </Text>
+                              <View>
+                                IN VALIDATION
+                              </View>
+                              <View>
+                                Jun
+                              </View>
+                              <View>
+                                default
+                              </View>
+                              <View>
+                                09:30
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  10
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  May
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 6
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#FFCB46",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                10
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Annullata
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  07:25
-                                </Text>
+                              <View>
+                                Annullata
+                              </View>
+                              <View>
+                                May
+                              </View>
+                              <View>
+                                cancelled
+                              </View>
+                              <View>
+                                07:25
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  07
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Apr
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 7
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#FF4040",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                07
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Destinatario irreperibile
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  05:20
-                                </Text>
+                              <View>
+                                Destinatario irreperibile
+                              </View>
+                              <View>
+                                Apr
+                              </View>
+                              <View>
+                                unreachable
+                              </View>
+                              <View>
+                                05:20
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  03
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Mar
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 8
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#6BCFFB",
-                                        "borderWidth": 1.5,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
+                              <View>
+                                03
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Perfezionata per decorrenza termini
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  03:15
-                                </Text>
+                              <View>
+                                Perfezionata per decorrenza termini
+                              </View>
+                              <View>
+                                Mar
+                              </View>
+                              <View>
+                                effective
+                              </View>
+                              <View>
+                                03:15
                               </View>
                             </View>
-                            <View
-                              accessible={true}
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "flexDirection": "row",
-                                  "flexShrink": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingVertical": 12,
-                                    "width": 30,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  01
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Feb
-                                </Text>
+                            <View>
+                              <View>
+                                Mock Timeline 9
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "paddingHorizontal": 16,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      undefined,
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "borderColor": "#FFFFFF",
-                                        "borderRadius": 7,
-                                        "height": 14,
-                                        "marginVertical": 4,
-                                        "width": 14,
-                                      },
-                                      {
-                                        "backgroundColor": "#6CC66A",
-                                        "borderWidth": 0,
-                                      },
-                                    ]
-                                  }
-                                />
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "#D2D6E3",
-                                        "flexGrow": 1,
-                                        "width": 2,
-                                      },
-                                      {
-                                        "opacity": 0,
-                                      },
-                                    ]
-                                  }
-                                />
+                              <View>
+                                01
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "flexShrink": 1,
-                                    "paddingVertical": 12,
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Avvenuto accesso
-                                </Text>
-                                <View
-                                  style={
-                                    {
-                                      "height": 4,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="caption1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "color": "#99A3C1",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  01:10
-                                </Text>
+                              <View>
+                                Avvenuto accesso
+                              </View>
+                              <View>
+                                Feb
+                              </View>
+                              <View>
+                                viewed
+                              </View>
+                              <View>
+                                01:10
                               </View>
                             </View>
                             <View

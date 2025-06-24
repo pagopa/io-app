@@ -56,6 +56,7 @@ import { ErrorType as SpidLoginErrorType } from "../store/types";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { usePosteIDApp2AppEducational } from "../hooks/usePosteIDApp2AppEducational";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
@@ -117,7 +118,12 @@ const IdpLoginScreen = () => {
   }, [setRequestState]);
 
   const idpId = loggedOutWithIdpAuth?.idp.id;
-  const loginUri = idpId ? getIdpLoginUri(idpId, 2) : undefined;
+  const remoteApiLoginUrlPrefix = useIOSelector(
+    remoteApiLoginUrlPrefixSelector
+  );
+  const loginUri = idpId
+    ? getIdpLoginUri(idpId, 2, remoteApiLoginUrlPrefix)
+    : undefined;
   const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
     useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
 

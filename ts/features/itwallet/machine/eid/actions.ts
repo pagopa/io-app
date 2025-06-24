@@ -23,7 +23,7 @@ import {
 } from "../../analytics";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import { itwSetAuthLevel } from "../../common/store/actions/preferences.ts";
+import { itwSetAuthLevel } from "../../common/store/actions/preferences";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -47,9 +47,15 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToIdentificationModeScreen: () => {
+  navigateToL3IdentificationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L3
+    });
+  },
+
+  navigateToL2IdentificationScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2,
       params: { eidReissuing: false }
     });
   },

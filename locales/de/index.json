@@ -692,15 +692,6 @@
           "hint": "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
         }
       },
-      "cie_unsupported": {
-        "title": "Du kannst dich nicht mit CIE anmelden",
-        "body": "Das von dir verwendete Gerät unterstützt den Zugang mit einer elektronischen Identitätskarte (CIE) nicht.",
-        "button": "Verstanden",
-        "nfc_problem": "Zum Lesen der CIE ist ein Gerät mit NFC-Chip erforderlich.",
-        "os_problem": "Ein Betriebssystem mit Android 6.0 oder iOS 13 oder höher ist erforderlich.",
-        "nfc_alert": "Dein Gerät verfügt nicht über NFC.",
-        "os_alert": "Das Betriebssystem des Geräts ist nicht auf dem neuesten Stand."
-      },
       "cie_bottom_sheet": {
         "title": "Wie willst du dich anmelden?",
         "module_cie_pin": {
@@ -3688,9 +3679,11 @@
             "contentBottom": "###### Wie funktioniert das?\n\nDeine **Identität wird bei der Aktivierung über SPID oder CIE verifiziert**.",
             "triggerLabel": "Was ist das?",
             "alert": {
-              "valid": "Die letzte Überprüfung ist vom {{date}}.",
-              "expiring": "Überprüfe deine Identität bis {{date}}.",
-              "expired": "Für die weitere Nutzung von Dokumente in IO ist ein kurzer Überprüfungsschritt erforderlich."
+              "documents": {
+                "valid": "Die letzte Überprüfung ist vom {{date}}.",
+                "expiring": "Überprüfe deine Identität bis {{date}}.",
+                "expired": "Für die weitere Nutzung von Dokumente in IO ist ein kurzer Überprüfungsschritt erforderlich."
+              }
             }
           },
           "MDL": {

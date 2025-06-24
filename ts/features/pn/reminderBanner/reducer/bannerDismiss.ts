@@ -76,7 +76,7 @@ export const isPnActivationReminderBannerRenderableSelector = (
   const hasBannerBeenDismissed =
     state.features.pn.bannerDismiss.dismissed === true;
   const isPnRemoteEnabled = isPnRemoteEnabledSelector(state);
-  const isPnInboxEnabled = isPnServiceEnabled(state) ?? false;
+  const isPnInboxEnabled = isPnServiceEnabled(state) ?? true;
 
   return isPnRemoteEnabled && !hasBannerBeenDismissed && !isPnInboxEnabled;
 };

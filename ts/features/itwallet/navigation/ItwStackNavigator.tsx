@@ -17,7 +17,6 @@ import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrong
 import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import ItwCieIdLoginScreen from "../identification/screens/cieId/ItwCieIdLoginScreen";
 import { ItwIdentificationIdpSelectionScreen } from "../identification/screens/ItwIdentificationIdpSelectionScreen";
-import { ItwIdentificationModeSelectionScreen } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import ItwSpidIdpLoginScreen from "../identification/screens/spid/ItwSpidIdpLoginScreen";
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialFailureScreen } from "../issuance/screens/ItwIssuanceCredentialFailureScreen";
@@ -41,19 +40,23 @@ import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/detail
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
-import { ItwCiePreparationScreen } from "../identification/screens/cie/ItwCiePreparationScreen.tsx";
-import { ItwCiePinPreparationScreen } from "../identification/screens/cie/ItwCiePinPreparationScreen.tsx";
+import { ItwCiePreparationScreen } from "../identification/screens/cie/ItwCiePreparationScreen";
+import { ItwCiePinPreparationScreen } from "../identification/screens/cie/ItwCiePinPreparationScreen";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { useIOSelector } from "../../../store/hooks";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
-import { ItwIdentificationCieWarningScreen } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
+import { ItwIdentificationCieWarningScreen } from "../identification/screens/ItwIdentificationCieWarningScreen";
+import { ItwL3IdentificationModeSelectionScreen } from "../identification/screens/ItwL3IdentificationModeSelectionScreen";
+import { ItwL2IdentificationModeSelectionScreen } from "../identification/screens/ItwL2IdentificationModeSelectionScreen";
 import {
   ItwProximityMachineContext,
   ItwProximityMachineProvider
 } from "../presentation/proximity/machine/provider.tsx";
 import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/ItwGrantPermissionsScreen.tsx";
 import { ItwActivateBluetoothScreen } from "../presentation/proximity/screens/ItwActivateBluetoothScreen.tsx";
+import { ItwProximityClaimsDisclosureScreen } from "../presentation/proximity/screens/ItwProximityClaimsDisclosureScreen.tsx";
+import { ItwProximityFailureScreen } from "../presentation/proximity/screens/ItwProximityFailureScreen.tsx";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
 import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
@@ -75,7 +78,7 @@ const InnerNavigator = () => {
   const eidIssuanceMachineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialIssuanceMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
-  const itwProximityMachineRef = ItwProximityMachineContext.useActorRef();
+  const proximityMachineRef = ItwProximityMachineContext.useActorRef();
 
   return (
     <Stack.Navigator
@@ -88,7 +91,7 @@ const InnerNavigator = () => {
           // Since the back event is accepted only by specific states, we can safely send a back event to each machine
           eidIssuanceMachineRef.send({ type: "back" });
           credentialIssuanceMachineRef.send({ type: "back" });
-          itwProximityMachineRef.send({ type: "back" });
+          proximityMachineRef.send({ type: "back" });
         }
       }}
     >
@@ -121,8 +124,12 @@ const InnerNavigator = () => {
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
-        component={ItwIdentificationModeSelectionScreen}
+        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2}
+        component={ItwL2IdentificationModeSelectionScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L3}
+        component={ItwL3IdentificationModeSelectionScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE_WARNING}
@@ -270,7 +277,7 @@ const InnerNavigator = () => {
         component={ItwPresentationEidVerificationExpiredScreen}
         options={{ headerShown: false }}
       />
-      {/*  Proximity's flow routes */}
+      {/* Proximity's flow routes */}
       <Stack.Group screenOptions={hiddenHeader}>
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.DEVICE_PERMISSIONS}
@@ -279,6 +286,14 @@ const InnerNavigator = () => {
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.BLUETOOTH_ACTIVATION}
           component={ItwActivateBluetoothScreen}
+        />
+        <Stack.Screen
+          name={ITW_ROUTES.PROXIMITY.CLAIMS_DISCLOSURE}
+          component={ItwProximityClaimsDisclosureScreen}
+        />
+        <Stack.Screen
+          name={ITW_ROUTES.PROXIMITY.FAILURE}
+          component={ItwProximityFailureScreen}
         />
       </Stack.Group>
       {/* Playground's routes */}

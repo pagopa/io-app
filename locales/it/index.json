@@ -837,15 +837,6 @@
         "body": "Per la tua sicurezza, di tanto in tanto dobbiamo verificare la tua identità",
         "linkButtonLabel": "Leggi come fare"
       },
-      "cie_unsupported": {
-        "title": "Non puoi entrare con CIE",
-        "body": "Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE).",
-        "button": "Ho capito",
-        "nfc_problem": "Per leggere la CIE è necessario un dispositivo con chip NFC.",
-        "os_problem": "È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori.",
-        "nfc_alert": "Il tuo dispositivo non ha l'NFC.",
-        "os_alert": "Il sistema operativo del dispositivo non è aggiornato."
-      },
       "cie_bottom_sheet": {
         "title": "Come vuoi entrare?",
         "module_cie_pin": {
@@ -4251,7 +4242,8 @@
       },
       "wallet": {
         "active": "Attivo",
-        "inactive": "Non attivo"
+        "inactive": "Non attivo",
+        "header": "Mostra identità"
       },
       "card": {
         "status": {
@@ -4410,22 +4402,41 @@
       },
       "identification": {
         "cieWarning": {
-          "primaryAction": "Scopri cosa puoi fare",
-          "closeAction": "Chiudi",
           "noPin": {
-            "title": "Non puoi continuare senza il PIN della CIE",
-            "subtitle": "Se hai registrato un contatto di recupero quando hai richiesto la CIE, puoi reimpostare il PIN con l’app CieID.\n\n In alternativa, rivolgiti al tuo Comune per recuperare il PIN della tua carta."
+            "toCieFAQ": {
+              "title": "Non puoi continuare senza il PIN della CIE",
+              "subtitle": "Se hai registrato un contatto di recupero quando hai richiesto la CIE, puoi reimpostare il PIN con l’app CieID.\n\n In alternativa, rivolgiti al tuo Comune per recuperare il PIN della tua carta.",
+              "primaryAction": "Scopri cosa puoi fare",
+              "closeAction": "Chiudi"
+            },
+            "toL2Identification": {
+              "title": "Continua senza i vantaggi di IT-Wallet",
+              "subtitle": "Se non hai il PIN della CIE, puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
+              "primaryAction": "Continua senza IT-Wallet",
+              "closeAction": "Torna indietro"
+            }
           },
           "noCie": {
-            "title": "Non puoi continuare senza la carta di identità elettronica (CIE)",
-            "subtitle": "Per ottenere i vantaggi di IT-Wallet è necessario autenticarsi con la CIE.\n\n Richiedere la CIE è facile e veloce, scopri cosa puoi fare."
+            "toCieFAQ": {
+              "title": "Non puoi continuare senza la carta di identità elettronica (CIE)",
+              "subtitle": "Per ottenere i vantaggi di IT-Wallet è necessario autenticarsi con la CIE.\n\n Richiedere la CIE è facile e veloce, scopri cosa puoi fare.",
+              "primaryAction": "Scopri cosa puoi fare",
+              "closeAction": "Chiudi"
+            },
+            "toL2Identification": {
+              "title": "Continua senza i vantaggi di IT-Wallet",
+              "subtitle": "Se non hai la CIE, puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
+              "primaryAction": "Continua senza IT-Wallet",
+              "closeAction": "Torna indietro"
+            }
           }
         },
         "l3": {
           "mode": {
             "title": "Verifica la tua identità con CIE",
             "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet.",
-            "action": "Inizia",
+            "primaryAction": "Inizia",
+            "secondaryAction": "Non ho la CIE",
             "ciePin": {
               "header": "Avrai bisogno di:",
               "card": "La tua carta d’identità elettronica (CIE)",
@@ -4453,6 +4464,33 @@
                 "title": "PIN della CIE",
                 "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE;\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
                 "primaryAction": "Ho capito",
+                "secondaryAction": "Non trovo il PIN della CIE"
+              },
+              "noCie": {
+                "title": "Se non hai la CIE puoi \ncontinuare senza i vantaggi di IT-Wallet",
+                "description": "Puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
+                "content": {
+                  "firstAttention": "Non potrai usare la Patente come documento d'identità",
+                  "secondAttention": "Non potrai usare IT-Wallet per accedere ai servizi digitali della PA",
+                  "thirdAttention": "Non potrai ottenere i nuovi documenti disponibili solo con IT-Wallet"
+                },
+                "primaryAction": "Continua senza IT-Wallet",
+                "secondaryAction": "Torna indietro"
+              }
+            },
+            "preparationScreen": {
+              "cie": {
+                "title": "Prepara la tua carta di identità elettronica (CIE)",
+                "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
+                "buttonLink": "Cos'è la CIE?",
+                "primaryAction": "Ho pronta la CIE",
+                "secondaryAction": "Non ho la CIE"
+              },
+              "ciePin": {
+                "title": "Prepara il PIN della tua carta di identità \nelettronica (CIE)",
+                "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell'identità.",
+                "buttonLink": "Cos'è il PIN della CIE?",
+                "primaryAction": "Ho pronto il PIN",
                 "secondaryAction": "Non trovo il PIN della CIE"
               }
             },
@@ -4574,6 +4612,11 @@
             }
           }
         },
+        "emptyWallet": {
+          "itwReadyBanner": {
+            "content": "Premi 'Aggiungi al Portafoglio' per aggiungere un documento al tuo Portafoglio di IO."
+          }
+        },
         "credentialResult": {
           "toast": "Fatto!"
         },
@@ -4657,10 +4700,18 @@
             "contentBottom": "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE.",
             "triggerLabel": "Cos'è?",
             "alert": {
-              "valid": "L'ultima verifica è del {{date}}.",
-              "expiring": "Verifica la tua identità entro il {{date}}.",
-              "expired": "È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.",
-              "action": "Inizia"
+              "documents": {
+                "valid": "L'ultima verifica è del {{date}}.",
+                "expiring": "Verifica la tua identità entro il {{date}}.",
+                "expired": "È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.",
+                "action": "Inizia"
+              },
+              "itw": {
+                "valid": "L'ultima verifica della tua identità è del {{date}}.",
+                "expiring": "Verifica la tua identità per continuare ad usare IT-Wallet entro il {{date}}.",
+                "expired": "Verifica la tua identità per continuare ad usare IT-Wallet.",
+                "action": "Inizia la verifica"
+              }
             }
           },
           "MDL": {
@@ -4679,6 +4730,12 @@
             "expiring": {
               "title": "Carta europea della disabilità su IO: documento in scadenza",
               "content": "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
+            }
+          },
+          "org.iso.18013.5.1.mDL": {
+            "expiring": {
+              "title": "Patente su IO: documento in scadenza",
+              "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nDovrai effettuare una visita medica con un medico abilitato e completare il pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\n - La Patente di guida in scadenza o scaduta \n - Un documento di identità \n - Il Codice fiscale \n - Una foto recente formato tessera"
             }
           }
         },
@@ -4936,6 +4993,31 @@
                 "action": "Prova di nuovo"
               }
             }
+          },
+          "loadingScreen": {
+            "title": "In attesa di connessione per la verifica...",
+            "subtitle": "Attendi qualche secondo..."
+          },
+          "selectiveDisclosure": {
+            "title": "Dati richiesti",
+            "subtitle": "Saranno mostrati a **{{relyingParty}}** per completare la verifica dei documenti richiesti.",
+            "requiredClaims": "Dati necessari",
+            "purpose": "Finalità: Identificazione",
+            "disclaimer": [
+              "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
+              "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
+            ],
+            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
+            "alert": {
+              "message": "Non potrai completare la verifica del documento."
+            }
+          },
+          "relyingParty": {
+            "genericError": {
+              "title": "Verifica interrotta",
+              "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
+              "primaryAction": "Chiudi"
+            }
           }
         }
       },
@@ -4967,6 +5049,14 @@
           "title": "Si è verificato un errore imprevisto",
           "subtitle": "Non è stato possibile disattivare il servizio. Riprova."
         }
+      },
+      "eidDetail": {
+        "title": "La mia identità",
+        "content": "Hai ottenuto IT-Wallet verificando i dati della tua identità con CIE. Ti consente di autenticarti ai servizi online.",
+        "header": {
+          "title": "I dati della mia identità"
+        },
+        "cta": "Disattiva IT-Wallet"
       },
       "feedback": {
         "banner": {

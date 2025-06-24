@@ -1,7 +1,4 @@
-import {
-  apiLoginUrlPrefix,
-  cieLoginFlowWithDevServerEnabled
-} from "../../../../../config";
+import { cieLoginFlowWithDevServerEnabled } from "../../../../../config";
 import { isDevEnv } from "../../../../../utils/environment";
 
 export type SpidLevel = "SpidL2" | "SpidL3";
@@ -9,7 +6,11 @@ export type SpidLevel = "SpidL2" | "SpidL3";
 export const cieFlowForDevServerEnabled =
   isDevEnv && cieLoginFlowWithDevServerEnabled;
 
-export const getCieIDLoginUri = (spidLevel: SpidLevel, isUat: boolean) =>
+export const getCieIDLoginUri = (
+  spidLevel: SpidLevel,
+  isUat: boolean,
+  apiLoginUrlPrefix: string
+) =>
   `${apiLoginUrlPrefix}/login?entityID=${
     isUat ? "xx_servizicie_coll" : "xx_servizicie"
   }&authLevel=${spidLevel}`;

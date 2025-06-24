@@ -44,6 +44,8 @@ import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { itwGradientColors } from "../../common/utils/constants.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors";
+import { selectIsLoading } from "../../machine/eid/selectors";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 const markdownRules = {
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
@@ -81,6 +83,7 @@ export const ItwPaywallComponent = ({
   onContinuePress
 }: ItwPaywallComponentProps) => {
   const { tos_url } = useIOSelector(tosConfigSelector);
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
   const theme = useIOTheme();
 
@@ -133,6 +136,7 @@ export const ItwPaywallComponent = ({
           onPress: handleScrollToHighlights
         },
         primary: {
+          loading: isLoading,
           label: I18n.t("features.itWallet.discovery.paywall.primaryAction"),
           onPress: onContinuePress
         }

@@ -6,6 +6,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { sessionInfoSelector } from "../../../common/store/selectors";
 import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
+import { apiLoginUrlPrefix } from "../../../../../config";
 
 /**
  * This selector returns a boolean that indicates whether to show
@@ -66,3 +67,18 @@ export const isSessionExpirationBannerRenderableSelector = createSelector(
 export const isActiveSessionLoginLocallyEnabledSelector = (
   state: GlobalState
 ) => state.features.loginFeatures.loginPreferences.activeSessionLoginLocalFlag;
+
+/**
+ * This selector returns the remote API login URL prefix.
+ * If the remote config does not provide a login URL,
+ * it falls back to the default API login URL prefix.
+ */
+export const remoteApiLoginUrlPrefixSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.chain(config => O.fromNullable(config.loginConfig?.loginUrl)),
+      O.getOrElse(() => apiLoginUrlPrefix)
+    )
+);

@@ -24,7 +24,7 @@ const topBottomSheetMargin = 122;
 const timelineBottomMargin = 292;
 const timelineItemHeight = 70;
 
-type TimelineListItemProps = {
+export type TimelineListItemProps = {
   history: NotificationStatusHistory;
 };
 

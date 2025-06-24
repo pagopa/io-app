@@ -2,12 +2,13 @@ import { SagaIterator } from "redux-saga";
 import { select, put } from "typed-redux-saga/macro";
 import { removeExpiredPaymentsOngoingFailedAction } from "../../history/store/actions";
 import { selectPaymentsOngoingFailed } from "../../history/store/selectors";
-import { PAYMENT_ONGOING_FAILURE_WAIT_TIME } from "../../checkout/components/WalletPaymentFailureDetail";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
+
+const PAYMENT_ONGOING_RPTID_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 /**
  * Clean expired payments ongoing failed from the store considering the
- * PAYMENT_ONGOING_FAILURE_WAIT_TIME time-to-live
+ * PAYMENT_ONGOING_RPTID_TTL_MS time-to-live
  */
 export function* cleanExpiredPaymentsOngoingFailed(): SagaIterator {
   const paymentsOngoingFailed = yield* select(selectPaymentsOngoingFailed);
@@ -30,7 +31,7 @@ export function* cleanExpiredPaymentsOngoingFailed(): SagaIterator {
         const effectiveElapsed =
           discrepancy > MAX_ALLOWED_DRIFT ? deltaPerf : deltaWall;
 
-        return effectiveElapsed >= PAYMENT_ONGOING_FAILURE_WAIT_TIME;
+        return effectiveElapsed >= PAYMENT_ONGOING_RPTID_TTL_MS;
       })
       .map(([rptId]) => rptId as RptId);
 

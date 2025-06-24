@@ -67,6 +67,7 @@ import {
   isNfcEnabledSelector
 } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
+import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -138,10 +139,18 @@ const CiePinScreen = () => {
     hideModal();
   }, [hideModal]);
 
+  const remoteApiLoginUrlPrefix = useIOSelector(
+    remoteApiLoginUrlPrefixSelector
+  );
+
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
       if (cieFlowForDevServerEnabled) {
-        const loginUri = getIdpLoginUri(CieEntityIds.PROD, 3);
+        const loginUri = getIdpLoginUri(
+          CieEntityIds.PROD,
+          3,
+          remoteApiLoginUrlPrefix
+        );
         navigation.navigate(AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE, {
           cieConsentUri: loginUri
         });
@@ -166,7 +175,8 @@ const CiePinScreen = () => {
     handleAuthenticationOverlayOnClose,
     isNfcEnabled,
     navigation,
-    pin
+    pin,
+    remoteApiLoginUrlPrefix
   ]);
 
   const showModal = useCallback(() => {

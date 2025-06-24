@@ -1,14 +1,14 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
-import { useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 import PN_ROUTES from "../../navigation/routes";
 import { dismissPnActivationReminderBanner } from "../../store/actions";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 
 type Props = {
   handleOnClose: () => void;
@@ -17,10 +17,17 @@ type Props = {
 export const PNActivationReminderBanner = ({ handleOnClose }: Props) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+  const isFirstRender = useRef<boolean>(true);
 
-  useOnFirstRender(() => {
-    sendBannerMixpanelEvents.bannerShown();
-  });
+  const maybeDispatchBannerShown = useCallback(() => {
+    if (isFirstRender.current) {
+      sendBannerMixpanelEvents.bannerShown();
+      // eslint-disable-next-line functional/immutable-data
+      isFirstRender.current = false;
+    }
+  }, [isFirstRender]);
+
+  useFocusEffect(maybeDispatchBannerShown);
 
   const closeHandler = useCallback(() => {
     sendBannerMixpanelEvents.bannerClose();

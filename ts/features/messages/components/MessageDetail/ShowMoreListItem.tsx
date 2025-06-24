@@ -10,7 +10,7 @@ import I18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 
-type ShowMoreListItemProps = {
+export type ShowMoreListItemProps = {
   sections: ShowMoreSection;
 };
 

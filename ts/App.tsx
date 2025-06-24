@@ -10,7 +10,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import * as Sentry from "@sentry/react-native";
-import { ErrorEvent, TransactionEvent } from "@sentry/types";
+import { ErrorEvent, TransactionEvent } from "@sentry/core";
 import RootContainer from "./RootContainer";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
@@ -36,6 +36,25 @@ const removeUserFromEvent = <T extends ErrorEvent | TransactionEvent>(
 };
 
 /**
+ * Handler to eventually remove any http client error on ios.
+ * Since Sentry ios sdk 8.0.0 the tracking of http error 500 is enabled by default and may ignore `enableCaptureFailedRequests` attribute on init callback.
+ * @param event
+ * @returns
+ */
+const removeHttpClientError = <T extends ErrorEvent | TransactionEvent>(
+  event: T
+): T | null => {
+  // Modify or drop the event here
+  if (
+    event.exception?.values?.[0]?.value?.match(/HTTPClientError/) ||
+    event.exception?.values?.[0]?.value?.match(/HTTP Client Error/)
+  ) {
+    return null;
+  }
+  return event;
+};
+
+/**
  * Processes events before sending them to Sentry.
  * Removes user data from all events and applies sampling logic.
  * @param event - The Sentry event (exception)  to process
@@ -45,6 +64,7 @@ const beforeSendHandler = <T extends ErrorEvent | TransactionEvent>(
   event: T
 ): T | null => {
   const safeEvent = removeUserFromEvent(event);
+  const eventExcludeHttp500 = removeHttpClientError(safeEvent);
   const isSendRequired = event.contexts?.send?.isRequired;
 
   // Always send events marked as required
@@ -54,7 +74,7 @@ const beforeSendHandler = <T extends ErrorEvent | TransactionEvent>(
 
   // Apply sampling for non-required events (20% sampling rate)
   const sampleRate = 0.2;
-  return Math.random() <= sampleRate ? safeEvent : null;
+  return Math.random() <= sampleRate ? eventExcludeHttp500 : null;
 };
 
 Sentry.setUser(null);
@@ -74,6 +94,8 @@ Sentry.init({
     /ApplicationNotResponding/i,
     /Background ANR/i
   ],
+  enableCaptureFailedRequests: false,
+  enableAppHangTracking: false,
   integrations: integrations => [
     ...integrations,
     Sentry.reactNativeTracingIntegration()

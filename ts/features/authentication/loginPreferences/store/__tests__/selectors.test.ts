@@ -4,7 +4,10 @@ import { addDays } from "date-fns";
 import MockDate from "mockdate";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { isSessionExpirationBannerRenderableSelector } from "../selectors";
+import {
+  isSessionExpirationBannerRenderableSelector,
+  remoteApiLoginUrlPrefixSelector
+} from "../selectors";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { AuthenticationState } from "../../../common/store/models";
 import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
@@ -115,6 +118,48 @@ describe("isSessionExpirationBannerRenderableSelector", () => {
       expect(isSessionExpirationBannerRenderable).toBe(expected);
     }
   );
+});
+
+const DEFAULT_API_LOGIN_URL_PREFIX = "https://api.default/login";
+const CUSTOM_API_LOGIN_URL_PREFIX = "https://api.custom/login";
+
+jest.mock("../../../../../config", () => ({
+  apiLoginUrlPrefix: DEFAULT_API_LOGIN_URL_PREFIX
+}));
+
+describe("remoteApiLoginUrlPrefixSelector", () => {
+  it("should return the default apiLoginUrlPrefix when remoteConfig is none", () => {
+    const globalState = configureGlobalState({
+      remoteConfig: O.none
+    });
+    expect(remoteApiLoginUrlPrefixSelector(globalState)).toBe(
+      DEFAULT_API_LOGIN_URL_PREFIX
+    );
+  });
+
+  it("should return the default apiLoginUrlPrefix when remoteConfig does not contain loginConfig.loginUrl", () => {
+    const globalState = configureGlobalState({
+      remoteConfig: O.some({
+        loginConfig: {}
+      })
+    });
+    expect(remoteApiLoginUrlPrefixSelector(globalState)).toBe(
+      DEFAULT_API_LOGIN_URL_PREFIX
+    );
+  });
+
+  it("should return the loginUrl from remoteConfig when present", () => {
+    const globalState = configureGlobalState({
+      remoteConfig: O.some({
+        loginConfig: {
+          loginUrl: CUSTOM_API_LOGIN_URL_PREFIX
+        }
+      })
+    });
+    expect(remoteApiLoginUrlPrefixSelector(globalState)).toBe(
+      CUSTOM_API_LOGIN_URL_PREFIX
+    );
+  });
 });
 
 type Config = {

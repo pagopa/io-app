@@ -38,6 +38,7 @@ import { getIdpLoginUri } from "../../../common/utils/login";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
+import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 
 // to make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
 // on Android it is not required
@@ -145,7 +146,10 @@ const CieWebView = (props: Props) => {
 
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const CIE_IDP_ID = useCieUat ? CieEntityIds.DEV : CieEntityIds.PROD;
-  const loginUri = getIdpLoginUri(CIE_IDP_ID, 3);
+  const remoteApiLoginUrlPrefix = useIOSelector(
+    remoteApiLoginUrlPrefixSelector
+  );
+  const loginUri = getIdpLoginUri(CIE_IDP_ID, 3, remoteApiLoginUrlPrefix);
 
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const dispatch = useIODispatch();

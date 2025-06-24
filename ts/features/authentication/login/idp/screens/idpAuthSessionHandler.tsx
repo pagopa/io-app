@@ -63,6 +63,7 @@ import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { setNativeLoginRequestInfo } from "../store/actions";
 import { nativeLoginRequestInfoSelector } from "../store/selectors";
 import { getSpidErrorCodeDescription } from "../utils/spidErrorCode";
+import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -179,9 +180,13 @@ export const AuthSessionPage = () => {
     [assistanceToolConfig]
   );
 
+  const remoteApiLoginUrlPrefix = useIOSelector(
+    remoteApiLoginUrlPrefixSelector
+  );
+
   const loginUri = useMemo(
-    () => (idp ? getIdpLoginUri(idp, 2) : undefined),
-    [idp]
+    () => (idp ? getIdpLoginUri(idp, 2, remoteApiLoginUrlPrefix) : undefined),
+    [idp, remoteApiLoginUrlPrefix]
   );
 
   const maybeKeyTag = useMemo(() => lollipopKeyTagSelector(state), [state]);
