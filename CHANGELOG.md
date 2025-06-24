@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0-rc.6](https://github.com/pagopa/io-app/compare/3.8.0-rc.5...3.8.0-rc.6) (2025-06-23)
+
+
+### Features
+
+* [[SIW-2221](https://pagopa.atlassian.net/browse/SIW-2221)] New Wallet L3 design ([#6991](https://github.com/pagopa/io-app/issues/6991)) ([16eee59](https://github.com/pagopa/io-app/commit/16eee595e17d3cca6e6a3533ad0ef9b379ce5835))
+
+
+### Bug Fixes
+
+* [[IOCOM-2451](https://pagopa.atlassian.net/browse/IOCOM-2451)] payment reminder alert empty focus ([#7109](https://github.com/pagopa/io-app/issues/7109)) ([129d09a](https://github.com/pagopa/io-app/commit/129d09ad8c945829fc41afc46911d499647a6e15))
+
+
+### Chores
+
+* [[IOPLT-0000](https://pagopa.atlassian.net/browse/IOPLT-0000)] Removes Sentry HttpClientErrors ([#7045](https://github.com/pagopa/io-app/issues/7045)) ([ce1ce97](https://github.com/pagopa/io-app/commit/ce1ce976df957a69be21d9590424f196bade360f))
+
+## [3.8.0-rc.5](https://github.com/pagopa/io-app/compare/3.8.0-rc.4...3.8.0-rc.5) (2025-06-20)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2593](https://pagopa.atlassian.net/browse/SIW-2593)] Persist `isFiscalCodeWhitelisted` across wallet resets ([#7098](https://github.com/pagopa/io-app/issues/7098)) ([e0e4aa9](https://github.com/pagopa/io-app/commit/e0e4aa9dda0a1b78beb35068cbc70a847280e5de))
+* [[IOAPP-007](https://pagopa.atlassian.net/browse/IOAPP-007)] bump vision camera to `4.7.0` to have 16k page size support ([#7076](https://github.com/pagopa/io-app/issues/7076)) ([f3d4f0d](https://github.com/pagopa/io-app/commit/f3d4f0d863ab93cd29bc2571a149776753630817))
+* [[IOBP-1753](https://pagopa.atlassian.net/browse/IOBP-1753)] Enable `about:*` wildcard schema inside the payment webview whitelist ([#7102](https://github.com/pagopa/io-app/issues/7102)) ([778bb53](https://github.com/pagopa/io-app/commit/778bb531bc70a5cda96eac74fe35178541f52765))
+
 ## [3.8.0-rc.4](https://github.com/pagopa/io-app/compare/3.8.0-rc.3...3.8.0-rc.4) (2025-06-19)
 
 

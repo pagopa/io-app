@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "3.8.0-rc.4",
+  "version": "3.8.0-rc.6",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -155,7 +155,7 @@
     "react-native-svg": "^15.11.2",
     "react-native-tab-view": "3.5.2",
     "react-native-url-polyfill": "^2.0.0",
-    "react-native-vision-camera": "^4.6.4",
+    "react-native-vision-camera": "^4.7.0",
     "react-native-webview": "^13.13.5",
     "react-native-xml2js": "^1.0.3",
     "react-redux": "8.1.3",

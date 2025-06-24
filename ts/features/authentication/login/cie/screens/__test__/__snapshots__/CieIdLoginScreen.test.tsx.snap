@@ -411,7 +411,6 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
                   }
                 >
                   <View
-                    entering={[Function]}
                     style={
                       [
                         {
