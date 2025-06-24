@@ -503,7 +503,8 @@ const EmailInsertScreen = () => {
               textInputProps={{
                 autoCorrect: false,
                 autoCapitalize: "none",
-                inputMode: "email"
+                inputMode: "email",
+                returnKeyType: "done"
               }}
               accessibilityLabel={I18n.t("email.newinsert.label")}
               accessibilityHint={errorMessage}
