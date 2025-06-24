@@ -9,6 +9,7 @@ export const ItwIssuanceUpcomingCredentialScreen = () => {
   useHeaderSecondLevel({
     title: ""
   });
+
   return (
     <OperationResultScreenContent
       pictogram="workInProgress"
