@@ -23,7 +23,8 @@ export const itwGetCredentialNameByCredentialType = (
     isItwCredential
       ? "features.itWallet.credentialName.pid"
       : "features.itWallet.credentialName.eid"
-  )
+  ),
+  [CredentialType.MDL]: I18n.t("features.itWallet.credentialName.mdl")
 });
 
 export const getCredentialNameFromType = (

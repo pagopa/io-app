@@ -19,7 +19,8 @@ export enum CredentialType {
   EUROPEAN_HEALTH_INSURANCE_CARD = "EuropeanHealthInsuranceCard",
   EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
   DRIVING_LICENSE = "MDL",
-  PID = "PersonIdentificationData"
+  PID = "PersonIdentificationData",
+  MDL = "org.iso.18013.5.1.mDL"
 }
 
 export const ItwStoredCredentialsMocks = {
