@@ -24,7 +24,7 @@ type IssuerConf = Awaited<
   ReturnType<Credential.Issuance.EvaluateIssuerTrust>
 >["issuerConf"];
 
-const CREDENTIAL_TYPE = "dc_sd_jwt_PersonIdentificationData";
+const CREDENTIAL_TYPE = "PersonIdentificationData";
 
 type StartAuthFlowParams = {
   env: Env;
@@ -49,7 +49,7 @@ const startAuthFlow = async ({
 }: StartAuthFlowParams) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
     issuerUrl: new URL("1-0", env.WALLET_PID_PROVIDER_BASE_URL).toString(), // TODO: [SIW-2530] Move "1-0" to WALLET_PID_PROVIDER_BASE_URL after migrating to the new API
-    credentialType: CREDENTIAL_TYPE
+    credentialType: "dc_sd_jwt_PersonIdentificationData"
   });
 
   // When issuing an L3 PID, we should not provide an IDP hint
@@ -199,6 +199,8 @@ const getPid = async ({
     issuerConf,
     keyTag: credentialKeyTag,
     credentialType: CREDENTIAL_TYPE,
+    credentialConfigurationId:
+      credentialIdentifierDefinition.credential_configuration_id,
     format,
     credential,
     jwt: {
