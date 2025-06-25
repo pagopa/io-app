@@ -1,6 +1,11 @@
 import { ProximityEvents } from "./events.ts";
 
-export class InvalidRequestedDocumentsError extends Error {}
+export class InvalidRequestedDocumentsError extends Error {
+  constructor(message?: string) {
+    super(message);
+    this.name = this.constructor.name;
+  }
+}
 
 export enum ProximityFailureType {
   INVALID_REQUESTED_DOCUMENTS = "INVALID_REQUESTED_DOCUMENTS",
