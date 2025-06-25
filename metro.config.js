@@ -6,7 +6,7 @@ const {
 } = require("@sentry/react-native/dist/js/tools/sentryMetroSerializer");
 
 const {
-  resolver: { assetExts }
+  resolver: { sourceExts, assetExts }
 } = getDefaultConfig(__dirname);
 
 /**
@@ -23,6 +23,7 @@ const config = {
     babelTransformerPath: require.resolve("react-native-svg-transformer")
   },
   resolver: {
+    sourceExts: [...sourceExts, "svg"],
     assetExts: assetExts.filter(ext => ext !== "svg")
   }
 };
