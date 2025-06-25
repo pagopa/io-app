@@ -65,6 +65,7 @@ const CardWithMarkdownContent = memo(
           <IOMarkdown
             content={content}
             rules={generateMessagesAndServicesRules(linkTo)}
+            sanitizeNewLines={true}
           />
         );
       }
