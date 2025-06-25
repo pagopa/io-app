@@ -91,6 +91,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
                 screen: ITW_ROUTES.PRESENTATION.PID_DETAIL
               })
             }
+            pidStatus={eidStatus}
           />
         </View>
       )}
