@@ -7,6 +7,7 @@ import { isScreenReaderEnabledSelector } from "../../store/reducers/preferences"
 import I18n from "../../i18n";
 import { IOMarkdownRenderRules } from "./types";
 import {
+  convertReferenceLinksToInline,
   getRenderMarkdown,
   parse,
   sanitizeMarkdownForImages
@@ -41,7 +42,8 @@ export type IOMarkdownProps = {
 const UnsafeIOMarkdown = ({ content, rules }: UnsafeProps) => {
   const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
 
-  const sanitizedMarkdown = sanitizeMarkdownForImages(content);
+  const inlineLinkMarkdown = convertReferenceLinksToInline(content);
+  const sanitizedMarkdown = sanitizeMarkdownForImages(inlineLinkMarkdown);
   const parsedContent = parse(sanitizedMarkdown);
   const renderMarkdown = getRenderMarkdown(
     {
