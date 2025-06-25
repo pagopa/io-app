@@ -35,7 +35,8 @@ export const getThemeColorByCredentialType = (
       return {
         backgroundColor: "#B3DCF9",
         textColor: "#032D5C",
-        statusBarStyle: "dark-content"
+        statusBarStyle: "dark-content",
+        variant: "neutral"
       };
     case CredentialType.EUROPEAN_DISABILITY_CARD:
       return {
