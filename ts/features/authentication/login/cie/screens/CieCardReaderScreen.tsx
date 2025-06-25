@@ -21,7 +21,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import {
   PureComponent,
   ReactNode,
-  RefObject,
   createRef,
   useCallback,
   useRef

@@ -4,7 +4,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { sequenceT } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useState, useCallback, useEffect, useRef, RefObject } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { AccessibilityInfo, View } from "react-native";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
