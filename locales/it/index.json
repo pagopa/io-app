@@ -1295,7 +1295,7 @@
     "newvalidate": {
       "title": "Ti abbiamo inviato un’email",
       "subtitle": "Per confermare il tuo indirizzo, segui le istruzioni che abbiamo inviato a",
-      "link": "Non è corretto?",
+      "link": "Modifica email",
       "countdowntext": "Richiedi una nuova email tra",
       "buttonlabelsent": "Email inviata!",
       "buttonlabelsentagain": "Invia di nuovo l’email",
