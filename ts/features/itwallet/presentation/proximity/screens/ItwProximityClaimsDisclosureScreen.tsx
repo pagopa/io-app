@@ -1,4 +1,5 @@
 import {
+  Body,
   ContentWrapper,
   FeatureInfo,
   ForceScrollDownView,
@@ -21,8 +22,8 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { generateDynamicUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig.ts";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../../urls.ts";
 import { ItwProximityPresentationDetails } from "../components/ItwProximityPresentationDetails.tsx";
-import { ItwProximityLoadingScreen } from "../components/ItwProximityLoadingScreen.tsx";
 import { ISSUER_MOCK_NAME } from "../../../common/utils/itwMocksUtils.ts";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 import { ProximityDetails } from "../utils/itwProximityTypeUtils.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
 
@@ -43,11 +44,19 @@ export const ItwProximityClaimsDisclosureScreen = () => {
       // An undefined proximityDetails cannot be stored in the context, as any failure causes the machine to transition
       // to the Failure state.
       () => (
-        <ItwProximityLoadingScreen
-          title={I18n.t(
+        <LoadingScreenContent
+          contentTitle={I18n.t(
             "features.itWallet.presentation.proximity.loadingScreen.title"
           )}
-        />
+        >
+          <ContentWrapper style={{ alignItems: "center" }}>
+            <Body>
+              {I18n.t(
+                "features.itWallet.presentation.proximity.loadingScreen.subtitle"
+              )}
+            </Body>
+          </ContentWrapper>
+        </LoadingScreenContent>
       ),
       proximityDetails => <ContentView proximityDetails={proximityDetails} />
     )
