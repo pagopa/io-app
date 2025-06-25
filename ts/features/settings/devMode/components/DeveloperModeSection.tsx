@@ -392,6 +392,13 @@ const PlaygroundsSection = () => {
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
           screen: SETTINGS_ROUTES.APP_FEEDBACK_PLAYGROUND
         })
+    },
+    {
+      value: "CIE",
+      onPress: () =>
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.CIE_PLAYGROUND
+        })
     }
   ];
 

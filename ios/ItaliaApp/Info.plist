@@ -38,7 +38,7 @@
     <key>CFBundleVersion</key>
     <string>7</string>
     <key>ITSAppUsesNonExemptEncryption</key>
-    <false/>
+    <false />
     <key>LSApplicationQueriesSchemes</key>
     <array>
       <string>http</string>
@@ -46,23 +46,23 @@
       <string>CIEID</string>
     </array>
     <key>LSRequiresIPhoneOS</key>
-    <true/>
+    <true />
     <key>LSSupportsOpeningDocumentsInPlace</key>
-    <true/>
+    <true />
     <key>NFCReaderUsageDescription</key>
     <string>NFC tag to read EIC cards</string>
     <key>NSAppTransportSecurity</key>
     <dict>
       <key>NSAllowsArbitraryLoads</key>
-      <false/>
+      <false />
       <key>NSAllowsLocalNetworking</key>
-      <true/>
+      <true />
       <key>NSExceptionDomains</key>
       <dict>
         <key>localhost</key>
         <dict>
           <key>NSExceptionAllowsInsecureHTTPLoads</key>
-          <true/>
+          <true />
         </dict>
       </dict>
     </dict>
@@ -133,7 +133,7 @@
       <string>remote-notification</string>
     </array>
     <key>UIFileSharingEnabled</key>
-    <true/>
+    <true />
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
     <key>UIRequiredDeviceCapabilities</key>
@@ -145,12 +145,11 @@
       <string>UIInterfaceOrientationPortrait</string>
     </array>
     <key>UIViewControllerBasedStatusBarAppearance</key>
-    <false/>
+    <false />
     <key>CADisableMinimumFrameDurationOnPhone</key>
-    <true/>
+    <true />
     <key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
     <array>
-      <string>com.apple.developer.nfc.readersession.iso7816.select-identifiers</string>
       <string>A0000000308000000009816001</string>
       <string>A00000000039</string>
       <string>A0000002471001</string>
