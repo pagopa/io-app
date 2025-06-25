@@ -31,6 +31,7 @@ import ProfileMainScreen from "../screens/ProfileMainScreen";
 import { IOMarkdownPlayground } from "../../devMode/playgrounds/IOMarkdownPlayground";
 import { AppFeedbackPlayground } from "../../devMode/playgrounds/AppFeedbackPlayground";
 import AppearancePreferenceScreen from "../../preferences/screens/AppearancePreferenceScreen";
+import { CiePlayground } from "../../devMode/playgrounds/CiePlayground";
 import { SettingsParamsList } from "./params/SettingsParamsList";
 import { SETTINGS_ROUTES } from "./routes";
 
@@ -183,6 +184,10 @@ const SettingsStackNavigator = () => (
     <Stack.Screen
       name={SETTINGS_ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
       component={NotificationsPreferencesScreen}
+    />
+    <Stack.Screen
+      name={SETTINGS_ROUTES.CIE_PLAYGROUND}
+      component={CiePlayground}
     />
   </Stack.Navigator>
 );
