@@ -24,6 +24,9 @@ export const itwGetCredentialNameByCredentialType = (
       ? "features.itWallet.credentialName.pid"
       : "features.itWallet.credentialName.eid"
   ),
+  [CredentialType.DEGREE_CERTIFICATES]: I18n.t(
+    "features.itWallet.credentialName.dgc"
+  ),
   [CredentialType.MDL]: I18n.t("features.itWallet.credentialName.mdl")
 });
 
