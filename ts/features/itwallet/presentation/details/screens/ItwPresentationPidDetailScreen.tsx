@@ -5,6 +5,7 @@ import { ItwPresentationPidDetail } from "../components/ItwPresentationPidDetail
 import { useIOSelector } from "../../../../../store/hooks";
 import { itwCredentialsEidSelector } from "../../../credentials/store/selectors";
 import { ItwPresentationPidScaffoldScreen } from "../components/ItwPresentationPidScaffoldScreen";
+import { ItwPresentationPidDetailFooter } from "../components/ItwPresentationPidDetailFooter";
 
 export const ItwPresentationPidDetailScreen = () => {
   const pidOption = useIOSelector(itwCredentialsEidSelector);
@@ -17,7 +18,7 @@ export const ItwPresentationPidDetailScreen = () => {
         <ItwPresentationPidScaffoldScreen credential={credential}>
           <ItwPresentationPidDetail credential={credential} />
           <VSpacer />
-          {/* TODO: add Footer with CTAs */}
+          <ItwPresentationPidDetailFooter credential={credential} />
         </ItwPresentationPidScaffoldScreen>
       )
     )
