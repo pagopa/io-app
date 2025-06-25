@@ -12,7 +12,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import * as O from "fp-ts/lib/Option";
-import { memo, RefObject, useCallback, useRef, useState } from "react";
+import { memo, useCallback, useRef, useState } from "react";
 import {
   AccessibilityInfo,
   Platform,
@@ -346,7 +346,7 @@ const Title = memo((props: { text: string; accessibilityLabel: string }) => {
   useFocusEffect(
     useCallback(() => {
       if (!titleRef.current && Platform.OS === "android") {
-        setAccessibilityFocus(titleRef as RefObject<View>, accessibityTimeout);
+        setAccessibilityFocus(titleRef, accessibityTimeout);
       }
     }, [])
   );

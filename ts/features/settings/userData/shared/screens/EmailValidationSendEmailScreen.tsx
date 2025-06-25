@@ -5,7 +5,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { useRef, useCallback, useEffect, useState, RefObject } from "react";
+import { useRef, useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import {
   IOPictogramSizeScale,
@@ -123,9 +123,7 @@ const EmailValidationSendEmailScreen = () => {
     [dispatch]
   );
 
-  useFocusEffect(() =>
-    setAccessibilityFocus(accessibilityFirstFocuseViewRef as RefObject<View>)
-  );
+  useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
   useOnFirstRender(() => {
     // polling starts every time the user land on this screen

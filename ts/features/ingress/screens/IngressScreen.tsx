@@ -2,7 +2,7 @@
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
-import { memo, RefObject, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { AccessibilityInfo, View } from "react-native";
 import I18n from "../../../i18n";
@@ -155,7 +155,7 @@ const IngressScreenBlockingError = memo(() => {
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
 
   useEffect(() => {
-    setAccessibilityFocus(operationRef as RefObject<View>);
+    setAccessibilityFocus(operationRef);
   }, []);
 
   useEffect(() => {

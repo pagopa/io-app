@@ -47,7 +47,7 @@ describe("PagerViewContainer", () => {
       "INBOX",
       pot.some({ page: [] }),
       pot.none,
-      mockUseRefOutput as RefObject<PagerView>
+      mockUseRefOutput
     );
     expect(mockUseRefOutput.current).toBeTruthy();
     expect(mockDispatch.mock.calls.length).toBe(0);
@@ -83,7 +83,7 @@ describe("PagerViewContainer", () => {
       "INBOX",
       pot.some({ page: [] }),
       pot.some({ page: [] }),
-      mockUseRefOutput as RefObject<PagerView>
+      mockUseRefOutput
     );
     expect(mockUseRefOutput.current).toBeTruthy();
     expect(mockDispatch.mock.calls.length).toBe(0);
@@ -114,7 +114,7 @@ describe("PagerViewContainer", () => {
       "ARCHIVE",
       pot.none,
       pot.some({ page: [] }),
-      mockUseRefOutput as RefObject<PagerView>
+      mockUseRefOutput
     );
     expect(mockUseRefOutput.current).toBeTruthy();
     expect(mockDispatch.mock.calls.length).toBe(0);
@@ -150,7 +150,7 @@ describe("PagerViewContainer", () => {
       "ARCHIVE",
       pot.some({ page: [] }),
       pot.some({ page: [] }),
-      mockUseRefOutput as RefObject<PagerView>
+      mockUseRefOutput
     );
     expect(mockUseRefOutput.current).toBeTruthy();
     expect(mockDispatch.mock.calls.length).toBe(0);
@@ -178,7 +178,7 @@ const renderComponent = (
   shownCategory: MessageListCategory,
   inboxMessagePagePot: MessagePagePot,
   archiveMessagePagePot: MessagePagePot,
-  ref?: RefObject<PagerView>
+  ref?: RefObject<PagerView | null>
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const finalState = {

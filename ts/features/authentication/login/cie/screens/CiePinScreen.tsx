@@ -136,7 +136,7 @@ const CiePinScreen = () => {
     ),
     title: I18n.t("bottomSheets.ciePin.title"),
     onDismiss: () => {
-      setAccessibilityFocus(modalTriggerRef as RefObject<View>);
+      setAccessibilityFocus(modalTriggerRef);
     }
   });
 
@@ -210,10 +210,7 @@ const CiePinScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      setAccessibilityFocus(
-        pinPadViewRef as RefObject<View>,
-        300 as Millisecond
-      );
+      setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
     }, [])
   );
 

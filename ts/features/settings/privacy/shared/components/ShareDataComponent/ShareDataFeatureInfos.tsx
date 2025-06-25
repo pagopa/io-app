@@ -1,6 +1,6 @@
 import { Body, FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { Component, RefObject, useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import IOMarkdown from "../../../../../../components/IOMarkdown";
@@ -59,10 +59,7 @@ const AnalyticsFeatureInfo = ({ trackAction }: FeatureProps) => {
       // When the bottom sheet is dismissed, the accessibility focus shifts to the body component of `FeatureInfo`.
       // This workaround is implemented to maintain semantic order and prevent disruptions.
       // Ideally, the accessibility focus should return to the element that triggered the bottom sheet's display. However, implementing this solution currently isn't feasible.
-      setAccessibilityFocus(
-        bodyRef as RefObject<Component<unknown, unknown, any>>,
-        300 as Millisecond
-      );
+      setAccessibilityFocus(bodyRef, 300 as Millisecond);
     }
   });
 

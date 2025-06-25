@@ -85,7 +85,7 @@ const GenericErrorComponent = (props: Props) => {
   useFocusEffect(
     useCallback(() => {
       if (props.avoidNavigationEvents !== true) {
-        setAccessibilityFocus(ref as RefObject<View>);
+        setAccessibilityFocus(ref);
       }
     }, [ref, props.avoidNavigationEvents])
   );

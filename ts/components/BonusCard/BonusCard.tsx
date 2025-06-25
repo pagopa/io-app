@@ -52,7 +52,7 @@ const BonusCardContent = (props: BonusCard) => {
   const bonusNameHeadingRef = createRef<View>();
 
   useLayoutEffect(() => {
-    setAccessibilityFocus(bonusNameHeadingRef as RefObject<View>);
+    setAccessibilityFocus(bonusNameHeadingRef);
   }, [bonusNameHeadingRef]);
 
   if (props.isLoading) {

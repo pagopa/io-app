@@ -52,10 +52,7 @@ const renderNode = (body: string | ReactNode) => {
 export const InfoScreenComponent: FunctionComponent<Props> = props => {
   const elementRef = createRef<Text>();
   useFocusEffect(
-    useCallback(
-      () => setAccessibilityFocus(elementRef as RefObject<View>),
-      [elementRef]
-    )
+    useCallback(() => setAccessibilityFocus(elementRef), [elementRef])
   );
 
   return (

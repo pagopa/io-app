@@ -176,11 +176,7 @@ const BarcodeScanBaseScreenComponent = ({
 
   useFocusEffect(
     useCallback(
-      () =>
-        setAccessibilityFocus(
-          scanItemRef as RefObject<View>,
-          200 as Millisecond
-        ),
+      () => setAccessibilityFocus(scanItemRef, 200 as Millisecond),
       []
     )
   );

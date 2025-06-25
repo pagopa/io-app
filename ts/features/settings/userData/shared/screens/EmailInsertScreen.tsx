@@ -16,14 +16,7 @@ import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import {
-  RefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert,
   Keyboard,
@@ -149,10 +142,7 @@ const EmailInsertScreen = () => {
 
   useFocusEffect(
     useCallback(
-      () =>
-        setAccessibilityFocus(
-          accessibilityFirstFocuseViewRef as RefObject<View>
-        ),
+      () => setAccessibilityFocus(accessibilityFirstFocuseViewRef),
       []
     )
   );

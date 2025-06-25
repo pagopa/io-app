@@ -38,8 +38,8 @@ const withLogging =
   };
 
 // NavigationContainerComponent
-const getNavigator = (): RefObject<NavigationContainerRef<AppParamsList>> =>
-  navigationRef as RefObject<NavigationContainerRef<AppParamsList>>;
+const getNavigator =
+  (): RefObject<NavigationContainerRef<AppParamsList> | null> => navigationRef;
 
 // NavigationParams
 // This definition comes from react-navigation navigate definition.

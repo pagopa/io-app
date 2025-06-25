@@ -99,7 +99,7 @@ const WalletPaymentPickMethodScreen = () => {
 
   useEffect(() => {
     if (currentStep === WalletPaymentStepEnum.PICK_PAYMENT_METHOD) {
-      setAccessibilityFocus(titleRef as RefObject<View>, 200 as Millisecond);
+      setAccessibilityFocus(titleRef, 200 as Millisecond);
     }
   }, [currentStep]);
 

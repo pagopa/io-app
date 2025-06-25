@@ -1,4 +1,4 @@
-import { RefObject, useRef } from "react";
+import { useRef } from "react";
 import { View } from "react-native";
 import {
   Badge,
@@ -86,9 +86,7 @@ const OptInScreen = () => {
     trackLoginSessionOptIn();
   });
 
-  useFocusEffect(() =>
-    setAccessibilityFocus(accessibilityFirstFocuseViewRef as RefObject<View>)
-  );
+  useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
   const getNavigationParams =
     (): NavigatorScreenParams<AuthenticationParamsList> => {

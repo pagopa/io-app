@@ -621,7 +621,7 @@ const Title = (props: { text: string; accessibilityLabel: string }) => {
   useFocusEffect(
     useCallback(() => {
       if (!titleRef.current && Platform.OS === "android") {
-        setAccessibilityFocus(titleRef as RefObject<View>, accessibityTimeout);
+        setAccessibilityFocus(titleRef, accessibityTimeout);
       }
     }, [])
   );

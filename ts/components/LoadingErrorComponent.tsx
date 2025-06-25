@@ -70,10 +70,7 @@ export const LoadingErrorComponent: FunctionComponent<
   LoadingErrorProps
 > = props => {
   useEffect(() => {
-    setAccessibilityFocus(
-      (props.isLoading ? loadingRef : errorRef) as RefObject<View>,
-      delay
-    );
+    setAccessibilityFocus(props.isLoading ? loadingRef : errorRef, delay);
   }, [props.isLoading]);
 
   return props.isLoading ? (

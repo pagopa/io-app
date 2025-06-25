@@ -61,7 +61,7 @@ const CiePinWizard = () => {
     ),
     snapPoint: [350],
     onDismiss: () => {
-      setAccessibilityFocus(buttonRef as RefObject<View>);
+      setAccessibilityFocus(buttonRef);
     }
   });
 

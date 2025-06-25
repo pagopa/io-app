@@ -5,7 +5,6 @@ import {
   FunctionComponent,
   isValidElement,
   ReactNode,
-  RefObject,
   useEffect
 } from "react";
 import { StyleSheet, View } from "react-native";
@@ -35,7 +34,7 @@ export const BottomSheetHeader: FunctionComponent<Props> = ({
   const headerRef = createRef<View>();
 
   useEffect(() => {
-    setAccessibilityFocus(headerRef as RefObject<View>, 1000 as Millisecond);
+    setAccessibilityFocus(headerRef, 1000 as Millisecond);
   }, [headerRef]);
 
   return (

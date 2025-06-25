@@ -6,7 +6,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { RefObject, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { View } from "react-native";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import I18n from "../../../../../../i18n";
@@ -27,7 +27,7 @@ export const CgnDiscountHeader = ({
   const ref = useRef<View>(null);
 
   useEffect(() => {
-    setAccessibilityFocus(ref as RefObject<View>, 400 as Millisecond);
+    setAccessibilityFocus(ref, 400 as Millisecond);
   }, [ref]);
 
   const { header: headerStyle } = useCgnStyle();

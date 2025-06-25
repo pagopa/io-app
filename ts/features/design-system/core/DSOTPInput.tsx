@@ -66,8 +66,8 @@ const OTPWrapper = ({
 };
 
 const scrollVerticallyToView = (
-  scrollViewRef: RefObject<ScrollView>,
-  targetViewRef: RefObject<View>
+  scrollViewRef: RefObject<ScrollView | null>,
+  targetViewRef: RefObject<View | null>
 ) => {
   if (targetViewRef.current && scrollViewRef.current) {
     targetViewRef.current.measureLayout(
@@ -149,8 +149,8 @@ export const DSOTPInput = () => {
                     setShowAutofocusableOTP(!showAutofocusableOTP);
                     setTimeout(() => {
                       scrollVerticallyToView(
-                        scrollViewRef as RefObject<ScrollView>,
-                        autofocusableOTPViewRef as RefObject<View>
+                        scrollViewRef,
+                        autofocusableOTPViewRef
                       );
                     }, 100);
                   }}
