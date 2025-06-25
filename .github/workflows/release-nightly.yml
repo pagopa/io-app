@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
       - id: setup-node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: ".node-version"
       - id: yarn-cache
@@ -58,7 +58,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ needs.bump-app-version.outputs.currentAppVersion }}
       - id: setup-node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: ".node-version"
       - id: yarn-cache
@@ -90,7 +90,7 @@ jobs:
       - id: setup-android-sdk
         uses: android-actions/setup-android@00854ea68c109d98c75d956347303bf7c45b0277 #v3.2.1
       - id: setup-ruby
-        uses: ruby/setup-ruby@401c19e14f474b54450cd3905bb8b86e2c8509cf #v1.204.0
+        uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 #v1.245.0
         with:
           bundler-cache: true
       - id: build-release-android
@@ -156,7 +156,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ needs.bump-app-version.outputs.currentAppVersion }}
       - id: setup-node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: ".node-version"
       - id: yarn-cache
@@ -180,7 +180,7 @@ jobs:
           name: api-client
           path: definitions/
       - id: setup-ruby
-        uses: ruby/setup-ruby@401c19e14f474b54450cd3905bb8b86e2c8509cf #v1.204.0
+        uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 #v1.245.0
         with:
           bundler-cache: true
       - id: prepare-ios-build
