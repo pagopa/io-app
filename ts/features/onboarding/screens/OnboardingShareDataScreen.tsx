@@ -12,6 +12,7 @@ import {
   TrackingInfo,
   trackMixPanelTrackingInfo,
   trackMixpanelDeclined,
+  trackMixpanelNotNowSelected,
   trackMixpanelSetEnabled
 } from "../../settings/common/analytics/mixpanel/mixpanelAnalytics";
 import { useConfirmOptOutBottomSheet } from "../../settings/privacy/shared/hooks/useConfirmOptOutBottomSheet";
@@ -45,6 +46,11 @@ const OnboardingShareDataScreen = (): ReactElement => {
     [flow]
   );
 
+  const onDontShareDataPress = useCallback(() => {
+    trackMixpanelNotNowSelected(flow);
+    present();
+  }, [flow, present]);
+
   const actions = useMemo<IOScrollViewActions>(
     () => ({
       type: "TwoButtons",
@@ -53,7 +59,7 @@ const OnboardingShareDataScreen = (): ReactElement => {
         accessibilityLabel: I18n.t(
           "profile.main.privacy.shareData.screen.cta.dontShare"
         ),
-        onPress: present
+        onPress: onDontShareDataPress
       },
       primary: {
         label: I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
@@ -73,7 +79,7 @@ const OnboardingShareDataScreen = (): ReactElement => {
         testID: "share-data-confirm-button"
       }
     }),
-    [flow, present, store, dispatch]
+    [onDontShareDataPress, dispatch, flow, store]
   );
 
   return (
