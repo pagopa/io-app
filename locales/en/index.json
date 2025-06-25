@@ -837,15 +837,6 @@
         "body": "We need to check your identity from time to time for security reasons",
         "linkButtonLabel": "Read more"
       },
-      "cie_unsupported": {
-        "title": "You cannot use CIE",
-        "body": "The device you are using does not support access with Electronic ID Card (CIE).",
-        "button": "I get it",
-        "nfc_problem": "To read the CIE, a device with NFC chip is required.",
-        "os_problem": "An Android 6.0 or iOS 13 or higher operating system is required.",
-        "nfc_alert": "Your device does not have NFC.",
-        "os_alert": "The device's operating system is not up-to-date."
-      },
       "cie_bottom_sheet": {
         "title": "How do you want to login?",
         "module_cie_pin": {
@@ -4105,7 +4096,8 @@
         "badge": {
           "active": "Già presente",
           "unavailable": "Non disponibile",
-          "requested": "In corso"
+          "requested": "In corso",
+          "upcoming": "In arrivo"
         },
         "options": {
           "cgn": "Carta Giovani Nazionale",
@@ -4240,7 +4232,8 @@
         "eid": "Identità Digitale",
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
-        "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia"
+        "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
+        "dgc": "Attestati di Laurea, Dottorato e Master"
       },
       "ipzsPrivacy": {
         "title": "I tuoi Documenti su IO sono al sicuro",
@@ -4251,7 +4244,8 @@
       },
       "wallet": {
         "active": "Attivo",
-        "inactive": "Non attivo"
+        "inactive": "Non attivo",
+        "header": "Mostra identità"
       },
       "card": {
         "status": {
@@ -4620,6 +4614,11 @@
             }
           }
         },
+        "emptyWallet": {
+          "itwReadyBanner": {
+            "content": "Premi 'Aggiungi al Portafoglio' per aggiungere un documento al tuo Portafoglio di IO."
+          }
+        },
         "credentialResult": {
           "toast": "Fatto!"
         },
@@ -4659,6 +4658,11 @@
         "credentialNotFound": {
           "title": "Aggiungi il documento al Portafoglio",
           "subtitle": "Per usare i documenti su IO, prima aggiungili al Portafoglio. È facile e veloce."
+        },
+        "upcomingCredential": {
+          "title": "Documento in arrivo",
+          "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
+          "primaryAction": "Ho capito"
         }
       },
       "unsupportedDevice": {
@@ -4703,10 +4707,18 @@
             "contentBottom": "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE.",
             "triggerLabel": "Cos'è?",
             "alert": {
-              "valid": "L'ultima verifica è del {{date}}.",
-              "expiring": "Verifica la tua identità entro il {{date}}.",
-              "expired": "È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.",
-              "action": "Inizia"
+              "documents": {
+                "valid": "L'ultima verifica è del {{date}}.",
+                "expiring": "Verifica la tua identità entro il {{date}}.",
+                "expired": "È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.",
+                "action": "Inizia"
+              },
+              "itw": {
+                "valid": "L'ultima verifica della tua identità è del {{date}}.",
+                "expiring": "Verifica la tua identità per continuare ad usare IT-Wallet entro il {{date}}.",
+                "expired": "Verifica la tua identità per continuare ad usare IT-Wallet.",
+                "action": "Inizia la verifica"
+              }
             }
           },
           "MDL": {
@@ -5048,6 +5060,14 @@
           "title": "Si è verificato un errore imprevisto",
           "subtitle": "Non è stato possibile disattivare il servizio. Riprova."
         }
+      },
+      "eidDetail": {
+        "title": "La mia identità",
+        "content": "Hai ottenuto IT-Wallet verificando i dati della tua identità con CIE. Ti consente di autenticarti ai servizi online.",
+        "header": {
+          "title": "I dati della mia identità"
+        },
+        "cta": "Disattiva IT-Wallet"
       },
       "feedback": {
         "banner": {

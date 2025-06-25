@@ -1,8 +1,10 @@
 import { ProximityEvents } from "./events.ts";
 
+export class InvalidRequestedDocumentsError extends Error {}
+
 export enum ProximityFailureType {
-  RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
   INVALID_REQUESTED_DOCUMENTS = "INVALID_REQUESTED_DOCUMENTS",
+  RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
   UNEXPECTED = "UNEXPECTED"
 }
 
@@ -10,8 +12,8 @@ export enum ProximityFailureType {
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
  */
 export type ReasonTypeByFailure = {
+  [ProximityFailureType.INVALID_REQUESTED_DOCUMENTS]: InvalidRequestedDocumentsError;
   [ProximityFailureType.RELYING_PARTY_GENERIC]: Error;
-  [ProximityFailureType.INVALID_REQUESTED_DOCUMENTS]: unknown;
   [ProximityFailureType.UNEXPECTED]: unknown;
 };
 
@@ -40,6 +42,13 @@ export const mapEventToFailure = (event: ProximityEvents): ProximityFailure => {
   }
 
   const { error } = event;
+
+  if (error instanceof InvalidRequestedDocumentsError) {
+    return {
+      type: ProximityFailureType.INVALID_REQUESTED_DOCUMENTS,
+      reason: error
+    };
+  }
 
   return {
     type: ProximityFailureType.UNEXPECTED,

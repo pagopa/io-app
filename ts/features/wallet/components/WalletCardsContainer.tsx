@@ -1,5 +1,5 @@
 import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
@@ -19,6 +19,7 @@ import {
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
 import { ItwUpgradeBanner } from "../../itwallet/common/components/ItwUpgradeBanner";
+import { ItwWalletCardsWrapper } from "../../itwallet/common/components/ItwWalletCardsWrapper";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
@@ -56,7 +57,11 @@ const WalletCardsContainer = () => {
     }
     return (
       <View testID="walletCardsContainerTestID" style={{ flex: 1 }}>
-        {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
+        {shouldRenderItwCardsContainer && (
+          <ItwWalletCardsWrapper>
+            <ItwWalletCardsContainer />
+          </ItwWalletCardsWrapper>
+        )}
         <OtherWalletCardsContainer />
       </View>
     );
@@ -80,7 +85,7 @@ const WalletCardsContainer = () => {
 /**
  * Renders the banners that are displayed at the top of the wallet screen
  */
-const WalletBannersContainer = () => (
+const WalletBannersContainer = memo(() => (
   <VStack>
     <ItwEnvironmentAlert />
     <ItwUpgradeBanner />
@@ -89,7 +94,7 @@ const WalletBannersContainer = () => (
     {/* Dummy view wich adds a spacer in case one of the above banners is rendered */}
     <View />
   </VStack>
-);
+));
 
 /**
  * Skeleton for the wallet cards container

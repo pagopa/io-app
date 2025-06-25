@@ -1,6 +1,10 @@
 import { createActor } from "xstate";
 import { createStore } from "redux";
-import { ProximityFailure, ProximityFailureType } from "../../machine/failure";
+import {
+  InvalidRequestedDocumentsError,
+  ProximityFailure,
+  ProximityFailureType
+} from "../../machine/failure";
 import { itwProximityMachine } from "../../machine/machine";
 import { ItwProximityMachineContext } from "../../machine/provider";
 import { ItwProximityFailureScreen } from "../ItwProximityFailureScreen";
@@ -14,7 +18,7 @@ describe("ItwProximityFailureScreen", () => {
   test.each<ProximityFailure>([
     {
       type: ProximityFailureType.INVALID_REQUESTED_DOCUMENTS,
-      reason: new Error("Invalid requested documents")
+      reason: new InvalidRequestedDocumentsError("Invalid requested documents")
     },
     {
       type: ProximityFailureType.RELYING_PARTY_GENERIC,

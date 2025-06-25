@@ -361,12 +361,7 @@ export const itwProximityMachine = setup({
               target: "#itwProximityMachine.Success"
             },
             onError: {
-              actions: assign({
-                failure: ({ event }) => ({
-                  type: ProximityFailureType.INVALID_REQUESTED_DOCUMENTS,
-                  reason: event.error
-                })
-              }),
+              actions: "setFailure",
               target: "#itwProximityMachine.Failure"
             }
           }
