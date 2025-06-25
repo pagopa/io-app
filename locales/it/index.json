@@ -385,7 +385,7 @@
   "profile": {
     "fiscalCode": {
       "accessibility": {
-        "fiscalCodeHint": "Immagine del codice a barre del tuo codice fiscale",
+        "fiscalCodeHint": "Immagine del codice a barre del tuo codice fiscale. Il tuo codice fiscale è: {{fiscalCode}}",
         "unavailable": "Non disponibile"
       },
       "title": "I tuoi documenti personali",
@@ -449,6 +449,7 @@
         "description": "I tuoi diritti e obblighi nell’uso di IO",
         "subtitle": "Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei dati personali.",
         "loading": "Attendi qualche secondo, stiamo verificando il tuo profilo...",
+        "status": "stato",
         "errorMessage": "Non riusciamo a recuperare lo stato delle tue richieste. Riprova.",
         "removeAccount": {
           "title": "Elimina il tuo profilo",
@@ -1263,7 +1264,9 @@
         "invalidemail": "Inserisci un indirizzo email valido",
         "modaltitle": "Questa email è già in uso",
         "modaldescription": "Può succedere se condividi lo stesso indirizzo con un familiare",
-        "modalbutton": "Usa un’altra email"
+        "modalbutton": "Usa un’altra email",
+        "validemaila11y": "Hai inserito un indirizzo email valido",
+        "invalidemaila11y": "Hai inserito un indirizzo email non valido."
       }
     },
     "edit": {
@@ -1292,7 +1295,7 @@
     "newvalidate": {
       "title": "Ti abbiamo inviato un’email",
       "subtitle": "Per confermare il tuo indirizzo, segui le istruzioni che abbiamo inviato a",
-      "link": "Non è corretto?",
+      "link": "Modifica email",
       "countdowntext": "Richiedi una nuova email tra",
       "buttonlabelsent": "Email inviata!",
       "buttonlabelsentagain": "Invia di nuovo l’email",
