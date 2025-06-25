@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0-rc.7](https://github.com/pagopa/io-app/compare/3.8.0-rc.6...3.8.0-rc.7) (2025-06-24)
+
+
+### Features
+
+* [[IOCOM-2452](https://pagopa.atlassian.net/browse/IOCOM-2452)] Remove usages of legacy getVerificaRPT ([#7114](https://github.com/pagopa/io-app/issues/7114)) ([b4a03dd](https://github.com/pagopa/io-app/commit/b4a03ddc03bbc10dfc48832a939bf212db3b5df4))
+* **IT Wallet:** [[SIW-2427](https://pagopa.atlassian.net/browse/SIW-2427)] Adds proximity communication ([#7073](https://github.com/pagopa/io-app/issues/7073)) ([f7e4938](https://github.com/pagopa/io-app/commit/f7e4938448524fde3c7f2897619247633afab7c9))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2618](https://pagopa.atlassian.net/browse/SIW-2618)] Obtaining eID through L3 identification ([#7106](https://github.com/pagopa/io-app/issues/7106)) ([35ed3ab](https://github.com/pagopa/io-app/commit/35ed3ab5c31414feb2611f8f8f29620894f8bb6b))
+* [[IOCOM-2450](https://pagopa.atlassian.net/browse/IOCOM-2450)] SEND banner optimistic render fix ([#7107](https://github.com/pagopa/io-app/issues/7107)) ([e61cd58](https://github.com/pagopa/io-app/commit/e61cd58fa1140aa53c6e78bafeb5da0ee9488881))
+
+
+### Chores
+
+* [[IOBP-1783](https://pagopa.atlassian.net/browse/IOBP-1783)] Increse TTL of the rptid saved ([#7113](https://github.com/pagopa/io-app/issues/7113)) ([ef67dff](https://github.com/pagopa/io-app/commit/ef67dff6dc1f198b3c3b39c000d61d293940e966))
+
 ## [3.8.0-rc.6](https://github.com/pagopa/io-app/compare/3.8.0-rc.5...3.8.0-rc.6) (2025-06-23)
 
 

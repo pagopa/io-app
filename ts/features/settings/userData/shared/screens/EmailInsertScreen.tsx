@@ -63,6 +63,21 @@ import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import { isDisplayZoomed } from "../../../../../utils/device";
 import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
 
+const ContinueButton = (props: { onContinue: () => void }) => (
+  <>
+    <ContentWrapper>
+      <IOButton
+        fullWidth
+        variant="solid"
+        label={I18n.t("global.buttons.continue")}
+        onPress={props.onContinue}
+        testID="continue-button"
+      />
+    </ContentWrapper>
+    <VSpacer size={16} />
+  </>
+);
+
 export type EmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
   isFciEditEmailFlow?: boolean;
@@ -526,7 +541,8 @@ const EmailInsertScreen = () => {
               textInputProps={{
                 autoCorrect: false,
                 autoCapitalize: "none",
-                inputMode: "email"
+                inputMode: "email",
+                returnKeyType: "done"
               }}
               accessibilityLabel={I18n.t("email.newinsert.label")}
               placeholder={I18n.t("email.newinsert.label")}
@@ -541,24 +557,19 @@ const EmailInsertScreen = () => {
             />
           </ContentWrapper>
         </ScrollView>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "android" ? undefined : "padding"}
-          keyboardVerticalOffset={Platform.select({
-            ios: 110 + 16,
-            android: themeVariables.contentPadding
-          })}
-        >
-          <ContentWrapper>
-            <IOButton
-              fullWidth
-              variant="solid"
-              label={I18n.t("global.buttons.continue")}
-              onPress={continueOnPress}
-              testID="continue-button"
-            />
-          </ContentWrapper>
-          <VSpacer size={16} />
-        </KeyboardAvoidingView>
+        {isScreenZoomed ? (
+          <ContinueButton onContinue={continueOnPress} />
+        ) : (
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "android" ? undefined : "padding"}
+            keyboardVerticalOffset={Platform.select({
+              ios: 110 + 16,
+              android: themeVariables.contentPadding
+            })}
+          >
+            <ContinueButton onContinue={continueOnPress} />
+          </KeyboardAvoidingView>
+        )}
       </SafeAreaView>
     </LoadingSpinnerOverlay>
   );

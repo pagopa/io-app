@@ -3,7 +3,6 @@ import { appReducer } from "../index";
 import preferencesReducer, {
   initialPreferencesState,
   isExperimentalDesignEnabledSelector,
-  isMessagePaymentInfoV2Selector,
   isMixpanelEnabled
 } from "../persistedPreferences";
 import { applicationChangeState } from "../../actions/application";
@@ -16,10 +15,7 @@ import {
 } from "../../../features/authentication/common/store/actions";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
 import { clearCache } from "../../../features/settings/common/store/actions";
-import {
-  preferencesExperimentalDesignEnabled,
-  setUseMessagePaymentInfoV2
-} from "../../actions/persistedPreferences";
+import { preferencesExperimentalDesignEnabled } from "../../actions/persistedPreferences";
 
 describe("persistedPreferences", () => {
   describe("isExperimentalDesignEnabledSelector", () => {
@@ -95,24 +91,6 @@ describe("persistedPreferences", () => {
           })
         );
         expect(state.isExperimentalDesignEnabled).toBe(value);
-      })
-    );
-    [false, true].forEach(payload =>
-      it(`should set 'useMessagePaymentInfoV2' to '${payload}' after receiving 'setUseMessagePaymentInfoV2(${payload})'`, () => {
-        const state = preferencesReducer(
-          { ...initialPreferencesState, useMessagePaymentInfoV2: !payload },
-          setUseMessagePaymentInfoV2(payload)
-        );
-        expect(state.useMessagePaymentInfoV2).toBe(payload);
-      })
-    );
-  });
-  describe("isMessagePaymentInfoV2Selector", () => {
-    [false, true].forEach(data =>
-      it(`should return '${data}' when 'useMessagePaymentInfoV2' is '${data}'`, () => {
-        const state = appReducer(undefined, setUseMessagePaymentInfoV2(data));
-        const useMessagePaymentInfoV2 = isMessagePaymentInfoV2Selector(state);
-        expect(useMessagePaymentInfoV2).toBe(data);
       })
     );
   });
