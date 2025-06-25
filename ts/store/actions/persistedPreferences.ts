@@ -31,10 +31,6 @@ export const preferencesPagoPaTestEnvironmentSetEnabled = createStandardAction(
   "PREFERENCES_PAGOPA_TEST_ENVIRONMENT_SET_ENABLED"
 )<{ isPagoPATestEnabled: boolean }>();
 
-export const setUseMessagePaymentInfoV2 = createStandardAction(
-  "SET_USE_MESSAGE_PAYMENT_INFO_V2"
-)<boolean>();
-
 export const customEmailChannelSetEnabled = createStandardAction(
   "CUSTOM_EMAIL_CHANNEL_SET_ENABLED"
 )<boolean>();
@@ -66,7 +62,6 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferredLanguageSaveSuccess
   | typeof serviceAlertDisplayedOnceSuccess
   | typeof preferencesPagoPaTestEnvironmentSetEnabled
-  | typeof setUseMessagePaymentInfoV2
   | typeof customEmailChannelSetEnabled
   | typeof continueWithRootOrJailbreak
   | typeof preferencesPnTestEnvironmentSetEnabled

@@ -18,10 +18,7 @@ import {
 import { UIMessageId } from "../../types";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import {
-  isMessagePaymentInfoV2Selector,
-  isPagoPATestEnabledSelector
-} from "../../../../store/reducers/persistedPreferences";
+import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import * as MIXPANEL from "../../../../mixpanel";
 
@@ -35,13 +32,8 @@ describe("handlePaymentUpdateRequests", () => {
   describe("handlePaymentUpdateRequests", () => {
     it("should follow proper flow", () => {
       const mockGetPaymentDataRequestFactory = jest.fn();
-      const mockGetVerificaRptFactory = jest.fn();
       const mockActionChannel = channel();
-      testSaga(
-        handlePaymentUpdateRequests,
-        mockGetPaymentDataRequestFactory,
-        mockGetVerificaRptFactory
-      )
+      testSaga(handlePaymentUpdateRequests, mockGetPaymentDataRequestFactory)
         .next()
         .actionChannel(updatePaymentForMessage.request)
         .next(mockActionChannel)
@@ -49,32 +41,27 @@ describe("handlePaymentUpdateRequests", () => {
           fork(
             testable!.paymentUpdateRequestWorker as any,
             mockActionChannel,
-            mockGetPaymentDataRequestFactory,
-            mockGetVerificaRptFactory
+            mockGetPaymentDataRequestFactory
           ),
           fork(
             testable!.paymentUpdateRequestWorker as any,
             mockActionChannel,
-            mockGetPaymentDataRequestFactory,
-            mockGetVerificaRptFactory
+            mockGetPaymentDataRequestFactory
           ),
           fork(
             testable!.paymentUpdateRequestWorker as any,
             mockActionChannel,
-            mockGetPaymentDataRequestFactory,
-            mockGetVerificaRptFactory
+            mockGetPaymentDataRequestFactory
           ),
           fork(
             testable!.paymentUpdateRequestWorker as any,
             mockActionChannel,
-            mockGetPaymentDataRequestFactory,
-            mockGetVerificaRptFactory
+            mockGetPaymentDataRequestFactory
           ),
           fork(
             testable!.paymentUpdateRequestWorker as any,
             mockActionChannel,
-            mockGetPaymentDataRequestFactory,
-            mockGetVerificaRptFactory
+            mockGetPaymentDataRequestFactory
           )
         ])
         .next()
@@ -92,7 +79,6 @@ describe("handlePaymentUpdateRequests", () => {
         ActionType<typeof updatePaymentForMessage.request>
       >;
       const mockGetPaymentDataRequestFactory = jest.fn();
-      const mockGetVerificaRptFactory = jest.fn();
       const paymentActionRequest = updatePaymentForMessage.request({
         messageId,
         paymentId,
@@ -102,15 +88,12 @@ describe("handlePaymentUpdateRequests", () => {
       testSaga(
         testable!.paymentUpdateRequestWorker,
         mockChannel,
-        mockGetPaymentDataRequestFactory,
-        mockGetVerificaRptFactory
+        mockGetPaymentDataRequestFactory
       )
         .next()
         .take(mockChannel)
         .next(paymentActionRequest)
         .select(isPagoPATestEnabledSelector)
-        .next(true)
-        .select(isMessagePaymentInfoV2Selector)
         .next(true)
         .race({
           hasVerifiedPayment: call(
@@ -124,49 +107,11 @@ describe("handlePaymentUpdateRequests", () => {
         .next(cancelQueuedPaymentUpdates({ messageId }))
         .take(mockChannel);
     });
-    it("should follow proper flow when using getVerificaRPT API (isTest false)", () => {
-      const mockChannel = channel() as Channel<
-        ActionType<typeof updatePaymentForMessage.request>
-      >;
-      const mockGetPaymentDataRequestFactory = jest.fn();
-      const mockGetVerificaRptFactory = jest.fn();
-      const paymentActionRequest = updatePaymentForMessage.request({
-        messageId,
-        paymentId,
-        serviceId
-      });
-
-      testSaga(
-        testable!.paymentUpdateRequestWorker,
-        mockChannel,
-        mockGetPaymentDataRequestFactory,
-        mockGetVerificaRptFactory
-      )
-        .next()
-        .take(mockChannel)
-        .next(paymentActionRequest)
-        .select(isPagoPATestEnabledSelector)
-        .next(false)
-        .select(isMessagePaymentInfoV2Selector)
-        .next(false)
-        .race({
-          hasVerifiedPayment: call(
-            testable!.legacyGetVerificaRpt,
-            paymentActionRequest,
-            false,
-            mockGetVerificaRptFactory
-          ),
-          wasCancelled: take(cancelQueuedPaymentUpdates)
-        })
-        .next(cancelQueuedPaymentUpdates({ messageId }))
-        .take(mockChannel);
-    });
     it("should properly handle a thrown Error", () => {
       const mockChannel = channel() as Channel<
         ActionType<typeof updatePaymentForMessage.request>
       >;
       const mockGetPaymentDataRequestFactory = jest.fn();
-      const mockGetVerificaRptFactory = jest.fn();
       const paymentActionRequest = updatePaymentForMessage.request({
         messageId,
         paymentId,
@@ -180,15 +125,12 @@ describe("handlePaymentUpdateRequests", () => {
       testSaga(
         testable!.paymentUpdateRequestWorker,
         mockChannel,
-        mockGetPaymentDataRequestFactory,
-        mockGetVerificaRptFactory
+        mockGetPaymentDataRequestFactory
       )
         .next()
         .take(mockChannel)
         .next(paymentActionRequest)
         .select(isPagoPATestEnabledSelector)
-        .next(true)
-        .select(isMessagePaymentInfoV2Selector)
         .next(true)
         .race({
           hasVerifiedPayment: call(
@@ -386,226 +328,6 @@ describe("handlePaymentUpdateRequests", () => {
             paymentId,
             paymentData: {
               amount: 100
-            },
-            serviceId
-          } as UpdatePaymentForMessageSuccess)
-        )
-        .next()
-        .isDone();
-    });
-  });
-
-  describe("legacyGetVerificaRpt", () => {
-    it("should return an error if API result is a left", () => {
-      const paymentActionRequest = updatePaymentForMessage.request({
-        messageId,
-        paymentId,
-        serviceId
-      });
-      const mockGetVerificatRptFactory = jest.fn();
-      const output = tryCatchErrorOrUndefined(() => {
-        testSaga(
-          testable!.legacyGetVerificaRpt,
-          paymentActionRequest,
-          false,
-          mockGetVerificatRptFactory
-        )
-          .next()
-          .call(
-            withRefreshApiCall,
-            mockGetVerificatRptFactory({ rptId: paymentId, test: false }),
-            paymentActionRequest
-          )
-          .next(E.left([]));
-      });
-      expect(output).toEqual(Error());
-    });
-    [500, 504].forEach(statusCode =>
-      it(`should return an error if API result is ${statusCode}`, () => {
-        const paymentActionRequest = updatePaymentForMessage.request({
-          messageId,
-          paymentId,
-          serviceId
-        });
-        const mockGetVerificatRptFactory = jest.fn();
-        const output = tryCatchErrorOrUndefined(() => {
-          testSaga(
-            testable!.legacyGetVerificaRpt,
-            paymentActionRequest,
-            false,
-            mockGetVerificatRptFactory
-          )
-            .next()
-            .call(
-              withRefreshApiCall,
-              mockGetVerificatRptFactory({
-                rptId: paymentId,
-                test: false
-              }),
-              paymentActionRequest
-            )
-            .next(
-              E.right({
-                status: statusCode,
-                value: {
-                  detail_v2: Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
-                }
-              })
-            );
-        });
-        expect(output).toEqual(Error(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO));
-      })
-    );
-    it(`should return an error if API result is 409`, () => {
-      const paymentActionRequest = updatePaymentForMessage.request({
-        messageId,
-        paymentId,
-        serviceId
-      });
-      const mockGetVerificatRptFactory = jest.fn();
-      const output = tryCatchErrorOrUndefined(() => {
-        testSaga(
-          testable!.legacyGetVerificaRpt,
-          paymentActionRequest,
-          false,
-          mockGetVerificatRptFactory
-        )
-          .next()
-          .call(
-            withRefreshApiCall,
-            mockGetVerificatRptFactory({
-              rptId: paymentId,
-              test: false
-            }),
-            paymentActionRequest
-          )
-          .next(
-            E.right({
-              status: 409,
-              value: {
-                status: 409,
-                title: "titl",
-                detail: "detai",
-                type: "typ",
-                instance: "instanc"
-              }
-            })
-          );
-      });
-      expect(output).toEqual(
-        Error("HTTP Status 409 (409) (titl) (detai) (typ) (instanc)")
-      );
-    });
-    it(`should do nothing if API result is 401`, () => {
-      const paymentActionRequest = updatePaymentForMessage.request({
-        messageId,
-        paymentId,
-        serviceId
-      });
-      const mockGetVerificatRptFactory = jest.fn();
-      const output = tryCatchErrorOrUndefined(() => {
-        testSaga(
-          testable!.legacyGetVerificaRpt,
-          paymentActionRequest,
-          false,
-          mockGetVerificatRptFactory
-        )
-          .next()
-          .call(
-            withRefreshApiCall,
-            mockGetVerificatRptFactory({
-              rptId: paymentId,
-              test: false
-            }),
-            paymentActionRequest
-          )
-          .next(
-            E.right({
-              status: 401
-            })
-          );
-      });
-      expect(output).toBeUndefined();
-    });
-
-    it(`should return an error if API result is 200 but conversion fails`, () => {
-      const paymentActionRequest = updatePaymentForMessage.request({
-        messageId,
-        paymentId,
-        serviceId
-      });
-      const mockGetVerificatRptFactory = jest.fn();
-      const output = tryCatchErrorOrUndefined(() => {
-        testSaga(
-          testable!.legacyGetVerificaRpt,
-          paymentActionRequest,
-          false,
-          mockGetVerificatRptFactory
-        )
-          .next()
-          .call(
-            withRefreshApiCall,
-            mockGetVerificatRptFactory({
-              rptId: paymentId,
-              test: false
-            }),
-            paymentActionRequest
-          )
-          .next(
-            E.right({
-              status: 200,
-              value: {}
-            })
-          );
-      });
-      expect(output).toEqual(
-        Error(
-          `Conversion failed some value at [root.0.amount.0] is not a valid [integer >= 0 and < 99999999]\nsome value at [root.0.amount.1] is not a valid [99999999]`
-        )
-      );
-    });
-    it(`should follow proper flow`, () => {
-      const paymentActionRequest = updatePaymentForMessage.request({
-        messageId,
-        paymentId,
-        serviceId
-      });
-      const mockGetVerificatRptFactory = jest.fn();
-
-      testSaga(
-        testable!.legacyGetVerificaRpt,
-        paymentActionRequest,
-        false,
-        mockGetVerificatRptFactory
-      )
-        .next()
-        .call(
-          withRefreshApiCall,
-          mockGetVerificatRptFactory({
-            rptId: paymentId,
-            test: false
-          }),
-          paymentActionRequest
-        )
-        .next(
-          E.right({
-            status: 200,
-            value: {
-              importoSingoloVersamento: 100
-            }
-          })
-        )
-        .put(
-          updatePaymentForMessage.success({
-            messageId,
-            paymentId,
-            paymentData: {
-              amount: 100,
-              description: undefined,
-              dueDate: undefined,
-              paFiscalCode: undefined,
-              paName: undefined,
-              rptId: undefined
             },
             serviceId
           } as UpdatePaymentForMessageSuccess)
