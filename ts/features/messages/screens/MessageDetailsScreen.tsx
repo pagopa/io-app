@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ContentWrapper, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -197,7 +197,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
             />
             <MessageDetailsBody
               messageMarkdown={messageMarkdown}
-              scrollViewRef={scrollViewRef}
+              scrollViewRef={scrollViewRef as RefObject<ScrollView>}
               serviceId={serviceId}
             />
             <MessageDetailsPayment

@@ -8,7 +8,7 @@ import {
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -85,7 +85,10 @@ export const ItwCiePinScreen = () => {
   useFocusEffect(
     useCallback(() => {
       trackItWalletCiePinEnter();
-      setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
+      setAccessibilityFocus(
+        pinPadViewRef as RefObject<View>,
+        300 as Millisecond
+      );
     }, [])
   );
 

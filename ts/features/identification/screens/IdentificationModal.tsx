@@ -15,7 +15,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
-import { memo, useCallback, useMemo, useRef, useState } from "react";
+import { memo, RefObject, useCallback, useMemo, useRef, useState } from "react";
 import {
   Alert,
   Modal,
@@ -362,7 +362,7 @@ export const IdentificationModal = () => {
     remainingAttemptsToShowAlert || showRetryText.current;
 
   if (showRetryText.current) {
-    setAccessibilityFocus(errorStatusRef, A11Y_FOCUS_DELAY);
+    setAccessibilityFocus(errorStatusRef as RefObject<View>, A11Y_FOCUS_DELAY);
   }
 
   return showLockModal ? (

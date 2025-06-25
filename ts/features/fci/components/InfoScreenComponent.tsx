@@ -2,7 +2,13 @@ import { Body, H2, VSpacer } from "@pagopa/io-app-design-system";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import { useFocusEffect } from "@react-navigation/native";
 
-import { FunctionComponent, ReactNode, createRef, useCallback } from "react";
+import {
+  FunctionComponent,
+  ReactNode,
+  RefObject,
+  createRef,
+  useCallback
+} from "react";
 import { Linking, StyleSheet, Text, View } from "react-native";
 import themeVariables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
@@ -59,7 +65,10 @@ const renderNode = (body: string | ReactNode, email?: EmailString) => {
 export const InfoScreenComponent: FunctionComponent<Props> = props => {
   const elementRef = createRef<Text>();
   useFocusEffect(
-    useCallback(() => setAccessibilityFocus(elementRef), [elementRef])
+    useCallback(
+      () => setAccessibilityFocus(elementRef as RefObject<Text>),
+      [elementRef]
+    )
   );
   return (
     <View style={styles.main} testID="InfoScreenComponent">

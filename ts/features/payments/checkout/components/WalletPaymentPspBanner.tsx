@@ -1,6 +1,6 @@
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import { useRef } from "react";
+import { RefObject, useRef } from "react";
 import * as O from "fp-ts/lib/Option";
 
 import Animated, {
@@ -81,7 +81,7 @@ const WalletPaymentPspBanner = () => {
         <Banner
           color="neutral"
           pictogramName="help"
-          viewRef={bannerViewRef}
+          viewRef={bannerViewRef as RefObject<View>}
           title={bannerConfig.title?.[localeFallback]}
           content={bannerConfig.description[localeFallback]}
           action={bannerConfig.action?.label[localeFallback] ?? ""}

@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { MutableRefObject, RefObject } from "react";
+import { RefObject } from "react";
 import { NativeSyntheticEvent } from "react-native";
 import PagerView from "react-native-pager-view";
 import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/specs/PagerViewNativeComponent";
@@ -40,14 +40,14 @@ describe("PagerViewContainer", () => {
     expect(mockDispatch.mock.calls.length).toBe(0);
   });
   it("should not dispatch 'reloadAllMessages.request' when INBOX has (empty) data, should dispatch both 'setShownMessageCategoryAction('ARCHIVE')' when setting page 1 and 'reloadAllMessages.request'", () => {
-    const mockUseRefOutput: MutableRefObject<PagerView | null> = {
+    const mockUseRefOutput: RefObject<PagerView | null> = {
       current: null
     };
     const { store } = renderComponent(
       "INBOX",
       pot.some({ page: [] }),
       pot.none,
-      mockUseRefOutput
+      mockUseRefOutput as RefObject<PagerView>
     );
     expect(mockUseRefOutput.current).toBeTruthy();
     expect(mockDispatch.mock.calls.length).toBe(0);
@@ -76,14 +76,14 @@ describe("PagerViewContainer", () => {
     );
   });
   it("should not dispatch 'reloadAllMessages.request' when INBOX has (empty) data, should dispatch 'setShownMessageCategoryAction('ARCHIVE')' when setting page 1 but no 'reloadAllMessages.request' when ARCHIVE has data", () => {
-    const mockUseRefOutput: MutableRefObject<PagerView | null> = {
+    const mockUseRefOutput: RefObject<PagerView | null> = {
       current: null
     };
     const { store } = renderComponent(
       "INBOX",
       pot.some({ page: [] }),
       pot.some({ page: [] }),
-      mockUseRefOutput
+      mockUseRefOutput as RefObject<PagerView>
     );
     expect(mockUseRefOutput.current).toBeTruthy();
     expect(mockDispatch.mock.calls.length).toBe(0);
@@ -107,14 +107,14 @@ describe("PagerViewContainer", () => {
   });
 
   it("should not dispatch 'reloadAllMessages.request' when ARCHIVE has (empty) data, should dispatch both 'setShownMessageCategoryAction('INBOX')' when setting page 0 and 'reloadAllMessages.request'", () => {
-    const mockUseRefOutput: MutableRefObject<PagerView | null> = {
+    const mockUseRefOutput: RefObject<PagerView | null> = {
       current: null
     };
     const { store } = renderComponent(
       "ARCHIVE",
       pot.none,
       pot.some({ page: [] }),
-      mockUseRefOutput
+      mockUseRefOutput as RefObject<PagerView>
     );
     expect(mockUseRefOutput.current).toBeTruthy();
     expect(mockDispatch.mock.calls.length).toBe(0);
@@ -143,14 +143,14 @@ describe("PagerViewContainer", () => {
     );
   });
   it("should not dispatch 'reloadAllMessages.request' when ARCHIVE has (empty) data, should dispatch 'setShownMessageCategoryAction('INBOX')' when setting page 0 but no 'reloadAllMessages.request' when INBOX has data", () => {
-    const mockUseRefOutput: MutableRefObject<PagerView | null> = {
+    const mockUseRefOutput: RefObject<PagerView | null> = {
       current: null
     };
     const { store } = renderComponent(
       "ARCHIVE",
       pot.some({ page: [] }),
       pot.some({ page: [] }),
-      mockUseRefOutput
+      mockUseRefOutput as RefObject<PagerView>
     );
     expect(mockUseRefOutput.current).toBeTruthy();
     expect(mockDispatch.mock.calls.length).toBe(0);

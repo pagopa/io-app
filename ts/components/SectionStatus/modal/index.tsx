@@ -86,7 +86,7 @@ const ModalSectionStatusComponent = ({
   }, [webUrl]);
   const invokeSessionRefCallback = useCallback(() => {
     if (viewRef.current) {
-      onSectionRef?.(viewRef);
+      onSectionRef?.(viewRef as RefObject<View>);
     }
   }, [onSectionRef, viewRef]);
 

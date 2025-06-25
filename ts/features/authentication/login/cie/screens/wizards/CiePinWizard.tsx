@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 import {
   ContentWrapper,
   IOButton,
@@ -61,7 +61,7 @@ const CiePinWizard = () => {
     ),
     snapPoint: [350],
     onDismiss: () => {
-      setAccessibilityFocus(buttonRef);
+      setAccessibilityFocus(buttonRef as RefObject<View>);
     }
   });
 

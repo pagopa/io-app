@@ -1,6 +1,6 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
-import { createRef, useMemo } from "react";
+import { createRef, RefObject, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -89,7 +89,7 @@ export const ItwDiscoveryBanner = ({
     <View style={!ignoreMargins && styles.margins}>
       <Banner
         testID="itwDiscoveryBannerTestID"
-        viewRef={bannerRef}
+        viewRef={bannerRef as RefObject<View>}
         title={withTitle ? title : undefined}
         content={content}
         action={action}

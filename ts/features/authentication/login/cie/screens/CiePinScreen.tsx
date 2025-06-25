@@ -16,7 +16,14 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import {
+  RefObject,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 
 import {
   Keyboard,
@@ -129,7 +136,7 @@ const CiePinScreen = () => {
     ),
     title: I18n.t("bottomSheets.ciePin.title"),
     onDismiss: () => {
-      setAccessibilityFocus(modalTriggerRef);
+      setAccessibilityFocus(modalTriggerRef as RefObject<View>);
     }
   });
 
@@ -203,7 +210,10 @@ const CiePinScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
+      setAccessibilityFocus(
+        pinPadViewRef as RefObject<View>,
+        300 as Millisecond
+      );
     }, [])
   );
 
@@ -268,7 +278,7 @@ const CiePinScreen = () => {
               />
               <VSpacer size={24} />
               <Banner
-                viewRef={bannerRef}
+                viewRef={bannerRef as RefObject<View>}
                 color="neutral"
                 title={I18n.t("login.help_banner_title")}
                 content={I18n.t("login.help_banner_content")}

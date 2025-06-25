@@ -176,7 +176,7 @@ export const useIOBarcodeCameraScanner = ({
 
   // This handles the resting state of the scanner after a scan
   // It is necessary to avoid multiple scans of the same barcode
-  const scannerReactivateTimeoutHandler = useRef<number>();
+  const scannerReactivateTimeoutHandler = useRef<number>(undefined);
   const [isResting, setIsResting] = useState(false);
 
   /**

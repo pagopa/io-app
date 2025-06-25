@@ -14,6 +14,7 @@ import {
 
 import {
   ComponentProps,
+  RefObject,
   useCallback,
   useEffect,
   useMemo,
@@ -175,7 +176,11 @@ const BarcodeScanBaseScreenComponent = ({
 
   useFocusEffect(
     useCallback(
-      () => setAccessibilityFocus(scanItemRef, 200 as Millisecond),
+      () =>
+        setAccessibilityFocus(
+          scanItemRef as RefObject<View>,
+          200 as Millisecond
+        ),
       []
     )
   );

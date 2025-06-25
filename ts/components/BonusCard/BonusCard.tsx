@@ -12,6 +12,7 @@ import {
   createRef,
   Fragment,
   ReactNode,
+  RefObject,
   useLayoutEffect,
   useMemo
 } from "react";
@@ -51,7 +52,7 @@ const BonusCardContent = (props: BonusCard) => {
   const bonusNameHeadingRef = createRef<View>();
 
   useLayoutEffect(() => {
-    setAccessibilityFocus(bonusNameHeadingRef);
+    setAccessibilityFocus(bonusNameHeadingRef as RefObject<View>);
   }, [bonusNameHeadingRef]);
 
   if (props.isLoading) {

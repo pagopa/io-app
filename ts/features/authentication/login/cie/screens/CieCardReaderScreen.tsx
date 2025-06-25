@@ -21,6 +21,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import {
   PureComponent,
   ReactNode,
+  RefObject,
   createRef,
   useCallback,
   useRef
@@ -620,7 +621,7 @@ const Title = (props: { text: string; accessibilityLabel: string }) => {
   useFocusEffect(
     useCallback(() => {
       if (!titleRef.current && Platform.OS === "android") {
-        setAccessibilityFocus(titleRef, accessibityTimeout);
+        setAccessibilityFocus(titleRef as RefObject<View>, accessibityTimeout);
       }
     }, [])
   );

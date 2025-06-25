@@ -20,7 +20,7 @@ import {
   vec
 } from "@shopify/react-native-skia";
 import { TxtLinkNode, TxtParagraphNode } from "@textlint/ast-node-types";
-import { useCallback, useRef, useState } from "react";
+import { RefObject, useCallback, useRef, useState } from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedRef,
@@ -113,7 +113,7 @@ export const ItwPaywallComponent = ({
       y: productHighlightsLayout.y - scrollOffset,
       animated: true
     });
-    setAccessibilityFocus(productHighlightsRef);
+    setAccessibilityFocus(productHighlightsRef as RefObject<View>);
   }, [animatedRef, productHighlightsLayout]);
 
   const backgroundColor = IOColors[theme["appBackground-accent"]];

@@ -16,6 +16,7 @@ import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
 import {
   ComponentProps,
+  RefObject,
   useCallback,
   useEffect,
   useMemo,
@@ -202,7 +203,7 @@ export const LandingScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      setAccessibilityFocus(accessibilityFirstFocuseViewRef);
+      setAccessibilityFocus(accessibilityFirstFocuseViewRef as RefObject<View>);
 
       return dismissBottomSheet;
     }, [dismissBottomSheet])

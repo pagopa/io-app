@@ -1,6 +1,6 @@
 import { Banner, H3, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { useEffect, createRef } from "react";
+import { useEffect, createRef, RefObject } from "react";
 import { StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -107,7 +107,7 @@ const IdPayCodeDisplayScreen = () => {
         <Banner
           color="neutral"
           pictogramName="security"
-          viewRef={bannerRef}
+          viewRef={bannerRef as RefObject<View>}
           title={I18n.t("idpay.code.onboarding.banner.header")}
           content={I18n.t("idpay.code.onboarding.banner.body")}
         />

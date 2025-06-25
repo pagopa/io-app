@@ -6,7 +6,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { createRef, useMemo, useEffect, useCallback } from "react";
+import { createRef, useMemo, useEffect, useCallback, RefObject } from "react";
 import { View } from "react-native";
 import * as analytics from "../analytics";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
@@ -156,7 +156,7 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
           action={I18n.t("features.payments.methods.banner.action")}
           onPress={handleOnAddMethodPress}
           color="neutral"
-          viewRef={bannerRef}
+          viewRef={bannerRef as RefObject<View>}
           labelClose={I18n.t("global.buttons.close")}
           onClose={() => dispatch(paymentsSetAddMethodsBannerVisible(false))}
         />

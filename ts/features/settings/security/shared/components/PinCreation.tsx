@@ -7,7 +7,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { useCallback, useRef, useState } from "react";
+import { RefObject, useCallback, useRef, useState } from "react";
 import { FlatList, Alert as NativeAlert, View } from "react-native";
 import { defaultPin } from "../../../../../config";
 import { isValidPinNumber } from "../../../../../features/authentication/fastLogin/utils/pinPolicy";
@@ -86,7 +86,10 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
       animated: true,
       index: CREATION_INDEX
     });
-    setAccessibilityFocus(titleCreationRef, 1000 as Millisecond);
+    setAccessibilityFocus(
+      titleCreationRef as RefObject<View>,
+      1000 as Millisecond
+    );
   }, []);
   const scrollToConfirmation = useCallback(() => {
     setPinConfirmation("");
@@ -95,7 +98,10 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
       animated: true,
       index: CONFIRMATION_INDEX
     });
-    setAccessibilityFocus(titleConfirmationRef, 1000 as Millisecond);
+    setAccessibilityFocus(
+      titleConfirmationRef as RefObject<View>,
+      1000 as Millisecond
+    );
   }, []);
 
   const goBack = useCallback(() => {

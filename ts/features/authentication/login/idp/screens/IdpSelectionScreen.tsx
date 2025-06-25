@@ -1,4 +1,11 @@
-import { ReactElement, createRef, useCallback, useEffect, useRef } from "react";
+import {
+  ReactElement,
+  RefObject,
+  createRef,
+  useCallback,
+  useEffect,
+  useRef
+} from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Platform, View } from "react-native";
 import { Banner, useIOToast, VSpacer } from "@pagopa/io-app-design-system";
@@ -141,7 +148,7 @@ const IdpSelectionScreen = (): ReactElement => {
     return (
       <>
         <Banner
-          viewRef={viewRef}
+          viewRef={viewRef as RefObject<View>}
           color="neutral"
           title={I18n.t("login.help_banner_title")}
           content={I18n.t("login.help_banner_content")}

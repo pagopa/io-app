@@ -1,6 +1,6 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 
-import { createRef, FunctionComponent, useEffect } from "react";
+import { createRef, FunctionComponent, RefObject, useEffect } from "react";
 import { ActivityIndicator, SafeAreaView, View } from "react-native";
 import { WithTestID } from "../types/WithTestID";
 import { setAccessibilityFocus } from "../utils/accessibility";
@@ -27,7 +27,7 @@ const renderError = (props: LoadingErrorProps) => (
     onCancel={props.onAbort}
     text={props.errorText}
     subText={props.errorSubText ?? ""}
-    ref={errorRef}
+    ref={errorRef as RefObject<View>}
   />
 );
 
@@ -70,7 +70,10 @@ export const LoadingErrorComponent: FunctionComponent<
   LoadingErrorProps
 > = props => {
   useEffect(() => {
-    setAccessibilityFocus(props.isLoading ? loadingRef : errorRef, delay);
+    setAccessibilityFocus(
+      (props.isLoading ? loadingRef : errorRef) as RefObject<View>,
+      delay
+    );
   }, [props.isLoading]);
 
   return props.isLoading ? (

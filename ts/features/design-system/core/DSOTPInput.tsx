@@ -149,8 +149,8 @@ export const DSOTPInput = () => {
                     setShowAutofocusableOTP(!showAutofocusableOTP);
                     setTimeout(() => {
                       scrollVerticallyToView(
-                        scrollViewRef,
-                        autofocusableOTPViewRef
+                        scrollViewRef as RefObject<ScrollView>,
+                        autofocusableOTPViewRef as RefObject<View>
                       );
                     }, 100);
                   }}

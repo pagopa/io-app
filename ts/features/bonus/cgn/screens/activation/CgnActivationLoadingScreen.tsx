@@ -1,5 +1,5 @@
 import { Body, ContentWrapper, H3, VStack } from "@pagopa/io-app-design-system";
-import { useRef } from "react";
+import { RefObject, useRef } from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
@@ -15,7 +15,7 @@ const LoadingComponent = () => {
   const ref = useRef<View>(null);
 
   useOnFirstRender(() => {
-    setAccessibilityFocus(ref);
+    setAccessibilityFocus(ref as RefObject<View>);
   });
 
   return (
