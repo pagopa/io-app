@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "3.8.0-rc.6",
+  "version": "3.8.0-rc.7",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -97,7 +97,6 @@
     "buffer": "^4.9.1",
     "color": "^3.0.0",
     "date-fns": "^1.29.0",
-    "detox": "^19.9.2",
     "eslint-plugin-react-native": "^4.0.0",
     "fp-ts": "^2.12.1",
     "front-matter": "^4.0.2",
@@ -246,8 +245,6 @@
     "fs-extra": "^7.0.0",
     "husky": "^8.0.0",
     "jest": "^29.7.0",
-    "jest-circus": "^29.7.0",
-    "jest-junit": "^16.0.0",
     "js-yaml": "^3.13.1",
     "lint-staged": "^13.2.0",
     "mockdate": "^3.0.2",

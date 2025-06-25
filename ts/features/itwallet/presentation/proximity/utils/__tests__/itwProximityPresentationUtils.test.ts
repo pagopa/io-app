@@ -1,5 +1,8 @@
 import { type VerifierRequest } from "@pagopa/io-react-native-proximity";
-import { getProximityDetails } from "../itwProximityPresentationUtils";
+import {
+  generateAcceptedFields,
+  getProximityDetails
+} from "../itwProximityPresentationUtils";
 import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
 
 const mockCredentialType = "org.iso.18013.5.1.mDL";
@@ -75,5 +78,57 @@ describe("getProximityDetails", () => {
         credentialType: mockCredentialType
       }
     ]);
+  });
+});
+
+describe("generateAcceptedFields", () => {
+  it("should return an object with all fields set to true", () => {
+    const parsedRequest: VerifierRequest = {
+      request: {
+        credential_A: {
+          "org.iso.18013.5.1.aamva": {
+            family_name: false
+          },
+          "org.iso.18013.5.1": {
+            unknown_field: false,
+            tax_id_code: false
+          },
+          isAuthenticated: false
+        },
+        credential_B: {
+          "org.iso.18013.5.1.aamva": {
+            family_name: true
+          },
+          "org.iso.18013.5.1": {
+            unknown_field: false,
+            tax_id_code: false
+          },
+          isAuthenticated: false
+        }
+      }
+    } as unknown as VerifierRequest;
+
+    const acceptedFields = generateAcceptedFields(parsedRequest.request);
+
+    expect(acceptedFields).toEqual({
+      credential_A: {
+        "org.iso.18013.5.1.aamva": {
+          family_name: true
+        },
+        "org.iso.18013.5.1": {
+          unknown_field: true,
+          tax_id_code: true
+        }
+      },
+      credential_B: {
+        "org.iso.18013.5.1.aamva": {
+          family_name: true
+        },
+        "org.iso.18013.5.1": {
+          unknown_field: true,
+          tax_id_code: true
+        }
+      }
+    });
   });
 });
