@@ -6,7 +6,7 @@ import {
   H4,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { createRef, RefObject, useCallback, useMemo } from "react";
+import { createRef, useCallback, useMemo } from "react";
 import { View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
@@ -55,7 +55,7 @@ const ProfileAboutApp = () => {
         <ComposedBodyFromArray body={bodyPropsArray} textAlign="left" />
         <VSpacer size={32} />
         <Banner
-          viewRef={viewRef as RefObject<View>}
+          ref={viewRef}
           color="neutral"
           content={I18n.t("profile.main.appInfo.bannerBody")}
           pictogramName="charity"

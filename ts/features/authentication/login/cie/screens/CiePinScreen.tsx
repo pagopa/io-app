@@ -16,14 +16,7 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import {
-  RefObject,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
 import {
   Keyboard,
@@ -275,7 +268,7 @@ const CiePinScreen = () => {
               />
               <VSpacer size={24} />
               <Banner
-                viewRef={bannerRef as RefObject<View>}
+                ref={bannerRef}
                 color="neutral"
                 title={I18n.t("login.help_banner_title")}
                 content={I18n.t("login.help_banner_content")}

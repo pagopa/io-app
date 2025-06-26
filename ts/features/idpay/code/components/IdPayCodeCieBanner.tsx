@@ -1,4 +1,4 @@
-import { useRef, useEffect, RefObject } from "react";
+import { useRef, useEffect } from "react";
 import { VSpacer, Banner } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 
@@ -70,7 +70,7 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
           labelClose={I18n.t(
             "idpay.initiative.discountDetails.IDPayCode.banner.close"
           )}
-          viewRef={bannerViewRef as RefObject<View>}
+          ref={bannerViewRef}
         />
         <VSpacer size={24} />
       </>

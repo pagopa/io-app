@@ -12,8 +12,7 @@ import {
   useEffect,
   useMemo,
   useRef,
-  useState,
-  RefObject
+  useState
 } from "react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -219,7 +218,7 @@ const LanguagesPreferencesScreen = () => {
         <VSpacer size={16} />
         {isBannerVisible && (
           <Banner
-            viewRef={viewRef as RefObject<View>}
+            ref={viewRef}
             color="neutral"
             content={bannerInfoSelector.message[getFullLocale()]}
             pictogramName="charity"

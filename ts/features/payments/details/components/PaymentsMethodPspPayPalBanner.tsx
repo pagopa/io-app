@@ -1,4 +1,4 @@
-import { RefObject, useRef } from "react";
+import { useRef } from "react";
 import { VSpacer, Banner } from "@pagopa/io-app-design-system";
 
 import Animated, { FadeOut } from "react-native-reanimated";
@@ -30,7 +30,7 @@ const PaymentsMethodPspPayPalBanner = () => {
           labelClose={I18n.t(
             "idpay.initiative.discountDetails.IDPayCode.banner.close"
           )}
-          viewRef={bannerViewRef as RefObject<View>}
+          ref={bannerViewRef}
         />
         <VSpacer size={24} />
       </Animated.View>

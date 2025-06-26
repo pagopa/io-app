@@ -1,6 +1,6 @@
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import { RefObject, useRef } from "react";
+import { useRef } from "react";
 import { View } from "react-native";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { useIOSelector } from "../../../../store/hooks";
@@ -44,7 +44,7 @@ const WalletPaymentFeebackBanner = () => {
       <Banner
         color="neutral"
         pictogramName="feedback"
-        viewRef={bannerViewRef as RefObject<View>}
+        ref={bannerViewRef}
         title={feedbackBannerConfig.title?.[localeFallback]}
         content={feedbackBannerConfig.description[localeFallback]}
         // Starting from version 5.1.3 of the Design System, the `action` property,
