@@ -24,7 +24,7 @@ import { useIONavigation } from "../../navigation/params/AppParamsList";
 
 type Props = {
   sectionKey: SectionStatusKey;
-  onSectionRef?: (ref: RefObject<View>) => void;
+  onSectionRef?: (ref: RefObject<View | null>) => void;
 };
 
 const statusVariantMap: Record<
@@ -61,7 +61,7 @@ const SectionStatusComponent = ({ sectionKey, onSectionRef }: Props) => {
   }, [webUrl]);
   const invokeSessionRefCallback = useCallback(() => {
     if (viewRef.current) {
-      onSectionRef?.(viewRef as RefObject<View>);
+      onSectionRef?.(viewRef);
     }
   }, [onSectionRef, viewRef]);
 

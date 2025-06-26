@@ -27,7 +27,7 @@ import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/r
 
 type Props = {
   sectionKey: SectionStatusKey;
-  onSectionRef?: (ref: RefObject<View>) => void;
+  onSectionRef?: (ref: RefObject<View | null>) => void;
   trackingAction?: () => void;
   sticky?: boolean;
 };
@@ -86,7 +86,7 @@ const ModalSectionStatusComponent = ({
   }, [webUrl]);
   const invokeSessionRefCallback = useCallback(() => {
     if (viewRef.current) {
-      onSectionRef?.(viewRef as RefObject<View>);
+      onSectionRef?.(viewRef);
     }
   }, [onSectionRef, viewRef]);
 
