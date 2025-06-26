@@ -7,7 +7,6 @@ import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
-import { navigateBack } from "../../../../../../store/actions/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { ITW_ROUTES } from "../../../../../itwallet/navigation/routes";
 import { MESSAGES_ROUTES } from "../../../../../messages/navigation/routes";
@@ -59,7 +58,9 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
   }
   if (result === "completed") {
     if (initialScreen?.name === BONUS_ROUTES.BONUS_AVAILABLE_LIST) {
-      yield* call(navigateBack);
+      yield* call(() =>
+        NavigationService.dispatchNavigationAction(CommonActions.goBack())
+      );
       yield* call(navigateToCgnDetails);
     } else if (
       initialScreen?.name &&
