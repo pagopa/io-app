@@ -2,6 +2,65 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0-rc.8](https://github.com/pagopa/io-app/compare/3.8.0-rc.7...3.8.0-rc.8) (2025-06-25)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2429](https://pagopa.atlassian.net/browse/SIW-2429),[SIW-2594](https://pagopa.atlassian.net/browse/SIW-2594)] Add user authorization via PIN/biometric for presenting requested data ([#7086](https://github.com/pagopa/io-app/issues/7086)) ([75baeb7](https://github.com/pagopa/io-app/commit/75baeb7a9e5e2dc77fc40e90facb877aabfd4422)), closes [/github.com/pagopa/io-app/blob/master/ts/features/itwallet/common/utils/itwCredentialUtils.ts#L101](https://github.com/pagopa//github.com/pagopa/io-app/blob/master/ts/features/itwallet/common/utils/itwCredentialUtils.ts/issues/L101)
+* **IT Wallet:** [[SIW-2550](https://pagopa.atlassian.net/browse/SIW-2550)] Added new credential "Attestati di Laurea, Master e Dottorato" ([#7100](https://github.com/pagopa/io-app/issues/7100)) ([1528c00](https://github.com/pagopa/io-app/commit/1528c00af74f413f2d93eabd3003808efe335725))
+* **IT Wallet:** [[SIW-2616](https://pagopa.atlassian.net/browse/SIW-2616)] Add playgrounds for new CIE SDK tests ([#7104](https://github.com/pagopa/io-app/issues/7104)) ([422a892](https://github.com/pagopa/io-app/commit/422a89261bd54af5d6102fe6edc38678713270ec))
+
+
+### Bug Fixes
+
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] metro config ([#7121](https://github.com/pagopa/io-app/issues/7121)) ([8e9472c](https://github.com/pagopa/io-app/commit/8e9472c2cb9d7a5d5fd5b7435e814a1719cb7758))
+* [[IOCOM-2419](https://pagopa.atlassian.net/browse/IOCOM-2419)] Support for markdown reference-style link ([#7099](https://github.com/pagopa/io-app/issues/7099)) ([5d87461](https://github.com/pagopa/io-app/commit/5d8746135eeba94d130fe4bc1d5ce3e1b50fcfaf))
+* [[IOPID-2998](https://pagopa.atlassian.net/browse/IOPID-2998),[IOPID-3000](https://pagopa.atlassian.net/browse/IOPID-3000),[IOPID-3001](https://pagopa.atlassian.net/browse/IOPID-3001),[IOPID-3002](https://pagopa.atlassian.net/browse/IOPID-3002),[IOPID-3008](https://pagopa.atlassian.net/browse/IOPID-3008),[IOPID-3009](https://pagopa.atlassian.net/browse/IOPID-3009),[IOPID-3016](https://pagopa.atlassian.net/browse/IOPID-3016)]: accessibility issues ([#7092](https://github.com/pagopa/io-app/issues/7092)) ([56ccfa2](https://github.com/pagopa/io-app/commit/56ccfa2deeafad46803d8142e658d1339d6b7cbd))
+* **IT Wallet:** [[SIW-2619](https://pagopa.atlassian.net/browse/SIW-2619)] Restore CIE+PIN auth option for L2 authentication flow ([#7110](https://github.com/pagopa/io-app/issues/7110)) ([a7819e9](https://github.com/pagopa/io-app/commit/a7819e9bd0d6ff86c14d714ce35474bd0dd03c40))
+
+
+### Chores
+
+* [[IOAPPX-501](https://pagopa.atlassian.net/browse/IOAPPX-501)] Remove Detox ([#7105](https://github.com/pagopa/io-app/issues/7105)) ([6572de5](https://github.com/pagopa/io-app/commit/6572de5d73d55f6f7294dbf3899032cfd5573a60))
+* [[IOPID-3199](https://pagopa.atlassian.net/browse/IOPID-3199)] Add MP events on the `CTA` and `BottomSheet` of `ShareDataScreen`s ([#7118](https://github.com/pagopa/io-app/issues/7118)) ([e270908](https://github.com/pagopa/io-app/commit/e2709081d9082513c3dc34a92a8915c972187607))
+
+## [3.8.0-rc.7](https://github.com/pagopa/io-app/compare/3.8.0-rc.6...3.8.0-rc.7) (2025-06-24)
+
+
+### Features
+
+* [[IOCOM-2452](https://pagopa.atlassian.net/browse/IOCOM-2452)] Remove usages of legacy getVerificaRPT ([#7114](https://github.com/pagopa/io-app/issues/7114)) ([b4a03dd](https://github.com/pagopa/io-app/commit/b4a03ddc03bbc10dfc48832a939bf212db3b5df4))
+* **IT Wallet:** [[SIW-2427](https://pagopa.atlassian.net/browse/SIW-2427)] Adds proximity communication ([#7073](https://github.com/pagopa/io-app/issues/7073)) ([f7e4938](https://github.com/pagopa/io-app/commit/f7e4938448524fde3c7f2897619247633afab7c9))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2618](https://pagopa.atlassian.net/browse/SIW-2618)] Obtaining eID through L3 identification ([#7106](https://github.com/pagopa/io-app/issues/7106)) ([35ed3ab](https://github.com/pagopa/io-app/commit/35ed3ab5c31414feb2611f8f8f29620894f8bb6b))
+* [[IOCOM-2450](https://pagopa.atlassian.net/browse/IOCOM-2450)] SEND banner optimistic render fix ([#7107](https://github.com/pagopa/io-app/issues/7107)) ([e61cd58](https://github.com/pagopa/io-app/commit/e61cd58fa1140aa53c6e78bafeb5da0ee9488881))
+
+
+### Chores
+
+* [[IOBP-1783](https://pagopa.atlassian.net/browse/IOBP-1783)] Increse TTL of the rptid saved ([#7113](https://github.com/pagopa/io-app/issues/7113)) ([ef67dff](https://github.com/pagopa/io-app/commit/ef67dff6dc1f198b3c3b39c000d61d293940e966))
+
+## [3.8.0-rc.6](https://github.com/pagopa/io-app/compare/3.8.0-rc.5...3.8.0-rc.6) (2025-06-23)
+
+
+### Features
+
+* [[SIW-2221](https://pagopa.atlassian.net/browse/SIW-2221)] New Wallet L3 design ([#6991](https://github.com/pagopa/io-app/issues/6991)) ([16eee59](https://github.com/pagopa/io-app/commit/16eee595e17d3cca6e6a3533ad0ef9b379ce5835))
+
+
+### Bug Fixes
+
+* [[IOCOM-2451](https://pagopa.atlassian.net/browse/IOCOM-2451)] payment reminder alert empty focus ([#7109](https://github.com/pagopa/io-app/issues/7109)) ([129d09a](https://github.com/pagopa/io-app/commit/129d09ad8c945829fc41afc46911d499647a6e15))
+
+
+### Chores
+
+* [[IOPLT-0000](https://pagopa.atlassian.net/browse/IOPLT-0000)] Removes Sentry HttpClientErrors ([#7045](https://github.com/pagopa/io-app/issues/7045)) ([ce1ce97](https://github.com/pagopa/io-app/commit/ce1ce976df957a69be21d9590424f196bade360f))
+
 ## [3.8.0-rc.5](https://github.com/pagopa/io-app/compare/3.8.0-rc.4...3.8.0-rc.5) (2025-06-20)
 
 

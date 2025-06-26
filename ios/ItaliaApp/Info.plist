@@ -36,7 +36,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>5</string>
+    <string>8</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
@@ -150,7 +150,6 @@
     <true/>
     <key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
     <array>
-      <string>com.apple.developer.nfc.readersession.iso7816.select-identifiers</string>
       <string>A0000000308000000009816001</string>
       <string>A00000000039</string>
       <string>A0000002471001</string>

@@ -22,14 +22,10 @@ import {
   toTimeoutError,
   updatePaymentForMessage
 } from "../store/actions";
-import {
-  isMessagePaymentInfoV2Selector,
-  isPagoPATestEnabledSelector
-} from "../../../store/reducers/persistedPreferences";
+import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../types/utils";
 import { readablePrivacyReport } from "../../../utils/reporters";
-import { PaymentInfoResponse } from "../../../../definitions/backend/PaymentInfoResponse";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { isTestEnv } from "../../../utils/environment";
 import { trackMessagePaymentFailure } from "../analytics";
@@ -37,8 +33,7 @@ import { trackMessagePaymentFailure } from "../analytics";
 const PaymentUpdateWorkerCount = 5;
 
 export function* handlePaymentUpdateRequests(
-  getPaymentDataRequestFactory: BackendClient["getPaymentInfoV2"],
-  getVerificaRptFactory: BackendClient["getVerificaRpt"]
+  getPaymentDataRequestFactory: BackendClient["getPaymentInfoV2"]
 ) {
   // Create a channel where 'updatePaymentForMessage.request' actions will be enqueued
   const paymentUpdateChannel = yield* actionChannel(
@@ -51,8 +46,7 @@ export function* handlePaymentUpdateRequests(
       fork(
         paymentUpdateRequestWorker,
         paymentUpdateChannel,
-        getPaymentDataRequestFactory,
-        getVerificaRptFactory
+        getPaymentDataRequestFactory
       )
     )
   );
@@ -70,8 +64,7 @@ function* paymentUpdateRequestWorker(
   paymentStatusChannel: Channel<
     ActionType<typeof updatePaymentForMessage.request>
   >,
-  getPaymentDataRequestFactory: BackendClient["getPaymentInfoV2"],
-  getVerificaRptFactory: BackendClient["getVerificaRpt"]
+  getPaymentDataRequestFactory: BackendClient["getPaymentInfoV2"]
 ) {
   while (true) {
     // Listen for 'updatePaymentForMessage.request' action in the channel
@@ -80,25 +73,15 @@ function* paymentUpdateRequestWorker(
     const { messageId, paymentId, serviceId } = paymentStatusRequest.payload;
 
     const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
-    const shouldUsePaymentInfoV2 = yield* select(
-      isMessagePaymentInfoV2Selector
-    );
 
     try {
       yield* race({
-        hasVerifiedPayment: shouldUsePaymentInfoV2
-          ? call(
-              updatePaymentInfo,
-              paymentStatusRequest,
-              isPagoPATestEnabled,
-              getPaymentDataRequestFactory
-            )
-          : call(
-              legacyGetVerificaRpt,
-              paymentStatusRequest,
-              isPagoPATestEnabled,
-              getVerificaRptFactory
-            ),
+        hasVerifiedPayment: call(
+          updatePaymentInfo,
+          paymentStatusRequest,
+          isPagoPATestEnabled,
+          getPaymentDataRequestFactory
+        ),
         wasCancelled: take(cancelQueuedPaymentUpdates)
       });
     } catch (e) {
@@ -164,70 +147,6 @@ function* updatePaymentInfo(
   }
 }
 
-function* legacyGetVerificaRpt(
-  paymentStatusRequest: ActionType<typeof updatePaymentForMessage.request>,
-  isPagoPATestEnabled: boolean,
-  getVerificaRptFactory: BackendClient["getVerificaRpt"]
-) {
-  const { messageId, paymentId, serviceId } = paymentStatusRequest.payload;
-
-  const rptVerificationRequest = getVerificaRptFactory({
-    rptId: paymentId,
-    test: isPagoPATestEnabled
-  });
-  const responseEither = (yield* call(
-    withRefreshApiCall,
-    rptVerificationRequest,
-    paymentStatusRequest
-  )) as SagaCallReturnType<typeof getVerificaRptFactory>;
-
-  if (E.isLeft(responseEither)) {
-    throw Error(readablePrivacyReport(responseEither.left));
-  }
-
-  const response = responseEither.right;
-  switch (response.status) {
-    case 200:
-      const legacyPaymentData = response.value;
-      const paymentDataEither = PaymentInfoResponse.decode({
-        amount: legacyPaymentData.importoSingoloVersamento,
-        rptId: legacyPaymentData.codiceContestoPagamento,
-        paFiscalCode:
-          legacyPaymentData.enteBeneficiario?.identificativoUnivocoBeneficiario,
-        paName: legacyPaymentData.enteBeneficiario?.denominazioneBeneficiario,
-        description: legacyPaymentData.causaleVersamento,
-        dueDate: legacyPaymentData.dueDate
-      });
-      if (E.isLeft(paymentDataEither)) {
-        throw Error(
-          `Conversion failed ${readablePrivacyReport(paymentDataEither.left)}`
-        );
-      }
-      const paymentData = paymentDataEither.right;
-      const successAction = updatePaymentForMessage.success({
-        messageId,
-        paymentId,
-        paymentData,
-        serviceId
-      });
-      yield* put(successAction);
-      break;
-    case 401:
-      // This status code does not represent an error to show to the user
-      // The authentication will be handled by the Fast Login token refresh procedure
-      break;
-    case 500:
-    case 504:
-      // Verifica failed with a 500 or 504, that usually means there was an error
-      // interacting with pagoPA that we can interpret
-      throw Error(response.value.detail_v2);
-    default:
-      throw Error(
-        `HTTP Status ${response.status} (${response.value.status}) (${response.value.title}) (${response.value.detail}) (${response.value.type}) (${response.value.instance})`
-      );
-  }
-}
-
 const unknownErrorToPaymentError = (e: unknown): PaymentError => {
   const reason = unknownErrorToString(e);
   const lowerCaseReason = reason.toLowerCase();
@@ -262,7 +181,6 @@ const trackPaymentErrorIfNeeded = (error: PaymentError) => {
 
 export const testable = isTestEnv
   ? {
-      legacyGetVerificaRpt,
       paymentUpdateRequestWorker,
       trackPaymentErrorIfNeeded,
       unknownErrorToPaymentError,
