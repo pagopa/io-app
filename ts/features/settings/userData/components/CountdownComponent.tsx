@@ -14,13 +14,11 @@ const Countdown = (props: CountdownProps) => {
   const { visible } = props;
   const { timerCount, resetTimer, startTimer, isRunning } = useCountdown();
 
-  if (timerCount === 0 && props.onContdownCompleted) {
-useEffect(() => {
-  if (timerCount === 0 && props.onContdownCompleted) {
-    props.onContdownCompleted();
-  }
-}, [timerCount, props]);
-  }
+  useEffect(() => {
+    if (timerCount === 0 && props.onContdownCompleted) {
+      props.onContdownCompleted();
+    }
+  }, [timerCount, props]);
 
   useEffect(() => {
     if (!visible) {
