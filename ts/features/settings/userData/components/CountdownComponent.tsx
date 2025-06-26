@@ -1,5 +1,6 @@
 import { View } from "react-native";
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
+import { useEffect } from "react";
 import { useCountdown } from "../../../../components/countdown/CountdownProvider";
 import I18n from "../../../../i18n";
 import { ProgressIndicator } from "../../../../components/ui/ProgressIndicator";
@@ -13,19 +14,21 @@ const Countdown = (props: CountdownProps) => {
   const { visible } = props;
   const { timerCount, resetTimer, startTimer, isRunning } = useCountdown();
 
-  if (timerCount === 0 && props.onContdownCompleted) {
-    props.onContdownCompleted();
-  }
-
-  if (!visible) {
-    if (resetTimer) {
-      resetTimer();
+  useEffect(() => {
+    if (timerCount === 0 && props.onContdownCompleted) {
+      props.onContdownCompleted();
     }
+  }, [timerCount, props]);
 
-    return null;
-  } else if (startTimer && isRunning && !isRunning()) {
-    startTimer();
-  }
+  useEffect(() => {
+    if (!visible) {
+      if (resetTimer) {
+        resetTimer();
+      }
+    } else if (startTimer && isRunning && !isRunning()) {
+      startTimer();
+    }
+  }, [visible, resetTimer, startTimer, isRunning]);
 
   if (visible) {
     return (
