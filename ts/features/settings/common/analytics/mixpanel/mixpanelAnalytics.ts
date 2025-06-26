@@ -45,3 +45,24 @@ export function trackMixPanelTrackingInfo(flow: FlowType, info: TrackingInfo) {
     buildEventProperties("UX", "action", { info }, flow)
   );
 }
+
+export function trackMixpanelNotNowSelected(flow: FlowType) {
+  void mixpanelTrack(
+    "MIXPANEL_NOT_NOW_SELECTED",
+    buildEventProperties("UX", "action", undefined, flow)
+  );
+}
+
+export function trackMixpanelConsentBottomsheet(flow: FlowType) {
+  void mixpanelTrack(
+    "MIXPANEL_CONSENT_BOTTOMSHEET",
+    buildEventProperties("UX", "action", undefined, flow)
+  );
+}
+
+export function trackMixpanelConsentCancel(flow: FlowType) {
+  void mixpanelTrack(
+    "MIXPANEL_CONSENT_CANCEL",
+    buildEventProperties("UX", "action", undefined, flow)
+  );
+}
