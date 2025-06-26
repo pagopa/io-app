@@ -26,7 +26,7 @@ describe("configureStoreAndPersistor", () => {
   describe("CURRENT_REDUX_STORE_VERSION", () => {
     it("should match expected value", () => {
       const version = testable!.CURRENT_REDUX_STORE_VERSION;
-      expect(version).toBe(45);
+      expect(version).toBe(46);
     });
   });
   describe("migrations", () => {
@@ -382,5 +382,72 @@ describe("configureStoreAndPersistor", () => {
         }
       });
     });
+    // Test for 45 to 46
+    [false, true].forEach(useV2ForMessagePayments =>
+      it(`should migrate from 45 to 46 (use V2 for message's payments ${useV2ForMessagePayments})`, () => {
+        const basePersistedGlobalStateAt45 = {
+          content: {
+            idps: remoteUndefined,
+            municipality: {
+              codiceCatastale: pot.none,
+              data: pot.none
+            },
+            contextualHelp: pot.none
+          },
+          crossSessions: {
+            hashedFiscalCode:
+              "6494e783ad296f016b2105f8fe7dc2979551a37d3a5c40624e2ee8eee64e8017"
+          },
+          installation: {
+            isFirstRunAfterInstall: false,
+            appVersionHistory: [
+              "2.83.0.7",
+              "3.0.0.8",
+              "3.0.1.0",
+              "3.1.0.2",
+              "3.2.0.8",
+              "3.3.0.8",
+              "3.4.0.5",
+              "3.5.0.8",
+              "3.6.0.9",
+              "3.7.0.7"
+            ]
+          },
+          onboarding: {
+            isFingerprintAcknowledged: false
+          },
+          persistedPreferences: {
+            isFingerprintEnabled: undefined,
+            preferredCalendar: undefined,
+            preferredLanguage: undefined,
+            wasServiceAlertDisplayedOnce: false,
+            isPagoPATestEnabled: false,
+            isCustomEmailChannelEnabled: pot.none,
+            continueWithRootOrJailbreak: false,
+            isMixpanelEnabled: null,
+            isPnTestEnabled: false,
+            isIdPayTestEnabled: false,
+            fontPreference: "comfortable",
+            isExperimentalDesignEnabled: false
+          },
+          profile: pot.none,
+          _persist: {
+            version: 42,
+            rehydrated: false
+          }
+        };
+        const persistedStateAt45 = {
+          ...basePersistedGlobalStateAt45,
+          persistedPreferences: {
+            ...basePersistedGlobalStateAt45.persistedPreferences,
+            useMessagePaymentInfoV2: useV2ForMessagePayments
+          }
+        };
+        const from45To46Migration = testable!.migrations[46];
+        expect(from45To46Migration).toBeDefined();
+        const globalStateAt46 = from45To46Migration(persistedStateAt45);
+        expect(globalStateAt46).toEqual(basePersistedGlobalStateAt45);
+      })
+    );
   });
 });

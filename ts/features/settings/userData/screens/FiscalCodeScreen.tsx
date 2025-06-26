@@ -91,7 +91,8 @@ const FiscalCodeScreen = () => {
         <View
           accessible
           accessibilityLabel={I18n.t(
-            "profile.fiscalCode.accessibility.fiscalCodeHint"
+            "profile.fiscalCode.accessibility.fiscalCodeHint",
+            { fiscalCode }
           )}
           style={[
             styles.card,

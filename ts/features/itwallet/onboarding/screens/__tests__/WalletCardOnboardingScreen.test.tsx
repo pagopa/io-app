@@ -10,6 +10,9 @@ import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import * as itwRemoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
+import * as preferencesSelectors from "../../../common/store/selectors/preferences";
+import * as envSelectors from "../../../common/store/selectors/environment";
+import { EnvType } from "../../../common/utils/environment";
 
 describe("WalletCardOnboardingScreen", () => {
   it("it should render the screen correctly", () => {
@@ -99,6 +102,54 @@ describe("WalletCardOnboardingScreen", () => {
         expect(queryByTestId(`${type}ModuleTestID`)).toBeNull();
       }
       expect(queryByTestId("EuropeanDisabilityCardModuleTestID")).toBeTruthy();
+    }
+  );
+
+  test.each([
+    {
+      description: "renders when L3 is enabled and env is pre",
+      isL3Enabled: true,
+      env: "pre",
+      shouldRender: true
+    },
+    {
+      description: "does NOT render when L3 is disabled and env is pre",
+      isL3Enabled: false,
+      env: "pre",
+      shouldRender: false
+    },
+    {
+      description: "does NOT render when L3 is enabled and env is prod",
+      isL3Enabled: true,
+      env: "prod",
+      shouldRender: false
+    }
+  ])(
+    "DegreeCertificates module: $description",
+    ({ isL3Enabled, env, shouldRender }) => {
+      jest
+        .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+        .mockReturnValue(true);
+
+      jest
+        .spyOn(itwRemoteConfigSelectors, "isItwEnabledSelector")
+        .mockReturnValue(true);
+
+      jest
+        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .mockReturnValue(isL3Enabled);
+
+      jest.spyOn(envSelectors, "selectItwEnv").mockReturnValue(env as EnvType);
+
+      const { queryByTestId } = renderComponent();
+
+      const testID = `${CredentialType.DEGREE_CERTIFICATES}ModuleTestID`;
+
+      if (shouldRender) {
+        expect(queryByTestId(testID)).toBeTruthy();
+      } else {
+        expect(queryByTestId(testID)).toBeNull();
+      }
     }
   );
 });
