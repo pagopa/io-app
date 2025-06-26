@@ -385,7 +385,7 @@
   "profile": {
     "fiscalCode": {
       "accessibility": {
-        "fiscalCodeHint": "Image of barcode and fiscal code",
+        "fiscalCodeHint": "Image of barcode and fiscal code. Your fiscal code is: {{fiscalCode}}",
         "unavailable": "Unavailable"
       },
       "title": "Your personal documents",
@@ -449,6 +449,7 @@
         "description": "Your rights and obligations when using IO",
         "subtitle": "Here you will find information about your rights and obligations regarding your use of the app and the processing of your personal data.",
         "loading": "Wait few seconds, we're checking your profile...",
+        "status": "status",
         "errorMessage": "We can't retrieve the status of your request at the moment. Please try again.",
         "removeAccount": {
           "title": "Delete your profile",
@@ -1264,7 +1265,9 @@
         "invalidemail": "Enter a valid email address",
         "modaltitle": "This email address is already in use",
         "modaldescription": "This can happen if you share the same address with a family member",
-        "modalbutton": "Use another email address"
+        "modalbutton": "Use another email address",
+        "validemaila11y": "This email address is valid",
+        "invalidemaila11y": "Sorry, but this email address is invalid."
       }
     },
     "edit": {
@@ -1293,7 +1296,7 @@
     "newvalidate": {
       "title": "We have sent you an email",
       "subtitle": "To confirm your address, follow the instructions we have sent to",
-      "link": "Isn't that right?",
+      "link": "Change email address",
       "buttonlabelsent": "Email sent!",
       "countdowntext": "Request new email in",
       "buttonlabelsentagain": "Send email again",
