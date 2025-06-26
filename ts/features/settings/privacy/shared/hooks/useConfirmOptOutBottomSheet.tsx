@@ -7,9 +7,12 @@ import {
   trackMixpanelConsentCancel
 } from "../../../common/analytics/mixpanel/mixpanelAnalytics";
 import { getFlowType } from "../../../../../utils/analytics";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 
 const ConfirmOptOut = () => {
-  trackMixpanelConsentBottomsheet(getFlowType(false, false));
+  useOnFirstRender(() => {
+    trackMixpanelConsentBottomsheet(getFlowType(false, false));
+  });
   return (
     <View>
       <View style={{ flex: 1 }}>
