@@ -117,11 +117,7 @@ export function* watchMessagesSaga(
   );
 
   // handle the request for updating a message's payment
-  yield* fork(
-    handlePaymentUpdateRequests,
-    backendClient.getPaymentInfoV2,
-    backendClient.getVerificaRpt
-  );
+  yield* fork(handlePaymentUpdateRequests, backendClient.getPaymentInfoV2);
 
   // handle the request for removing a downloaded attachment
   yield* takeEvery(removeCachedAttachment, handleClearAttachment);

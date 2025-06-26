@@ -18,6 +18,7 @@ const PaymentsMethodDetailsErrorContent = ({ walletId }: Props) => {
 
   return (
     <OperationResultScreenContent
+      testID="PaymentsMethodDetailsErrorContent"
       title={I18n.t("wallet.methodDetails.error.title")}
       subtitle={I18n.t("wallet.methodDetails.error.subtitle")}
       pictogram="umbrella"

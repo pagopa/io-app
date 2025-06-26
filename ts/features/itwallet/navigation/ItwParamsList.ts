@@ -55,6 +55,7 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE]: undefined;
   [ITW_ROUTES.ISSUANCE
     .CREDENTIAL_ASYNC_FLOW_CONTINUATION]: ItwIssuanceCredentialAsyncContinuationNavigationParams;
+  [ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL]: undefined;
   // PRESENTATION
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_DETAIL]: ItwPresentationCredentialDetailNavigationParams;

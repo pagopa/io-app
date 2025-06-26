@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/react-native";
 import { Appearance, ColorSchemeName } from "react-native";
 import * as O from "fp-ts/Option";
 import {
@@ -36,7 +37,6 @@ import { itwAuthLevelSelector } from "../features/itwallet/common/store/selector
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
 import { isConnectedSelector } from "../features/connectivity/store/selectors";
-import { sendExceptionToSentry } from "../utils/sentryUtils.ts";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -130,7 +130,7 @@ export const updateMixpanelSuperProperties = async (
 
     registerSuperProperties(superPropertiesObject);
   } catch (e) {
-    sendExceptionToSentry(e, "updateMixpanelSuperProperties");
+    Sentry.captureException(e);
   }
 };
 

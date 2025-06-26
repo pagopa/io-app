@@ -29,7 +29,8 @@ jest.mock(
   () => ({
     trackMixPanelTrackingInfo: jest.fn(),
     trackMixpanelDeclined: jest.fn(),
-    trackMixpanelSetEnabled: jest.fn(() => Promise.resolve())
+    trackMixpanelSetEnabled: jest.fn(() => Promise.resolve()),
+    trackMixpanelNotNowSelected: jest.fn()
   })
 );
 

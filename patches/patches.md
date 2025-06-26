@@ -1,11 +1,5 @@
 This file describes the reason for the patches applied.
 
-### detox+19.13.0
-Created on 03/05/2024
-
-- Apply [fix/ios-17-regression](https://github.com/wix/Detox/pull/4171).
-- Remove this patch once bumped `detox` to `v20`.
-
 ### react-native-pdf+6.4.0
 Created on **16/03/2024**
 

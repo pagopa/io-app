@@ -18,13 +18,14 @@ import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import { selectProximityDetails } from "../machine/selectors.ts";
 import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
 import IOMarkdown from "../../../../../components/IOMarkdown/index.tsx";
-import { useIOSelector } from "../../../../../store/hooks.ts";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { generateDynamicUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig.ts";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../../urls.ts";
 import { ItwProximityPresentationDetails } from "../components/ItwProximityPresentationDetails.tsx";
 import { ISSUER_MOCK_NAME } from "../../../common/utils/itwMocksUtils.ts";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 import { ProximityDetails } from "../utils/itwProximityTypeUtils.ts";
+import { identificationRequest } from "../../../../identification/store/actions/index.ts";
 
 export const ItwProximityClaimsDisclosureScreen = () => {
   const proximityDetails = ItwProximityMachineContext.useSelector(
@@ -68,6 +69,7 @@ type ContentViewProps = {
 
 const ContentView = ({ proximityDetails }: ContentViewProps) => {
   const machineRef = ItwProximityMachineContext.useActorRef();
+  const dispatch = useIODispatch();
 
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
@@ -82,6 +84,22 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
 
   useHeaderSecondLevel({ title: "", goBack: dismissalDialog.show });
 
+  const confirmVerifiablePresentation = () =>
+    dispatch(
+      identificationRequest(
+        false,
+        true,
+        undefined,
+        {
+          label: I18n.t("global.buttons.cancel"),
+          onCancel: () => undefined
+        },
+        {
+          onSuccess: () => machineRef.send({ type: "holder-consent" })
+        }
+      )
+    );
+
   return (
     <ForceScrollDownView
       footerActions={{
@@ -89,9 +107,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
           type: "TwoButtons",
           primary: {
             label: I18n.t("global.buttons.continue"),
-            onPress: () => {
-              // TODO: [SIW-2429]
-            }
+            onPress: confirmVerifiablePresentation
           },
           secondary: {
             label: I18n.t("global.buttons.cancel"),

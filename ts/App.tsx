@@ -65,7 +65,7 @@ const beforeSendHandler = <T extends ErrorEvent | TransactionEvent>(
 ): T | null => {
   const safeEvent = removeUserFromEvent(event);
   const eventExcludeHttp500 = removeHttpClientError(safeEvent);
-  const isSendRequired = event.contexts?.send?.isRequired;
+  const isSendRequired = event.tags?.isRequired;
 
   // Always send events marked as required
   if (isSendRequired) {

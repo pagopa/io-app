@@ -1,7 +1,7 @@
 import { WalletInstance } from "@pagopa/io-react-native-wallet";
+import * as Sentry from "@sentry/react-native";
 import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
-import { sendExceptionToSentry } from "../../../../utils/sentryUtils";
 import { Env } from "./environment";
 
 /**
@@ -27,7 +27,7 @@ export const revokeCurrentWalletInstance = async (
       appFetch
     });
   } catch (e) {
-    sendExceptionToSentry(e, "revokeCurrentWalletInstance");
+    Sentry.captureException(e);
     throw e;
   }
 };

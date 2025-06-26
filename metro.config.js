@@ -9,10 +9,6 @@ const {
   resolver: { sourceExts, assetExts }
 } = getDefaultConfig(__dirname);
 
-const withE2ESourceExts = process.env.RN_SRC_EXT
-  ? process.env.RN_SRC_EXT.split(",").concat(sourceExts)
-  : sourceExts;
-
 /**
  * Metro configuration
  * https://reactnative.dev/docs/metro
@@ -27,8 +23,8 @@ const config = {
     babelTransformerPath: require.resolve("react-native-svg-transformer")
   },
   resolver: {
-    assetExts: assetExts.filter(ext => ext !== "svg"),
-    sourceExts: [...withE2ESourceExts, "svg"]
+    sourceExts: [...sourceExts, "svg"],
+    assetExts: assetExts.filter(ext => ext !== "svg")
   }
 };
 

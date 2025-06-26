@@ -48,6 +48,7 @@ export const formatAmountText = (amount: string): string => {
   return amountNumber.toLocaleString("it-IT", {
     style: "currency",
     currency: "EUR",
+    useGrouping: true,
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });

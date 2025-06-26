@@ -5,7 +5,10 @@ import {
   TrackingInfo,
   trackMixpanelDeclined,
   trackMixpanelSetEnabled,
-  trackMixPanelTrackingInfo
+  trackMixPanelTrackingInfo,
+  trackMixpanelNotNowSelected,
+  trackMixpanelConsentBottomsheet,
+  trackMixpanelConsentCancel
 } from "../mixpanel/mixpanelAnalytics";
 
 jest.mock("../../../../../mixpanel", () => ({
@@ -87,6 +90,51 @@ describe("trackMixPanelTrackingInfo", () => {
         event_category: "UX",
         event_type: "action",
         info: "fornitori",
+        flow
+      })
+    );
+  });
+});
+
+describe("trackMixpanelNotNowSelected", () => {
+  it("should track 'not now' selection", () => {
+    const flow: FlowType = "onBoarding";
+    trackMixpanelNotNowSelected(flow);
+    expect(mixpanelTrack).toHaveBeenCalledWith(
+      "MIXPANEL_NOT_NOW_SELECTED",
+      expect.objectContaining({
+        event_category: "UX",
+        event_type: "action",
+        flow
+      })
+    );
+  });
+});
+
+describe("trackMixpanelConsentBottomsheet", () => {
+  it("should track consent bottomsheet event", () => {
+    const flow: FlowType = "onBoarding";
+    trackMixpanelConsentBottomsheet(flow);
+    expect(mixpanelTrack).toHaveBeenCalledWith(
+      "MIXPANEL_CONSENT_BOTTOMSHEET",
+      expect.objectContaining({
+        event_category: "UX",
+        event_type: "action",
+        flow
+      })
+    );
+  });
+});
+
+describe("trackMixpanelConsentCancel", () => {
+  it("should track consent cancel event", () => {
+    const flow: FlowType = "onBoarding";
+    trackMixpanelConsentCancel(flow);
+    expect(mixpanelTrack).toHaveBeenCalledWith(
+      "MIXPANEL_CONSENT_CANCEL",
+      expect.objectContaining({
+        event_category: "UX",
+        event_type: "action",
         flow
       })
     );

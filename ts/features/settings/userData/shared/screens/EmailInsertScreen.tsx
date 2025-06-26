@@ -18,6 +18,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
+  AccessibilityInfo,
   Alert,
   Keyboard,
   KeyboardAvoidingView,
@@ -61,6 +62,21 @@ import { trackTosUserExit } from "../../../../authentication/common/analytics";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import { isDisplayZoomed } from "../../../../../utils/device";
 import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
+
+const ContinueButton = (props: { onContinue: () => void }) => (
+  <>
+    <ContentWrapper>
+      <IOButton
+        fullWidth
+        variant="solid"
+        label={I18n.t("global.buttons.continue")}
+        onPress={props.onContinue}
+        testID="continue-button"
+      />
+    </ContentWrapper>
+    <VSpacer size={16} />
+  </>
+);
 
 export type EmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
@@ -118,7 +134,7 @@ const EmailInsertScreen = () => {
   const isProfileEmailAlreadyTaken = useIOSelector(
     isProfileEmailAlreadyTakenSelector
   );
-  const [errorMessage, setErrorMessage] = useState("");
+
   const flow = getFlowType(isOnboarding, isFirstOnboarding);
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   // This reference is used to prevent the refresh visual glitch
@@ -183,6 +199,7 @@ const EmailInsertScreen = () => {
 
   const [areSameEmails, setAreSameEmails] = useState(false);
   const [email, setEmail] = useState(getEmail(optionEmail));
+  const timeout = useRef<number | null>(null);
 
   useEffect(() => {
     if (areSameEmails) {
@@ -203,6 +220,31 @@ const EmailInsertScreen = () => {
     return I18n.t("email.newinsert.alert.description1");
   }, [isFirstOnboarding, isOnboarding, isProfileEmailAlreadyTaken]);
 
+  const invalidEmailLabel = I18n.t("email.newinsert.alert.invalidemail");
+  const invalidEmailA11Y = I18n.t("email.newinsert.alert.invalidemaila11y");
+  const validEmailLabel = I18n.t("email.newinsert.alert.validemaila11y");
+
+  /** Returns the accessibility error label to be announced when the email is not valid.
+   * If the email is valid, it returns undefined.
+   * If the email is not valid, it returns a string with the error message.
+   */
+  const getAccessibilityErrorLabel = (): string | undefined =>
+    pipe(
+      email,
+      O.fold(
+        () => `${invalidEmailA11Y} ${invalidEmailLabel}`,
+        value => {
+          if (!validator.isEmail(value)) {
+            return `${invalidEmailA11Y} ${invalidEmailLabel}`;
+          }
+          if (areSameEmails) {
+            return `${invalidEmailA11Y} ${sameEmailsErrorRender()}`;
+          }
+          return undefined;
+        }
+      )
+    );
+
   /** validate email returning two possible values:
    * - _true_,      if email is valid.
    * - _false_,     if email has been already changed from the user and it is not
@@ -213,39 +255,35 @@ const EmailInsertScreen = () => {
       pipe(
         email,
         O.fold(
-          () => {
-            const errMessage = I18n.t("email.newinsert.alert.invalidemail");
-            setErrorMessage(errMessage);
-
-            return {
-              isValid: false,
-              errorMessage: errMessage
-            };
-          },
+          () => ({
+            isValid: false,
+            errorMessage: invalidEmailLabel
+          }),
           value => {
             if (!validator.isEmail(value)) {
-              const errMessage = I18n.t("email.newinsert.alert.invalidemail");
-              setErrorMessage(errMessage);
-
               return {
                 isValid: false,
-                errorMessage: errMessage
+                errorMessage: invalidEmailLabel
               };
             }
             if (areSameEmails) {
               const errMessage = sameEmailsErrorRender();
-              setErrorMessage(errMessage);
 
               return { isValid: false, errorMessage: errMessage };
             }
-            // If the instered email is valid the error is resetted
-            setErrorMessage("");
+            AccessibilityInfo.announceForAccessibility(validEmailLabel);
 
             return true;
           }
         )
       ),
-    [areSameEmails, email, sameEmailsErrorRender]
+    [
+      areSameEmails,
+      email,
+      invalidEmailLabel,
+      sameEmailsErrorRender,
+      validEmailLabel
+    ]
   );
 
   const continueOnPress = () => {
@@ -262,6 +300,16 @@ const EmailInsertScreen = () => {
       );
       if (isFirstOnboarding) {
         trackSendValidationEmail(flow);
+      }
+    } else {
+      const message = getAccessibilityErrorLabel();
+      if (message) {
+        // eslint-disable-next-line functional/immutable-data
+        timeout.current = setTimeout(() => {
+          AccessibilityInfo.announceForAccessibilityWithOptions(message, {
+            queue: true
+          });
+        }, 300);
       }
     }
   };
@@ -350,6 +398,11 @@ const EmailInsertScreen = () => {
         }
       });
     }
+    return () => {
+      if (timeout.current !== null) {
+        clearTimeout(timeout.current);
+      }
+    };
   }, [isOnboarding, navigation, userNavigateToEmailValidationScreen]);
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -488,13 +541,14 @@ const EmailInsertScreen = () => {
               textInputProps={{
                 autoCorrect: false,
                 autoCapitalize: "none",
-                inputMode: "email"
+                inputMode: "email",
+                returnKeyType: "done"
               }}
               accessibilityLabel={I18n.t("email.newinsert.label")}
-              accessibilityHint={errorMessage}
               placeholder={I18n.t("email.newinsert.label")}
+              accessibilityErrorLabel={getAccessibilityErrorLabel()}
               onValidate={isValidEmail}
-              errorMessage={I18n.t("email.newinsert.alert.invalidemail")}
+              errorMessage={invalidEmailLabel}
               value={pipe(
                 email,
                 O.getOrElse(() => EMPTY_EMAIL)
@@ -503,24 +557,19 @@ const EmailInsertScreen = () => {
             />
           </ContentWrapper>
         </ScrollView>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "android" ? undefined : "padding"}
-          keyboardVerticalOffset={Platform.select({
-            ios: 110 + 16,
-            android: themeVariables.contentPadding
-          })}
-        >
-          <ContentWrapper>
-            <IOButton
-              fullWidth
-              variant="solid"
-              label={I18n.t("global.buttons.continue")}
-              onPress={continueOnPress}
-              testID="continue-button"
-            />
-          </ContentWrapper>
-          <VSpacer size={16} />
-        </KeyboardAvoidingView>
+        {isScreenZoomed ? (
+          <ContinueButton onContinue={continueOnPress} />
+        ) : (
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "android" ? undefined : "padding"}
+            keyboardVerticalOffset={Platform.select({
+              ios: 110 + 16,
+              android: themeVariables.contentPadding
+            })}
+          >
+            <ContinueButton onContinue={continueOnPress} />
+          </KeyboardAvoidingView>
+        )}
       </SafeAreaView>
     </LoadingSpinnerOverlay>
   );

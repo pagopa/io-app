@@ -168,12 +168,6 @@ const warningWaitNavigatorTime = 2000 as Millisecond;
 export function* initializeApplicationSaga(
   startupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {
-  // ingress screen
-  const isBlockingScreen = yield* select(isBlockingScreenSelector);
-  if (isBlockingScreen) {
-    return;
-  }
-
   // LV
   const handleSessionExpiration = !!(
     startupAction?.payload && startupAction.payload.handleSessionExpiration
@@ -300,6 +294,12 @@ export function* initializeApplicationSaga(
   const remoteConfig = yield* select(remoteConfigSelector);
   if (O.isNone(remoteConfig)) {
     yield* take(backendStatusLoadSuccess);
+  }
+
+  // ingress screen
+  const isBlockingScreen = yield* select(isBlockingScreenSelector);
+  if (isBlockingScreen) {
+    return;
   }
 
   // Whether the user is currently logged in.

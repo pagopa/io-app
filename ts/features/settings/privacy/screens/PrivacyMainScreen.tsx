@@ -59,6 +59,7 @@ type PrivacyNavListItem = {
  * - send a request to delete his profile
  * - send a request to export all his data
  */
+
 const PrivacyMainScreen = ({ navigation }: Props) => {
   const dispatch = useIODispatch();
 
@@ -291,7 +292,12 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       item: { value, description, onPress, topElement, testID }
     }: ListRenderItemInfo<PrivacyNavListItem>) => (
       <ListItemNav
-        accessibilityLabel={value}
+        accessibilityLabel={`${value} ${description} ${
+          topElement?.badgeProps?.text
+            ? I18n.t("profile.main.privacy.status") +
+              topElement.badgeProps?.text
+            : ""
+        }`}
         value={value}
         description={description}
         onPress={onPress}

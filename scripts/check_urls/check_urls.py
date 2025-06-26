@@ -234,8 +234,6 @@ if not run_test and __name__ == '__main__':
         "https://collaudo.idserver.servizicie.interno.gov.it/idp"
         # localhost is not reachable
         "https://localhost",
-        # local url used for E2E tests
-        "http://127.0.0.1:3000/api/v1/cgn/delete",
         # not accessible outside of PagoPA
         "https://docs.google.com/presentation/d/11rEttb7lJYlRqgFpl4QopyjFmjt2Q0K8uis6JhAQaCw/edit#slide=id.p"
     }
