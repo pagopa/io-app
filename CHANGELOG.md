@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0-canary.7172](https://github.com/pagopa/io-app/compare/3.8.0-rc.8...3.8.0-canary.7172) (2025-06-26)
+
+
+### Bug Fixes
+
+* [[IOPID-3209](https://pagopa.atlassian.net/browse/IOPID-3209),[IOPID-3228](https://pagopa.atlassian.net/browse/IOPID-3228)] Connectivity edge case ([#7124](https://github.com/pagopa/io-app/issues/7124)) ([cd508c8](https://github.com/pagopa/io-app/commit/cd508c844054b575553ac17c167316bf52a50ac9))
+
+
+### Chores
+
+* bump skia to 2.0.7 ([303d829](https://github.com/pagopa/io-app/commit/303d8294c36e3a8964abcbd4c349d6e19de6553b))
+
 ## [3.8.0-rc.8](https://github.com/pagopa/io-app/compare/3.8.0-rc.7...3.8.0-rc.8) (2025-06-25)
 
 
