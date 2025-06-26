@@ -50,7 +50,6 @@ export const MessageDetailsReminderExpiring = ({
         didShowCalendarModalRef.current = false;
         // 350 is the minimum delay. Lower values will
         // not prevent the back button to steal focus
-        console.log(`=== WHY`);
         setAccessibilityFocus(alertRef, 350 as Millisecond);
       }
     }, [didShowCalendarModalRef])
