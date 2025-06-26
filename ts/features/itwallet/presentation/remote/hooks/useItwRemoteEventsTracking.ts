@@ -9,7 +9,7 @@ import {
   getOrderedCredential,
   trackItwRemoteIdentityNeedsVerification,
   trackItwRemoteMandatoryCredentialMissing,
-  trackItwRemoteMandatoryCredentialNotValid,
+  trackItwRemoteInvalidMandatoryCredential,
   trackItwRemoteRPGenericFailure,
   trackItwRemoteRPInvalidAuthResponse,
   trackItwRemoteRequestObjectFailure,
@@ -59,7 +59,7 @@ export const useItwRemoteEventsTracking = ({ failure }: Params) => {
       case RemoteFailureType.INVALID_CREDENTIALS_STATUS: {
         const { invalidCredentials } = failure.reason;
         const { credential, count } = extractTrackingData(invalidCredentials);
-        return trackItwRemoteMandatoryCredentialNotValid({
+        return trackItwRemoteInvalidMandatoryCredential({
           not_valid_credential: credential,
           not_valid_credential_number: count
         });

@@ -122,7 +122,7 @@ export const trackItwRemoteMandatoryCredentialMissing = ({
   );
 };
 
-export const trackItwRemoteMandatoryCredentialNotValid = ({
+export const trackItwRemoteInvalidMandatoryCredential = ({
   not_valid_credential,
   not_valid_credential_number
 }: ItwRemoteInvalidCredential) => {

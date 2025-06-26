@@ -12,7 +12,7 @@ import {
   ItwFailureType
 } from "../../../common/utils/ItwFailureTypes.ts";
 import { trackItwRemoteDeepLinkFailure } from "../analytics";
-import { trackItwKoState } from "../../../analytics";
+import { trackItwKoStateAction } from "../../../analytics";
 
 type Props = {
   /**
@@ -56,7 +56,7 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
   const supportModalAction = {
     label: primaryActionLabel,
     onPress: () => {
-      trackItwKoState({
+      trackItwKoStateAction({
         reason: failure,
         cta_category: "custom_1",
         cta_id: primaryActionLabel
@@ -82,7 +82,7 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
         secondaryAction={{
           label: secondaryActionLabel,
           onPress: () => {
-            trackItwKoState({
+            trackItwKoStateAction({
               reason: failure,
               cta_category: "custom_2",
               cta_id: secondaryActionLabel
