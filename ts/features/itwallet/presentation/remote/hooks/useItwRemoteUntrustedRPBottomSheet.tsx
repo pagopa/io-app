@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { memo } from "react";
 import I18n from "../../../../../i18n.ts";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
+import { trackItwRemoteUntrustedRPBottomSheet } from "../analytics";
 
 /**
  * Content component for the Not Trusted RP bottom sheet
@@ -34,8 +35,8 @@ const ItwRemoteUntrustedRPBottomSheetContent = memo(() => (
  * Hook to create the  Untrusted RP bottom sheet
  * @returns Bottom sheet modal object
  */
-export const useItwRemoteUntrustedRPBottomSheet = () =>
-  useIOBottomSheetModal({
+export const useItwRemoteUntrustedRPBottomSheet = () => {
+  const bottomSheet = useIOBottomSheetModal({
     title: I18n.t(
       "features.itWallet.presentation.remote.untrustedRpScreen.bottomSheet.title"
     ),
@@ -56,3 +57,15 @@ export const useItwRemoteUntrustedRPBottomSheet = () =>
       />
     ) */
   });
+
+  // Add to the present function the tracking of the bottom sheet
+  const presentWithTrack = () => {
+    trackItwRemoteUntrustedRPBottomSheet();
+    bottomSheet.present();
+  };
+
+  return {
+    ...bottomSheet,
+    presentWithTrack
+  };
+};

@@ -155,6 +155,9 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "ITW_REMOTE":
+        /* openDeepLink(
+          "https://continua.io.pagopa.it/itw/auth?client_id=abc123x"
+        ); */
         navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
           screen: ITW_REMOTE_ROUTES.REQUEST_VALIDATION,
           params: barcode.itwRemoteRequestPayload

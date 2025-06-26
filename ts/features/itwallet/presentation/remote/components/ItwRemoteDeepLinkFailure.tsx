@@ -11,6 +11,8 @@ import {
   ItwFailure,
   ItwFailureType
 } from "../../../common/utils/ItwFailureTypes.ts";
+import { trackItwRemoteDeepLinkFailure } from "../analytics";
+import { trackItwKoState } from "../../../analytics";
 
 type Props = {
   /**
@@ -22,6 +24,11 @@ type Props = {
    */
   payload: Partial<ItwRemoteRequestPayload>;
 };
+
+const primaryActionLabel = I18n.t("features.itWallet.support.button");
+const secondaryActionLabel = I18n.t(
+  "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.secondaryAction"
+);
 
 /**
  * Component that renders an error message for an invalid deep link payload
@@ -47,9 +54,18 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
   });
 
   const supportModalAction = {
-    label: I18n.t("features.itWallet.support.button"),
-    onPress: supportModal.present
+    label: primaryActionLabel,
+    onPress: () => {
+      trackItwKoState({
+        reason: failure,
+        cta_category: "custom_1",
+        cta_id: primaryActionLabel
+      });
+      supportModal.present();
+    }
   };
+
+  trackItwRemoteDeepLinkFailure(failure);
 
   return (
     <>
@@ -64,10 +80,13 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
         pictogram={"umbrella"}
         action={supportModalAction}
         secondaryAction={{
-          label: I18n.t(
-            "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.secondaryAction"
-          ),
+          label: secondaryActionLabel,
           onPress: () => {
+            trackItwKoState({
+              reason: failure,
+              cta_category: "custom_2",
+              cta_id: secondaryActionLabel
+            });
             navigation.popToTop();
           }
         }}

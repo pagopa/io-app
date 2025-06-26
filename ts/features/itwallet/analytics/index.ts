@@ -17,6 +17,7 @@ import {
   resetOfflineAccessReason,
   setOfflineAccessReason
 } from "../../ingress/store/actions";
+import { RemoteFailureType } from "../presentation/remote/machine/failure";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -46,7 +47,7 @@ const mixPanelCredentials = [
   "ITW_TS_V2"
 ] as const;
 
-type MixPanelCredential = (typeof mixPanelCredentials)[number];
+export type MixPanelCredential = (typeof mixPanelCredentials)[number];
 
 type TrackCredentialDetail = {
   credential: MixPanelCredential; // MixPanelCredential
@@ -179,6 +180,29 @@ type ItwOfflineBanner = {
 
 export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
 
+/**
+ * Actions that trigger the requirement for L3 upgrade.
+ * This type represents the user action that was performed immediately before
+ * the L3 mandatory upgrade screen was displayed.
+ * Add new values when implementing additional flows that require L3 upgrade.
+ */
+export enum ItwL3UpgradeTrigger {
+  REMOTE_QR_CODE = "remote_qr_code"
+}
+
+export type ItwFlow = "L2" | "L3";
+
+export type ItwDismissContext = {
+  screen_name: string;
+  itw_flow: ItwFlow;
+};
+
+export type ItwDismissAction = {
+  screen_name: string;
+  itw_flow: ItwFlow;
+  user_action: string;
+};
+
 // #region SCREEN VIEW EVENTS
 export const trackWalletDataShare = (properties: ItwWalletDataShare) => {
   void mixpanelTrack(
@@ -302,6 +326,14 @@ export function trackItwOfflineBottomSheet() {
     buildEventProperties("UX", "screen_view")
   );
 }
+
+export function trackItwDismissContext(dismissContext: ItwDismissContext) {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OPERATION_BLOCK,
+    buildEventProperties("UX", "screen_view", dismissContext)
+  );
+}
+
 // #endregion SCREEN VIEW EVENTS
 
 // #region ACTIONS
@@ -347,7 +379,7 @@ export const trackStartAddNewCredential = (wallet_item: NewCredential) => {
   );
 };
 
-export const trackWalletCreationFailed = (params: KoState) => {
+export const trackItwKoState = (params: KoState) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_KO_STATE_ACTION_SELECTED,
     buildEventProperties("UX", "action", { ...params })
@@ -574,6 +606,13 @@ export const trackCopyListItem = (properties: ItwCopyListItem) => {
   );
 };
 
+export const trackItwDismissAction = (dismissAction: ItwDismissAction) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_OPERATION_BLOCK_ACTION,
+    buildEventProperties("UX", "action", dismissAction)
+  );
+};
+
 // #endregion ACTIONS
 
 // #region ERRORS
@@ -786,6 +825,13 @@ export const trackItwWalletBadState = () => {
   );
 };
 
+export const trackItwUpgradeL3Mandatory = (action: ItwL3UpgradeTrigger) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_UPGRADE_L3_MANDATORY,
+    buildEventProperties("KO", "screen_view", { action })
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
@@ -978,5 +1024,24 @@ export const trackOfflineAccessReason = (
         property: "OFFLINE_ACCESS_REASON",
         value: "not_available"
       });
+  }
+};
+
+/**
+ * Returns the dismiss context for a given failure type.
+ * This is used to determine which screen and flow to show when a failure occurs.
+ * @param failureType - The type of failure that occurred
+ * @returns An ItwDismissContext object or undefined if no dismiss context is defined for the failure type
+ */
+export const getDimissContextFromFailure = (
+  failureType: RemoteFailureType
+): ItwDismissContext | undefined => {
+  switch (failureType) {
+    case RemoteFailureType.WALLET_INACTIVE:
+      return { screen_name: "ITW_REMOTE_L3_UPGRADE", itw_flow: "L3" };
+    case RemoteFailureType.MISSING_CREDENTIALS:
+      return { screen_name: "ITW_REMOTE_MISSING_CREDENTIALS", itw_flow: "L3" };
+    default:
+      return undefined;
   }
 };

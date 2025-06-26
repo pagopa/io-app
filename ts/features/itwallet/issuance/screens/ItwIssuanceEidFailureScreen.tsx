@@ -22,7 +22,7 @@ import {
   ZendeskSubcategoryValue,
   useItwFailureSupportModal
 } from "../../common/hooks/useItwFailureSupportModal";
-import { KoState, trackWalletCreationFailed } from "../../analytics";
+import { KoState, trackItwKoState } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
 import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
@@ -77,7 +77,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   const closeIssuance = (errorConfig: KoState) => {
     machineRef.send({ type: "close" });
-    trackWalletCreationFailed(errorConfig);
+    trackItwKoState(errorConfig);
   };
 
   const supportModalAction = {

@@ -22,6 +22,12 @@ import {
   ZendeskSubcategoryValue
 } from "../../../common/hooks/useItwFailureSupportModal.tsx";
 import { useItwSendAuthorizationErrorResponse } from "../hooks/useItwSendAuthorizationErrorResponse.tsx";
+import { useItwRemoteEventsTracking } from "../hooks/useItwRemoteEventsTracking";
+import { trackItwRemoteInvalidAuthResponseBottomSheet } from "../analytics";
+import {
+  getDimissContextFromFailure,
+  trackItwKoState
+} from "../../../analytics";
 
 const zendeskAssistanceErrors = [
   RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE,
@@ -52,10 +58,14 @@ const ContentView = ({ failure }: ContentViewProps) => {
     failure: serializeFailureReason(failure)
   });
 
-  const { bottomSheet, present } = useItwRemoteUntrustedRPBottomSheet();
+  const dismissContext = getDimissContextFromFailure(failure.type);
+
+  const { bottomSheet, presentWithTrack } =
+    useItwRemoteUntrustedRPBottomSheet();
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => machineRef.send({ type: "close" }),
-    customBodyMessage: I18n.t(`${i18nNs}.walletInactiveScreen.alert.body`)
+    customBodyMessage: I18n.t(`${i18nNs}.walletInactiveScreen.alert.body`),
+    dismissContext
   });
 
   const failureSupportModal = useItwFailureSupportModal({
@@ -76,11 +86,29 @@ const ContentView = ({ failure }: ContentViewProps) => {
             pictogram: "umbrella",
             action: {
               label: I18n.t(`${i18nNs}.unexpectedErrorScreen.primaryAction`),
-              onPress: closeMachine
+              onPress: () => {
+                trackItwKoState({
+                  reason: failure,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t(
+                    `${i18nNs}.unexpectedErrorScreen.primaryAction`
+                  )
+                });
+                closeMachine();
+              }
             },
             secondaryAction: {
               label: I18n.t(`${i18nNs}.unexpectedErrorScreen.secondaryAction`),
-              onPress: failureSupportModal.present
+              onPress: () => {
+                trackItwKoState({
+                  reason: failure,
+                  cta_category: "custom_2",
+                  cta_id: I18n.t(
+                    `${i18nNs}.unexpectedErrorScreen.secondaryAction`
+                  )
+                });
+                failureSupportModal.present();
+              }
             }
           };
         case RemoteFailureType.WALLET_INACTIVE:
@@ -178,7 +206,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 `${i18nNs}.relyingParty.invalidAuthResponse.secondaryAction`
               ),
-              onPress: failureSupportModal.present
+              onPress: () => {
+                trackItwRemoteInvalidAuthResponseBottomSheet();
+                failureSupportModal.present();
+              }
             }
           };
         }
@@ -227,7 +258,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             },
             secondaryAction: {
               label: I18n.t(`${i18nNs}.untrustedRpScreen.secondaryAction`),
-              onPress: present
+              onPress: presentWithTrack
             }
           };
         }
@@ -259,6 +290,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
         }
       }
     };
+
+  useItwRemoteEventsTracking({ failure });
 
   const resultScreenProps = getOperationResultScreenContentProps();
 
