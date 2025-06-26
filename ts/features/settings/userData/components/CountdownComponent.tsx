@@ -15,7 +15,11 @@ const Countdown = (props: CountdownProps) => {
   const { timerCount, resetTimer, startTimer, isRunning } = useCountdown();
 
   if (timerCount === 0 && props.onContdownCompleted) {
+useEffect(() => {
+  if (timerCount === 0 && props.onContdownCompleted) {
     props.onContdownCompleted();
+  }
+}, [timerCount, props]);
   }
 
   useEffect(() => {
