@@ -51,6 +51,11 @@ const DownloadProfileDataScreen = () => {
         toast.error(I18n.t("profile.main.privacy.exportData.error"));
         return;
       }
+      /**
+       * When the data submission request is successful and the user has
+       * the screen reader active he is notified that the operation was
+       * successful and then is sent back to the previous page.
+       */
       if (screenReaderEnabled) {
         const message = I18n.t("profile.main.privacy.exportData.a11y");
         AccessibilityInfo.announceForAccessibility(message);
@@ -58,9 +63,10 @@ const DownloadProfileDataScreen = () => {
         timer = setTimeout(() => {
           goBack();
         }, 2000);
-        return;
+        // Otherwise the user is sent back to the previous page
+      } else {
+        goBack();
       }
-      goBack();
     }
     return () => {
       if (timer !== undefined) {
