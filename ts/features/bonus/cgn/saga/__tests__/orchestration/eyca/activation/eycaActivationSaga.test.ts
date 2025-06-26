@@ -4,7 +4,7 @@ import { getGenericError } from "../../../../../../../../utils/errors";
 import {
   navigateToCgnDetails,
   navigateToEycaActivationLoading
-} from "../../../../../navigation/actions";
+} from "../../../../orchestration/navigation/actions";
 import { cgnEycaActivation } from "../../../../../store/actions/eyca/activation";
 import { cgnEycaStatus } from "../../../../../store/actions/eyca/details";
 import {

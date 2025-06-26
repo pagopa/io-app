@@ -9,12 +9,9 @@ import {
 } from "../../../../../../sagas/workUnit";
 import { navigateBack } from "../../../../../../store/actions/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
+import { ITW_ROUTES } from "../../../../../itwallet/navigation/routes";
 import { MESSAGES_ROUTES } from "../../../../../messages/navigation/routes";
 import { BONUS_ROUTES } from "../../../../common/navigation/navigator";
-import {
-  navigateToCgnActivationInformationTos,
-  navigateToCgnDetails
-} from "../../../navigation/actions";
 import CGN_ROUTES from "../../../navigation/routes";
 import {
   cgnActivationBack,
@@ -22,7 +19,10 @@ import {
   cgnActivationComplete,
   cgnActivationFailure
 } from "../../../store/actions/activation";
-import { ITW_ROUTES } from "../../../../../itwallet/navigation/routes";
+import {
+  navigateToCgnActivationInformationTos,
+  navigateToCgnDetails
+} from "../navigation/actions";
 
 function* cgnActivationWorkUnit() {
   return yield* call(executeWorkUnit, {
