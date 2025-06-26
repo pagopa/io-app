@@ -1,5 +1,8 @@
 import { ProximityEvents } from "./events.ts";
 
+/**
+ * Thrown when requested documents are not valid
+ */
 export class InvalidRequestedDocumentsError extends Error {
   constructor(message?: string) {
     super(message);
