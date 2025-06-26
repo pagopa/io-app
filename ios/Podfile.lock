@@ -3,6 +3,7 @@ PODS:
   - boost (1.84.0)
   - BVLinearGradient (2.5.6):
     - React
+  - CieSDK (0.1.11)
   - DoubleConversion (1.1.6)
   - fast_float (6.1.4)
   - FBLazyVector (0.78.2)
@@ -11,6 +12,28 @@ PODS:
   - hermes-engine (0.78.2):
     - hermes-engine/Pre-built (= 0.78.2)
   - hermes-engine/Pre-built (0.78.2)
+  - IoReactNativeCie (1.0.1):
+    - CieSDK (~> 0.1.11)
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - IoReactNativeProximity (0.6.0):
     - DoubleConversion
     - glog
@@ -176,7 +199,7 @@ PODS:
     - Yoga
   - pagopa-io-react-native-login-utils (1.1.0):
     - React-Core
-  - pagopa-io-react-native-secure-storage (0.2.0):
+  - pagopa-io-react-native-secure-storage (0.2.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2238,6 +2261,7 @@ DEPENDENCIES:
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
+  - "IoReactNativeCie (from `../node_modules/@pagopa/io-react-native-cie`)"
   - "IoReactNativeProximity (from `../node_modules/@pagopa/io-react-native-proximity`)"
   - jail-monkey (from `../node_modules/jail-monkey`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
@@ -2357,6 +2381,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - CieSDK
     - IOWalletProximity
     - JOSESwift
     - lottie-ios
@@ -2395,6 +2420,8 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-2025-01-13-RNv0.78.0-a942ef374897d85da38e9c8904574f8376555388
+  IoReactNativeCie:
+    :path: "../node_modules/@pagopa/io-react-native-cie"
   IoReactNativeProximity:
     :path: "../node_modules/@pagopa/io-react-native-proximity"
   jail-monkey:
@@ -2626,12 +2653,14 @@ SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   BVLinearGradient: 44fd36b87f318e7933c4c91a6991442a5e3f5bcf
+  CieSDK: ad23ec4b2f86c1e505030e68105ea509443d6706
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
   FBLazyVector: e32d34492c519a2194ec9d7f5e7a79d11b73f91c
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   hermes-engine: 2771b98fb813fdc6f92edd7c9c0035ecabf9fee7
+  IoReactNativeCie: 54bdf08a12242b95af9caabfe7e045a06bec6f0c
   IoReactNativeProximity: 3efb5d2d87ea676bfd962fc710e81da1726f5dee
   IOWalletProximity: 55d5527de91a971dbcdbdda1838860c9860683ac
   jail-monkey: 1846061ac12e861ac5a8ec7197b0daa775b83733
@@ -2646,7 +2675,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-integrity: 6d5ea10255884e516422e09c5cd937d4dbaa8f27
   pagopa-io-react-native-jwt: 0ac1bc58dbd1e40277c4c9086af7898438a7ea45
   pagopa-io-react-native-login-utils: a493266f15ae2476ce629469658d81e93981b273
-  pagopa-io-react-native-secure-storage: 90b255f9597712d45a1087b6c10c1ab45c3dff79
+  pagopa-io-react-native-secure-storage: 7b050d9332b61b2f769bf8d7f6f145f479875976
   pagopa-react-native-zendesk: 6b72253f8f7cc89054dfaeb5f3ff3b652a3c34fe
   RCT-Folly: e78785aa9ba2ed998ea4151e314036f6c49e6d82
   RCTDeprecation: be794de7dc6ed8f9f7fbf525f86e7651b8b68746
