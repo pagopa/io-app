@@ -20,9 +20,11 @@ const EycaActivationLoading: FunctionComponent<Props> = (props: Props) =>
     <LoadingComponent
       captionTitle={I18n.t("bonus.cgn.activation.eyca.loading.caption")}
       captionSubtitle={I18n.t("bonus.cgn.activation.eyca.loading.subCaption")}
+      testID="eyca-activation-loading"
     />
   ) : (
     <OperationResultScreenContent
+      testID="eyca-activation-error"
       pictogram="umbrella"
       enableAnimatedPictogram
       title={I18n.t("bonus.cgn.activation.eyca.error.title")}
