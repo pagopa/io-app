@@ -26,7 +26,7 @@ import { useItwRemoteEventsTracking } from "../hooks/useItwRemoteEventsTracking"
 import { trackItwRemoteInvalidAuthResponseBottomSheet } from "../analytics";
 import {
   getDimissContextFromFailure,
-  trackItwKoState
+  trackItwKoStateAction
 } from "../../../analytics";
 
 const zendeskAssistanceErrors = [
@@ -87,7 +87,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             action: {
               label: I18n.t(`${i18nNs}.unexpectedErrorScreen.primaryAction`),
               onPress: () => {
-                trackItwKoState({
+                trackItwKoStateAction({
                   reason: failure,
                   cta_category: "custom_1",
                   cta_id: I18n.t(
@@ -100,7 +100,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             secondaryAction: {
               label: I18n.t(`${i18nNs}.unexpectedErrorScreen.secondaryAction`),
               onPress: () => {
-                trackItwKoState({
+                trackItwKoStateAction({
                   reason: failure,
                   cta_category: "custom_2",
                   cta_id: I18n.t(

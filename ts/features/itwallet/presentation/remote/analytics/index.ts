@@ -178,9 +178,8 @@ export const trackItwRemoteDeepLinkFailure = (error: Error) => {
 // TODO: this function should be updated when new L3 credentials are added
 export const getOrderedCredential = (
   missingCredentials: Array<string>
-): string => 
-   Object.keys(CREDENTIALS_MAP)
+): string =>
+  Object.keys(CREDENTIALS_MAP)
     .filter(credentialType => missingCredentials.includes(credentialType))
     .map(credentialType => CREDENTIALS_MAP[credentialType])
     .join(" - ");
-;

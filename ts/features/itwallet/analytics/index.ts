@@ -47,7 +47,7 @@ const mixPanelCredentials = [
   "ITW_TS_V2"
 ] as const;
 
-export type MixPanelCredential = (typeof mixPanelCredentials)[number];
+type MixPanelCredential = (typeof mixPanelCredentials)[number];
 
 type TrackCredentialDetail = {
   credential: MixPanelCredential; // MixPanelCredential
@@ -379,7 +379,7 @@ export const trackStartAddNewCredential = (wallet_item: NewCredential) => {
   );
 };
 
-export const trackItwKoState = (params: KoState) => {
+export const trackItwKoStateAction = (params: KoState) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_KO_STATE_ACTION_SELECTED,
     buildEventProperties("UX", "action", { ...params })
@@ -825,10 +825,12 @@ export const trackItwWalletBadState = () => {
   );
 };
 
-export const trackItwUpgradeL3Mandatory = (action: ItwL3UpgradeTrigger) => {
+export const trackItwUpgradeL3Mandatory = (
+  upgradeTrigger: ItwL3UpgradeTrigger
+) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_UPGRADE_L3_MANDATORY,
-    buildEventProperties("KO", "screen_view", { action })
+    buildEventProperties("KO", "screen_view", { upgradeTrigger })
   );
 };
 
