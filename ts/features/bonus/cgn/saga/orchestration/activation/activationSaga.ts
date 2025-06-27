@@ -10,7 +10,6 @@ import {
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { ITW_ROUTES } from "../../../../../itwallet/navigation/routes";
 import { MESSAGES_ROUTES } from "../../../../../messages/navigation/routes";
-import { BONUS_ROUTES } from "../../../../common/navigation/navigator";
 import CGN_ROUTES from "../../../navigation/routes";
 import {
   cgnActivationBack,
@@ -57,12 +56,7 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
     });
   }
   if (result === "completed") {
-    if (initialScreen?.name === BONUS_ROUTES.BONUS_AVAILABLE_LIST) {
-      yield* call(() =>
-        NavigationService.dispatchNavigationAction(CommonActions.goBack())
-      );
-      yield* call(navigateToCgnDetails);
-    } else if (
+    if (
       initialScreen?.name &&
       INITIAL_SCREENS_TO_WALLET_HOME.includes(initialScreen.name)
     ) {
