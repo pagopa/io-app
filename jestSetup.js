@@ -22,6 +22,7 @@ const mockRNQRGenerator = {
 import "react-native-get-random-values";
 require("@shopify/flash-list/jestSetup");
 jest.mock("rn-qr-generator", () => mockRNQRGenerator);
+jest.mock("react-native-screenshot-prevent", () => ({}));
 
 jest.mock("react-native-i18n");
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
