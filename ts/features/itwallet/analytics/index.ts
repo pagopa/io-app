@@ -825,11 +825,11 @@ export const trackItwWalletBadState = () => {
 };
 
 export const trackItwUpgradeL3Mandatory = (
-  upgradeTrigger: ItwL3UpgradeTrigger
+  action: ItwL3UpgradeTrigger
 ) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_UPGRADE_L3_MANDATORY,
-    buildEventProperties("KO", "screen_view", { upgradeTrigger })
+    buildEventProperties("KO", "screen_view", { action })
   );
 };
 
