@@ -1,0 +1,62 @@
+@startuml
+start
+:tap on "Aggiungi/Rimuovi Promemoria";
+if (Has calendar permission?) then (yes)
+else (no)
+  :request system permission;
+  if(granted?) then (yes)
+  else (no)
+    if (show popup\n"Per aggiungere il promemoria, devi consentire\na IO di accedere al tuo calendario"\nConsenti l'accesso\nAnnulla) then (consenti)
+      :open app System settings;
+    else (annulla)
+    endif
+    stop
+  endif
+endif
+if (Add or remove?) then (add)
+  if (has preferred calendar?) then (yes)
+    label extraspace1
+    label extraspace2
+    label extraspace3
+    label extraspace4
+    label addEventToCalendar
+    if (event is already in calendar?) then (yes)
+      if(show popup\n"Esiste già un evento\nEsiste già un evento corrispondente\nal messaggio selezionato nel calendario.\nVuoi mantenere quello precedente o aggiungerne uno nuovo?"\nAggiungi un nuovo evento\nMantieni l'evento precedente\nAnnulla) then (Aggiungi)
+        label addEvent
+        if (Add to calendar) then (success)
+          :show toast\nPromemoria aggiunto;
+        else (failure)
+          :show toast\nErrore durante l'aggiunta del promemoria,\nriprova per piacere;
+        endif
+      else (Mantieni\nAnnulla)
+      endif
+    else (no)
+      label extraSpaceA1
+      label extraSpaceA2
+      label extraSpaceA3
+      label extraSpaceA4
+      goto addEvent
+    endif
+    stop
+  else (no)
+    :show CalendarSelection;
+    if (Calendar selected?) then (yes)
+      label extraspaceA
+      goto addEventToCalendar
+    else (no\nCancel)
+      :;
+    endif
+    stop
+  endif
+else (remove)
+  if (show popup\nVuoi davvero rimuovere il promemoria?\nRimuovi promemoria\nAnnulla l'operazione) then (Rimuovi)
+    if (Event removed?) then (yes)
+      :show toast\nPromemoria eliminato;
+    else (no)
+      :show toast\nErrore durante l'eliminazione del promemoria,\nriprova per piacere;
+    endif
+  else (Annulla)
+  endif
+  stop
+endif
+@enduml
