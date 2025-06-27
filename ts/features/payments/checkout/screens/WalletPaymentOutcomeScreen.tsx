@@ -303,10 +303,7 @@ const WalletPaymentOutcomeScreen = () => {
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       psp_selected: paymentAnalyticsData?.selectedPsp,
       browser_type: paymentAnalyticsData?.browserType,
-      payment_phase:
-        outcome === WalletPaymentOutcomeEnum.GENERIC_ERROR
-          ? getPaymentPhaseFromStep(currentStep)
-          : undefined
+      payment_phase: getPaymentPhaseFromStep(currentStep)
     });
   };
 
