@@ -68,7 +68,7 @@ describe("MessageDetailsReminderExpiring", () => {
     expect(spiedOnMockedSetAccessibilityFocus.mock.calls.length).toBe(1);
     expect(spiedOnMockedSetAccessibilityFocus.mock.calls[0].length).toBe(2);
     // At the moment, there is not way to check for the first parameter
-    expect(spiedOnMockedSetAccessibilityFocus.mock.calls[0][1]).toBe(350);
+    expect(spiedOnMockedSetAccessibilityFocus.mock.calls[0][1]).toBe(1000);
   });
 });
 
