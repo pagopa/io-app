@@ -17,9 +17,6 @@ import { MessageCategory } from "../../../../../../definitions/backend/MessageCa
 import { toggleScheduledMessageArchivingAction } from "../../../store/actions/archiving";
 import * as homeUtils from "../homeUtils";
 
-jest.mock("rn-qr-generator", () => ({}));
-jest.mock("react-native-screenshot-prevent", () => ({}));
-
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual<typeof import("@react-navigation/native")>(
