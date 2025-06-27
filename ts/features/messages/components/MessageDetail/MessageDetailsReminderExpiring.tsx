@@ -48,9 +48,9 @@ export const MessageDetailsReminderExpiring = ({
       if (didShowCalendarModalRef.current) {
         // eslint-disable-next-line functional/immutable-data
         didShowCalendarModalRef.current = false;
-        // 350 is the minimum delay. Lower values will
-        // not prevent the back button to steal focus
-        setAccessibilityFocus(alertRef, 350 as Millisecond);
+        // 1000 is a safe delay on low spec Android devices. Lower
+        // values will not prevent the back button to steal focus
+        setAccessibilityFocus(alertRef, 1000 as Millisecond);
       }
     }, [didShowCalendarModalRef])
   );
