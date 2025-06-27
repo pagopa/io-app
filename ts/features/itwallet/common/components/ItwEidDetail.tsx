@@ -22,7 +22,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import {
   CREDENTIALS_MAP,
-  ID_STATUS_MAP,
+  mapEidStatusToMixpanel,
   trackCredentialDetail,
   trackWalletStartDeactivation
 } from "../../analytics";
@@ -60,7 +60,7 @@ const ItwEidDetail = ({ navigation }: ItwEidInfoBottomSheetContentProps) => {
       if (eidStatus) {
         trackCredentialDetail({
           credential: CREDENTIALS_MAP[credential.credentialType],
-          credential_status: ID_STATUS_MAP[eidStatus]
+          credential_status: mapEidStatusToMixpanel(eidStatus)
         });
       }
     }, [credential.credentialType]);
