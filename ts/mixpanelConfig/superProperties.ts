@@ -90,9 +90,12 @@ export const updateMixpanelSuperProperties = async (
     const SERVICE_CONFIGURATION = serviceConfigHandler(state);
     const ITW_STATUS_V2 = walletStatusHandler(state);
     const ITW_ID_V2 = idStatusHandler(state);
-    const ITW_PG_V2 = pgStatusHandler(state);
-    const ITW_TS_V2 = tsStatusHandler(state);
-    const ITW_CED_V2 = cedStatusHandler(state);
+    const ITW_PG_V2 = credentialStatusHandler("MDL", state);
+    const ITW_TS_V2 = credentialStatusHandler(
+      "EuropeanHealthInsuranceCard",
+      state
+    );
+    const ITW_CED_V2 = credentialStatusHandler("EuropeanDisabilityCard", state);
     const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
     const CGN_STATUS = cgnStatusHandler(state);
     const WELFARE_STATUS = welfareStatusHandler(state);
@@ -152,20 +155,15 @@ const idStatusHandler = (state: GlobalState): ItwId => {
     ? mapEidStatusToMixpanel(eidStatus)
     : "not_available";
 };
-const pgStatusHandler = (state: GlobalState): ItwCredentialMixpanelStatus => {
+
+const credentialStatusHandler = (
+  type: string,
+  state: GlobalState
+): ItwCredentialMixpanelStatus => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
-  return getCredentialMixpanelStatus(credentialsByType.MDL);
+  return getCredentialMixpanelStatus(credentialsByType[type]);
 };
-const tsStatusHandler = (state: GlobalState): ItwCredentialMixpanelStatus => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
-  return getCredentialMixpanelStatus(
-    credentialsByType.EuropeanHealthInsuranceCard
-  );
-};
-const cedStatusHandler = (state: GlobalState): ItwCredentialMixpanelStatus => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
-  return getCredentialMixpanelStatus(credentialsByType.EuropeanDisabilityCard);
-};
+
 const offlineStatusHandler = (state: GlobalState): ConnectivityStatus => {
   const isConnected = isConnectedSelector(state);
   return isConnected ? "online" : "offline";

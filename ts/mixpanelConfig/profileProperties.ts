@@ -83,11 +83,15 @@ export const updateMixpanelProfileProperties = async (
     const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
     const CGN_STATUS = cgnStatusHandler(state);
     const FONT_PREFERENCE = fontPreferenceSelector(state);
-    const ITW_CED_V2 = cedStatusHandler(state);
+
     const ITW_ID_V2 = idStatusHandler(state);
-    const ITW_PG_V2 = pgStatusHandler(state);
+    const ITW_PG_V2 = credentialStatusHandler("MDL", state);
+    const ITW_TS_V2 = credentialStatusHandler(
+      "EuropeanHealthInsuranceCard",
+      state
+    );
+    const ITW_CED_V2 = credentialStatusHandler("EuropeanDisabilityCard", state);
     const ITW_STATUS_V2 = walletStatusHandler(state);
-    const ITW_TS_V2 = tsStatusHandler(state);
     const LOGIN_METHOD = loginMethodHandler(state);
     const LOGIN_SESSION = loginSessionConfigHandler(state);
     const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
@@ -165,17 +169,11 @@ const idStatusHandler = (state: GlobalState): ItwId => {
     ? mapEidStatusToMixpanel(eidStatus)
     : "not_available";
 };
-const pgStatusHandler = (state: GlobalState): ItwCredentialMixpanelStatus => {
+
+const credentialStatusHandler = (
+  type: string,
+  state: GlobalState
+): ItwCredentialMixpanelStatus => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
-  return getCredentialMixpanelStatus(credentialsByType.MDL);
-};
-const tsStatusHandler = (state: GlobalState): ItwCredentialMixpanelStatus => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
-  return getCredentialMixpanelStatus(
-    credentialsByType.EuropeanHealthInsuranceCard
-  );
-};
-const cedStatusHandler = (state: GlobalState): ItwCredentialMixpanelStatus => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
-  return getCredentialMixpanelStatus(credentialsByType.EuropeanDisabilityCard);
+  return getCredentialMixpanelStatus(credentialsByType[type]);
 };
