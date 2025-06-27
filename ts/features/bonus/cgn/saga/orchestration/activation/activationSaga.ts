@@ -7,14 +7,9 @@ import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
-import { navigateBack } from "../../../../../../store/actions/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
+import { ITW_ROUTES } from "../../../../../itwallet/navigation/routes";
 import { MESSAGES_ROUTES } from "../../../../../messages/navigation/routes";
-import { BONUS_ROUTES } from "../../../../common/navigation/navigator";
-import {
-  navigateToCgnActivationInformationTos,
-  navigateToCgnDetails
-} from "../../../navigation/actions";
 import CGN_ROUTES from "../../../navigation/routes";
 import {
   cgnActivationBack,
@@ -22,7 +17,10 @@ import {
   cgnActivationComplete,
   cgnActivationFailure
 } from "../../../store/actions/activation";
-import { ITW_ROUTES } from "../../../../../itwallet/navigation/routes";
+import {
+  navigateToCgnActivationInformationTos,
+  navigateToCgnDetails
+} from "../navigation/actions";
 
 function* cgnActivationWorkUnit() {
   return yield* call(executeWorkUnit, {
@@ -58,10 +56,7 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
     });
   }
   if (result === "completed") {
-    if (initialScreen?.name === BONUS_ROUTES.BONUS_AVAILABLE_LIST) {
-      yield* call(navigateBack);
-      yield* call(navigateToCgnDetails);
-    } else if (
+    if (
       initialScreen?.name &&
       INITIAL_SCREENS_TO_WALLET_HOME.includes(initialScreen.name)
     ) {
