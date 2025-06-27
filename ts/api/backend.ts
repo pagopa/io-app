@@ -18,8 +18,6 @@ import {
   AbortUserDataProcessingT,
   createOrUpdateInstallationDefaultDecoder,
   CreateOrUpdateInstallationT,
-  getPaymentInfoDefaultDecoder,
-  GetPaymentInfoT,
   getServicePreferencesDefaultDecoder,
   GetServicePreferencesT,
   getUserDataProcessingDefaultDecoder,
@@ -283,14 +281,6 @@ export function BackendClient(
     response_decoder: baseResponseDecoder(SuccessResponse)
   };
 
-  const verificaRptT: GetPaymentInfoT = {
-    method: "get",
-    url: ({ rptId, test }) => `/api/v1/payment-requests/${rptId}?test=${test}`,
-    headers: tokenHeaderProducer,
-    query: _q15 => ({}),
-    response_decoder: getPaymentInfoDefaultDecoder()
-  };
-
   const getPaymentInfoV2T: GetPaymentInfoV2T = {
     method: "get",
     url: ({ ["rptId"]: rptId }) => `/api/v1/payment-info/${rptId}`,
@@ -337,9 +327,6 @@ export function BackendClient(
       createFetchRequestForApi(createOrUpdateInstallationT, options)
     ),
     logout: withBearerToken(createFetchRequestForApi(logoutT, options)),
-    getVerificaRpt: withBearerToken(
-      createFetchRequestForApi(verificaRptT, options)
-    ),
     getPaymentInfoV2: withBearerToken(
       createFetchRequestForApi(getPaymentInfoV2T, options)
     ),

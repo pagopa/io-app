@@ -328,7 +328,6 @@
   "profile": {
     "fiscalCode": {
       "accessibility": {
-        "fiscalCodeHint": "Bild des Strichcodes deiner Steuernummer",
         "unavailable": "Nicht verfügbar"
       },
       "title": "Deine persönlichen Dokumente",
@@ -691,15 +690,6 @@
           "label": "Vorstellung von IO",
           "hint": "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
         }
-      },
-      "cie_unsupported": {
-        "title": "Du kannst dich nicht mit CIE anmelden",
-        "body": "Das von dir verwendete Gerät unterstützt den Zugang mit einer elektronischen Identitätskarte (CIE) nicht.",
-        "button": "Verstanden",
-        "nfc_problem": "Zum Lesen der CIE ist ein Gerät mit NFC-Chip erforderlich.",
-        "os_problem": "Ein Betriebssystem mit Android 6.0 oder iOS 13 oder höher ist erforderlich.",
-        "nfc_alert": "Dein Gerät verfügt nicht über NFC.",
-        "os_alert": "Das Betriebssystem des Geräts ist nicht auf dem neuesten Stand."
       },
       "cie_bottom_sheet": {
         "title": "Wie willst du dich anmelden?",

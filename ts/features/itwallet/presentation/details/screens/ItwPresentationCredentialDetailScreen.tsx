@@ -6,7 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import I18n from "../../../../../i18n.ts";
 import {
@@ -67,7 +67,7 @@ type Props = IOStackNavigationRouteProps<
  */
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
-  const { bottomSheet, dismiss } = useItwPresentQRCode();
+  const { bottomSheet } = useItwPresentQRCode();
   const { credentialType } = route.params;
   const credentialOption = useIOSelector(
     itwCredentialByTypeSelector(credentialType)
@@ -87,16 +87,6 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
         dispatch(itwSetReviewPending(true));
       }
     }, [credentialType, isPendingReview, dispatch])
-  );
-
-  useFocusEffect(
-    // eslint-disable-next-line arrow-body-style
-    useCallback(() => {
-      /**
-       * Dismiss the bottom sheet when this screen is no longer in focus.
-       */
-      return dismiss;
-    }, [dismiss])
   );
 
   if (O.isNone(credentialOption)) {
