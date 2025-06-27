@@ -5,9 +5,9 @@ import {
   WalletInstanceAttestation as WalletInstanceAttestationV1
 } from "@pagopa/io-react-native-wallet";
 import { WalletInstanceAttestation as WalletInstanceAttestationV2 } from "@pagopa/io-react-native-wallet-v2";
+import * as Sentry from "@sentry/react-native";
 import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
-import { sendExceptionToSentry } from "../../../../utils/sentryUtils.ts";
 import { regenerateCryptoKey, WIA_KEYTAG } from "./itwCryptoContextUtils";
 import {
   generateIntegrityHardwareKeyTag,
@@ -167,7 +167,11 @@ export const getCurrentWalletInstanceStatus = (
       )
     });
   } catch (e) {
-    sendExceptionToSentry(e, "getCurrentWalletInstanceStatus");
+    Sentry.captureException(e, {
+      tags: {
+        isRequired: true
+      }
+    });
     throw e;
   }
 };
