@@ -1,6 +1,7 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
-import { CREDENTIALS_MAP } from "../../../analytics";
+import { CREDENTIALS_MAP, ItwDismissContext } from "../../../analytics";
+import { RemoteFailureType } from "../machine/failure";
 import {
   ITW_REMOTE_ACTIONS_EVENTS,
   ITW_REMOTE_ERRORS_EVENTS,
@@ -183,3 +184,22 @@ export const getOrderedCredential = (
     .filter(credentialType => missingCredentials.includes(credentialType))
     .map(credentialType => CREDENTIALS_MAP[credentialType])
     .join(" - ");
+
+/**
+ * Returns the dismiss context for a given failure type.
+ * This is used to determine which screen and flow to show when a failure occurs.
+ * @param failureType - The type of failure that occurred
+ * @returns An ItwDismissContext object or undefined if no dismiss context is defined for the failure type
+ */
+export const getDimissContextFromFailure = (
+  failureType: RemoteFailureType
+): ItwDismissContext | undefined => {
+  switch (failureType) {
+    case RemoteFailureType.WALLET_INACTIVE:
+      return { screen_name: "ITW_REMOTE_L3_UPGRADE", itw_flow: "L3" };
+    case RemoteFailureType.MISSING_CREDENTIALS:
+      return { screen_name: "ITW_REMOTE_MISSING_CREDENTIALS", itw_flow: "L3" };
+    default:
+      return undefined;
+  }
+};

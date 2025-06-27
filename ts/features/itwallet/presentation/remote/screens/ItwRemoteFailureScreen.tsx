@@ -23,9 +23,8 @@ import {
 } from "../../../common/hooks/useItwFailureSupportModal.tsx";
 import { useItwSendAuthorizationErrorResponse } from "../hooks/useItwSendAuthorizationErrorResponse.tsx";
 import { useItwRemoteEventsTracking } from "../hooks/useItwRemoteEventsTracking";
-import { trackItwRemoteInvalidAuthResponseBottomSheet } from "../analytics";
+import { getDimissContextFromFailure, trackItwRemoteInvalidAuthResponseBottomSheet } from "../analytics";
 import {
-  getDimissContextFromFailure,
   trackItwKoStateAction
 } from "../../../analytics";
 
