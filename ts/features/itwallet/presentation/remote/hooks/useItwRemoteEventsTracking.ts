@@ -31,6 +31,7 @@ const extractTrackingData = (credentials: Array<string>) => ({
  * Track errors occurred during the remote presentation flow for analytics.
  */
 export const useItwRemoteEventsTracking = ({ failure }: Params) => {
+  const serializedFailure = serializeFailureReason(failure);
   useEffect(() => {
     switch (failure.type) {
       case RemoteFailureType.WALLET_INACTIVE:
@@ -43,9 +44,7 @@ export const useItwRemoteEventsTracking = ({ failure }: Params) => {
         return trackItwRemoteUntrustedRP();
 
       case RemoteFailureType.INVALID_REQUEST_OBJECT:
-        return trackItwRemoteRequestObjectFailure(
-          serializeFailureReason(failure)
-        );
+        return trackItwRemoteRequestObjectFailure(serializedFailure);
 
       case RemoteFailureType.MISSING_CREDENTIALS: {
         const { missingCredentials } = failure.reason;
@@ -66,12 +65,10 @@ export const useItwRemoteEventsTracking = ({ failure }: Params) => {
       }
 
       case RemoteFailureType.RELYING_PARTY_GENERIC:
-        return trackItwRemoteRPGenericFailure(serializeFailureReason(failure));
+        return trackItwRemoteRPGenericFailure(serializedFailure);
 
       case RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE:
-        return trackItwRemoteRPInvalidAuthResponse(
-          serializeFailureReason(failure)
-        );
+        return trackItwRemoteRPInvalidAuthResponse(serializedFailure);
 
       case RemoteFailureType.UNEXPECTED:
         const shouldSerializeReason =
@@ -80,7 +77,7 @@ export const useItwRemoteEventsTracking = ({ failure }: Params) => {
             Object.keys(failure.reason).length === 0);
 
         return trackItwRemoteUnexpectedFailure(
-          shouldSerializeReason ? serializeFailureReason(failure) : failure
+          shouldSerializeReason ? serializedFailure : failure
         );
     }
   }, [failure]);
