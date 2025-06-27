@@ -8,9 +8,9 @@ import { ITW_REMOTE_ROUTES } from "../navigation/routes.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import ROUTES from "../../../../../navigation/routes.ts";
 import { trackItwRemoteDataShare } from "../analytics";
+import { groupCredentialsByPurpose } from "../utils/itwRemotePresentationUtils";
 import { Context } from "./context";
 import { RemoteEvents } from "./events";
-import { groupCredentialsByPurpose } from "../utils/itwRemotePresentationUtils";
 
 export const createRemoteActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>

@@ -23,10 +23,11 @@ import {
 } from "../../../common/hooks/useItwFailureSupportModal.tsx";
 import { useItwSendAuthorizationErrorResponse } from "../hooks/useItwSendAuthorizationErrorResponse.tsx";
 import { useItwRemoteEventsTracking } from "../hooks/useItwRemoteEventsTracking";
-import { getDimissContextFromFailure, trackItwRemoteInvalidAuthResponseBottomSheet } from "../analytics";
 import {
-  trackItwKoStateAction
-} from "../../../analytics";
+  getDimissContextFromFailure,
+  trackItwRemoteInvalidAuthResponseBottomSheet
+} from "../analytics";
+import { trackItwKoStateAction } from "../../../analytics";
 
 const zendeskAssistanceErrors = [
   RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE,
