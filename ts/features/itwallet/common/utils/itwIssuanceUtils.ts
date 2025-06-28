@@ -1,19 +1,19 @@
 import { generate } from "@pagopa/io-react-native-crypto";
+import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
   AuthorizationDetail,
   createCryptoContextFor,
   Credential
 } from "@pagopa/io-react-native-wallet";
-import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import { v4 as uuidv4 } from "uuid";
 import { type IdentificationContext } from "../../machine/eid/context";
-import { StoredCredential } from "./itwTypesUtils";
+import { Env } from "./environment";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
-import { Env } from "./environment";
+import { StoredCredential } from "./itwTypesUtils";
 
 type AccessToken = Awaited<
   ReturnType<typeof Credential.Issuance.authorizeAccess>
@@ -27,7 +27,7 @@ type StartAuthFlowParams = {
   env: Env;
   walletAttestation: string;
   identification: IdentificationContext;
-  isL3IssuanceEnabled: boolean;
+  isL3: boolean;
 };
 
 /**
@@ -38,14 +38,14 @@ type StartAuthFlowParams = {
  * @param env - The environment to use for the wallet provider base URL
  * @param walletAttestation - The wallet attestation.
  * @param identification - The identification context.
- * @param isL3IssuanceEnabled flag that indicates that we need to issue an L3 PID
+ * @param isL3 flag that indicates that we need to issue an L3 PID
  * @returns Authentication params to use when completing the flow.
  */
 const startAuthFlow = async ({
   env,
   walletAttestation,
   identification,
-  isL3IssuanceEnabled
+  isL3
 }: StartAuthFlowParams) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
     issuerUrl: env.WALLET_PID_PROVIDER_BASE_URL,
@@ -53,7 +53,7 @@ const startAuthFlow = async ({
   });
 
   // When issuing an L3 PID, we should not provide an IDP hint
-  const idpHint = getIdpHint(identification, env, isL3IssuanceEnabled);
+  const idpHint = getIdpHint(identification, env, isL3);
 
   const { issuerUrl, credentialType } = startFlow();
 
@@ -203,7 +203,7 @@ const getPid = async ({
   };
 };
 
-export { startAuthFlow, completeAuthFlow, getPid };
+export { completeAuthFlow, getPid, startAuthFlow };
 
 /**
  * Consts for the IDP hints in test for SPID and CIE and in production for CIE.

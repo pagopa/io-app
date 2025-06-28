@@ -39,7 +39,7 @@ export type RequestEidActorParams = {
 export type StartAuthFlowActorParams = {
   walletInstanceAttestation: string | undefined;
   identification: IdentificationContext | undefined;
-  isL3IssuanceEnabled?: boolean;
+  isL3?: boolean;
 };
 
 export type GetWalletAttestationActorParams = {
@@ -125,7 +125,7 @@ export const createEidIssuanceActorsImplementation = (
         env,
         walletAttestation: input.walletInstanceAttestation,
         identification: input.identification,
-        isL3IssuanceEnabled: input.isL3IssuanceEnabled || false
+        isL3: input.isL3 || false
       });
 
       return {
