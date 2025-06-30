@@ -502,7 +502,7 @@
           "title": "Access your data",
           "subtitle": "You can download your IO profile data at any time.",
           "description": "Receive a copy of the data associated with your IO profile",
-          "a11y": "Hai richiesto correttamente una copia dei tuoi dati.",
+          "a11y": "Done. You asked for a copy of your data.",
           "detail": {
             "bulletList": {
               "title": "Your data are:",
