@@ -11,7 +11,7 @@ import {
   performGetNonce
 } from "../index";
 
-jest.mock("../../../../../../definitions/fast_login/client", () => ({
+jest.mock("../../../../../../definitions/session_manager/client", () => ({
   createClient: jest.fn()
 }));
 
