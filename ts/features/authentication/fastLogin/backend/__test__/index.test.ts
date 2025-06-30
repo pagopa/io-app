@@ -1,4 +1,4 @@
-import { createClient } from "../../../../../../definitions/fast_login/client";
+import { createClient } from "../../../../../../definitions/session_manager/client";
 import { LollipopMethodEnum } from "../../../../../../definitions/lollipop/LollipopMethod";
 import { defaultRetryingFetch } from "../../../../../utils/fetch";
 import { LollipopConfig } from "../../../../lollipop";
