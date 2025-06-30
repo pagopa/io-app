@@ -1,11 +1,7 @@
 import { Credential } from "@pagopa/io-react-native-wallet";
 import { fromPromise } from "xstate";
 import * as O from "fp-ts/lib/Option";
-import {
-  buildTrustChain,
-  getTrustAnchorEntityConfiguration,
-  verifyTrustChain
-} from "@pagopa/io-react-native-wallet-v2/src/trust";
+import { Trust } from "@pagopa/io-react-native-wallet-v2";
 import {
   DcqlQuery,
   EnrichedPresentationDetails,
@@ -71,9 +67,10 @@ export const createRemoteActorsImplementation = (
         qrCodePayload.client_id
       );
 
-    const trustAnchorEntityConfig = await getTrustAnchorEntityConfiguration(
-      env.WALLET_TA_BASE_URL
-    );
+    const trustAnchorEntityConfig =
+      await Trust.Build.getTrustAnchorEntityConfiguration(
+        env.WALLET_TA_BASE_URL
+      );
 
     const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
 
@@ -81,17 +78,21 @@ export const createRemoteActorsImplementation = (
     assert(trustAnchorKey, "No suitable key found in Trust Anchor JWKS.");
 
     // Create the trust chain for the Relying Party
-    const builtChainJwts = await buildTrustChain(
+    const builtChainJwts = await Trust.Build.buildTrustChain(
       qrCodePayload.client_id,
       trustAnchorKey
     );
 
     // Perform full validation on the built chainW
-    await verifyTrustChain(trustAnchorEntityConfig, builtChainJwts, {
-      connectTimeout: 10000,
-      readTimeout: 10000,
-      requireCrl: true
-    });
+    await Trust.Verify.verifyTrustChain(
+      trustAnchorEntityConfig,
+      builtChainJwts,
+      {
+        connectTimeout: 10000,
+        readTimeout: 10000,
+        requireCrl: true
+      }
+    );
 
     return { rpConf, rpSubject: subject };
   });
