@@ -87,9 +87,10 @@ export function* getActivation(
           case StatusEnum.PENDING:
           case StatusEnum.RUNNING:
             return E.right("PROCESSING");
-          default:
+          default: {
             const reason = `unexpected status result ${getEycaActivationResult.right.value.status}`;
             return E.left(getGenericError(new Error(reason)));
+          }
         }
       } else if (getEycaActivationResult.right.status === 404) {
         return E.right("NOT_FOUND");
