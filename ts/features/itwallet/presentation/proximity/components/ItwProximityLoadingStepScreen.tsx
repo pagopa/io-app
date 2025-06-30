@@ -18,7 +18,7 @@ export const ItwProximityLoadingStepScreen = () => {
 
   const i18nNs = "features.itWallet.presentation.proximity"; // Common i18n namespace
 
-  const getLoadingScreenContentProps = () => {
+  const getLoadingStepScreenContentProps = () => {
     if (isInitialLoading) {
       return {
         title: I18n.t(`${i18nNs}.loadingStepScreen.initial.title`),
@@ -39,7 +39,7 @@ export const ItwProximityLoadingStepScreen = () => {
     };
   };
 
-  const { subtitle, title } = getLoadingScreenContentProps();
+  const { subtitle, title } = getLoadingStepScreenContentProps();
 
   return (
     <LoadingScreenContent testID="loader" contentTitle={title}>
