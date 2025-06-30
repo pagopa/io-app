@@ -22,6 +22,7 @@ const mockRNQRGenerator = {
 import "react-native-get-random-values";
 require("@shopify/flash-list/jestSetup");
 jest.mock("rn-qr-generator", () => mockRNQRGenerator);
+jest.mock("react-native-screenshot-prevent", () => ({}));
 
 jest.mock("react-native-i18n");
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
@@ -250,10 +251,14 @@ jest.mock("uuid", () => ({
   }
 }));
 
-jest.mock("react-native-bluetooth-state-manager", () =>({
+jest.mock("react-native-bluetooth-state-manager", () => ({
   getState: jest.fn().mockResolvedValue(true)
 }));
 
-jest.mock("@pagopa/io-react-native-proximity", ()=>({
+jest.mock("@pagopa/io-react-native-proximity", () => ({
   Proximity: jest.fn()
+}));
+
+jest.mock("@pagopa/io-react-native-cie", () => ({
+  CieManager: jest.fn()
 }));
