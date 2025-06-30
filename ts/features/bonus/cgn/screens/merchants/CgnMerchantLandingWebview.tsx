@@ -40,7 +40,7 @@ const CgnMerchantLandingWebview: FunctionComponent<Props> = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <WebviewComponent
         source={{
-          uri: landingPageUrl as string,
+          uri: landingPageUrl,
           headers: {
             "X-PagoPa-CGN-Referer": landingPageReferrer
           }

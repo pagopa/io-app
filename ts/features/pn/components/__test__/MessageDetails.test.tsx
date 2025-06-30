@@ -15,8 +15,6 @@ import { PNMessage } from "../../store/types/types";
 import { MessageDetails } from "../MessageDetails";
 
 jest.mock("../MessageBottomMenu");
-jest.mock("rn-qr-generator", () => ({}));
-jest.mock("react-native-screenshot-prevent", () => ({}));
 
 const pnMessage = pipe(thirdPartyMessage, toPNMessage, O.toUndefined)!;
 

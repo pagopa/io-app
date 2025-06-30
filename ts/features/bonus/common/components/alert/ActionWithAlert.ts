@@ -17,7 +17,7 @@ type ConfirmConfig = {
 export const actionWithAlert = (confirmConfig: ConfirmConfig) => {
   Alert.alert(
     confirmConfig.title,
-    confirmConfig.body ? confirmConfig.body : "",
+    confirmConfig.body ?? "",
     [
       {
         text: confirmConfig.cancelText

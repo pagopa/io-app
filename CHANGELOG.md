@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0-rc.9](https://github.com/pagopa/io-app/compare/3.8.0-rc.8...3.8.0-rc.9) (2025-06-26)
+
+
+### Bug Fixes
+
+* [[IOPID-3209](https://pagopa.atlassian.net/browse/IOPID-3209),[IOPID-3228](https://pagopa.atlassian.net/browse/IOPID-3228)] Connectivity edge case ([#7124](https://github.com/pagopa/io-app/issues/7124)) ([cd508c8](https://github.com/pagopa/io-app/commit/cd508c844054b575553ac17c167316bf52a50ac9))
+* [[IOPID-3227](https://pagopa.atlassian.net/browse/IOPID-3227)] Cannot update a component (CountdownProvider) while rendering ([#7125](https://github.com/pagopa/io-app/issues/7125)) ([fcdfabf](https://github.com/pagopa/io-app/commit/fcdfabf66e759df605a15a60e1b8699c5564c250))
+
 ## [3.8.0-rc.8](https://github.com/pagopa/io-app/compare/3.8.0-rc.7...3.8.0-rc.8) (2025-06-25)
 
 

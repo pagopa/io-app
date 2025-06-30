@@ -12,9 +12,6 @@ import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblem
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { toSpecificError } from "../../../messages/store/actions";
 
-jest.mock("rn-qr-generator", () => ({}));
-jest.mock("react-native-screenshot-prevent", () => ({}));
-
 describe("MessagePaymentBottomSheet", () => {
   it("should match snapshot, no payments", () => {
     const messageId = "01HTHS3N21AFMBMKHGWVRAMXQ6" as UIMessageId;

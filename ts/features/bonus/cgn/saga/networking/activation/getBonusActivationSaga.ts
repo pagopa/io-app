@@ -120,7 +120,7 @@ export const handleCgnStatusPolling = (
           case StatusEnum.PENDING:
             break;
           default:
-            void mixpanelTrack(getType(cgnActivationStatus.failure), {
+            mixpanelTrack(getType(cgnActivationStatus.failure), {
               reason: `unexpected status result ${cgnActivationResult.right.value.status}`
             });
             break;

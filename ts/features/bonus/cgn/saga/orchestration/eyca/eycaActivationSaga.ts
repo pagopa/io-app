@@ -7,7 +7,7 @@ import { BackendCGN } from "../../../api/backendCgn";
 import {
   navigateToCgnDetails,
   navigateToEycaActivationLoading
-} from "../../../navigation/actions";
+} from "../navigation/actions";
 import {
   cgnEycaActivation,
   cgnEycaActivationCancel

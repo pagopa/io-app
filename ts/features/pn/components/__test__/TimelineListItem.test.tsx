@@ -9,9 +9,6 @@ import { NotificationStatusHistory } from "../../../../../definitions/pn/Notific
 import { GlobalState } from "../../../../store/reducers/types";
 import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
 
-jest.mock("rn-qr-generator", () => ({}));
-jest.mock("react-native-screenshot-prevent", () => ({}));
-
 jest.mock("../Timeline");
 
 describe("TimelineListItem", () => {

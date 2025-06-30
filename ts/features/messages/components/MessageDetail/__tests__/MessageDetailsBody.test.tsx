@@ -14,9 +14,6 @@ import { applicationChangeState } from "../../../../../store/actions/application
 jest.mock("../MessageMarkdown");
 jest.mock("../../../../../components/IOMarkdown");
 
-jest.mock("rn-qr-generator", () => ({}));
-jest.mock("react-native-screenshot-prevent", () => ({}));
-
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: () => "2.0.0.0",
   getVersion: () => "2.0.0.0",

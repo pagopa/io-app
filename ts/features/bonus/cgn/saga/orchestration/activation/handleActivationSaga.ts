@@ -11,7 +11,7 @@ import {
   navigateToCgnActivationPending,
   navigateToCgnActivationTimeout,
   navigateToCgnAlreadyActive
-} from "../../../navigation/actions";
+} from "../navigation/actions";
 import CGN_ROUTES from "../../../navigation/routes";
 import {
   cgnActivationCancel,

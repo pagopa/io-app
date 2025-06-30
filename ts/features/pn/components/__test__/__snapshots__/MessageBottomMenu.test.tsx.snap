@@ -368,13 +368,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -922,13 +926,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -1504,13 +1512,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -2058,13 +2070,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -2612,13 +2628,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -3166,13 +3186,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -3720,13 +3744,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -4274,13 +4302,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -4828,13 +4860,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -5382,13 +5418,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -5936,13 +5976,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -6518,13 +6562,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -7072,13 +7120,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -7761,13 +7813,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -8450,13 +8506,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -9139,13 +9199,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -9828,13 +9892,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -10517,13 +10585,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -11206,13 +11278,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -11760,13 +11836,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -12342,13 +12422,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -12896,13 +12980,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -13495,13 +13583,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -14094,13 +14186,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -14693,13 +14789,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -15292,13 +15392,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -15891,13 +15995,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -16490,13 +16598,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -17044,13 +17156,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -17626,13 +17742,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -18180,13 +18300,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -18734,13 +18858,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -19288,13 +19416,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -19842,13 +19974,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -20396,13 +20532,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -20950,13 +21090,17 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -21504,13 +21648,17 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, ca
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -21948,13 +22096,17 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, ca
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -22420,13 +22572,17 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, ca
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -22864,13 +23020,17 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, no
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -23308,13 +23468,17 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, no
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -23752,13 +23916,17 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, no
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -24196,13 +24364,17 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, un
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -24640,13 +24812,17 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, un
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -25084,13 +25260,17 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, un
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -25528,13 +25708,17 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -25972,13 +26156,17 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -26444,13 +26632,17 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -26888,13 +27080,17 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -27467,13 +27663,17 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -28046,13 +28246,17 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -28625,13 +28829,17 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -29204,13 +29412,17 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -29783,13 +29995,17 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -30362,13 +30578,17 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, cance
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -30806,13 +31026,17 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, cance
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -31278,13 +31502,17 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, cance
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -31722,13 +31950,17 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, not c
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -32211,13 +32443,17 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, not c
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -32700,13 +32936,17 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, not c
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -33189,13 +33429,17 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, undef
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -33678,13 +33922,17 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, undef
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -34167,13 +34415,17 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, undef
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -34656,13 +34908,17 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -35100,13 +35356,17 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -35572,13 +35832,17 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -36016,13 +36280,17 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -36460,13 +36728,17 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -36904,13 +37176,17 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -37348,13 +37624,17 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -37792,13 +38072,17 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
@@ -38236,13 +38520,17 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                     >
                       <View
                         style={
-                          {
-                            "backgroundColor": "#F4F5F8",
-                            "marginBottom": "-95%",
-                            "paddingBottom": "95%",
-                            "paddingHorizontal": 24,
-                            "paddingTop": 24,
-                          }
+                          [
+                            {
+                              "marginBottom": "-95%",
+                              "paddingBottom": "95%",
+                              "paddingHorizontal": 24,
+                              "paddingTop": 24,
+                            },
+                            {
+                              "backgroundColor": "#F4F5F8",
+                            },
+                          ]
                         }
                       >
                         <View>
