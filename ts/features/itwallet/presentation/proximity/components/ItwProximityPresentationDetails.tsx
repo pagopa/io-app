@@ -1,4 +1,5 @@
 import { ComponentProps, memo } from "react";
+import { View } from "react-native";
 import {
   ClaimsSelector,
   ListItemHeader,
@@ -47,24 +48,29 @@ const ItwProximityPresentationDetails = ({
   const theme = useIOTheme();
 
   return (
-    <VStack space={24}>
+    <View>
       <ListItemHeader
         label={I18n.t(
           "features.itWallet.presentation.proximity.selectiveDisclosure.requiredClaims"
         )}
         iconName="security"
         iconColor={theme["icon-decorative"]}
+        description={I18n.t(
+          "features.itWallet.presentation.proximity.selectiveDisclosure.purpose"
+        )}
       />
-      {data.map(({ claimsToDisplay, credentialType }) => (
-        <ClaimsSelector
-          key={credentialType}
-          title={getCredentialNameFromType(credentialType)}
-          items={mapClaims(claimsToDisplay)}
-          defaultExpanded
-          selectionEnabled={false}
-        />
-      ))}
-    </VStack>
+      <VStack space={24}>
+        {data.map(({ claimsToDisplay, credentialType }) => (
+          <ClaimsSelector
+            key={credentialType}
+            title={getCredentialNameFromType(credentialType)}
+            items={mapClaims(claimsToDisplay)}
+            defaultExpanded
+            selectionEnabled={false}
+          />
+        ))}
+      </VStack>
+    </View>
   );
 };
 
