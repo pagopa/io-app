@@ -1,23 +1,22 @@
+import { BodySmall, H3, VStack } from "@pagopa/io-app-design-system";
 import { PropsWithChildren } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
-import { Divider, H3, BodySmall, VSpacer } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { localeDateFormat } from "../../../../utils/locale";
 import I18n from "../../../../i18n";
-import { logosForService } from "../../../services/common/utils";
 import { useIOSelector } from "../../../../store/hooks";
+import { localeDateFormat } from "../../../../utils/locale";
+import { logosForService } from "../../../services/common/utils";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
-import { gapBetweenItemsInAGrid } from "../../utils";
 import { UIMessageId } from "../../types";
 import { OrganizationHeader } from "./OrganizationHeader";
 
 const styles = StyleSheet.create({
   tagsWrapper: {
     flexDirection: "row",
+    alignItems: "center",
     flexWrap: "wrap",
     justifyContent: "flex-start",
-    marginHorizontal: -(gapBetweenItemsInAGrid / 2),
-    marginVertical: -(gapBetweenItemsInAGrid / 2)
+    gap: 8
   }
 });
 
@@ -32,18 +31,17 @@ const MessageDetailsHeaderContent = ({
   subject,
   createdAt
 }: Pick<MessageDetailsHeaderProps, "createdAt" | "subject">) => (
-  <>
+  <VStack space={8}>
     <H3 accessibilityRole="header" testID="message-header-subject">
       {subject}
     </H3>
-    <VSpacer size={8} />
-    <BodySmall weight="Regular" color="grey-700">
+    <BodySmall weight="Regular">
       {localeDateFormat(
         createdAt,
         I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")
       )}
     </BodySmall>
-  </>
+  </VStack>
 );
 
 export const MessageDetailsHeader = ({
@@ -57,24 +55,18 @@ export const MessageDetailsHeader = ({
   );
 
   return (
-    <>
+    <VStack space={8}>
       <View style={styles.tagsWrapper}>{children}</View>
-      <VSpacer size={8} />
       <MessageDetailsHeaderContent {...rest} />
-      <VSpacer size={8} />
-      <Divider />
       {service && (
-        <>
-          <OrganizationHeader
-            messageId={messageId}
-            logoUri={logosForService(service) as ImageSourcePropType}
-            organizationName={service.organization.name}
-            serviceId={serviceId}
-            serviceName={service.name}
-          />
-          <Divider />
-        </>
+        <OrganizationHeader
+          messageId={messageId}
+          logoUri={logosForService(service) as ImageSourcePropType}
+          organizationName={service.organization.name}
+          serviceId={serviceId}
+          serviceName={service.name}
+        />
       )}
-    </>
+    </VStack>
   );
 };
