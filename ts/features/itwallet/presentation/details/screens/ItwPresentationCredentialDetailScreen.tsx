@@ -16,6 +16,7 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import {
   CREDENTIALS_MAP,
+  CREDENTIAL_STATUS_MAP,
   trackCredentialDetail,
   trackWalletCredentialShowFAC_SIMILE,
   trackWalletCredentialShowTrustmark
@@ -127,8 +128,7 @@ export const ItwPresentationCredentialDetail = ({
   useFocusEffect(() => {
     trackCredentialDetail({
       credential: CREDENTIALS_MAP[credential.credentialType],
-      credential_status:
-        credential.storedStatusAttestation?.credentialStatus || "not_valid"
+      credential_status: CREDENTIAL_STATUS_MAP[status]
     });
   });
 
