@@ -3,7 +3,7 @@ import _ from "lodash";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import {
-  itwCredentialByTypeSelector,
+  itwCredentialSelector,
   itwCredentialsSelector,
   itwCredentialsEidSelector,
   itwCredentialsTypesSelector,
@@ -97,7 +97,7 @@ describe("itwCredentialsEidSelector", () => {
   });
 });
 
-describe("itwCredentialsByTypeSelector", () => {
+describe("itwCredentialsSelector", () => {
   it("returns the credentials by type from the global state", () => {
     const state = getStateWithCredentials({
       [CredentialType.PID]: mockedEid,
@@ -111,7 +111,7 @@ describe("itwCredentialsByTypeSelector", () => {
   });
 });
 
-describe("itwCredentialByTypeSelector", () => {
+describe("itwCredentialSelector", () => {
   it("returns the O.some with the credential if it exists", () => {
     const state = getStateWithCredentials({
       [CredentialType.PID]: mockedEid,
@@ -119,7 +119,7 @@ describe("itwCredentialByTypeSelector", () => {
       [CredentialType.EUROPEAN_DISABILITY_CARD]: mockedDisabilityCard
     });
     expect(
-      itwCredentialByTypeSelector(CredentialType.DRIVING_LICENSE)(state)
+      itwCredentialSelector(CredentialType.DRIVING_LICENSE)(state)
     ).toEqual(O.some(mockedDrivingLicense));
   });
   it("returns the O.none if the credential does not exist", () => {
@@ -129,9 +129,9 @@ describe("itwCredentialByTypeSelector", () => {
       [CredentialType.EUROPEAN_DISABILITY_CARD]: mockedDisabilityCard
     });
     expect(
-      itwCredentialByTypeSelector(
-        CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-      )(state)
+      itwCredentialSelector(CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD)(
+        state
+      )
     ).toEqual(O.none);
   });
 });
@@ -141,7 +141,8 @@ describe("itwCredentialsTypesSelector", () => {
     const state = getStateWithCredentials({
       [CredentialType.PID]: mockedEid,
       [CredentialType.DRIVING_LICENSE]: mockedDrivingLicense,
-      [CredentialType.EUROPEAN_DISABILITY_CARD]: mockedDisabilityCard
+      [CredentialType.EUROPEAN_DISABILITY_CARD]: mockedDisabilityCard,
+      ["other"]: mockedDisabilityCard
     });
     expect(itwCredentialsTypesSelector(state)).toEqual([
       CredentialType.DRIVING_LICENSE,

@@ -26,14 +26,14 @@ const reducer = (
 ): ItwCredentialsState => {
   switch (action.type) {
     case getType(itwCredentialsStore): {
-      const credentialsByType = action.payload.reduce(
+      const addedCredentials = action.payload.reduce(
         (acc, c) => ({ ...acc, [c.credentialType]: c }),
         {} as { [K in CredentialType]?: StoredCredential }
       );
 
       // Can't add other credentials when there is no eID
       if (
-        credentialsByType[CredentialType.PID] === undefined &&
+        addedCredentials[CredentialType.PID] === undefined &&
         state.credentials[CredentialType.PID] === undefined
       ) {
         return state;
@@ -43,7 +43,7 @@ const reducer = (
         ...state,
         credentials: {
           ...state.credentials,
-          ...credentialsByType
+          ...addedCredentials
         }
       };
     }

@@ -7,7 +7,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
-import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
+import { itwCredentialSelector } from "../../credentials/store/selectors";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { Context } from "./context";
@@ -32,7 +32,7 @@ export const createItwTrustmarkActionsImplementation = (
       store.getState()
     ),
     credential: O.toUndefined(
-      itwCredentialByTypeSelector(context.credentialType)(store.getState())
+      itwCredentialSelector(context.credentialType)(store.getState())
     )
   }));
 

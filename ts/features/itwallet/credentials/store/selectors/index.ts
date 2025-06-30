@@ -16,17 +16,6 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { ItwJwtCredentialStatus } from "../../../common/utils/itwTypesUtils";
 
 /**
- * Returns an Option containing the eID credential from the credentials object.
- *
- * @param state - The global state.
- * @returns The eID credential Option
- */
-export const itwCredentialsEidSelector = createSelector(
-  (state: GlobalState) => state.features.itWallet.credentials.credentials,
-  ({ [CredentialType.PID]: pid }) => O.fromNullable(pid)
-);
-
-/**
  * Returns the credentials object from the itw credentials state, excluding the eID credential.
  *
  * @param state - The global state.
@@ -38,25 +27,37 @@ export const itwCredentialsSelector = createSelector(
 );
 
 /**
- * Returns an Option containing the credential of the given type from the credentials object.
+ * Convenience selector that returns an Option containing the eID credential from the credentials object.
+ *
+ * @param state - The global state.
+ * @returns The eID credential Option
+ */
+export const itwCredentialsEidSelector = createSelector(
+  (state: GlobalState) => state.features.itWallet.credentials.credentials,
+  ({ [CredentialType.PID]: pid }) => O.fromNullable(pid)
+);
+
+/**
+ * Given a credential key, returns an Option containing the credential of the given type from the credentials object.
  *
  * @param type - The credential type.
  * @returns The credential Option.
  */
-export const itwCredentialByTypeSelector = (type: string) =>
+export const itwCredentialSelector = (key: string) =>
   createSelector(itwCredentialsSelector, credentials =>
-    O.fromNullable(credentials[type])
+    O.fromNullable(credentials[key])
   );
 
 /**
- * Returns the types of the credentials in the credentials object, excluding the eID credential.
+ * Returns the list of unique types of credentials contained in the credentials object.
  *
  * @param state - The global state.
  * @returns The types of the credentials.
  */
 export const itwCredentialsTypesSelector = createSelector(
   itwCredentialsSelector,
-  credentials => Object.keys(credentials)
+  credentials =>
+    Array.from(new Set(Object.values(credentials).map(c => c.credentialType)))
 );
 
 /**
