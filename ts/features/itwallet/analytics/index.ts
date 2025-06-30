@@ -179,6 +179,29 @@ type ItwOfflineBanner = {
 
 export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
 
+/**
+ * Actions that trigger the requirement for L3 upgrade.
+ * This type represents the user action that was performed immediately before
+ * the L3 mandatory upgrade screen was displayed.
+ * Add new values when implementing additional flows that require L3 upgrade.
+ */
+export enum ItwL3UpgradeTrigger {
+  REMOTE_QR_CODE = "remote_qr_code"
+}
+
+export type ItwFlow = "L2" | "L3";
+
+export type ItwDismissContext = {
+  screen_name: string;
+  itw_flow: ItwFlow;
+};
+
+export type ItwDismissAction = {
+  screen_name: string;
+  itw_flow: ItwFlow;
+  user_action: string;
+};
+
 // #region SCREEN VIEW EVENTS
 export const trackWalletDataShare = (properties: ItwWalletDataShare) => {
   void mixpanelTrack(
@@ -302,6 +325,14 @@ export function trackItwOfflineBottomSheet() {
     buildEventProperties("UX", "screen_view")
   );
 }
+
+export function trackItwDismissContext(dismissContext: ItwDismissContext) {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OPERATION_BLOCK,
+    buildEventProperties("UX", "screen_view", dismissContext)
+  );
+}
+
 // #endregion SCREEN VIEW EVENTS
 
 // #region ACTIONS
@@ -347,7 +378,7 @@ export const trackStartAddNewCredential = (wallet_item: NewCredential) => {
   );
 };
 
-export const trackWalletCreationFailed = (params: KoState) => {
+export const trackItwKoStateAction = (params: KoState) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_KO_STATE_ACTION_SELECTED,
     buildEventProperties("UX", "action", { ...params })
@@ -574,6 +605,13 @@ export const trackCopyListItem = (properties: ItwCopyListItem) => {
   );
 };
 
+export const trackItwDismissAction = (dismissAction: ItwDismissAction) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_OPERATION_BLOCK_ACTION,
+    buildEventProperties("UX", "action", dismissAction)
+  );
+};
+
 // #endregion ACTIONS
 
 // #region ERRORS
@@ -783,6 +821,13 @@ export const trackItwWalletBadState = () => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_BAD_STATE_WALLET_DEACTIVATED,
     buildEventProperties("KO", "error")
+  );
+};
+
+export const trackItwUpgradeL3Mandatory = (action: ItwL3UpgradeTrigger) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_UPGRADE_L3_MANDATORY,
+    buildEventProperties("KO", "screen_view", { action })
   );
 };
 

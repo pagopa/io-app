@@ -11,6 +11,8 @@ import {
   selectRedirectUri,
   selectRelyingPartyData
 } from "../machine/selectors";
+import { trackItwRemotePresentationCompleted } from "../analytics";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 
 export const ItwRemoteAuthResponseScreen = () => {
   useItwDisableGestureNavigation();
@@ -20,6 +22,10 @@ export const ItwRemoteAuthResponseScreen = () => {
   const isSuccess = ItwRemoteMachineContext.useSelector(selectIsSuccess);
   const rpData = ItwRemoteMachineContext.useSelector(selectRelyingPartyData);
   const redirectUri = ItwRemoteMachineContext.useSelector(selectRedirectUri);
+
+  useOnFirstRender(() => {
+    trackItwRemotePresentationCompleted(!!redirectUri);
+  });
 
   /**
    * In addition to checking for the loading state,

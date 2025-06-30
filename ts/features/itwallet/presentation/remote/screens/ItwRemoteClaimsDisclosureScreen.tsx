@@ -21,6 +21,7 @@ import {
   selectIsLoading,
   selectRelyingPartyData
 } from "../machine/selectors.ts";
+import { trackItwRemoteContinuePresentation } from "../analytics";
 
 const ItwRemoteClaimsDisclosureScreen = () => {
   usePreventScreenCapture();
@@ -82,7 +83,10 @@ const ContentView = () => {
           type: "TwoButtons",
           primary: {
             label: I18n.t("global.buttons.continue"),
-            onPress: confirmVerifiablePresentation
+            onPress: () => {
+              trackItwRemoteContinuePresentation();
+              confirmVerifiablePresentation();
+            }
           },
           secondary: {
             label: I18n.t("global.buttons.cancel"),

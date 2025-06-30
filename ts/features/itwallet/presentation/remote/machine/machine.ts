@@ -31,7 +31,8 @@ export const itwRemoteMachine = setup({
     navigateToIdentificationModeScreen: notImplemented,
     navigateToAuthResponseScreen: notImplemented,
     navigateToBarcodeScanScreen: notImplemented,
-    closePresentation: notImplemented
+    closePresentation: notImplemented,
+    trackRemoteDataShare: notImplemented
   },
   actors: {
     evaluateRelyingPartyTrust: fromPromise<
@@ -173,7 +174,7 @@ export const itwRemoteMachine = setup({
       }
     },
     ClaimsDisclosure: {
-      entry: "navigateToClaimsDisclosureScreen",
+      entry: ["navigateToClaimsDisclosureScreen", "trackRemoteDataShare"],
       description:
         "Display the list of claims to disclose for the verifiable presentation",
       on: {
