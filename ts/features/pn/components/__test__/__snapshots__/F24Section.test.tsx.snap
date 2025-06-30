@@ -429,7 +429,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                           [
                             {},
                             {
-                              "color": "#2B2E38",
+                              "color": "#555C70",
                               "fontFamily": "Titillio",
                               "fontSize": 16,
                               "fontStyle": "normal",
@@ -2642,7 +2642,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                           [
                             {},
                             {
-                              "color": "#2B2E38",
+                              "color": "#555C70",
                               "fontFamily": "Titillio",
                               "fontSize": 16,
                               "fontStyle": "normal",

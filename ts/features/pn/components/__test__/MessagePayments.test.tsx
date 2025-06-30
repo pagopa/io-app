@@ -13,9 +13,6 @@ import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblem
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { toSpecificError } from "../../../messages/store/actions";
 
-jest.mock("rn-qr-generator", () => ({}));
-jest.mock("react-native-screenshot-prevent", () => ({}));
-
 const globalMessageId = "01HTFFDYS8VQ779EA4M5WB9YWA" as UIMessageId;
 const globalMaxVisiblePaymentCount = 5;
 const globalDueDate = new Date(2099, 4, 2, 1, 1, 1);
