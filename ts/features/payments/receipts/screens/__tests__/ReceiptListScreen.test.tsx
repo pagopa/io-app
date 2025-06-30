@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import * as hooks from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -42,6 +43,38 @@ describe("ReceiptListScreen", () => {
     };
     const component = renderComponent(loadingState);
     expect(component.getByTestId("section-title-skeleton")).toBeDefined();
+  });
+
+  it("should render empty state when no transactions are available", () => {
+    jest.mock("../../../../../utils/hooks/useOnFirstRender", () => ({
+      useOnFirstRender: jest.fn(() => null)
+    }));
+
+    const mockDispatch = jest.fn();
+
+    jest.mock("../../../../../store/hooks", () => ({
+      useIODispatch: jest.fn(),
+      useIOStore: jest.fn(),
+      useIOSelector: jest.fn()
+    }));
+
+    jest.spyOn(hooks, "useIODispatch").mockReturnValue(mockDispatch);
+
+    const emptyState: GlobalState = {
+      ...globalState,
+      features: {
+        ...globalState.features,
+        payments: {
+          ...globalState.features.payments,
+          receipt: {
+            ...globalState.features.payments.receipt,
+            transactions: pot.some([])
+          }
+        }
+      }
+    };
+    const { getByTestId } = renderComponent(emptyState);
+    expect(getByTestId("PaymentsTransactionsEmptyList")).toBeDefined();
   });
 
   it("should set titleHeight on header layout event", () => {
