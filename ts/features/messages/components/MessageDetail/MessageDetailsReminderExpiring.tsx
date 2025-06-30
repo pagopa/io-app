@@ -1,5 +1,8 @@
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
+import { View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { Alert } from "@pagopa/io-app-design-system";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { preferredCalendarSelector } from "../../../../store/reducers/persistedPreferences";
@@ -7,6 +10,7 @@ import { UIMessageId } from "../../types";
 import { useMessageReminder } from "../../hooks/useMessageReminder";
 import { localeDateFormat } from "../../../../utils/locale";
 import I18n from "../../../../i18n";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 
 type MessageDetailsReminderExpiringProps = {
   dueDate: Date;
@@ -20,9 +24,13 @@ export const MessageDetailsReminderExpiring = ({
   title
 }: MessageDetailsReminderExpiringProps) => {
   const navigation = useIONavigation();
+  const alertRef = useRef<View>(null);
+  const didShowCalendarModalRef = useRef<boolean>(false);
   const preferredCalendar = useIOSelector(preferredCalendarSelector);
 
   const navigate = useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    didShowCalendarModalRef.current = true;
     navigation.navigate("MESSAGES_NAVIGATOR", {
       screen: "MESSAGE_DETAIL_CALENDAR",
       params: {
@@ -30,6 +38,22 @@ export const MessageDetailsReminderExpiring = ({
       }
     });
   }, [messageId, navigation]);
+
+  // When going back from the calendar-selection modal, the
+  // accessibility focus is stolen by the back button so we
+  // have to do this customization to make sure that the
+  // focus goes back to the Alert component
+  useFocusEffect(
+    useCallback(() => {
+      if (didShowCalendarModalRef.current) {
+        // eslint-disable-next-line functional/immutable-data
+        didShowCalendarModalRef.current = false;
+        // 1000 is a safe delay on low spec Android devices. Lower
+        // values will not prevent the back button to steal focus
+        setAccessibilityFocus(alertRef, 1000 as Millisecond);
+      }
+    }, [didShowCalendarModalRef])
+  );
 
   const { isEventInDeviceCalendar, upsertReminder } = useMessageReminder(
     messageId,
@@ -39,6 +63,7 @@ export const MessageDetailsReminderExpiring = ({
     <Alert
       testID="due-date-alert"
       variant="warning"
+      ref={alertRef}
       action={
         isEventInDeviceCalendar
           ? I18n.t("features.messages.alert.removeReminder")
