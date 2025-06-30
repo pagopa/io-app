@@ -4232,6 +4232,7 @@
     "itWallet": {
       "title": "IT-WALLET",
       "credentialName": {
+        "pid": "IT-Wallet ID",
         "eid": "Identità Digitale",
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
@@ -4249,6 +4250,10 @@
         "active": "Attivo",
         "inactive": "Non attivo",
         "header": "Mostra identità"
+      },
+      "walletID": {
+        "title": "IT-Wallet ID",
+        "show": "Mostra"
       },
       "card": {
         "status": {
@@ -4498,22 +4503,6 @@
                 "primaryAction": "Ho pronto il PIN",
                 "secondaryAction": "Non trovo il PIN della CIE"
               }
-            },
-            "preparationScreen": {
-              "cie": {
-                "title": "Prepara la tua carta di identità elettronica (CIE)",
-                "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
-                "buttonLink": "Cos'è la CIE?",
-                "primaryAction": "Ho pronta la CIE",
-                "secondaryAction": "Non ho la CIE"
-              },
-              "ciePin": {
-                "title": "Prepara il PIN della tua carta di identità \nelettronica (CIE)",
-                "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell'identità.",
-                "buttonLink": "Cos'è il PIN della CIE?",
-                "primaryAction": "Ho pronto il PIN",
-                "secondaryAction": "Non trovo il PIN della CIE"
-              }
             }
           }
         },
@@ -4619,7 +4608,7 @@
         },
         "emptyWallet": {
           "itwReadyBanner": {
-            "content": "Premi 'Aggiungi al Portafoglio' per aggiungere un documento al tuo Portafoglio di IO."
+            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO."
           }
         },
         "credentialResult": {
@@ -4717,10 +4706,10 @@
                 "action": "Inizia"
               },
               "itw": {
-                "valid": "L'ultima verifica della tua identità è del {{date}}.",
-                "expiring": "Verifica la tua identità per continuare ad usare IT-Wallet entro il {{date}}.",
+                "valid": "Hai attivato il tuo ID con CIE il {{date}}.",
+                "expiring": "Rinnova il tuo ID per continuare ad usare IT-Wallet entro il {{date}}.",
                 "expired": "Verifica la tua identità per continuare ad usare IT-Wallet.",
-                "action": "Inizia la verifica"
+                "action": "Rinnova ID"
               }
             }
           },
@@ -5028,6 +5017,12 @@
               "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
               "primaryAction": "Chiudi"
             }
+          }
+        },
+        "itWalletId": {
+          "detail": {
+            "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
+            "listItemHeader": "Dati del mio IT-Wallet ID"
           }
         }
       },

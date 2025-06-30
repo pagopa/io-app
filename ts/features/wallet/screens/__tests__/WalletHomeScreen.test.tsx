@@ -31,18 +31,6 @@ describe("WalletHomeScreen", () => {
 
     expect(queryByTestId("walletAddCardButtonTestID")).toBeNull();
   });
-
-  it("should render screen actions if the wallet is not empty", () => {
-    jest
-      .spyOn(walletSelectors, "isWalletEmptySelector")
-      .mockImplementation(() => false);
-
-    const { queryByTestId } = renderComponent();
-
-    jest.runOnlyPendingTimers();
-
-    expect(queryByTestId("walletAddCardButtonTestID")).not.toBeNull();
-  });
 });
 
 const renderComponent = () => {

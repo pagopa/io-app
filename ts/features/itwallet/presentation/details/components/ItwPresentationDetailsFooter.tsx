@@ -1,7 +1,6 @@
 import { ListItemAction, useIOToast } from "@pagopa/io-app-design-system";
 import { memo, ReactNode, useMemo } from "react";
 import { Alert, View } from "react-native";
-import { useStartSupportRequest } from "../../../../../hooks/useStartSupportRequest.ts";
 import I18n from "../../../../../i18n.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import {
@@ -12,8 +11,7 @@ import {
 import {
   CREDENTIALS_MAP,
   trackCredentialDeleteProperties,
-  trackItwCredentialDelete,
-  trackWalletCredentialSupport
+  trackItwCredentialDelete
 } from "../../../analytics";
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
@@ -21,6 +19,7 @@ import { itwCredentialsRemove } from "../../../credentials/store/actions";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import { getCredentialDocumentNumber } from "../../../trustmark/utils";
 import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
+import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest.tsx";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -39,11 +38,8 @@ const ItwPresentationDetailsFooter = ({
   const navigation = useIONavigation();
   const toast = useIOToast();
 
-  const startSupportRequest = useOfflineToastGuard(
-    useStartSupportRequest({
-      faqCategories: []
-    })
-  );
+  const startAndTrackSupportRequest =
+    useItwStartCredentialSupportRequest(credential);
 
   const handleRemoveCredential = () => {
     dispatch(itwCredentialsRemove(credential));
@@ -81,11 +77,6 @@ const ItwPresentationDetailsFooter = ({
         }
       ]
     );
-  };
-
-  const startAndTrackSupportRequest = () => {
-    trackWalletCredentialSupport(CREDENTIALS_MAP[credential.credentialType]);
-    startSupportRequest();
   };
 
   const credentialActions = useMemo(

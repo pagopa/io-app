@@ -59,6 +59,7 @@ import { ItwProximityClaimsDisclosureScreen } from "../presentation/proximity/sc
 import { ItwProximityFailureScreen } from "../presentation/proximity/screens/ItwProximityFailureScreen.tsx";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
 import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
+import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/ItwPresentationPidDetailScreen.tsx";
 import { ItwIssuanceUpcomingCredentialScreen } from "../issuance/screens/ItwIssuanceUpcomingCredentialScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
@@ -266,6 +267,10 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL}
         component={ItwPresentationCredentialFiscalCodeModal}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.PRESENTATION.PID_DETAIL}
+        component={ItwPresentationPidDetailScreen}
       />
       {/* LIFECYCLE */}
       <Stack.Screen

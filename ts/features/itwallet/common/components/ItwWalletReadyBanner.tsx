@@ -23,26 +23,23 @@ export const ItwWalletReadyBanner = () => {
     });
   };
 
+  const bannerTitle = !isNewItwRenderable
+    ? I18n.t("features.itWallet.issuance.eidResult.success.title")
+    : undefined;
+
   return (
     <Banner
-      {...(isNewItwRenderable
-        ? {
-            content: I18n.t(
-              "features.itWallet.issuance.emptyWallet.itwReadyBanner.content"
-            ),
-            color: "neutral"
-          }
-        : {
-            title: I18n.t("features.itWallet.issuance.eidResult.success.title"),
-            content: I18n.t(
-              "features.itWallet.issuance.eidResult.success.subtitle"
-            ),
-            action: I18n.t(
-              "features.itWallet.issuance.eidResult.success.actions.continueAlt"
-            ),
-            color: "turquoise",
-            onPress: handleOnPress
-          })}
+      title={bannerTitle}
+      content={I18n.t(
+        isNewItwRenderable
+          ? "features.itWallet.issuance.emptyWallet.itwReadyBanner.content"
+          : "features.itWallet.issuance.eidResult.success.subtitle"
+      )}
+      action={I18n.t(
+        "features.itWallet.issuance.eidResult.success.actions.continueAlt"
+      )}
+      color="turquoise"
+      onPress={handleOnPress}
       testID="itwWalletReadyBannerTestID"
       pictogramName="itWallet"
     />
