@@ -55,7 +55,7 @@ const ProfileAboutApp = () => {
         <ComposedBodyFromArray body={bodyPropsArray} textAlign="left" />
         <VSpacer size={32} />
         <Banner
-          viewRef={viewRef}
+          ref={viewRef}
           color="neutral"
           content={I18n.t("profile.main.appInfo.bannerBody")}
           pictogramName="charity"

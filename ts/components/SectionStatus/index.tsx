@@ -24,7 +24,7 @@ import { useIONavigation } from "../../navigation/params/AppParamsList";
 
 type Props = {
   sectionKey: SectionStatusKey;
-  onSectionRef?: (ref: RefObject<View>) => void;
+  onSectionRef?: (ref: RefObject<View | null>) => void;
 };
 
 const statusVariantMap: Record<

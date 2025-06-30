@@ -1,6 +1,7 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { createActorContext } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
+import { JSX } from "react";
 import { itwBypassIdentityMatch } from "../../../config";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../store/hooks";

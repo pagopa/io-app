@@ -1,7 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { useEffect } from "react";
+import { JSX, useEffect } from "react";
 import { connect } from "react-redux";
 import {
   Alert,

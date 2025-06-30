@@ -10,7 +10,7 @@ import {
   BodyProps
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { ComponentProps, useState, forwardRef } from "react";
+import { ComponentProps, useState, forwardRef, JSX } from "react";
 
 import { LayoutChangeEvent, View } from "react-native";
 import { useHeaderProps } from "../../hooks/useHeaderProps";

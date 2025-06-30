@@ -1,5 +1,5 @@
 import { AlertEdgeToEdgeProps } from "@pagopa/io-app-design-system";
-import { useEffect, useMemo, useState } from "react";
+import { JSX, useEffect, useMemo, useState } from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { GestureResponderEvent } from "react-native";

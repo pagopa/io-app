@@ -17,7 +17,7 @@ import { MessageMarkdown } from "./MessageMarkdown";
 export type MessageDetailsBodyProps = {
   messageMarkdown: string;
   serviceId: ServiceId;
-  scrollViewRef: React.RefObject<ScrollView>;
+  scrollViewRef: React.RefObject<ScrollView | null>;
 };
 
 export const MessageDetailsBody = ({
