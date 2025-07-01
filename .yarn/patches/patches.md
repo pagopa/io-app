@@ -1,20 +1,11 @@
 This file describes the reason for the patches applied.
 
-### react-native-pdf+6.4.0
+### react-native-pdf+6.7.7
 Created on **16/03/2024**
 
 #### Reason:
 - Make PDF annotations on iOS read-only to align with Android behaviour.
 
-### react-native-vision-camera+2.15.4
-Created on **24/07/2023** 
-FIXME: remove this patch after this [PR](https://github.com/mrousavy/react-native-vision-camera/pull/1666) has been merged and a new vision camera version has been released.
-
-Updated on **01/10/2023** 
-FIXME: Fixed in the v2 branch [here](https://github.com/mrousavy/react-native-vision-camera/issues/1840#issuecomment-1741734963). Remove this patch when `v2.16.2` has been released.
-
-#### Reason:
-- This patch going to remove all codes related to `colorSpace` to fix an issue on iOS 17.0.2 that cause the crash on camera load
 
 ### react-native-device-info+14.0.4
 Created on **15/12/2021**
@@ -26,24 +17,6 @@ Created on **15/12/2021**
     - `getMacAddress`
     - `getMacAddressSync`
 
-### @types/react-native+0.70.19
-Created on **30/08/2022**
-
-#### Reason:
-- Missing accessibility types.
-
-### react-native-mixpanel+1.2.0
-
-#### Reason:
-- **20/03/2020** Change the endpoint to european server.
-- **04/03/2021** Improve track function type definition.
-
-
-### reactotron-redux-saga+2.1.4
-Created on **13/12/2019**
-
-#### Reason:
-- Change type export.
 
 ### react-native-i18n+2.0.15
 Created on **05/08/2020**
@@ -57,7 +30,7 @@ Updated on **29/08/2022**
 
 - This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
 
-### react-native-push-notification+7.3.1
+### react-native-push-notification+8.1.1
 Created on **10/05/2021**
 
 #### Reason:
@@ -76,41 +49,6 @@ Created on **16/08/2021**
 #### Reason:
 - implementation 'androidx.core:core:1.+' not compatible with the new gradle settings used by react-native 0.64.2
 
-### react-native+0.70.15
-Created on **20/08/2021**
-
-#### Reason:
-- As for known issue anytime a developer launch a pod install on his own machine the podfile would be updated with 
-  different hashes: [here the issue](https://github.com/facebook/react-native/issues/31193)
-  To be removed when updating to `react-native` *0.65*
-
-
-Updated on **29/08/2022**
-
-#### Reason:
-- Fixes deprecation of PropTypes for backward compatibility on libraries.
-
-### react-native-qrcode-scanner+1.5.3
-Created on **16/09/2021**
-
-#### Reason:
-- The package use the prop `checkAndroid6Permissions` for both display the `notAuthorizedView` and display the
-  rationale. We need always to display the rationale alert and not only when requested by the Android OS. Without this
-  patch is impossible to use the `notAuthorizedView` without displaying again the alert. ⚠️ The `QRCodeScanner`
-  component, with this patch, doesn't use anymore the props permissionDialogTitle, permissionDialogMessage and
-  buttonPositive.
-
-### react-native+0.70.15 (Localizable.strings)
-
-Created on **28/02/2022**
-
-#### Reason:
-
-- This patch is going to add a new `Localizable.strings` file inside
-  the `[package]/React/AccessibilityResources/it.lproj` directory in order to translate various internal strings used
-  for accessibility. At the moment there are no other ways to translate these strings even in newer React Native
-  versions, thus this patch should be replicated for every new update. See https://github.com/pagopa/io-app/pull/3791
-  for reference.
 
 ### @gorhom+bottom-sheet+5.1.2
 
@@ -126,17 +64,8 @@ Updated on **23/04/2025**
   accessibility). Nonetheless, a new patch has been applied in order to set accessibility-order starting from
   the bottom-sheet content instead of the bottom-sheet background layer (chosen by the author as a default).
 
-### react-native-flag-secure-android+1.0.3
 
-Created on **29/08/2022**
-
-Removed on **10/01/2025** and replaced with `react-native-screenshot-prevent`
-
-#### Reason:
-
-- This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
-
-### react-native-webview+13.8.1
+### react-native-webview+13.13.5
 
 Updated on **13/07/2023**
 
@@ -155,22 +84,6 @@ Created on **16/01/2023**
   This was fine as long as each event was originally created and handled using this library only but 
   initially another library was used, react-native-add-calendar-event, which treated event's Id as long
 
-### react-native-fingerprint-scanner+6.0.0.patch
-
-Created on **29/08/2024**
-
-#### Reason:
-
-- Patch to fix an error occurring during Android gradle build (see https://github.com/hieuvp/react-native-fingerprint-scanner/issues/192)
-
-### react-native+0.72.14.patch
-
-Created on **04/10/2024**
-
-#### Reason:
-
-- Patch to fix this jest error: `TypeError: _reactNative.AccessibilityInfo.announceForAccessibilityWithOptions is not a function`.  
-In the `react-native/jest/setup.js` the `announceForAccessibilityWithOptions` method mock was missing (see [this issue](https://github.com/facebook/react-native/issues/44014)), this patch adds it.  
 
 ### react-native-reanimated+3.17.5.patch
 
