@@ -8,6 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ComponentProps, useCallback, useEffect, useMemo } from "react";
+import { AccessibilityInfo } from "react-native";
 import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
 import { BulletList, BulletListItem } from "../../../../components/BulletList";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
@@ -19,6 +20,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { userDataProcessingSelector } from "../../common/store/selectors/userDataProcessing";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
+import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 
 /**
  * A screen to explain how profile data export works.
@@ -30,12 +32,15 @@ const DownloadProfileDataScreen = () => {
   const userDataProcessing = useIOSelector(userDataProcessingSelector);
   const prevUserDataProcessing = usePrevious(userDataProcessing);
   const toast = useIOToast();
+  const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
 
   const isLoading =
     pot.isLoading(userDataProcessing.DOWNLOAD) ||
     pot.isUpdating(userDataProcessing.DOWNLOAD);
 
   useEffect(() => {
+    // eslint-disable-next-line functional/no-let
+    let timer: number;
     // the request to download has been done
     if (
       prevUserDataProcessing &&
@@ -46,9 +51,35 @@ const DownloadProfileDataScreen = () => {
         toast.error(I18n.t("profile.main.privacy.exportData.error"));
         return;
       }
-      goBack();
+      /**
+       * When the data submission request is successful and the user has
+       * the screen reader active he is notified that the operation was
+       * successful and then is sent back to the previous page.
+       */
+      if (screenReaderEnabled) {
+        const message = I18n.t("profile.main.privacy.exportData.a11y");
+        AccessibilityInfo.announceForAccessibility(message);
+
+        timer = setTimeout(() => {
+          goBack();
+        }, 2000);
+        // Otherwise the user is sent back to the previous page
+      } else {
+        goBack();
+      }
     }
-  }, [prevUserDataProcessing, userDataProcessing, goBack, toast]);
+    return () => {
+      if (timer !== undefined) {
+        clearTimeout(timer);
+      }
+    };
+  }, [
+    prevUserDataProcessing,
+    userDataProcessing,
+    goBack,
+    toast,
+    screenReaderEnabled
+  ]);
 
   const handleDownloadPress = useCallback(() => {
     dispatch(
