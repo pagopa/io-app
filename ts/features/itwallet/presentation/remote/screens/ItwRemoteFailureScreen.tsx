@@ -24,7 +24,7 @@ import {
 import { useItwSendAuthorizationErrorResponse } from "../hooks/useItwSendAuthorizationErrorResponse.tsx";
 import { useItwRemoteEventsTracking } from "../hooks/useItwRemoteEventsTracking";
 import {
-  getDimissContextFromFailure,
+  getDismissalContextFromFailure,
   trackItwRemoteInvalidAuthResponseBottomSheet
 } from "../analytics";
 import { trackItwKoStateAction } from "../../../analytics";
@@ -58,14 +58,14 @@ const ContentView = ({ failure }: ContentViewProps) => {
     failure: serializeFailureReason(failure)
   });
 
-  const dismissContext = getDimissContextFromFailure(failure.type);
+  const dismissalContext = getDismissalContextFromFailure(failure.type);
 
   const { bottomSheet, presentWithTrack } =
     useItwRemoteUntrustedRPBottomSheet();
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => machineRef.send({ type: "close" }),
     customBodyMessage: I18n.t(`${i18nNs}.walletInactiveScreen.alert.body`),
-    dismissContext
+    dismissalContext
   });
 
   const failureSupportModal = useItwFailureSupportModal({

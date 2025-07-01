@@ -191,12 +191,12 @@ export enum ItwL3UpgradeTrigger {
 
 export type ItwFlow = "L2" | "L3";
 
-export type ItwDismissContext = {
+export type ItwDismissalContext = {
   screen_name: string;
   itw_flow: ItwFlow;
 };
 
-export type ItwDismissAction = {
+export type ItwDismissalAction = {
   screen_name: string;
   itw_flow: ItwFlow;
   user_action: string;
@@ -326,10 +326,12 @@ export function trackItwOfflineBottomSheet() {
   );
 }
 
-export function trackItwDismissContext(dismissContext: ItwDismissContext) {
+export function trackItwDismissalContext(
+  dismissalContext: ItwDismissalContext
+) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_OPERATION_BLOCK,
-    buildEventProperties("UX", "screen_view", dismissContext)
+    buildEventProperties("UX", "screen_view", dismissalContext)
   );
 }
 
@@ -605,10 +607,12 @@ export const trackCopyListItem = (properties: ItwCopyListItem) => {
   );
 };
 
-export const trackItwDismissAction = (dismissAction: ItwDismissAction) => {
+export const trackItwDismissalAction = (
+  dismissalAction: ItwDismissalAction
+) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_OPERATION_BLOCK_ACTION,
-    buildEventProperties("UX", "action", dismissAction)
+    buildEventProperties("UX", "action", dismissalAction)
   );
 };
 
