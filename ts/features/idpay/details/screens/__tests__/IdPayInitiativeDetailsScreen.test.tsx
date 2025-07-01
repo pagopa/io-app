@@ -85,7 +85,8 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
     const { component } = renderComponent(
       pot.some({
         ...mockedInitiative,
-        initiativeRewardType: InitiativeRewardTypeEnum.DISCOUNT
+        initiativeRewardType: InitiativeRewardTypeEnum.DISCOUNT,
+        endDate: new Date(2113, 1, 1)
       })
     );
     expect(component).toBeTruthy();
