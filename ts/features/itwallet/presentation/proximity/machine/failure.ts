@@ -1,5 +1,14 @@
-import { TimeoutError } from "../utils/itwProximityErrors.tsx";
 import { ProximityEvents } from "./events.ts";
+
+/**
+ * Thrown when an operation times out
+ */
+export class TimeoutError extends Error {
+  constructor(message?: string) {
+    super(message);
+    this.name = this.constructor.name;
+  }
+}
 
 export enum ProximityFailureType {
   RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",

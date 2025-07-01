@@ -9,8 +9,8 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { parseClaims } from "../../../common/utils/itwClaimsUtils";
 import { assert } from "../../../../../utils/assert";
+import { TimeoutError } from "../machine/failure";
 import { ProximityDetails } from "./itwProximityTypeUtils";
-import { TimeoutError } from "./itwProximityErrors";
 
 export const promiseWithTimeout = <T>(
   promise: Promise<T>,
