@@ -24,7 +24,6 @@ const getKeyTag = (credential: O.Option<StoredCredential>) =>
   );
 
 export function* handleWalletInstanceResetSaga() {
-  const state: GlobalState = yield* select();
   const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
   const eid = yield* select(itwCredentialsEidSelector);
   const credentials = yield* select(itwCredentialsSelector);
@@ -47,6 +46,7 @@ export function* handleWalletInstanceResetSaga() {
     );
     yield* all(itwKeyTags.map(deleteKey));
     // Update every mixpanel property related to the wallet instance and its credentials.
+    const state: GlobalState = yield* select();
     void updatePropertiesWalletRevoked(state);
   } catch (e) {
     Sentry.captureException(e);
