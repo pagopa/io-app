@@ -168,7 +168,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                     ]
                   }
                 >
-                  DUMMY
+                  MESSAGE_DETAIL
                 </Text>
               </View>
               <View

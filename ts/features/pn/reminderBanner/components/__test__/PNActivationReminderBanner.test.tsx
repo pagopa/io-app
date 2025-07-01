@@ -1,7 +1,4 @@
-import { NavigationContext } from "@react-navigation/native";
-import { fireEvent, render } from "@testing-library/react-native";
-import { PropsWithChildren } from "react";
-import { Provider } from "react-redux";
+import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import * as USEIO from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -13,6 +10,10 @@ import * as MIXPANEL from "../../../analytics/activationReminderBanner";
 import PN_ROUTES from "../../../navigation/routes";
 import { dismissPnActivationReminderBanner } from "../../../store/actions";
 import { PNActivationReminderBanner } from "../PNActivationReminderBanner";
+import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/__tests__/testUtils.test";
+
+jest.mock("rn-qr-generator", () => ({}));
+jest.mock("react-native-screenshot-prevent", () => ({}));
 
 describe("pnActivationBanner", () => {
   it("should match snapshot", () => {
@@ -83,7 +84,10 @@ describe("dispatch mixpanel event on first render", () => {
       MIXPANEL.sendBannerMixpanelEvents,
       "bannerShown"
     );
-    renderForFocus(true);
+    renderComponentWithStoreAndNavigationContextForFocus(
+      componentToRender,
+      true
+    );
 
     expect(mixpanelSpy).toHaveBeenCalledTimes(1);
   });
@@ -92,7 +96,10 @@ describe("dispatch mixpanel event on first render", () => {
       MIXPANEL.sendBannerMixpanelEvents,
       "bannerShown"
     );
-    renderForFocus(false);
+    renderComponentWithStoreAndNavigationContextForFocus(
+      componentToRender,
+      false
+    );
 
     expect(mixpanelSpy).toHaveBeenCalledTimes(0);
   });
@@ -101,16 +108,13 @@ describe("dispatch mixpanel event on first render", () => {
       MIXPANEL.sendBannerMixpanelEvents,
       "bannerShown"
     );
-    const component = renderForFocus(true);
-    component.rerender(
-      <PNActivationReminderBanner handleOnClose={() => null} />
+    const component = renderComponentWithStoreAndNavigationContextForFocus(
+      componentToRender,
+      true
     );
-    component.rerender(
-      <PNActivationReminderBanner handleOnClose={() => null} />
-    );
-    component.rerender(
-      <PNActivationReminderBanner handleOnClose={() => null} />
-    );
+    component.rerender(componentToRender);
+    component.rerender(componentToRender);
+    component.rerender(componentToRender);
 
     expect(mixpanelSpy).toHaveBeenCalledTimes(1);
   });
@@ -126,31 +130,6 @@ const renderComponent = (closeHandler: () => void = () => null) => {
   );
 };
 
-const renderForFocus = (isFocused: boolean) => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
-  const store = createStore(appReducer, globalState as any);
-  const actualNav = jest.requireActual("@react-navigation/native");
-  const navContext = {
-    ...actualNav.navigation,
-    navigate: () => null,
-    dangerouslyGetState: () => null,
-    setOptions: () => null,
-    addListener: () => () => null,
-    isFocused: () => isFocused
-  };
-  const Wrapper = ({ children }: PropsWithChildren<any>) => (
-    <Provider store={store}>
-      <NavigationContext.Provider
-        value={{
-          ...navContext
-        }}
-      >
-        {children}
-      </NavigationContext.Provider>
-    </Provider>
-  );
-
-  return render(<PNActivationReminderBanner handleOnClose={() => null} />, {
-    wrapper: Wrapper
-  });
-};
+const componentToRender = (
+  <PNActivationReminderBanner handleOnClose={() => null} />
+);

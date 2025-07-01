@@ -196,7 +196,7 @@ export type ItwScreenFlowContext = {
   itw_flow: ItwFlow;
 };
 
-export type ItwDismissAction = {
+export type ItwDismissalAction = {
   screen_name: string;
   itw_flow: ItwFlow;
   user_action: string;
@@ -332,7 +332,7 @@ export function trackItwOfflineBottomSheet() {
   );
 }
 
-export function trackItwDismissContext(
+export function trackItwDismissalContext(
   screenFlowContext: ItwScreenFlowContext
 ) {
   void mixpanelTrack(
@@ -659,10 +659,12 @@ export const trackCopyListItem = (properties: ItwCopyListItem) => {
   );
 };
 
-export const trackItwDismissAction = (dismissAction: ItwDismissAction) => {
+export const trackItwDismissalAction = (
+  dismissalAction: ItwDismissalAction
+) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_OPERATION_BLOCK_ACTION,
-    buildEventProperties("UX", "action", dismissAction)
+    buildEventProperties("UX", "action", dismissalAction)
   );
 };
 

@@ -4,13 +4,13 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
   ItwScreenFlowContext,
-  trackItwDismissAction,
-  trackItwDismissContext
+  trackItwDismissalAction,
+  trackItwDismissalContext
 } from "../../analytics";
 
 type ItwDismissalDialogProps = {
   handleDismiss?: () => void;
-  dismissContext?: ItwScreenFlowContext;
+  dismissalContext?: ItwScreenFlowContext;
   customLabels?: {
     title?: string;
     body?: string;
@@ -23,14 +23,14 @@ type ItwDismissalDialogProps = {
  * Allows to show a dismissal dialog in which the user must confirm the desire to close the current flow.
  * This hook also handles the hardware back button to show the dialog when the user presses the back button.
  * @param handleDismiss - An optionalfunction that will be called when the user confirms the dismissal.
- * @param dismissContext - An optional dismiss context to be used for analytics tracking.
+ * @param dismissalContext - An optional dismissal context to be used for analytics tracking.
  * @param customLabels - Optional object to override the default title, message, confirm button label, and cancel button label.
  * @returns a function that can be used to show the dialog
  */
 export const useItwDismissalDialog = (props?: ItwDismissalDialogProps) => {
   const navigation = useIONavigation();
 
-  const { handleDismiss, dismissContext, customLabels = {} } = props ?? {};
+  const { handleDismiss, dismissalContext, customLabels = {} } = props ?? {};
 
   const labels = {
     title:
@@ -45,17 +45,17 @@ export const useItwDismissalDialog = (props?: ItwDismissalDialogProps) => {
   };
 
   const trackUserAction = (label: string) => {
-    if (dismissContext) {
-      trackItwDismissAction({
-        ...dismissContext,
+    if (dismissalContext) {
+      trackItwDismissalAction({
+        ...dismissalContext,
         user_action: label
       });
     }
   };
 
   const show = () => {
-    if (dismissContext) {
-      trackItwDismissContext(dismissContext);
+    if (dismissalContext) {
+      trackItwDismissalContext(dismissalContext);
     }
 
     Alert.alert(labels.title, labels.body, [
