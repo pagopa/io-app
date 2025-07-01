@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+import * as AppParamsList from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as hooks from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
@@ -92,5 +93,81 @@ describe("ReceiptListScreen", () => {
     // But no error means the setter ran successfully.
 
     expect(header).toBeTruthy();
+  });
+
+  it("should refresh transactions list on pull to refresh", () => {
+    const mockDispatch = jest.fn();
+    jest.spyOn(hooks, "useIODispatch").mockReturnValue(mockDispatch);
+    const { getByTestId } = renderComponent(globalState);
+    fireEvent(getByTestId("PaymentsTransactionsListTestID"), "refresh");
+    expect(mockDispatch).toHaveBeenCalled();
+  });
+
+  it("should fetch next page on end reached if continuationToken is set", () => {
+    const mockDispatch = jest.fn();
+    jest.spyOn(hooks, "useIODispatch").mockReturnValue(mockDispatch);
+
+    const transaction = {
+      eventId: "1",
+      payeeTaxCode: "TAXCODE",
+      amount: "10.00",
+      noticeDate: "2023-01-01",
+      isCart: false,
+      isPayer: true,
+      isDebtor: false
+    };
+    const pagedState: GlobalState = {
+      ...globalState,
+      features: {
+        ...globalState.features,
+        payments: {
+          ...globalState.features.payments,
+          receipt: {
+            ...globalState.features.payments.receipt,
+            transactions: pot.some([transaction])
+          }
+        }
+      }
+    };
+    const { getByTestId } = renderComponent(pagedState);
+    fireEvent(getByTestId("PaymentsTransactionsListTestID"), "endReached");
+    expect(mockDispatch).toHaveBeenCalled();
+  });
+
+  it("should navigate to transaction details on item press", () => {
+    const mockNavigate = jest.fn();
+    jest.spyOn(AppParamsList, "useIONavigation").mockReturnValue({
+      navigate: mockNavigate,
+      dispatch: jest.fn(),
+      reset: jest.fn(),
+      goBack: jest.fn(),
+      isFocused: jest.fn(),
+      canGoBack: jest.fn()
+    } as any);
+    const transaction = {
+      eventId: "1",
+      payeeTaxCode: "TAXCODE",
+      amount: "10.00",
+      noticeDate: "2023-01-01",
+      isCart: false,
+      isPayer: true,
+      isDebtor: false
+    };
+    const stateWithItem: GlobalState = {
+      ...globalState,
+      features: {
+        ...globalState.features,
+        payments: {
+          ...globalState.features.payments,
+          receipt: {
+            ...globalState.features.payments.receipt,
+            transactions: pot.some([transaction])
+          }
+        }
+      }
+    };
+    const { getByText } = renderComponent(stateWithItem);
+    fireEvent.press(getByText("10,00 €"));
+    expect(mockNavigate).toHaveBeenCalled();
   });
 });
