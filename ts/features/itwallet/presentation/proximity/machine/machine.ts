@@ -9,7 +9,7 @@ import {
   SendDocumentsActorOutput,
   StartProximityFlowInput
 } from "./actors";
-import { mapEventToFailure, ProximityFailureType } from "./failure";
+import { mapEventToFailure } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -305,12 +305,7 @@ export const itwProximityMachine = setup({
           target: "DeviceCommunication.ClaimsDisclosure"
         },
         "device-error": {
-          actions: assign({
-            failure: ({ event }) => ({
-              type: ProximityFailureType.RELYING_PARTY_GENERIC,
-              reason: event.payload
-            })
-          }),
+          actions: "setFailure",
           target: "Failure"
         }
       },
