@@ -1,7 +1,7 @@
-diff --git a/node_modules/react-native-pdf/ios/RNPDFPdf/RNPDFPdfView.mm b/node_modules/react-native-pdf/ios/RNPDFPdf/RNPDFPdfView.mm
-index cddec76..ed71109 100644
---- a/node_modules/react-native-pdf/ios/RNPDFPdf/RNPDFPdfView.mm
-+++ b/node_modules/react-native-pdf/ios/RNPDFPdf/RNPDFPdfView.mm
+diff --git a/ios/RNPDFPdf/RNPDFPdfView.mm b/ios/RNPDFPdf/RNPDFPdfView.mm
+index cddec7663fcf6b4d4043d36115e6a89750a5d118..ed71109ccb8abd5f84ca9b21e0c92c0ddebec6d7 100644
+--- a/ios/RNPDFPdf/RNPDFPdfView.mm
++++ b/ios/RNPDFPdf/RNPDFPdfView.mm
 @@ -397,12 +397,16 @@ - (void)didSetProps:(NSArray<NSString *> *)changedProps
          }
  

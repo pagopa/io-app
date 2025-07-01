@@ -1,7 +1,7 @@
-diff --git a/node_modules/react-native-fingerprint-scanner/android/build.gradle b/node_modules/react-native-fingerprint-scanner/android/build.gradle
-index 6ae1aa7..23c2f96 100644
---- a/node_modules/react-native-fingerprint-scanner/android/build.gradle
-+++ b/node_modules/react-native-fingerprint-scanner/android/build.gradle
+diff --git a/android/build.gradle b/android/build.gradle
+index 6ae1aa71f21669037864495fdc584b839962a46a..23c2f96d3d71ae3a0fb786ea98d8ec57ce51640f 100644
+--- a/android/build.gradle
++++ b/android/build.gradle
 @@ -49,5 +49,5 @@ dependencies {
      // 1.2.3 is the minimum version compatible with androidx.
      // See https://github.com/uccmawei/FingerprintIdentify/issues/74

@@ -1,7 +1,7 @@
-diff --git a/node_modules/react-native-barcode-builder/Example/package.json b/node_modules/react-native-barcode-builder/Example/package.json
-index 5d33462..be0512c 100644
---- a/node_modules/react-native-barcode-builder/Example/package.json
-+++ b/node_modules/react-native-barcode-builder/Example/package.json
+diff --git a/Example/package.json b/Example/package.json
+index 5d33462300710e21ce1c5e4ab1458bf9756c7ec8..be0512cc795e2c097a677e353c5dd2615063265a 100644
+--- a/Example/package.json
++++ b/Example/package.json
 @@ -26,5 +26,11 @@
    },
    "jest": {
@@ -14,10 +14,10 @@ index 5d33462..be0512c 100644
 +    "path": "path-browserify"
    }
  }
-diff --git a/node_modules/react-native-barcode-builder/index.js b/node_modules/react-native-barcode-builder/index.js
-index 516605b..4f57a8a 100644
---- a/node_modules/react-native-barcode-builder/index.js
-+++ b/node_modules/react-native-barcode-builder/index.js
+diff --git a/index.js b/index.js
+index 516605b258e03441c68a4645a442e449944251bd..4f57a8a0e9d23409aba2b79d10c010c006922b33 100644
+--- a/index.js
++++ b/index.js
 @@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
  
  import barcodes from 'jsbarcode/src/barcodes';
