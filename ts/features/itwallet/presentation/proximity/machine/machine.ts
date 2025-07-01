@@ -321,11 +321,11 @@ export const itwProximityMachine = setup({
           }
         },
         Connecting: {
-          entry: "navigateToClaimsDisclosureScreen",
           description:
             "Initiates the connection between the device and the verifier"
         },
         Connected: {
+          entry: "navigateToClaimsDisclosureScreen",
           description:
             "The device has successfully established a connection with the verifier"
         },
