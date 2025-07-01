@@ -76,8 +76,6 @@ export function* updateCredentialStatusAttestationSaga(
  * This saga is responsible to check the status attestation for each credential in the wallet.
  */
 export function* checkCredentialsStatusAttestation() {
-  const state: GlobalState = yield* select();
-
   const isWalletValid = yield* select(itwLifecycleIsValidSelector);
 
   // Credentials can be requested only when the wallet is valid, i.e. the eID was issued
@@ -104,6 +102,7 @@ export function* checkCredentialsStatusAttestation() {
 
   yield* put(itwCredentialsStore(updatedCredentials));
 
+  const state: GlobalState = yield* select();
   void updateMixpanelProfileProperties(state);
   void updateMixpanelSuperProperties(state);
 }

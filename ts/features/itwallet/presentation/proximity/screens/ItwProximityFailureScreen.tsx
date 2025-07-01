@@ -39,7 +39,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       switch (failure.type) {
-        case ProximityFailureType.INVALID_REQUESTED_DOCUMENTS:
         case ProximityFailureType.RELYING_PARTY_GENERIC:
           return {
             title: I18n.t(`${i18nNs}.relyingParty.genericError.title`),

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ItwProximityFailureScreen should render failure screen for INVALID_REQUESTED_DOCUMENTS 1`] = `
+exports[`ItwProximityFailureScreen should render failure screen for RELYING_PARTY_GENERIC 1`] = `
 <View
   style={
     {

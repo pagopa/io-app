@@ -9,17 +9,10 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import {
-  InvalidRequestedDocumentsError,
-  TimeoutError
-} from "../../utils/itwProximityErrors";
+import { TimeoutError } from "../../utils/itwProximityErrors";
 
 describe("ItwProximityFailureScreen", () => {
   test.each<ProximityFailure>([
-    {
-      type: ProximityFailureType.INVALID_REQUESTED_DOCUMENTS,
-      reason: new InvalidRequestedDocumentsError("Invalid requested documents")
-    },
     {
       type: ProximityFailureType.RELYING_PARTY_GENERIC,
       reason: new Error("RP generic error")
