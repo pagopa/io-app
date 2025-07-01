@@ -7,69 +7,73 @@ import { UpdateAppAlert } from "../UpdateAppAlert";
 import * as urlUtils from "../../utils/url";
 import * as otherHooks from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
+import { mockAccessibilityInfo } from "../../utils/testAccessibility";
 
 const mockGoBack = jest.fn();
 const mockSetOptions = jest.fn();
-jest.mock("../../navigation/params/AppParamsList", () => ({
-  useIONavigation: () => ({
+jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual<typeof import("@react-navigation/native")>(
+    "@react-navigation/native"
+  ),
+  useNavigation: () => ({
     goBack: mockGoBack,
     setOptions: mockSetOptions
   })
-}));
-
-jest.mock("../../i18n", () => ({
-  __esModule: true,
-  default: { t: (key: string) => key },
-  t: (key: string) => key
 }));
 
 describe("UpdateAppAlert", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
+    mockAccessibilityInfo();
   });
-
   it("should match snapshot", () => {
     const component = renderComponent();
     expect(component.toJSON()).toMatchSnapshot();
   });
-
   it("should call 'openAppStoreUrl' with no parameters when the primary action is pressed", () => {
     const mockOpenAppStoreUrl = jest
       .spyOn(urlUtils, "openAppStoreUrl")
-      .mockImplementation(() => new Promise<void>(resolve => resolve()));
+      .mockImplementation(_fn => new Promise<void>(resolve => resolve()));
 
     const component = renderComponent();
+
     const primaryAction = component.getByTestId("primary-update-app");
     expect(primaryAction).toBeDefined();
+
     fireEvent(primaryAction, "onPress");
-    expect(mockOpenAppStoreUrl).toHaveBeenCalledTimes(1);
+
+    expect(mockOpenAppStoreUrl.mock.calls.length).toBe(1);
     expect(mockOpenAppStoreUrl.mock.calls[0].length).toBe(0);
   });
-
-  it("should call 'navigation.goBack()' when the secondary action is pressed", () => {
+  it("should call 'navigation.goBack()' when the primary action is pressed", () => {
     const component = renderComponent();
-    const secondaryAction = component.getByTestId("secondary-update-app");
-    expect(secondaryAction).toBeDefined();
-    fireEvent(secondaryAction, "onPress");
-    expect(mockGoBack).toHaveBeenCalledTimes(1);
-    expect(mockGoBack.mock.calls[0].length).toBe(0);
-  });
 
+    const primaryAction = component.getByTestId("secondary-update-app");
+    expect(primaryAction).toBeDefined();
+
+    fireEvent(primaryAction, "onPress");
+
+    expect(mockGoBack.mock.calls.length).toBe(1);
+    expect(mockGoBack.mock.calls[0].length).toBe(1);
+  });
   it("should set the navigation header to include the support request feature", () => {
     const mockStartSupportRequest = jest.fn();
     const useStartSupportRequestSpy = jest
       .spyOn(otherHooks, "useStartSupportRequest")
-      .mockImplementation((_params: any) => mockStartSupportRequest);
+      .mockImplementation(_ => mockStartSupportRequest);
 
     renderComponent();
 
-    // Check useStartSupportRequest
-    expect(useStartSupportRequestSpy).toHaveBeenCalledTimes(1);
+    // Combined checks below assert the presence of inner 'useOnlySupportRequestHeader' hook
+
+    // Check `useStartSupportRequest`
+    expect(useStartSupportRequestSpy.mock.calls.length).toBe(1);
+    expect(useStartSupportRequestSpy.mock.calls[0].length).toBe(1);
     expect(useStartSupportRequestSpy.mock.calls[0][0]).toEqual({});
 
     // Check navigation.setOptions with parameters
-    expect(mockSetOptions).toHaveBeenCalledTimes(1);
+    expect(mockSetOptions.mock.calls.length).toBe(1);
     expect(mockSetOptions.mock.calls[0].length).toBe(1);
 
     const setOptionsInput = mockSetOptions.mock.calls[0][0];
@@ -96,7 +100,8 @@ describe("UpdateAppAlert", () => {
 
     // Check header first action onPress effect
     headerFirstAction();
-    expect(mockStartSupportRequest).toHaveBeenCalledTimes(1);
+
+    expect(mockStartSupportRequest.mock.calls.length).toBe(1);
     expect(mockStartSupportRequest.mock.calls[0].length).toBe(0);
   });
 });
