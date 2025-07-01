@@ -23,7 +23,7 @@ export const useCieInfoAndPinBottomSheets = () => {
     trackItwUserWithoutL3Requirements({
       screen_name: routeName,
       reason: warning === "noCie" ? "user_without_cie" : "user_without_pin",
-      position: "bottomsheet"
+      position: "bottom_sheet"
     });
   };
 

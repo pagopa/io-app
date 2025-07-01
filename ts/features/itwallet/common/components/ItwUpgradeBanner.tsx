@@ -1,4 +1,4 @@
-import { useRoute } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -10,14 +10,13 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { itwShouldRenderL3UpgradeBannerSelector } from "../store/selectors";
 import { ItwHighlightBanner } from "./ItwHighlightBanner";
 import { useCallback } from "react";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 export const ItwUpgradeBanner = () => {
   const navigation = useIONavigation();
   const shouldRender = useIOSelector(itwShouldRenderL3UpgradeBannerSelector);
   const { name: routeName } = useRoute();
 
-  useOnFirstRender(
+  useFocusEffect(
     useCallback(() => {
       if (shouldRender) {
         trackItwUpgradeBanner(routeName);

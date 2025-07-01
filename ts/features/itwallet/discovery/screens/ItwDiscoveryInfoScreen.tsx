@@ -4,9 +4,7 @@ import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoComponent.tsx";
 import { ItwPaywallComponent } from "../components/ItwPaywallComponent.tsx";
 import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
-import {
-  trackItWalletActivationStart
-} from "../../analytics/index.ts";
+import { trackItWalletActivationStart } from "../../analytics/index.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwHasNfcFeatureSelector } from "../../identification/store/selectors/index.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";

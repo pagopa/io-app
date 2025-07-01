@@ -1,4 +1,4 @@
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { useCallback, useRef } from "react";
 import {
   ContentWrapper,
@@ -16,7 +16,8 @@ import {
   trackItWalletIDMethodSelected,
   trackItwContinueWithCieID,
   trackItwContinueWithCieIDClose,
-  trackItwGoToCieIDApp
+  trackItwGoToCieIDApp,
+  trackItwUserWithoutL3Requirements
 } from "../../analytics";
 import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet";
 import { useCieInfoAndPinBottomSheets } from "../hooks/useCieInfoAndPinBottomSheets";
@@ -30,6 +31,7 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const shouldTrackDismissRef = useRef(true);
+  const { name: routeName } = useRoute();
 
   const navigateToCieWarning = (warning: CieWarningType) => {
     machineRef.send({ type: "go-to-cie-warning", warning });
@@ -79,7 +81,8 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
 
   const { cieInfoBottomSheet, pinBottomSheet } = useCieInfoAndPinBottomSheets();
 
-  const noCieBottomSheet = useNoCieBottomSheet();
+  const { noCieBottomSheet, noCieBottomSheetPresentWitTrack } = useNoCieBottomSheet();
+  
   useFocusEffect(
     useCallback(() => {
       trackItWalletIDMethod("L3");
@@ -125,8 +128,15 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
             "features.itWallet.identification.l3.mode.secondaryAction"
           ),
           onPress: isItwValid
-            ? () => navigateToCieWarning("noCie")
-            : () => noCieBottomSheet.present(),
+            ? () => {
+                trackItwUserWithoutL3Requirements({
+                  screen_name: routeName,
+                  reason: "user_without_cie",
+                  position: "screen"
+                });
+                navigateToCieWarning("noCie");
+              }
+            : () => noCieBottomSheetPresentWitTrack(),
           testID: "l3-secondary-action"
         }
       }}

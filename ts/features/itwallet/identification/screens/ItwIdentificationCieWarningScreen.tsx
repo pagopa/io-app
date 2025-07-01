@@ -11,6 +11,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import { TranslationKeys } from "../../../../../locales/locales";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { trackItwKoStateAction } from "../../analytics";
 
 export type CieWarningType = "noPin" | "noCie";
 
@@ -35,6 +36,7 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const { warning } = params.route.params;
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
+  const reason = warning === "noCie" ? "user_without_cie" : "user_without_pin";
 
   const sectionKey = isItwValid ? "toCieFAQ" : "toL2Identification";
 
@@ -59,14 +61,30 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
     (): OperationResultScreenContentProps => {
       const primaryAction = {
         label: t("primaryAction"),
-        onPress: isItwValid
-          ? () => Linking.openURL(cieFaqUrls[warning])
-          : goToL2Identification
+        onPress: () => {
+          trackItwKoStateAction({
+            reason,
+            cta_category: "custom_1",
+            cta_id: t("primaryAction")
+          });
+  
+          isItwValid
+            ? Linking.openURL(cieFaqUrls[warning])
+            : goToL2Identification();
+        }
       };
 
       const secondaryAction = {
         label: t("closeAction"),
-        onPress: isItwValid ? closeIdentification : back
+        onPress: () => {
+          trackItwKoStateAction({
+            reason,
+            cta_category: "custom_2",
+            cta_id: t("closeAction")
+          });
+  
+          isItwValid ? closeIdentification() : back();
+        }
       };
 
       return {

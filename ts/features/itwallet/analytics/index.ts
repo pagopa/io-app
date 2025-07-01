@@ -205,7 +205,7 @@ export type ItwDismissalAction = {
 type ItwUserWithoutL3requirements = {
   screen_name: string;
   reason: "user_without_cie" | "user_without_pin";
-  position: "screen" | "bottomsheet";
+  position: "screen" | "bottom_sheet";
 };
 
 // #region SCREEN VIEW EVENTS
@@ -369,13 +369,21 @@ export function trackItwCieInfoBottomSheet(
 export function trackItwCiePinTutorialCie() {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_TUTORIAL_CIE,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow: "L3" })
   );
 }
 
 export function trackItwCiePinTutorialPin() {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_TUTORIAL_PIN,
+    buildEventProperties("UX", "screen_view", { itw_flow: "L3" })
+  );
+}
+
+export function trackItwUserWithoutL3Bottomsheet(
+) {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_USER_WITHOUT_L3_BOTTOMSHEET,
     buildEventProperties("UX", "screen_view")
   );
 }
@@ -925,7 +933,7 @@ export const trackItwUpgradeL3Mandatory = (action: ItwL3UpgradeTrigger) => {
 export const trackItwNfcNotSupported = () => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_NFC_NOT_SUPPORTED,
-    buildEventProperties("KO", "error")
+    buildEventProperties("KO", "screen_view")
   );
 };
 
@@ -934,7 +942,7 @@ export const trackItwUserWithoutL3Requirements = (
 ) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_USER_WITHOUT_L3_REQUIREMENTS,
-    buildEventProperties("KO", "error", itwUserWithoutL3requirements)
+    buildEventProperties("KO", "screen_view", itwUserWithoutL3requirements)
   );
 };
 // #endregion ERRORS

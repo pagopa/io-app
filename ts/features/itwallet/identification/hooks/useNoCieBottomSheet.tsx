@@ -9,6 +9,7 @@ import I18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { trackItwUserWithoutL3Bottomsheet } from "../../analytics";
 
 const noCieContentKeys = [
   "features.itWallet.identification.l3.mode.bottomSheet.noCie.content.firstAttention",
@@ -23,7 +24,7 @@ export const useNoCieBottomSheet = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const navigateToL2Identification = () => {
     machineRef.send({ type: "go-to-l2-identification" });
-    noCieBottomSheet.dismiss();
+    bottomSheet.dismiss();
   };
 
   const Footer = () => (
@@ -47,13 +48,13 @@ export const useNoCieBottomSheet = () => {
           accessibilityLabel={I18n.t(
             "features.itWallet.identification.l3.mode.bottomSheet.noCie.secondaryAction"
           )}
-          onPress={() => noCieBottomSheet.dismiss()}
+          onPress={() => bottomSheet.dismiss()}
         />
       </View>
     </VStack>
   );
 
-  const noCieBottomSheet = useIOBottomSheetModal({
+  const bottomSheet = useIOBottomSheetModal({
     title: I18n.t(
       "features.itWallet.identification.l3.mode.bottomSheet.noCie.title"
     ),
@@ -84,7 +85,15 @@ export const useNoCieBottomSheet = () => {
     )
   });
 
-  return noCieBottomSheet;
+  const presentWithTrack = () => {
+    trackItwUserWithoutL3Bottomsheet();
+    bottomSheet.present();
+  };
+
+  return {
+    noCieBottomSheet: bottomSheet,
+    noCieBottomSheetPresentWitTrack: presentWithTrack,
+  };
 };
 
 const styles = StyleSheet.create({

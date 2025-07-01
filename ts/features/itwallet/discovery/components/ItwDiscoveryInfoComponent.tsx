@@ -14,6 +14,7 @@ import { IOScrollView } from "../../../../components/ui/IOScrollView.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp.tsx";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
+import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 
 export type ItwDiscoveryInfoComponentProps = {
   onContinuePress: () => void;
@@ -39,8 +40,8 @@ export const ItwDiscoveryInfoComponent = ({
       ),
       cancelLabel: I18n.t("features.itWallet.discovery.dismissalDialog.cancel")
     },
-    dismissContext: {
-      screen_name: "ITW_DISCOVERY_INFO",
+    dismissalContext: {
+      screen_name: ITW_SCREENVIEW_EVENTS.ITW_INTRO,
       itw_flow: "L2"
     }
   });

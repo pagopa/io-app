@@ -49,6 +49,7 @@ import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { trackItwDiscoveryPlus, trackItwIntroBack } from "../../analytics";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { useRoute } from "@react-navigation/native";
+import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 
 const markdownRules = {
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
@@ -100,8 +101,8 @@ export const ItwPaywallComponent = ({
         "features.itWallet.discovery.paywall.dismissalDialog.cancel"
       )
     },
-    dismissContext: {
-      screen_name: "ITW_PAYWALL",
+    dismissalContext: {
+      screen_name: ITW_SCREENVIEW_EVENTS.ITW_INTRO,
       itw_flow: "L3"
     }
   });
