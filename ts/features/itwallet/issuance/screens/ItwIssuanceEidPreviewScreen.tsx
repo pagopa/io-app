@@ -31,6 +31,7 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
+  isL3FeaturesEnabledSelector,
   selectEidOption,
   selectIdentification
 } from "../../machine/eid/selectors";
@@ -69,6 +70,9 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+  const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute();
@@ -84,7 +88,11 @@ const ContentView = ({ eid }: ContentViewProps) => {
     useCallback(() => {
       trackCredentialPreview(mixPanelCredential);
       if (identification) {
-        trackItwRequestSuccess(identification?.mode, identification?.level);
+        trackItwRequestSuccess(
+          identification?.mode,
+          identification?.level,
+          isL3Enabled ? "L3" : "L2"
+        );
       }
     }, [identification, mixPanelCredential])
   );

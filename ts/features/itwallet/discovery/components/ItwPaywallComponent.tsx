@@ -46,6 +46,9 @@ import { itwGradientColors } from "../../common/utils/constants.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors";
 import { selectIsLoading } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { trackItwDiscoveryPlus, trackItwIntroBack } from "../../analytics";
+import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
+import { useRoute } from "@react-navigation/native";
 
 const markdownRules = {
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
@@ -84,7 +87,24 @@ export const ItwPaywallComponent = ({
 }: ItwPaywallComponentProps) => {
   const { tos_url } = useIOSelector(tosConfigSelector);
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-
+  const dismissalDialog = useItwDismissalDialog({
+    customLabels: {
+      title: I18n.t(
+        "features.itWallet.discovery.paywall.dismissalDialog.title"
+      ),
+      body: I18n.t("features.itWallet.discovery.paywall.dismissalDialog.body"),
+      confirmLabel: I18n.t(
+        "features.itWallet.discovery.paywall.dismissalDialog.confirm"
+      ),
+      cancelLabel: I18n.t(
+        "features.itWallet.discovery.paywall.dismissalDialog.cancel"
+      )
+    },
+    dismissContext: {
+      screen_name: "ITW_PAYWALL",
+      itw_flow: "L3"
+    }
+  });
   const theme = useIOTheme();
 
   const [productHighlightsLayout, setProductHighlightsLayout] = useState({
@@ -114,6 +134,7 @@ export const ItwPaywallComponent = ({
       animated: true
     });
     setAccessibilityFocus(productHighlightsRef);
+    trackItwDiscoveryPlus();
   }, [animatedRef, productHighlightsLayout]);
 
   const backgroundColor = IOColors[theme["appBackground-accent"]];
@@ -123,7 +144,11 @@ export const ItwPaywallComponent = ({
     contextualHelp: emptyContextualHelp,
     supportRequest: true,
     title: "",
-    variant: "contrast"
+    variant: "contrast",
+    goBack: () => {
+      trackItwIntroBack("L3");
+      dismissalDialog.show();
+    }
   });
 
   return (

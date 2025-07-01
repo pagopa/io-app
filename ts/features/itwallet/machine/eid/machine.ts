@@ -19,6 +19,7 @@ import {
 } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { IssuanceFailureType, mapEventToFailure } from "./failure";
+import { trackItWalletIntroScreen } from "../../analytics";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -80,7 +81,10 @@ export const itwEidIssuanceMachine = setup({
     }),
     setIsReissuing: assign({
       isReissuing: true
-    })
+    }),
+    trackIntroScreen: ({ context }) => {
+      trackItWalletIntroScreen(context.isL3FeaturesEnabled ? "L3" : "L2");
+    }
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
@@ -160,7 +164,7 @@ export const itwEidIssuanceMachine = setup({
     TosAcceptance: {
       description:
         "Display of the ToS to the user who must accept in order to proceed with the issuance of the eID",
-      entry: "navigateToTosScreen",
+      entry: ["navigateToTosScreen", "trackIntroScreen"],
       on: {
         "accept-tos": [
           {
@@ -743,7 +747,8 @@ export const itwEidIssuanceMachine = setup({
             input: ({ context }) => ({
               identification: context.identification,
               authenticationContext: context.authenticationContext,
-              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+              isL3IssuanceEnabled: context.isL3FeaturesEnabled
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),

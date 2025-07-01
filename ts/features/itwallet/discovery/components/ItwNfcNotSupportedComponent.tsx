@@ -12,6 +12,8 @@ import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { openWebUrl } from "../../../../utils/url";
+import { useFocusEffect } from "@react-navigation/native";
+import { trackItwNfcNotSupported } from "../../analytics";
 
 const NFC_NOT_SUPPORTED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/35541811236113-Cosa-serve-per-usare-IT-Wallet";
@@ -23,6 +25,8 @@ export const ItwNfcNotSupportedComponent = () => {
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
+
+  useFocusEffect(trackItwNfcNotSupported);
 
   const goBack = useCallback(() => navigation.goBack(), [navigation]);
 

@@ -191,7 +191,7 @@ export enum ItwL3UpgradeTrigger {
 
 export type ItwFlow = "L2" | "L3";
 
-export type ItwDismissContext = {
+export type ItwScreenFlowContext = {
   screen_name: string;
   itw_flow: ItwFlow;
 };
@@ -200,6 +200,12 @@ export type ItwDismissAction = {
   screen_name: string;
   itw_flow: ItwFlow;
   user_action: string;
+};
+
+type ItwUserWithoutL3requirements = {
+  screen_name: string;
+  reason: "user_without_cie" | "user_without_pin";
+  position: "screen" | "bottomsheet";
 };
 
 // #region SCREEN VIEW EVENTS
@@ -249,17 +255,17 @@ export function trackITWalletBannerVisualized(
   );
 }
 
-export function trackItWalletIntroScreen() {
+export function trackItWalletIntroScreen(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_INTRO,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 
-export function trackItWalletIDMethod() {
+export function trackItWalletIDMethod(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_ID_METHOD,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 
@@ -270,17 +276,17 @@ export function trackItWalletSpidIDPSelection() {
   );
 }
 
-export function trackItWalletCiePinEnter() {
+export function trackItWalletCiePinEnter(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_ENTER,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 
-export function trackItWalletCieNfcActivation() {
+export function trackItWalletCieNfcActivation(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CIE_NFC_ACTIVATION,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 
@@ -326,10 +332,51 @@ export function trackItwOfflineBottomSheet() {
   );
 }
 
-export function trackItwDismissContext(dismissContext: ItwDismissContext) {
+export function trackItwDismissContext(
+  screenFlowContext: ItwScreenFlowContext
+) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_OPERATION_BLOCK,
-    buildEventProperties("UX", "screen_view", dismissContext)
+    buildEventProperties("UX", "screen_view", screenFlowContext)
+  );
+}
+
+export function trackItwUpgradeBanner(banner_page: string) {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_BANNER,
+    buildEventProperties("UX", "screen_view", { banner_page })
+  );
+}
+
+export function trackItwPinInfoBottomSheet(
+  screenFlowContext: ItwScreenFlowContext
+) {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_PIN_INFO_BOTTOMSHEET,
+    buildEventProperties("UX", "screen_view", screenFlowContext)
+  );
+}
+
+export function trackItwCieInfoBottomSheet(
+  screenFlowContext: ItwScreenFlowContext
+) {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_CIE_INFO_BOTTOMSHEET,
+    buildEventProperties("UX", "screen_view", screenFlowContext)
+  );
+}
+
+export function trackItwCiePinTutorialCie() {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_TUTORIAL_CIE,
+    buildEventProperties("UX", "screen_view")
+  );
+}
+
+export function trackItwCiePinTutorialPin() {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_TUTORIAL_PIN,
+    buildEventProperties("UX", "screen_view")
   );
 }
 
@@ -360,10 +407,10 @@ export const trackOpenItwTos = () => {
   );
 };
 
-export const trackOpenItwTosAccepted = () => {
+export const trackOpenItwTosAccepted = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_TOS_ACCEPTED,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow })
   );
 };
 
@@ -402,10 +449,10 @@ export const trackSaveCredentialToWallet = (currentCredential: string) => {
   }
 };
 
-export function trackItWalletActivationStart() {
+export function trackItWalletActivationStart(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_ID_START,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow })
   );
 }
 
@@ -448,10 +495,10 @@ export function trackItWalletCiePukForgotten() {
   );
 }
 
-export function trackItWalletCieNfcGoToSettings() {
+export function trackItWalletCieNfcGoToSettings(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CIE_NFC_GO_TO_SETTINGS,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow })
   );
 }
 
@@ -557,6 +604,13 @@ export function trackWalletNewIdReset(state: GlobalState) {
   );
 }
 
+export function trackItwIntroBack(itw_flow: ItwFlow) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_INTRO_BACK,
+    buildEventProperties("UX", "action", { itw_flow })
+  );
+}
+
 // TODO: Track credential renewal flow when implemented
 export function trackWalletCredentialRenewStart(
   credential: MixPanelCredential
@@ -609,6 +663,41 @@ export const trackItwDismissAction = (dismissAction: ItwDismissAction) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_OPERATION_BLOCK_ACTION,
     buildEventProperties("UX", "action", dismissAction)
+  );
+};
+
+export const trackItwTapUpgradeBanner = (banner_page: string) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_TAP_BANNER,
+    buildEventProperties("UX", "action", { banner_page })
+  );
+};
+
+export const trackItwDiscoveryPlus = () => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_DISCOVERY_PLUS,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwContinueWithCieID = () => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CONTINUE_WITH_CIEID,
+    buildEventProperties("UX", "action", { itw_flow: "L3" })
+  );
+};
+
+export const trackItwContinueWithCieIDClose = () => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CONTINUE_WITH_CIEID_CLOSE,
+    buildEventProperties("UX", "action", { itw_flow: "L3" })
+  );
+};
+
+export const trackItwGoToCieIDApp = () => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_GO_TO_CIEID_APP,
+    buildEventProperties("UX", "action", { itw_flow: "L3" })
   );
 };
 
@@ -831,6 +920,21 @@ export const trackItwUpgradeL3Mandatory = (action: ItwL3UpgradeTrigger) => {
   );
 };
 
+export const trackItwNfcNotSupported = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_NFC_NOT_SUPPORTED,
+    buildEventProperties("KO", "error")
+  );
+};
+
+export const trackItwUserWithoutL3Requirements = (
+  itwUserWithoutL3requirements: ItwUserWithoutL3requirements
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_USER_WITHOUT_L3_REQUIREMENTS,
+    buildEventProperties("KO", "error", itwUserWithoutL3requirements)
+  );
+};
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
@@ -909,25 +1013,30 @@ export const trackBackToWallet = ({ exit_page, credential }: BackToWallet) => {
 
 // #region TECH
 
-export const trackItwRequest = (method?: ItwIdMethod) => {
+export const trackItwRequest = (method?: ItwIdMethod, itw_flow?: ItwFlow) => {
   if (method) {
     void mixpanelTrack(
       ITW_TECH_EVENTS.ITW_ID_REQUEST,
-      buildEventProperties("TECH", undefined, { ITW_ID_method: method })
+      buildEventProperties("TECH", undefined, {
+        itw_flow,
+        ITW_ID_method: method
+      })
     );
   }
 };
 
 export const trackItwRequestSuccess = (
   method?: ItwIdMethod,
-  status?: ItwStatus
+  status?: ItwStatus,
+  itw_flow?: ItwFlow
 ) => {
   if (method) {
     void mixpanelTrack(
       ITW_TECH_EVENTS.ITW_ID_REQUEST_SUCCESS,
       buildEventProperties("TECH", undefined, {
         ITW_ID_method: method,
-        ITW_ID_V2: status
+        ITW_ID_V2: status,
+        itw_flow
       })
     );
   }

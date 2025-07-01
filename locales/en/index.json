@@ -4345,6 +4345,11 @@
         "title": "La versione digitale dei tuoi documenti, su IO",
         "content": "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n\n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati.",
         "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
+        "dismissalDialog": {
+          "title": "Vuoi rinunciare ai documenti digitali su IO?",
+          "confirm": "Si, rinuncia",
+          "cancel": "No, torna indietro"
+        },
         "upcomingWalletBanner": {
           "title": "Novità in arrivo: i tuoi Documenti su IO",
           "content": "Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!",
@@ -4397,7 +4402,13 @@
           },
           "tos": "Premendo **Ottieni IT-Wallet** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}})",
           "anchorAction": "Scopri tutti i vantaggi",
-          "primaryAction": "Ottieni IT-Wallet"
+          "primaryAction": "Ottieni IT-Wallet",
+          "dismissalDialog": {
+            "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
+            "body": "Otterrai una versione digitale dei tuoi documenti con funzionalità ridotte.",
+            "confirm": "Si, rinuncia",
+            "cancel": "No, torna indietro"
+          }
         },
         "offlineBanner": {
           "title": "Novità: i tuoi documenti anche offline",

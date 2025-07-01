@@ -1,23 +1,41 @@
+import { useRoute } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
+import {
+  trackItwTapUpgradeBanner,
+  trackItwUpgradeBanner
+} from "../../analytics";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwShouldRenderL3UpgradeBannerSelector } from "../store/selectors";
 import { ItwHighlightBanner } from "./ItwHighlightBanner";
+import { useCallback } from "react";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 export const ItwUpgradeBanner = () => {
   const navigation = useIONavigation();
   const shouldRender = useIOSelector(itwShouldRenderL3UpgradeBannerSelector);
+  const { name: routeName } = useRoute();
+
+  useOnFirstRender(
+    useCallback(() => {
+      if (shouldRender) {
+        trackItwUpgradeBanner(routeName);
+      }
+    }, [shouldRender, routeName])
+  );
 
   if (!shouldRender) {
     return null;
   }
 
-  const handleOnPress = () =>
+  const handleOnPress = () => {
+    trackItwTapUpgradeBanner(routeName);
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: { isL3: true }
     });
+  };
 
   return (
     <ItwHighlightBanner

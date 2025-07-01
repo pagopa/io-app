@@ -26,6 +26,7 @@ type ItwIdentificationBottomSheetProps = {
   content: Array<ItwIdentificationContentType>;
   imageSrc?: ImageSourcePropType;
   footerButtons?: Array<ItwIdentificationFooterButton>;
+  onDismiss?: () => void;
 };
 
 /**
@@ -34,12 +35,14 @@ type ItwIdentificationBottomSheetProps = {
  * @param content - the content of the bottom sheet. Consists of an array of objects with a title and a body.
  * @param imageSrc - the source of the image to be displayed in the bottom sheet.
  * @param footerButtons - the array of buttons to be displayed in the bottom sheet footer.
+ * @param onDismiss - callback function to be called when the bottom sheet is dismissed.
  */
 export const useItwIdentificationBottomSheet = ({
   title,
   content,
   imageSrc,
-  footerButtons = []
+  footerButtons = [],
+  onDismiss
 }: ItwIdentificationBottomSheetProps) => {
   const Footer = () => {
     // If there's only one button
@@ -103,7 +106,8 @@ export const useItwIdentificationBottomSheet = ({
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title,
-    component: <BottomSheetBody />
+    component: <BottomSheetBody />,
+    onDismiss
   });
 
   return {

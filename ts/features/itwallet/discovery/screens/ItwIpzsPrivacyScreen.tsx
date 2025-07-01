@@ -11,6 +11,7 @@ import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { trackOpenItwTosAccepted } from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
+import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,8 +19,12 @@ const ItwIpzsPrivacyScreen = () => {
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
+  const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+
   const handleContinuePress = () => {
-    trackOpenItwTosAccepted();
+    trackOpenItwTosAccepted(isL3Enabled ? "L3" : "L2");
     machineRef.send({ type: "accept-ipzs-privacy" });
   };
 

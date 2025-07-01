@@ -45,7 +45,12 @@ export const ItwL2IdentificationModeSelectionScreen = (
       }
     }, [eidReissuing, machineRef])
   );
-  useFocusEffect(trackItWalletIDMethod);
+
+  useFocusEffect(
+    useCallback(() => {
+      trackItWalletIDMethod("L2");
+    }, [])
+  );
 
   const handleSpidPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });

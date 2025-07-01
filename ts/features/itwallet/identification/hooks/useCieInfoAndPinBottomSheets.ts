@@ -2,6 +2,12 @@ import I18n from "../../../../i18n";
 import { CieWarningType } from "../screens/ItwIdentificationCieWarningScreen";
 import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { useRoute } from "@react-navigation/native";
+import {
+  trackItwCieInfoBottomSheet,
+  trackItwPinInfoBottomSheet,
+  trackItwUserWithoutL3Requirements
+} from "../../analytics";
 
 /**
  * Hook that manages the two bottom sheets used in the CIE identification flow:
@@ -10,9 +16,15 @@ import { ItwEidIssuanceMachineContext } from "../../machine/provider";
  */
 export const useCieInfoAndPinBottomSheets = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const { name: routeName } = useRoute();
 
   const navigateToCieWarning = (warning: CieWarningType) => {
     machineRef.send({ type: "go-to-cie-warning", warning });
+    trackItwUserWithoutL3Requirements({
+      screen_name: routeName,
+      reason: warning === "noCie" ? "user_without_cie" : "user_without_pin",
+      position: "bottomsheet"
+    });
   };
 
   const cieInfoBottomSheet = useItwIdentificationBottomSheet({
@@ -46,6 +58,15 @@ export const useCieInfoAndPinBottomSheets = () => {
     ]
   });
 
+  const originalCiePresent = cieInfoBottomSheet.present;
+  cieInfoBottomSheet.present = () => {
+    trackItwCieInfoBottomSheet({
+      itw_flow: "L3",
+      screen_name: routeName
+    });
+    originalCiePresent();
+  };
+
   const pinBottomSheet = useItwIdentificationBottomSheet({
     title: I18n.t(
       "features.itWallet.identification.l3.mode.bottomSheet.pin.title"
@@ -76,6 +97,15 @@ export const useCieInfoAndPinBottomSheets = () => {
       }
     ]
   });
+
+  const originalPinPresent = pinBottomSheet.present;
+  pinBottomSheet.present = () => {
+    trackItwPinInfoBottomSheet({
+      itw_flow: "L3",
+      screen_name: routeName
+    });
+    originalPinPresent();
+  };
 
   return {
     cieInfoBottomSheet,

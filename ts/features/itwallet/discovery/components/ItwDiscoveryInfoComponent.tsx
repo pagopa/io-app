@@ -5,7 +5,7 @@ import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
 import I18n from "../../../../i18n.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
-import { trackOpenItwTos } from "../../analytics/index.ts";
+import { trackItwIntroBack, trackOpenItwTos } from "../../analytics/index.ts";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
@@ -13,6 +13,7 @@ import { generateLinkRuleWithCallback } from "../../common/utils/markdown.tsx";
 import { IOScrollView } from "../../../../components/ui/IOScrollView.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp.tsx";
+import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 
 export type ItwDiscoveryInfoComponentProps = {
   onContinuePress: () => void;
@@ -29,11 +30,29 @@ export const ItwDiscoveryInfoComponent = ({
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const { tos_url } = useIOSelector(tosConfigSelector);
+  const dismissalDialog = useItwDismissalDialog({
+    customLabels: {
+      title: I18n.t("features.itWallet.discovery.dismissalDialog.title"),
+      body: "",
+      confirmLabel: I18n.t(
+        "features.itWallet.discovery.dismissalDialog.confirm"
+      ),
+      cancelLabel: I18n.t("features.itWallet.discovery.dismissalDialog.cancel")
+    },
+    dismissContext: {
+      screen_name: "ITW_DISCOVERY_INFO",
+      itw_flow: "L2"
+    }
+  });
 
   useHeaderSecondLevel({
     contextualHelp: emptyContextualHelp,
     supportRequest: true,
-    title: ""
+    title: "",
+    goBack: () => {
+      trackItwIntroBack("L2");
+      dismissalDialog.show();
+    }
   });
 
   return (

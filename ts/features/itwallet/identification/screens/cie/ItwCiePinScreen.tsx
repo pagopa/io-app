@@ -35,6 +35,7 @@ import {
   trackItWalletCiePinInfo
 } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -63,6 +64,9 @@ export const ItwCiePinScreen = () => {
 
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
 
   const [pin, setPin] = useState("");
   const pinPadViewRef = useRef<View>(null);
@@ -84,9 +88,9 @@ export const ItwCiePinScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      trackItWalletCiePinEnter();
+      trackItWalletCiePinEnter(isL3Enabled ? "L3" : "L2");
       setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
-    }, [])
+    }, [isL3Enabled])
   );
 
   useHeaderSecondLevel({
