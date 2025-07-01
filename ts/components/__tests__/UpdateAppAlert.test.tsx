@@ -10,7 +10,7 @@ import I18n from "../../i18n";
 
 const mockGoBack = jest.fn();
 const mockSetOptions = jest.fn();
-jest.mock("../navigation/params/AppParamsList", () => ({
+jest.mock("../../navigation/params/AppParamsList", () => ({
   useIONavigation: () => ({
     goBack: mockGoBack,
     setOptions: mockSetOptions
