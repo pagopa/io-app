@@ -31,7 +31,7 @@ export type RequestObject = Awaited<
  * Alias type for the relying party entity configuration.
  */
 export type RpEntityConfiguration =
-  Trust.RelyingPartyEntityConfiguration["payload"]["metadata"];
+  Trust.Types.RelyingPartyEntityConfiguration["payload"]["metadata"];
 
 /**
  * Alias for the IssuerConfiguration type
