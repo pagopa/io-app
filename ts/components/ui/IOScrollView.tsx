@@ -167,7 +167,7 @@ export const IOScrollView = ({
   contentContainerStyle,
   testID
 }: IOScrollView) => {
-  const alertProps = useStatusAlertProps();
+  const alertProps = useStatusAlertProps(undefined, true);
   const theme = useIOTheme();
 
   /* Navigation */

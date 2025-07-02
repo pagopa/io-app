@@ -34,7 +34,7 @@ export const useHeaderFirstLevel = ({
 
   const actionHelp = useHeaderFirstLevelActionPropHelp(currentRoute);
   const actionSettings = useHeaderFirstLevelActionPropSettings();
-  const alertProps = useStatusAlertProps(currentRoute);
+  const alertProps = useStatusAlertProps(currentRoute, true);
 
   const actions: HeaderFirstLevel["actions"] = useMemo(() => {
     const fallbackActions: HeaderFirstLevel["actions"] = [

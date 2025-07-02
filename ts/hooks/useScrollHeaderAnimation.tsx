@@ -39,7 +39,7 @@ export const useScrollHeaderAnimation = ({
   const scrollPositionAbsolute = useSharedValue(0);
   const scrollPositionPercentage = useSharedValue(0);
   const theme = useIOTheme();
-  const alertProps = useStatusAlertProps();
+  const alertProps = useStatusAlertProps(undefined, true);
   const navigation = useNavigation();
 
   const HEADER_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];

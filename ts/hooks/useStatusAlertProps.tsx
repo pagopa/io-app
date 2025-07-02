@@ -51,7 +51,8 @@ type AlertProps = {
   bottomSheet?: JSX.Element;
 };
 export const useStatusAlertProps = (
-  routeName?: string
+  routeName?: string,
+  ignoreTrackingEvents?: true
 ): AlertProps | undefined => {
   const [connectivityAlert, setConnectivityAlert] = useState<
     AlertEdgeToEdgeProps | undefined
@@ -77,6 +78,9 @@ export const useStatusAlertProps = (
   const localeFallback = fallbackForLocalizedMessageKeys(locale);
 
   useEffect(() => {
+    if (prevIsConnected === isConnected) {
+      return;
+    }
     if (
       blackListOfflineAlertRoutes.has(currentRoute) ||
       offlineAccessReason !== undefined
@@ -104,12 +108,14 @@ export const useStatusAlertProps = (
         }
       });
 
-      void mixpanelTrack(
-        "OFFLINE_BANNER",
-        buildEventProperties("TECH", undefined, {
-          screen: currentRoute
-        })
-      );
+      if (!ignoreTrackingEvents) {
+        void mixpanelTrack(
+          "OFFLINE_BANNER",
+          buildEventProperties("TECH", undefined, {
+            screen: currentRoute
+          })
+        );
+      }
     }
     if (prevIsConnected === false && isConnected === true) {
       setConnectivityAlert({
@@ -117,27 +123,29 @@ export const useStatusAlertProps = (
         content: I18n.t("global.offline.connectionRestored")
       });
 
-      void mixpanelTrack(
-        "ONLINE_BANNER",
-        buildEventProperties("TECH", undefined, {
-          screen: currentRoute
-        })
-      );
-
+      if (!ignoreTrackingEvents) {
+        void mixpanelTrack(
+          "ONLINE_BANNER",
+          buildEventProperties("TECH", undefined, {
+            screen: currentRoute
+          })
+        );
+      }
       setTimeout(() => {
         setConnectivityAlert(undefined);
       }, 3000);
     }
   }, [
+    ignoreTrackingEvents,
     isConnected,
-    present,
     prevIsConnected,
     currentRoute,
-    offlineAccessReason
+    offlineAccessReason,
+    present
   ]);
 
   return useMemo(() => {
-    if (isConnected === false && connectivityAlert) {
+    if (connectivityAlert) {
       return {
         alertProps: connectivityAlert,
         bottomSheet
@@ -168,11 +176,5 @@ export const useStatusAlertProps = (
         ...statusAction
       }
     };
-  }, [
-    currentStatusMessage,
-    localeFallback,
-    isConnected,
-    bottomSheet,
-    connectivityAlert
-  ]);
+  }, [currentStatusMessage, localeFallback, bottomSheet, connectivityAlert]);
 };

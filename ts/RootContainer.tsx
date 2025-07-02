@@ -18,7 +18,6 @@ import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
 import { applicationChangeState } from "./store/actions/application";
-import { setDebugCurrentRouteName } from "./store/actions/debug";
 import { navigateBack } from "./store/actions/navigation";
 import { setScreenReaderEnabled } from "./store/actions/preferences";
 import { isDebugModeEnabledSelector } from "./store/reducers/debug";
@@ -141,7 +140,6 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = {
   applicationChangeState,
   navigateBack,
-  setDebugCurrentRouteName,
   setScreenReaderEnabled
 };
 
