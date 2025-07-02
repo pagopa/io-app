@@ -54,6 +54,7 @@ import {
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { useFIMSAuthenticationFlow } from "../../../fims/common/hooks";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -64,7 +65,7 @@ type IdPayInitiativeDetailsScreenRouteProps = RouteProp<
   "IDPAY_DETAILS_MONITORING"
 >;
 
-const IdPayInitiativeDetailsScreen = () => {
+const IdPayInitiativeDetailsScreenComponent = () => {
   const route = useRoute<IdPayInitiativeDetailsScreenRouteProps>();
 
   const { initiativeId } = route.params;
@@ -365,6 +366,11 @@ const IdPayInitiativeDetailsScreen = () => {
     </BonusCardScreenComponent>
   );
 };
+
+const IdPayInitiativeDetailsScreen = withAppRequiredUpdate(
+  IdPayInitiativeDetailsScreenComponent,
+  "idpay.initiative_details"
+);
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
