@@ -5788,7 +5788,7 @@
         "button": "Chiudi"
       },
       "removeAlert": {
-        "title": "Do you want to delete {{Initiativename}} from the wallet?",
+        "title": "Do you want to delete {{initiativeName}} from the wallet?",
         "content": "The bonus will be removed."
       }
     },

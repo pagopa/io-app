@@ -4103,7 +4103,7 @@
     },
     "unsubscription": {
       "removeAlert": {
-        "title": "Möchten Sie {{Initiativename}} aus der Brieftasche löschen?",
+        "title": "Möchten Sie {{initiativeName}} aus der Brieftasche löschen?",
         "content": "Der Bonus wird entfernt."
       }
     }
