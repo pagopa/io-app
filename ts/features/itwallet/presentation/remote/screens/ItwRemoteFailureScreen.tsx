@@ -118,12 +118,27 @@ const ContentView = ({ failure }: ContentViewProps) => {
             pictogram: "itWallet",
             action: {
               label: I18n.t(`${i18nNs}.walletInactiveScreen.primaryAction`),
-              onPress: () =>
-                machineRef.send({ type: "go-to-wallet-activation" })
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t(`${i18nNs}.walletInactiveScreen.primaryAction`)
+                });
+                machineRef.send({ type: "go-to-wallet-activation" });
+              }
             },
             secondaryAction: {
               label: I18n.t(`${i18nNs}.walletInactiveScreen.secondaryAction`),
-              onPress: dismissalDialog.show
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure,
+                  cta_category: "custom_2",
+                  cta_id: I18n.t(
+                    `${i18nNs}.walletInactiveScreen.secondaryAction`
+                  )
+                });
+                dismissalDialog.show();
+              }
             }
           };
         case RemoteFailureType.MISSING_CREDENTIALS: {
