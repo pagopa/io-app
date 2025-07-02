@@ -67,6 +67,7 @@ describe("itwEidIssuanceMachine", () => {
   const hasValidWalletInstanceAttestation = jest.fn();
   const hasIntegrityKeyTag = jest.fn();
   const isL3FeaturesEnabled = jest.fn();
+  const isL2Fallback = jest.fn();
   const resetWalletInstance = jest.fn();
   const trackWalletInstanceCreation = jest.fn();
   const trackWalletInstanceRevocation = jest.fn();
@@ -131,7 +132,8 @@ describe("itwEidIssuanceMachine", () => {
       isOperationAborted,
       hasValidWalletInstanceAttestation,
       hasIntegrityKeyTag,
-      isL3FeaturesEnabled
+      isL3FeaturesEnabled,
+      isL2Fallback
     }
   });
 
@@ -1456,6 +1458,7 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
   });
+
   it("Should initialize the machine context with L3 active", async () => {
     const actor = createActor(mockedMachine);
     actor.start();
