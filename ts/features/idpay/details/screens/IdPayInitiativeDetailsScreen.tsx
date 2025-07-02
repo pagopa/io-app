@@ -22,6 +22,7 @@ import {
 } from "../../../../../definitions/idpay/InitiativeDTO";
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
+import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import {
@@ -61,7 +62,7 @@ type IdPayInitiativeDetailsScreenRouteProps = RouteProp<
   "IDPAY_DETAILS_MONITORING"
 >;
 
-const IdPayInitiativeDetailsScreen = () => {
+const IdPayInitiativeDetailsScreenComponent = () => {
   const route = useRoute<IdPayInitiativeDetailsScreenRouteProps>();
 
   const { initiativeId } = route.params;
@@ -370,6 +371,11 @@ const IdPayInitiativeDetailsScreen = () => {
     </BonusCardScreenComponent>
   );
 };
+
+const IdPayInitiativeDetailsScreen = withAppRequiredUpdate(
+  IdPayInitiativeDetailsScreenComponent,
+  "idpay.initiative_details"
+);
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
