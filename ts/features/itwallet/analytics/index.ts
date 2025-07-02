@@ -125,6 +125,7 @@ type TrackITWalletBannerClosureProperties = {
 
 type TrackITWalletIDMethodSelected = {
   ITW_ID_method: "spid" | "ciePin" | "cieId";
+  itw_flow: ItwFlow;
 };
 
 type TrackITWalletSpidIDPSelected = { idp: string };
@@ -686,7 +687,7 @@ export const trackItwTapUpgradeBanner = (banner_page: string) => {
 export const trackItwDiscoveryPlus = () => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_DISCOVERY_PLUS,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow: "L3" })
   );
 };
 

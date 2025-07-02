@@ -91,12 +91,12 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
 
   const handleCiePinPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin", itw_flow: "L3" });
   }, [machineRef]);
 
   const handleCieIdPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "cieId", itw_flow: "L3" });
   }, [machineRef]);
 
   return (

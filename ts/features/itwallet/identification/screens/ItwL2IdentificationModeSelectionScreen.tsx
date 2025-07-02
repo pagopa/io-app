@@ -54,17 +54,17 @@ export const ItwL2IdentificationModeSelectionScreen = (
 
   const handleSpidPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "spid" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "spid", itw_flow: "L2" });
   }, [machineRef]);
 
   const handleCiePinPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin", itw_flow: "L2" });
   }, [machineRef]);
 
   const handleCieIdPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "cieId", itw_flow: "L2" });
   }, [machineRef]);
 
   const disabledIdentificationMethods = useIOSelector(
