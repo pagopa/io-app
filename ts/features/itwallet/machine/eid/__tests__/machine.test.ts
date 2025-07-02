@@ -272,7 +272,8 @@ describe("itwEidIssuanceMachine", () => {
         mode: "spid",
         level: "L2",
         idpId: idps[0].id
-      }
+      },
+      isL2Fallback: true
     });
 
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -327,7 +328,8 @@ describe("itwEidIssuanceMachine", () => {
       authenticationContext: expect.objectContaining({
         callbackUrl: "http://test.it"
       }),
-      eid: ItwStoredCredentialsMocks.eid
+      eid: ItwStoredCredentialsMocks.eid,
+      isL2Fallback: true
     });
 
     /**
@@ -380,8 +382,6 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-
-      isL3FeaturesEnabled: false,
       identification: {
         mode: "cieId",
         level: "L2"
