@@ -4370,26 +4370,26 @@
         },
         "paywall": {
           "badge": "Novità",
-          "description": "L'unico Wallet di Stato:\npubblico, sicuro, gratuito.",
+          "description": "L'unico portafoglio digitale di Stato: pubblico, sicuro, gratuito.",
           "featureHighlights": {
             "1": "Usi la tua Patente su IO come documento di riconoscimento",
             "2": "Ti basta il tuo telefono per dimostrare la tua identità",
             "3": "Hai tutto ciò che ti serve anche se lasci a casa il portafoglio",
-            "4": "Nuovi documenti ufficiali, solo sull’app IO",
+            "4": "I nuovi documenti digitali ufficiali, solo sull’app IO",
             "5": "Accedi in pochi tocchi ai servizi digitali della PA"
           },
           "productHighlights": {
             "1": {
               "title": "Facile, sicuro, ufficiale",
-              "content": "Ottienilo con la tua **Carta di Identità Elettronica (CIE)** e il suo **PIN**.\n\n\nIT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantenerli al sicuro."
+              "content": "Ottienilo con la tua **Carta di Identità Elettronica (CIE)** e il suo **PIN per associarlo alla tua identità**.\n\n\nIT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantenerli al sicuro."
             },
             "2": {
               "title": "Nuovi documenti in arrivo",
-              "content": "ISEE, titoli di studio, certificazione a uso elettorale e altri: potrai aggiungere all’app IO nuovi documenti ufficiali."
+              "content": "Titoli di studio, attestati di residenza e altri: potrai aggiungere all’app IO nuovi documenti ufficiali."
             },
             "3": {
               "title": "Tutto nelle tue mani",
-              "content": "Con IT-Wallet mostri il codice QR dei tuoi documenti digitali: chi verifica non dovrà tenere in mano il tuo dispositivo."
+              "content": "Con IT-Wallet mostri il codice QR della tua Patente digitale: chi verifica non dovrà tenere in mano il tuo dispositivo."
             },
             "4": {
               "title": "Progettato con l'Europa",
@@ -4440,18 +4440,18 @@
         "l3": {
           "mode": {
             "title": "Verifica la tua identità con CIE",
-            "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet.",
+            "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet e associare i documenti alla tua identità.",
             "primaryAction": "Inizia",
             "secondaryAction": "Non ho la CIE",
             "ciePin": {
               "header": "Avrai bisogno di:",
-              "card": "La tua carta d’identità elettronica (CIE)",
+              "card": "La tua Carta di Identità Elettronica (CIE)",
               "pin": "Il PIN della CIE a 8 cifre"
             },
             "cieId": {
               "header": "In alternativa:",
-              "title": "Usa l'app CieID",
-              "subtitle": "Utile se hai già installato l’app CieID"
+              "title": "Continua sull'app CieID",
+              "subtitle": "Utile se hai già installato l’app CieID e registrato la CIE"
             },
             "bottomSheet": {
               "cie": {
@@ -4486,30 +4486,14 @@
             },
             "preparationScreen": {
               "cie": {
-                "title": "Prepara la tua carta di identità elettronica (CIE)",
+                "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
                 "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
                 "buttonLink": "Cos'è la CIE?",
                 "primaryAction": "Ho pronta la CIE",
                 "secondaryAction": "Non ho la CIE"
               },
               "ciePin": {
-                "title": "Prepara il PIN della tua carta di identità \nelettronica (CIE)",
-                "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell'identità.",
-                "buttonLink": "Cos'è il PIN della CIE?",
-                "primaryAction": "Ho pronto il PIN",
-                "secondaryAction": "Non trovo il PIN della CIE"
-              }
-            },
-            "preparationScreen": {
-              "cie": {
-                "title": "Prepara la tua carta di identità elettronica (CIE)",
-                "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
-                "buttonLink": "Cos'è la CIE?",
-                "primaryAction": "Ho pronta la CIE",
-                "secondaryAction": "Non ho la CIE"
-              },
-              "ciePin": {
-                "title": "Prepara il PIN della tua carta di identità \nelettronica (CIE)",
+                "title": "Prepara il PIN della tua Carta di Identità \nElettronica (CIE)",
                 "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell'identità.",
                 "buttonLink": "Cos'è il PIN della CIE?",
                 "primaryAction": "Ho pronto il PIN",
@@ -5141,7 +5125,7 @@
       "upgrade": {
         "banner": {
           "title": "IT-Wallet per\ni tuoi documenti",
-          "description": "L’unico Wallet di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
+          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
           "action": "Ottieni IT-Wallet"
         }
       },
