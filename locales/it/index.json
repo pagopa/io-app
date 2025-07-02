@@ -5018,6 +5018,10 @@
               "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
               "primaryAction": "Chiudi"
             }
+          },
+          "success": {
+            "title": "Fatto!",
+            "subtitle": "La verifica è stata completata con successo."
           }
         },
         "itWalletId": {
@@ -5767,6 +5771,10 @@
       },
       "button": {
         "continue": "Rimuovi"
+      },
+      "removeAlert": {
+        "title": "Vuoi eliminare {{initiativeName}} dal Portafoglio?",
+        "content": "Il bonus verrà rimosso."
       },
       "modal": {
         "title": "Rimuovere {{initiativeName}}?",
