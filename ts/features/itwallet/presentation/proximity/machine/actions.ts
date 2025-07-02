@@ -3,6 +3,7 @@ import { StackActions } from "@react-navigation/native";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../../store/hooks";
+import ROUTES from "../../../../../navigation/routes";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { itwCredentialsSelector } from "../../../credentials/store/selectors";
 import { Context } from "./context";
@@ -36,6 +37,26 @@ export const createProximityActionsImplementation = (
   navigateToClaimsDisclosureScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.PROXIMITY.CLAIMS_DISCLOSURE
+    });
+  },
+
+  navigateToSendDocumentsResponseScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PROXIMITY.SEND_DOCUMENTS_RESPONSE
+    });
+  },
+
+  navigateToWallet: () => {
+    navigation.reset({
+      index: 0,
+      routes: [
+        {
+          name: ROUTES.MAIN,
+          params: {
+            screen: ROUTES.WALLET_HOME
+          }
+        }
+      ]
     });
   },
 

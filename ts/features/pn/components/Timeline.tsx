@@ -28,6 +28,7 @@ export type TimelineItemProps = {
 
 export type TimelineProps = {
   data: ReadonlyArray<TimelineItemProps>;
+  footerHeight: number;
 };
 
 const styles = StyleSheet.create({
@@ -153,9 +154,10 @@ const TimelineItem = ({
   </View>
 );
 
-export const Timeline = ({ data = [] }: TimelineProps) => (
+export const Timeline = ({ data = [], footerHeight }: TimelineProps) => (
   // Additional margin needed to allow proper scrolling of the timeline
-  <View collapsable={false} style={{ marginBottom: 96 }}>
+  // 64 is the additional padding of the timeline that has to be removed
+  <View collapsable={false} style={{ marginBottom: footerHeight - 64 }}>
     {data.map((item, i) => (
       <TimelineItem
         key={i}
