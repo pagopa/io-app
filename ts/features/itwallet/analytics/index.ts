@@ -130,7 +130,7 @@ type TrackITWalletIDMethodSelected = {
 
 type TrackITWalletSpidIDPSelected = { idp: string };
 
-type TrackItWalletCieCardReadingFailure = { reason: string };
+type TrackItWalletCieCardReadingFailure = { reason: string; itw_flow: ItwFlow };
 
 export type ItwStatus = "not_active" | "L2" | "L3";
 export type ItwId = "not_available" | "valid" | "not_valid";
@@ -291,17 +291,17 @@ export function trackItWalletCieNfcActivation(itw_flow: ItwFlow) {
   );
 }
 
-export function trackItWalletCieCardReading() {
+export function trackItWalletCieCardReading(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CIE_CARD_READING,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 
-export function trackItWalletCieCardReadingSuccess() {
+export function trackItWalletCieCardReadingSuccess(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CARD_READING_SUCCESS,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 
@@ -381,8 +381,7 @@ export function trackItwCiePinTutorialPin() {
   );
 }
 
-export function trackItwUserWithoutL3Bottomsheet(
-) {
+export function trackItwUserWithoutL3Bottomsheet() {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_USER_WITHOUT_L3_BOTTOMSHEET,
     buildEventProperties("UX", "screen_view")
@@ -483,24 +482,24 @@ export function trackItWalletSpidIDPSelected(
   );
 }
 
-export function trackItWalletCiePinInfo() {
+export function trackItWalletCiePinInfo(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CIE_PIN_INFO,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow })
   );
 }
 
-export function trackItWalletCiePinForgotten() {
+export function trackItWalletCiePinForgotten(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CIE_PIN_FORGOTTEN,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow })
   );
 }
 
-export function trackItWalletCiePukForgotten() {
+export function trackItWalletCiePukForgotten(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CIE_PUK_FORGOTTEN,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow })
   );
 }
 
@@ -511,10 +510,10 @@ export function trackItWalletCieNfcGoToSettings(itw_flow: ItwFlow) {
   );
 }
 
-export function trackItWalletCieRetryPin() {
+export function trackItWalletCieRetryPin(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CIE_RETRY_PIN,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow })
   );
 }
 
@@ -716,38 +715,38 @@ export const trackItwGoToCieIDApp = () => {
 
 // #region ERRORS
 
-export function trackItWalletErrorCardReading() {
+export function trackItWalletErrorCardReading(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_CARD_READING_ERROR,
-    buildEventProperties("UX", "error")
+    buildEventProperties("UX", "error", { itw_flow })
   );
 }
 
-export function trackItWalletErrorPin() {
+export function trackItWalletErrorPin(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_PIN_ERROR,
-    buildEventProperties("UX", "error")
+    buildEventProperties("UX", "error", { itw_flow })
   );
 }
 
-export function trackItWalletSecondErrorPin() {
+export function trackItWalletSecondErrorPin(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_PIN_SECOND_ERROR,
-    buildEventProperties("UX", "error")
+    buildEventProperties("UX", "error", { itw_flow })
   );
 }
 
-export function trackItWalletLastErrorPin() {
+export function trackItWalletLastErrorPin(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_PIN_LAST_ERROR,
-    buildEventProperties("UX", "error")
+    buildEventProperties("UX", "error", { itw_flow })
   );
 }
 
-export function trackItWalletCieCardVerifyFailure() {
+export function trackItWalletCieCardVerifyFailure(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_CARD_VERIFY_FAILURE,
-    buildEventProperties("UX", "error")
+    buildEventProperties("UX", "error", { itw_flow })
   );
 }
 

@@ -1,8 +1,8 @@
+import { useRoute } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { CieWarningType } from "../screens/ItwIdentificationCieWarningScreen";
 import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { useRoute } from "@react-navigation/native";
 import {
   trackItwCieInfoBottomSheet,
   trackItwPinInfoBottomSheet,

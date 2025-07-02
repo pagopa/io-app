@@ -44,7 +44,7 @@ export const ItwDiscoveryInfoScreen = ({
   const handleContinuePress = useCallback(() => {
     trackItWalletActivationStart(isL3 ? "L3" : "L2");
     machineRef.send({ type: "accept-tos" });
-  }, [machineRef]);
+  }, [machineRef, isL3]);
 
   if (!isL3) {
     return <ItwDiscoveryInfoComponent onContinuePress={handleContinuePress} />;

@@ -81,8 +81,9 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
 
   const { cieInfoBottomSheet, pinBottomSheet } = useCieInfoAndPinBottomSheets();
 
-  const { noCieBottomSheet, noCieBottomSheetPresentWitTrack } = useNoCieBottomSheet();
-  
+  const { noCieBottomSheet, noCieBottomSheetPresentWitTrack } =
+    useNoCieBottomSheet();
+
   useFocusEffect(
     useCallback(() => {
       trackItWalletIDMethod("L3");

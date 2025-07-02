@@ -67,7 +67,7 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
             cta_category: "custom_1",
             cta_id: t("primaryAction")
           });
-  
+
           isItwValid
             ? Linking.openURL(cieFaqUrls[warning])
             : goToL2Identification();
@@ -82,7 +82,7 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
             cta_category: "custom_2",
             cta_id: t("closeAction")
           });
-  
+
           isItwValid ? closeIdentification() : back();
         }
       };

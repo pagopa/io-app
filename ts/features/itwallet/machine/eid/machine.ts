@@ -6,6 +6,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { assert } from "../../../../utils/assert.ts";
+import { trackItWalletIntroScreen } from "../../analytics";
 import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
@@ -19,7 +20,6 @@ import {
 } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { IssuanceFailureType, mapEventToFailure } from "./failure";
-import { trackItWalletIntroScreen } from "../../analytics";
 
 const notImplemented = () => {
   throw new Error("Not implemented");

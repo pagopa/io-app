@@ -1,4 +1,5 @@
 import { IOToast } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import I18n from "../../../../i18n";
 import {
@@ -12,7 +13,6 @@ import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { openWebUrl } from "../../../../utils/url";
-import { useFocusEffect } from "@react-navigation/native";
 import { trackItwNfcNotSupported } from "../../analytics";
 
 const NFC_NOT_SUPPORTED_FAQ_URL =

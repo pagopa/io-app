@@ -20,6 +20,7 @@ import {
   trackItWalletLastErrorPin,
   trackItWalletSecondErrorPin
 } from "../../../analytics";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 
 export type ItwCieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
@@ -45,6 +46,10 @@ type Messages = {
 
 export const ItwCieWrongCiePinScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+  const itw_flow = isL3Enabled ? "L3" : "L2";
 
   useItwPreventNavigationEvent();
 
@@ -60,39 +65,39 @@ export const ItwCieWrongCiePinScreen = () => {
   const handleTrackPinErrors = (key: number) => {
     switch (key) {
       case 2:
-        trackItWalletErrorPin();
+        trackItWalletErrorPin(itw_flow);
         break;
       case 1:
-        trackItWalletSecondErrorPin();
+        trackItWalletSecondErrorPin(itw_flow);
         break;
       case 0:
-        trackItWalletLastErrorPin();
+        trackItWalletLastErrorPin(itw_flow);
         break;
     }
   };
 
   const handleRetry = useCallback(() => {
-    trackItWalletCieRetryPin();
+    trackItWalletCieRetryPin(itw_flow);
     machineRef.send({ type: "back" });
-  }, [machineRef]);
+  }, [machineRef, itw_flow]);
 
   const handleClose = useCallback(() => {
     machineRef.send({ type: "close" });
   }, [machineRef]);
 
   const didYouForgetPin = useCallback(() => {
-    trackItWalletCiePinForgotten();
+    trackItWalletCiePinForgotten(itw_flow);
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/"
     ).catch(constNull);
-  }, []);
+  }, [itw_flow]);
 
   const didYouForgetPuk = useCallback(() => {
-    trackItWalletCiePukForgotten();
+    trackItWalletCiePukForgotten(itw_flow);
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/recupero-puk/"
     ).catch(constNull);
-  }, []);
+  }, [itw_flow]);
 
   const createMessageAction = useCallback(
     <T extends string>({

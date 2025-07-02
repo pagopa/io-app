@@ -94,7 +94,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
           isL3Enabled ? "L3" : "L2"
         );
       }
-    }, [identification, mixPanelCredential])
+    }, [identification, mixPanelCredential, isL3Enabled])
   );
 
   useDebugInfo({

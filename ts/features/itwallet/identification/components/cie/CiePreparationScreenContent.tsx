@@ -1,12 +1,12 @@
 import { Dimensions, Image, StyleSheet, View } from "react-native";
+import { useCallback, useMemo } from "react";
 import { ContentWrapper, IOButton } from "@pagopa/io-app-design-system";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { EidIssuanceEvents } from "../../../machine/eid/events";
 import { useCieInfoAndPinBottomSheets } from "../../hooks/useCieInfoAndPinBottomSheets";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { useCallback, useMemo } from "react";
 import {
   trackItwCiePinTutorialCie,
   trackItwCiePinTutorialPin,
