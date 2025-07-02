@@ -44,6 +44,7 @@ const ReceiptCartItemDetailsScreen = () => {
   return (
     <IOScrollViewWithLargeHeader
       includeContentMargins
+      testID="cart-item-details-scroll-view"
       title={{
         label: cartItem.subject ?? ""
       }}
