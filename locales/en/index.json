@@ -5774,6 +5774,10 @@
         "title": "C’è un problema sui nostri sistemi",
         "content": "Ci scusiamo per il disagio.\n Ti invitiamo a riprovare più tardi.",
         "button": "Chiudi"
+      },
+      "removeAlert": {
+        "title": "Do you want to delete {{initiativeName}} from the wallet?",
+        "content": "The bonus will be removed."
       }
     },
     "payment": {

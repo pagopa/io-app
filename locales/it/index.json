@@ -5761,6 +5761,10 @@
       "button": {
         "continue": "Rimuovi"
       },
+      "removeAlert": {
+        "title": "Vuoi eliminare {{initiativeName}} dal Portafoglio?",
+        "content": "Il bonus verrà rimosso."
+      },
       "modal": {
         "title": "Rimuovere {{initiativeName}}?",
         "content": "L’operazione è irreversibile e ha effetto su tutti i canali. Non potrai più utilizzare i fondi a disposizione."
