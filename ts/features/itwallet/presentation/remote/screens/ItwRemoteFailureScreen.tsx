@@ -60,8 +60,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   const dismissalContext = getDismissalContextFromFailure(failure.type);
 
-  const { bottomSheet, presentWithTrack } =
-    useItwRemoteUntrustedRPBottomSheet();
+  const { bottomSheet, present } = useItwRemoteUntrustedRPBottomSheet();
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => machineRef.send({ type: "close" }),
     customBodyMessage: I18n.t(`${i18nNs}.walletInactiveScreen.alert.body`),
@@ -273,7 +272,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             },
             secondaryAction: {
               label: I18n.t(`${i18nNs}.untrustedRpScreen.secondaryAction`),
-              onPress: presentWithTrack
+              onPress: present
             }
           };
         }

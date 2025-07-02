@@ -14,9 +14,6 @@ type ItwDismissalDialogProps = {
   dismissalContext?: ItwDismissalContext;
 };
 
-const confirmText = I18n.t("features.itWallet.generic.alert.confirm");
-const cancelText = I18n.t("features.itWallet.generic.alert.cancel");
-
 /**
  * Allows to show a dismissal dialog in which the user must confirm the desire to close the current flow.
  * This hook also handles the hardware back button to show the dialog when the user presses the back button.
@@ -42,30 +39,32 @@ export const useItwDismissalDialog = (props?: ItwDismissalDialogProps) => {
   };
 
   const show = () => {
+    const title = I18n.t("features.itWallet.generic.alert.title");
+    const body =
+      customBodyMessage || I18n.t("features.itWallet.generic.alert.body");
+    const confirm = I18n.t("features.itWallet.generic.alert.confirm");
+    const cancel = I18n.t("features.itWallet.generic.alert.cancel");
+
     if (dismissalContext) {
       trackItwDismissalContext(dismissalContext);
     }
-    Alert.alert(
-      I18n.t("features.itWallet.generic.alert.title"),
-      customBodyMessage || I18n.t("features.itWallet.generic.alert.body"),
-      [
-        {
-          text: confirmText,
-          style: "destructive",
-          onPress: () => {
-            trackUserAction(confirmText);
-            (handleDismiss || navigation.goBack)();
-          }
-        },
-        {
-          text: cancelText,
-          style: "cancel",
-          onPress: () => {
-            trackUserAction(cancelText);
-          }
+    Alert.alert(title, body, [
+      {
+        text: confirm,
+        style: "destructive",
+        onPress: () => {
+          trackUserAction(confirm);
+          (handleDismiss || navigation.goBack)();
         }
-      ]
-    );
+      },
+      {
+        text: cancel,
+        style: "cancel",
+        onPress: () => {
+          trackUserAction(cancel);
+        }
+      }
+    ]);
   };
 
   useHardwareBackButton(() => {

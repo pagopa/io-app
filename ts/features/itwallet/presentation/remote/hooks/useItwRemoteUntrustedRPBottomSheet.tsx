@@ -66,6 +66,6 @@ export const useItwRemoteUntrustedRPBottomSheet = () => {
 
   return {
     ...bottomSheet,
-    presentWithTrack
+    present: presentWithTrack
   };
 };
