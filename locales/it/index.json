@@ -4499,22 +4499,6 @@
                 "primaryAction": "Ho pronto il PIN",
                 "secondaryAction": "Non trovo il PIN della CIE"
               }
-            },
-            "preparationScreen": {
-              "cie": {
-                "title": "Prepara la tua carta di identità elettronica (CIE)",
-                "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
-                "buttonLink": "Cos'è la CIE?",
-                "primaryAction": "Ho pronta la CIE",
-                "secondaryAction": "Non ho la CIE"
-              },
-              "ciePin": {
-                "title": "Prepara il PIN della tua carta di identità \nelettronica (CIE)",
-                "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell'identità.",
-                "buttonLink": "Cos'è il PIN della CIE?",
-                "primaryAction": "Ho pronto il PIN",
-                "secondaryAction": "Non trovo il PIN della CIE"
-              }
             }
           }
         },
@@ -5029,6 +5013,10 @@
               "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
               "primaryAction": "Chiudi"
             }
+          },
+          "success": {
+            "title": "Fatto!",
+            "subtitle": "La verifica è stata completata con successo."
           }
         }
       },
@@ -5772,6 +5760,10 @@
       },
       "button": {
         "continue": "Rimuovi"
+      },
+      "removeAlert": {
+        "title": "Vuoi eliminare {{initiativeName}} dal Portafoglio?",
+        "content": "Il bonus verrà rimosso."
       },
       "modal": {
         "title": "Rimuovere {{initiativeName}}?",
