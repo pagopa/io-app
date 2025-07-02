@@ -4,7 +4,7 @@ import {
   InitiativeDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
-import IdPayRemoveFromWallet from "../IdPayRemoveFromWallet";
+import IdPayRemoveFromWalletButton from "../IdPayRemoveFromWalletButton";
 const mockNavigation = jest.fn();
 
 jest.mock("../../../../../store/hooks", () => ({
@@ -40,7 +40,7 @@ const mockedInitiative: InitiativeDTO = {
   status: StatusEnum.REFUNDABLE
 };
 
-describe("IdPayRemoveFromWallet", () => {
+describe("IdPayRemoveFromWalletButton", () => {
   beforeAll(() => {
     jest.spyOn(Alert, "alert");
     jest.mock("react-native/Libraries/Utilities/Platform", () => ({
@@ -50,21 +50,21 @@ describe("IdPayRemoveFromWallet", () => {
   });
   it("should render correctly", () => {
     const { getByTestId } = render(
-      <IdPayRemoveFromWallet {...mockedInitiative} />
+      <IdPayRemoveFromWalletButton {...mockedInitiative} />
     );
     expect(getByTestId("idpay-remove-from-wallet")).toBeDefined();
   });
 
   it("should not render when hide prop is true", () => {
     const { queryByTestId } = render(
-      <IdPayRemoveFromWallet {...hideButtonProps} />
+      <IdPayRemoveFromWalletButton {...hideButtonProps} />
     );
     expect(queryByTestId("idpay-remove-from-wallet")).toBeNull();
   });
 
   it("should call showAlert on press", () => {
     const { getByTestId } = render(
-      <IdPayRemoveFromWallet {...mockedInitiative} />
+      <IdPayRemoveFromWalletButton {...mockedInitiative} />
     );
     const button = getByTestId("idpay-remove-from-wallet");
     fireEvent.press(button);

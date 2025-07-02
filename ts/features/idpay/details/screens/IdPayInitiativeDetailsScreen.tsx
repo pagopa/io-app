@@ -42,7 +42,7 @@ import {
   IdPayInitiativeTimelineComponentSkeleton
 } from "../components/IdPayInitiativeTimelineComponent";
 import { IdPayMissingConfigurationAlert } from "../components/IdPayMissingConfigurationAlert";
-import IdPayRemoveFromWallet from "../components/IdPayRemoveFromWallet";
+import IdPayRemoveFromWalletButton from "../components/IdPayRemoveFromWalletButton";
 import { useIdPayDiscountDetailsBottomSheet } from "../hooks/useIdPayDiscountDetailsBottomSheet";
 import { IDPayDetailsParamsList, IDPayDetailsRoutes } from "../navigation";
 import {
@@ -236,7 +236,7 @@ const IdPayInitiativeDetailsScreen = () => {
                     <IdPayInitiativeDiscountSettingsComponent
                       initiative={initiative}
                     />
-                    <IdPayRemoveFromWallet {...initiative} />
+                    <IdPayRemoveFromWalletButton {...initiative} />
                   </Animated.View>
                 </ContentWrapper>
               );
