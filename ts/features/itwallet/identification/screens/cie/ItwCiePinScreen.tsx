@@ -53,7 +53,11 @@ const ForgottenPin = ({ itw_flow }: { itw_flow: ItwFlow }) => (
   <View>
     <IOMarkdown content={I18n.t("bottomSheets.ciePin.content")} />
     <VSpacer size={24} />
-    <Body weight="Semibold" asLink onPress={() => onOpenForgotPinPage(itw_flow)}>
+    <Body
+      weight="Semibold"
+      asLink
+      onPress={() => onOpenForgotPinPage(itw_flow)}
+    >
       {I18n.t("authentication.cie.pin.bottomSheetCTA")}
     </Body>
     <VSpacer size={24} />

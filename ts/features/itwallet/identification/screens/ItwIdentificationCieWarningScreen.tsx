@@ -57,36 +57,44 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
     machineRef.send({ type: "go-to-l2-identification" });
   };
 
+  const handlePrimaryAction = () => {
+    trackItwKoStateAction({
+      reason,
+      cta_category: "custom_1",
+      cta_id: t("primaryAction")
+    });
+
+    if (isItwValid) {
+      void Linking.openURL(cieFaqUrls[warning]);
+    } else {
+      goToL2Identification();
+    }
+  };
+
+  const handleSecondaryAction = () => {
+    trackItwKoStateAction({
+      reason,
+      cta_category: "custom_2",
+      cta_id: t("closeAction")
+    });
+
+    if (isItwValid) {
+      closeIdentification();
+    } else {
+      back();
+    }
+  };
+
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       const primaryAction = {
         label: t("primaryAction"),
-        onPress: () => {
-          trackItwKoStateAction({
-            reason,
-            cta_category: "custom_1",
-            cta_id: t("primaryAction")
-          });
-
-          isItwValid
-            ? Linking.openURL(cieFaqUrls[warning])
-            : goToL2Identification();
-        }
+        onPress: handlePrimaryAction
       };
-
       const secondaryAction = {
         label: t("closeAction"),
-        onPress: () => {
-          trackItwKoStateAction({
-            reason,
-            cta_category: "custom_2",
-            cta_id: t("closeAction")
-          });
-
-          isItwValid ? closeIdentification() : back();
-        }
+        onPress: handleSecondaryAction
       };
-
       return {
         title: t("title"),
         subtitle: t("subtitle"),

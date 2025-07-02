@@ -62,7 +62,7 @@ export const ItwCieWrongCiePinScreen = () => {
     >();
   const { remainingCount } = route.params;
 
-  const handleTrackPinErrors = (key: number) => {
+  const handleTrackPinErrors = useCallback((key: number) => {
     switch (key) {
       case 2:
         trackItWalletErrorPin(itw_flow);
@@ -73,8 +73,8 @@ export const ItwCieWrongCiePinScreen = () => {
       case 0:
         trackItWalletLastErrorPin(itw_flow);
         break;
-    }
-  };
+      }
+    }, [itw_flow]);
 
   const handleRetry = useCallback(() => {
     trackItWalletCieRetryPin(itw_flow);
@@ -195,7 +195,7 @@ export const ItwCieWrongCiePinScreen = () => {
         ? messages[key]
         : defaultMessageThatShouldNeverHappen;
     },
-    [defaultMessageThatShouldNeverHappen, messages]
+    [defaultMessageThatShouldNeverHappen, messages, handleTrackPinErrors]
   );
 
   return <OperationResultScreenContent {...getMessage(remainingCount)} />;

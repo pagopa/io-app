@@ -1,5 +1,5 @@
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { useCallback, useRef } from "react";
+import { useCallback, useState } from "react";
 import {
   ContentWrapper,
   Divider,
@@ -30,7 +30,7 @@ import { CieWarningType } from "./ItwIdentificationCieWarningScreen";
 export const ItwL3IdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
-  const shouldTrackDismissRef = useRef(true);
+  const [shouldTrackDismiss, setShouldTrackDismiss] = useState(true);
   const { name: routeName } = useRoute();
 
   const navigateToCieWarning = (warning: CieWarningType) => {
@@ -55,7 +55,7 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
           "features.itWallet.identification.l3.mode.bottomSheet.cie.action"
         ),
         onPress: () => {
-          shouldTrackDismissRef.current = false;
+          setShouldTrackDismiss(false);
           handleCieIdPress();
           trackItwGoToCieIDApp();
           cieBottomSheet.dismiss();
@@ -66,16 +66,16 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
           "features.itWallet.identification.l3.mode.bottomSheet.cie.cancel"
         ),
         onPress: () => {
-          shouldTrackDismissRef.current = true;
+          setShouldTrackDismiss(true);
           cieBottomSheet.dismiss();
         }
       }
     ],
     onDismiss: () => {
-      if (shouldTrackDismissRef.current) {
+      if (shouldTrackDismiss) {
         trackItwContinueWithCieIDClose();
       }
-      shouldTrackDismissRef.current = true;
+      setShouldTrackDismiss(true);
     }
   });
 

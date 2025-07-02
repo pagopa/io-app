@@ -27,7 +27,7 @@ export const useCieInfoAndPinBottomSheets = () => {
     });
   };
 
-  const cieInfoBottomSheet = useItwIdentificationBottomSheet({
+  const baseCieInfoBottomSheet = useItwIdentificationBottomSheet({
     title: I18n.t(
       "features.itWallet.identification.l3.mode.bottomSheet.cieInfo.title"
     ),
@@ -44,7 +44,7 @@ export const useCieInfoAndPinBottomSheets = () => {
         label: I18n.t(
           "features.itWallet.identification.l3.mode.bottomSheet.cieInfo.primaryAction"
         ),
-        onPress: () => cieInfoBottomSheet.dismiss()
+        onPress: () => baseCieInfoBottomSheet.dismiss()
       },
       {
         label: I18n.t(
@@ -52,22 +52,24 @@ export const useCieInfoAndPinBottomSheets = () => {
         ),
         onPress: () => {
           navigateToCieWarning("noCie");
-          cieInfoBottomSheet.dismiss();
+          baseCieInfoBottomSheet.dismiss();
         }
       }
     ]
   });
 
-  const originalCiePresent = cieInfoBottomSheet.present;
-  cieInfoBottomSheet.present = () => {
-    trackItwCieInfoBottomSheet({
-      itw_flow: "L3",
-      screen_name: routeName
-    });
-    originalCiePresent();
+  const cieInfoBottomSheet = {
+    ...baseCieInfoBottomSheet,
+    present: () => {
+      trackItwCieInfoBottomSheet({
+        itw_flow: "L3",
+        screen_name: routeName
+      });
+      baseCieInfoBottomSheet.present();
+    }
   };
 
-  const pinBottomSheet = useItwIdentificationBottomSheet({
+  const basePinBottomSheet = useItwIdentificationBottomSheet({
     title: I18n.t(
       "features.itWallet.identification.l3.mode.bottomSheet.pin.title"
     ),
@@ -84,7 +86,7 @@ export const useCieInfoAndPinBottomSheets = () => {
         label: I18n.t(
           "features.itWallet.identification.l3.mode.bottomSheet.pin.primaryAction"
         ),
-        onPress: () => pinBottomSheet.dismiss()
+        onPress: () => basePinBottomSheet.dismiss()
       },
       {
         label: I18n.t(
@@ -92,19 +94,21 @@ export const useCieInfoAndPinBottomSheets = () => {
         ),
         onPress: () => {
           navigateToCieWarning("noPin");
-          pinBottomSheet.dismiss();
+          basePinBottomSheet.dismiss();
         }
       }
     ]
   });
 
-  const originalPinPresent = pinBottomSheet.present;
-  pinBottomSheet.present = () => {
-    trackItwPinInfoBottomSheet({
-      itw_flow: "L3",
-      screen_name: routeName
-    });
-    originalPinPresent();
+  const pinBottomSheet = {
+    ...basePinBottomSheet,
+    present: () => {
+      trackItwPinInfoBottomSheet({
+        itw_flow: "L3",
+        screen_name: routeName
+      });
+      basePinBottomSheet.present();
+    }
   };
 
   return {
