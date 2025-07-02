@@ -190,7 +190,7 @@ export enum ItwL3UpgradeTrigger {
   REMOTE_QR_CODE = "remote_qr_code"
 }
 
-export type ItwFlow = "L2" | "L3";
+export type ItwFlow = "L2" | "L3" | "not_available";
 
 export type ItwScreenFlowContext = {
   screen_name: string;

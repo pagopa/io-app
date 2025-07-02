@@ -60,8 +60,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   const dismissalContext = getDismissalContextFromFailure(failure.type);
 
-  const { bottomSheet, presentWithTrack } =
-    useItwRemoteUntrustedRPBottomSheet();
+  const { bottomSheet, present } = useItwRemoteUntrustedRPBottomSheet();
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => machineRef.send({ type: "close" }),
     customLabels: {
@@ -120,12 +119,27 @@ const ContentView = ({ failure }: ContentViewProps) => {
             pictogram: "itWallet",
             action: {
               label: I18n.t(`${i18nNs}.walletInactiveScreen.primaryAction`),
-              onPress: () =>
-                machineRef.send({ type: "go-to-wallet-activation" })
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t(`${i18nNs}.walletInactiveScreen.primaryAction`)
+                });
+                machineRef.send({ type: "go-to-wallet-activation" });
+              }
             },
             secondaryAction: {
               label: I18n.t(`${i18nNs}.walletInactiveScreen.secondaryAction`),
-              onPress: dismissalDialog.show
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure,
+                  cta_category: "custom_2",
+                  cta_id: I18n.t(
+                    `${i18nNs}.walletInactiveScreen.secondaryAction`
+                  )
+                });
+                dismissalDialog.show();
+              }
             }
           };
         case RemoteFailureType.MISSING_CREDENTIALS: {
@@ -260,7 +274,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             },
             secondaryAction: {
               label: I18n.t(`${i18nNs}.untrustedRpScreen.secondaryAction`),
-              onPress: presentWithTrack
+              onPress: present
             }
           };
         }

@@ -157,10 +157,10 @@ export const trackItwRemoteRPGenericFailure = ({
   );
 };
 
-export const trackItwRemoteDeepLinkFailure = (error: Error) => {
+export const trackItwRemoteDeepLinkFailure = (reason: Error) => {
   void mixpanelTrack(
     ITW_REMOTE_ERRORS_EVENTS.ITW_REMOTE_LINK_FAILURE,
-    buildEventProperties("KO", "screen_view", { error })
+    buildEventProperties("KO", "screen_view", { reason })
   );
 };
 // #endregion ERRORS
@@ -199,13 +199,13 @@ export const getDismissalContextFromFailure = (
     case RemoteFailureType.WALLET_INACTIVE:
       return {
         screen_name: ITW_ERRORS_EVENTS.ITW_UPGRADE_L3_MANDATORY,
-        itw_flow: "L3"
+        itw_flow: "not_available"
       };
     case RemoteFailureType.MISSING_CREDENTIALS:
       return {
         screen_name:
           ITW_REMOTE_ERRORS_EVENTS.ITW_REMOTE_MANDATORY_CREDENTIAL_MISSING,
-        itw_flow: "L3"
+        itw_flow: "not_available"
       };
     default:
       return undefined;
