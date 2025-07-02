@@ -1028,8 +1028,8 @@ export const trackItwRequest = (method?: ItwIdMethod, itw_flow?: ItwFlow) => {
     void mixpanelTrack(
       ITW_TECH_EVENTS.ITW_ID_REQUEST,
       buildEventProperties("TECH", undefined, {
-        itw_flow,
-        ITW_ID_method: method
+        ITW_ID_method: method,
+        itw_flow
       })
     );
   }
