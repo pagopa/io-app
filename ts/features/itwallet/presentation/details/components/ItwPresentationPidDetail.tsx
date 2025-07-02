@@ -11,6 +11,7 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { ItwCredentialClaim } from "../../../common/components/ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import I18n from "../../../../../i18n";
+import { ItwIssuanceMetadata } from "../../../common/components/ItwIssuanceMetadata";
 
 type Props = {
   credential: StoredCredential;
@@ -55,6 +56,8 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
           <ItwCredentialClaim claim={claim} isPreview hidden={claimsHidden} />
         </Fragment>
       ))}
+      {claims.length > 0 && <Divider />}
+      <ItwIssuanceMetadata credential={credential} />
     </View>
   );
 };
