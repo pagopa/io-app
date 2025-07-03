@@ -115,7 +115,7 @@ export type StoredCredential = {
   format: string;
   parsedCredential: ParsedCredential;
   credentialType: string;
-  credentialConfigurationId?: string;
+  credentialConfigurationId: string;
   issuerConf: IssuerConfiguration;
   storedStatusAttestation?: StoredStatusAttestation;
   /**

@@ -5,7 +5,7 @@ import { MigrationManifest, PersistedState } from "redux-persist";
 
 type MigrationState = PersistedState & Record<string, any>;
 
-export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 2;
+export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 3;
 
 export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 0
@@ -84,5 +84,23 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
         ...credentialsByType
       }
     };
-  }
+  },
+
+  // Version 3
+  // Add credentialConfigurationId
+  "3": (state: MigrationState) => ({
+    ...state,
+    credentials: Object.fromEntries(
+      Object.entries<Record<string, any>>(state.credentials).map(
+        ([key, credential]) => [
+          key,
+          {
+            ...credential,
+            credentialConfigurationId:
+              credential.credentialConfigurationId ?? credential.credentialType
+          }
+        ]
+      )
+    )
+  })
 };
