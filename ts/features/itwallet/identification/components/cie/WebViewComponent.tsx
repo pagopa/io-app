@@ -66,6 +66,9 @@ const defaultUserAgent = Platform.select({
 
 const webView = createRef<WebView>();
 
+const isL3AuthUrl = (url: string) =>
+  Platform.OS ? url.includes("authnRequestString") : url.includes("OpenApp");
+
 /**
  * WebViewComponent
  *
@@ -126,12 +129,19 @@ export const WebViewComponent = (props: WebViewComponentProps) => {
   const handleShouldStartLoading =
     (onSuccess: OnCieSuccess, redirectUrl: string) =>
     (event: WebViewNavigation): boolean => {
+      // When authenticating with L3 directly, the injected JS does not work so `handleMessage` is never called
+      // To continue we must take the url with `OpenApp` (Android) or `authnRequestString` (iOS)
+      if (isL3AuthUrl(event.url)) {
+        void handleMessage({
+          nativeEvent: { data: event.url }
+        } as WebViewMessageEvent);
+        return false;
+      }
       if (isCardReadingFinished && event.url.includes(redirectUrl)) {
         onSuccess(event.url);
         return false;
-      } else {
-        return true;
       }
+      return true;
     };
 
   const handleOnLoadEnd =
