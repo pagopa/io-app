@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.9.0-canary.7192](https://github.com/pagopa/io-app/compare/3.9.0-rc.1...3.9.0-canary.7192) (2025-07-03)
+
+
+### Chores
+
+* [[IOBP-1807](https://pagopa.atlassian.net/browse/IOBP-1807)] New bonus onboarding process ([#7146](https://github.com/pagopa/io-app/issues/7146)) ([da04909](https://github.com/pagopa/io-app/commit/da04909115ed258f4a1ad5cd29b12bb43b39270b))
+
 ## [3.9.0-rc.1](https://github.com/pagopa/io-app/compare/3.9.0-rc.0...3.9.0-rc.1) (2025-07-02)
 
 ## [3.9.0-rc.0](https://github.com/pagopa/io-app/compare/3.8.0-rc.9...3.9.0-rc.0) (2025-07-02)
