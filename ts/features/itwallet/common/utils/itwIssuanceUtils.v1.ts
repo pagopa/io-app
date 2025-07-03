@@ -7,7 +7,7 @@ import {
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import { v4 as uuidv4 } from "uuid";
 import { type IdentificationContext } from "../../machine/eid/context";
-import { StoredCredential } from "./itwTypesUtils";
+import { LegacyIssuerConfiguration, StoredCredential } from "./itwTypesUtils";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
@@ -19,10 +19,6 @@ import { getIdpHint } from "./itwIssuanceUtils";
 type AccessToken = Awaited<
   ReturnType<Credential.Issuance.AuthorizeAccess>
 >["accessToken"];
-
-type IssuerConf = Awaited<
-  ReturnType<Credential.Issuance.EvaluateIssuerTrust>
->["issuerConf"];
 
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
@@ -93,7 +89,7 @@ const startAuthFlow = async ({
 
 export type CompleteAuthFlowParams = {
   callbackUrl: string;
-  issuerConf: IssuerConf;
+  issuerConf: LegacyIssuerConfiguration;
   clientId: string;
   codeVerifier: string;
   walletAttestation: string;
@@ -146,7 +142,7 @@ const completeAuthFlow = async ({
 };
 
 export type PidIssuanceParams = {
-  issuerConf: IssuerConf;
+  issuerConf: LegacyIssuerConfiguration;
   accessToken: AccessToken;
   clientId: string;
   dPoPContext: CryptoContext;

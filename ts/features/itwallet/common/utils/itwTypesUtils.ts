@@ -34,15 +34,19 @@ export type RpEntityConfiguration =
   Trust.Types.RelyingPartyEntityConfiguration["payload"]["metadata"];
 
 /**
- * Alias for the IssuerConfiguration type
+ * Alias for the IssuerConfiguration type v0.7.1
  * TODO: [SIW-2530]: remove the legacy type
  */
-export type IssuerConfiguration = Awaited<
-  ReturnType<
-    | Credential.Issuance.EvaluateIssuerTrust
-    | _legacy_Credential.Issuance.EvaluateIssuerTrust
-  >
+export type LegacyIssuerConfiguration = Awaited<
+  ReturnType<_legacy_Credential.Issuance.EvaluateIssuerTrust>
 >["issuerConf"];
+
+/**
+ * Alias for the IssuerConfiguration type
+ */
+export type IssuerConfiguration =
+  | Awaited<ReturnType<Credential.Issuance.EvaluateIssuerTrust>>["issuerConf"]
+  | LegacyIssuerConfiguration;
 
 /**
  * Alias for the AuthorizationDetail type
