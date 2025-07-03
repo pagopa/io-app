@@ -20,48 +20,67 @@ import {
   StoredCredential
 } from "../../../common/utils/itwTypesUtils";
 import { isL3Credential } from "../../../common/utils/itwCredentialUtils";
+import { ItwJwtCredentialStatus } from "../../../common/utils/itwTypesUtils";
 
 export const itwCredentialsSelector = (state: GlobalState) =>
   state.features.itWallet.credentials;
 
-export const itwCredentialsEidSelector = (state: GlobalState) =>
-  state.features.itWallet.credentials.eid;
-
-export const itwCredentialsByTypeSelector = createSelector(
-  itwCredentialsSelector,
-  ({ eid, credentials }) =>
-    ({
-      [CredentialType.PID]: eid,
-      ...credentials.reduce((acc, credentialOption) => {
-        if (O.isSome(credentialOption)) {
-          return {
-            ...acc,
-            [credentialOption.value.credentialType]: credentialOption
-          };
-        }
-        return acc;
-      }, {} as { [type: string]: O.Option<StoredCredential> })
-    } as { [type: string]: O.Option<StoredCredential> })
+/**
+ * Returns the credentials object from the itw credentials state, excluding the eID credential.
+ *
+ * @param state - The global state.
+ * @returns The credentials object.
+ */
+export const itwCredentialsSelector = createSelector(
+  (state: GlobalState) => state.features.itWallet.credentials.credentials,
+  ({ [CredentialType.PID]: pid, ...otherCredentials }) => otherCredentials
 );
 
-export const itwCredentialByTypeSelector = (type: string) =>
-  createSelector(itwCredentialsByTypeSelector, credentials =>
-    pipe(credentials[type], O.fromNullable, O.flatten)
+/**
+ * Convenience selector that returns an Option containing the eID credential from the credentials object.
+ *
+ * @param state - The global state.
+ * @returns The eID credential Option
+ */
+export const itwCredentialsEidSelector = createSelector(
+  (state: GlobalState) => state.features.itWallet.credentials.credentials,
+  ({ [CredentialType.PID]: pid }) => O.fromNullable(pid)
+);
+
+/**
+ * Given a credential key, returns an Option containing the credential of the given type from the credentials object.
+ *
+ * @param type - The credential type.
+ * @returns The credential Option.
+ */
+export const itwCredentialSelector = (key: string) =>
+  createSelector(itwCredentialsSelector, credentials =>
+    O.fromNullable(credentials[key])
   );
 
+/**
+ * Returns the list of unique types of credentials contained in the credentials object.
+ *
+ * @param state - The global state.
+ * @returns The types of the credentials.
+ */
 export const itwCredentialsTypesSelector = createSelector(
-  itwCredentialsByTypeSelector,
-  credentials => Object.keys(credentials)
+  itwCredentialsSelector,
+  credentials =>
+    Array.from(new Set(Object.values(credentials).map(c => c.credentialType)))
 );
 
 /**
  * Returns the fiscal code from the stored eID.
+ *
+ * @param state - The global state.
+ * @returns The fiscal code.
  */
 export const selectFiscalCodeFromEid = createSelector(
-  itwCredentialsSelector,
-  credentials =>
+  itwCredentialsEidSelector,
+  eid =>
     pipe(
-      credentials.eid,
+      eid,
       O.map(getFiscalCodeFromCredential),
       O.getOrElse(() => "")
     )
@@ -69,20 +88,22 @@ export const selectFiscalCodeFromEid = createSelector(
 
 /**
  * Returns the name and surname from the stored eID.
+ *
+ * @param state - The global state.
+ * @returns The name and surname.
  */
 export const selectNameSurnameFromEid = createSelector(
-  itwCredentialsSelector,
-  credentials =>
+  itwCredentialsEidSelector,
+  eid =>
     pipe(
-      credentials.eid,
+      eid,
       O.map(getFirstNameFromCredential),
       O.chain(firstName =>
         pipe(
-          credentials.eid,
+          eid,
           O.map(getFamilyNameFromCredential),
-          O.map(
-            familyName =>
-              `${_.capitalize(firstName)} ${_.capitalize(familyName)}`
+          O.map(familyName =>
+            `${_.capitalize(firstName)} ${_.capitalize(familyName)}`.trim()
           )
         )
       ),
@@ -91,24 +112,42 @@ export const selectNameSurnameFromEid = createSelector(
 );
 
 /**
+ * Returns the number of credentials in the credentials object, excluding the eID credential.
+ *
+ * @param state - The global state.
+ * @returns The number of credentials.
+ */
+const itwCredentialsSizeSelector = createSelector(
+  itwCredentialsSelector,
+  credentials => Object.keys(credentials).length
+);
+
+/**
  * Returns whether the wallet is empty, i.e. it does not have any credential.
  * The eID is not considered, only other (Q)EAAs.
  *
  * Note: this selector does not check the wallet validity.
+ *
+ * @param state - The global state.
+ * @returns Whether the wallet is empty.
  */
 export const itwIsWalletEmptySelector = createSelector(
-  itwCredentialsSelector,
-  ({ credentials }) => credentials.length === 0
+  itwCredentialsSizeSelector,
+  size => size === 0
 );
+
 /**
  * Returns whether the wallet has at least 2 credentials.
  * The eID is not considered, only other (Q)EAAs.
  *
  * Note: this selector does not check the wallet validity.
+ *
+ * @param state - The global state.
+ * @returns Whether the wallet has at least 2 credentials.
  */
 export const itwHasWalletAtLeastTwoCredentialsSelector = createSelector(
-  itwCredentialsSelector,
-  ({ credentials }) => credentials.length >= 2
+  itwCredentialsSizeSelector,
+  size => size >= 2
 );
 
 /**
@@ -116,22 +155,30 @@ export const itwHasWalletAtLeastTwoCredentialsSelector = createSelector(
  * The message is dynamic and extracted from the issuer configuration.
  *
  * Note: the credential type is passed as second argument to reuse the same selector and cache per credential type.
+ *
+ * @param state - The global state.
+ * @param type - The credential type.
+ * @returns The credential status and the error message corresponding to the status attestation error, if present.
  */
 export const itwCredentialStatusSelector = createSelector(
-  itwCredentialsByTypeSelector,
+  itwCredentialsSelector,
   (_state: GlobalState, type: string) => type,
   (credentials, type) => {
-    const credentialOption = credentials[type] || O.none;
-
     // This should never happen
-    if (O.isNone(credentialOption)) {
+    if (credentials[type] === undefined) {
       return { status: undefined, message: undefined };
     }
 
-    return getCredentialStatusObject(credentialOption.value);
+    return getCredentialStatusObject(credentials[type]);
   }
 );
 
+/**
+ * Returns the credential status and the error message corresponding to the status attestation error, if present.
+ *
+ * @param state - The global state.
+ * @returns The credential status and the error message corresponding to the status attestation error, if present.
+ */
 export const itwCredentialsEidStatusSelector = createSelector(
   itwCredentialsEidSelector,
   eidOption =>

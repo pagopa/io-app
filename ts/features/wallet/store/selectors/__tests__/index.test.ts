@@ -121,8 +121,8 @@ describe("selectWalletCategories", () => {
         _.set(globalState, "features.itWallet.issuance", {
           integrityKeyTag: O.some("dummy")
         }),
-        _.set(globalState, "features.itWallet.credentials", {
-          eid: O.some(ItwStoredCredentialsMocks.eid)
+        _.set(globalState, "features.itWallet.credentials.credentials", {
+          [CredentialType.PID]: ItwStoredCredentialsMocks.eid
         })
       )
     );
@@ -217,7 +217,7 @@ describe("isWalletEmptySelector", () => {
           integrityKeyTag: O.some("dummy")
         }),
         _.set(globalState, "features.itWallet.credentials", {
-          eid: O.some(ItwStoredCredentialsMocks.eid)
+          credentials: { [CredentialType.PID]: ItwStoredCredentialsMocks.eid }
         })
       )
     );

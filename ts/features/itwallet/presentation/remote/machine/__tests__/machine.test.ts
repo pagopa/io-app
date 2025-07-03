@@ -41,6 +41,7 @@ describe("itwRemoteMachine", () => {
   const navigateToIdentificationModeScreen = jest.fn();
   const navigateToAuthResponseScreen = jest.fn();
   const closePresentation = jest.fn();
+  const trackRemoteDataShare = jest.fn();
 
   const isWalletActive = jest.fn();
   const isL3Enabled = jest.fn().mockReturnValue(true);
@@ -58,7 +59,8 @@ describe("itwRemoteMachine", () => {
       navigateToClaimsDisclosureScreen,
       navigateToIdentificationModeScreen,
       navigateToAuthResponseScreen,
-      closePresentation
+      closePresentation,
+      trackRemoteDataShare
     },
     actors: {
       evaluateRelyingPartyTrust: fromPromise<
