@@ -4100,6 +4100,12 @@
           }
         }
       }
+    },
+    "unsubscription": {
+      "removeAlert": {
+        "title": "Möchten Sie {{initiativeName}} aus der Brieftasche löschen?",
+        "content": "Der Bonus wird entfernt."
+      }
     }
   }
 }

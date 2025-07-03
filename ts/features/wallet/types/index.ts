@@ -5,7 +5,7 @@ import { ItwCredentialCard } from "../../itwallet/common/components/ItwCredentia
 import { PaymentWalletCardProps } from "../../payments/wallet/components/PaymentWalletCard";
 
 // Used to group the cards in the wallet. **DO NOT CHANGE THE ITEMS ORDER**
-export const walletCardCategories = ["itw", "cgn", "bonus", "payment"] as const;
+export const walletCardCategories = ["itw", "bonus", "cgn", "payment"] as const;
 export type WalletCardCategory = (typeof walletCardCategories)[number];
 
 // Used for the filtering logic in the wallet screen

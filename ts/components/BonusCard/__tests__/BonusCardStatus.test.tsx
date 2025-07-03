@@ -10,7 +10,7 @@ import {
   InitiativeDTO,
   StatusEnum
 } from "../../../../definitions/idpay/InitiativeDTO";
-import { IdPayCardStatus } from "../../../features/idpay/details/screens/IdPayInitiativeDetailsScreen";
+import { IdPayCardStatus } from "../../../features/idpay/details/utils";
 
 jest.mock("react-native-safe-area-context", () => {
   const useSafeAreaInsets = () => ({ top: 0 });

@@ -354,6 +354,34 @@ export const isIdPayEnabledSelector = createSelector(
     )
 );
 
+export const idPayOnboardingRequiresAppUpdateSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    remoteConfig =>
+      !isPropertyWithMinAppVersionEnabled({
+        remoteConfig,
+        mainLocalFlag: true,
+        configPropertyName: "idPay",
+        optionalLocalFlag: true,
+        optionalConfig: "onboarding"
+      })
+  );
+
+export const idPayDetailsRequiresAppUpdateSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    remoteConfig =>
+      !isPropertyWithMinAppVersionEnabled({
+        remoteConfig,
+        mainLocalFlag: true,
+        configPropertyName: "idPay",
+        optionalLocalFlag: true,
+        optionalConfig: "initiative_details"
+      })
+  );
+
 export const absolutePortalLinksFallback = {
   io_web: "https://ioapp.it/",
   io_showcase: "https://io.italia.it/"

@@ -35,7 +35,7 @@ export type DeviceConnected = {
 
 export type DeviceError = {
   type: "device-error";
-  payload: Error;
+  error: Error;
 };
 
 export type DeviceDocumentRequestReceived = {

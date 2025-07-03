@@ -370,7 +370,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         collapsable={false}
                         style={
                           {
-                            "marginBottom": 96,
+                            "marginBottom": 52,
                           }
                         }
                       >
@@ -2862,7 +2862,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
                         collapsable={false}
                         style={
                           {
-                            "marginBottom": 96,
+                            "marginBottom": 52,
                           }
                         }
                       />

@@ -114,13 +114,13 @@ export const createProximityActorsImplementation = () => {
     const handleDeviceDisconnected = () => {
       sendBack({
         type: "device-error",
-        payload: new Error("Device disconnected")
+        error: new Error("Device disconnected")
       });
     };
 
     const handleError = (eventPayload: Proximity.EventsPayload["onError"]) => {
       const { error } = eventPayload ?? {};
-      sendBack({ type: "device-error", payload: parseError(error) });
+      sendBack({ type: "device-error", error: parseError(error) });
     };
 
     const handleDocumentRequestReceived = (
@@ -146,7 +146,7 @@ export const createProximityActorsImplementation = () => {
       } catch (e) {
         sendBack({
           type: "device-error",
-          payload: getError(e)
+          error: getError(e)
         });
       }
     };
