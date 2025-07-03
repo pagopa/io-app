@@ -156,7 +156,7 @@ const renderComponent = () => {
   const globalState = appReducer(
     undefined,
     applicationChangeState("active")
-  ) as PreloadedState<GlobalState>;
+  ) as unknown as PreloadedState<GlobalState>;
   const store = createStore(appReducer, globalState);
 
   return {

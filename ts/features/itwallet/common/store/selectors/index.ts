@@ -91,8 +91,7 @@ export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
  * - if the wallet contains at least one credential
  */
 export const itwOfflineAccessAvailableSelector = (state: GlobalState) =>
-  itwLifecycleIsOperationalOrValid(state) &&
-  state.features.itWallet.credentials.credentials.length > 0;
+  itwLifecycleIsOperationalOrValid(state) && !itwIsWalletEmptySelector(state);
 
 /**
  * Returns if the offline banner should be visible. The banner is visible if:

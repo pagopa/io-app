@@ -23,7 +23,7 @@ import {
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import {
-  itwCredentialByTypeSelector,
+  itwCredentialSelector,
   itwCredentialStatusSelector
 } from "../../../credentials/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
@@ -68,9 +68,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
   const { bottomSheet } = useItwPresentQRCode();
   const { credentialType } = route.params;
-  const credentialOption = useIOSelector(
-    itwCredentialByTypeSelector(credentialType)
-  );
+  const credentialOption = useIOSelector(itwCredentialSelector(credentialType));
   const isPendingReview = useIOSelector(itwIsPendingReviewSelector);
 
   useFocusEffect(
