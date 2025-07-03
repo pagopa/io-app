@@ -34,7 +34,7 @@ export const ItwDiscoveryInfoComponent = ({
   const dismissalDialog = useItwDismissalDialog({
     customLabels: {
       title: I18n.t("features.itWallet.discovery.dismissalDialog.title"),
-      body: "",
+      body: I18n.t("features.itWallet.discovery.dismissalDialog.body"),
       confirmLabel: I18n.t(
         "features.itWallet.discovery.dismissalDialog.confirm"
       ),
