@@ -1,16 +1,14 @@
-import _ from "lodash";
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { GlobalState } from "../../store/reducers/types";
-import { updateMixpanelProfileProperties } from "../profileProperties";
-import * as BIOMETRICS from "../../utils/biometrics";
-import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
+import * as O from "fp-ts/lib/Option";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
-import * as PUSHUTILS from "../../features/pushNotifications/utils";
-import { StoredCredential } from "../../features/itwallet/common/utils/itwTypesUtils";
-import { ServicesState } from "../../features/services/common/store/reducers";
+import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
+import * as PUSHUTILS from "../../features/pushNotifications/utils";
+import { ServicesState } from "../../features/services/common/store/reducers";
 import { ServicePreferenceResponse } from "../../features/services/details/types/ServicePreferenceResponse";
+import { GlobalState } from "../../store/reducers/types";
+import * as BIOMETRICS from "../../utils/biometrics";
+import { updateMixpanelProfileProperties } from "../profileProperties";
 
 // eslint-disable-next-line functional/no-let
 let mockIsMixpanelInitialized = true;
@@ -286,8 +284,7 @@ const generateMockedGlobalState = (
     features: {
       itWallet: {
         credentials: {
-          eid: O.none,
-          credentials: [] as Array<O.Option<StoredCredential>>
+          credentials: {}
         },
         preferences: {
           authLevel: "L2"

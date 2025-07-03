@@ -3,10 +3,7 @@
 exports[`itWalletReducer should match snapshot [if this test fails, remember to add a migration to the store before updating the snapshot] 1`] = `
 {
   "credentials": {
-    "credentials": [],
-    "eid": {
-      "_tag": "None",
-    },
+    "credentials": {},
   },
   "environment": {
     "env": "prod",

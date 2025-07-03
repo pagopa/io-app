@@ -1,8 +1,9 @@
 import { put, select } from "typed-redux-saga/macro";
-import { identity, pipe } from "fp-ts/lib/function";
-import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
-import { itwCredentialsSelector } from "../store/selectors";
+import {
+  itwCredentialsSelector,
+  itwCredentialsEidSelector
+} from "../store/selectors";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { WalletCard } from "../../../wallet/types";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
@@ -27,14 +28,14 @@ const mapCredentialsToWalletCards = (
  */
 export function* handleWalletCredentialsRehydration() {
   const isItWalletValid = yield* select(itwLifecycleIsValidSelector);
-  const { eid, credentials } = yield* select(itwCredentialsSelector);
+  const pid = yield* select(itwCredentialsEidSelector);
+  const credentials = yield* select(itwCredentialsSelector);
 
   // Only a valid wallet should contain credentials to display
-  if (!isItWalletValid || O.isNone(eid)) {
+  if (!isItWalletValid || O.isNone(pid)) {
     return;
   }
 
-  const allItwCredentials = pipe(credentials, A.filterMap(identity));
-
+  const allItwCredentials = Object.values(credentials);
   yield* put(walletAddCards(mapCredentialsToWalletCards(allItwCredentials)));
 }
