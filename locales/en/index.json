@@ -4349,6 +4349,7 @@
         "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
         "dismissalDialog": {
           "title": "Vuoi rinunciare ai documenti digitali su IO?",
+          "body": "Potrai attivarli in qualsiasi altro momento, se cambi idea.",
           "confirm": "Si, rinuncia",
           "cancel": "No, torna indietro"
         },
