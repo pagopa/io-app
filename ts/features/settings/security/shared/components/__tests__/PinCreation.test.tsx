@@ -145,7 +145,7 @@ function renderComponent(isOnboarding?: boolean) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(
     appReducer,
-    globalState as PreloadedState<ReturnType<typeof appReducer>>
+    globalState as unknown as PreloadedState<ReturnType<typeof appReducer>>
   );
 
   return (
