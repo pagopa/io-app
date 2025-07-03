@@ -81,7 +81,7 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
 
   const { cieInfoBottomSheet, pinBottomSheet } = useCieInfoAndPinBottomSheets();
 
-  const { noCieBottomSheet, noCieBottomSheetPresentWitTrack } =
+  const { noCieBottomSheet, noCieBottomSheetPresent } =
     useNoCieBottomSheet();
 
   useFocusEffect(
@@ -137,7 +137,7 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
                 });
                 navigateToCieWarning("noCie");
               }
-            : () => noCieBottomSheetPresentWitTrack(),
+            : () => noCieBottomSheetPresent(),
           testID: "l3-secondary-action"
         }
       }}

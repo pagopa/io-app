@@ -92,7 +92,7 @@ export const useNoCieBottomSheet = () => {
 
   return {
     noCieBottomSheet: bottomSheet,
-    noCieBottomSheetPresentWitTrack: presentWithTrack
+    noCieBottomSheetPresent: presentWithTrack
   };
 };
 
