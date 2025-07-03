@@ -4708,10 +4708,10 @@
                 "action": "Inizia"
               },
               "itw": {
-                "valid": "L'ultima verifica dei dati della tua identità è del {{date}}.",
-                "expiring": "Verifica la tua identità per continuare a usare IT-Wallet entro il {{date}}.",
-                "expired": "Verifica la tua identità per continuare a usare IT-Wallet.",
-                "action": "Inizia la verifica"
+                "valid": "Hai attivato il tuo ID con CIE il {{date}}.",
+                "expiring": "Rinnova il tuo ID per continuare ad usare IT-Wallet entro il {{date}}.",
+                "expired": "Rinnova il tuo ID per continuare ad usare IT-Wallet.",
+                "action": "Rinnova ID"
               }
             }
           },
