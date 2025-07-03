@@ -67,7 +67,9 @@ const defaultUserAgent = Platform.select({
 const webView = createRef<WebView>();
 
 const isL3AuthUrl = (url: string) =>
-  Platform.OS ? url.includes("authnRequestString") : url.includes("OpenApp");
+  Platform.OS === "ios"
+    ? url.includes("authnRequestString")
+    : url.includes("OpenApp");
 
 /**
  * WebViewComponent
