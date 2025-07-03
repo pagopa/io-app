@@ -62,11 +62,6 @@ export const createRemoteActorsImplementation = (
     const { qrCodePayload } = input;
     assert(qrCodePayload?.client_id, "Missing required client ID");
 
-    const { rpConf, subject } =
-      await Credential.Presentation.evaluateRelyingPartyTrust(
-        qrCodePayload.client_id
-      );
-
     const trustAnchorEntityConfig =
       await Trust.Build.getTrustAnchorEntityConfiguration(
         env.WALLET_TA_BASE_URL
@@ -93,6 +88,12 @@ export const createRemoteActorsImplementation = (
         requireCrl: true
       }
     );
+
+    // Determine the Relying Party configuration and subject
+    const { rpConf, subject } =
+      await Credential.Presentation.evaluateRelyingPartyTrust(
+        qrCodePayload.client_id
+      );
 
     return { rpConf, rpSubject: subject };
   });
