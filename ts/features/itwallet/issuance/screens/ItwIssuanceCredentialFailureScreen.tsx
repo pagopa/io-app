@@ -14,7 +14,7 @@ import {
   getFullLocale
 } from "../../../../utils/locale";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { trackWalletCreationFailed } from "../../analytics";
+import { trackItwKoStateAction } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import {
   ZendeskSubcategoryValue,
@@ -92,7 +92,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   const closeIssuance = () => {
     machineRef.send({ type: "close" });
-    trackWalletCreationFailed({
+    trackItwKoStateAction({
       reason: failure.reason,
       cta_category: "custom_2",
       cta_id: "close_issuance"

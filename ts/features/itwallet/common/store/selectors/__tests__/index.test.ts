@@ -1,30 +1,18 @@
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import {
   isItwDiscoveryBannerRenderableSelector,
   itwOfflineAccessAvailableSelector,
   itwShouldRenderFeedbackBannerSelector,
-  itwShouldRenderOfflineBannerSelector,
-  itwShouldRenderL3UpgradeBannerSelector
+  itwShouldRenderL3UpgradeBannerSelector,
+  itwShouldRenderOfflineBannerSelector
 } from "..";
-import { applicationChangeState } from "../../../../../../store/actions/application";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { itwStoreIntegrityKeyTag } from "../../../../issuance/store/actions";
-import { itwCredentialsStore } from "../../../../credentials/store/actions";
-import { CredentialType } from "../../../utils/itwMocksUtils";
-import { StoredCredential } from "../../../utils/itwTypesUtils";
-import { appReducer } from "../../../../../../store/reducers";
-import { Action } from "../../../../../../store/actions/types";
-import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
+import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
+import * as ingressSelectors from "../../../../../ingress/store/selectors";
 import * as credentialsSelectors from "../../../../credentials/store/selectors";
+import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import * as preferencesSelectors from "../preferences";
 import * as remoteConfigSelectors from "../remoteConfig";
-import * as ingressSelectors from "../../../../../ingress/store/selectors";
-import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
-
-const curriedAppReducer =
-  (action: Action) => (state: GlobalState | undefined) =>
-    appReducer(state, action);
 
 describe("isItwDiscoveryBannerRenderableSelector", () => {
   beforeEach(() => {
@@ -113,39 +101,33 @@ describe("itwOfflineAccessAvailableSelector", () => {
     jest.clearAllMocks();
   });
 
-  it("Returns true when the wallet is available for offline access", () => {
-    const globalState = pipe(
-      undefined,
-      curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(
-        itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3")
-      ),
-      curriedAppReducer(
-        itwCredentialsStore([
-          { credentialType: CredentialType.PID },
-          { credentialType: CredentialType.DRIVING_LICENSE }
-        ] as Array<StoredCredential>)
-      )
-    );
+  it.each`
+    isLifecycleIsOperationalOrValid | isWalletEmpty | isAvailable
+    ${false}                        | ${false}      | ${false}
+    ${false}                        | ${true}       | ${false}
+    ${true}                         | ${false}      | ${true}
+    ${true}                         | ${true}       | ${false}
+  `(
+    "should return $isAvailable when isLifecycleIsOperationalOrValid is $isLifecycleIsOperationalOrValid, isWalletEmpty is $isWalletEmpty",
+    ({ isLifecycleIsOperationalOrValid, isWalletEmpty, isAvailable }) => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsOperationalOrValid")
+        .mockImplementation(() => isLifecycleIsOperationalOrValid);
+      jest
+        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
+        .mockImplementation(() => isWalletEmpty);
 
-    expect(itwOfflineAccessAvailableSelector(globalState)).toEqual(true);
-  });
+      expect(
+        itwOfflineAccessAvailableSelector({} as unknown as GlobalState)
+      ).toEqual(isAvailable);
+    }
+  );
+});
 
-  it("Returns false when the wallet does not have credentials", () => {
-    const globalState = pipe(
-      undefined,
-      curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(
-        itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3")
-      ),
-      curriedAppReducer(
-        itwCredentialsStore([
-          { credentialType: CredentialType.PID }
-        ] as Array<StoredCredential>)
-      )
-    );
-
-    expect(itwOfflineAccessAvailableSelector(globalState)).toEqual(false);
+describe("itwShouldRenderOfflineBannerSelector", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
   it.each`
