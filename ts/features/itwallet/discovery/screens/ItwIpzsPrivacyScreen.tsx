@@ -10,21 +10,23 @@ import { generateDynamicUrlSelector } from "../../../../store/reducers/backendSt
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { trackOpenItwTosAccepted } from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
 import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
+import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const privacyUrl = useIOSelector(state =>
-    generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
-  );
-  const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
+
+  const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
 
+  const privacyUrl = useIOSelector(state =>
+    generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
+  );
+
   const handleContinuePress = () => {
-    trackOpenItwTosAccepted(isL3Enabled ? "L3" : "L2");
+    trackOpenItwTosAccepted(isL3 ? "L3" : "L2");
     machineRef.send({ type: "accept-ipzs-privacy" });
   };
 
@@ -64,7 +66,11 @@ const ItwIpzsPrivacyScreen = () => {
             accessibilityRole="header"
             testID="screen-content-header-title"
           >
-            {I18n.t("features.itWallet.ipzsPrivacy.title")}
+            {I18n.t(
+              isL3
+                ? "features.itWallet.ipzsPrivacy.titleL3"
+                : "features.itWallet.ipzsPrivacy.title"
+            )}
           </H2>
           <VSpacer size={16} />
           <IOMarkdown
