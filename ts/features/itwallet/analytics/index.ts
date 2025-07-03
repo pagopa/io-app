@@ -945,6 +945,7 @@ export const trackItwUserWithoutL3Requirements = (
     buildEventProperties("KO", "screen_view", itwUserWithoutL3requirements)
   );
 };
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES

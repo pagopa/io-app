@@ -12,7 +12,7 @@ import {
 import { useIOSelector } from "../../../../store/hooks";
 import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
+import { itwCredentialSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -70,9 +70,7 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = ({
 
 const InnerComponent = ({ credentialType }: { credentialType: string }) => {
   const navigation = useIONavigation();
-  const credentialOption = useIOSelector(
-    itwCredentialByTypeSelector(credentialType)
-  );
+  const credentialOption = useIOSelector(itwCredentialSelector(credentialType));
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
 
   const isCredentialValid = pipe(
