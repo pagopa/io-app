@@ -25,6 +25,14 @@ export const lollipopRemovePublicKey = createStandardAction(
   "LOLLIPOP_REMOVE_PUBLIC_KEY"
 )();
 
+export const lollipopSetEphermeralPublicKey = createStandardAction(
+  "LOLLIPOP_SET_EPHEMERAL_PUBLIC_KEY"
+)<SetPublicKeyPayload>();
+
+export const lollipopRemoveEphermeralPublicKey = createStandardAction(
+  "LOLLIPOP_REMOVE_EPHEMERAL_PUBLIC_KEY"
+)();
+
 export const lollipopSetSupportedDevice = createStandardAction(
   "LOLLIPOP_SET_SUPPORTED_DEVICE"
 )<boolean>();
@@ -33,5 +41,7 @@ export type LollipopActions = ActionType<
   | typeof lollipopKeyTagSave
   | typeof lollipopSetPublicKey
   | typeof lollipopRemovePublicKey
+  | typeof lollipopSetEphermeralPublicKey
+  | typeof lollipopRemoveEphermeralPublicKey
   | typeof lollipopSetSupportedDevice
 >;

@@ -9,8 +9,8 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
-  lollipopKeyTagSelector,
-  lollipopPublicKeySelector
+  ephemeralKeyTagSelector,
+  ephemeralPublicKeySelector
 } from "../store/reducers/lollipop";
 import {
   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
@@ -34,8 +34,8 @@ export const useLollipopLoginSource = (
   );
 
   const dispatch = useIODispatch();
-  const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
-  const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
+  const ephemeralKeyTag = useIOSelector(ephemeralKeyTagSelector);
+  const maybeEphemeralPublicKey = useIOSelector(ephemeralPublicKeySelector);
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
   const idp = useIOSelector(selectedIdentityProviderSelector);
@@ -75,7 +75,7 @@ export const useLollipopLoginSource = (
       return;
     }
 
-    if (O.isNone(maybeKeyTag) || O.isNone(maybePublicKey)) {
+    if (maybeEphemeralPublicKey === undefined) {
       // We track missing key tag event only if lollipop is enabled
       // (since the key tag is not used without lollipop)
       trackLollipopIdpLoginFailure(
@@ -97,7 +97,7 @@ export const useLollipopLoginSource = (
      */
 
     void pipe(
-      () => handleRegenerateKey(maybeKeyTag.value, mixpanelEnabled, dispatch),
+      () => handleRegenerateKey(ephemeralKeyTag, mixpanelEnabled, dispatch),
       T.map(nullableKey =>
         pipe(
           nullableKey,
@@ -123,11 +123,11 @@ export const useLollipopLoginSource = (
     )();
   }, [
     dispatch,
-    idp,
+    ephemeralKeyTag,
+    idp?.id,
     isFastLogin,
     loginUri,
-    maybeKeyTag,
-    maybePublicKey,
+    maybeEphemeralPublicKey,
     mixpanelEnabled
   ]);
 
@@ -153,13 +153,13 @@ export const useLollipopLoginSource = (
           // Make sure that we have a public key (since its retrieval
           // may have failed - in which case let the flow go through
           // the non-lollipop standard check process)
-          if (O.isSome(maybeKeyTag) && O.isSome(maybePublicKey)) {
+          if (maybeEphemeralPublicKey) {
             // Start Lollipop verification process
             setLollipopCheckStatus({
               status: "checking",
               url: O.some(url)
             });
-            verifyLollipop(url, urlEncodedSamlRequest, maybePublicKey.value);
+            verifyLollipop(url, urlEncodedSamlRequest, maybeEphemeralPublicKey);
             // Prevent the WebView from loading the current URL (its
             // loading will be restored after LolliPOP verification
             // has succeded)
@@ -184,7 +184,7 @@ export const useLollipopLoginSource = (
 
       return false;
     },
-    [lollipopCheckStatus.status, maybeKeyTag, maybePublicKey, verifyLollipop]
+    [lollipopCheckStatus.status, maybeEphemeralPublicKey, verifyLollipop]
   );
 
   useOnFirstRender(() => {
