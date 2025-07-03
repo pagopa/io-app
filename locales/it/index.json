@@ -4233,6 +4233,7 @@
     "itWallet": {
       "title": "IT-WALLET",
       "credentialName": {
+        "pid": "IT-Wallet ID",
         "eid": "Identità Digitale",
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
@@ -4251,6 +4252,10 @@
         "active": "Attivo",
         "inactive": "Non attivo",
         "header": "Mostra identità"
+      },
+      "walletID": {
+        "title": "IT-Wallet ID",
+        "show": "Mostra"
       },
       "card": {
         "status": {
@@ -4605,7 +4610,7 @@
         },
         "emptyWallet": {
           "itwReadyBanner": {
-            "content": "Premi 'Aggiungi al Portafoglio' per aggiungere un documento al tuo Portafoglio di IO."
+            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO."
           }
         },
         "credentialResult": {
@@ -4703,10 +4708,10 @@
                 "action": "Inizia"
               },
               "itw": {
-                "valid": "L'ultima verifica della tua identità è del {{date}}.",
-                "expiring": "Verifica la tua identità per continuare ad usare IT-Wallet entro il {{date}}.",
+                "valid": "Hai attivato il tuo ID con CIE il {{date}}.",
+                "expiring": "Rinnova il tuo ID per continuare ad usare IT-Wallet entro il {{date}}.",
                 "expired": "Verifica la tua identità per continuare ad usare IT-Wallet.",
-                "action": "Inizia la verifica"
+                "action": "Rinnova ID"
               }
             }
           },
@@ -5018,6 +5023,12 @@
           "success": {
             "title": "Fatto!",
             "subtitle": "La verifica è stata completata con successo."
+          }
+        },
+        "itWalletId": {
+          "detail": {
+            "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
+            "listItemHeader": "Dati del mio IT-Wallet ID"
           }
         }
       },
