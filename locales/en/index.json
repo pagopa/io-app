@@ -4456,7 +4456,7 @@
             "bottomSheet": {
               "cie": {
                 "title": "Continua sull’app CieID",
-                "content": "Per completare la verifica della tua identità sull’app CieID avrai bisogno di:\n\n * La Carta di identità elettronica\n * Il PIN a 8 cifre della CIE\n\nSe hai già installato l’app e hai già registrato la CIE, usa l’app CieID come alternativa più veloce.",
+                "content": "Per completare la verifica della tua identità sull’app CieID avrai bisogno di:\n\n * La Carta di Identità Elettronica\n * Il PIN a 8 cifre della CIE\n\nSe hai già installato l’app e hai già registrato la CIE, usa l’app CieID come alternativa più veloce.",
                 "action": "Continua sull’app CieID",
                 "cancel": "Non ora"
               },
@@ -4468,7 +4468,7 @@
               },
               "pin": {
                 "title": "PIN della CIE",
-                "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE;\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
+                "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
                 "primaryAction": "Ho capito",
                 "secondaryAction": "Non trovo il PIN della CIE"
               },
@@ -4702,9 +4702,9 @@
                 "action": "Inizia"
               },
               "itw": {
-                "valid": "L'ultima verifica della tua identità è del {{date}}.",
-                "expiring": "Verifica la tua identità per continuare ad usare IT-Wallet entro il {{date}}.",
-                "expired": "Verifica la tua identità per continuare ad usare IT-Wallet.",
+                "valid": "L'ultima verifica dei dati della tua identità è del {{date}}.",
+                "expiring": "Verifica la tua identità per continuare a usare IT-Wallet entro il {{date}}.",
+                "expired": "Verifica la tua identità per continuare a usare IT-Wallet.",
                 "action": "Inizia la verifica"
               }
             }
@@ -4910,7 +4910,7 @@
           "purpose": "Finalità: {{purpose}}",
           "success": {
             "title": "Fatto!",
-            "subtitle": "Continua sul sito dell'ente.",
+            "subtitle": "Ora puoi continuare a usare i servizi sul sito dell'ente.",
             "cta": "Continua sul sito dell'ente"
           }
         },
