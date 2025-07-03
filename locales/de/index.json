@@ -328,7 +328,6 @@
   "profile": {
     "fiscalCode": {
       "accessibility": {
-        "fiscalCodeHint": "Bild des Strichcodes deiner Steuernummer",
         "unavailable": "Nicht verfügbar"
       },
       "title": "Deine persönlichen Dokumente",
@@ -4100,6 +4099,12 @@
             "name": "Assoziiert einen Namen mit der Iban"
           }
         }
+      }
+    },
+    "unsubscription": {
+      "removeAlert": {
+        "title": "Möchten Sie {{initiativeName}} aus der Brieftasche löschen?",
+        "content": "Der Bonus wird entfernt."
       }
     }
   }

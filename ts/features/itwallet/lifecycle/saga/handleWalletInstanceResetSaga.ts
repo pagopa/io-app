@@ -1,4 +1,5 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
+import * as Sentry from "@sentry/react-native";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { identity, pipe } from "fp-ts/lib/function";
@@ -12,7 +13,6 @@ import { itwCredentialsSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../store/actions";
 import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
-import { sendExceptionToSentry } from "../../../../utils/sentryUtils.ts";
 
 const getKeyTag = (credential: O.Option<StoredCredential>) =>
   pipe(
@@ -21,7 +21,6 @@ const getKeyTag = (credential: O.Option<StoredCredential>) =>
   );
 
 export function* handleWalletInstanceResetSaga() {
-  const state: GlobalState = yield* select();
   const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
   const { eid, credentials } = yield* select(itwCredentialsSelector);
   try {
@@ -42,8 +41,9 @@ export function* handleWalletInstanceResetSaga() {
     );
     yield* all(itwKeyTags.map(deleteKey));
     // Update every mixpanel property related to the wallet instance and its credentials.
+    const state: GlobalState = yield* select();
     void updatePropertiesWalletRevoked(state);
   } catch (e) {
-    sendExceptionToSentry(e, "handleWalletInstanceResetSaga");
+    Sentry.captureException(e);
   }
 }

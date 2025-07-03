@@ -39,16 +39,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       switch (failure.type) {
-        case ProximityFailureType.UNEXPECTED:
-          return {
-            title: I18n.t("features.itWallet.generic.error.title"),
-            subtitle: I18n.t("features.itWallet.generic.error.body"),
-            pictogram: "workInProgress",
-            action: {
-              label: I18n.t("global.buttons.close"),
-              onPress: () => machineRef.send({ type: "close" })
-            }
-          };
         case ProximityFailureType.RELYING_PARTY_GENERIC:
           return {
             title: I18n.t(`${i18nNs}.relyingParty.genericError.title`),
@@ -58,6 +48,16 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 `${i18nNs}.relyingParty.genericError.primaryAction`
               ),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
+        case ProximityFailureType.UNEXPECTED:
+          return {
+            title: I18n.t("features.itWallet.generic.error.title"),
+            subtitle: I18n.t("features.itWallet.generic.error.body"),
+            pictogram: "workInProgress",
+            action: {
+              label: I18n.t("global.buttons.close"),
               onPress: () => machineRef.send({ type: "close" })
             }
           };

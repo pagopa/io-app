@@ -3903,6 +3903,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pagopa/io-react-native-cie@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@pagopa/io-react-native-cie@npm:1.0.1"
+  dependencies:
+    zod: ^3.24.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: bdc10cbb5d56fb19b0c0fbaa479b554d7baac9175af3635a47d83778919765fe927062394d9c2160e4df5de9b9d0c6d09ce856e2fa007c8f2a8aa4e5443915b3
+  languageName: node
+  linkType: hard
+
 "@pagopa/io-react-native-cieid@npm:^0.3.5":
   version: 0.3.5
   resolution: "@pagopa/io-react-native-cieid@npm:0.3.5"
@@ -3978,13 +3990,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-secure-storage@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@pagopa/io-react-native-secure-storage@npm:0.2.0"
+"@pagopa/io-react-native-secure-storage@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@pagopa/io-react-native-secure-storage@npm:0.2.1"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: ccc31bf2b6fd04dd9fe68ccd3416752ce19c8fc91c07cb42a6e574ccc8e6784e04647224da8c67a5cce8e5488a408a8b0072df4e9c945ba73c9730a2236f8680
+  checksum: da369112e70b646f1106dc2a0e45a93b1b7ed761c969fc7336438682413bf48a27a01bcd47e5c439e067e91382f90e5006d9925ac44641aa12fc3077c752a1a8
   languageName: node
   linkType: hard
 
@@ -12971,6 +12983,7 @@ __metadata:
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
     "@pagopa/io-app-design-system": 5.6.7
     "@pagopa/io-pagopa-commons": ^3.1.0
+    "@pagopa/io-react-native-cie": ^1.0.1
     "@pagopa/io-react-native-cieid": ^0.3.5
     "@pagopa/io-react-native-crypto": ^1.0.1
     "@pagopa/io-react-native-http-client": 1.0.5
@@ -12978,7 +12991,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": ^1.1.0
     "@pagopa/io-react-native-proximity": ^0.6.0
-    "@pagopa/io-react-native-secure-storage": ^0.2.0
+    "@pagopa/io-react-native-secure-storage": ^0.2.1
     "@pagopa/io-react-native-wallet": ^0.30.0
     "@pagopa/io-react-native-wallet-v2": "npm:@pagopa/io-react-native-wallet@next"
     "@pagopa/io-react-native-zendesk": ^0.3.30
@@ -21791,6 +21804,13 @@ __metadata:
   version: 3.23.8
   resolution: "zod@npm:3.23.8"
   checksum: 15949ff82118f59c893dacd9d3c766d02b6fa2e71cf474d5aa888570c469dbf5446ac5ad562bb035bf7ac9650da94f290655c194f4a6de3e766f43febd432c5c
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.24.4":
+  version: 3.25.67
+  resolution: "zod@npm:3.25.67"
+  checksum: 56ab904d33b1cd00041ce64ae05b0628fcbfeb7e707fa31cd498a97b540135e4dfe685200c9c62aea307695ee132870b4bc34f035228ea728aa75cc96a4954cb
   languageName: node
   linkType: hard
 

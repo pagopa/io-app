@@ -40,7 +40,7 @@ export const mapEventToFailure = (event: ProximityEvents): ProximityFailure => {
   const { error } = event;
 
   return {
-    type: ProximityFailureType.UNEXPECTED,
-    reason: String(error)
+    type: ProximityFailureType.RELYING_PARTY_GENERIC,
+    reason: error
   };
 };

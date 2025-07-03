@@ -5,9 +5,11 @@ import { ItwPresentationTags } from "./tags";
 import {
   SendErrorResponseActorOutput,
   ProximityCommunicationLogicActorInput,
+  SendDocumentsActorInput,
+  SendDocumentsActorOutput,
   StartProximityFlowInput
 } from "./actors";
-import { mapEventToFailure, ProximityFailureType } from "./failure";
+import { mapEventToFailure } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -26,6 +28,8 @@ export const itwProximityMachine = setup({
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
+    navigateToSendDocumentsResponseScreen: notImplemented,
+    navigateToWallet: notImplemented,
     closeProximity: notImplemented
   },
   actors: {
@@ -41,7 +45,11 @@ export const itwProximityMachine = setup({
       ProximityCommunicationLogicActorInput
     >(notImplemented),
     terminateProximitySession:
-      fromPromise<SendErrorResponseActorOutput>(notImplemented)
+      fromPromise<SendErrorResponseActorOutput>(notImplemented),
+    sendDocuments: fromPromise<
+      SendDocumentsActorOutput,
+      SendDocumentsActorInput
+    >(notImplemented)
   }
 }).createMachine({
   id: "itwProximityMachine",
@@ -297,12 +305,7 @@ export const itwProximityMachine = setup({
           target: "DeviceCommunication.ClaimsDisclosure"
         },
         "device-error": {
-          actions: assign({
-            failure: ({ event }) => ({
-              type: ProximityFailureType.RELYING_PARTY_GENERIC,
-              reason: event.payload
-            })
-          }),
+          actions: "setFailure",
           target: "Failure"
         }
       },
@@ -318,19 +321,43 @@ export const itwProximityMachine = setup({
           }
         },
         Connecting: {
-          entry: "navigateToClaimsDisclosureScreen",
           description:
             "Initiates the connection between the device and the verifier"
         },
         Connected: {
+          entry: "navigateToClaimsDisclosureScreen",
           description:
             "The device has successfully established a connection with the verifier"
         },
         ClaimsDisclosure: {
           description: "Displays the requested claims",
           on: {
+            "holder-consent": {
+              target:
+                "#itwProximityMachine.DeviceCommunication.SendingDocuments"
+            },
             back: {
               target: "#itwProximityMachine.DeviceCommunication.Closing"
+            }
+          }
+        },
+        SendingDocuments: {
+          tags: [ItwPresentationTags.Loading],
+          entry: "navigateToSendDocumentsResponseScreen",
+          description: "Sends the required documents to the verifier app",
+          invoke: {
+            id: "sendDocuments",
+            src: "sendDocuments",
+            input: ({ context }) => ({
+              credentialsByType: context.credentialsByType,
+              verifiedRequest: context.verifierRequest
+            }),
+            onDone: {
+              target: "#itwProximityMachine.Success"
+            },
+            onError: {
+              actions: "setFailure",
+              target: "#itwProximityMachine.Failure"
             }
           }
         },
@@ -348,6 +375,14 @@ export const itwProximityMachine = setup({
               target: "#itwProximityMachine.Idle"
             }
           }
+        }
+      }
+    },
+    Success: {
+      description: "The documents have been successfully sent to the Verifier",
+      on: {
+        close: {
+          actions: "navigateToWallet"
         }
       }
     },

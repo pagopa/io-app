@@ -2,13 +2,15 @@
  * Implements the preferences screen where the user can see and update his
  * preferences about notifications, calendar, services, messages and languages
  */
-import { ComponentProps, useCallback } from "react";
-import { Alert, FlatList, ListRenderItemInfo } from "react-native";
+import { ComponentProps, useCallback, useRef } from "react";
+import { Alert, FlatList, ListRenderItemInfo, View } from "react-native";
 import {
   Divider,
   IOVisualCostants,
   ListItemNav
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
@@ -17,6 +19,7 @@ import { requestWriteCalendarPermission } from "../../../../utils/permission";
 import { checkAndRequestPermission } from "../../../../utils/calendar";
 import { openAppSettings } from "../../../../utils/appSettings";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 
 type PreferencesNavListItem = {
   value: string;
@@ -32,6 +35,13 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const PreferencesScreen = () => {
   const navigation = useIONavigation();
+  const titleRef = useRef<View>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      setAccessibilityFocus(titleRef, 400 as Millisecond);
+    }, [])
+  );
 
   const navigateToServicePreferenceScreen = useCallback(() => {
     navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -172,6 +182,7 @@ const PreferencesScreen = () => {
       contextualHelpMarkdown={contextualHelpMarkdown}
       headerActionsProp={{ showHelp: true }}
       faqCategories={["profile", "privacy", "authentication_SPID"]}
+      ref={titleRef}
     >
       <FlatList
         scrollEnabled={false}

@@ -30,7 +30,6 @@ import { OperationResultScreenContent } from "../../../components/screens/Operat
 import { MessageDetailsHeader } from "../components/MessageDetail/MessageDetailsHeader";
 import I18n from "../../../i18n";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
-import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetailsTagBox";
 import { getMessageCTAs } from "../utils/ctas";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
@@ -177,16 +176,14 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
               createdAt={message.createdAt}
             >
               {hasAttachments && (
-                <MessageDetailsTagBox>
-                  <Icon
-                    name="attachment"
-                    accessibilityLabel={I18n.t(
-                      "messageDetails.accessibilityAttachmentIcon"
-                    )}
-                    testID="attachment-tag"
-                    size={16}
-                  />
-                </MessageDetailsTagBox>
+                <Icon
+                  name="attachment"
+                  accessibilityLabel={I18n.t(
+                    "messageDetails.accessibilityAttachmentIcon"
+                  )}
+                  testID="attachment-tag"
+                  size={16}
+                />
               )}
             </MessageDetailsHeader>
             <VSpacer />

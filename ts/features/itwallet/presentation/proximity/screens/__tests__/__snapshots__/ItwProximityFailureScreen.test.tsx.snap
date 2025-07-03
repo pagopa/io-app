@@ -168,7 +168,7 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                     ]
                   }
                 >
-                  ITW_PROXIMITY_FAILURE_SCREEN
+                  ITW_PROXIMITY_FAILURE
                 </Text>
               </View>
               <View

@@ -35,7 +35,7 @@ export type DeviceConnected = {
 
 export type DeviceError = {
   type: "device-error";
-  payload: Error;
+  error: Error;
 };
 
 export type DeviceDocumentRequestReceived = {
@@ -44,9 +44,14 @@ export type DeviceDocumentRequestReceived = {
   verifierRequest: VerifierRequest;
 };
 
+export type Consent = {
+  type: "holder-consent";
+};
+
 export type ProximityEvents =
   | Start
   | Back
+  | Consent
   | Continue
   | Close
   | Dismiss

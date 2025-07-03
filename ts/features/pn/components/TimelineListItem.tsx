@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Dimensions, View } from "react-native";
 import {
   Alert,
@@ -43,6 +43,7 @@ const generateTimelineData = (
   }));
 
 export const TimelineListItem = ({ history }: TimelineListItemProps) => {
+  const [footerHeight, setFooterHeight] = useState<number>(181);
   const windowHeight = Dimensions.get("window").height;
   const snapPoint = Math.min(
     windowHeight - topBottomSheetMargin,
@@ -51,10 +52,15 @@ export const TimelineListItem = ({ history }: TimelineListItemProps) => {
   const sendExternalUrl = useIOSelector(pnFrontendUrlSelector);
   const timelineData = useMemo(() => generateTimelineData(history), [history]);
   const { bottomSheet, present } = useIOBottomSheetModal({
-    component: <Timeline data={timelineData} />,
+    component: <Timeline data={timelineData} footerHeight={footerHeight} />,
     title: I18n.t("features.pn.details.timeline.menuTitle"),
     footer: (
-      <View style={{ padding: IOVisualCostants.appMarginDefault }}>
+      <View
+        onLayout={layoutChangeEvent =>
+          setFooterHeight(layoutChangeEvent.nativeEvent.layout.height)
+        }
+        style={{ padding: IOVisualCostants.appMarginDefault }}
+      >
         <Alert
           variant="info"
           content={`${I18n.t("features.pn.details.timeline.newInfo")}`}

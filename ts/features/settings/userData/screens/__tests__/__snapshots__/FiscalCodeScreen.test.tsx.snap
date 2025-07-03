@@ -318,7 +318,7 @@ exports[`WithLightModalContext should match snapshot 1`] = `
                               }
                             />
                             <View
-                              accessibilityLabel="Image of barcode and fiscal code"
+                              accessibilityLabel="Image of barcode and fiscal code. Your fiscal code is: AAAAAA00A00A000A"
                               accessible={true}
                               style={
                                 [

@@ -10,9 +10,6 @@ import * as archivingReducer from "../../../store/reducers/archiving";
 import * as preferencesReducer from "../../../../../store/reducers/preferences";
 import * as allPaginatedReducer from "../../../store/reducers/allPaginated";
 
-jest.mock("rn-qr-generator", () => ({}));
-jest.mock("react-native-screenshot-prevent", () => ({}));
-
 const mockToastSuccess = jest.fn();
 const mockToastError = jest.fn();
 jest.mock("@pagopa/io-app-design-system", () => ({

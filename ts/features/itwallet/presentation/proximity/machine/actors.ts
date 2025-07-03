@@ -11,10 +11,15 @@ import {
 import BluetoothStateManager from "react-native-bluetooth-state-manager";
 import {
   Proximity,
+  type VerifierRequest,
   parseError,
   parseVerifierRequest
 } from "@pagopa/io-react-native-proximity";
-import { getProximityDetails } from "../utils/itwProximityPresentationUtils";
+import {
+  generateAcceptedFields,
+  getDocuments,
+  getProximityDetails
+} from "../utils/itwProximityPresentationUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { assert } from "../../../../../utils/assert";
 import { getError } from "../../../../../utils/errors";
@@ -42,6 +47,15 @@ export type SendErrorResponseActorOutput = Awaited<
 export type ProximityCommunicationLogicActorInput = {
   credentialsByType: Record<string, StoredCredential>;
 };
+
+export type SendDocumentsActorInput = {
+  credentialsByType: Record<string, StoredCredential>;
+  verifiedRequest?: VerifierRequest;
+};
+
+export type SendDocumentsActorOutput = Awaited<
+  ReturnType<typeof Proximity.sendResponse>
+>;
 
 export const createProximityActorsImplementation = () => {
   const checkPermissions = fromPromise<boolean, void>(async () => {
@@ -100,13 +114,13 @@ export const createProximityActorsImplementation = () => {
     const handleDeviceDisconnected = () => {
       sendBack({
         type: "device-error",
-        payload: new Error("Device disconnected")
+        error: new Error("Device disconnected")
       });
     };
 
     const handleError = (eventPayload: Proximity.EventsPayload["onError"]) => {
       const { error } = eventPayload ?? {};
-      sendBack({ type: "device-error", payload: parseError(error) });
+      sendBack({ type: "device-error", error: parseError(error) });
     };
 
     const handleDocumentRequestReceived = (
@@ -132,7 +146,7 @@ export const createProximityActorsImplementation = () => {
       } catch (e) {
         sendBack({
           type: "device-error",
-          payload: getError(e)
+          error: getError(e)
         });
       }
     };
@@ -157,6 +171,25 @@ export const createProximityActorsImplementation = () => {
     };
   });
 
+  const sendDocuments = fromPromise<
+    SendDocumentsActorOutput,
+    SendDocumentsActorInput
+  >(async ({ input }) => {
+    const { credentialsByType, verifiedRequest } = input;
+    assert(verifiedRequest, "Missing required verifiedRequest");
+
+    const documents = getDocuments(verifiedRequest.request, credentialsByType);
+    // We accept all the fields requested by the verifier app
+    const acceptedFields = generateAcceptedFields(verifiedRequest.request);
+
+    const generatedResponse = await Proximity.generateResponse(
+      documents,
+      acceptedFields
+    );
+
+    return Proximity.sendResponse(generatedResponse);
+  });
+
   const terminateProximitySession = fromPromise<SendErrorResponseActorOutput>(
     () => Proximity.sendErrorResponse(Proximity.ErrorCode.SESSION_TERMINATED)
   );
@@ -169,6 +202,7 @@ export const createProximityActorsImplementation = () => {
     closeProximityFlow,
     generateQrCodeString,
     proximityCommunicationLogic,
+    sendDocuments,
     startProximityFlow,
     terminateProximitySession
   };

@@ -362,6 +362,10 @@ export const itwEidIssuanceMachine = setup({
                 target: "Spid"
               },
               {
+                guard: ({ event }) => event.mode === "ciePin",
+                target: "CiePin"
+              },
+              {
                 guard: ({ event }) => event.mode === "cieId",
                 actions: assign(() => ({
                   isL3FeaturesEnabled: false,
@@ -552,8 +556,17 @@ export const itwEidIssuanceMachine = setup({
         CiePin: {
           description:
             "This state handles the entire CIE + pin identification flow",
-          initial: "PreparationCie",
+          initial: "EvaluateInitialState",
           states: {
+            EvaluateInitialState: {
+              always: [
+                {
+                  guard: "isL3FeaturesEnabled",
+                  target: "PreparationCie"
+                },
+                { target: "InsertingCardPin" }
+              ]
+            },
             PreparationCie: {
               description:
                 "This state handles the CIE preparation screen, where the user is informed about the CIE card",
@@ -628,10 +641,17 @@ export const itwEidIssuanceMachine = setup({
                     }))
                   }
                 ],
-                back: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
-                }
+                back: [
+                  {
+                    guard: "isL3FeaturesEnabled",
+                    target:
+                      "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
+                  },
+                  {
+                    target:
+                      "#itwEidIssuanceMachine.UserIdentification.L2Identification"
+                  }
+                ]
               }
             },
             RequestingNfcActivation: {
