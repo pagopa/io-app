@@ -81,8 +81,7 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
 
   const { cieInfoBottomSheet, pinBottomSheet } = useCieInfoAndPinBottomSheets();
 
-  const { noCieBottomSheet, noCieBottomSheetPresent } =
-    useNoCieBottomSheet();
+  const { noCieBottomSheet, noCieBottomSheetPresent } = useNoCieBottomSheet();
 
   useFocusEffect(
     useCallback(() => {
