@@ -13,6 +13,7 @@ import {
 } from "../../../lifecycle/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import { isItwCredential } from "../../utils/itwCredentialUtils";
+import { ItwJwtCredentialStatus } from "../../utils/itwTypesUtils";
 import {
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
@@ -138,3 +139,30 @@ export const itwShouldRenderNewITWalletSelector = (state: GlobalState) =>
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   isItwCredentialSelector(state);
+
+/**
+ * Factory function that creates a selector to determine if any banners
+ * should be displayed above the Wallet component.
+ *
+ * It checks three conditions:
+ * 1. If the Wallet Ready banner should be rendered.
+ * 2. If the Offline banner should be rendered.
+ * 3. If the current ITW credential status is included in
+ *    the specified list of `lifecycleStatus` values.
+ */
+export const makeItwHasActiveBannersAboveWalletSelector =
+  (lifecycleStatus: Array<ItwJwtCredentialStatus>) => (state: GlobalState) => {
+    const shouldDisplayStatus = pipe(
+      O.fromNullable(itwCredentialsEidStatusSelector(state)),
+      O.fold(
+        () => false,
+        status => lifecycleStatus.includes(status)
+      )
+    );
+
+    return (
+      itwShouldRenderWalletReadyBannerSelector(state) ||
+      itwShouldRenderOfflineBannerSelector(state) ||
+      shouldDisplayStatus
+    );
+  };

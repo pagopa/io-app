@@ -4233,6 +4233,7 @@
     "itWallet": {
       "title": "IT-WALLET",
       "credentialName": {
+        "pid": "IT-Wallet ID",
         "eid": "Identità Digitale",
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
@@ -4241,6 +4242,7 @@
       },
       "ipzsPrivacy": {
         "title": "I tuoi Documenti su IO sono al sicuro",
+        "titleL3": "I tuoi Documenti sono al sicuro",
         "warning": "Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.",
         "button": {
           "label": "Continua"
@@ -4250,6 +4252,10 @@
         "active": "Attivo",
         "inactive": "Non attivo",
         "header": "Mostra identità"
+      },
+      "walletID": {
+        "title": "IT-Wallet ID",
+        "show": "Mostra"
       },
       "card": {
         "status": {
@@ -4604,7 +4610,7 @@
         },
         "emptyWallet": {
           "itwReadyBanner": {
-            "content": "Premi 'Aggiungi al Portafoglio' per aggiungere un documento al tuo Portafoglio di IO."
+            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO."
           }
         },
         "credentialResult": {
@@ -5013,6 +5019,16 @@
               "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
               "primaryAction": "Chiudi"
             }
+          },
+          "success": {
+            "title": "Fatto!",
+            "subtitle": "La verifica è stata completata con successo."
+          }
+        },
+        "itWalletId": {
+          "detail": {
+            "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
+            "listItemHeader": "Dati del mio IT-Wallet ID"
           }
         }
       },
@@ -5756,6 +5772,10 @@
       },
       "button": {
         "continue": "Rimuovi"
+      },
+      "removeAlert": {
+        "title": "Vuoi eliminare {{initiativeName}} dal Portafoglio?",
+        "content": "Il bonus verrà rimosso."
       },
       "modal": {
         "title": "Rimuovere {{initiativeName}}?",
