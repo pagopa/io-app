@@ -127,10 +127,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "itWallet": {
     "credentials": {
-      "credentials": [],
-      "eid": {
-        "_tag": "None",
-      },
+      "credentials": {},
     },
     "environment": {
       "env": "prod",
