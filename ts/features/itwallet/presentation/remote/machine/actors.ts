@@ -1,11 +1,12 @@
 import { Credential } from "@pagopa/io-react-native-wallet";
 import { fromPromise } from "xstate";
 import * as O from "fp-ts/lib/Option";
+import { Trust } from "@pagopa/io-react-native-wallet-v2";
 import {
-  ItwRemoteRequestPayload,
+  DcqlQuery,
   EnrichedPresentationDetails,
-  RelyingPartyConfiguration,
-  DcqlQuery
+  ItwRemoteRequestPayload,
+  RelyingPartyConfiguration
 } from "../utils/itwRemoteTypeUtils";
 import { RequestObject } from "../../../common/utils/itwTypesUtils";
 import { useIOStore } from "../../../../../store/hooks";
@@ -18,6 +19,7 @@ import {
   getInvalidCredentials
 } from "../utils/itwRemotePresentationUtils";
 import { assert } from "../../../../../utils/assert";
+import { Env } from "../../../common/utils/environment.ts";
 import { InvalidCredentialsStatusError } from "./failure";
 
 export type EvaluateRelyingPartyTrustInput = Partial<{
@@ -53,6 +55,7 @@ export type SendAuthorizationResponseOutput = {
 };
 
 export const createRemoteActorsImplementation = (
+  env: Env,
   store: ReturnType<typeof useIOStore>
 ) => {
   const evaluateRelyingPartyTrust = fromPromise<
@@ -62,12 +65,38 @@ export const createRemoteActorsImplementation = (
     const { qrCodePayload } = input;
     assert(qrCodePayload?.client_id, "Missing required client ID");
 
+    const trustAnchorEntityConfig =
+      await Trust.Build.getTrustAnchorEntityConfiguration(
+        env.WALLET_TA_BASE_URL
+      );
+
+    const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
+
+    // Ensure that the trust anchor key is suitable for building the trust chain
+    assert(trustAnchorKey, "No suitable key found in Trust Anchor JWKS.");
+
+    // Create the trust chain for the Relying Party
+    const builtChainJwts = await Trust.Build.buildTrustChain(
+      qrCodePayload.client_id,
+      trustAnchorKey
+    );
+
+    // Perform full validation on the built chainW
+    await Trust.Verify.verifyTrustChain(
+      trustAnchorEntityConfig,
+      builtChainJwts,
+      {
+        connectTimeout: 10000,
+        readTimeout: 10000,
+        requireCrl: true
+      }
+    );
+
+    // Determine the Relying Party configuration and subject
     const { rpConf, subject } =
       await Credential.Presentation.evaluateRelyingPartyTrust(
         qrCodePayload.client_id
       );
-
-    // TODO: add trust chain validation
 
     return { rpConf, rpSubject: subject };
   });
