@@ -4755,36 +4755,36 @@
         },
         "credentialDetails": {
           "card": {
-            "front": "Fronte",
-            "back": "Retro",
-            "showFront": "Mostra fronte",
-            "showBack": "Mostra retro",
+            "front": "Front",
+            "back": "Back",
+            "showFront": "Show front",
+            "showBack": "Show back",
             "hideValues": "Nascondi dati",
             "showValues": "Mostra dati"
           },
-          "personalDataTitle": "Dati personali",
-          "documentDataTitle": "Dati del documento",
-          "lastUpdated": "Dati aggiornati al {{lastUpdateTime}}",
+          "personalDataTitle": "Personal data",
+          "documentDataTitle": "Document data",
+          "lastUpdated": "Last updated on {{lastUpdateTime}}",
           "boolClaim": {
             "true": "Sì",
             "false": "No"
           },
-          "hiddenClaim": "Nascosto",
+          "hiddenClaim": "Hidden",
           "fiscalCode": {
-            "label": "Il tuo Codice Fiscale",
-            "action": "Premi per ingrandire e visualizzare il codice a barre a tutto schermo"
+            "label": "Your Fiscal Code",
+            "action": "Press to enlarge and display the barcode on the entire screen"
           },
           "status": {
-            "valid": "Valida",
-            "invalid": "Non valida",
-            "expired": "Scaduta",
-            "expiring": "In scadenza"
+            "valid": "Valid",
+            "invalid": "Not valid",
+            "expired": "Expired",
+            "expiring": "Expiring"
           },
           "actions": {
-            "removeFromWallet": "Rimuovi dal Portafoglio",
-            "requestAssistance": "Qualcosa non torna?",
-            "showClaimValues": "Mostra gli attributi del documento",
-            "hideClaimValues": "Nascondi gli attributi del documento",
+            "removeFromWallet": "Remove from Wallet",
+            "requestAssistance": "Something wrong?",
+            "showClaimValues": "Show claim values",
+            "hideClaimValues": "Hide claim values",
             "openIPatente": "Vai al saldo punti patente"
           },
           "dialogs": {
@@ -4805,9 +4805,9 @@
         },
         "ctas": {
           "trustmark": "Mostra certificato di autenticità",
-          "openPdf": "Mostra documento",
-          "shareButton": "Salva o condividi",
-          "fiscalCode": "Il tuo Codice Fiscale",
+          "openPdf": "Show document",
+          "shareButton": "Save or share",
+          "fiscalCode": "Your Fiscal Code",
           "showQRCode": "Mostra QR Code di verifica"
         },
         "eid": {
@@ -5128,7 +5128,7 @@
           "modal": {
             "title": "Il tuo accesso all’app è scaduto",
             "content": "###### Cosa posso fare?\n\nQuando la tua sessione di accesso all’app scade, alcuni servizi dell’app potrebbero essere limitati per motivi di sicurezza.\n\nAccedi di nuovo con SPID o CIE per continuare ad usare tutti i servizi di IO.",
-            "footerAction": "Accedi di nuovo"
+            "footerAction": "Log in again"
           }
         },
         "session_refresh": {
@@ -5162,32 +5162,32 @@
         "environment": {
           "toggle": {
             "pre": {
-              "value": "Imposta l'ambiente su PRE",
-              "description": "Usa l'ambiente pre-produzione. Potrebbe essere necessario un proxy per accedere ai servizi. Questa azione reimposta lo stato di IT-Wallet."
+              "value": "Set environment to PRE",
+              "description": "Use pre-production environment. A proxy may be required to access services. This action will reset IT-Wallet state."
             },
             "prod": {
-              "value": "Imposta l'ambiente su PROD",
-              "description": "Usa l'ambiente di produzione. Questa azione reimposta lo stato di IT-Wallet."
+              "value": "Set environment to PROD",
+              "description": "Use production environment. This action will reset IT-Wallet state."
             }
           },
           "alert": {
-            "title": "Imposta l'ambiente su [{{environment}}]",
-            "content": "Stai per accedere all'ambiente di test dedicato a IT-Wallet.\nLa funzionalità Documenti su IO, se attiva, verrà automaticamente disattivata."
+            "title": "Set environment to [{{environment}}]",
+            "content": "You are about to access the IT-Wallet test environment.\nThe \"Documenti su IO\" feature, if active, will be automatically disabled."
           },
           "banner": {
-            "content": "Ti trovi nell’ambiente di test dell’app dedicato a IT-Wallet.",
-            "action": "Come funziona?"
+            "content": "You are in the IT-Wallet test environment.",
+            "action": "How does it work?"
           },
           "bottom_sheet": {
-            "title": "Ambiente di test IT-Wallet",
-            "content": "Se avevi attivato Documenti su IO, la funzionalità è stata disattivata automaticamente.\nPer riattivarla, esci dall’ambiente di test e attiva di nuovo Documenti su IO.",
-            "action": "Esci dall'ambiente di test"
+            "title": "IT-Wallet test environment",
+            "content": "If you had \"Documenti su IO\" enabled, the feature has been automatically disabled.\nTo re-enable it, exit the test environment and enable Documents on IO again.",
+            "action": "Exit test environment"
           }
         },
         "walletL3": {
           "alert": {
-            "title": "Disattiva IT-Wallet L3",
-            "content": "Se avevi attivato IT-Wallet, il portafoglio sarà resettato e tutti i documenti rimossi."
+            "title": "Disable IT Wallet L3",
+            "content": "If you had IT-Wallet enabled, the wallet will be reset and all documents removed."
           }
         }
       }
