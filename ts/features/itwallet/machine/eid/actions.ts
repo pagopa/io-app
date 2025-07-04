@@ -1,31 +1,32 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs, assertEvent, assign } from "xstate";
 import * as O from "fp-ts/lib/Option";
+import { ActionArgs, assertEvent, assign } from "xstate";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
-import { itwCredentialsStore } from "../../credentials/store/actions";
-import {
-  itwRemoveIntegrityKeyTag,
-  itwStoreIntegrityKeyTag
-} from "../../issuance/store/actions";
-import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
+import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import {
   trackItwDeactivated,
   trackSaveCredentialSuccess,
   updateITWStatusAndIDProperties
 } from "../../analytics";
+import { itwSetAuthLevel } from "../../common/store/actions/preferences.ts";
+import { itwCredentialsStore } from "../../credentials/store/actions";
+import { itwL2CredentialSelector } from "../../credentials/store/selectors/index.ts";
+import {
+  itwRemoveIntegrityKeyTag,
+  itwStoreIntegrityKeyTag
+} from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
+import { ITW_ROUTES } from "../../navigation/routes";
+import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import { itwSetAuthLevel } from "../../common/store/actions/preferences";
-import { Context } from "./context";
-import { EidIssuanceEvents } from "./events";
+import { Context } from "./context.ts";
+import { EidIssuanceEvents } from "./events.ts";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -37,7 +38,7 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { isL3: context.isL3FeaturesEnabled }
+      params: { isL3: context.isL3 }
     });
   },
 
@@ -248,10 +249,12 @@ export const createEidIssuanceActionsImplementation = (
       const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(state);
       const walletInstanceAttestation =
         itwWalletInstanceAttestationSelector(state);
+      const l2Credentials = itwL2CredentialSelector(state);
 
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
-        walletInstanceAttestation
+        walletInstanceAttestation,
+        l2Credentials
       };
     }
   )

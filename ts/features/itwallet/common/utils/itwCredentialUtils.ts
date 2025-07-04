@@ -1,8 +1,8 @@
 import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { decode } from "@pagopa/io-react-native-jwt";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
 import { CredentialType } from "./itwMocksUtils";
 import { ItwCredentialStatus, StoredCredential } from "./itwTypesUtils";
@@ -97,12 +97,12 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
 /**
  * Checks if a credential is an ITW enabled credential by checking the
  * JWT header's typ parameter.
- * @param sdJwt - The SD-JWT string to check
+ * @param credential - The credential to check
  * @returns boolean indicating if the credential is an ITW credential (L3)
  */
-export const isItwCredential = (sdJwt: string): boolean =>
+export const isItwCredential = (credential: StoredCredential): boolean =>
   pipe(
-    E.tryCatch(() => decode(sdJwt), E.toError),
+    E.tryCatch(() => decode(credential.credential), E.toError),
     E.map(({ protectedHeader }) => protectedHeader.typ === "dc+sd-jwt"),
     E.getOrElse(() => false)
   );
@@ -124,4 +124,4 @@ const credentialsWithL3Design: ReadonlyArray<string> = [
  */
 export const hasL3Design = (credential: StoredCredential): boolean =>
   credentialsWithL3Design.includes(credential.credentialType) &&
-  isItwCredential(credential.credential);
+  isItwCredential(credential);
