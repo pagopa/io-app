@@ -44,6 +44,8 @@ export type Context = {
   // Flag to check if IT Wallet L3 features are enabled and thus we should allow to request
   // a PID credential and upgrade the existing credentials to L3
   isL3FeaturesEnabled: boolean | undefined;
+  // Flag to check if the user chose to fallback to L2 issuance
+  isL2Fallback: boolean;
   // During the transition phase to 1.0 we need to route only whitelisted
   // users to the Issuer API 1.0, regardless of the auth level (L2 or L3)
   // TODO: [SIW-2530] remove after migrating to API 1.0
@@ -60,5 +62,6 @@ export const InitialContext: Context = {
   failure: undefined,
   isReissuing: false,
   isL3FeaturesEnabled: undefined,
+  isL2Fallback: false,
   isWhitelisted: false
 };

@@ -54,8 +54,11 @@ const startAuthFlow = async ({
     credentialId: "dc_sd_jwt_PersonIdentificationData"
   });
 
+  // L3 issuance is enabled when the user is in L3 mode and the identification mode is level L3
+  const isL3 = isL3IssuanceEnabled && identification.level === "L3";
+
   // When issuing an L3 PID, we should not provide an IDP hint
-  const idpHint = getIdpHint(identification, env, isL3IssuanceEnabled);
+  const idpHint = getIdpHint(identification, env, isL3);
 
   const { issuerUrl, credentialId } = startFlow();
 
