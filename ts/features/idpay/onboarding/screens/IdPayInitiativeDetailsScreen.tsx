@@ -19,6 +19,7 @@ import { IdPayOnboardingServiceHeader } from "../components/IdPayOnboardingServi
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
 import { IdPayOnboardingParamsList } from "../navigation/params";
+import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 
 export type InitiativeDetailsScreenParams = {
   serviceId?: string;
@@ -29,7 +30,7 @@ type InitiativeDetailsScreenParamsRouteProps = RouteProp<
   "IDPAY_ONBOARDING_INITIATIVE_DETAILS"
 >;
 
-export const IdPayInitiativeDetailsScreen = () => {
+const IdPayInitiativeDetailsScreenComponent = () => {
   const { params } = useRoute<InitiativeDetailsScreenParamsRouteProps>();
 
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -107,3 +108,8 @@ export const IdPayInitiativeDetailsScreen = () => {
     </ForceScrollDownView>
   );
 };
+
+export const IdPayInitiativeDetailsScreen = withAppRequiredUpdate(
+  IdPayInitiativeDetailsScreenComponent,
+  "idpay.onboarding"
+);

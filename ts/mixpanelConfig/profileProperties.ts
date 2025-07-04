@@ -1,4 +1,5 @@
 import * as O from "fp-ts/lib/Option";
+import * as Sentry from "@sentry/react-native";
 import { getPeople, isMixpanelInstanceInitialized } from "../mixpanel.ts";
 import { GlobalState } from "../store/reducers/types";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
@@ -22,13 +23,12 @@ import {
   ItwTs
 } from "../features/itwallet/analytics";
 import {
-  itwCredentialsByTypeSelector,
-  itwCredentialsSelector
+  itwCredentialsSelector,
+  itwCredentialsEidSelector
 } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
 import { fontPreferenceSelector } from "../store/reducers/persistedPreferences.ts";
-import { sendExceptionToSentry } from "../utils/sentryUtils.ts";
 import {
   booleanOrUndefinedToPNServiceStatus,
   PNServiceStatus
@@ -132,7 +132,7 @@ export const updateMixpanelProfileProperties = async (
 
     getPeople()?.set(profilePropertiesObject);
   } catch (e) {
-    sendExceptionToSentry(e, "updateMixpanelProfileProperties");
+    Sentry.captureException(e);
   }
 };
 
@@ -160,20 +160,23 @@ const walletStatusHandler = (state: GlobalState): ItwStatus => {
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {
-  const credentialsState = itwCredentialsSelector(state);
-  return O.isSome(credentialsState.eid) ? "valid" : "not_available";
+  const eid = itwCredentialsEidSelector(state);
+  return O.isSome(eid) ? "valid" : "not_available";
 };
+
 const pgStatusHandler = (state: GlobalState): ItwPg => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
+  const credentialsByType = itwCredentialsSelector(state);
   return credentialsByType.MDL ? "valid" : "not_available";
 };
+
 const tsStatusHandler = (state: GlobalState): ItwTs => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
+  const credentialsByType = itwCredentialsSelector(state);
   return credentialsByType.EuropeanHealthInsuranceCard
     ? "valid"
     : "not_available";
 };
+
 const cedStatusHandler = (state: GlobalState): ItwCed => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
+  const credentialsByType = itwCredentialsSelector(state);
   return credentialsByType.EuropeanDisabilityCard ? "valid" : "not_available";
 };

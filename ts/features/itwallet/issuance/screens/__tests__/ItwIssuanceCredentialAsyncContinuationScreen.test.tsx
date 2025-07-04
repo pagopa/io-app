@@ -50,7 +50,7 @@ describe("ItwIssuanceCredentialAsyncContinuationScreen", () => {
       .mockReturnValue(true);
 
     jest
-      .spyOn(itwCredentialSelectors, "itwCredentialByTypeSelector")
+      .spyOn(itwCredentialSelectors, "itwCredentialSelector")
       .mockImplementation(() =>
         createSelector(
           () => ({}),
