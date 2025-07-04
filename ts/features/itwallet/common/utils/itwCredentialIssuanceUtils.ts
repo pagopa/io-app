@@ -10,12 +10,12 @@ import {
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
-import { RequestObject, StoredCredential } from "./itwTypesUtils";
+import {
+  LegacyIssuerConfiguration,
+  RequestObject,
+  StoredCredential
+} from "./itwTypesUtils";
 import { Env } from "./environment";
-
-type IssuerConfiguration = Awaited<
-  ReturnType<Credential.Issuance.EvaluateIssuerTrust>
->["issuerConf"];
 
 export type RequestCredentialParams = {
   env: Env;
@@ -81,7 +81,7 @@ export type ObtainCredentialParams = {
   clientId: string;
   codeVerifier: string;
   credentialDefinition: AuthorizationDetail;
-  issuerConf: IssuerConfiguration;
+  issuerConf: LegacyIssuerConfiguration;
 };
 
 /**
