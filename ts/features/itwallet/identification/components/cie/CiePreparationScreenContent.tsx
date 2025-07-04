@@ -1,112 +1,75 @@
 import { Dimensions, Image, StyleSheet, View } from "react-native";
 import { ContentWrapper, IOButton } from "@pagopa/io-app-design-system";
+import { useMemo } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
-import { EidIssuanceEvents } from "../../../machine/eid/events";
-import { useCieInfoAndPinBottomSheets } from "../../hooks/useCieInfoAndPinBottomSheets";
+import { useCieInfoBottomSheet } from "../../hooks/useCieInfoBottomSheet";
 
-type InfoType = "cie" | "ciePin";
+type InfoCategory = "card" | "pin";
 
-type Props = { infoType: InfoType };
-
-type GetContentParams = {
-  infoType: InfoType;
-  presentCieBottomSheet: () => void;
-  presentPinBottomSheet: () => void;
-  sendEvent: (event: EidIssuanceEvents) => void;
-};
+type Props = { category: InfoCategory };
 
 // Get the screen height to calculate a responsive image container height
 const screenHeight = Dimensions.get("window").height;
 
-const getContent = ({
-  infoType,
-  presentCieBottomSheet,
-  presentPinBottomSheet,
-  sendEvent
-}: GetContentParams) => {
-  const isCie = infoType === "cie";
-
-  return {
-    title: I18n.t(
-      `features.itWallet.identification.l3.mode.preparationScreen.${infoType}.title`
-    ),
-    description: I18n.t(
-      `features.itWallet.identification.l3.mode.preparationScreen.${infoType}.content`
-    ),
-    buttonLink: {
-      label: I18n.t(
-        `features.itWallet.identification.l3.mode.preparationScreen.${infoType}.buttonLink`
-      ),
-      onPress: () => (isCie ? presentCieBottomSheet() : presentPinBottomSheet())
-    },
-    primaryAction: {
-      label: I18n.t(
-        `features.itWallet.identification.l3.mode.preparationScreen.${infoType}.primaryAction`
-      ),
-      onPress: () =>
-        sendEvent({
-          type: "next"
-        })
-    },
-    secondaryAction: {
-      label: I18n.t(
-        `features.itWallet.identification.l3.mode.preparationScreen.${infoType}.secondaryAction`
-      ),
-      onPress: () =>
-        sendEvent({
-          type: "go-to-cie-warning",
-          warning: isCie ? "noCie" : "noPin"
-        })
-    },
-    imageSource: isCie
-      ? require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif")
-      : require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif")
-  };
-};
-
-export const CiePreparationScreenContent = ({ infoType }: Props) => {
+export const CiePreparationScreenContent = ({ category }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
-  const { cieInfoBottomSheet, pinBottomSheet } = useCieInfoAndPinBottomSheets();
+  const infoBottomSheet = useCieInfoBottomSheet(category);
 
-  const content = getContent({
-    infoType,
-    presentCieBottomSheet: cieInfoBottomSheet.present,
-    presentPinBottomSheet: pinBottomSheet.present,
-    sendEvent: machineRef.send
-  });
   // Define image container height as 50% of screen height
   const imageHeightContainer = screenHeight * 0.5;
 
+  const imageSrc = useMemo(() => {
+    switch (category) {
+      case "card":
+        return require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif");
+      case "pin":
+        return require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif");
+      default:
+        return undefined;
+    }
+  }, [category]);
+
   return (
     <IOScrollViewWithLargeHeader
-      title={{ label: content.title }}
-      description={content.description}
+      title={{
+        label: I18n.t(
+          `features.itWallet.identification.cie.prepare.${category}.title`
+        )
+      }}
+      description={I18n.t(
+        `features.itWallet.identification.cie.prepare.${category}.content`
+      )}
       headerActionsProp={{ showHelp: true }}
       actions={{
-        type: "TwoButtons",
-        primary: content.primaryAction,
-        secondary: content.secondaryAction
+        type: "SingleButton",
+        primary: {
+          label: I18n.t(
+            `features.itWallet.identification.cie.prepare.${category}.cta`
+          ),
+          onPress: () => machineRef.send({ type: "next" })
+        }
       }}
     >
       <ContentWrapper>
         <IOButton
           variant="link"
-          label={content.buttonLink.label}
-          onPress={content.buttonLink.onPress}
+          label={I18n.t(
+            `features.itWallet.identification.cie.prepare.${category}.buttonLink`
+          )}
+          onPress={() => infoBottomSheet.present()}
         />
         <View style={[styles.imageContainer, { height: imageHeightContainer }]}>
           <Image
             accessibilityIgnoresInvertColors
-            source={content.imageSource}
+            source={imageSrc}
             resizeMode="contain"
             style={styles.image}
           />
         </View>
-        {cieInfoBottomSheet.bottomSheet}
-        {pinBottomSheet.bottomSheet}
+        {infoBottomSheet.bottomSheet}
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );

@@ -565,102 +565,34 @@ export const itwEidIssuanceMachine = setup({
         CiePin: {
           description:
             "This state handles the entire CIE + pin identification flow",
-          initial: "EvaluateInitialState",
+          initial: "PreparationPin",
           states: {
-            EvaluateInitialState: {
-              always: [
-                {
-                  guard: "isL3FeaturesEnabled",
-                  target: "PreparationCie"
-                },
-                { target: "InsertingCardPin" }
-              ]
-            },
-            PreparationCie: {
-              description:
-                "This state handles the CIE preparation screen, where the user is informed about the CIE card",
-              entry: "navigateToCiePreparationScreen",
-              on: {
-                next: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
-                },
-                "go-to-cie-warning": {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.CieWarning.PreparationCie"
-                },
-                back: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.EvaluateIdentificationLevel"
-                },
-                close: {
-                  actions: ["closeIssuance"]
-                }
-              }
-            },
             PreparationPin: {
               description:
                 "This state handles the CIE PIN preparation screen, where the user is informed about the CIE PIN",
               entry: "navigateToCiePinPreparationScreen",
               on: {
-                next: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.CiePin.InsertingCardPin"
-                },
+                next: [
+                  {
+                    guard: "isNFCEnabled",
+                    target:
+                      "#itwEidIssuanceMachine.UserIdentification.CiePin.InsertingCardPin"
+                  },
+                  {
+                    target:
+                      "#itwEidIssuanceMachine.UserIdentification.CiePin.RequestingNfcActivation"
+                  }
+                ],
                 "go-to-cie-warning": {
                   target:
                     "#itwEidIssuanceMachine.UserIdentification.CieWarning.PreparationPin"
                 },
                 back: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie"
+                  target: "#itwEidIssuanceMachine.UserIdentification"
                 },
                 close: {
                   actions: ["closeIssuance"]
                 }
-              }
-            },
-            InsertingCardPin: {
-              entry: [
-                assign(() => ({ authenticationContext: undefined })), // Reset the authentication context, otherwise retries will use stale data
-                "navigateToCiePinScreen"
-              ],
-              on: {
-                "cie-pin-entered": [
-                  {
-                    guard: "isNFCEnabled",
-                    target: "StartingCieAuthFlow",
-                    actions: assign(({ event }) => ({
-                      identification: {
-                        mode: "ciePin",
-                        level: "L3",
-                        pin: event.pin
-                      }
-                    }))
-                  },
-                  {
-                    target:
-                      "#itwEidIssuanceMachine.UserIdentification.CiePin.RequestingNfcActivation",
-                    actions: assign(({ event }) => ({
-                      identification: {
-                        level: "L3",
-                        mode: "ciePin",
-                        pin: event.pin
-                      }
-                    }))
-                  }
-                ],
-                back: [
-                  {
-                    guard: "isL3FeaturesEnabled",
-                    target:
-                      "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
-                  },
-                  {
-                    target:
-                      "#itwEidIssuanceMachine.UserIdentification.L2Identification"
-                  }
-                ]
               }
             },
             RequestingNfcActivation: {
@@ -672,11 +604,62 @@ export const itwEidIssuanceMachine = setup({
                       isNFCEnabled: true
                     })
                   })),
-                  target: "StartingCieAuthFlow"
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CiePin.InsertingCardPin"
+                },
+                back: {
+                  target: "#itwEidIssuanceMachine.UserIdentification"
+                }
+              }
+            },
+            InsertingCardPin: {
+              entry: [
+                assign(() => ({ authenticationContext: undefined })), // Reset the authentication context, otherwise retries will use stale data
+                "navigateToCiePinScreen"
+              ],
+              on: {
+                "cie-pin-entered": {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie",
+                  actions: assign(({ event }) => ({
+                    identification: {
+                      mode: "ciePin",
+                      level: "L3",
+                      pin: event.pin
+                    }
+                  }))
+                },
+                back: [
+                  {
+                    guard: "isL3FeaturesEnabled",
+                    target:
+                      "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
+                  },
+                  {
+                    target: "#itwEidIssuanceMachine.UserIdentification"
+                  }
+                ]
+              }
+            },
+            PreparationCie: {
+              description:
+                "This state handles the CIE preparation screen, where the user is informed about the CIE card",
+              entry: "navigateToCiePreparationScreen",
+              on: {
+                next: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CiePin.StartingCieAuthFlow"
+                },
+                "go-to-cie-warning": {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CieWarning.PreparationCie"
                 },
                 back: {
                   target:
-                    "#itwEidIssuanceMachine.UserIdentification.EvaluateIdentificationLevel"
+                    "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
+                },
+                close: {
+                  actions: ["closeIssuance"]
                 }
               }
             },
@@ -720,7 +703,8 @@ export const itwEidIssuanceMachine = setup({
                   target: "#itwEidIssuanceMachine.UserIdentification"
                 },
                 back: {
-                  target: "InsertingCardPin"
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie"
                 }
               }
             },

@@ -4474,28 +4474,23 @@
           }
         },
         "cie": {
-          "preparePin": {
-            "screen": {
+          "prepare": {
+            "pin": {
               "title": "Prepara il PIN della tua carta di identità elettronica (CIE)",
               "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell’identità.",
               "buttonLink": "Cos’è il PIN della CIE?",
               "cta": "Inserisci il PIN della CIE"
             },
-            "bottomSheet": {
-              "title": "PIN della CIE",
-              "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
-              "primaryAction": "Ho capito",
-              "secondaryAction": "Non trovo il PIN della CIE"
+            "card": {
+              "title": "Prepara la tua carta di identità elettronica (CIE)",
+              "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
+              "cta": "Inizia lettura CIE",
+              "buttonLink": "Cos’è la CIE?"
             }
           },
           "inputPin": {
             "title": "Inserisci il PIN della CIE",
             "buttonLink": "Dove trovo il PIN della CIE?"
-          },
-          "prepareCard": {
-            "title": "Prepara la tua carta di identità elettronica (CIE)",
-            "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
-            "cta": "Inizia lettura CIE"
           },
           "readingCard": {
             "android": {
@@ -4544,7 +4539,7 @@
             }
           },
           "bottomSheet": {
-            "cie": {
+            "card": {
               "title": "Carta di identità elettronica (CIE)",
               "content": "La CIE è la Carta d'Identità in formato elettronico introdotto in Italia per sostituire la tradizionale carta d'identità cartacea.\n\nTi è utile averla per:\n * Accedere ai servizi online della Pubblica Amministrazione (es. INPS, Agenzia delle Entrate)\n * Identificarti ufficialmente in Italia e all’estero\n * Viaggiare nei Paesi dell’UE e in altri che la accettano al posto del passaporto.",
               "primaryAction": "Ho capito",
