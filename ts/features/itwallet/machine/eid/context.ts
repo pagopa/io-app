@@ -1,10 +1,8 @@
-import {
-  type AuthorizationDetail,
-  type Credential
-} from "@pagopa/io-react-native-wallet";
 import type {
   WalletInstanceAttestations,
-  StoredCredential
+  StoredCredential,
+  IssuerConfiguration,
+  CredentialAuthDetail
 } from "../../common/utils/itwTypesUtils";
 import { IssuanceFailure } from "./failure";
 
@@ -23,8 +21,8 @@ export type AuthenticationContext = {
   authUrl: string;
   clientId: string;
   codeVerifier: string;
-  issuerConf: Parameters<Credential.Issuance.ObtainCredential>[0];
-  credentialDefinition: AuthorizationDetail;
+  issuerConf: IssuerConfiguration;
+  credentialDefinition: CredentialAuthDetail;
   callbackUrl: string;
   redirectUri: string;
 };
@@ -48,6 +46,10 @@ export type Context = {
   isL3FeaturesEnabled: boolean | undefined;
   // Flag to check if the user chose to fallback to L2 issuance
   isL2Fallback: boolean;
+  // During the transition phase to 1.0 we need to route only whitelisted
+  // users to the Issuer API 1.0, regardless of the auth level (L2 or L3)
+  // TODO: [SIW-2530] remove after migrating to API 1.0
+  isWhitelisted: boolean;
 };
 
 export const InitialContext: Context = {
@@ -60,5 +62,6 @@ export const InitialContext: Context = {
   failure: undefined,
   isReissuing: false,
   isL3FeaturesEnabled: undefined,
-  isL2Fallback: false
+  isL2Fallback: false,
+  isWhitelisted: false
 };

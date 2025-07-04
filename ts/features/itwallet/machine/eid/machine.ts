@@ -249,7 +249,7 @@ export const itwEidIssuanceMachine = setup({
         src: "getWalletAttestation",
         input: ({ context }) => ({
           integrityKeyTag: context.integrityKeyTag,
-          isL3IssuanceEnabled: false // TODO this is a temporary fix, we should use context.isL3FeaturesEnabled when the new issuance flow is completed
+          isNewApiEnabled: context.isWhitelisted
         }),
         onDone: [
           {
@@ -447,6 +447,7 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
+                  isNewApiEnabled: context.isWhitelisted,
                   isL3IssuanceEnabled: context.isL3FeaturesEnabled,
                   identification: context.identification
                 }),
@@ -524,7 +525,8 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  identification: context.identification
+                  identification: context.identification,
+                  isNewApiEnabled: context.isWhitelisted
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -691,6 +693,7 @@ export const itwEidIssuanceMachine = setup({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
                   identification: context.identification,
+                  isNewApiEnabled: context.isWhitelisted,
                   isL3IssuanceEnabled: context.isL3FeaturesEnabled
                 }),
                 onDone: {
@@ -751,7 +754,9 @@ export const itwEidIssuanceMachine = setup({
             input: ({ context }) => ({
               identification: context.identification,
               authenticationContext: context.authenticationContext,
-              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+              isNewApiEnabled: context.isWhitelisted,
+              isL3IssuanceEnabled: context.isL3FeaturesEnabled
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),

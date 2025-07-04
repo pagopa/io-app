@@ -6,7 +6,8 @@ describe("isStatusAttestationMissingOrExpired", () => {
   const baseMockCredential: StoredCredential = {
     credential: "",
     credentialType: CredentialType.DRIVING_LICENSE,
-    format: "vc+sd-jwt",
+    credentialId: "dc_sd_jwt_mDL",
+    format: "dc+sd-jwt",
     keyTag: "9020c6f8-01be-4236-9b6f-834af9dcbc63",
     issuerConf: {} as StoredCredential["issuerConf"],
     parsedCredential: {},

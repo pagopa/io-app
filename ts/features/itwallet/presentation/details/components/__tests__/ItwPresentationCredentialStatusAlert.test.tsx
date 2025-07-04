@@ -64,10 +64,11 @@ function renderComponent() {
   const mockedMdl: StoredCredential = {
     credential: "",
     credentialType: "MDL",
+    credentialId: "dc_sd_jwt_mDL",
     parsedCredential: {
       expiry_date: { value: "2100-09-04", name: "exp" }
     },
-    format: "vc+sd-jwt",
+    format: "dc+sd-jwt",
     keyTag: "1",
     issuerConf: {} as StoredCredential["issuerConf"],
     jwt: {

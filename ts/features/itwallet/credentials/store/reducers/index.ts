@@ -3,7 +3,6 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { isDevEnv } from "../../../../../utils/environment";
 import itwCreateSecureStorage from "../../../common/store/storages/itwSecureStorage";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
@@ -12,8 +11,10 @@ import {
   itwCredentialsStateMigrations
 } from "./migrations";
 
+type CredentialsRecord = { [credentialKey: string]: StoredCredential };
+
 export type ItwCredentialsState = {
-  credentials: { [credentialKey: string]: StoredCredential };
+  credentials: CredentialsRecord;
 };
 
 export const itwCredentialsInitialState: ItwCredentialsState = {
@@ -27,17 +28,9 @@ const reducer = (
   switch (action.type) {
     case getType(itwCredentialsStore): {
       const addedCredentials = action.payload.reduce(
-        (acc, c) => ({ ...acc, [c.credentialType]: c }),
-        {} as { [K in CredentialType]?: StoredCredential }
+        (acc, c) => ({ ...acc, [c.credentialId]: c }),
+        {} as CredentialsRecord
       );
-
-      // Can't add other credentials when there is no eID
-      if (
-        addedCredentials[CredentialType.PID] === undefined &&
-        state.credentials[CredentialType.PID] === undefined
-      ) {
-        return state;
-      }
 
       return {
         ...state,
@@ -49,13 +42,14 @@ const reducer = (
     }
 
     case getType(itwCredentialsRemove): {
-      // Do not remove the eID singularly
-      if (action.payload.credentialType === CredentialType.PID) {
-        return state;
-      }
+      // Remove all credentials with the same type
+      const otherCredentials = Object.values(state.credentials)
+        .filter(c => c.credentialType !== action.payload.credentialType)
+        .reduce(
+          (acc, c) => ({ ...acc, [c.credentialId]: c }),
+          {} as CredentialsRecord
+        );
 
-      const { [action.payload.credentialType]: _, ...otherCredentials } =
-        state.credentials;
       return {
         ...state,
         credentials: otherCredentials

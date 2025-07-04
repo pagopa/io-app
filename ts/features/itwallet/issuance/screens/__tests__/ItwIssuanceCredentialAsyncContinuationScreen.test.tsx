@@ -16,13 +16,14 @@ import {
 
 const mockStoredCredential: StoredCredential = {
   credentialType: "MDL",
+  credentialId: "dc_sd_jwt_mDL",
   jwt: { expiration: "2100-01-01T00:00:00Z" },
   parsedCredential: {
     expiry_date: { value: "2100-01-01", name: "expiry_date" }
   },
   keyTag: "1",
   credential: "credential",
-  format: "jwt",
+  format: "dc+sd-jwt",
   issuerConf: {} as StoredCredential["issuerConf"]
 };
 

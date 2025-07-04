@@ -13,17 +13,61 @@ import {
   getCredentialStatusObject
 } from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { ItwJwtCredentialStatus } from "../../../common/utils/itwTypesUtils";
+import {
+  CredentialFormat,
+  ItwJwtCredentialStatus,
+  StoredCredential
+} from "../../../common/utils/itwTypesUtils";
+
+type CredentialsByType = {
+  [K: string]: Record<CredentialFormat, StoredCredential>;
+};
+
+// TODO: [SIW-2530] remove after migrating to API 1.0
+const withLegacyFallback = (
+  credential: CredentialsByType[string] | undefined,
+  format: CredentialFormat
+) => {
+  if (format === "dc+sd-jwt") {
+    return credential?.[format] ?? credential?.["vc+sd-jwt"];
+  }
+  return credential?.[format];
+};
+
+/**
+ * Aggregate credentials by type to get the same credential with all its formats
+ *
+ * @param state - The global state.
+ * @returns The credentials object grouped by type
+ */
+export const itwCredentialsByTypeSelector = createSelector(
+  (state: GlobalState) => state.features.itWallet.credentials.credentials,
+  credentials =>
+    Object.values(credentials).reduce(
+      (acc, c) => ({
+        ...acc,
+        [c.credentialType]: { ...acc[c.credentialType], [c.format]: c }
+      }),
+      {} as CredentialsByType
+    )
+);
 
 /**
  * Returns the credentials object from the itw credentials state, excluding the eID credential.
+ * Only SD-JWT credentials are returned.
  *
  * @param state - The global state.
  * @returns The credentials object.
  */
 export const itwCredentialsSelector = createSelector(
-  (state: GlobalState) => state.features.itWallet.credentials.credentials,
-  ({ [CredentialType.PID]: pid, ...otherCredentials }) => otherCredentials
+  itwCredentialsByTypeSelector,
+  ({ [CredentialType.PID]: pid, ...otherCredentials }) =>
+    Object.values(otherCredentials)
+      .map(c => withLegacyFallback(c, "dc+sd-jwt"))
+      .reduce(
+        (acc, c) => (c ? { ...acc, [c.credentialType]: c } : acc),
+        {} as Record<string, StoredCredential>
+      )
 );
 
 /**
@@ -33,19 +77,24 @@ export const itwCredentialsSelector = createSelector(
  * @returns The eID credential Option
  */
 export const itwCredentialsEidSelector = createSelector(
-  (state: GlobalState) => state.features.itWallet.credentials.credentials,
-  ({ [CredentialType.PID]: pid }) => O.fromNullable(pid)
+  itwCredentialsByTypeSelector,
+  ({ [CredentialType.PID]: pid }) =>
+    O.fromNullable(withLegacyFallback(pid, "dc+sd-jwt"))
 );
 
 /**
  * Given a credential key, returns an Option containing the credential of the given type from the credentials object.
  *
  * @param type - The credential type.
+ * @param format - The credential format (default to SD-JWT).
  * @returns The credential Option.
  */
-export const itwCredentialSelector = (key: string) =>
-  createSelector(itwCredentialsSelector, credentials =>
-    O.fromNullable(credentials[key])
+export const itwCredentialSelector = (
+  key: string,
+  format: CredentialFormat = "dc+sd-jwt"
+) =>
+  createSelector(itwCredentialsByTypeSelector, credentials =>
+    O.fromNullable(withLegacyFallback(credentials[key], format))
   );
 
 /**
