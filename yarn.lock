@@ -3863,9 +3863,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system#banner-ref-refactoring":
-  version: 5.7.2
-  resolution: "@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system.git#commit=cad505b544c3b1da758352fe87f4098760d3699f"
+"@pagopa/io-app-design-system@npm:5.7.3":
+  version: 5.7.3
+  resolution: "@pagopa/io-app-design-system@npm:5.7.3"
   dependencies:
     auto-changelog: ^2.4.0
     lodash: ^4.17.21
@@ -3886,7 +3886,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: 0ec3e0d6e117864cccd2c7eccf112a106b61e18ff590c67e8b6daa64de5edc5ec0db18222216349f4d117f3b78ef45e8c54b615934a2ab16c3736fdbda1de359
+  checksum: 4ffd42555e11246c6aa27804964bf6e54871496185bbc70c8336cca1f4439514b248fa071ff260717c7556511a0a57ad39de0c9e2f16bae398a86dabb634a920
   languageName: node
   linkType: hard
 
@@ -12943,7 +12943,7 @@ __metadata:
     "@babel/runtime": ^7.25.0
     "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": "https://github.com/pagopa/io-app-design-system#banner-ref-refactoring"
+    "@pagopa/io-app-design-system": 5.7.3
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cie": ^1.0.1
     "@pagopa/io-react-native-cieid": ^0.3.5
