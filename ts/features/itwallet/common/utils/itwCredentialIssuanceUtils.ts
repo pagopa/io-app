@@ -174,6 +174,7 @@ export const obtainCredential = async ({
     credential,
     parsedCredential,
     credentialType,
+    credentialId: credentialType,
     format,
     issuerConf,
     keyTag: credentialKeyTag,

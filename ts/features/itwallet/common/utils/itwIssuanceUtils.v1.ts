@@ -189,6 +189,7 @@ const getPid = async ({
     issuerConf,
     keyTag: credentialKeyTag,
     credentialType: CREDENTIAL_TYPE,
+    credentialId: CREDENTIAL_TYPE,
     format,
     credential,
     jwt: {
