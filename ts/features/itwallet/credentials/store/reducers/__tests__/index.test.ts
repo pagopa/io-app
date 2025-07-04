@@ -162,7 +162,7 @@ describe("ITW credentials reducer", () => {
   });
 
   it("should update existing credentials overwriting the previous instances", () => {
-    const credentialUpdate: StoredCredential = {
+    const updatedCredential: StoredCredential = {
       ...mockedCredential,
       storedStatusAttestation: {
         credentialStatus: "valid" as const,
@@ -171,13 +171,11 @@ describe("ITW credentials reducer", () => {
       }
     };
 
-    const updatedCredential = { ...mockedCredential, ...credentialUpdate };
-
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
       itwCredentialsStore([mockedEid]),
       itwCredentialsStore([mockedCredential, mockedCredential2]),
-      itwCredentialsStore([credentialUpdate])
+      itwCredentialsStore([updatedCredential])
     ];
     const targetSate = reproduceSequence(
       {} as GlobalState,
