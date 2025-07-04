@@ -30,6 +30,7 @@ type StartAuthFlowParams = {
   env: Env;
   walletAttestation: string;
   identification: IdentificationContext;
+  isL3IssuanceEnabled: boolean;
 };
 
 /**
@@ -45,7 +46,8 @@ type StartAuthFlowParams = {
 const startAuthFlow = async ({
   env,
   walletAttestation,
-  identification
+  identification,
+  isL3IssuanceEnabled
 }: StartAuthFlowParams) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
     issuerUrl: new URL("1-0", env.WALLET_PID_PROVIDER_BASE_URL).toString(), // TODO: [SIW-2530] Move "1-0" to WALLET_PID_PROVIDER_BASE_URL after migrating to the new API
@@ -53,7 +55,7 @@ const startAuthFlow = async ({
   });
 
   // When issuing an L3 PID, we should not provide an IDP hint
-  const idpHint = getIdpHint(identification, env, true);
+  const idpHint = getIdpHint(identification, env, isL3IssuanceEnabled);
 
   const { issuerUrl, credentialId } = startFlow();
 
@@ -199,8 +201,7 @@ const getPid = async ({
     issuerConf,
     keyTag: credentialKeyTag,
     credentialType: CREDENTIAL_TYPE,
-    credentialConfigurationId:
-      credentialIdentifierDefinition.credential_configuration_id,
+    credentialId: credentialIdentifierDefinition.credential_configuration_id,
     format,
     credential,
     jwt: {

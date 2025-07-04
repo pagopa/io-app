@@ -248,7 +248,7 @@ export const itwEidIssuanceMachine = setup({
         src: "getWalletAttestation",
         input: ({ context }) => ({
           integrityKeyTag: context.integrityKeyTag,
-          isL3IssuanceEnabled: context.isL3FeaturesEnabled
+          isNewApiEnabled: context.isWhitelisted
         }),
         onDone: [
           {
@@ -439,6 +439,7 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
+                  isNewApiEnabled: context.isWhitelisted,
                   isL3IssuanceEnabled: context.isL3FeaturesEnabled,
                   identification: context.identification
                 }),
@@ -516,7 +517,8 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  identification: context.identification
+                  identification: context.identification,
+                  isNewApiEnabled: context.isWhitelisted
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -683,6 +685,7 @@ export const itwEidIssuanceMachine = setup({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
                   identification: context.identification,
+                  isNewApiEnabled: context.isWhitelisted,
                   isL3IssuanceEnabled: context.isL3FeaturesEnabled
                 }),
                 onDone: {
@@ -744,6 +747,7 @@ export const itwEidIssuanceMachine = setup({
               identification: context.identification,
               authenticationContext: context.authenticationContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+              isNewApiEnabled: context.isWhitelisted,
               isL3IssuanceEnabled: context.isL3FeaturesEnabled
             }),
             onDone: {
