@@ -393,10 +393,10 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               ]
                             }
                           >
-                            Document data
+                            Dati del documento
                           </Text>
                           <View
-                            accessibilityLabel="Hide claim values"
+                            accessibilityLabel="Nascondi gli attributi del documento"
                             accessibilityRole="switch"
                             accessibilityState={
                               {
@@ -406,7 +406,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             accessible={true}
                           >
                             <View
-                              accessibilityLabel="Hide claim values"
+                              accessibilityLabel="Nascondi gli attributi del documento"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -522,7 +522,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           </View>
                         </View>
                         <View
-                          accessibilityLabel="Place of Birth Hidden"
+                          accessibilityLabel="Place of Birth Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -660,7 +660,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Institution Number (TEAM) Hidden"
+                          accessibilityLabel="Institution Number (TEAM) Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -798,7 +798,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Date of Birth Hidden"
+                          accessibilityLabel="Date of Birth Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -936,7 +936,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Province Hidden"
+                          accessibilityLabel="Province Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1074,7 +1074,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Nation Hidden"
+                          accessibilityLabel="Nation Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1212,7 +1212,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Sex Hidden"
+                          accessibilityLabel="Sex Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1350,7 +1350,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Expiry Date Hidden"
+                          accessibilityLabel="Expiry Date Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1488,7 +1488,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Document Number (TEAM) Hidden"
+                          accessibilityLabel="Document Number (TEAM) Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1626,7 +1626,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="First Name Hidden"
+                          accessibilityLabel="First Name Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1764,7 +1764,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Fiscal Code Hidden"
+                          accessibilityLabel="Fiscal Code Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1902,7 +1902,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Family Name Hidden"
+                          accessibilityLabel="Family Name Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -2810,10 +2810,10 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               ]
                             }
                           >
-                            Document data
+                            Dati del documento
                           </Text>
                           <View
-                            accessibilityLabel="Hide claim values"
+                            accessibilityLabel="Nascondi gli attributi del documento"
                             accessibilityRole="switch"
                             accessibilityState={
                               {
@@ -2823,7 +2823,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             accessible={true}
                           >
                             <View
-                              accessibilityLabel="Hide claim values"
+                              accessibilityLabel="Nascondi gli attributi del documento"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -3806,7 +3806,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     ]
                                   }
                                 >
-                                  Expired
+                                  Scaduta
                                 </Text>
                               </View>
                             </View>

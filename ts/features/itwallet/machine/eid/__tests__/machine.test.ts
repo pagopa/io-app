@@ -449,7 +449,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: "PreparationCie"
+        CiePin: "PreparationPin"
       }
     });
 
