@@ -16,7 +16,10 @@ import {
   lollipopSetSupportedDevice
 } from "../actions/lollipop";
 import { GlobalState } from "../../../../store/reducers/types";
-import { loginSuccess } from "../../../authentication/common/store/actions";
+import {
+  loginFailure,
+  loginSuccess
+} from "../../../authentication/common/store/actions";
 import { isDevEnv } from "./../../../../utils/environment";
 
 type EphemeralKey = {
@@ -49,13 +52,14 @@ export default function lollipopReducer(
 ): LollipopState {
   switch (action.type) {
     case getType(loginSuccess):
-      // When the user logs in, we generate a new ephemeral key
-      // to be used for the login flow.
+      // When the user logs in successfully, the ephemeral key
+      // he logged in with is saved as the main key and a
+      // new ephemeral key is set, ready to be used for a new login
       return {
         ...state,
         keyTag: O.some(state.ephemeralKey.ephemeralKeyTag),
-        publicKey: O.fromNullable(state.ephemeralKey.ephemeralPublicKey)
-        // ephemeralKey: ephemeralInitialState
+        publicKey: O.fromNullable(state.ephemeralKey.ephemeralPublicKey),
+        ephemeralKey: ephemeralInitialState
       };
     case getType(lollipopKeyTagSave):
       return {
@@ -81,6 +85,10 @@ export default function lollipopReducer(
         }
       };
     case getType(lollipopRemoveEphermeralPublicKey):
+    case getType(loginFailure):
+      // Clear the ephemeral public key from state.
+      // For loginFailure: ensures a clean state if the user attempts to log in again.
+      // For lollipopRemoveEphermeralPublicKey: used to explicitly discard the public key.
       return {
         ...state,
         ephemeralKey: {
