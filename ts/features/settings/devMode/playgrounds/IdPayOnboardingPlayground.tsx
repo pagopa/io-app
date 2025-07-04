@@ -110,6 +110,10 @@ const testServices: ReadonlyArray<TestService> = [
     label: "Iniziativa GUIDONIA"
   },
   {
+    serviceId: "TESTSRV17",
+    label: "Bonus Elettrodomestici"
+  },
+  {
     serviceId: "TESTSRV07",
     label: "KO - Generico",
     willFail: true

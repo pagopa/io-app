@@ -101,10 +101,93 @@ describe("ITW credentials reducer migrations", () => {
       ]
     });
 
-    const from0To1Migration = itwCredentialsStateMigrations[1];
-    expect(from0To1Migration).toBeDefined();
-    const nextState = from0To1Migration(basePersistedGlobalStateAt1);
+    const from1To2Migration = itwCredentialsStateMigrations[1];
+    expect(from1To2Migration).toBeDefined();
+    const nextState = from1To2Migration(basePersistedGlobalStateAt1);
 
     expect(nextState).toStrictEqual(persistedStateAt2);
+  });
+
+  it("should migrate from 2 to 3", () => {
+    const basePersistedGlobalStateAt2 = {
+      eid: {
+        _tag: "Some",
+        value: {
+          credentialType: "PersonIdentificationData",
+          storedStatusAttestation: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        }
+      },
+      credentials: [
+        {
+          _tag: "Some",
+          value: {
+            credentialType: "EuropeanHealthInsuranceCard",
+            storedStatusAttestation: undefined,
+            jwt: {
+              expiration: "2024-06-12T11:33:20.000Z",
+              issuedAt: "2024-06-11T18:53:20.000Z"
+            }
+          }
+        },
+        {
+          _tag: "Some",
+          value: {
+            credentialType: "MDL",
+            storedStatusAttestation: undefined,
+            jwt: {
+              expiration: "2024-06-12T11:33:20.000Z",
+              issuedAt: "2024-06-11T18:53:20.000Z"
+            }
+          }
+        },
+        { _tag: "None" }
+      ],
+      _persist: {
+        version: 0,
+        rehydrated: false
+      }
+    };
+    const persistedStateAt3 = {
+      credentials: {
+        PersonIdentificationData: {
+          credentialType: "PersonIdentificationData",
+          storedStatusAttestation: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        },
+        MDL: {
+          credentialType: "MDL",
+          storedStatusAttestation: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        },
+        EuropeanHealthInsuranceCard: {
+          credentialType: "EuropeanHealthInsuranceCard",
+          storedStatusAttestation: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        }
+      },
+      _persist: {
+        version: 0,
+        rehydrated: false
+      }
+    };
+
+    const from2To3Migration = itwCredentialsStateMigrations[2];
+    expect(from2To3Migration).toBeDefined();
+    const nextState = from2To3Migration(basePersistedGlobalStateAt2);
+
+    expect(nextState).toStrictEqual(persistedStateAt3);
   });
 });

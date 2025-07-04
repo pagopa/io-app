@@ -29,6 +29,11 @@ export const getProximityDetails = (
         (acc, field) => {
           const claim = credential.parsedCredential[field];
 
+          // Ignore required fields that are missing from the parsed credential
+          if (!claim) {
+            return acc;
+          }
+
           return {
             ...acc,
             [field]: claim

@@ -9,6 +9,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
 import { idPayUnsubscribeAction } from "../store/actions";
+import { walletRemoveCards } from "../../../wallet/store/actions/cards";
 
 export function* handleUnsubscribe(
   unsubscribe: IDPayClient["unsubscribe"],
@@ -29,7 +30,7 @@ export function* handleUnsubscribe(
       action
     )) as unknown as SagaCallReturnType<typeof unsubscribe>;
 
-    yield pipe(
+    yield* pipe(
       getTimelineResult,
       E.fold(
         error =>
@@ -40,7 +41,10 @@ export function* handleUnsubscribe(
           ),
         response => {
           if (response.status === 204) {
-            return put(idPayUnsubscribeAction.success());
+            return [
+              put(walletRemoveCards([`idpay_${action.payload.initiativeId}`])),
+              put(idPayUnsubscribeAction.success())
+            ];
           } else {
             return put(
               idPayUnsubscribeAction.failure({

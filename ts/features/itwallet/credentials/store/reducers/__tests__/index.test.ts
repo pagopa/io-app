@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
@@ -63,10 +62,9 @@ describe("ITW credentials reducer", () => {
       curriedAppReducer(itwCredentialsStore([mockedEid]))
     );
 
-    expect(targetSate.features.itWallet.credentials.eid).toEqual(
-      O.some(mockedEid)
-    );
-    expect(targetSate.features.itWallet.credentials.credentials).toEqual([]);
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual({
+      [CredentialType.PID]: mockedEid
+    });
   });
 
   it("should add a credential when the eID is present", () => {
@@ -77,12 +75,10 @@ describe("ITW credentials reducer", () => {
       curriedAppReducer(itwCredentialsStore([mockedCredential]))
     );
 
-    expect(targetSate.features.itWallet.credentials.eid).toEqual(
-      O.some(mockedEid)
-    );
-    expect(targetSate.features.itWallet.credentials.credentials).toEqual([
-      O.some(mockedCredential)
-    ]);
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual({
+      [CredentialType.PID]: mockedEid,
+      [CredentialType.DRIVING_LICENSE]: mockedCredential
+    });
   });
 
   it("should add multiple credentials with a single action when the eID is present", () => {
@@ -95,13 +91,11 @@ describe("ITW credentials reducer", () => {
       )
     );
 
-    expect(targetSate.features.itWallet.credentials.eid).toEqual(
-      O.some(mockedEid)
-    );
-    expect(targetSate.features.itWallet.credentials.credentials).toEqual([
-      O.some(mockedCredential),
-      O.some(mockedCredential2)
-    ]);
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual({
+      [CredentialType.PID]: mockedEid,
+      [CredentialType.DRIVING_LICENSE]: mockedCredential,
+      [CredentialType.EUROPEAN_DISABILITY_CARD]: mockedCredential2
+    });
   });
 
   it("should add the eID and a credential with a single action", () => {
@@ -111,12 +105,10 @@ describe("ITW credentials reducer", () => {
       curriedAppReducer(itwCredentialsStore([mockedCredential, mockedEid]))
     );
 
-    expect(targetSate.features.itWallet.credentials.eid).toEqual(
-      O.some(mockedEid)
-    );
-    expect(targetSate.features.itWallet.credentials.credentials).toEqual([
-      O.some(mockedCredential)
-    ]);
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual({
+      [CredentialType.PID]: mockedEid,
+      [CredentialType.DRIVING_LICENSE]: mockedCredential
+    });
   });
 
   it("should NOT add a credential when the eID is missing", () => {
@@ -126,8 +118,7 @@ describe("ITW credentials reducer", () => {
       curriedAppReducer(itwCredentialsStore([mockedCredential]))
     );
 
-    expect(targetSate.features.itWallet.credentials.eid).toEqual(O.none);
-    expect(targetSate.features.itWallet.credentials.credentials).toEqual([]);
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual({});
   });
 
   it("should NOT remove the eID", () => {
@@ -138,9 +129,9 @@ describe("ITW credentials reducer", () => {
       curriedAppReducer(itwCredentialsRemove(mockedEid))
     );
 
-    expect(targetSate.features.itWallet.credentials.eid).toEqual(
-      O.some(mockedEid)
-    );
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual({
+      [CredentialType.PID]: mockedEid
+    });
   });
 
   it("should remove a credential different than the eID", () => {
@@ -152,10 +143,9 @@ describe("ITW credentials reducer", () => {
       curriedAppReducer(itwCredentialsRemove(mockedCredential))
     );
 
-    expect(targetSate.features.itWallet.credentials.eid).toEqual(
-      O.some(mockedEid)
-    );
-    expect(targetSate.features.itWallet.credentials.credentials).toEqual([]);
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual({
+      [CredentialType.PID]: mockedEid
+    });
   });
 
   it("should reset the state", () => {
@@ -167,10 +157,7 @@ describe("ITW credentials reducer", () => {
       curriedAppReducer(itwLifecycleStoresReset())
     );
 
-    expect(targetSate.features.itWallet.credentials).toEqual({
-      eid: O.none,
-      credentials: []
-    });
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual({});
   });
 
   it("should update existing credentials overwriting the previous instances", () => {
@@ -195,12 +182,10 @@ describe("ITW credentials reducer", () => {
       curriedAppReducer(itwCredentialsStore([credentialUpdate]))
     );
 
-    expect(targetSate.features.itWallet.credentials.eid).toEqual(
-      O.some(mockedEid)
-    );
-    expect(targetSate.features.itWallet.credentials.credentials).toEqual([
-      O.some(mockedCredential),
-      O.some(updatedCredential)
-    ]);
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual({
+      [CredentialType.PID]: mockedEid,
+      [CredentialType.DRIVING_LICENSE]: mockedCredential,
+      [CredentialType.EUROPEAN_DISABILITY_CARD]: updatedCredential
+    });
   });
 });
