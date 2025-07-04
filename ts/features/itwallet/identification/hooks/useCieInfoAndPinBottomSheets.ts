@@ -1,7 +1,13 @@
+import { useRoute } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { CieWarningType } from "../screens/ItwIdentificationCieWarningScreen";
 import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import {
+  trackItwCieInfoBottomSheet,
+  trackItwPinInfoBottomSheet,
+  trackItwUserWithoutL3Requirements
+} from "../../analytics";
 
 /**
  * Hook that manages the two bottom sheets used in the CIE identification flow:
@@ -10,12 +16,18 @@ import { ItwEidIssuanceMachineContext } from "../../machine/provider";
  */
 export const useCieInfoAndPinBottomSheets = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const { name: routeName } = useRoute();
 
   const navigateToCieWarning = (warning: CieWarningType) => {
     machineRef.send({ type: "go-to-cie-warning", warning });
+    trackItwUserWithoutL3Requirements({
+      screen_name: routeName,
+      reason: warning === "noCie" ? "user_without_cie" : "user_without_pin",
+      position: "bottom_sheet"
+    });
   };
 
-  const cieInfoBottomSheet = useItwIdentificationBottomSheet({
+  const baseCieInfoBottomSheet = useItwIdentificationBottomSheet({
     title: I18n.t(
       "features.itWallet.identification.l3.mode.bottomSheet.cieInfo.title"
     ),
@@ -32,7 +44,7 @@ export const useCieInfoAndPinBottomSheets = () => {
         label: I18n.t(
           "features.itWallet.identification.l3.mode.bottomSheet.cieInfo.primaryAction"
         ),
-        onPress: () => cieInfoBottomSheet.dismiss()
+        onPress: () => baseCieInfoBottomSheet.dismiss()
       },
       {
         label: I18n.t(
@@ -40,13 +52,24 @@ export const useCieInfoAndPinBottomSheets = () => {
         ),
         onPress: () => {
           navigateToCieWarning("noCie");
-          cieInfoBottomSheet.dismiss();
+          baseCieInfoBottomSheet.dismiss();
         }
       }
     ]
   });
 
-  const pinBottomSheet = useItwIdentificationBottomSheet({
+  const cieInfoBottomSheet = {
+    ...baseCieInfoBottomSheet,
+    present: () => {
+      trackItwCieInfoBottomSheet({
+        itw_flow: "L3",
+        screen_name: routeName
+      });
+      baseCieInfoBottomSheet.present();
+    }
+  };
+
+  const basePinBottomSheet = useItwIdentificationBottomSheet({
     title: I18n.t(
       "features.itWallet.identification.l3.mode.bottomSheet.pin.title"
     ),
@@ -63,7 +86,7 @@ export const useCieInfoAndPinBottomSheets = () => {
         label: I18n.t(
           "features.itWallet.identification.l3.mode.bottomSheet.pin.primaryAction"
         ),
-        onPress: () => pinBottomSheet.dismiss()
+        onPress: () => basePinBottomSheet.dismiss()
       },
       {
         label: I18n.t(
@@ -71,11 +94,22 @@ export const useCieInfoAndPinBottomSheets = () => {
         ),
         onPress: () => {
           navigateToCieWarning("noPin");
-          pinBottomSheet.dismiss();
+          basePinBottomSheet.dismiss();
         }
       }
     ]
   });
+
+  const pinBottomSheet = {
+    ...basePinBottomSheet,
+    present: () => {
+      trackItwPinInfoBottomSheet({
+        itw_flow: "L3",
+        screen_name: routeName
+      });
+      basePinBottomSheet.present();
+    }
+  };
 
   return {
     cieInfoBottomSheet,

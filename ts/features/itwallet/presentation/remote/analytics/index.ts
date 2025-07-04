@@ -1,6 +1,6 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
-import { CREDENTIALS_MAP, ItwDismissalContext } from "../../../analytics";
+import { CREDENTIALS_MAP, ItwScreenFlowContext } from "../../../analytics";
 import { ITW_ERRORS_EVENTS } from "../../../analytics/enum";
 import { RemoteFailureType } from "../machine/failure";
 import {
@@ -194,7 +194,7 @@ export const getOrderedCredential = (
  */
 export const getDismissalContextFromFailure = (
   failureType: RemoteFailureType
-): ItwDismissalContext | undefined => {
+): ItwScreenFlowContext | undefined => {
   switch (failureType) {
     case RemoteFailureType.WALLET_INACTIVE:
       return {

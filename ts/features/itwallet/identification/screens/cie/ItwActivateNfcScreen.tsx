@@ -15,16 +15,24 @@ import {
   trackItWalletCieNfcActivation,
   trackItWalletCieNfcGoToSettings
 } from "../../../analytics";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 
 export const ItwActivateNfcScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
 
-  useFocusEffect(trackItWalletCieNfcActivation);
+  useFocusEffect(
+    useCallback(() => {
+      trackItWalletCieNfcActivation(isL3FeaturesEnabled ? "L3" : "L2");
+    }, [isL3FeaturesEnabled])
+  );
 
   const openSettings = useCallback(async () => {
-    trackItWalletCieNfcGoToSettings();
+    trackItWalletCieNfcGoToSettings(isL3FeaturesEnabled ? "L3" : "L2");
     await cieUtils.openNFCSettings();
-  }, []);
+  }, [isL3FeaturesEnabled]);
 
   const onContinue = useCallback(async () => {
     const isNfcEnabled = await cieUtils.isNfcEnabled();

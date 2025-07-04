@@ -30,11 +30,13 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
 import {
+  ItwFlow,
   trackItWalletCiePinEnter,
   trackItWalletCiePinForgotten,
   trackItWalletCiePinInfo
 } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -42,16 +44,20 @@ const getContextualHelp = (): ContextualHelpPropsMarkdown => ({
   title: "authentication.cie.pin.contextualHelpTitle",
   body: "authentication.cie.pin.contextualHelpBody"
 });
-const onOpenForgotPinPage = () => {
-  trackItWalletCiePinForgotten();
+const onOpenForgotPinPage = (itw_flow: ItwFlow) => {
+  trackItWalletCiePinForgotten(itw_flow);
   openWebUrl(pinPukHelpUrl);
 };
 
-const ForgottenPin = () => (
+const ForgottenPin = ({ itw_flow }: { itw_flow: ItwFlow }) => (
   <View>
     <IOMarkdown content={I18n.t("bottomSheets.ciePin.content")} />
     <VSpacer size={24} />
-    <Body weight="Semibold" asLink onPress={onOpenForgotPinPage}>
+    <Body
+      weight="Semibold"
+      asLink
+      onPress={() => onOpenForgotPinPage(itw_flow)}
+    >
       {I18n.t("authentication.cie.pin.bottomSheetCTA")}
     </Body>
     <VSpacer size={24} />
@@ -63,6 +69,10 @@ export const ItwCiePinScreen = () => {
 
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+  const itw_flow = isL3Enabled ? "L3" : "L2";
 
   const [pin, setPin] = useState("");
   const pinPadViewRef = useRef<View>(null);
@@ -71,7 +81,7 @@ export const ItwCiePinScreen = () => {
   const isFocused = useIsFocused();
 
   const { present, bottomSheet } = useIOBottomSheetModal({
-    component: <ForgottenPin />,
+    component: <ForgottenPin itw_flow={itw_flow} />,
     title: I18n.t("bottomSheets.ciePin.title")
   });
 
@@ -84,9 +94,9 @@ export const ItwCiePinScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      trackItWalletCiePinEnter();
+      trackItWalletCiePinEnter(itw_flow);
       setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
-    }, [])
+    }, [itw_flow])
   );
 
   useHeaderSecondLevel({
@@ -123,7 +133,7 @@ export const ItwCiePinScreen = () => {
               weight="Semibold"
               asLink
               onPress={() => {
-                trackItWalletCiePinInfo();
+                trackItWalletCiePinInfo(itw_flow);
                 present();
               }}
             >

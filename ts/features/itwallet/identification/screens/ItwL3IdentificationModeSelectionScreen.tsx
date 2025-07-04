@@ -1,5 +1,5 @@
-import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useCallback, useState } from "react";
 import {
   ContentWrapper,
   Divider,
@@ -13,7 +13,11 @@ import I18n from "../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import {
   trackItWalletIDMethod,
-  trackItWalletIDMethodSelected
+  trackItWalletIDMethodSelected,
+  trackItwContinueWithCieID,
+  trackItwContinueWithCieIDClose,
+  trackItwGoToCieIDApp,
+  trackItwUserWithoutL3Requirements
 } from "../../analytics";
 import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet";
 import { useCieInfoAndPinBottomSheets } from "../hooks/useCieInfoAndPinBottomSheets";
@@ -26,6 +30,8 @@ import { CieWarningType } from "./ItwIdentificationCieWarningScreen";
 export const ItwL3IdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
+  const [shouldTrackDismiss, setShouldTrackDismiss] = useState(true);
+  const { name: routeName } = useRoute();
 
   const navigateToCieWarning = (warning: CieWarningType) => {
     machineRef.send({ type: "go-to-cie-warning", warning });
@@ -49,7 +55,9 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
           "features.itWallet.identification.l3.mode.bottomSheet.cie.action"
         ),
         onPress: () => {
+          setShouldTrackDismiss(false);
           handleCieIdPress();
+          trackItwGoToCieIDApp();
           cieBottomSheet.dismiss();
         }
       },
@@ -58,25 +66,37 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
           "features.itWallet.identification.l3.mode.bottomSheet.cie.cancel"
         ),
         onPress: () => {
+          setShouldTrackDismiss(true);
           cieBottomSheet.dismiss();
         }
       }
-    ]
+    ],
+    onDismiss: () => {
+      if (shouldTrackDismiss) {
+        trackItwContinueWithCieIDClose();
+      }
+      setShouldTrackDismiss(true);
+    }
   });
 
   const { cieInfoBottomSheet, pinBottomSheet } = useCieInfoAndPinBottomSheets();
 
-  const noCieBottomSheet = useNoCieBottomSheet();
-  useFocusEffect(trackItWalletIDMethod);
+  const { noCieBottomSheet, noCieBottomSheetPresent } = useNoCieBottomSheet();
+
+  useFocusEffect(
+    useCallback(() => {
+      trackItWalletIDMethod("L3");
+    }, [])
+  );
 
   const handleCiePinPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin", itw_flow: "L3" });
   }, [machineRef]);
 
   const handleCieIdPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "cieId", itw_flow: "L3" });
   }, [machineRef]);
 
   return (
@@ -108,8 +128,15 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
             "features.itWallet.identification.l3.mode.secondaryAction"
           ),
           onPress: isItwValid
-            ? () => navigateToCieWarning("noCie")
-            : () => noCieBottomSheet.present(),
+            ? () => {
+                trackItwUserWithoutL3Requirements({
+                  screen_name: routeName,
+                  reason: "user_without_cie",
+                  position: "screen"
+                });
+                navigateToCieWarning("noCie");
+              }
+            : () => noCieBottomSheetPresent(),
           testID: "l3-secondary-action"
         }
       }}
@@ -170,7 +197,10 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
           description={I18n.t(
             "features.itWallet.identification.l3.mode.cieId.subtitle"
           )}
-          onPress={cieBottomSheet.present}
+          onPress={() => {
+            trackItwContinueWithCieID();
+            cieBottomSheet.present();
+          }}
           testID="l3-cie-id-nav"
         />
         {cieBottomSheet.bottomSheet}

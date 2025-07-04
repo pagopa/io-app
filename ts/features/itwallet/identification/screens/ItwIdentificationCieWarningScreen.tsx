@@ -11,6 +11,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import { TranslationKeys } from "../../../../../locales/locales";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { trackItwKoStateAction } from "../../analytics";
 
 export type CieWarningType = "noPin" | "noCie";
 
@@ -35,6 +36,7 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const { warning } = params.route.params;
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
+  const reason = warning === "noCie" ? "user_without_cie" : "user_without_pin";
 
   const sectionKey = isItwValid ? "toCieFAQ" : "toL2Identification";
 
@@ -55,20 +57,44 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
     machineRef.send({ type: "go-to-l2-identification" });
   };
 
+  const handlePrimaryAction = () => {
+    trackItwKoStateAction({
+      reason,
+      cta_category: "custom_1",
+      cta_id: t("primaryAction")
+    });
+
+    if (isItwValid) {
+      void Linking.openURL(cieFaqUrls[warning]);
+    } else {
+      goToL2Identification();
+    }
+  };
+
+  const handleSecondaryAction = () => {
+    trackItwKoStateAction({
+      reason,
+      cta_category: "custom_2",
+      cta_id: t("closeAction")
+    });
+
+    if (isItwValid) {
+      closeIdentification();
+    } else {
+      back();
+    }
+  };
+
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       const primaryAction = {
         label: t("primaryAction"),
-        onPress: isItwValid
-          ? () => Linking.openURL(cieFaqUrls[warning])
-          : goToL2Identification
+        onPress: handlePrimaryAction
       };
-
       const secondaryAction = {
         label: t("closeAction"),
-        onPress: isItwValid ? closeIdentification : back
+        onPress: handleSecondaryAction
       };
-
       return {
         title: t("title"),
         subtitle: t("subtitle"),
