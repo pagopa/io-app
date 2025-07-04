@@ -31,8 +31,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
         itWallet: {
           issuance: { integrityKeyTag: O.some("key-tag") },
           credentials: {
-            eid: O.some(mockedEid),
-            credentials: []
+            credentials: {}
           }
         }
       }
@@ -60,26 +59,25 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
         itWallet: {
           issuance: { integrityKeyTag: O.some("key-tag") },
           credentials: {
-            eid: O.some(mockedEid),
-            credentials: [
-              O.none,
-              O.some({
+            credentials: {
+              [CredentialType.PID]: mockedEid,
+              [CredentialType.DRIVING_LICENSE]: {
                 keyTag: "2",
                 credentialType: CredentialType.DRIVING_LICENSE,
                 jwt: { expiration: jwtExpiration },
                 parsedCredential: {
                   expiry_date: expirationClaim
                 }
-              }),
-              O.some({
+              },
+              [CredentialType.EUROPEAN_DISABILITY_CARD]: {
                 keyTag: "3",
                 credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
                 jwt: { expiration: jwtExpiration },
                 parsedCredential: {
                   expiry_date: expirationClaim
                 }
-              })
-            ]
+              }
+            }
           }
         }
       }
@@ -114,17 +112,16 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
         itWallet: {
           issuance: { integrityKeyTag: O.none },
           credentials: {
-            eid: O.none,
-            credentials: [
-              O.some({
+            credentials: {
+              [CredentialType.DRIVING_LICENSE]: {
                 keyTag: "2",
                 credentialType: CredentialType.DRIVING_LICENSE,
                 jwt: { expiration: jwtExpiration },
                 parsedCredential: {
                   expiry_date: expirationClaim
                 }
-              })
-            ]
+              }
+            }
           }
         }
       }

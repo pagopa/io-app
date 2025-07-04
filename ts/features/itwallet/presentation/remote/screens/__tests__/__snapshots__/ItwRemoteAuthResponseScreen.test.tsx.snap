@@ -585,7 +585,7 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                 ]
                               }
                             >
-                              Continua sul sito dell'ente.
+                              Ora puoi continuare a usare i servizi sul sito dell'ente.
                             </Text>
                             <View
                               style={
@@ -1389,7 +1389,7 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
                                 ]
                               }
                             >
-                              Continua sul sito dell'ente.
+                              Ora puoi continuare a usare i servizi sul sito dell'ente.
                             </Text>
                             <View
                               style={

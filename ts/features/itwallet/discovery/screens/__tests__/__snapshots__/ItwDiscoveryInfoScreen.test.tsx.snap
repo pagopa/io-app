@@ -1562,8 +1562,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true and 
                                         ]
                                       }
                                     >
-                                      L'unico Wallet di Stato:
-pubblico, sicuro, gratuito.
+                                      L'unico portafoglio digitale di Stato: pubblico, sicuro, gratuito.
                                     </Text>
                                   </View>
                                   <View
@@ -2351,7 +2350,7 @@ pubblico, sicuro, gratuito.
                                           }
                                           testID="infoScreenBody"
                                         >
-                                          Nuovi documenti ufficiali, solo sull’app IO
+                                          I nuovi documenti digitali ufficiali, solo sull’app IO
                                         </Text>
                                       </View>
                                     </View>
@@ -2542,7 +2541,7 @@ pubblico, sicuro, gratuito.
                                       data={
                                         [
                                           {
-                                            "content": "Ottienilo con la tua **Carta di Identità Elettronica (CIE)** e il suo **PIN**.
+                                            "content": "Ottienilo con la tua **Carta di Identità Elettronica (CIE)** e il suo **PIN per associarlo alla tua identità**.
 
 
 IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantenerli al sicuro.",
@@ -2550,12 +2549,12 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                                             "title": "Facile, sicuro, ufficiale",
                                           },
                                           {
-                                            "content": "ISEE, titoli di studio, certificazione a uso elettorale e altri: potrai aggiungere all’app IO nuovi documenti ufficiali.",
+                                            "content": "Titoli di studio, attestati di residenza e altri: potrai aggiungere all’app IO nuovi documenti ufficiali.",
                                             "icon": "fiscalCodeIndividual",
                                             "title": "Nuovi documenti in arrivo",
                                           },
                                           {
-                                            "content": "Con IT-Wallet mostri il codice QR dei tuoi documenti digitali: chi verifica non dovrà tenere in mano il tuo dispositivo.",
+                                            "content": "Con IT-Wallet mostri il codice QR della tua Patente digitale: chi verifica non dovrà tenere in mano il tuo dispositivo.",
                                             "icon": "website",
                                             "title": "Tutto nelle tue mani",
                                           },
@@ -2734,7 +2733,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                                                     }
                                                   }
                                                 >
-                                                  PIN
+                                                  PIN per associarlo alla tua identità
                                                 </Text>
                                                 .
                                               </Text>
@@ -2908,7 +2907,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                                                   ]
                                                 }
                                               >
-                                                ISEE, titoli di studio, certificazione a uso elettorale e altri: potrai aggiungere all’app IO nuovi documenti ufficiali.
+                                                Titoli di studio, attestati di residenza e altri: potrai aggiungere all’app IO nuovi documenti ufficiali.
                                               </Text>
                                             </View>
                                           </View>
@@ -3050,7 +3049,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                                                   ]
                                                 }
                                               >
-                                                Con IT-Wallet mostri il codice QR dei tuoi documenti digitali: chi verifica non dovrà tenere in mano il tuo dispositivo.
+                                                Con IT-Wallet mostri il codice QR della tua Patente digitale: chi verifica non dovrà tenere in mano il tuo dispositivo.
                                               </Text>
                                             </View>
                                           </View>
