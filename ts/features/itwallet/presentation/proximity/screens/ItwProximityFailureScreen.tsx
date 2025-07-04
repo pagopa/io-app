@@ -51,6 +51,16 @@ const ContentView = ({ failure }: ContentViewProps) => {
               onPress: () => machineRef.send({ type: "close" })
             }
           };
+        case ProximityFailureType.TIMEOUT:
+          return {
+            title: I18n.t(`${i18nNs}.relyingParty.timeout.title`),
+            subtitle: I18n.t(`${i18nNs}.relyingParty.timeout.subtitle`),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(`${i18nNs}.relyingParty.timeout.primaryAction`),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
         case ProximityFailureType.UNEXPECTED:
           return {
             title: I18n.t("features.itWallet.generic.error.title"),

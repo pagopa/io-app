@@ -18,7 +18,8 @@ import {
 import {
   generateAcceptedFields,
   getDocuments,
-  getProximityDetails
+  getProximityDetails,
+  promiseWithTimeout
 } from "../utils/itwProximityPresentationUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { assert } from "../../../../../utils/assert";
@@ -35,6 +36,8 @@ const PERMISSIONS_TO_CHECK: Array<Permission> =
         ] // Android 12 and above: Request new Bluetooth permissions along with location.
       : [PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION] // Android 9 to Android 11: Only location permission is required for BLE.
     : [PERMISSIONS.IOS.BLUETOOTH]; // iOS permissions required are Bluetooth and location.
+
+const SEND_RESPONSE_TIMEOUT_MS = 20000;
 
 export type StartProximityFlowInput = {
   isRestarting?: boolean;
@@ -187,7 +190,11 @@ export const createProximityActorsImplementation = () => {
       acceptedFields
     );
 
-    return Proximity.sendResponse(generatedResponse);
+    // If the timeout is exceeded, throw an exception
+    return promiseWithTimeout(
+      Proximity.sendResponse(generatedResponse),
+      SEND_RESPONSE_TIMEOUT_MS
+    );
   });
 
   const terminateProximitySession = fromPromise<SendErrorResponseActorOutput>(

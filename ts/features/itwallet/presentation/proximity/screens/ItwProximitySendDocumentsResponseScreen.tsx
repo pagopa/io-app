@@ -1,6 +1,5 @@
-import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
+import { ItwProximityLoadingStepScreen } from "../components/ItwProximityLoadingStepScreen.tsx";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
@@ -19,21 +18,7 @@ export const ItwProximitySendDocumentsResponseScreen = () => {
   // We need to ensure that the current state is not `Success` to prevent a visual glitch
   // that occurs when any failure causes the machine to transition to the `Failure` state
   if (!isSuccess) {
-    return (
-      <LoadingScreenContent
-        contentTitle={I18n.t(
-          "features.itWallet.presentation.proximity.loadingScreen.title"
-        )}
-      >
-        <ContentWrapper style={{ alignItems: "center" }}>
-          <Body>
-            {I18n.t(
-              "features.itWallet.presentation.proximity.loadingScreen.subtitle"
-            )}
-          </Body>
-        </ContentWrapper>
-      </LoadingScreenContent>
-    );
+    return <ItwProximityLoadingStepScreen />;
   }
 
   return (

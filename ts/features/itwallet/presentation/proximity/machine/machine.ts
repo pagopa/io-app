@@ -342,8 +342,7 @@ export const itwProximityMachine = setup({
           }
         },
         SendingDocuments: {
-          tags: [ItwPresentationTags.Loading],
-          entry: "navigateToSendDocumentsResponseScreen",
+          initial: "Initial",
           description: "Sends the required documents to the verifier app",
           invoke: {
             id: "sendDocuments",
@@ -358,6 +357,30 @@ export const itwProximityMachine = setup({
             onError: {
               actions: "setFailure",
               target: "#itwProximityMachine.Failure"
+            }
+          },
+          states: {
+            Initial: {
+              entry: "navigateToSendDocumentsResponseScreen",
+              description: "Initial loading state",
+              after: {
+                5000: {
+                  target:
+                    "#itwProximityMachine.DeviceCommunication.SendingDocuments.Reminder"
+                }
+              }
+            },
+            Reminder: {
+              description: "Loading state when the process is taking too long",
+              after: {
+                10000: {
+                  target:
+                    "#itwProximityMachine.DeviceCommunication.SendingDocuments.Final"
+                }
+              }
+            },
+            Final: {
+              description: "Final loading state"
             }
           }
         },
