@@ -141,6 +141,8 @@ export type ItwCredentialStatus =
 
 export type ItwAuthLevel = "L2" | "L3";
 
+export type CredentialFormat = "dc+sd-jwt" | "mso_mdoc" | "vc+sd-jwt"; // TODO: [SIW-2530] remove legacy format
+
 export type WalletInstanceAttestations = {
   jwt: string;
   "dc+sd-jwt"?: string;

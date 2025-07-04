@@ -87,20 +87,15 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   },
 
   // Version 3
-  // Add credentialConfigurationId
+  // Add credentialId and use it as key, with fallback to credentialType
   "3": (state: MigrationState) => ({
     ...state,
     credentials: Object.fromEntries(
-      Object.entries<Record<string, any>>(state.credentials).map(
-        ([key, credential]) => [
-          key,
-          {
-            ...credential,
-            credentialConfigurationId:
-              credential.credentialConfigurationId ?? credential.credentialType
-          }
-        ]
-      )
+      Object.values<Record<string, any>>(state.credentials).map(credential => {
+        const credentialId =
+          credential.credentialId ?? credential.credentialType;
+        return [credentialId, { ...credential, credentialId }];
+      })
     )
   })
 };
