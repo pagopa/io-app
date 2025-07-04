@@ -56,9 +56,11 @@ import {
 import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/ItwGrantPermissionsScreen.tsx";
 import { ItwActivateBluetoothScreen } from "../presentation/proximity/screens/ItwActivateBluetoothScreen.tsx";
 import { ItwProximityClaimsDisclosureScreen } from "../presentation/proximity/screens/ItwProximityClaimsDisclosureScreen.tsx";
+import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximity/screens/ItwProximitySendDocumentsResponseScreen.tsx";
 import { ItwProximityFailureScreen } from "../presentation/proximity/screens/ItwProximityFailureScreen.tsx";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
 import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
+import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/ItwPresentationPidDetailScreen.tsx";
 import { ItwIssuanceUpcomingCredentialScreen } from "../issuance/screens/ItwIssuanceUpcomingCredentialScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
@@ -267,6 +269,10 @@ const InnerNavigator = () => {
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL}
         component={ItwPresentationCredentialFiscalCodeModal}
       />
+      <Stack.Screen
+        name={ITW_ROUTES.PRESENTATION.PID_DETAIL}
+        component={ItwPresentationPidDetailScreen}
+      />
       {/* LIFECYCLE */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}
@@ -296,6 +302,10 @@ const InnerNavigator = () => {
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.CLAIMS_DISCLOSURE}
           component={ItwProximityClaimsDisclosureScreen}
+        />
+        <Stack.Screen
+          name={ITW_ROUTES.PROXIMITY.SEND_DOCUMENTS_RESPONSE}
+          component={ItwProximitySendDocumentsResponseScreen}
         />
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.FAILURE}

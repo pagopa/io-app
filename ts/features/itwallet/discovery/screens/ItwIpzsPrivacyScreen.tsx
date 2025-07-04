@@ -10,14 +10,21 @@ import { generateDynamicUrlSelector } from "../../../../store/reducers/backendSt
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { trackOpenItwTosAccepted } from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
 import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+
+  const isL3 = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
+
   const handleContinuePress = () => {
     trackOpenItwTosAccepted();
     machineRef.send({ type: "accept-ipzs-privacy" });
@@ -59,7 +66,11 @@ const ItwIpzsPrivacyScreen = () => {
             accessibilityRole="header"
             testID="screen-content-header-title"
           >
-            {I18n.t("features.itWallet.ipzsPrivacy.title")}
+            {I18n.t(
+              isL3
+                ? "features.itWallet.ipzsPrivacy.titleL3"
+                : "features.itWallet.ipzsPrivacy.title"
+            )}
           </H2>
           <VSpacer size={16} />
           <IOMarkdown

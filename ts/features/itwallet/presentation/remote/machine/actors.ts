@@ -9,7 +9,10 @@ import {
 } from "../utils/itwRemoteTypeUtils";
 import { RequestObject } from "../../../common/utils/itwTypesUtils";
 import { useIOStore } from "../../../../../store/hooks";
-import { itwCredentialsSelector } from "../../../credentials/store/selectors";
+import {
+  itwCredentialsSelector,
+  itwCredentialsEidSelector
+} from "../../../credentials/store/selectors";
 import {
   enrichPresentationDetails,
   getInvalidCredentials
@@ -107,18 +110,20 @@ export const createRemoteActorsImplementation = (
       }
     );
 
-    const { eid, credentials } = itwCredentialsSelector(store.getState());
-
     assert(requestObject.dcql_query, "Missing required DCQL query");
+
+    const eid = itwCredentialsEidSelector(store.getState());
+    const credentials = itwCredentialsSelector(store.getState());
+
     assert(O.isSome(eid), "Missing PID");
 
     // Prepare credentials to evaluate the Relying Party request
     // TODO: add the Wallet Attestation in SD-JWT format
     const credentialsSdJwt: Array<[string, string]> = [
       [eid.value.keyTag, eid.value.credential],
-      ...credentials
-        .filter(O.isSome)
-        .map(c => [c.value.keyTag, c.value.credential] as [string, string])
+      ...Object.values(credentials).map(
+        c => [c.keyTag, c.credential] as [string, string]
+      )
     ];
 
     // Evaluate the DCQL query against the credentials contained in the Wallet
@@ -128,10 +133,9 @@ export const createRemoteActorsImplementation = (
     );
 
     const credentialsByType = Object.fromEntries(
-      credentials
-        .concat(eid)
-        .filter(O.isSome)
-        .map(c => [c.value.credentialType, c.value])
+      Object.values(credentials)
+        .concat(eid.value)
+        .map(c => [c.credentialType, c])
     );
 
     // Check whether any of the requested credential is invalid
