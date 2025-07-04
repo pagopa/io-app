@@ -13,10 +13,11 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
   const mockedEid: StoredCredential = {
     credential: "",
     credentialType: CredentialType.PID,
+    credentialId: "dc_sd_jwt_PersonIdentificationData",
     parsedCredential: {
       expiry_date: expirationClaim
     },
-    format: "vc+sd-jwt",
+    format: "dc+sd-jwt",
     keyTag: "1",
     issuerConf: {} as StoredCredential["issuerConf"],
     jwt: {

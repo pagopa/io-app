@@ -36,6 +36,7 @@ const getStateWithCredentials = (credentials: {
 const mockedEid: StoredCredential = {
   credential: "",
   credentialType: CredentialType.PID,
+  credentialId: "dc_sd_jwt_PersonIdentificationData",
   parsedCredential: {
     tax_id_code: {
       value: "AAAAAA00A00A000A",
@@ -45,7 +46,7 @@ const mockedEid: StoredCredential = {
       }
     }
   },
-  format: "vc+sd-jwt",
+  format: "dc+sd-jwt",
   keyTag: "9020c6f8-01be-4236-9b6f-834af9dcbc63",
   issuerConf: {} as StoredCredential["issuerConf"],
   jwt: {
@@ -57,8 +58,9 @@ const mockedEid: StoredCredential = {
 const mockedDrivingLicense: StoredCredential = {
   credential: "",
   credentialType: CredentialType.DRIVING_LICENSE,
+  credentialId: "dc_sd_jwt_mDL",
   parsedCredential: {},
-  format: "vc+sd-jwt",
+  format: "dc+sd-jwt",
   keyTag: "d191ad52-2674-46f3-9610-6eb7bd9146a3",
   issuerConf: {} as StoredCredential["issuerConf"],
   jwt: {
@@ -70,8 +72,9 @@ const mockedDrivingLicense: StoredCredential = {
 const mockedDisabilityCard: StoredCredential = {
   credential: "",
   credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
+  credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
   parsedCredential: {},
-  format: "vc+sd-jwt",
+  format: "dc+sd-jwt",
   keyTag: "07ccc69a-d1b5-4c3c-9955-6a436d0c3710",
   issuerConf: {} as StoredCredential["issuerConf"],
   jwt: {
