@@ -4310,7 +4310,7 @@
           "securityLevel": "Livello di sicurezza",
           "info": "Ulteriori info su questi dati",
           "releasedBy": "Emissione versione digitale",
-          "attachments": "Allegati",
+          "attachments": "Attachments",
           "authenticSource": "Origine dei dati",
           "mdl": {
             "category": "Patente {{category}}",
