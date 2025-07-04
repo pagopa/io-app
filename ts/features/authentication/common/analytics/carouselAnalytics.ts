@@ -1,3 +1,4 @@
+import { JSX } from "react";
 import { LandingCardComponent } from "../../../../components/LandingCardComponent";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";

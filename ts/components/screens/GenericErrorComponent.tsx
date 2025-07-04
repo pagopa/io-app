@@ -32,7 +32,7 @@ type Props = WithTestID<
     subText?: string;
     retryButtonTitle?: string;
     cancelButtonTitle?: string;
-    ref?: RefObject<View>;
+    ref?: RefObject<View | null>;
   }>
 >;
 

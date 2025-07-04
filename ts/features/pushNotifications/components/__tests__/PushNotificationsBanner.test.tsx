@@ -1,8 +1,10 @@
 import { fireEvent } from "@testing-library/react-native";
 
-import { ReactElement } from "react";
+import { ComponentProps, ReactElement } from "react";
 import { createStore } from "redux";
 import { constUndefined } from "fp-ts/lib/function";
+import { FooterActions } from "@pagopa/io-app-design-system";
+import { GestureResponderEvent } from "react-native";
 import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";
 import * as IOHOOKS from "../../../../store/hooks";
@@ -161,21 +163,26 @@ describe("PushNotificationsBanner", () => {
     expect(spyOnBS.mock.calls[0].length).toBe(1);
     expect(spyOnBS.mock.calls[0][0]).toBeDefined();
 
-    const primaryActionCallback =
-      spyOnBS.mock.calls[0][0].footer?.props.actions.primary.onPress;
+    const primaryActionCallback = (
+      spyOnBS.mock.calls[0][0].footer?.props as ComponentProps<
+        typeof FooterActions
+      >
+    ).actions?.primary.onPress;
     expect(primaryActionCallback).toBeDefined();
     expect(typeof primaryActionCallback).toBe("function");
 
-    primaryActionCallback();
+    if (primaryActionCallback) {
+      primaryActionCallback({} as GestureResponderEvent);
 
-    expect(
-      spyOnMockedTrackPushNotificationBannerDismissOutcome
-    ).toHaveBeenCalledTimes(1);
-    expect(
-      spyOnMockedTrackPushNotificationBannerDismissOutcome
-    ).toHaveBeenCalledWith("remind_later");
+      expect(
+        spyOnMockedTrackPushNotificationBannerDismissOutcome
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        spyOnMockedTrackPushNotificationBannerDismissOutcome
+      ).toHaveBeenCalledWith("remind_later");
 
-    expect(mockCloseHandler).toHaveBeenCalledTimes(1);
+      expect(mockCloseHandler).toHaveBeenCalledTimes(1);
+    }
   });
   it("bottom sheet secondary action should call 'trackPushNotificationBannerDismissOutcome' and dispatch 'setPushNotificationBannerForceDismissed'", () => {
     const mockedDispatch = jest.fn();
@@ -196,24 +203,30 @@ describe("PushNotificationsBanner", () => {
     expect(spyOnBS.mock.calls[0].length).toBe(1);
     expect(spyOnBS.mock.calls[0][0]).toBeDefined();
 
-    const secondaryActionCallback =
-      spyOnBS.mock.calls[0][0].footer?.props.actions.secondary.onPress;
+    const secondaryActionCallback = (
+      spyOnBS.mock.calls[0][0].footer?.props as ComponentProps<
+        typeof FooterActions
+      >
+    ).actions?.secondary?.onPress;
+
     expect(secondaryActionCallback).toBeDefined();
     expect(typeof secondaryActionCallback).toBe("function");
 
-    secondaryActionCallback();
+    if (secondaryActionCallback) {
+      secondaryActionCallback({} as GestureResponderEvent);
 
-    expect(
-      spyOnMockedTrackPushNotificationBannerDismissOutcome
-    ).toHaveBeenCalledTimes(1);
-    expect(
-      spyOnMockedTrackPushNotificationBannerDismissOutcome
-    ).toHaveBeenCalledWith("deactivate");
+      expect(
+        spyOnMockedTrackPushNotificationBannerDismissOutcome
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        spyOnMockedTrackPushNotificationBannerDismissOutcome
+      ).toHaveBeenCalledWith("deactivate");
 
-    expect(mockedDispatch).toHaveBeenCalledTimes(1);
-    expect(mockedDispatch).toHaveBeenCalledWith(
-      setPushNotificationBannerForceDismissed()
-    );
+      expect(mockedDispatch).toHaveBeenCalledTimes(1);
+      expect(mockedDispatch).toHaveBeenCalledWith(
+        setPushNotificationBannerForceDismissed()
+      );
+    }
   });
 });
 

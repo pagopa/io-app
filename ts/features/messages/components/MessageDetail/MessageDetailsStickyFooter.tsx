@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { JSX, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useLinkTo } from "@react-navigation/native";
 import {

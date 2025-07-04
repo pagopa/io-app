@@ -1,4 +1,5 @@
 import { Text } from "react-native";
+import { JSX } from "react";
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 import { trackCarousel } from "../carouselAnalytics";
 import { mixpanelTrack } from "../../../../../mixpanel";

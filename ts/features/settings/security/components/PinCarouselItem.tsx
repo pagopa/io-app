@@ -12,7 +12,7 @@ import { useDetectSmallScreen } from "../../../../hooks/useDetectSmallScreen";
 
 export type PinCaouselItemProps = WithTestID<{
   title: string;
-  titleRef?: RefObject<View>;
+  titleRef?: RefObject<View | null>;
   description?: string;
   value: string;
   maxLength: number;

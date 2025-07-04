@@ -30,7 +30,7 @@ const UpdateAppModal: FC = () => {
   trackForcedUpdateScreen();
 
   const insets = useSafeAreaInsets();
-  const timeoutRef = useRef<number>();
+  const timeoutRef = useRef<number>(undefined);
   const [isError, setIsError] = useState(false);
 
   const title = I18n.t("titleUpdateApp");

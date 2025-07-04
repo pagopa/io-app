@@ -97,7 +97,7 @@ type InnerNavigationContainerProps = PropsWithChildren<{
 }>;
 
 const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
-  const routeNameRef = useRef<string>();
+  const routeNameRef = useRef<string>(undefined);
   const dispatch = useIODispatch();
   const store = useIOStore();
 

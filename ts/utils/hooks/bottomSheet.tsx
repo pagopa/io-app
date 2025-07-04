@@ -16,6 +16,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import {
+  JSX,
   ReactElement,
   ReactNode,
   useCallback,
