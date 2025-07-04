@@ -75,21 +75,6 @@ export const useLollipopLoginSource = (
       return;
     }
 
-    if (maybeEphemeralPublicKey === undefined) {
-      // We track missing key tag event only if lollipop is enabled
-      // (since the key tag is not used without lollipop)
-      trackLollipopIdpLoginFailure(
-        "Missing key tag while trying to login with lollipop"
-      );
-
-      // Key generation may have failed. In that case, follow the old
-      // non-lollipop login flow
-      setWebviewSource({
-        uri: loginUri
-      });
-      return;
-    }
-
     /**
      * We generate a new key pair for every new login/relogin/retry we
      * need to garantee the public key uniqueness on every login request.
@@ -127,7 +112,6 @@ export const useLollipopLoginSource = (
     idp?.id,
     isFastLogin,
     loginUri,
-    maybeEphemeralPublicKey,
     mixpanelEnabled
   ]);
 
