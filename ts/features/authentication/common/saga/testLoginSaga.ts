@@ -1,6 +1,5 @@
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import * as O from "fp-ts/lib/Option";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
 import { call, put, select, takeLatest } from "typed-redux-saga/macro";
@@ -16,7 +15,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
 import { IdpData } from "../../../../../definitions/content/IdpData";
 import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
-import { lollipopPublicKeySelector } from "../../../lollipop/store/reducers/lollipop";
+import { ephemeralPublicKeySelector } from "../../../lollipop/store/reducers/lollipop";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../../../lollipop/utils/login";
 
 // Started by redux action
@@ -29,7 +28,7 @@ export function* handleTestLogin({
 > {
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
   const isFastLoginSelected = yield* select(isFastLoginEnabledSelector);
-  const maybePublicKey = yield* select(lollipopPublicKeySelector);
+  const maybeEphemeralPublicKey = yield* select(ephemeralPublicKeySelector);
   function postTestLogin(
     login: PasswordLogin,
     publicKey?: PublicKey,
@@ -51,11 +50,11 @@ export function* handleTestLogin({
       yield* call(
         postTestLogin,
         payload,
-        O.isSome(maybePublicKey) ? maybePublicKey.value : undefined,
-        O.isSome(maybePublicKey)
+        maybeEphemeralPublicKey,
+        maybeEphemeralPublicKey
           ? DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
           : undefined,
-        O.isSome(maybePublicKey) ? isFastLoginSelected : undefined
+        maybeEphemeralPublicKey ? isFastLoginSelected : undefined
       );
 
     if (E.isRight(testLoginResponse)) {

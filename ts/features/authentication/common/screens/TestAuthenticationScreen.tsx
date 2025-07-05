@@ -25,7 +25,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isMixpanelEnabled } from "../../../../store/reducers/persistedPreferences";
 import { getAppVersion } from "../../../../utils/appVersion";
 import { handleRegenerateKey } from "../../../lollipop";
-import { lollipopKeyTagSelector } from "../../../lollipop/store/reducers/lollipop";
+import { ephemeralKeyTagSelector } from "../../../lollipop/store/reducers/lollipop";
 import { testLoginCleanUp, testLoginRequest } from "../../common/store/actions";
 import { testLoginSelector } from "../store/reducers/testLogin";
 
@@ -103,7 +103,7 @@ const TestAuthenticationScreen = () => {
   const isLoading = loginState.kind === "requested";
   const isError = loginState.kind === "failed";
   const isSuccessful = loginState.kind === "succedeed";
-  const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
+  const ephemeralKeyTag = useIOSelector(ephemeralKeyTagSelector);
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
 
   const requestLogin = useCallback(
@@ -121,12 +121,13 @@ const TestAuthenticationScreen = () => {
     () =>
       pipe(
         // First, map over maybeKeyTag to get the TaskEither if it's Some
+        O.some(ephemeralKeyTag),
         O.map((keyTag: string) =>
           TE.tryCatch(
             () => handleRegenerateKey(keyTag, mixpanelEnabled, dispatch),
             E.toError
           )
-        )(maybeKeyTag),
+        ),
         // If maybeKeyTag is None, create a TaskEither that immediately fails
         O.getOrElse(() => TE.left(new Error("Missing keyTag"))),
         // Continue with the login flow if key regeneration is successful
@@ -146,7 +147,14 @@ const TestAuthenticationScreen = () => {
           result => T.of(result)
         )
       )(),
-    [maybeKeyTag, mixpanelEnabled, requestLogin, dispatch, username, password]
+    [
+      ephemeralKeyTag,
+      mixpanelEnabled,
+      requestLogin,
+      dispatch,
+      username,
+      password
+    ]
   );
 
   useHeaderSecondLevel({

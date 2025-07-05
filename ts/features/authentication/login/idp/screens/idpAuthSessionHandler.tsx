@@ -38,13 +38,12 @@ import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reduce
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
 import themeVariables from "../../../../../theme/variables";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { trackLollipopIdpLoginFailure } from "../../../../../utils/analytics";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
-import { lollipopKeyTagSelector } from "../../../../lollipop/store/reducers/lollipop";
+import { ephemeralKeyTagSelector } from "../../../../lollipop/store/reducers/lollipop";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../../../lollipop/utils/login";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
@@ -189,7 +188,10 @@ export const AuthSessionPage = () => {
     [idp, remoteApiLoginUrlPrefix]
   );
 
-  const maybeKeyTag = useMemo(() => lollipopKeyTagSelector(state), [state]);
+  const ephemeralKeyTag = useMemo(
+    () => ephemeralKeyTagSelector(state),
+    [state]
+  );
 
   const contextualHelp = useMemo(() => {
     if (O.isNone(selectedIdpTextData)) {
@@ -291,16 +293,12 @@ export const AuthSessionPage = () => {
 
   // Memoized values/func --end--
 
-  if (
-    loginUri &&
-    O.isSome(maybeKeyTag) &&
-    requestInfo.requestState === "LOADING"
-  ) {
+  if (loginUri && requestInfo.requestState === "LOADING") {
     void pipe(
       () =>
         regenerateKeyGetRedirectsAndVerifySaml(
           loginUri,
-          maybeKeyTag.value,
+          ephemeralKeyTag,
           mixpanelEnabled,
           isFastLogin,
           dispatch
@@ -346,15 +344,6 @@ export const AuthSessionPage = () => {
     )();
   } else if (!loginUri) {
     handleLoadingError();
-  } else if (O.isNone(maybeKeyTag)) {
-    setRequestInfo({
-      requestState: "ERROR",
-      errorType: ErrorType.LOGIN_ERROR,
-      nativeAttempts: requestInfo.nativeAttempts
-    });
-    trackLollipopIdpLoginFailure(
-      "Missing keyTag while trying to login with lollipop"
-    );
   }
 
   useHardwareBackButton(() => {
