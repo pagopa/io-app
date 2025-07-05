@@ -40,7 +40,7 @@ import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/detail
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
-import { ItwCiePreparationScreen } from "../identification/screens/cie/ItwCiePreparationScreen";
+import { ItwCieCardPreparationScreen } from "../identification/screens/cie/ItwCieCardPreparationScreen.tsx";
 import { ItwCiePinPreparationScreen } from "../identification/screens/cie/ItwCiePinPreparationScreen";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
@@ -153,7 +153,7 @@ const InnerNavigator = () => {
       {/* IDENTIFICATION CIE + PIN */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN}
-        component={ItwCiePreparationScreen}
+        component={ItwCieCardPreparationScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN}

@@ -97,7 +97,7 @@ const ItwSpidIdpLoginScreen = () => {
 
   // Setup header properties
   const headerProps: HeaderSecondLevelHookProps = {
-    title: I18n.t("features.itWallet.identification.mode.title"),
+    title: I18n.t("features.itWallet.identification.mode.l2.title"),
     supportRequest: false,
     goBack: dismissalDialog.show
   };

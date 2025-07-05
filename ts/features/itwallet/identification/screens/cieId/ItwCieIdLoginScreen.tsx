@@ -59,7 +59,7 @@ const ItwCieIdLoginScreen = () => {
   );
 
   useHeaderSecondLevel({
-    title: I18n.t("features.itWallet.identification.mode.title"),
+    title: I18n.t("features.itWallet.identification.mode.l2.title"),
     supportRequest: false,
     goBack: dismissalDialog.show
   });
