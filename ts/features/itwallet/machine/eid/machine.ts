@@ -174,7 +174,7 @@ export const itwEidIssuanceMachine = setup({
           },
           {
             actions: "setIsReissuing",
-            target: "UserIdentification.L2Identification"
+            target: "UserIdentification.Identification.L2"
           }
         ]
       }
@@ -399,7 +399,7 @@ export const itwEidIssuanceMachine = setup({
                 "select-identification-mode": [
                   {
                     guard: ({ event }) => event.mode === "ciePin",
-                    target: "CiePin"
+                    target: "#itwEidIssuanceMachine.UserIdentification.CiePin"
                   },
                   {
                     guard: ({ event }) => event.mode === "cieId",
@@ -409,7 +409,7 @@ export const itwEidIssuanceMachine = setup({
                         level: "L3"
                       }
                     })),
-                    target: "CieID"
+                    target: "#itwEidIssuanceMachine.UserIdentification.CieID"
                   }
                 ],
                 "go-to-l2-identification": {
@@ -418,7 +418,7 @@ export const itwEidIssuanceMachine = setup({
                 },
                 "go-to-cie-warning": {
                   target:
-                    "#itwEidIssuanceMachine.UserIdentification.CiePin.CieWarning.Identification"
+                    "#itwEidIssuanceMachine.UserIdentification.CiePin.L3.CieWarning.Identification"
                 },
                 back: {
                   target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
@@ -478,7 +478,7 @@ export const itwEidIssuanceMachine = setup({
           on: {
             back: {
               target:
-                "#itwEidIssuanceMachine.UserIdentification.EvaluateIdentificationLevel"
+                "#itwEidIssuanceMachine.UserIdentification.Identification.EvaluateInitialState"
             }
           },
           onDone: {
@@ -507,7 +507,7 @@ export const itwEidIssuanceMachine = setup({
                 },
                 back: {
                   target:
-                    "#itwEidIssuanceMachine.UserIdentification.L2Identification"
+                    "#itwEidIssuanceMachine.UserIdentification.Identification.L2"
                 }
               }
             },
@@ -789,7 +789,7 @@ export const itwEidIssuanceMachine = setup({
                     "Read the CIE card and get back a url to continue the PID issuing flow. This state also handles errors when reading the card.",
                   on: {
                     "user-identification-completed": {
-                      arget:
+                      target:
                         "#itwEidIssuanceMachine.UserIdentification.Completed",
                       actions: ["completeUserIdentification", "storeAuthLevel"]
                     },
@@ -805,6 +805,7 @@ export const itwEidIssuanceMachine = setup({
                   description:
                     "Navigates to and handles the CIE warning screen.",
                   entry: "navigateToCieWarningScreen",
+                  initial: "Identification",
                   states: {
                     Identification: {
                       on: {
@@ -813,12 +814,12 @@ export const itwEidIssuanceMachine = setup({
                     },
                     PreparationCie: {
                       on: {
-                        back: "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie"
+                        back: "#itwEidIssuanceMachine.UserIdentification.CiePin.L3.PreparationCie"
                       }
                     },
                     PreparationPin: {
                       on: {
-                        back: "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
+                        back: "#itwEidIssuanceMachine.UserIdentification.CiePin.L3.PreparationPin"
                       }
                     }
                   },
