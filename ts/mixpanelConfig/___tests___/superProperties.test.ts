@@ -1,16 +1,14 @@
-import * as O from "fp-ts/lib/Option";
-import { MixpanelProperties } from "mixpanel-react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { GlobalState } from "../../store/reducers/types";
-import * as BIOMETRICS from "../../utils/biometrics";
-import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
+import { MixpanelProperties } from "mixpanel-react-native";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
-import { StoredCredential } from "../../features/itwallet/common/utils/itwTypesUtils";
-import { updateMixpanelSuperProperties } from "../superProperties";
-import * as APPVERSION from "../../utils/appVersion";
-import * as DEVICE from "../../utils/device";
+import { GlobalState } from "../../store/reducers/types";
 import * as ACCESSIBILITY from "../../utils/accessibility";
+import * as APPVERSION from "../../utils/appVersion";
+import * as BIOMETRICS from "../../utils/biometrics";
+import * as DEVICE from "../../utils/device";
+import { updateMixpanelSuperProperties } from "../superProperties";
 
 const mockColorScheme = "light";
 jest.mock("react-native", () => ({
@@ -151,8 +149,7 @@ const generateMockedGlobalState = (
     features: {
       itWallet: {
         credentials: {
-          eid: O.none,
-          credentials: [] as Array<O.Option<StoredCredential>>
+          credentials: {}
         },
         preferences: {
           authLevel: "L2"

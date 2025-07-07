@@ -8,11 +8,14 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { isIos } from "../../../../utils/platform";
 import { walletRemoveCardsByCategory } from "../../../wallet/store/actions/cards";
 import { updatePropertiesWalletRevoked } from "../../analytics";
+import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { itwCredentialsSelector } from "../../credentials/store/selectors";
+import {
+  itwCredentialsSelector,
+  itwCredentialsEidSelector
+} from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../store/actions";
-import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
 
 const getKeyTag = (credential: O.Option<StoredCredential>) =>
   pipe(
@@ -22,7 +25,9 @@ const getKeyTag = (credential: O.Option<StoredCredential>) =>
 
 export function* handleWalletInstanceResetSaga() {
   const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
-  const { eid, credentials } = yield* select(itwCredentialsSelector);
+  const eid = yield* select(itwCredentialsEidSelector);
+  const credentials = yield* select(itwCredentialsSelector);
+
   try {
     yield* put(itwLifecycleStoresReset());
     yield* put(walletRemoveCardsByCategory("itw"));
@@ -35,7 +40,7 @@ export function* handleWalletInstanceResetSaga() {
       [
         isIos ? O.none : integrityKeyTag,
         getKeyTag(eid),
-        ...credentials.map(getKeyTag)
+        ...Object.values(credentials).map(O.some).map(getKeyTag)
       ],
       RA.filterMap(identity)
     );
