@@ -204,7 +204,8 @@ export const ItwPresentationCredentialDetail = ({
     isL3Credential,
     navigation,
     isCheckingPermissions,
-    itwProximityMachineRef
+    itwProximityMachineRef,
+    isDrivingLicense
   ]);
 
   if (status === "unknown") {

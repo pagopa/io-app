@@ -181,5 +181,5 @@ export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  !isItwCredentialSelector(state) && 
+  !isItwCredentialSelector(state) &&
   !itwIsWalletUpgradeMDLDetailsBannerHiddenSelector(state);

@@ -1,12 +1,12 @@
 import { Banner } from "@pagopa/io-app-design-system";
+import { useCallback, useMemo } from "react";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { itwSetWalletUpgradeMDLDetailsBannerHidden } from "../../../common/store/actions/preferences";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { itwShouldRenderWalletUpgradeMDLDetailsBannerSelector } from "../../../common/store/selectors";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { useCallback, useMemo } from "react";
 import {
   trackITWalletBannerVisualized,
   trackItWalletBannerClosure,
