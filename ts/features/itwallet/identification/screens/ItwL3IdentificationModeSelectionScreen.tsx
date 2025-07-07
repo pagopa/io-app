@@ -233,13 +233,15 @@ export const useNoCieBottomSheet = () => {
           )}
         />
         {([0, 1, 2] as const).map(index => (
-          <HStack space={24} key={index}>
-            <Pictogram name="attention" size={64} />
-            <IOMarkdown
-              content={I18n.t(
-                `features.itWallet.identification.mode.l3.bottomSheet.noCie.warnings.${index}`
-              )}
-            />
+          <HStack space={24} key={index} style={{ alignItems: "center" }}>
+            <Pictogram name="attention" size={48} />
+            <View style={{ flex: 1 }}>
+              <IOMarkdown
+                content={I18n.t(
+                  `features.itWallet.identification.mode.l3.bottomSheet.noCie.warnings.${index}`
+                )}
+              />
+            </View>
           </HStack>
         ))}
         <View>
