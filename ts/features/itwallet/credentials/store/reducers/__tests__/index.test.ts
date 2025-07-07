@@ -1,9 +1,6 @@
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import {
-  CredentialType,
-  ItwStoredCredentialsMocks
-} from "../../../../common/utils/itwMocksUtils";
+import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
   ParsedStatusAttestation,
   StoredCredential
