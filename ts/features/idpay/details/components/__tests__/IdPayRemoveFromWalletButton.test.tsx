@@ -37,7 +37,8 @@ const mockedInitiative: InitiativeDTO = {
   endDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
   nInstr: 1,
   lastCounterUpdate: new Date(),
-  status: StatusEnum.REFUNDABLE
+  // TODO: replace with USED when the logic is updated
+  status: StatusEnum.SUSPENDED
 };
 
 describe("IdPayRemoveFromWalletButton", () => {
