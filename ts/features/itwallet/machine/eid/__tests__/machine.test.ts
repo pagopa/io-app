@@ -67,6 +67,7 @@ describe("itwEidIssuanceMachine", () => {
   const hasValidWalletInstanceAttestation = jest.fn();
   const hasIntegrityKeyTag = jest.fn();
   const isL3FeaturesEnabled = jest.fn();
+  const isL2Fallback = jest.fn();
   const resetWalletInstance = jest.fn();
   const trackWalletInstanceCreation = jest.fn();
   const trackWalletInstanceRevocation = jest.fn();
@@ -131,7 +132,8 @@ describe("itwEidIssuanceMachine", () => {
       isOperationAborted,
       hasValidWalletInstanceAttestation,
       hasIntegrityKeyTag,
-      isL3FeaturesEnabled
+      isL3FeaturesEnabled,
+      isL2Fallback
     }
   });
 
@@ -270,7 +272,8 @@ describe("itwEidIssuanceMachine", () => {
         mode: "spid",
         level: "L2",
         idpId: idps[0].id
-      }
+      },
+      isL2Fallback: true
     });
 
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -325,7 +328,8 @@ describe("itwEidIssuanceMachine", () => {
       authenticationContext: expect.objectContaining({
         callbackUrl: "http://test.it"
       }),
-      eid: ItwStoredCredentialsMocks.eid
+      eid: ItwStoredCredentialsMocks.eid,
+      isL2Fallback: true
     });
 
     /**
@@ -378,8 +382,6 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-
-      isL3FeaturesEnabled: false,
       identification: {
         mode: "cieId",
         level: "L2"
@@ -1456,6 +1458,7 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
   });
+
   it("Should initialize the machine context with L3 active", async () => {
     const actor = createActor(mockedMachine);
     actor.start();

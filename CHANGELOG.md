@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.9.0-rc.3](https://github.com/pagopa/io-app/compare/3.9.0-rc.2...3.9.0-rc.3) (2025-07-04)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2669](https://pagopa.atlassian.net/browse/SIW-2669)] Fix back navigation after choosing L2 identification fallback ([#7149](https://github.com/pagopa/io-app/issues/7149)) ([9786a3a](https://github.com/pagopa/io-app/commit/9786a3a6af6efe71280c6ba75d4f569fe6e6ce0a))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2624](https://pagopa.atlassian.net/browse/SIW-2624)] Update copy for remote presentation and L3 upgrade ([#7152](https://github.com/pagopa/io-app/issues/7152)) ([432277b](https://github.com/pagopa/io-app/commit/432277b545a32aa6ae6df2dc87610f814c0f2a76))
+
+## [3.9.0-rc.2](https://github.com/pagopa/io-app/compare/3.9.0-rc.1...3.9.0-rc.2) (2025-07-03)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2548](https://pagopa.atlassian.net/browse/SIW-2548)] Implement Mixpanel events for remote presentation ([#7132](https://github.com/pagopa/io-app/issues/7132)) ([7a07395](https://github.com/pagopa/io-app/commit/7a07395fb8906d45b5a4b314ea004d5b9def6491))
+* [[SIW-2543](https://pagopa.atlassian.net/browse/SIW-2543)] IT-Wallet ID ([#7117](https://github.com/pagopa/io-app/issues/7117)) ([f034ba4](https://github.com/pagopa/io-app/commit/f034ba403d3257c92638ed3aed14d232bd2bb894)), closes [/github.com/pagopa/io-app/blob/master/ts/features/itwallet/common/utils/itwCredentialUtils.ts#L101](https://github.com/pagopa//github.com/pagopa/io-app/blob/master/ts/features/itwallet/common/utils/itwCredentialUtils.ts/issues/L101)
+
+
+### Chores
+
+* [[IOBP-1807](https://pagopa.atlassian.net/browse/IOBP-1807)] New bonus onboarding process ([#7146](https://github.com/pagopa/io-app/issues/7146)) ([da04909](https://github.com/pagopa/io-app/commit/da04909115ed258f4a1ad5cd29b12bb43b39270b))
+
 ## [3.9.0-rc.1](https://github.com/pagopa/io-app/compare/3.9.0-rc.0...3.9.0-rc.1) (2025-07-02)
 
 ## [3.9.0-rc.0](https://github.com/pagopa/io-app/compare/3.8.0-rc.9...3.9.0-rc.0) (2025-07-02)
