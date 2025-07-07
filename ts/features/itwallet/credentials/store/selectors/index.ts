@@ -23,7 +23,10 @@ type CredentialsByType = {
   [K: string]: Record<CredentialFormat, StoredCredential>;
 };
 
-// TODO: [SIW-2530] remove after migrating to API 1.0
+/**
+ * The Wallet might contain older credentials in `vc+sd-jwt` format.
+ * We must ensure credentials selectors still work with the older format.
+ */
 const withLegacyFallback = (
   credential: CredentialsByType[string] | undefined,
   format: CredentialFormat

@@ -313,3 +313,28 @@ describe("itwHasWalletAtLeastTwoCredentialsSelector", () => {
     expect(itwHasWalletAtLeastTwoCredentialsSelector(state)).toEqual(expected);
   });
 });
+
+describe("test legacy credentials", () => {
+  it("itwCredentialsEidSelector returns O.some with the eid ", () => {
+    const legacyEid = { ...mockedEid, format: "vc+sd-jwt" };
+    const state = getStateWithCredentials({
+      [legacyEid.credentialId]: legacyEid
+    });
+    expect(itwCredentialsEidSelector(state)).toEqual(O.some(legacyEid));
+  });
+
+  it("itwCredentialsSelector returns the legacy credentials", () => {
+    const legacyEid = { ...mockedEid, format: "vc+sd-jwt" };
+    const legacyMdl = { ...mockedDrivingLicense, format: "vc+sd-jwt" };
+    const legacyDc = { ...mockedDisabilityCard, format: "vc+sd-jwt" };
+    const state = getStateWithCredentials({
+      [legacyEid.credentialId]: legacyEid,
+      [legacyMdl.credentialId]: legacyMdl,
+      [legacyDc.credentialId]: legacyDc
+    });
+    expect(itwCredentialsSelector(state)).toEqual({
+      [CredentialType.DRIVING_LICENSE]: legacyMdl,
+      [CredentialType.EUROPEAN_DISABILITY_CARD]: legacyDc
+    });
+  });
+});
