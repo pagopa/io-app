@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-identical-functions */
 import _ from "lodash";
 import { and, assertEvent, assign, fromPromise, not, setup } from "xstate";
 import {
@@ -418,7 +417,7 @@ export const itwEidIssuanceMachine = setup({
                 },
                 "go-to-cie-warning": {
                   target:
-                    "#itwEidIssuanceMachine.UserIdentification.CiePin.L3.CieWarning.Identification"
+                    "#itwEidIssuanceMachine.UserIdentification.CiePin.CieWarning.Identification"
                 },
                 back: {
                   target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
@@ -560,284 +559,164 @@ export const itwEidIssuanceMachine = setup({
         CiePin: {
           description:
             "This state handles the entire CIE + pin identification flow",
-          initial: "EvaluateInitialState",
+          initial: "PreparationPin",
           states: {
-            EvaluateInitialState: {
+            PreparationPin: {
               description:
-                "CIE+PIN needs different behaviors depending on the level of identification",
-              always: [
-                {
-                  guard: "isL3FeaturesEnabled",
-                  target: "L3"
-                },
-                { target: "L2" }
-              ]
-            },
-            L2: {
-              initial: "InsertingCardPin",
-              states: {
-                InsertingCardPin: {
-                  entry: [
-                    assign(() => ({ authenticationContext: undefined })), // Reset the authentication context, otherwise retries will use stale data
-                    "navigateToCiePinScreen"
-                  ],
-                  on: {
-                    "cie-pin-entered": [
-                      {
-                        guard: "isNFCEnabled",
-                        target: "StartingCieAuthFlow",
-                        actions: assign(({ event }) => ({
-                          identification: {
-                            mode: "ciePin",
-                            level: "L3",
-                            pin: event.pin
-                          }
-                        }))
-                      },
-                      {
-                        target: "RequestingNfcActivation",
-                        actions: assign(({ event }) => ({
-                          identification: {
-                            mode: "ciePin",
-                            level: "L3",
-                            pin: event.pin
-                          }
-                        }))
-                      }
-                    ],
-                    back: {
-                      target: "#itwEidIssuanceMachine.UserIdentification"
-                    }
-                  }
-                },
-                RequestingNfcActivation: {
-                  entry: "navigateToNfcInstructionsScreen",
-                  on: {
-                    "nfc-enabled": {
-                      actions: assign(({ context }) => ({
-                        cieContext: _.merge(context.cieContext, {
-                          isNFCEnabled: true
-                        })
-                      })),
-                      target: "StartingCieAuthFlow"
-                    },
-                    back: {
-                      target: "#itwEidIssuanceMachine.UserIdentification"
-                    }
-                  }
-                },
-                StartingCieAuthFlow: {
-                  description:
-                    "Start the preliminary phase of the CIE identification flow.",
-                  entry: "navigateToCieReadCardScreen",
-                  tags: [ItwTags.Loading],
-                  invoke: {
-                    src: "startAuthFlow",
-                    input: ({ context }) => ({
-                      walletInstanceAttestation:
-                        context.walletInstanceAttestation?.jwt,
-                      identification: context.identification
-                    }),
-                    onDone: {
-                      actions: assign(({ event }) => ({
-                        authenticationContext: event.output
-                      })),
-                      target: "ReadingCieCard"
-                    },
-                    onError: {
-                      actions: "setFailure",
-                      target: "#itwEidIssuanceMachine.Failure"
-                    }
-                  },
-                  back: {
+                "This state handles the CIE PIN preparation screen, where the user is informed about the CIE PIN",
+              entry: "navigateToCiePinPreparationScreen",
+              on: {
+                next: [
+                  {
+                    guard: "isNFCEnabled",
                     target: "InsertingCardPin"
+                  },
+                  {
+                    target: "RequestingNfcActivation"
                   }
+                ],
+                "go-to-cie-warning": {
+                  target: "CieWarning.PreparationPin"
                 },
-                ReadingCieCard: {
-                  description:
-                    "Read the CIE card and get back a url to continue the PID issuing flow. This state also handles errors when reading the card.",
-                  on: {
-                    "user-identification-completed": {
-                      target:
-                        "#itwEidIssuanceMachine.UserIdentification.Completed",
-                      actions: ["completeUserIdentification", "storeAuthLevel"]
-                    },
-                    close: {
-                      target: "#itwEidIssuanceMachine.UserIdentification"
-                    },
-                    back: {
-                      target: "InsertingCardPin"
-                    }
-                  }
+                back: {
+                  target: "#itwEidIssuanceMachine.UserIdentification"
+                },
+                close: {
+                  actions: "closeIssuance"
                 }
               }
             },
-            L3: {
-              initial: "PreparationPin",
+            RequestingNfcActivation: {
+              entry: "navigateToNfcInstructionsScreen",
+              on: {
+                "nfc-enabled": {
+                  actions: assign(({ context }) => ({
+                    cieContext: _.merge(context.cieContext, {
+                      isNFCEnabled: true
+                    })
+                  })),
+                  target: "InsertingCardPin"
+                },
+                back: {
+                  target: "#itwEidIssuanceMachine.UserIdentification"
+                }
+              }
+            },
+            InsertingCardPin: {
+              entry: [
+                assign(() => ({ authenticationContext: undefined })), // Reset the authentication context, otherwise retries will use stale data
+                "navigateToCiePinScreen"
+              ],
+              on: {
+                "cie-pin-entered": {
+                  target: "PreparationCie",
+                  actions: assign(({ event }) => ({
+                    identification: {
+                      mode: "ciePin",
+                      level: "L3",
+                      pin: event.pin
+                    }
+                  }))
+                },
+                back: {
+                  target: "PreparationPin"
+                }
+              }
+            },
+            PreparationCie: {
+              description:
+                "This state handles the CIE preparation screen, where the user is informed about the CIE card",
+              entry: "navigateToCiePreparationScreen",
+              on: {
+                next: {
+                  target: "StartingCieAuthFlow"
+                },
+                "go-to-cie-warning": {
+                  target: "CieWarning.PreparationCie"
+                },
+                back: {
+                  target: "PreparationPin"
+                },
+                close: {
+                  actions: "closeIssuance"
+                }
+              }
+            },
+            StartingCieAuthFlow: {
+              description:
+                "Start the preliminary phase of the CIE identification flow.",
+              entry: "navigateToCieReadCardScreen",
+              tags: [ItwTags.Loading],
+              invoke: {
+                src: "startAuthFlow",
+                input: ({ context }) => ({
+                  walletInstanceAttestation:
+                    context.walletInstanceAttestation?.jwt,
+                  identification: context.identification,
+                  isL3IssuanceEnabled: context.isL3FeaturesEnabled
+                }),
+                onDone: {
+                  actions: assign(({ event }) => ({
+                    authenticationContext: event.output
+                  })),
+                  target: "ReadingCieCard"
+                },
+                onError: {
+                  actions: "setFailure",
+                  target: "#itwEidIssuanceMachine.Failure"
+                }
+              },
+              back: {
+                target: "PreparationCie"
+              }
+            },
+            ReadingCieCard: {
+              description:
+                "Read the CIE card and get back a url to continue the PID issuing flow. This state also handles errors when reading the card.",
+              on: {
+                "user-identification-completed": {
+                  target: "#itwEidIssuanceMachine.UserIdentification.Completed",
+                  actions: ["completeUserIdentification", "storeAuthLevel"]
+                },
+                close: {
+                  target: "#itwEidIssuanceMachine.UserIdentification"
+                },
+                back: {
+                  target: "PreparationCie"
+                }
+              }
+            },
+            CieWarning: {
+              description: "Navigates to and handles the CIE warning screen.",
+              entry: "navigateToCieWarningScreen",
+              initial: "Identification",
               states: {
-                PreparationPin: {
-                  description:
-                    "This state handles the CIE PIN preparation screen, where the user is informed about the CIE PIN",
-                  entry: "navigateToCiePinPreparationScreen",
+                Identification: {
                   on: {
-                    next: [
-                      {
-                        guard: "isNFCEnabled",
-                        target: "InsertingCardPin"
-                      },
-                      {
-                        target: "RequestingNfcActivation"
-                      }
-                    ],
-                    "go-to-cie-warning": {
-                      target: "CieWarning.PreparationPin"
-                    },
-                    back: {
-                      target: "#itwEidIssuanceMachine.UserIdentification"
-                    },
-                    close: {
-                      actions: "closeIssuance"
-                    }
-                  }
-                },
-                RequestingNfcActivation: {
-                  entry: "navigateToNfcInstructionsScreen",
-                  on: {
-                    "nfc-enabled": {
-                      actions: assign(({ context }) => ({
-                        cieContext: _.merge(context.cieContext, {
-                          isNFCEnabled: true
-                        })
-                      })),
-                      target: "InsertingCardPin"
-                    },
-                    back: {
-                      target: "#itwEidIssuanceMachine.UserIdentification"
-                    }
-                  }
-                },
-                InsertingCardPin: {
-                  entry: [
-                    assign(() => ({ authenticationContext: undefined })), // Reset the authentication context, otherwise retries will use stale data
-                    "navigateToCiePinScreen"
-                  ],
-                  on: {
-                    "cie-pin-entered": {
-                      target: "PreparationCie",
-                      actions: assign(({ event }) => ({
-                        identification: {
-                          mode: "ciePin",
-                          level: "L3",
-                          pin: event.pin
-                        }
-                      }))
-                    },
-                    back: {
-                      target: "PreparationPin"
-                    }
+                    back: "#itwEidIssuanceMachine.UserIdentification.Identification.L3"
                   }
                 },
                 PreparationCie: {
-                  description:
-                    "This state handles the CIE preparation screen, where the user is informed about the CIE card",
-                  entry: "navigateToCiePreparationScreen",
                   on: {
-                    next: {
-                      target: "StartingCieAuthFlow"
-                    },
-                    "go-to-cie-warning": {
-                      target: "CieWarning.PreparationCie"
-                    },
-                    back: {
-                      target: "PreparationPin"
-                    },
-                    close: {
-                      actions: "closeIssuance"
-                    }
+                    back: "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie"
                   }
                 },
-                StartingCieAuthFlow: {
-                  description:
-                    "Start the preliminary phase of the CIE identification flow.",
-                  entry: "navigateToCieReadCardScreen",
-                  tags: [ItwTags.Loading],
-                  invoke: {
-                    src: "startAuthFlow",
-                    input: ({ context }) => ({
-                      walletInstanceAttestation:
-                        context.walletInstanceAttestation?.jwt,
-                      identification: context.identification,
-                      isL3IssuanceEnabled: context.isL3FeaturesEnabled
-                    }),
-                    onDone: {
-                      actions: assign(({ event }) => ({
-                        authenticationContext: event.output
-                      })),
-                      target: "ReadingCieCard"
-                    },
-                    onError: {
-                      actions: "setFailure",
-                      target: "#itwEidIssuanceMachine.Failure"
-                    }
-                  },
-                  back: {
-                    target: "PreparationCie"
-                  }
-                },
-                ReadingCieCard: {
-                  description:
-                    "Read the CIE card and get back a url to continue the PID issuing flow. This state also handles errors when reading the card.",
+                PreparationPin: {
                   on: {
-                    "user-identification-completed": {
-                      target:
-                        "#itwEidIssuanceMachine.UserIdentification.Completed",
-                      actions: ["completeUserIdentification", "storeAuthLevel"]
-                    },
-                    close: {
-                      target: "#itwEidIssuanceMachine.UserIdentification"
-                    },
-                    back: {
-                      target: "PreparationCie"
-                    }
-                  }
-                },
-                CieWarning: {
-                  description:
-                    "Navigates to and handles the CIE warning screen.",
-                  entry: "navigateToCieWarningScreen",
-                  initial: "Identification",
-                  states: {
-                    Identification: {
-                      on: {
-                        back: "#itwEidIssuanceMachine.UserIdentification.Identification.L3"
-                      }
-                    },
-                    PreparationCie: {
-                      on: {
-                        back: "#itwEidIssuanceMachine.UserIdentification.CiePin.L3.PreparationCie"
-                      }
-                    },
-                    PreparationPin: {
-                      on: {
-                        back: "#itwEidIssuanceMachine.UserIdentification.CiePin.L3.PreparationPin"
-                      }
-                    }
-                  },
-                  on: {
-                    "go-to-l2-identification": {
-                      target:
-                        "#itwEidIssuanceMachine.UserIdentification.Identification.L2",
-                      actions: assign({ isL2Fallback: true })
-                    },
-                    close: {
-                      actions: "closeIssuance"
-                    }
+                    back: "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
                   }
                 }
+              },
+              on: {
+                "go-to-l2-identification": {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.Identification.L2",
+                  actions: assign({ isL2Fallback: true })
+                },
+                close: {
+                  actions: "closeIssuance"
+                }
               }
-            },
-            Completed: {
-              type: "final"
             }
           },
           onDone: {

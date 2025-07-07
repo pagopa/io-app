@@ -453,9 +453,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: {
-          L3: "PreparationPin"
-        }
+        CiePin: "PreparationPin"
       }
     });
 
@@ -465,9 +463,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: {
-          L3: "InsertingCardPin"
-        }
+        CiePin: "InsertingCardPin"
       }
     });
 
@@ -497,9 +493,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: {
-          L3: "PreparationCie"
-        }
+        CiePin: "PreparationCie"
       }
     });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
@@ -527,9 +521,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: {
-          L3: "ReadingCieCard"
-        }
+        CiePin: "ReadingCieCard"
       }
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -567,9 +559,7 @@ describe("itwEidIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: {
         UserIdentification: {
-          CiePin: {
-            L2: "InsertingCardPin"
-          }
+          CiePin: "PreparationPin"
         }
       },
       context: {
@@ -592,15 +582,12 @@ describe("itwEidIssuanceMachine", () => {
      */
 
     actor.send({
-      type: "cie-pin-entered",
-      pin: "12345678"
+      type: "next"
     });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: {
-          L2: "RequestingNfcActivation"
-        }
+        CiePin: "RequestingNfcActivation"
       }
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -608,11 +595,7 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      identification: {
-        mode: "ciePin",
-        level: "L3",
-        pin: "12345678"
-      },
+      identification: undefined,
       cieContext: {
         isNFCEnabled: false,
         isCIEAuthenticationSupported: true
@@ -630,20 +613,14 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: {
-          L2: "StartingCieAuthFlow"
-        }
+        CiePin: "InsertingCardPin"
       }
     });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      identification: {
-        mode: "ciePin",
-        level: "L3",
-        pin: "12345678"
-      },
+      identification: undefined,
       cieContext: {
         isNFCEnabled: true,
         isCIEAuthenticationSupported: true
@@ -1370,9 +1347,7 @@ describe("itwEidIssuanceMachine", () => {
       expect(actor.getSnapshot().value).toStrictEqual({
         UserIdentification: {
           CiePin: {
-            L3: {
-              CieWarning: "Identification"
-            }
+            CieWarning: "Identification"
           }
         }
       });
@@ -1406,9 +1381,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: {
-          L3: "PreparationPin"
-        }
+        CiePin: "PreparationPin"
       }
     });
 
@@ -1418,9 +1391,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: {
-          L3: "InsertingCardPin"
-        }
+        CiePin: "InsertingCardPin"
       }
     });
 
@@ -1430,9 +1401,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: {
-          L3: "InsertingCardPin"
-        }
+        CiePin: "InsertingCardPin"
       }
     });
 
@@ -1464,9 +1433,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: {
-          L3: "PreparationPin"
-        }
+        CiePin: "PreparationPin"
       }
     });
 
@@ -1479,9 +1446,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
         CiePin: {
-          L3: {
-            CieWarning: "PreparationPin"
-          }
+          CieWarning: "PreparationPin"
         }
       }
     });
@@ -1494,9 +1459,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: {
-          L3: "PreparationPin"
-        }
+        CiePin: "PreparationPin"
       }
     });
   });
