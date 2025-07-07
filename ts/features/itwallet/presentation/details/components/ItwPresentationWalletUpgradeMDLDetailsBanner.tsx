@@ -1,0 +1,85 @@
+import { Banner } from "@pagopa/io-app-design-system";
+import I18n from "../../../../../i18n";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../../navigation/routes";
+import { itwSetWalletUpgradeMDLDetailsBannerHidden } from "../../../common/store/actions/preferences";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { itwShouldRenderWalletUpgradeMDLDetailsBannerSelector } from "../../../common/store/selectors";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useCallback, useMemo } from "react";
+import {
+  trackITWalletBannerVisualized,
+  trackItWalletBannerClosure,
+  trackItWalletBannerTap
+} from "../../../analytics";
+import { ITW_SCREENVIEW_EVENTS } from "../../../analytics/enum";
+
+/**
+ * Banner promoting IT Wallet upgrade in MDL details to enable
+ * driving license usage as identity document.
+ */
+export const ItwPresentationWalletUpgradeMDLDetailsBanner = () => {
+  const dispatch = useIODispatch();
+  const navigation = useIONavigation();
+  const shouldRender = useIOSelector(
+    itwShouldRenderWalletUpgradeMDLDetailsBannerSelector
+  );
+  const { name: routeName } = useRoute();
+
+  const trackBannerProperties = useMemo(
+    () => ({
+      banner_id: "itwUpgradeMDLDetailsBanner",
+      banner_page: routeName,
+      banner_landing: ITW_SCREENVIEW_EVENTS.ITW_INTRO,
+      banner_campaign: I18n.t(
+        "features.itWallet.presentation.credentialDetails.mdl.itwUpgradeBanner.title"
+      )
+    }),
+    [routeName]
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      if (shouldRender) {
+        trackITWalletBannerVisualized(trackBannerProperties);
+      }
+    }, [trackBannerProperties, shouldRender])
+  );
+
+  if (!shouldRender) {
+    return null;
+  }
+
+  const handleOnPress = () => {
+    trackItWalletBannerTap(trackBannerProperties);
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: { isL3: true }
+    });
+  };
+
+  const handleOnClose = () => {
+    trackItWalletBannerClosure(trackBannerProperties);
+    dispatch(itwSetWalletUpgradeMDLDetailsBannerHidden(true));
+  };
+
+  return (
+    <Banner
+      testID="itwUpgradeMDLDetailsBannerTestID"
+      title={I18n.t(
+        "features.itWallet.presentation.credentialDetails.mdl.itwUpgradeBanner.title"
+      )}
+      content={I18n.t(
+        "features.itWallet.presentation.credentialDetails.mdl.itwUpgradeBanner.content"
+      )}
+      action={I18n.t(
+        "features.itWallet.presentation.credentialDetails.mdl.itwUpgradeBanner.action"
+      )}
+      pictogramName="cie"
+      color="neutral"
+      onPress={handleOnPress}
+      labelClose={I18n.t("global.buttons.close")}
+      onClose={handleOnClose}
+    />
+  );
+};

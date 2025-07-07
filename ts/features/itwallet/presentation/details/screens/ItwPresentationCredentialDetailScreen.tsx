@@ -51,6 +51,7 @@ import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
 import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
 import { selectIsLoading } from "../../proximity/machine/selectors.ts";
 import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
+import { ItwPresentationWalletUpgradeMDLDetailsBanner } from "../components/ItwPresentationWalletUpgradeMDLDetailsBanner.tsx";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -118,6 +119,8 @@ export const ItwPresentationCredentialDetail = ({
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
+  const isDrivingLicense =
+    credential.credentialType === CredentialType.DRIVING_LICENSE;
 
   useDebugInfo(credential);
   usePreventScreenCapture();
@@ -165,7 +168,7 @@ export const ItwPresentationCredentialDetail = ({
     const credentialType = credential.credentialType;
     const contentClaim = parsedCredential[WellKnownClaim.content];
 
-    if (credentialType === CredentialType.DRIVING_LICENSE && isL3Credential) {
+    if (isDrivingLicense && isL3Credential) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
         icon: "qrCode",
@@ -224,6 +227,7 @@ export const ItwPresentationCredentialDetail = ({
       <ContentWrapper>
         <VStack space={24}>
           <ItwPresentationAdditionalInfoSection credential={credential} />
+          {isDrivingLicense && <ItwPresentationWalletUpgradeMDLDetailsBanner />}
           <ItwPresentationCredentialStatusAlert credential={credential} />
           <ItwPresentationCredentialInfoAlert credential={credential} />
           <ItwPresentationClaimsSection credential={credential} />
