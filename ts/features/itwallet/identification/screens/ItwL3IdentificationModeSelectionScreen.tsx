@@ -25,15 +25,25 @@ import {
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
+import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
 
 export const ItwL3IdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isWalletAlreadyActivated = useIOSelector(itwLifecycleIsValidSelector);
+  const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
 
   const cieIdBottomSheet = useCieIdBottomSheet();
   const noCieBottomSheet = useNoCieBottomSheet();
-  const cieCardInfoBottomSheet = useCieInfoBottomSheet("card");
-  const ciePinInfoBottomSheet = useCieInfoBottomSheet("pin");
+  const cieCardInfoBottomSheet = useCieInfoBottomSheet({
+    type: "card",
+    showSecondaryAction: isL3FeaturesEnabled
+  });
+  const ciePinInfoBottomSheet = useCieInfoBottomSheet({
+    type: "pin",
+    showSecondaryAction: isL3FeaturesEnabled
+  });
 
   useFocusEffect(trackItWalletIDMethod);
 

@@ -20,7 +20,7 @@ import {
   InitialContext
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
-import { CiePreparationType } from "../../../identification/components/cie/CiePreparationScreenContent";
+import { CiePreparationType } from "../../../identification/components/cie/ItwCiePreparationBaseScreenContent";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 

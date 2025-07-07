@@ -7,14 +7,21 @@ import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
 import { renderActionButtons } from "../../../../components/ui/IOScrollView";
-import { CiePreparationType } from "../components/cie/CiePreparationScreenContent";
+import { CiePreparationType } from "../components/cie/ItwCiePreparationBaseScreenContent";
+
+type Props = { type: CiePreparationType; showSecondaryAction?: boolean };
 
 /**
  * Hook to display a bottom sheet with information about the CIE
- * @param type - The category of info to display
+ * @param type - The type of info to display
+ * @param showSecondaryAction - Whether to show the secondary action button. The bottomsheet has different actions based
+ * on auth level or step in the flow.
  * @returns The bottom sheet component
  */
-export const useCieInfoBottomSheet = (type: CiePreparationType) => {
+export const useCieInfoBottomSheet = ({
+  type,
+  showSecondaryAction = true
+}: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const imageSrc = useMemo(() => {
@@ -42,29 +49,43 @@ export const useCieInfoBottomSheet = (type: CiePreparationType) => {
         <AnimatedImage source={imageSrc} style={styles.image} />
         <View>
           {renderActionButtons(
-            {
-              type: "TwoButtons",
-              primary: {
-                label: I18n.t(
-                  `features.itWallet.identification.cie.bottomSheet.${type}.primaryAction`
-                ),
-                onPress: () => {
-                  bottomSheet.dismiss();
+            showSecondaryAction
+              ? // If L3 (IT-Wallet), show both primary and secondary actions
+                {
+                  type: "TwoButtons",
+                  primary: {
+                    label: I18n.t(
+                      `features.itWallet.identification.cie.bottomSheet.${type}.primaryAction`
+                    ),
+                    onPress: () => {
+                      bottomSheet.dismiss();
+                    }
+                  },
+                  secondary: {
+                    label: I18n.t(
+                      `features.itWallet.identification.cie.bottomSheet.${type}.secondaryAction`
+                    ),
+                    onPress: () => {
+                      machineRef.send({
+                        type: "go-to-cie-warning",
+                        warning: type
+                      });
+                      bottomSheet.dismiss();
+                    }
+                  }
                 }
-              },
-              secondary: {
-                label: I18n.t(
-                  `features.itWallet.identification.cie.bottomSheet.${type}.secondaryAction`
-                ),
-                onPress: () => {
-                  machineRef.send({
-                    type: "go-to-cie-warning",
-                    warning: type
-                  });
-                  bottomSheet.dismiss();
-                }
-              }
-            },
+              : // If not L3 (Documenti su IO), show only the primary action
+                {
+                  type: "SingleButton",
+                  primary: {
+                    label: I18n.t(
+                      `features.itWallet.identification.cie.bottomSheet.${type}.primaryAction`
+                    ),
+                    onPress: () => {
+                      bottomSheet.dismiss();
+                    }
+                  }
+                },
             16
           )}
         </View>

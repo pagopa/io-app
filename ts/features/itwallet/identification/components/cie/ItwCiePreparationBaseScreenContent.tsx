@@ -5,6 +5,7 @@ import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScro
 import I18n from "../../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { useCieInfoBottomSheet } from "../../hooks/useCieInfoBottomSheet";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 
 export type CiePreparationType = "card" | "pin";
 
@@ -13,10 +14,15 @@ type Props = { type: CiePreparationType };
 // Get the screen height to calculate a responsive image container height
 const screenHeight = Dimensions.get("window").height;
 
-export const CiePreparationScreenContent = ({ type }: Props) => {
+export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-
-  const infoBottomSheet = useCieInfoBottomSheet(type);
+  const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+  const infoBottomSheet = useCieInfoBottomSheet({
+    type,
+    showSecondaryAction: isL3FeaturesEnabled
+  });
 
   // Define image container height as 50% of screen height
   const imageHeightContainer = screenHeight * 0.5;

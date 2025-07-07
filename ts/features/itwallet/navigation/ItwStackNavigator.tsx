@@ -40,8 +40,8 @@ import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/detail
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
-import { ItwCieCardPreparationScreen } from "../identification/screens/cie/ItwCieCardPreparationScreen.tsx";
-import { ItwCiePinPreparationScreen } from "../identification/screens/cie/ItwCiePinPreparationScreen";
+import { ItwCiePreparationCardScreen } from "../identification/screens/cie/ItwCiePreparationCardScreen";
+import { ItwCiePreparationPinScreen } from "../identification/screens/cie/ItwCiePreparationPinScreen.tsx";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { useIOSelector } from "../../../store/hooks";
@@ -153,11 +153,11 @@ const InnerNavigator = () => {
       {/* IDENTIFICATION CIE + PIN */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN}
-        component={ItwCieCardPreparationScreen}
+        component={ItwCiePreparationCardScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN}
-        component={ItwCiePinPreparationScreen}
+        component={ItwCiePreparationPinScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}
