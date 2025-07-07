@@ -1,9 +1,11 @@
 import {
   ContentWrapper,
   Divider,
+  HStack,
   ListItemHeader,
   ListItemInfo,
   ListItemNav,
+  Pictogram,
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -14,32 +16,49 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 import { renderActionButtons } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../analytics";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 import { CieWarningType } from "./ItwIdentificationCieWarningScreen";
 
 export const ItwL3IdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isWalletAlreadyActivated = useIOSelector(itwLifecycleIsValidSelector);
 
   const cieIdBottomSheet = useCieIdBottomSheet();
+  const noCieBottomSheet = useNoCieBottomSheet();
   const cieCardInfoBottomSheet = useCieInfoBottomSheet("card");
   const ciePinInfoBottomSheet = useCieInfoBottomSheet("pin");
 
-  const navigateToCieWarning = (warning: CieWarningType) => {
-    machineRef.send({ type: "go-to-cie-warning", warning });
-  };
+  const navigateToCieWarning = useCallback(
+    (warning: CieWarningType) => {
+      machineRef.send({ type: "go-to-cie-warning", warning });
+    },
+    [machineRef]
+  );
 
   useFocusEffect(trackItWalletIDMethod);
 
-  const handleCiePinPress = useCallback(() => {
+  const handlePrimaryActionPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
     trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin" });
   }, [machineRef]);
+
+  const handleSecondaryActionPress = useCallback(() => {
+    if (isWalletAlreadyActivated) {
+      // If the user is in the L3 upgrade flow, he cannot proceed without a CIE card
+      navigateToCieWarning("noCie");
+    } else {
+      // If the user is activating the IT Wallet, we provide an L2 fallback
+      noCieBottomSheet.present();
+    }
+  }, [isWalletAlreadyActivated, noCieBottomSheet, navigateToCieWarning]);
 
   return (
     <IOScrollViewWithLargeHeader
@@ -59,7 +78,7 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
           accessibilityLabel: I18n.t(
             "features.itWallet.identification.mode.l3.screen.primaryAction"
           ),
-          onPress: handleCiePinPress,
+          onPress: handlePrimaryActionPress,
           testID: "l3-primary-action"
         },
         secondary: {
@@ -69,7 +88,7 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
           accessibilityLabel: I18n.t(
             "features.itWallet.identification.mode.l3.screen.secondaryAction"
           ),
-          onPress: () => navigateToCieWarning("noCie"),
+          onPress: handleSecondaryActionPress,
           testID: "l3-secondary-action"
         }
       }}
@@ -138,13 +157,14 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
         {cieIdBottomSheet.bottomSheet}
         {cieCardInfoBottomSheet.bottomSheet}
         {ciePinInfoBottomSheet.bottomSheet}
+        {noCieBottomSheet.bottomSheet}
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );
 };
 
 /**
- * Bottom sheet that displays info about the CieID authentication method
+ * Hook that manages the bottom sheet that displays info about the CieID authentication method
  */
 const useCieIdBottomSheet = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -179,6 +199,66 @@ const useCieIdBottomSheet = () => {
               secondary: {
                 label: I18n.t(
                   "features.itWallet.identification.mode.l3.bottomSheet.cieId.secondaryAction"
+                ),
+                onPress: () => {
+                  bottomSheet.dismiss();
+                }
+              }
+            },
+            16
+          )}
+        </View>
+      </VStack>
+    )
+  });
+
+  return bottomSheet;
+};
+
+/**
+ * Hook that manages the bottom sheet that displays info about the CieID authentication method
+ */
+export const useNoCieBottomSheet = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+
+  const bottomSheet = useIOBottomSheetModal({
+    title: I18n.t(
+      "features.itWallet.identification.mode.l3.bottomSheet.noCie.title"
+    ),
+    component: (
+      <VStack space={24}>
+        <IOMarkdown
+          content={I18n.t(
+            "features.itWallet.identification.mode.l3.bottomSheet.noCie.content"
+          )}
+        />
+        {([0, 1, 2] as const).map(index => (
+          <HStack space={24} key={index}>
+            <Pictogram name="attention" size={64} />
+            <IOMarkdown
+              content={I18n.t(
+                `features.itWallet.identification.mode.l3.bottomSheet.noCie.warnings.${index}`
+              )}
+            />
+          </HStack>
+        ))}
+        <View>
+          {renderActionButtons(
+            {
+              type: "TwoButtons",
+              primary: {
+                icon: "cie",
+                label: I18n.t(
+                  "features.itWallet.identification.mode.l3.bottomSheet.noCie.primaryAction"
+                ),
+                onPress: () => {
+                  machineRef.send({ type: "go-to-l2-identification" });
+                  bottomSheet.dismiss();
+                }
+              },
+              secondary: {
+                label: I18n.t(
+                  "features.itWallet.identification.mode.l3.bottomSheet.noCie.secondaryAction"
                 ),
                 onPress: () => {
                   bottomSheet.dismiss();
