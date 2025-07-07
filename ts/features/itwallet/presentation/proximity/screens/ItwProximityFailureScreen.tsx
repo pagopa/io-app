@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import { selectFailureOption } from "../machine/selectors.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
@@ -11,7 +12,8 @@ import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../../components/screens/OperationResultScreenContent.tsx";
-import I18n from "../../../../../i18n.ts";
+import I18n from "../../../../../i18n";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
 
 export const ItwProximityFailureScreen = () => {
   const failureOption =
@@ -34,6 +36,18 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   useDebugInfo({
     failure: serializeFailureReason(failure)
+  });
+
+  const { bottomSheet, present } = useIOBottomSheetModal({
+    component: (
+      <>
+        <Body>
+          {I18n.t(`${i18nNs}.relyingParty.untrustedRp.bottomSheet.content`)}
+        </Body>
+        <VSpacer size={24} />
+      </>
+    ),
+    title: I18n.t(`${i18nNs}.relyingParty.untrustedRp.bottomSheet.title`)
   });
 
   const getOperationResultScreenContentProps =
@@ -71,15 +85,34 @@ const ContentView = ({ failure }: ContentViewProps) => {
               onPress: () => machineRef.send({ type: "close" })
             }
           };
+        case ProximityFailureType.UNTRUSTED_RP:
+          return {
+            title: I18n.t(`${i18nNs}.relyingParty.untrustedRp.title`),
+            subtitle: I18n.t(`${i18nNs}.relyingParty.untrustedRp.subtitle`),
+            pictogram: "stopSecurity",
+            action: {
+              label: I18n.t(`${i18nNs}.relyingParty.untrustedRp.primaryAction`),
+              onPress: () => machineRef.send({ type: "close" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                `${i18nNs}.relyingParty.untrustedRp.secondaryAction`
+              ),
+              onPress: present
+            }
+          };
       }
     };
 
   const resultScreenProps = getOperationResultScreenContentProps();
 
   return (
-    <OperationResultScreenContent
-      {...resultScreenProps}
-      subtitleProps={{ textBreakStrategy: "simple" }}
-    />
+    <>
+      <OperationResultScreenContent
+        {...resultScreenProps}
+        subtitleProps={{ textBreakStrategy: "simple" }}
+      />
+      {bottomSheet}
+    </>
   );
 };

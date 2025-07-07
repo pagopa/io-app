@@ -7,7 +7,9 @@ import {
   ProximityCommunicationLogicActorInput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
-  StartProximityFlowInput
+  StartProximityFlowInput,
+  GetQrCodeStringActorOutput,
+  CloseActorOutput
 } from "./actors";
 import { mapEventToFailure } from "./failure";
 
@@ -22,8 +24,18 @@ export const itwProximityMachine = setup({
   },
   actions: {
     onInit: notImplemented,
+
+    /**
+     * Context manipulation
+     */
+
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     setQRCodeGenerationError: assign({ isQRCodeGenerationError: true }),
+
+    /**
+     * Navigation
+     */
+
     navigateToGrantPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
@@ -33,13 +45,14 @@ export const itwProximityMachine = setup({
     closeProximity: notImplemented
   },
   actors: {
-    checkPermissions: fromPromise<boolean, void>(notImplemented),
-    checkBluetoothIsActive: fromPromise<boolean, void>(notImplemented),
+    checkPermissions: fromPromise<boolean>(notImplemented),
+    checkBluetoothIsActive: fromPromise<boolean>(notImplemented),
     startProximityFlow: fromPromise<void, StartProximityFlowInput>(
       notImplemented
     ),
-    generateQrCodeString: fromPromise<string, void>(notImplemented),
-    closeProximityFlow: fromPromise<boolean, void>(notImplemented),
+    generateQrCodeString:
+      fromPromise<GetQrCodeStringActorOutput>(notImplemented),
+    closeProximityFlow: fromPromise<CloseActorOutput>(notImplemented),
     proximityCommunicationLogic: fromCallback<
       ProximityEvents,
       ProximityCommunicationLogicActorInput
@@ -50,6 +63,9 @@ export const itwProximityMachine = setup({
       SendDocumentsActorOutput,
       SendDocumentsActorInput
     >(notImplemented)
+  },
+  guards: {
+    hasFailure: notImplemented
   }
 }).createMachine({
   id: "itwProximityMachine",
@@ -242,7 +258,7 @@ export const itwProximityMachine = setup({
           tags: [ItwPresentationTags.Presenting],
           description: "Display the QR code generation error",
           on: {
-            close: {
+            dismiss: {
               target: "#itwProximityMachine.ClosePresentation"
             },
             retry: {
@@ -251,7 +267,7 @@ export const itwProximityMachine = setup({
           }
         },
         RestartingProximityFlow: {
-          tags: [ItwPresentationTags.Loading],
+          tags: [ItwPresentationTags.Presenting, ItwPresentationTags.Loading],
           description: "Restart the proximity flow",
           invoke: {
             src: "startProximityFlow",
@@ -306,7 +322,7 @@ export const itwProximityMachine = setup({
         },
         "device-error": {
           actions: "setFailure",
-          target: "Failure"
+          target: "DeviceCommunication.Closing"
         }
       },
       states: {
@@ -349,7 +365,7 @@ export const itwProximityMachine = setup({
             src: "sendDocuments",
             input: ({ context }) => ({
               credentialsByType: context.credentialsByType,
-              verifiedRequest: context.verifierRequest
+              verifierRequest: context.verifierRequest
             }),
             onDone: {
               target: "#itwProximityMachine.Success"
@@ -389,14 +405,26 @@ export const itwProximityMachine = setup({
           invoke: {
             id: "terminateProximitySession",
             src: "terminateProximitySession",
-            onDone: {
-              actions: "closeProximity",
-              target: "#itwProximityMachine.Idle"
-            },
-            onError: {
-              actions: "closeProximity",
-              target: "#itwProximityMachine.Idle"
-            }
+            onDone: [
+              {
+                guard: "hasFailure",
+                target: "#itwProximityMachine.Failure"
+              },
+              {
+                actions: "closeProximity",
+                target: "#itwProximityMachine.Idle"
+              }
+            ],
+            onError: [
+              {
+                guard: "hasFailure",
+                target: "#itwProximityMachine.Failure"
+              },
+              {
+                actions: "closeProximity",
+                target: "#itwProximityMachine.Idle"
+              }
+            ]
           }
         }
       }

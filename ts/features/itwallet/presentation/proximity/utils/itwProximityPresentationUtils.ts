@@ -9,7 +9,7 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { parseClaims } from "../../../common/utils/itwClaimsUtils";
 import { assert } from "../../../../../utils/assert";
-import { TimeoutError } from "../machine/failure";
+import { TimeoutError, UntrustedRpError } from "./itwProximityErrors";
 import { ProximityDetails } from "./itwProximityTypeUtils";
 
 export const promiseWithTimeout = <T>(
@@ -31,6 +31,11 @@ export const getProximityDetails = (
 ): ProximityDetails =>
   Object.entries(request).map(
     ([credentialType, { isAuthenticated, ...namespaces }]) => {
+      // Stop the flow if the verifier (RP) is not trusted
+      if (!isAuthenticated) {
+        throw new UntrustedRpError("Untrusted RP");
+      }
+
       const credential = credentialsByType[credentialType];
 
       assert(credential, "Credential not found in the wallet");

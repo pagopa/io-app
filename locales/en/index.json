@@ -5037,6 +5037,16 @@
               "title": "L’app di chi verifica non risponde",
               "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
               "primaryAction": "Chiudi"
+            },
+            "untrustedRp": {
+              "title": "Non è possibile verificare il documento",
+              "subtitle": "Per la tua sicurezza, IO può condividere le tue informazioni solo con sistemi riconosciuti e abilitati alla verifica.",
+              "primaryAction": "Chiudi",
+              "secondaryAction": "Cosa significa?",
+              "bottomSheet": {
+                "title": "Chi puo' leggere i tuoi dati?",
+                "content": "IO controlla sempre chi sta richiedendo la lettura dei tuoi dati e non ti permette di continuare se non riconosce il sistema utilizzato per la verifica.\n\nL'app puo' condividere i tuoi dati solo con enti e soggetti autorizzati."
+              }
             }
           },
           "success": {
