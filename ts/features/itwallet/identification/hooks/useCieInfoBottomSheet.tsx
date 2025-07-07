@@ -1,28 +1,24 @@
 import { VStack } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import I18n from "../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
 import { renderActionButtons } from "../../../../components/ui/IOScrollView";
-
-/**
- * The type of info to display in the bottom sheet
- */
-type InfoCategory = "card" | "pin";
+import { CiePreparationType } from "../components/cie/CiePreparationScreenContent";
 
 /**
  * Hook to display a bottom sheet with information about the CIE
- * @param category - The category of info to display
+ * @param type - The category of info to display
  * @returns The bottom sheet component
  */
-export const useCieInfoBottomSheet = (category: InfoCategory) => {
+export const useCieInfoBottomSheet = (type: CiePreparationType) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const imageSrc = useMemo(() => {
-    switch (category) {
+    switch (type) {
       case "card":
         return require("../../../../../img/features/itWallet/identification/cie_card.png");
       case "pin":
@@ -30,33 +26,17 @@ export const useCieInfoBottomSheet = (category: InfoCategory) => {
       default:
         return undefined;
     }
-  }, [category]);
+  }, [type]);
 
-  const handleSecondaryAction = useCallback(() => {
-    switch (category) {
-      case "card":
-        machineRef.send({
-          type: "go-to-cie-warning",
-          warning: "noCie"
-        });
-        break;
-      case "pin":
-        machineRef.send({
-          type: "go-to-cie-warning",
-          warning: "noPin"
-        });
-        break;
-    }
-  }, [category, machineRef]);
   const bottomSheet = useIOBottomSheetModal({
     title: I18n.t(
-      `features.itWallet.identification.cie.bottomSheet.${category}.title`
+      `features.itWallet.identification.cie.bottomSheet.${type}.title`
     ),
     component: (
       <VStack space={24}>
         <IOMarkdown
           content={I18n.t(
-            `features.itWallet.identification.cie.bottomSheet.${category}.content`
+            `features.itWallet.identification.cie.bottomSheet.${type}.content`
           )}
         />
         <AnimatedImage source={imageSrc} style={styles.image} />
@@ -66,7 +46,7 @@ export const useCieInfoBottomSheet = (category: InfoCategory) => {
               type: "TwoButtons",
               primary: {
                 label: I18n.t(
-                  `features.itWallet.identification.cie.bottomSheet.${category}.primaryAction`
+                  `features.itWallet.identification.cie.bottomSheet.${type}.primaryAction`
                 ),
                 onPress: () => {
                   bottomSheet.dismiss();
@@ -74,9 +54,15 @@ export const useCieInfoBottomSheet = (category: InfoCategory) => {
               },
               secondary: {
                 label: I18n.t(
-                  `features.itWallet.identification.cie.bottomSheet.${category}.secondaryAction`
+                  `features.itWallet.identification.cie.bottomSheet.${type}.secondaryAction`
                 ),
-                onPress: handleSecondaryAction
+                onPress: () => {
+                  machineRef.send({
+                    type: "go-to-cie-warning",
+                    warning: type
+                  });
+                  bottomSheet.dismiss();
+                }
               }
             },
             16

@@ -25,7 +25,6 @@ import {
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
-import { CieWarningType } from "./ItwIdentificationCieWarningScreen";
 
 export const ItwL3IdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -35,13 +34,6 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
   const noCieBottomSheet = useNoCieBottomSheet();
   const cieCardInfoBottomSheet = useCieInfoBottomSheet("card");
   const ciePinInfoBottomSheet = useCieInfoBottomSheet("pin");
-
-  const navigateToCieWarning = useCallback(
-    (warning: CieWarningType) => {
-      machineRef.send({ type: "go-to-cie-warning", warning });
-    },
-    [machineRef]
-  );
 
   useFocusEffect(trackItWalletIDMethod);
 
@@ -53,12 +45,12 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
   const handleSecondaryActionPress = useCallback(() => {
     if (isWalletAlreadyActivated) {
       // If the user is in the L3 upgrade flow, he cannot proceed without a CIE card
-      navigateToCieWarning("noCie");
+      machineRef.send({ type: "go-to-cie-warning", warning: "card" });
     } else {
       // If the user is activating the IT Wallet, we provide an L2 fallback
       noCieBottomSheet.present();
     }
-  }, [isWalletAlreadyActivated, noCieBottomSheet, navigateToCieWarning]);
+  }, [isWalletAlreadyActivated, noCieBottomSheet, machineRef]);
 
   return (
     <IOScrollViewWithLargeHeader

@@ -20,7 +20,7 @@ import {
   InitialContext
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
-import { CieWarningType } from "../../../identification/screens/ItwIdentificationCieWarningScreen.tsx";
+import { CiePreparationType } from "../../../identification/components/cie/CiePreparationScreenContent";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -1339,7 +1339,7 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
 
-    const testWarningType: CieWarningType = "noCie" as CieWarningType;
+    const testWarningType: CiePreparationType = "card";
 
     actor.send({ type: "go-to-cie-warning", warning: testWarningType });
 
@@ -1439,7 +1439,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(navigateToCiePinPreparationScreen).toHaveBeenCalledTimes(1);
 
-    const testWarningType: CieWarningType = "noCie" as CieWarningType;
+    const testWarningType: CiePreparationType = "card";
 
     actor.send({ type: "go-to-cie-warning", warning: testWarningType });
 

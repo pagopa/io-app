@@ -6,23 +6,23 @@ import I18n from "../../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { useCieInfoBottomSheet } from "../../hooks/useCieInfoBottomSheet";
 
-type InfoCategory = "card" | "pin";
+export type CiePreparationType = "card" | "pin";
 
-type Props = { category: InfoCategory };
+type Props = { type: CiePreparationType };
 
 // Get the screen height to calculate a responsive image container height
 const screenHeight = Dimensions.get("window").height;
 
-export const CiePreparationScreenContent = ({ category }: Props) => {
+export const CiePreparationScreenContent = ({ type }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
-  const infoBottomSheet = useCieInfoBottomSheet(category);
+  const infoBottomSheet = useCieInfoBottomSheet(type);
 
   // Define image container height as 50% of screen height
   const imageHeightContainer = screenHeight * 0.5;
 
   const imageSrc = useMemo(() => {
-    switch (category) {
+    switch (type) {
       case "card":
         return require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif");
       case "pin":
@@ -30,24 +30,24 @@ export const CiePreparationScreenContent = ({ category }: Props) => {
       default:
         return undefined;
     }
-  }, [category]);
+  }, [type]);
 
   return (
     <IOScrollViewWithLargeHeader
       title={{
         label: I18n.t(
-          `features.itWallet.identification.cie.prepare.${category}.title`
+          `features.itWallet.identification.cie.prepare.${type}.title`
         )
       }}
       description={I18n.t(
-        `features.itWallet.identification.cie.prepare.${category}.content`
+        `features.itWallet.identification.cie.prepare.${type}.content`
       )}
       headerActionsProp={{ showHelp: true }}
       actions={{
         type: "SingleButton",
         primary: {
           label: I18n.t(
-            `features.itWallet.identification.cie.prepare.${category}.cta`
+            `features.itWallet.identification.cie.prepare.${type}.cta`
           ),
           onPress: () => machineRef.send({ type: "next" })
         }
@@ -57,7 +57,7 @@ export const CiePreparationScreenContent = ({ category }: Props) => {
         <IOButton
           variant="link"
           label={I18n.t(
-            `features.itWallet.identification.cie.prepare.${category}.buttonLink`
+            `features.itWallet.identification.cie.prepare.${type}.buttonLink`
           )}
           onPress={() => infoBottomSheet.present()}
         />
