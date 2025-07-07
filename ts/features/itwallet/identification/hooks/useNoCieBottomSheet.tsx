@@ -79,7 +79,7 @@ export const useNoCieBottomSheet = () => {
         </View>
         <VSpacer size={24} />
         <Footer />
-        <VSpacer size={12} />
+        <VSpacer size={8} />
       </View>
     )
   });
