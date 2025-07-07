@@ -109,7 +109,8 @@ export const itwEidIssuanceMachine = setup({
     hasValidWalletInstanceAttestation: notImplemented,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
     isReissuing: ({ context }) => context.isReissuing,
-    isL3FeaturesEnabled: ({ context }) => context.isL3FeaturesEnabled || false
+    isL3FeaturesEnabled: ({ context }) => context.isL3FeaturesEnabled || false,
+    isL2Fallback: ({ context }) => context.isL2Fallback || false
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -316,7 +317,7 @@ export const itwEidIssuanceMachine = setup({
         EvaluateIdentificationLevel: {
           always: [
             {
-              guard: "isL3FeaturesEnabled",
+              guard: and(["isL3FeaturesEnabled", not("isL2Fallback")]),
               target: "L3Identification"
             },
             {
@@ -326,7 +327,12 @@ export const itwEidIssuanceMachine = setup({
         },
         L3Identification: {
           description: "Navigates to the L3 identification screen",
-          entry: "navigateToL3IdentificationScreen",
+          entry: [
+            "navigateToL3IdentificationScreen",
+            assign({
+              isL2Fallback: false
+            })
+          ],
           on: {
             "select-identification-mode": [
               {
@@ -347,7 +353,10 @@ export const itwEidIssuanceMachine = setup({
               }
             ],
             "go-to-l2-identification": {
-              target: "L2Identification"
+              target: "L2Identification",
+              actions: assign({
+                isL2Fallback: true
+              })
             },
             "go-to-cie-warning": {
               target: "CieWarning.L3Identification"
@@ -373,7 +382,6 @@ export const itwEidIssuanceMachine = setup({
               {
                 guard: ({ event }) => event.mode === "cieId",
                 actions: assign(() => ({
-                  isL3FeaturesEnabled: false,
                   identification: {
                     mode: "cieId",
                     level: "L2"

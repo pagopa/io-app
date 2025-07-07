@@ -65,24 +65,22 @@ export const useItwIdentificationBottomSheet = ({
       const secondaryButton = footerButtons[1];
 
       return (
-        <>
-          <VStack space={8}>
+        <VStack space={16}>
+          <IOButton
+            variant="solid"
+            label={primaryButton.label}
+            onPress={primaryButton.onPress}
+            icon={primaryButton.icon}
+          />
+          <View style={{ alignSelf: "center" }}>
             <IOButton
-              variant="solid"
-              label={primaryButton.label}
-              onPress={primaryButton.onPress}
-              icon={primaryButton.icon}
+              variant="link"
+              label={secondaryButton.label}
+              onPress={secondaryButton.onPress}
+              icon={secondaryButton.icon}
             />
-            <View style={{ alignSelf: "center" }}>
-              <IOButton
-                variant="link"
-                label={secondaryButton.label}
-                onPress={secondaryButton.onPress}
-                icon={secondaryButton.icon}
-              />
-            </View>
-          </VStack>
-        </>
+          </View>
+        </VStack>
       );
     }
 
@@ -100,7 +98,7 @@ export const useItwIdentificationBottomSheet = ({
       ))}
       <VSpacer size={24} />
       <Footer />
-      <VSpacer size={12} />
+      <VSpacer size={8} />
     </View>
   );
 
