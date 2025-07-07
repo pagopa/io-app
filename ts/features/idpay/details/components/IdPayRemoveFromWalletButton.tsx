@@ -58,8 +58,7 @@ const IdPayRemoveFromWalletButton = (initiative: InitiativeDTO) => {
 
   const show =
     getInitiativeStatus({ initiative, now: new Date() }) === "EXPIRED" ||
-    getInitiativeStatus({ initiative, now: new Date() }) === "EXPIRING" ||
-    getInitiativeStatus({ initiative, now: new Date() }) === "ACTIVE";
+    getInitiativeStatus({ initiative, now: new Date() }) === "USED";
 
   return (
     show && (
