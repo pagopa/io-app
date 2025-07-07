@@ -28,11 +28,11 @@ export const ItwPresentationWalletUpgradeMDLDetailsBanner = () => {
 
   const trackBannerProperties = useMemo(
     () => ({
-      banner_id: "itwUpgradeMDLDetailsBanner",
+      banner_id: "walletUpgradeMDLDetailsBanner",
       banner_page: routeName,
       banner_landing: ITW_SCREENVIEW_EVENTS.ITW_INTRO,
       banner_campaign: I18n.t(
-        "features.itWallet.presentation.credentialDetails.mdl.itwUpgradeBanner.title"
+        "features.itWallet.presentation.credentialDetails.mdl.walletUpgradeBanner.title"
       )
     }),
     [routeName]
@@ -67,13 +67,13 @@ export const ItwPresentationWalletUpgradeMDLDetailsBanner = () => {
     <Banner
       testID="itwUpgradeMDLDetailsBannerTestID"
       title={I18n.t(
-        "features.itWallet.presentation.credentialDetails.mdl.itwUpgradeBanner.title"
+        "features.itWallet.presentation.credentialDetails.mdl.walletUpgradeBanner.title"
       )}
       content={I18n.t(
-        "features.itWallet.presentation.credentialDetails.mdl.itwUpgradeBanner.content"
+        "features.itWallet.presentation.credentialDetails.mdl.walletUpgradeBanner.content"
       )}
       action={I18n.t(
-        "features.itWallet.presentation.credentialDetails.mdl.itwUpgradeBanner.action"
+        "features.itWallet.presentation.credentialDetails.mdl.walletUpgradeBanner.action"
       )}
       pictogramName="cie"
       color="neutral"
