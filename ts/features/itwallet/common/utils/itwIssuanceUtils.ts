@@ -18,7 +18,6 @@ type StartAuthFlowParams = {
   walletAttestation: string;
   identification: IdentificationContext;
   isL3IssuanceEnabled: boolean;
-  isNewApiEnabled: boolean;
 };
 
 /**
@@ -33,7 +32,7 @@ type StartAuthFlowParams = {
  * @returns Authentication params to use when completing the flow.
  */
 const startAuthFlow = async (params: StartAuthFlowParams) =>
-  params.isNewApiEnabled
+  params.isL3IssuanceEnabled
     ? IssuanceUtilsV2.startAuthFlow(params)
     : IssuanceUtilsV1.startAuthFlow(params);
 
@@ -44,7 +43,7 @@ type CompleteAuthFlowParams = {
   codeVerifier: string;
   walletAttestation: string;
   redirectUri: string;
-  isNewApiEnabled: boolean;
+  isL3IssuanceEnabled: boolean;
 };
 
 /**
@@ -56,7 +55,7 @@ type CompleteAuthFlowParams = {
  * @returns Authentication tokens.
  */
 const completeAuthFlow = async (params: CompleteAuthFlowParams) =>
-  params.isNewApiEnabled
+  params.isL3IssuanceEnabled
     ? IssuanceUtilsV2.completeAuthFlow(
         params as IssuanceUtilsV2.CompleteAuthFlowParams
       )
@@ -70,7 +69,7 @@ type PidIssuanceParams = {
   clientId: string;
   dPoPContext: CryptoContext;
   credentialDefinition: CredentialAuthDetail;
-  isNewApiEnabled: boolean;
+  isL3IssuanceEnabled: boolean;
 };
 
 /**
@@ -79,7 +78,7 @@ type PidIssuanceParams = {
  * @returns The stored credential.
  */
 const getPid = async (params: PidIssuanceParams): Promise<StoredCredential> =>
-  params.isNewApiEnabled
+  params.isL3IssuanceEnabled
     ? IssuanceUtilsV2.getPid(params as IssuanceUtilsV2.PidIssuanceParams)
     : IssuanceUtilsV1.getPid(params as IssuanceUtilsV1.PidIssuanceParams);
 

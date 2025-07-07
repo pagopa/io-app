@@ -34,19 +34,18 @@ export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
   walletInstanceAttestation: string | undefined;
   authenticationContext: AuthenticationContext | undefined;
-  isNewApiEnabled: boolean;
+  isL3IssuanceEnabled?: boolean;
 };
 
 export type StartAuthFlowActorParams = {
   walletInstanceAttestation: string | undefined;
   identification: IdentificationContext | undefined;
-  isNewApiEnabled: boolean;
   isL3IssuanceEnabled?: boolean;
 };
 
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
-  isNewApiEnabled: boolean;
+  isL3IssuanceEnabled?: boolean;
 };
 
 /**
@@ -100,7 +99,7 @@ export const createEidIssuanceActorsImplementation = (
       env,
       input.integrityKeyTag,
       sessionToken,
-      input.isNewApiEnabled
+      input.isL3IssuanceEnabled
     );
   }),
 
@@ -127,8 +126,7 @@ export const createEidIssuanceActorsImplementation = (
         env,
         walletAttestation: input.walletInstanceAttestation,
         identification: input.identification,
-        isL3IssuanceEnabled: input.isL3IssuanceEnabled || false,
-        isNewApiEnabled: input.isNewApiEnabled
+        isL3IssuanceEnabled: !!input.isL3IssuanceEnabled
       });
 
       return {
@@ -155,7 +153,7 @@ export const createEidIssuanceActorsImplementation = (
       const authParams = await issuanceUtils.completeAuthFlow({
         ...input.authenticationContext,
         walletAttestation: input.walletInstanceAttestation,
-        isNewApiEnabled: input.isNewApiEnabled
+        isL3IssuanceEnabled: !!input.isL3IssuanceEnabled
       });
 
       trackItwRequest(input.identification.mode);
@@ -163,7 +161,7 @@ export const createEidIssuanceActorsImplementation = (
       return issuanceUtils.getPid({
         ...authParams,
         ...input.authenticationContext,
-        isNewApiEnabled: input.isNewApiEnabled
+        isL3IssuanceEnabled: !!input.isL3IssuanceEnabled
       });
     }
   ),
