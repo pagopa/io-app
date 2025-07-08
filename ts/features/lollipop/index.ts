@@ -76,7 +76,7 @@ export const chainSignPromises = (
  * Regenerate publicKey, it returns a Promise
  * with publicKey, if it was succesfully generated
  */
-export const handleRegenerateKey = (
+export const handleRegenerateEphermeralKey = (
   keyTag: string,
   isMixpanelEnabled: boolean | null,
   dispatch: AppDispatch

@@ -6,7 +6,7 @@ import {
   toSignatureComponents,
   getSignAlgorithm,
   chainSignPromises,
-  handleRegenerateKey,
+  handleRegenerateEphermeralKey,
   getLollipopLoginHeaders
 } from "..";
 
@@ -101,7 +101,7 @@ describe("chainSignPromises", () => {
   });
 });
 
-describe("handleRegenerateKey", () => {
+describe("handleRegenerateEphermeralKey", () => {
   it("should dispatch success action and track success on key regeneration", async () => {
     const dispatch = jest.fn();
     const keyTag = "testKey";
@@ -112,7 +112,7 @@ describe("handleRegenerateKey", () => {
     } as PublicKey);
     jest.spyOn(global, "deleteKey").mockResolvedValue(undefined);
 
-    await handleRegenerateKey(keyTag, isMixpanelEnabled, dispatch);
+    await handleRegenerateEphermeralKey(keyTag, isMixpanelEnabled, dispatch);
 
     expect(dispatch).toHaveBeenCalledWith(
       expect.objectContaining({ type: "LOLLIPOP_SET_EPHEMERAL_PUBLIC_KEY" })
@@ -128,7 +128,7 @@ describe("handleRegenerateKey", () => {
       .spyOn(global, "deleteKey")
       .mockRejectedValue(new Error("Delete key error"));
 
-    await handleRegenerateKey(keyTag, isMixpanelEnabled, dispatch);
+    await handleRegenerateEphermeralKey(keyTag, isMixpanelEnabled, dispatch);
 
     expect(dispatch).toHaveBeenCalledWith(
       expect.objectContaining({ type: "LOLLIPOP_REMOVE_EPHEMERAL_PUBLIC_KEY" })

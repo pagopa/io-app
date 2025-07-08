@@ -10,7 +10,7 @@ jest.mock("../..", () => {
   const actualModule = jest.requireActual("../..");
   return {
     ...actualModule,
-    handleRegenerateKey: jest.fn().mockResolvedValue(undefined)
+    handleRegenerateEphermeralKey: jest.fn().mockResolvedValue(undefined)
   };
 });
 jest.mock("@pagopa/io-react-native-login-utils", () => ({
