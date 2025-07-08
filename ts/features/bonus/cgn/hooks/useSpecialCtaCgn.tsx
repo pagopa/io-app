@@ -1,23 +1,23 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import { constNull } from "fp-ts/lib/function";
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import { Alert, Platform } from "react-native";
-import { IOToast } from "@pagopa/io-app-design-system";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
+import { Alert } from "react-native";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   fold,
   isLoading as isRemoteLoading
 } from "../../../../common/model/RemoteValue";
+import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isCGNEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import * as analytics from "../../../services/common/analytics";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { cgnUnsubscribe } from "../store/actions/unsubscribe";
+import { useServicePreferenceByChannel } from "../../../services/details/hooks/useServicePreference";
+import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import { cgnActivationStart } from "../store/actions/activation";
-import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
-import { loadServicePreference } from "../../../services/details/store/actions/preference";
-import { isCGNEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { useServicePreferenceByChannel } from "../../../services/details/hooks/useServicePreference";
+import { cgnUnsubscribe } from "../store/actions/unsubscribe";
+import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 
 /**
  * Hook to handle the CGN activation/deactivation
@@ -55,10 +55,7 @@ const useCgnActivation = (serviceId: ServiceId) => {
         I18n.t("bonus.cgn.activation.deactivate.alert.message"),
         [
           {
-            text:
-              Platform.OS === "ios"
-                ? I18n.t(`wallet.delete.ios.confirm`)
-                : I18n.t(`wallet.delete.android.confirm`),
+            text: I18n.t(`wallet.delete.android.confirm`),
             style: "destructive",
             onPress: () => {
               analytics.trackSpecialServiceStatusChanged({
