@@ -629,9 +629,17 @@ export const itwEidIssuanceMachine = setup({
                 "This state handles the CIE preparation screen, where the user is informed about the CIE card",
               entry: "navigateToCiePreparationScreen",
               on: {
-                next: {
-                  target: "StartingCieAuthFlow"
-                },
+                next: [
+                  {
+                    guard: "isL3FeaturesEnabled",
+                    actions: "navigateToCieReadCardL3Screen",
+                    target: "StartingCieAuthFlow"
+                  },
+                  {
+                    actions: "navigateToCieReadCardL2Screen",
+                    target: "StartingCieAuthFlow"
+                  }
+                ],
                 "go-to-cie-warning": {
                   target: "CieWarning.PreparationCie"
                 },
@@ -646,7 +654,6 @@ export const itwEidIssuanceMachine = setup({
             StartingCieAuthFlow: {
               description:
                 "Start the preliminary phase of the CIE identification flow.",
-              entry: "navigateToCieReadCardL2Screen",
               tags: [ItwTags.Loading],
               invoke: {
                 src: "startAuthFlow",
