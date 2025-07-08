@@ -44,3 +44,6 @@ export const selectAuthUrlOption = (snapshot: MachineSnapshot) =>
 
 export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwTags.Loading);
+
+export const isL2FallbackSelector = (snapshot: MachineSnapshot) =>
+  snapshot.context.isL2Fallback ?? false;

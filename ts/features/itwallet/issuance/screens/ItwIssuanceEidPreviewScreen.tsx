@@ -31,6 +31,7 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
+  isL2FallbackSelector,
   isL3FeaturesEnabledSelector,
   selectEidOption,
   selectIdentification
@@ -73,6 +74,8 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
+  const isL2Fallback =
+    ItwEidIssuanceMachineContext.useSelector(isL2FallbackSelector);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute();
@@ -91,10 +94,10 @@ const ContentView = ({ eid }: ContentViewProps) => {
         trackItwRequestSuccess(
           identification?.mode,
           identification?.level,
-          isL3Enabled ? "L3" : "L2"
+          isL3Enabled && !isL2Fallback ? "L3" : "L2"
         );
       }
-    }, [identification, mixPanelCredential, isL3Enabled])
+    }, [identification, mixPanelCredential, isL3Enabled, isL2Fallback])
   );
 
   useDebugInfo({
