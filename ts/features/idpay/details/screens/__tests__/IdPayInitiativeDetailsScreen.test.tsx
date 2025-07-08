@@ -118,7 +118,7 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
     ).not.toBeTruthy();
 
     expect(component.queryByTestId("IDPayTimelineSkeletonTestID")).toBeNull();
-    expect(component.queryByTestId("IDPayDetailsSettingsTestID")).toBeTruthy();
+    expect(component.queryByTestId("IDPayDetailsSettingsTestID")).toBeNull();
 
     expect(
       component.queryByText(
