@@ -12,6 +12,8 @@ import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { IdPayConfigurationParamsList } from "../../configuration/navigation/params";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
+import { useIOSelector } from "../../../../store/hooks";
+import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 type Props = {
   initiative: InitiativeDTO;
@@ -22,6 +24,10 @@ const IdPayInitiativeDiscountSettingsComponent = (props: Props) => {
 
   const navigation =
     useNavigation<IOStackNavigationProp<IdPayConfigurationParamsList>>();
+
+  const isIdPayCodeCieEnabled = useIOSelector(
+    isIdPayCiePaymentCodeEnabledSelector
+  );
 
   const navigateToInstrumentsConfiguration = ({
     initiativeId,
@@ -85,6 +91,10 @@ const IdPayInitiativeDiscountSettingsComponent = (props: Props) => {
       }
     )
   );
+
+  if (!isIdPayCodeCieEnabled) {
+    return undefined;
+  }
 
   return (
     <View testID={"IDPayDetailsSettingsTestID"}>
