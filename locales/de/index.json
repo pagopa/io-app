@@ -4106,6 +4106,14 @@
         "title": "Möchten Sie {{initiativeName}} aus der Brieftasche löschen?",
         "content": "Der Bonus wird entfernt."
       }
+    },
+    "onboarding": {
+      "enableNotification": {
+        "title": "Non rischiare di perdere l'esito della tua richiesta",
+        "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
+        "action": "Attiva le notifiche",
+        "deny": "Non ora"
+      }
     }
   }
 }
