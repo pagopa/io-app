@@ -34,8 +34,8 @@ export type Close = {
   readonly type: "close";
 };
 
-export type CheckNotificationStatus = {
-  readonly type: "check-notification-status";
+export type UpdatePushNotificationSetting = {
+  readonly type: "update-notification-status";
   readonly isPushNotificationEnabled: boolean;
 };
 
@@ -47,4 +47,4 @@ export type IdPayOnboardingEvents =
   | Next
   | Back
   | Close
-  | CheckNotificationStatus;
+  | UpdatePushNotificationSetting;
