@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
+import { areNotificationPermissionsEnabledSelector } from "../../../appearanceSettings/store/selectors";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 
@@ -11,6 +14,9 @@ const IdPayCompletionScreen = () => {
   const machine = useActorRef();
 
   const isLoading = useSelector(isLoadingSelector);
+  const isPushNotificationEnabled = useIOSelector(
+    areNotificationPermissionsEnabledSelector
+  );
 
   const handleClosePress = () => machine.send({ type: "close" });
 
@@ -20,6 +26,14 @@ const IdPayCompletionScreen = () => {
     headerShown: isLoading
   });
 
+  // Send the event to check notification status only on the first render
+  useEffect(() => {
+    machine.send({
+      type: "update-notification-status",
+      isPushNotificationEnabled
+    });
+  }, [isPushNotificationEnabled, machine]);
+
   if (isLoading) {
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -27,7 +41,6 @@ const IdPayCompletionScreen = () => {
       </SafeAreaView>
     );
   }
-
   return (
     <OperationResultScreenContent
       title={I18n.t("idpay.onboarding.success.requestSent.title")}
