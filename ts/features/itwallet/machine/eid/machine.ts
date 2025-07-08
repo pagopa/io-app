@@ -51,7 +51,8 @@ export const itwEidIssuanceMachine = setup({
     navigateToCiePreparationScreen: notImplemented,
     navigateToCiePinPreparationScreen: notImplemented,
     navigateToCiePinScreen: notImplemented,
-    navigateToCieReadCardScreen: notImplemented,
+    navigateToCieReadCardL2Screen: notImplemented,
+    navigateToCieReadCardL3Screen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
     navigateToCieWarningScreen: notImplemented,
@@ -645,7 +646,7 @@ export const itwEidIssuanceMachine = setup({
             StartingCieAuthFlow: {
               description:
                 "Start the preliminary phase of the CIE identification flow.",
-              entry: "navigateToCieReadCardScreen",
+              entry: "navigateToCieReadCardL2Screen",
               tags: [ItwTags.Loading],
               invoke: {
                 src: "startAuthFlow",

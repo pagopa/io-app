@@ -152,7 +152,7 @@ const LoadingSpinner = (
   <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
 );
 
-export const ItwCieCardReaderScreen = () => {
+export const ItwCieCardReaderL2Screen = () => {
   const navigation = useNavigation<StackNavigationProp<ItwParamsList>>();
   const env = useIOSelector(selectItwEnv);
   const { ISSUANCE_REDIRECT_URI } = getEnv(env);
