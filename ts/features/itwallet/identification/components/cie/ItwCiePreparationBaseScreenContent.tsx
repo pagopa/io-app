@@ -3,9 +3,9 @@ import { ContentWrapper, IOButton } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../../i18n";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { useCieInfoBottomSheet } from "../../hooks/useCieInfoBottomSheet";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 
 export type CiePreparationType = "card" | "pin";
 

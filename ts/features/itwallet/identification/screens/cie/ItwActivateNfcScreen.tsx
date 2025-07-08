@@ -10,7 +10,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../../i18n";
 import * as cieUtils from "../../../../authentication/login/cie/utils/cie";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   trackItWalletCieNfcActivation,
   trackItWalletCieNfcGoToSettings

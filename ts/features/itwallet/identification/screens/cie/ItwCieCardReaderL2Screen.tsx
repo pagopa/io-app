@@ -45,10 +45,10 @@ import {
   selectCiePin,
   selectIsLoading
 } from "../../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import * as Cie from "../../components/cie";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;

@@ -28,11 +28,6 @@ import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidP
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import { ItwIdentityNotMatchingScreen } from "../lifecycle/screens/ItwIdentityNotMatchingScreen";
 import { ItwLifecycleWalletRevocationScreen } from "../lifecycle/screens/ItwLifecycleWalletRevocationScreen";
-import {
-  ItWalletIssuanceMachineProvider,
-  ItwCredentialIssuanceMachineContext,
-  ItwEidIssuanceMachineContext
-} from "../machine/provider";
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModal } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
@@ -63,6 +58,14 @@ import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
 import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
 import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/ItwPresentationPidDetailScreen.tsx";
 import { ItwIssuanceUpcomingCredentialScreen } from "../issuance/screens/ItwIssuanceUpcomingCredentialScreen";
+import {
+  ItwEidIssuanceMachineContext,
+  ItwEidIssuanceMachineProvider
+} from "../machine/eid/provider";
+import {
+  ItwCredentialIssuanceMachineContext,
+  ItwCredentialIssuanceMachineProvider
+} from "../machine/credential/provider";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -71,11 +74,13 @@ const Stack = createStackNavigator<ItwParamsList>();
 const hiddenHeader = { headerShown: false };
 
 export const ItwStackNavigator = () => (
-  <ItWalletIssuanceMachineProvider>
-    <ItwProximityMachineProvider>
-      <InnerNavigator />
-    </ItwProximityMachineProvider>
-  </ItWalletIssuanceMachineProvider>
+  <ItwEidIssuanceMachineProvider>
+    <ItwCredentialIssuanceMachineProvider>
+      <ItwProximityMachineProvider>
+        <InnerNavigator />
+      </ItwProximityMachineProvider>
+    </ItwCredentialIssuanceMachineProvider>
+  </ItwEidIssuanceMachineProvider>
 );
 
 const InnerNavigator = () => {

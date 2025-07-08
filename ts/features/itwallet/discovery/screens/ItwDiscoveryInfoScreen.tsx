@@ -12,7 +12,7 @@ import {
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwHasNfcFeatureSelector } from "../../identification/store/selectors/index.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider.tsx";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
   isL3?: boolean;

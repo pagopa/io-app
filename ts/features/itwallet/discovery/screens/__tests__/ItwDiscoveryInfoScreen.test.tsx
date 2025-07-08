@@ -6,7 +6,7 @@ import * as itwLifecycleSelectors from "../../../lifecycle/store/selectors";
 import * as itwIdentificationSelectors from "../../../identification/store/selectors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import {
   ItwDiscoveryInfoScreen,
