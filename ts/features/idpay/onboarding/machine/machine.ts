@@ -35,7 +35,8 @@ export const idPayOnboardingMachine = setup({
     navigateToInitiativeMonitoringScreen: notImplementedStub,
     closeOnboarding: notImplementedStub,
     handleSessionExpired: notImplementedStub,
-    navigateToInputFormScreen: notImplementedStub
+    navigateToInputFormScreen: notImplementedStub,
+    navigateToEnableNotificationScreen: notImplementedStub
   },
   actors: {
     getInitiativeInfo: fromPromise<InitiativeDataDTO, string>(
@@ -86,7 +87,13 @@ export const idPayOnboardingMachine = setup({
       context.activeTextConsentPage >=
       getInputFormSelfDeclarationFromContext(context).length - 1,
     isSessionExpired: ({ event }: { event: IdPayOnboardingEvents }) =>
-      "error" in event && event.error === InitiativeFailureType.SESSION_EXPIRED
+      "error" in event && event.error === InitiativeFailureType.SESSION_EXPIRED,
+    shouldShowEnableNotificationOnClose: ({ context }) =>
+      pipe(
+        context.initiative,
+        // TODO use a more specific check for the initiative name
+        O.exists(initiative => initiative.initiativeName !== "Elettrodomestici")
+      ) && !context.isPushNotificationsEnabled
   }
 }).createMachine({
   id: "idpay-onboarding",
@@ -473,8 +480,43 @@ export const idPayOnboardingMachine = setup({
       }
     },
 
+    EnableNotification: {
+      entry: "navigateToEnableNotificationScreen",
+      on: {
+        "update-notification-status": {
+          actions: assign(({ event }) => ({
+            isPushNotificationsEnabled: event.isPushNotificationEnabled
+          }))
+        },
+        back: {
+          actions: "closeOnboarding",
+          target: "Idle"
+        },
+        close: {
+          actions: "closeOnboarding",
+          target: "Idle"
+        }
+      }
+    },
+
     OnboardingCompleted: {
-      entry: "navigateToCompletionScreen"
+      entry: "navigateToCompletionScreen",
+      on: {
+        "update-notification-status": {
+          actions: assign(({ event }) => ({
+            isPushNotificationsEnabled: event.isPushNotificationEnabled
+          }))
+        },
+        close: [
+          {
+            target: "EnableNotification",
+            guard: "shouldShowEnableNotificationOnClose"
+          },
+          {
+            actions: "closeOnboarding"
+          }
+        ]
+      }
     },
 
     OnboardingFailure: {
