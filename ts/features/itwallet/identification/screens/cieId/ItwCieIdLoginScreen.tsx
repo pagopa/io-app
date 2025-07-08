@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 });
 
 const isAuthenticationUrl = (url: string) => {
-  const authUrlRegex = /\/(livello1|livello2|nextUrl|openApp)(\/|\?|$)/;
+  const authUrlRegex = /livello1|livello2|nextUrl|openApp/;
   return authUrlRegex.test(url);
 };
 
