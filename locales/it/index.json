@@ -4509,9 +4509,9 @@
                 "title": "Appoggia la CIE alla parte alta del telefono",
                 "action": "Annulla"
               },
-              "progress": {
+              "reading": {
                 "title": "La lettura è in corso",
-                "content": "Non muovere la carta.",
+                "subtitle": "Non muovere la carta.",
                 "action": "Annulla"
               },
               "completed": {
@@ -4522,16 +4522,16 @@
             "ios": {
               "idle": {
                 "title": "Appoggia il retro del telefono sulla CIE, a questa altezza.",
-                "status": "{{ progress }}\nSe la lettura non parte, rimuovi la cover del telefono."
+                "status": "\u26AA\u26AA\u26AA\u26AA\u26AA\u26AA\u26AA\u26AA\nSe la lettura non parte, rimuovi la cover del telefono."
               },
-              "progress": {
+              "reading": {
                 "title": "Lettura in corso...",
-                "content": "Non muovere la carta.",
+                "subtitle": "Non muovere la carta.",
                 "status": "{{ progress }}\nLa lettura è in corso, non muovere o spostare la carta. "
               },
               "completed": {
                 "title": "Lettura completata!",
-                "status": "{{ progress }}\nFatto!"
+                "status": "\uD83D\uDD35\uD83D\uDD35\uD83D\uDD35\uD83D\uDD35\uD83D\uDD35\uD83D\uDD35\uD83D\uDD35\uD83D\uDD35\nFatto!"
               }
             }
           },

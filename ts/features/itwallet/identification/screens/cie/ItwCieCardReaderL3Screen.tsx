@@ -1,104 +1,179 @@
-import { createRef, useEffect, useState } from "react";
-import { Platform } from "react-native";
-import WebView, { WebViewNavigation } from "react-native-webview";
+import {
+  Body,
+  ContentWrapper,
+  H4,
+  HStack,
+  IOColors,
+  IOSpringValues,
+  Pictogram,
+  useIOTheme,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../../store/hooks";
-import { selectItwEnv } from "../../../common/store/selectors/environment";
+import * as O from "fp-ts/lib/Option";
+import { useEffect, useMemo, useState } from "react";
+import { Platform, ScrollView, View } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring
+} from "react-native-reanimated";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../../i18n";
 import { trackItWalletCieCardReading } from "../../../analytics";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   selectAuthUrlOption,
-  selectCiePin,
-  selectIsLoading
+  selectCiePin
 } from "../../../machine/eid/selectors";
-import { getEnv } from "../../../common/utils/environment";
-
-/**
- * To make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
- * on Android it is not required.
- */
-const defaultUserAgent = Platform.select({
-  ios: "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",
-  default: undefined
-});
+import {
+  ItwCieMachineContext,
+  ItwCieMachineProvider
+} from "../../machine/cie/provider";
+import {
+  selectCurrentState,
+  selectReadProgress
+} from "../../machine/cie/selectors";
 
 export const ItwCieCardReaderL3Screen = () => {
-  const navigation = useIONavigation();
-  const env = useIOSelector(selectItwEnv);
-  const { ISSUANCE_REDIRECT_URI } = getEnv(env);
-
-  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isMachineLoading =
-    ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const ciePin = ItwEidIssuanceMachineContext.useSelector(selectCiePin);
-  const cieAuthUrl =
-    ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
+  const pin = ItwEidIssuanceMachineContext.useSelector(selectCiePin);
+  const authUrl = ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
 
   useFocusEffect(trackItWalletCieCardReading);
 
-  return <></>;
-};
+  useHeaderSecondLevel({ title: "", canGoBack: false });
 
-type CiewWebViewProps = {
-  uri: string;
-  onAuthUrlChange: (url: string) => void;
-};
-
-/**
- * WebView component which loads a given URI and looks for authentication URLs.
- * It handles the navigation events to detect when the authentication URL is reached.
- * Once the URL is detected, it updates the state and calls the provided callback.
- * @param param0 - Props containing the URI and a callback for URL changes.
- * @returns A WebView component.
- */
-const AuthenticationUrlWebView = ({
-  uri,
-  onAuthUrlChange
-}: CiewWebViewProps) => {
-  const webView = createRef<WebView>();
-  const [authUrl, setAuthUrl] = useState<string>();
-
-  useEffect(() => {
-    if (authUrl) {
-      onAuthUrlChange(authUrl);
-    }
-  }, [authUrl, onAuthUrlChange]);
-
-  const handleShouldStartLoadWithRequest = ({ url }: WebViewNavigation) => {
-    if (authUrl) {
-      return false;
-    }
-
-    // on iOS when authnRequestString is present in the url, it means we have all stuffs to go on.
-    if (
-      url !== undefined &&
-      Platform.OS === "ios" &&
-      url.indexOf("authnRequestString") !== -1
-    ) {
-      // avoid redirect and follow the 'happy path'
-      if (webView.current !== null) {
-        setAuthUrl(url);
-      }
-      return false;
-    }
-
-    // Once the returned url contains the "OpenApp" string, then the authorization has been given
-    if (url && url.indexOf("OpenApp") !== -1) {
-      setAuthUrl(url);
-      return false;
-    }
-
-    return true;
-  };
+  if (O.isNone(authUrl)) {
+    return (
+      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+    );
+  }
 
   return (
-    <WebView
-      ref={webView}
-      userAgent={defaultUserAgent}
-      javaScriptEnabled={true}
-      onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
-      source={{ uri }}
-    />
+    <ItwCieMachineProvider pin={pin} authenticationUrl={authUrl.value}>
+      <ItwCieCardReaderScreenContent />
+    </ItwCieMachineProvider>
+  );
+};
+
+const ItwCieCardReaderScreenContent = () => {
+  const currentState = ItwCieMachineContext.useSelector(selectCurrentState);
+
+  switch (currentState) {
+    case "ReadingCard":
+      return Platform.select({
+        ios: <CardReadProgressContentIOs />,
+        default: <CardReadProgressContentAndroid />
+      });
+    case "Authorizing":
+      return <Body>Authorizing</Body>;
+    case "Failure":
+      return <Body>Failure</Body>;
+    default:
+      return (
+        <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+      );
+  }
+};
+
+const CardReadProgressContentAndroid = () => (
+  <ScrollView centerContent={true}>
+    <ContentWrapper />
+  </ScrollView>
+);
+
+const CardReadProgressContentIOs = () => {
+  const readProgress = ItwCieMachineContext.useSelector(selectReadProgress);
+
+  const { title, subtitle } = useMemo(() => {
+    const status =
+      readProgress <= 0 ? "idle" : readProgress < 100 ? "reading" : "completed";
+
+    return {
+      title: I18n.t(
+        `features.itWallet.identification.cie.readingCard.ios.${status}.title`
+      ),
+      subtitle: I18n.t(
+        `features.itWallet.identification.cie.readingCard.ios.${status}.subtitle`,
+        {
+          defaultValue: ""
+        }
+      )
+    };
+  }, [readProgress]);
+
+  return (
+    <ContentWrapper>
+      <VStack>
+        <ReadProgressBar progress={readProgress} />
+        <HStack space={32} style={{ alignItems: "center" }}>
+          <View style={{ flex: 1 }}>
+            <H4>{title}</H4>
+            <Body color="grey-650">{subtitle}</Body>
+          </View>
+          <Pictogram
+            name={readProgress < 100 ? "nfcScaniOS" : "success"}
+            size={120}
+          />
+        </HStack>
+      </VStack>
+    </ContentWrapper>
+  );
+};
+
+type ReadProgressBarProps = {
+  progress: number;
+};
+
+export const ReadProgressBar = ({ progress }: ReadProgressBarProps) => {
+  const theme = useIOTheme();
+  const [width, setWidth] = useState(0);
+  const progressWidth = useSharedValue(0);
+
+  const backgroundColor = IOColors["grey-200"];
+  const foregroundColor = IOColors["turquoise-500"];
+
+  useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    progressWidth.value = withSpring(
+      (progress / 100) * width,
+      IOSpringValues.accordion
+    );
+  }, [progressWidth, progress, width]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    width: progressWidth.value
+  }));
+
+  return (
+    <View
+      focusable
+      /* We set a fixed height to make the component focusable on Android */
+      style={{
+        width: "100%",
+        height: 4,
+        justifyContent: "center",
+        borderRadius: 4,
+        backgroundColor
+      }}
+      onLayout={e => setWidth(e.nativeEvent.layout.width)}
+      importantForAccessibility="yes"
+      accessibilityLabel={`${progress * 1000}%`}
+      accessible={true}
+      accessibilityRole="progressbar"
+      accessibilityValue={{
+        min: 0,
+        max: 100,
+        now: progress
+      }}
+    >
+      <Animated.View
+        style={[
+          animatedStyle,
+          { height: 4, backgroundColor: foregroundColor, borderRadius: 4 }
+        ]}
+      />
+    </View>
   );
 };
