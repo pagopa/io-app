@@ -17,10 +17,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../identification/store/actions";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  isFingerprintEnabledSelector,
-  isIdPayLocallyEnabledSelector
-} from "../../../../store/reducers/persistedPreferences";
+import { isFingerprintEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { getFlowType } from "../../../../utils/analytics";
 import {
   biometricAuthenticationRequest,
@@ -37,6 +34,7 @@ import { FAQsCategoriesType } from "../../../../utils/faq";
 import { fimsIsHistoryEnabledSelector } from "../../../fims/history/store/selectors";
 import { FIMS_ROUTES } from "../../../fims/common/navigation";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
+import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -53,7 +51,9 @@ const SecurityScreen = (): ReactElement => {
   const dispatch = useIODispatch();
   const isFingerprintEnabled = useIOSelector(isFingerprintEnabledSelector);
   const isIdPayCodeOnboarded = useIOSelector(isIdPayCodeOnboardedSelector);
-  const isIdPayEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
+  const isIdPayCieCodeEnabled = useIOSelector(
+    isIdPayCiePaymentCodeEnabledSelector
+  );
   const isFimsHistoryEnabled = useIOSelector(fimsIsHistoryEnabledSelector);
   const navigation = useIONavigation();
   const [isBiometricDataAvailable, setIsBiometricDataAvailable] =
@@ -179,7 +179,7 @@ const SecurityScreen = (): ReactElement => {
           onPress={requestIdentificationAndResetPin}
           testID="reset-unlock-code"
         />
-        {isIdPayEnabled && (
+        {isIdPayCieCodeEnabled && (
           /* Reset IDPay code */
           <>
             <Divider />
