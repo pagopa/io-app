@@ -28,7 +28,7 @@ export function* checkItWalletIdentitySaga() {
   const eidFiscalCode = yield* select(selectFiscalCodeFromEid);
 
   if (
-    env.ITW_BYPASS_IDENTITY_MATCH ||
+    env.BYPASS_IDENTITY_MATCH ||
     authenticatedUserFiscalCode === eidFiscalCode
   ) {
     return;

@@ -35,7 +35,7 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
 
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
     guards: createEidIssuanceGuardsImplementation(store, {
-      bypassIdentityMatch: env.ITW_BYPASS_IDENTITY_MATCH
+      bypassIdentityMatch: env.BYPASS_IDENTITY_MATCH
     }),
     actions: createEidIssuanceActionsImplementation(navigation, store, toast),
     actors: createEidIssuanceActorsImplementation(env, store)
