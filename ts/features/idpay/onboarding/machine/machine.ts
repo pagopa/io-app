@@ -89,11 +89,7 @@ export const idPayOnboardingMachine = setup({
     isSessionExpired: ({ event }: { event: IdPayOnboardingEvents }) =>
       "error" in event && event.error === InitiativeFailureType.SESSION_EXPIRED,
     shouldShowEnableNotificationOnClose: ({ context }) =>
-      pipe(
-        context.initiative,
-        // TODO use a more specific check for the initiative name
-        O.exists(initiative => initiative.initiativeName !== "Elettrodomestici")
-      ) && !context.isPushNotificationsEnabled
+      !context.isPushNotificationsEnabled
   }
 }).createMachine({
   id: "idpay-onboarding",
