@@ -643,9 +643,6 @@ export const itwEidIssuanceMachine = setup({
                 "go-to-cie-warning": {
                   target: "CieWarning.PreparationCie"
                 },
-                "go-to-cie-warning": {
-                  target: "CieWarning.PreparationCie"
-                },
                 back: {
                   target: "PreparationPin"
                 },
