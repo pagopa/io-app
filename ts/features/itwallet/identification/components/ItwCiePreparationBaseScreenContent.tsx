@@ -1,11 +1,11 @@
 import { Dimensions, Image, StyleSheet, View } from "react-native";
 import { ContentWrapper, IOButton } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
-import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../../i18n";
-import { useCieInfoBottomSheet } from "../../hooks/useCieInfoBottomSheet";
-import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import I18n from "../../../../i18n";
+import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
+import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 
 export type CiePreparationType = "card" | "pin";
 
@@ -30,9 +30,9 @@ export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
   const imageSrc = useMemo(() => {
     switch (type) {
       case "card":
-        return require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif");
+        return require("../../../../../img/features/itWallet/identification/itw_cie_nfc.gif");
       case "pin":
-        return require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif");
+        return require("../../../../../img/features/itWallet/identification/itw_cie_pin.gif");
       default:
         return undefined;
     }

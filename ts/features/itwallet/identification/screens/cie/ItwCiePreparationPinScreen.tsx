@@ -1,4 +1,4 @@
-import { ItwCiePreparationBaseScreenContent } from "../../components/cie/ItwCiePreparationBaseScreenContent";
+import { ItwCiePreparationBaseScreenContent } from "../../components/ItwCiePreparationBaseScreenContent";
 
 export const ItwCiePreparationPinScreen = () => (
   <ItwCiePreparationBaseScreenContent type="pin" />
