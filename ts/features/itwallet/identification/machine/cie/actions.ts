@@ -1,7 +1,7 @@
 import { CieManager } from "@pagopa/io-react-native-cie";
 import { ActionArgs } from "xstate";
 import I18n from "../../../../../i18n";
-import { Context } from "./context";
+import { CieContext } from "./context";
 import { CieEvents } from "./events";
 
 /**
@@ -14,11 +14,11 @@ const getProgressEmojis = (progress: number) => {
   const clampedProgress = Math.max(0, Math.min(1, progress));
 
   const totalDots = 8; // Length of the progress bar
-  const blueDots = Math.round(clampedProgress * totalDots);
+  const blueDots = Math.floor(clampedProgress * totalDots);
   const whiteDots = totalDots - blueDots;
 
-  const blueDotEmoji = "\uD83D\uDD35"; // 🔵
-  const whiteDotyEmoji = "\u26AA"; // ⚪
+  const blueDotEmoji = "🔵";
+  const whiteDotyEmoji = "⚪";
 
   return blueDotEmoji.repeat(blueDots) + whiteDotyEmoji.repeat(whiteDots);
 };
@@ -45,14 +45,17 @@ export const createCieActionsImplementation = () => ({
    */
   updateStatusAlert: ({
     context
-  }: ActionArgs<Context, CieEvents, CieEvents>) => {
-    CieManager.setCurrentAlertMessage(
-      I18n.t(
-        "features.itWallet.identification.cie.readingCard.ios.progress.status",
-        {
-          progress: getProgressEmojis(context.readProgress ?? 0)
-        }
-      )
+  }: ActionArgs<CieContext, CieEvents, CieEvents>) => {
+    const progress = getProgressEmojis(context.readProgress ?? 0);
+    const label = I18n.t(
+      "features.itWallet.identification.cie.readingCard.ios.reading.status"
     );
+    CieManager.setCurrentAlertMessage(`${progress}\n${label}`);
+  },
+  announceEvent: () => {
+    // TODO
+  },
+  trackEvent: () => {
+    // TODO
   }
 });

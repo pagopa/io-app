@@ -1,7 +1,8 @@
-import { CieError } from "@pagopa/io-react-native-cie";
+import { NfcError, NfcEvent } from "@pagopa/io-react-native-cie";
 
-type Close = {
-  type: "close";
+type SetServiceProviderUrl = {
+  type: "set-service-provider-url";
+  url: string;
 };
 
 /**
@@ -10,7 +11,7 @@ type Close = {
  */
 type CieReadEvent = {
   type: "cie-read-event";
-  progress: number;
+  event: NfcEvent;
 };
 
 /**
@@ -19,7 +20,7 @@ type CieReadEvent = {
  */
 type CieReadError = {
   type: "cie-read-error";
-  error: CieError;
+  error: NfcError;
 };
 
 /**
@@ -31,4 +32,25 @@ type CieReadSuccess = {
   authorizationUrl: string;
 };
 
-export type CieEvents = Close | CieReadEvent | CieReadError | CieReadSuccess;
+/**
+ * Event emitted when the user complete the authentication by authorizing it
+ */
+type CompleteAuthentication = {
+  type: "complete-authentication";
+  redirectUrl: string;
+};
+
+/**
+ * Closed the authentication
+ */
+type Close = {
+  type: "close";
+};
+
+export type CieEvents =
+  | SetServiceProviderUrl
+  | CieReadEvent
+  | CieReadError
+  | CieReadSuccess
+  | CompleteAuthentication
+  | Close;

@@ -4521,17 +4521,17 @@
             },
             "ios": {
               "idle": {
-                "title": "Appoggia il retro del telefono sulla CIE, a questa altezza.",
-                "status": "\u26AA\u26AA\u26AA\u26AA\u26AA\u26AA\u26AA\u26AA\nSe la lettura non parte, rimuovi la cover del telefono."
+                "title": "Appoggia il retro del telefono sulla CIE",
+                "status": "⚪⚪⚪⚪⚪⚪⚪⚪\nSe la lettura non parte, rimuovi la cover del telefono."
               },
               "reading": {
                 "title": "Lettura in corso...",
                 "subtitle": "Non muovere la carta.",
-                "status": "{{ progress }}\nLa lettura è in corso, non muovere o spostare la carta. "
+                "status": "La lettura è in corso, non muovere o spostare la carta. "
               },
               "completed": {
                 "title": "Lettura completata!",
-                "status": "\uD83D\uDD35\uD83D\uDD35\uD83D\uDD35\uD83D\uDD35\uD83D\uDD35\uD83D\uDD35\uD83D\uDD35\uD83D\uDD35\nFatto!"
+                "status": "🔵🔵🔵🔵🔵🔵🔵🔵\nFatto!"
               }
             }
           },
