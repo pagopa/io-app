@@ -34,7 +34,7 @@ const allowScreenCapture = (tag: string) => {
 export function usePreventScreenCapture(key?: string) {
   const tag = useMemo(() => key || uuidv4().toString(), [key]);
 
-  const timeoutRef = useRef<number>();
+  const timeoutRef = useRef<number>(undefined);
 
   useFocusEffect(
     useCallback(() => {

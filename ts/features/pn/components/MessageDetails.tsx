@@ -46,7 +46,7 @@ export const MessageDetails = ({
   payments,
   serviceId
 }: MessageDetailsProps) => {
-  const presentPaymentsBottomSheetRef = useRef<() => void>();
+  const presentPaymentsBottomSheetRef = useRef<() => void>(undefined);
   const partitionedAttachments = pipe(
     message.attachments,
     O.fromNullable,

@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, JSX } from "react";
 import { Linking, View } from "react-native";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";

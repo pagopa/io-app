@@ -94,7 +94,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
     outcome,
     isOnboarding: true
   });
-  const paymentMethodSelectedRef = useRef<string | undefined>();
+  const paymentMethodSelectedRef = useRef<string | undefined>(undefined);
   const store = useIOStore();
 
   const outcomeEnumKey = Object.keys(WalletOnboardingOutcomeEnum)[

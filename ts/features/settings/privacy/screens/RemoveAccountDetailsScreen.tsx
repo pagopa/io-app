@@ -84,7 +84,7 @@ const RemoveAccountDetails = () => {
   const dispatch = useIODispatch();
   const { navigate } = useIONavigation();
   const toast = useIOToast();
-  const timeoutRef = useRef<number>();
+  const timeoutRef = useRef<number>(undefined);
   const buttonRef = useRef<View>(null);
 
   const hasActiveBonus = useIOSelector(isCgnEnrolledSelector);

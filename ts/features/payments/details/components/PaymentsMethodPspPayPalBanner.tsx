@@ -2,13 +2,14 @@ import { useRef } from "react";
 import { VSpacer, Banner } from "@pagopa/io-app-design-system";
 
 import Animated, { FadeOut } from "react-native-reanimated";
+import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { paymentsPayPalBannerSetIsClosedAction } from "../store/actions";
 import { walletPayPalBannerClosedSelector } from "../store/selectors";
 
 const PaymentsMethodPspPayPalBanner = () => {
-  const bannerViewRef = useRef(null);
+  const bannerViewRef = useRef<View>(null);
   const dispatch = useIODispatch();
   const bannerClosed = useIOSelector(walletPayPalBannerClosedSelector);
 
@@ -29,7 +30,7 @@ const PaymentsMethodPspPayPalBanner = () => {
           labelClose={I18n.t(
             "idpay.initiative.discountDetails.IDPayCode.banner.close"
           )}
-          viewRef={bannerViewRef}
+          ref={bannerViewRef}
         />
         <VSpacer size={24} />
       </Animated.View>

@@ -5,7 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { Alert, Linking, View } from "react-native";
 import {
   launchImageLibrary,

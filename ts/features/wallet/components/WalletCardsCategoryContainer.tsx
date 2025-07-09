@@ -5,7 +5,7 @@ import Animated, {
   FadeOutDown,
   LinearTransition
 } from "react-native-reanimated";
-import { useMemo } from "react";
+import { JSX, useMemo } from "react";
 import { WalletCard } from "../types";
 import { renderWalletCardFn } from "../utils";
 
