@@ -746,9 +746,7 @@ export const itwEidIssuanceMachine = setup({
             input: ({ context }) => ({
               identification: context.identification,
               authenticationContext: context.authenticationContext,
-              walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-              isL3IssuanceEnabled:
-                context.isL3FeaturesEnabled && !context.isL2Fallback
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),

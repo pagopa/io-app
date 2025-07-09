@@ -1038,8 +1038,7 @@ export const trackItwRequest = (method?: ItwIdMethod, itw_flow?: ItwFlow) => {
 
 export const trackItwRequestSuccess = (
   method?: ItwIdMethod,
-  status?: ItwStatus,
-  itw_flow?: ItwFlow
+  status?: ItwStatus
 ) => {
   if (method) {
     void mixpanelTrack(
@@ -1047,7 +1046,7 @@ export const trackItwRequestSuccess = (
       buildEventProperties("TECH", undefined, {
         ITW_ID_method: method,
         ITW_ID_V2: status,
-        itw_flow
+        itw_flow: status
       })
     );
   }
