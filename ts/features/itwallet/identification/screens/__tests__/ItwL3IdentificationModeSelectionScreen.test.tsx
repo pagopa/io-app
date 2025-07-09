@@ -54,7 +54,7 @@ const renderComponent = (isL3FeaturesEnabled = true) => {
     const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
     const snapshot: typeof initialSnapshot = {
       ...initialSnapshot,
-      value: { UserIdentification: "L3Identification" },
+      value: { UserIdentification: { Identification: "L3" } },
       context: {
         ...initialSnapshot.context,
         isL3FeaturesEnabled,
