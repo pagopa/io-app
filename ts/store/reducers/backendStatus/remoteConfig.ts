@@ -354,6 +354,17 @@ export const isIdPayEnabledSelector = createSelector(
     )
 );
 
+export const isIdPayCiePaymentCodeEnabledSelector = (state: GlobalState) =>
+  pipe(state, remoteConfigSelector, remoteConfig =>
+    isPropertyWithMinAppVersionEnabled({
+      remoteConfig,
+      mainLocalFlag: true,
+      configPropertyName: "idPay",
+      optionalLocalFlag: true,
+      optionalConfig: "cie_payments"
+    })
+  );
+
 export const idPayOnboardingRequiresAppUpdateSelector = (state: GlobalState) =>
   pipe(
     state,
