@@ -1,10 +1,10 @@
-import { useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { areNotificationPermissionsEnabledSelector } from "../../../appearanceSettings/store/selectors";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
@@ -27,12 +27,12 @@ const IdPayCompletionScreen = () => {
   });
 
   // Send the event to check notification status only on the first render
-  useEffect(() => {
+  useOnFirstRender(() => {
     machine.send({
       type: "update-notification-status",
       isPushNotificationEnabled
     });
-  }, [isPushNotificationEnabled, machine]);
+  });
 
   if (isLoading) {
     return (
