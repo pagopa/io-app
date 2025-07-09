@@ -1,3 +1,4 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
@@ -22,6 +23,7 @@ const IdPayEnableNotificationScreen = () => {
       // if push notifications are enabled, close the screen
       if (isPushNotificationEnabled) {
         machine.send({ type: "close" });
+        IOToast.success(I18n.t("idpay.onboarding.enableNotification.success"));
       }
     }, [machine, isPushNotificationEnabled])
   );

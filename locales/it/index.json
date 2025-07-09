@@ -5677,7 +5677,8 @@
         "title": "Non rischiare di perdere l'esito della tua richiesta",
         "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
         "action": "Attiva le notifiche",
-        "deny": "Non ora"
+        "deny": "Non ora",
+        "success": "Hai attivato le notifiche push"
       }
     },
     "configuration": {
