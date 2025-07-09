@@ -25,7 +25,7 @@ import {
 } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { useCieInfoBottomSheet } from "../../hooks/useCieInfoBottomSheet";
-import {isL3FeaturesEnabledSelector} from "../../../machine/eid/selectors";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 
 const CIE_PIN_LENGTH = 8;
 
