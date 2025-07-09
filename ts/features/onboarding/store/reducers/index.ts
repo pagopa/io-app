@@ -3,7 +3,7 @@
  * @flow
  */
 import { getType } from "typesafe-actions";
-import { clearOnboarding, fingerprintAcknowledged } from "../actions";
+import { fingerprintAcknowledged } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { sessionExpired } from "../../../authentication/common/store/actions";
 
@@ -26,7 +26,6 @@ const reducer = (
         isFingerprintAcknowledged: true
       };
     case getType(sessionExpired):
-    case getType(clearOnboarding):
       return INITIAL_STATE;
 
     default:
