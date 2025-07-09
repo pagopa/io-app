@@ -5672,6 +5672,14 @@
       },
       "boolPrerequisites": {
         "header": "Per aderire, dichiari di:"
+      },
+      "preferences": {
+        "enableEmailBanner": {
+          "title": "Don't miss important updates",
+          "content": "Enable email forwarding to receive all communications even outside the app.",
+          "cta": "Notify me via email",
+          "successOutcome": "You've enabled email notifications"
+        }
       }
     },
     "configuration": {
