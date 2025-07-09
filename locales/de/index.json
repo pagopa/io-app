@@ -23,7 +23,15 @@
       "Freitag",
       "Samstag"
     ],
-    "abbr_day_names": ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."],
+    "abbr_day_names": [
+      "So.",
+      "Mo.",
+      "Di.",
+      "Mi.",
+      "Do.",
+      "Fr.",
+      "Sa."
+    ],
     "month_names": [
       " ",
       "Januar",
@@ -54,7 +62,10 @@
       "Nov.",
       "Dez."
     ],
-    "meridian": ["am", "pm"]
+    "meridian": [
+      "am",
+      "pm"
+    ]
   },
   "global": {
     "why": "Warum?",
@@ -4107,6 +4118,14 @@
       "removeAlert": {
         "title": "Möchten Sie {{initiativeName}} aus der Brieftasche löschen?",
         "content": "Der Bonus wird entfernt."
+      }
+    },
+    "onboarding": {
+      "enableMessages": {
+        "cancelAction": "Stornieren",
+        "subtitle": "Aktivieren Sie die Möglichkeit, Sie in der App zu kontaktieren, um Aktualisierungen auf dem {{initiativeName}} zu erhalten. Dieser Schritt ist erforderlich, um mit der Anfrage fortzufahren.",
+        "title": "Nachrichten aktivieren",
+        "confirmAction": "OK, aktiv"
       }
     }
   }

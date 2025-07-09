@@ -24,7 +24,15 @@
       "Friday",
       "Saturday"
     ],
-    "abbr_day_names": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "abbr_day_names": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ],
     "month_names": [
       " ",
       "January",
@@ -55,7 +63,10 @@
       "Nov",
       "Dec"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes": {
         "zero": "0 minutes",
@@ -5672,6 +5683,12 @@
       },
       "boolPrerequisites": {
         "header": "Per aderire, dichiari di:"
+      },
+      "enableMessages": {
+        "cancelAction": "Cancel",
+        "subtitle": "Activate the possibility to contact you in the app to receive updates on the {{initiativeName}}. \nThis step is necessary to proceed with the request.",
+        "title": "Activate messages",
+        "confirmAction": "Ok, active"
       }
     },
     "configuration": {
