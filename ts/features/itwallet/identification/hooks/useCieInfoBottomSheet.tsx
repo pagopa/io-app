@@ -10,23 +10,29 @@ import { AnimatedImage } from "../../../../components/AnimatedImage";
 import { renderActionButtons } from "../../../../components/ui/IOScrollView";
 import { CiePreparationType } from "../components/cie/ItwCiePreparationBaseScreenContent";
 import {
+  ItwFlow,
   trackItwCieInfoBottomSheet,
   trackItwPinInfoBottomSheet,
   trackItwUserWithoutL3Requirements
 } from "../../analytics";
+import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
 
 type Props = { type: CiePreparationType; showSecondaryAction?: boolean };
 
-const trackBottomSheetView = (type: CiePreparationType, screenName: string) => {
+const trackBottomSheetView = (
+  type: CiePreparationType,
+  screenName: string,
+  itw_flow: ItwFlow
+) => {
   switch (type) {
     case "card":
       return trackItwCieInfoBottomSheet({
-        itw_flow: "L3",
+        itw_flow,
         screen_name: screenName
       });
     case "pin":
       return trackItwPinInfoBottomSheet({
-        itw_flow: "L3",
+        itw_flow,
         screen_name: screenName
       });
   }
@@ -46,6 +52,10 @@ export const useCieInfoBottomSheet = ({
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const { name: routeName } = useRoute();
   const reason = type === "card" ? "user_without_cie" : "user_without_pin";
+  const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+  const itw_flow = isL3FeaturesEnabled ? "L3" : "L2";
 
   const imageSrc = useMemo(() => {
     switch (type) {
@@ -124,7 +134,7 @@ export const useCieInfoBottomSheet = ({
   return {
     ...bottomSheet,
     present: () => {
-      trackBottomSheetView(type, routeName);
+      trackBottomSheetView(type, routeName, itw_flow);
       bottomSheet.present();
     }
   };

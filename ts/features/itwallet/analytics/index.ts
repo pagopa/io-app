@@ -367,17 +367,17 @@ export function trackItwCieInfoBottomSheet(
   );
 }
 
-export function trackItwCiePinTutorialCie() {
+export function trackItwCiePinTutorialCie(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_TUTORIAL_CIE,
-    buildEventProperties("UX", "screen_view", { itw_flow: "L3" })
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 
-export function trackItwCiePinTutorialPin() {
+export function trackItwCiePinTutorialPin(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_TUTORIAL_PIN,
-    buildEventProperties("UX", "screen_view", { itw_flow: "L3" })
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 

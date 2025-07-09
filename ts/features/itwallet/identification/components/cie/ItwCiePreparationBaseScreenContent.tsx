@@ -24,6 +24,7 @@ export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
+  const itw_flow = isL3FeaturesEnabled ? "L3" : "L2";
   const infoBottomSheet = useCieInfoBottomSheet({
     type,
     showSecondaryAction: isL3FeaturesEnabled
@@ -45,12 +46,13 @@ export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
 
   useFocusEffect(
     useCallback(() => {
-      if (type === "pin") {
-        trackItwCiePinTutorialPin();
-      } else {
-        trackItwCiePinTutorialCie();
-      }
-    }, [type])
+      const trackingMap: Record<CiePreparationType, () => void> = {
+        card: () => trackItwCiePinTutorialCie(itw_flow),
+        pin: () => trackItwCiePinTutorialPin(itw_flow)
+      };
+
+      trackingMap[type]?.();
+    }, [type, itw_flow])
   );
 
   return (
