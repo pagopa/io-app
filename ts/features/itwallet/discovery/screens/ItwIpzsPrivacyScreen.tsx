@@ -53,9 +53,11 @@ const ItwIpzsPrivacyScreen = () => {
         actions={{
           type: "SingleButton",
           primary: {
-            label: I18n.t("features.itWallet.ipzsPrivacy.button.label"),
+            label: I18n.t(
+              "features.itWallet.discovery.ipzsPrivacy.button.label"
+            ),
             accessibilityLabel: I18n.t(
-              "features.itWallet.ipzsPrivacy.button.label"
+              "features.itWallet.discovery.ipzsPrivacy.button.label"
             ),
             onPress: handleContinuePress
           }
@@ -69,13 +71,13 @@ const ItwIpzsPrivacyScreen = () => {
           >
             {I18n.t(
               isL3
-                ? "features.itWallet.ipzsPrivacy.titleL3"
-                : "features.itWallet.ipzsPrivacy.title"
+                ? "features.itWallet.discovery.ipzsPrivacy.titleL3"
+                : "features.itWallet.discovery.ipzsPrivacy.title"
             )}
           </H2>
           <VSpacer size={16} />
           <IOMarkdown
-            content={I18n.t("features.itWallet.ipzsPrivacy.warning")}
+            content={I18n.t("features.itWallet.discovery.ipzsPrivacy.warning")}
           />
         </ContentWrapper>
         <ItwPrivacyWebViewComponent
