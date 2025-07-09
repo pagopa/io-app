@@ -3404,13 +3404,6 @@
         "dc": "Europäische Behindertenkarte",
         "ts": "Gesundheitskarte - Europäische Krankenversicherungskarte"
       },
-      "ipzsPrivacy": {
-        "title": "Deine Dokumente in IO sind sicher",
-        "warning": "Indem du auf **Weiter** tippst, erklärst du, dass du den **Datenschutzhinweis** gelesen und verstanden hast.",
-        "button": {
-          "label": "Weiter"
-        }
-      },
       "wallet": {
         "active": "Aktiv",
         "inactive": "Nicht aktiv"
@@ -3493,25 +3486,34 @@
           "title": "Dokumente in IO ist bereits aktiv",
           "content": "Füge weiterhin digitale Versionen deiner Dokumente zu deinem Konto hinzu.",
           "action": "Gehe zum Konto"
+        },
+        "ipzsPrivacy": {
+          "title": "Deine Dokumente in IO sind sicher",
+          "warning": "Indem du auf **Weiter** tippst, erklärst du, dass du den **Datenschutzhinweis** gelesen und verstanden hast.",
+          "button": {
+            "label": "Weiter"
+          }
         }
       },
       "identification": {
         "mode": {
-          "title": "Überprüfe deine Identität",
-          "description": "Dies ist ein notwendiger Schritt, um die Sicherheit deiner Daten zu gewährleisten.",
-          "header": "Wähle, wie du dich identifizieren willst",
-          "method": {
-            "spid": {
-              "title": "SPID",
-              "subtitle": "Zugangsdaten und App (oder SMS) verwenden"
-            },
-            "ciePin": {
-              "title": "CIE + PIN",
-              "subtitle": "Elektronische Identitätskarte und PIN verwenden"
-            },
-            "cieId": {
-              "title": "CieID",
-              "subtitle": "CieID-Zugangsdaten und -App verwenden"
+          "l2": {
+            "title": "Überprüfe deine Identität",
+            "description": "Dies ist ein notwendiger Schritt, um die Sicherheit deiner Daten zu gewährleisten.",
+            "header": "Wähle, wie du dich identifizieren willst",
+            "method": {
+              "spid": {
+                "title": "SPID",
+                "subtitle": "Zugangsdaten und App (oder SMS) verwenden"
+              },
+              "ciePin": {
+                "title": "CIE + PIN",
+                "subtitle": "Elektronische Identitätskarte und PIN verwenden"
+              },
+              "cieId": {
+                "title": "CieID",
+                "subtitle": "CieID-Zugangsdaten und -App verwenden"
+              }
             }
           }
         },
@@ -3528,19 +3530,8 @@
           "primaryAction": "Einstellungen öffnen",
           "secondaryAction": "Weiter"
         },
-        "notMatchingIdentityScreen": {
-          "title": "Du meldest dich mit einem neuen Gerät an",
-          "message": "Wenn du dich von einem anderen Gerät als dem üblichen (z. B. dem einer anderen Person) in IO anmeldest, werden aus Sicherheitsgründen diese Funktionalitäten zurückgesetzt:\n\n- Dokumente in IO",
-          "banner": {
-            "title": "Wir empfehlen, dass du nur von deinem Gerät aus auf die App zugreifst."
-          },
-          "alert": {
-            "title": "Möchtest du dich wirklich abmelden?",
-            "message": "Du musst dich erneut mit SPID oder CIE anmelden, um die App nutzen zu können."
-          }
-        },
-        "loading": {
-          "cieId": {
+        "cieId": {
+          "loading": {
             "title": "Verbindung mit der CieID-App läuft...",
             "subtitle": "Bestätige den Zugang in der CieID-App, um die Verbindung fortzusetzen oder abzubrechen",
             "cancel": "Verbindung abbrechen"
@@ -3635,6 +3626,17 @@
         "credentialNotFound": {
           "title": "Dokument zum Konto hinzufügen",
           "subtitle": "Um Dokumente in IO zu verwenden, füge sie zunächst dem Konto hinzu. Das geht schnell und einfach."
+        }
+      },
+      "notMatchingIdentityScreen": {
+        "title": "Du meldest dich mit einem neuen Gerät an",
+        "message": "Wenn du dich von einem anderen Gerät als dem üblichen (z. B. dem einer anderen Person) in IO anmeldest, werden aus Sicherheitsgründen diese Funktionalitäten zurückgesetzt:\n\n- Dokumente in IO",
+        "banner": {
+          "title": "Wir empfehlen, dass du nur von deinem Gerät aus auf die App zugreifst."
+        },
+        "alert": {
+          "title": "Möchtest du dich wirklich abmelden?",
+          "message": "Du musst dich erneut mit SPID oder CIE anmelden, um die App nutzen zu können."
         }
       },
       "unsupportedDevice": {
