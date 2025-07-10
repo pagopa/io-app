@@ -176,6 +176,7 @@ export const makeItwHasActiveBannersAboveWalletSelector =
  * - The IT Wallet feature flag is enabled
  * - The wallet is not offline
  * - The L3 feature flag is enabled
+ * - The credential type is DRIVING_LICENSE
  * - Isn't ITW Credential
  * - The user did not close the banner
  */
