@@ -7,6 +7,7 @@ import { OnboardingFailure } from "../types/OnboardingFailure";
 import { SelfDeclarationTextDTO } from "../../../../../definitions/idpay/SelfDeclarationTextDTO";
 
 export type Context = {
+  readonly inbox: boolean;
   readonly serviceId: string;
   readonly initiative: O.Option<InitiativeDataDTO>;
   readonly onboardingStatus: O.Option<StatusEnum>;
@@ -20,6 +21,7 @@ export type Context = {
 };
 
 export const InitialContext: Context = {
+  inbox: false,
   serviceId: "",
   initiative: O.none,
   onboardingStatus: O.none,
