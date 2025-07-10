@@ -35,8 +35,7 @@ export const idPayOnboardingMachine = setup({
     navigateToInitiativeMonitoringScreen: notImplementedStub,
     closeOnboarding: notImplementedStub,
     handleSessionExpired: notImplementedStub,
-    navigateToInputFormScreen: notImplementedStub,
-    navigateToEnableMessagesScreen: notImplementedStub
+    navigateToInputFormScreen: notImplementedStub
   },
   actors: {
     getInitiativeInfo: fromPromise<InitiativeDataDTO, string>(
@@ -87,8 +86,7 @@ export const idPayOnboardingMachine = setup({
       context.activeTextConsentPage >=
       getInputFormSelfDeclarationFromContext(context).length - 1,
     isSessionExpired: ({ event }: { event: IdPayOnboardingEvents }) =>
-      "error" in event && event.error === InitiativeFailureType.SESSION_EXPIRED,
-    shouldShowEnableMessagesScreen: ({ context }) => !context.inbox
+      "error" in event && event.error === InitiativeFailureType.SESSION_EXPIRED
   }
 }).createMachine({
   id: "idpay-onboarding",
@@ -103,24 +101,13 @@ export const idPayOnboardingMachine = setup({
     Idle: {
       tags: [IdPayTags.Loading],
       on: {
-        "start-onboarding": [
-          {
-            guard: and(["shouldShowEnableMessagesScreen"]),
-            actions: assign(({ event }) => ({
-              serviceId: event.serviceId,
-              inbox: event.inbox
-            })),
-            target: "EnableMessage"
-          },
-          {
-            guard: "assertServiceId",
-            actions: assign(({ event }) => ({
-              serviceId: event.serviceId,
-              inbox: event.inbox
-            })),
-            target: "LoadingInitiative"
-          }
-        ]
+        "start-onboarding": {
+          guard: "assertServiceId",
+          actions: assign(({ event }) => ({
+            serviceId: event.serviceId
+          })),
+          target: "LoadingInitiative"
+        }
       }
     },
     LoadingInitiative: {
@@ -502,39 +489,6 @@ export const idPayOnboardingMachine = setup({
     SessionExpired: {
       entry: ["handleSessionExpired"],
       always: { target: "LoadingInitiative" }
-    },
-
-    EnableMessage: {
-      entry: "navigateToEnableMessagesScreen",
-      invoke: {
-        src: "getInitiativeInfo",
-        input: ({ context }) => context.serviceId,
-        onDone: {
-          actions: assign(({ event }) => ({
-            initiative: O.some(event.output)
-          }))
-        },
-        onError: [
-          {
-            guard: "isSessionExpired",
-            target: "#idpay-onboarding.SessionExpired"
-          },
-          {
-            actions: assign(({ event }) => ({
-              failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
-            })),
-            target: "#idpay-onboarding.OnboardingFailure"
-          }
-        ]
-      },
-      on: {
-        next: {
-          target: "LoadingInitiative"
-        },
-        back: {
-          target: "Idle"
-        }
-      }
     }
   }
 });

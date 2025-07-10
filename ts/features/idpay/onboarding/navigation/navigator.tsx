@@ -44,7 +44,7 @@ export const InnerNavigator = () => {
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_MESSAGE}
         component={IdPayEnableMessageScreen}
-        options={{ headerShown: false, gestureEnabled: false }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS}

@@ -59,11 +59,6 @@ export const createActionsImplementation = (
     });
   };
 
-  const navigateToEnableMessagesScreen = () =>
-    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_MESSAGE
-    });
-
   const closeOnboarding = () => {
     navigation.popToTop();
   };
@@ -87,7 +82,6 @@ export const createActionsImplementation = (
     navigateToFailureScreen,
     navigateToInitiativeMonitoringScreen,
     navigateToInputFormScreen,
-    navigateToEnableMessagesScreen,
     closeOnboarding,
     handleSessionExpired
   };
