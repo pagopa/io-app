@@ -17,6 +17,7 @@ import {
   ItwJwtCredentialStatus,
   StoredCredential
 } from "../../utils/itwTypesUtils";
+import { CredentialType } from "../../utils/itwMocksUtils";
 import {
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
@@ -28,7 +29,6 @@ import {
   isItwEnabledSelector,
   isItwFeedbackBannerEnabledSelector
 } from "./remoteConfig";
-import { CredentialType } from "../../utils/itwMocksUtils";
 
 /**
  * Returns if the discovery banner should be rendered. The banner is rendered if:
