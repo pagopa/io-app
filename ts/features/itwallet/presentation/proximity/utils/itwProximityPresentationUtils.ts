@@ -3,14 +3,17 @@ import {
   Proximity,
   type VerifierRequest
 } from "@pagopa/io-react-native-proximity";
-import {
-  ParsedCredential,
-  StoredCredential
-} from "../../../common/utils/itwTypesUtils";
+import { ParsedCredential } from "../../../common/utils/itwTypesUtils";
 import { parseClaims } from "../../../common/utils/itwClaimsUtils";
 import { assert } from "../../../../../utils/assert";
+import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
 import { TimeoutError, UntrustedRpError } from "./itwProximityErrors";
-import { ProximityDetails } from "./itwProximityTypeUtils";
+import {
+  ProximityCredentials,
+  ProximityDetails
+} from "./itwProximityTypeUtils";
+
+export const WIA_TYPE = "org.iso.18013.5.1.IT.WalletAttestation";
 
 export const promiseWithTimeout = <T>(
   promise: Promise<T>,
@@ -27,10 +30,10 @@ export const promiseWithTimeout = <T>(
 
 export const getProximityDetails = (
   request: VerifierRequest["request"],
-  credentialsByType: Record<string, StoredCredential | undefined>
+  credentialsByType: ProximityCredentials
 ): ProximityDetails =>
-  Object.entries(request).map(
-    ([credentialType, { isAuthenticated, ...namespaces }]) => {
+  Object.entries(request).reduce<ProximityDetails>(
+    (acc, [credentialType, { isAuthenticated, ...namespaces }]) => {
       // Stop the flow if the verifier (RP) is not trusted
       if (!isAuthenticated) {
         throw new UntrustedRpError("Untrusted RP");
@@ -39,6 +42,12 @@ export const getProximityDetails = (
       const credential = credentialsByType[credentialType];
 
       assert(credential, "Credential not found in the wallet");
+
+      // If the credential is a string, it means it's a WIA
+      // and we should not include it in the proximity details
+      if (typeof credential === "string") {
+        return acc;
+      }
 
       // Extract required fields that are part of the verifier request
       const requiredFields = Object.values(namespaces).flatMap(Object.keys);
@@ -61,16 +70,20 @@ export const getProximityDetails = (
         {}
       );
 
-      return {
-        credentialType,
-        claimsToDisplay: parseClaims(parsedCredential)
-      };
-    }
+      return [
+        ...acc,
+        {
+          credentialType,
+          claimsToDisplay: parseClaims(parsedCredential)
+        }
+      ];
+    },
+    []
   );
 
 export const getDocuments = (
   request: VerifierRequest["request"],
-  credentialsByType: Record<string, StoredCredential | undefined>
+  credentialsByType: ProximityCredentials
 ): Array<Proximity.Document> =>
   Object.entries(request).reduce<Array<Proximity.Document>>(
     (acc, [credentialKey]) => {
@@ -78,6 +91,18 @@ export const getDocuments = (
 
       // This should be guaranteed by getProximityDetails having already validated credentials
       assert(storedCredential, "Credential not found in the wallet");
+
+      // If the credential is a string, it means it's a WIA
+      if (typeof storedCredential === "string") {
+        return [
+          ...acc,
+          {
+            alias: WIA_KEYTAG,
+            docType: WIA_TYPE,
+            issuerSignedContent: storedCredential
+          }
+        ];
+      }
 
       const { credential, credentialType, keyTag } = storedCredential;
 
