@@ -59,8 +59,7 @@ const PaymentCardSmall = ({
     textColorDefault,
     textColorError,
     backgroundColorDefault,
-    backgroundColorError,
-    skeletonColor
+    backgroundColorError
   } = usePaymentCardStyles();
 
   const labelText = useMemo(() => {
