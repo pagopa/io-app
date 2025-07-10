@@ -124,7 +124,6 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-
       actor.send({ type: "start" });
 
       await waitFor(() =>
@@ -132,6 +131,7 @@ describe("itwProximityMachine", () => {
           Permissions: "GrantPermissions"
         })
       );
+
       expect(navigateToGrantPermissionsScreen).toHaveBeenCalled();
 
       actor.send({ type: "continue" });
@@ -160,7 +160,6 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-
       actor.send({ type: "start" });
 
       await waitFor(() =>
@@ -193,6 +192,7 @@ describe("itwProximityMachine", () => {
       actor.send({ type: "close" });
 
       expect(actor.getSnapshot().value).toStrictEqual("Idle");
+
       expect(checkPermissions).toHaveBeenCalledTimes(2);
     });
 
@@ -216,6 +216,7 @@ describe("itwProximityMachine", () => {
       actor.send({ type: "back" });
 
       expect(actor.getSnapshot().value).toStrictEqual("Idle");
+
       expect(setFailure).not.toHaveBeenCalled();
       expect(navigateToFailureScreen).not.toHaveBeenCalled();
     });
@@ -303,6 +304,7 @@ describe("itwProximityMachine", () => {
       actor.send({ type: "close" });
 
       expect(actor.getSnapshot().value).toStrictEqual("Idle");
+      
       expect(checkBluetoothIsActive).toHaveBeenCalledTimes(2);
 
       expect(setFailure).not.toHaveBeenCalled();
