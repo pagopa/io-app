@@ -32,12 +32,8 @@ export const ItwIdentityNotMatchingScreen = () => {
 
   const handleCancel = () => {
     Alert.alert(
-      I18n.t(
-        "features.itWallet.identification.notMatchingIdentityScreen.alert.title"
-      ),
-      I18n.t(
-        "features.itWallet.identification.notMatchingIdentityScreen.alert.message"
-      ),
+      I18n.t("features.itWallet.notMatchingIdentityScreen.alert.title"),
+      I18n.t("features.itWallet.notMatchingIdentityScreen.alert.message"),
       [
         {
           text: I18n.t("global.buttons.exit"),
@@ -56,9 +52,7 @@ export const ItwIdentityNotMatchingScreen = () => {
   return (
     <IOScrollViewWithLargeHeader
       title={{
-        label: I18n.t(
-          "features.itWallet.identification.notMatchingIdentityScreen.title"
-        )
+        label: I18n.t("features.itWallet.notMatchingIdentityScreen.title")
       }}
       headerActionsProp={{ showHelp: true }}
       goBack={handleCancel}
@@ -78,12 +72,12 @@ export const ItwIdentityNotMatchingScreen = () => {
         <VStack space={24}>
           <IOMarkdown
             content={I18n.t(
-              "features.itWallet.identification.notMatchingIdentityScreen.message"
+              "features.itWallet.notMatchingIdentityScreen.message"
             )}
           />
           <Banner
             content={I18n.t(
-              "features.itWallet.identification.notMatchingIdentityScreen.banner.title"
+              "features.itWallet.notMatchingIdentityScreen.banner.title"
             )}
             pictogramName="security"
             color="neutral"
