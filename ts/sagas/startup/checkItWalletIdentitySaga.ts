@@ -7,7 +7,8 @@ import { selectFiscalCodeFromEid } from "../../features/itwallet/credentials/sto
 import { itwLifecycleIdentityCheckCompleted } from "../../features/itwallet/lifecycle/store/actions";
 import { watchItwLifecycleSaga } from "../../features/itwallet/lifecycle/saga";
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
-import { itwBypassIdentityMatch } from "../../config";
+import { selectItwEnv } from "../../features/itwallet/common/store/selectors/environment";
+import { getEnv } from "../../features/itwallet/common/utils/environment";
 
 /**
  * When IT Wallet is valid, this saga checks whether the stored eID was issued
@@ -16,6 +17,7 @@ import { itwBypassIdentityMatch } from "../../config";
  * If they are different, the user is taken to a new screen where the active wallet instance must be reset before continuing.
  */
 export function* checkItWalletIdentitySaga() {
+  const env = getEnv(yield* select(selectItwEnv));
   const isWalletValid = yield* select(itwLifecycleIsValidSelector);
 
   if (!isWalletValid) {
@@ -25,7 +27,10 @@ export function* checkItWalletIdentitySaga() {
   const authenticatedUserFiscalCode = yield* select(profileFiscalCodeSelector);
   const eidFiscalCode = yield* select(selectFiscalCodeFromEid);
 
-  if (itwBypassIdentityMatch || authenticatedUserFiscalCode === eidFiscalCode) {
+  if (
+    env.BYPASS_IDENTITY_MATCH ||
+    authenticatedUserFiscalCode === eidFiscalCode
+  ) {
     return;
   }
 
