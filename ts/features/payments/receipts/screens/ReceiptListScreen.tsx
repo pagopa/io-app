@@ -188,7 +188,11 @@ const ReceiptListScreen = () => {
 
   const EmptyStateList = isEmpty ? (
     <ReceiptFadeInOutAnimationView>
-      <OperationResultScreenContent isHeaderVisible {...emptyProps} />
+      <OperationResultScreenContent
+        testID="PaymentsTransactionsEmptyList"
+        isHeaderVisible
+        {...emptyProps}
+      />
     </ReceiptFadeInOutAnimationView>
   ) : undefined;
 

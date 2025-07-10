@@ -1,12 +1,11 @@
-import * as R from "fp-ts/lib/Record";
-import { identity, pipe } from "fp-ts/lib/function";
 import { assign } from "xstate";
 import { StackActions } from "@react-navigation/native";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../../store/hooks";
+import ROUTES from "../../../../../navigation/routes";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { itwCredentialsByTypeSelector } from "../../../credentials/store/selectors";
+import { itwCredentialsSelector } from "../../../credentials/store/selectors";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 
@@ -16,10 +15,9 @@ export const createProximityActionsImplementation = (
 ) => ({
   onInit: assign<Context, ProximityEvents, unknown, ProximityEvents, any>(
     () => {
-      const credentialsByType = itwCredentialsByTypeSelector(store.getState());
-
+      const credentialsByType = itwCredentialsSelector(store.getState());
       return {
-        credentialsByType: pipe(credentialsByType, R.filterMap(identity))
+        credentialsByType
       };
     }
   ),
@@ -39,6 +37,26 @@ export const createProximityActionsImplementation = (
   navigateToClaimsDisclosureScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.PROXIMITY.CLAIMS_DISCLOSURE
+    });
+  },
+
+  navigateToSendDocumentsResponseScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PROXIMITY.SEND_DOCUMENTS_RESPONSE
+    });
+  },
+
+  navigateToWallet: () => {
+    navigation.reset({
+      index: 0,
+      routes: [
+        {
+          name: ROUTES.MAIN,
+          params: {
+            screen: ROUTES.WALLET_HOME
+          }
+        }
+      ]
     });
   },
 

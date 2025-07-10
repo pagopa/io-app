@@ -40,8 +40,8 @@ import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/detail
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
-import { ItwCiePreparationScreen } from "../identification/screens/cie/ItwCiePreparationScreen";
-import { ItwCiePinPreparationScreen } from "../identification/screens/cie/ItwCiePinPreparationScreen";
+import { ItwCiePreparationCardScreen } from "../identification/screens/cie/ItwCiePreparationCardScreen";
+import { ItwCiePreparationPinScreen } from "../identification/screens/cie/ItwCiePreparationPinScreen.tsx";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { useIOSelector } from "../../../store/hooks";
@@ -56,9 +56,11 @@ import {
 import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/ItwGrantPermissionsScreen.tsx";
 import { ItwActivateBluetoothScreen } from "../presentation/proximity/screens/ItwActivateBluetoothScreen.tsx";
 import { ItwProximityClaimsDisclosureScreen } from "../presentation/proximity/screens/ItwProximityClaimsDisclosureScreen.tsx";
+import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximity/screens/ItwProximitySendDocumentsResponseScreen.tsx";
 import { ItwProximityFailureScreen } from "../presentation/proximity/screens/ItwProximityFailureScreen.tsx";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
 import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
+import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/ItwPresentationPidDetailScreen.tsx";
 import { ItwIssuanceUpcomingCredentialScreen } from "../issuance/screens/ItwIssuanceUpcomingCredentialScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
@@ -151,11 +153,11 @@ const InnerNavigator = () => {
       {/* IDENTIFICATION CIE + PIN */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN}
-        component={ItwCiePreparationScreen}
+        component={ItwCiePreparationCardScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN}
-        component={ItwCiePinPreparationScreen}
+        component={ItwCiePreparationPinScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}
@@ -267,6 +269,10 @@ const InnerNavigator = () => {
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL}
         component={ItwPresentationCredentialFiscalCodeModal}
       />
+      <Stack.Screen
+        name={ITW_ROUTES.PRESENTATION.PID_DETAIL}
+        component={ItwPresentationPidDetailScreen}
+      />
       {/* LIFECYCLE */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}
@@ -296,6 +302,10 @@ const InnerNavigator = () => {
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.CLAIMS_DISCLOSURE}
           component={ItwProximityClaimsDisclosureScreen}
+        />
+        <Stack.Screen
+          name={ITW_ROUTES.PROXIMITY.SEND_DOCUMENTS_RESPONSE}
+          component={ItwProximitySendDocumentsResponseScreen}
         />
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.FAILURE}

@@ -17,7 +17,7 @@ const renderComponent = (customState?: Partial<GlobalState>) => {
   const baseState = appReducer(
     undefined,
     applicationChangeState("active")
-  ) as PreloadedState<GlobalState>;
+  ) as unknown as PreloadedState<GlobalState>;
   const mergedState = {
     ...baseState,
     ...customState

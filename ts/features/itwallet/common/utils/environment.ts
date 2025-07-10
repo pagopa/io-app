@@ -12,6 +12,7 @@ export type Env = {
   GOOGLE_CLOUD_PROJECT_NUMBER: string;
   VERIFIER_BASE_URL: string;
   ISSUANCE_REDIRECT_URI: string;
+  BYPASS_IDENTITY_MATCH: boolean;
 };
 
 export const getEnv = (env?: EnvType): Env => {
@@ -28,7 +29,8 @@ export const getEnv = (env?: EnvType): Env => {
         REDIRECT_URI: Config.ITW_PRE_REDIRECT_URI,
         GOOGLE_CLOUD_PROJECT_NUMBER: Config.ITW_PRE_GOOGLE_CLOUD_PROJECT_NUMBER,
         VERIFIER_BASE_URL: Config.ITW_PRE_VERIFIER_BASE_URL,
-        ISSUANCE_REDIRECT_URI: Config.ITW_PRE_ISSUANCE_REDIRECT_URI
+        ISSUANCE_REDIRECT_URI: Config.ITW_PRE_ISSUANCE_REDIRECT_URI,
+        BYPASS_IDENTITY_MATCH: true
       };
     default:
       return {
@@ -43,7 +45,8 @@ export const getEnv = (env?: EnvType): Env => {
         GOOGLE_CLOUD_PROJECT_NUMBER:
           Config.ITW_PROD_GOOGLE_CLOUD_PROJECT_NUMBER,
         VERIFIER_BASE_URL: Config.ITW_PROD_VERIFIER_BASE_URL,
-        ISSUANCE_REDIRECT_URI: Config.ITW_PROD_ISSUANCE_REDIRECT_URI
+        ISSUANCE_REDIRECT_URI: Config.ITW_PROD_ISSUANCE_REDIRECT_URI,
+        BYPASS_IDENTITY_MATCH: Config.ITW_BYPASS_IDENTITY_MATCH === "YES"
       };
   }
 };

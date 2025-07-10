@@ -7,9 +7,9 @@ import I18n from "../../../../i18n";
 import { CredentialType } from "./itwMocksUtils";
 import { ItwCredentialStatus, StoredCredential } from "./itwTypesUtils";
 
-export const itwCredentialNameByCredentialType: {
-  [type: string]: string;
-} = {
+export const itwGetCredentialNameByCredentialType = (
+  isItwCredential: boolean
+): Record<string, string> => ({
   [CredentialType.EUROPEAN_DISABILITY_CARD]: I18n.t(
     "features.itWallet.credentialName.dc"
   ),
@@ -19,20 +19,25 @@ export const itwCredentialNameByCredentialType: {
   [CredentialType.DRIVING_LICENSE]: I18n.t(
     "features.itWallet.credentialName.mdl"
   ),
-  [CredentialType.PID]: I18n.t("features.itWallet.credentialName.eid"),
+  [CredentialType.PID]: I18n.t(
+    isItwCredential
+      ? "features.itWallet.credentialName.pid"
+      : "features.itWallet.credentialName.eid"
+  ),
   [CredentialType.DEGREE_CERTIFICATES]: I18n.t(
     "features.itWallet.credentialName.dgc"
   ),
   [CredentialType.MDL]: I18n.t("features.itWallet.credentialName.mdl")
-};
+});
 
 export const getCredentialNameFromType = (
   credentialType: string | undefined,
-  withDefault: string = ""
+  withDefault: string = "",
+  isItwCredential: boolean = false
 ): string =>
   pipe(
     O.fromNullable(credentialType),
-    O.map(type => itwCredentialNameByCredentialType[type]),
+    O.map(type => itwGetCredentialNameByCredentialType(isItwCredential)[type]),
     O.getOrElse(() => withDefault)
   );
 
@@ -106,7 +111,8 @@ export const isItwCredential = (sdJwt: string): boolean =>
  * Credential types that support the L3 design
  */
 const credentialsWithL3Design: ReadonlyArray<string> = [
-  CredentialType.DRIVING_LICENSE
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.PID
 ];
 
 /**
