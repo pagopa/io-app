@@ -18,3 +18,7 @@ export const settingsBannerToShowSelector = (state: GlobalState) => {
     ? "APPEARANCE_SETTINGS_BANNER"
     : undefined;
 };
+
+export const areNotificationPermissionsEnabledSelector = (
+  state: GlobalState
+): boolean => areNotificationPermissionsEnabled(state);
