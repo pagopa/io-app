@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.9.0-rc.5](https://github.com/pagopa/io-app/compare/3.9.0-rc.4...3.9.0-rc.5) (2025-07-08)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2670](https://pagopa.atlassian.net/browse/SIW-2670)] New UX for CIE+PIN identification flow ([#7157](https://github.com/pagopa/io-app/issues/7157)) ([2502cb1](https://github.com/pagopa/io-app/commit/2502cb15316c92a697d782e5ba20a0e36cf1f294))
+
+
+### Chores
+
+* [[IOBP-1818](https://pagopa.atlassian.net/browse/IOBP-1818)] Hide IDPay timeline "show all" CTA when available only few operations ([#7163](https://github.com/pagopa/io-app/issues/7163)) ([a8a6500](https://github.com/pagopa/io-app/commit/a8a6500e91f90bc4f083eee1d754615159ed6ae1))
+* [[IOBP-1822](https://pagopa.atlassian.net/browse/IOBP-1822)] Add IdPay CIE code remote feature flag ([#7164](https://github.com/pagopa/io-app/issues/7164)) ([3382046](https://github.com/pagopa/io-app/commit/3382046ba4e634103a75bf4a601a639750cb1271))
+
+## [3.9.0-rc.4](https://github.com/pagopa/io-app/compare/3.9.0-rc.3...3.9.0-rc.4) (2025-07-07)
+
+## [3.9.0-rc.3](https://github.com/pagopa/io-app/compare/3.9.0-rc.2...3.9.0-rc.3) (2025-07-04)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2669](https://pagopa.atlassian.net/browse/SIW-2669)] Fix back navigation after choosing L2 identification fallback ([#7149](https://github.com/pagopa/io-app/issues/7149)) ([9786a3a](https://github.com/pagopa/io-app/commit/9786a3a6af6efe71280c6ba75d4f569fe6e6ce0a))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2624](https://pagopa.atlassian.net/browse/SIW-2624)] Update copy for remote presentation and L3 upgrade ([#7152](https://github.com/pagopa/io-app/issues/7152)) ([432277b](https://github.com/pagopa/io-app/commit/432277b545a32aa6ae6df2dc87610f814c0f2a76))
+
 ## [3.9.0-rc.2](https://github.com/pagopa/io-app/compare/3.9.0-rc.1...3.9.0-rc.2) (2025-07-03)
 
 

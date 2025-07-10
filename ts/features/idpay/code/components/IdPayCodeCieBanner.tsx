@@ -11,6 +11,7 @@ import { IdPayCodeRoutes } from "../navigation/routes";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { isLoadingDiscountInitiativeInstrumentsSelector } from "../../configuration/store";
 import { idPayCodeCieBannerClose } from "../store/actions";
+import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 export type IdPayCodeCIEBannerParams = {
   initiativeId: string;
@@ -21,7 +22,11 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
   const navigation =
     useNavigation<IOStackNavigationProp<IdPayCodeParamsList>>();
   const dispatch = useIODispatch();
-  const showBanner = useIOSelector(showIdPayCodeBannerSelector);
+  const isIdPayCodeCieEnabled = useIOSelector(
+    isIdPayCiePaymentCodeEnabledSelector
+  );
+  const showBanner =
+    useIOSelector(showIdPayCodeBannerSelector) && isIdPayCodeCieEnabled;
   const isLoadingInitiativeInstruments = useIOSelector(
     isLoadingDiscountInitiativeInstrumentsSelector
   );

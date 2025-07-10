@@ -1,4 +1,4 @@
-import { fingerprintAcknowledged, clearOnboarding } from "../actions";
+import { fingerprintAcknowledged } from "../actions";
 import { sessionExpired } from "../../../authentication/common/store/actions";
 import { isFingerprintAcknowledgedSelector } from "../selectors";
 import reducer, { OnboardingState } from "../reducers";
@@ -19,12 +19,6 @@ describe("onboarding reducer", () => {
     expect(newState).toEqual({
       isFingerprintAcknowledged: true
     });
-  });
-
-  it("should reset state on clearOnboarding", () => {
-    const prevState: OnboardingState = { isFingerprintAcknowledged: true };
-    const newState = reducer(prevState, clearOnboarding());
-    expect(newState).toEqual(INITIAL_STATE);
   });
 
   it("should reset state on sessionExpired", () => {
