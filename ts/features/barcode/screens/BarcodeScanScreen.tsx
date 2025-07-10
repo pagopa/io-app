@@ -17,7 +17,10 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import {
+  barcodesScannerConfigSelector,
+  isPnRemoteEnabledSelector
+} from "../../../store/reducers/backendStatus/remoteConfig";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
@@ -50,6 +53,7 @@ const BarcodeScanScreen = () => {
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
+  const isSendEnabled = useIOSelector(isPnRemoteEnabledSelector);
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
@@ -67,7 +71,7 @@ const BarcodeScanScreen = () => {
   );
 
   const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
-    type === "IDPAY" ? isIdPayEnabled : true
+    type === "IDPAY" ? isIdPayEnabled : type === "SEND" ? isSendEnabled : true
   );
 
   /**
