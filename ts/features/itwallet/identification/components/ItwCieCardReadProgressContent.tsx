@@ -3,6 +3,7 @@ import { Platform } from "react-native";
 import I18n from "../../../../i18n";
 import { ItwCieMachineContext } from "../machine/cie/provider";
 import { selectReadProgress } from "../machine/cie/selectors";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   CieCardReadContentProps,
   ItwCieCardReadContent
@@ -16,7 +17,7 @@ export const ItwCieCardReadProgressContent = () => {
 };
 
 const useProgressContentProps = (): CieCardReadContentProps => {
-  const cieActor = ItwCieMachineContext.useActorRef();
+  const issuanceActor = ItwEidIssuanceMachineContext.useActorRef();
   const progress = ItwCieMachineContext.useSelector(selectReadProgress);
 
   const platform = Platform.select({
@@ -30,7 +31,7 @@ const useProgressContentProps = (): CieCardReadContentProps => {
   const cancelAction: IOButtonProps = {
     variant: "link",
     label: I18n.t("global.buttons.cancel"),
-    onPress: () => cieActor.send({ type: "close" })
+    onPress: () => issuanceActor.send({ type: "close" })
   };
 
   switch (state) {

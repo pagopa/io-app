@@ -47,18 +47,10 @@ type Retry = {
   type: "retry";
 };
 
-/**
- * Closes the authentication
- */
-type Close = {
-  type: "close";
-};
-
 export type CieEvents =
   | SetServiceProviderUrl
   | CieReadEvent
   | CieReadError
   | CieReadSuccess
   | CompleteAuthentication
-  | Retry
-  | Close;
+  | Retry;

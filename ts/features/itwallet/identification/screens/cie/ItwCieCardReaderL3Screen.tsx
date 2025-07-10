@@ -4,7 +4,10 @@ import { useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import I18n from "../../../../../i18n";
-import { trackItWalletCieCardReading } from "../../../analytics";
+import {
+  trackItWalletCieCardReading,
+  trackItWalletCieCardReadingSuccess
+} from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   selectAuthUrlOption,
@@ -64,6 +67,7 @@ const ScreenContent = () => {
    */
   useEffect(() => {
     if (authRedirectUrl !== undefined) {
+      trackItWalletCieCardReadingSuccess();
       issuanceActor.send({
         type: "user-identification-completed",
         authRedirectUrl

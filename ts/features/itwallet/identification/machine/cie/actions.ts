@@ -51,11 +51,5 @@ export const createCieActionsImplementation = () => ({
       "features.itWallet.identification.cie.readingCard.ios.reading.status"
     );
     CieManager.setCurrentAlertMessage(`${progress}\n${label}`);
-  },
-  announceEvent: () => {
-    // TODO
-  },
-  trackEvent: () => {
-    // TODO
   }
 });
