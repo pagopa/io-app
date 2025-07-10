@@ -36,7 +36,8 @@ export const idPayOnboardingMachine = setup({
     closeOnboarding: notImplementedStub,
     handleSessionExpired: notImplementedStub,
     navigateToInputFormScreen: notImplementedStub,
-    navigateToEnableNotificationScreen: notImplementedStub
+    navigateToEnableNotificationScreen: notImplementedStub,
+    navigateToEnableMessageScreen: notImplementedStub
   },
   actors: {
     getInitiativeInfo: fromPromise<InitiativeDataDTO, string>(
@@ -89,7 +90,8 @@ export const idPayOnboardingMachine = setup({
     isSessionExpired: ({ event }: { event: IdPayOnboardingEvents }) =>
       "error" in event && event.error === InitiativeFailureType.SESSION_EXPIRED,
     shouldShowEnableNotificationOnClose: ({ context }) =>
-      !context.isPushNotificationsEnabled
+      !context.isPushNotificationsEnabled,
+    hasMessageConsent: ({ context }) => !context.hasInbox
   }
 }).createMachine({
   id: "idpay-onboarding",
@@ -107,7 +109,8 @@ export const idPayOnboardingMachine = setup({
         "start-onboarding": {
           guard: "assertServiceId",
           actions: assign(({ event }) => ({
-            serviceId: event.serviceId
+            serviceId: event.serviceId,
+            hasInbox: event.hasInbox
           })),
           target: "LoadingInitiative"
         }
@@ -175,6 +178,21 @@ export const idPayOnboardingMachine = setup({
     },
 
     DisplayingInitiativeInfo: {
+      on: {
+        next: [
+          {
+            guard: "hasMessageConsent",
+            target: "EnableMessage"
+          },
+          {
+            target: "AcceptingTos"
+          }
+        ]
+      }
+    },
+
+    EnableMessage: {
+      entry: "navigateToEnableMessageScreen",
       on: {
         next: {
           target: "AcceptingTos"
