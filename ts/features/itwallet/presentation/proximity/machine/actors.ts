@@ -103,9 +103,10 @@ export const createProximityActorsImplementation = (env: Env) => {
         await Proximity.close().catch(constUndefined);
       }
 
+      // TODO: "https://pre.verifier.wallet.ipzs.it"
       const entityConfiguration =
         await Trust.Build.getRelyingPartyEntityConfiguration(
-          env.VERIFIER_BASE_URL // "https://pre.verifier.wallet.ipzs.it"
+          env.VERIFIER_BASE_URL
         );
 
       await Proximity.start({
@@ -131,10 +132,7 @@ export const createProximityActorsImplementation = (env: Env) => {
     };
 
     const handleDeviceDisconnected = () => {
-      sendBack({
-        type: "device-error",
-        error: new Error("Device disconnected")
-      });
+      sendBack({ type: "device-disconnected" });
     };
 
     const handleError = (eventPayload: Proximity.EventsPayload["onError"]) => {

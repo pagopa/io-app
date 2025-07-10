@@ -1,4 +1,4 @@
-import { assign, fromCallback, fromPromise, setup } from "xstate";
+import { assign, fromCallback, fromPromise, setup, stateIn } from "xstate";
 import { InitialContext, Context } from "./context";
 import { ProximityEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
@@ -320,6 +320,20 @@ export const itwProximityMachine = setup({
           })),
           target: "DeviceCommunication.ClaimsDisclosure"
         },
+        "device-disconnected": [
+          {
+            description:
+              "This event is dispatched when the verifier app disconnects after sendDocuments. At this point, the verification process is complete and we can safely navigate to the success state",
+            guard: stateIn("DeviceCommunication.SendingDocuments"),
+            target: "#itwProximityMachine.Success"
+          },
+          {
+            description:
+              "This event is dispatched when the verifier app disconnects before sendDocuments. At this point, we can safely close the proximity session",
+            actions: "setFailure",
+            target: "DeviceCommunication.Closing"
+          }
+        ],
         "device-error": {
           actions: "setFailure",
           target: "DeviceCommunication.Closing"
@@ -368,7 +382,8 @@ export const itwProximityMachine = setup({
               verifierRequest: context.verifierRequest
             }),
             onDone: {
-              target: "#itwProximityMachine.Success"
+              // There's not evidence of the verifier app responding to this request
+              // We are waiting for the onDeviceDisconnected event
             },
             onError: {
               actions: "setFailure",
