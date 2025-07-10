@@ -156,4 +156,42 @@ describe("test decodeIOBarcode function", () => {
       expect(output).toStrictEqual(O.none);
     });
   });
+
+  describe("test SEND AAR barcode type", () => {
+    const testUrls: Array<[string, boolean]> = [
+      ["https://dev.cittadini.notifichedigitali.it/?aar=whatever", true],
+      ["https://test.cittadini.notifichedigitali.it/?aar=whatever", true],
+      ["https://hotfix.cittadini.notifichedigitali.it/?aar=whatever", true],
+      ["https://uat.cittadini.notifichedigitali.it/?aar=whatever", true],
+      ["https://cittadini.notifichedigitali.it/?aar=whatever", true],
+      [
+        "https://cittadini.notifichedigitali.it/notifications/detail?aar=12345",
+        true
+      ],
+      [
+        "  https://dev.cittadini.notifichedigitali.it/some/path?aar=abc123  ",
+        true
+      ],
+      ["https://cittadini.notifichedigitali.it/?aar=", false],
+      ["https://other-domain.it/?aar=whatever", false],
+      ["https://stage.cittadini.notifichedigitali.it/?aar=whatever", false]
+    ];
+    testUrls.forEach(([data, shouldMatch]) => {
+      it(`should ${
+        shouldMatch ? "" : "not "
+      }match a QRCode containing '${data}'`, () => {
+        const output = decodeIOBarcode(fakeGlobalState, data);
+        if (shouldMatch) {
+          expect(output).toEqual(
+            O.some({
+              qrCodeContent: data.trim(),
+              type: "SEND"
+            })
+          );
+        } else {
+          expect(output).toEqual(O.none);
+        }
+      });
+    });
+  });
 });

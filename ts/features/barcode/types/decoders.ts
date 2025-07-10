@@ -14,7 +14,6 @@ import { SignatureRequestDetailView } from "../../../../definitions/fci/Signatur
 import { decodePosteDataMatrix } from "../../../utils/payment";
 import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/utils/itwRemoteTypeUtils";
 import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
-import { isTestEnv } from "../../../utils/environment";
 import { pnAARQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { IOBarcodeType } from "./IOBarcode";
 
@@ -243,5 +242,3 @@ export const decodeMultipleIOBarcodes = (
     O.map(A.compact),
     O.filter(A.isNonEmpty)
   );
-
-export const testable = isTestEnv ? { decodeSENDAARBarcode } : undefined;

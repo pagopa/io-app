@@ -294,7 +294,7 @@ export const pnFrontendUrlSelector = (state: GlobalState) =>
   );
 
 export const pnAARQRCodeRegexSelector = (_state: GlobalState) =>
-  "'^\\s*https:\\/\\/(dev\\.|test\\.|hotfix\\.|uta\\.)?cittadini\\.notifichedigitali\\.it(\\/[^?]*)?\\?aar=.+\\s*";
+  "^\\s*https:\\/\\/(dev\\.|test\\.|hotfix\\.|uat\\.)?cittadini\\.notifichedigitali\\.it(\\/[^?]*)?\\?aar=.+\\s*";
 
 export const paymentsConfigSelector = createSelector(
   remoteConfigSelector,
