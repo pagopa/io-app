@@ -239,7 +239,3 @@ export const walletApiUatBaseUrl = Config.WALLET_API_UAT_BASEURL;
 
 // Default pin for dev mode
 export const defaultPin = "162534";
-
-// IT Wallet
-export const itwBypassIdentityMatch =
-  Config.ITW_BYPASS_IDENTITY_MATCH === "YES";
