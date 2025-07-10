@@ -1,12 +1,12 @@
-import { useEffect, useRef } from "react";
-import { Alert, Platform } from "react-native";
 import { IOToast } from "@pagopa/io-app-design-system";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
-import I18n from "../../../../i18n";
-import { cgnUnsubscribe } from "../store/actions/unsubscribe";
+import { useEffect, useRef } from "react";
+import { Alert } from "react-native";
 import { isError, isReady } from "../../../../common/model/RemoteValue";
+import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { cgnUnsubscribe } from "../store/actions/unsubscribe";
+import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 
 export function useCgnUnsubscribe() {
   const dispatch = useIODispatch();
@@ -20,10 +20,7 @@ export function useCgnUnsubscribe() {
       I18n.t("bonus.cgn.activation.deactivate.alert.message"),
       [
         {
-          text:
-            Platform.OS === "ios"
-              ? I18n.t(`wallet.delete.ios.confirm`)
-              : I18n.t(`wallet.delete.android.confirm`),
+          text: I18n.t(`wallet.delete.android.confirm`),
           style: "destructive",
           onPress: () => dispatch(cgnUnsubscribe.request())
         },
