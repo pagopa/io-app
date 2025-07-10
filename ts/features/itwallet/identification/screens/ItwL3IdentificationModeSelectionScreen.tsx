@@ -196,6 +196,7 @@ const useCieIdBottomSheet = () => {
                     type: "select-identification-mode",
                     mode: "cieId"
                   });
+                  bottomSheet.dismiss();
                 }
               },
               secondary: {
