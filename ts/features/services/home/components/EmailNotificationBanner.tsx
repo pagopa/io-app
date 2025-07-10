@@ -76,7 +76,7 @@ export const EmailNotificationBanner = () => {
         labelClose={I18n.t("global.buttons.close")}
         onClose={handleOnCloseBanner}
         color="turquoise"
-        pictogramName="notification"
+        pictogramName="emailDotNotif"
         title={I18n.t("idpay.onboarding.preferences.enableEmailBanner.title")}
         content={I18n.t(
           "idpay.onboarding.preferences.enableEmailBanner.content"
