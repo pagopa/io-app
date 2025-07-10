@@ -1,28 +1,33 @@
 import { createSelector } from "reselect";
 import * as O from "fp-ts/lib/Option";
-import { itwCredentialsSelector } from "../../../../credentials/store/selectors";
-import { itwWalletInstanceAttestationSelector } from "../../../../walletInstance/store/selectors";
-import { WIA_KEYTAG } from "../../../../common/utils/itwCryptoContextUtils";
+import { SdJwt } from "@pagopa/io-react-native-wallet-v2";
+import {
+  itwCredentialsEidSelector,
+  itwCredentialsSelector
+} from "../../../../credentials/store/selectors";
 import { assert } from "../../../../../../utils/assert";
+import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
 
 /**
  * Select credentials to be used in a remote presentation and evaluated against a DQCL query.
- *
- * The Wallet Attestation in SD-JWT format is also included.
+ * They are keyed by VCT to be compatible with the DCQL query evaluation.
  */
 export const itwRemotePresentationCredentialsSelector = createSelector(
+  itwCredentialsEidSelector,
   itwCredentialsSelector,
-  itwWalletInstanceAttestationSelector,
-  ({ eid, credentials }, walletAttestation) => {
+  (eid, credentials) => {
     assert(O.isSome(eid), "Missing PID");
-    const walletAttestationSdJwt = walletAttestation?.["dc+sd-jwt"];
 
-    return [
-      walletAttestationSdJwt && [WIA_KEYTAG, walletAttestationSdJwt],
-      [eid.value.keyTag, eid.value.credential],
-      ...credentials
-        .filter(O.isSome)
-        .map(c => [c.value.keyTag, c.value.credential] as [string, string])
-    ].filter(Boolean) as Array<[string, string]>;
+    const { sdJwt } = SdJwt.decode(eid.value.credential);
+
+    return {
+      [sdJwt.payload.vct]: eid.value,
+      ...Object.values(credentials).reduce((acc, c) => {
+        const { sdJwt } = SdJwt.decode(c.credential);
+        // eslint-disable-next-line functional/immutable-data
+        acc[sdJwt.payload.vct] = c;
+        return acc;
+      }, {} as Record<string, StoredCredential>)
+    };
   }
 );

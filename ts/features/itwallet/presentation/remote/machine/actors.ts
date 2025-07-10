@@ -15,9 +15,6 @@ import { Env } from "../../../common/utils/environment";
 import { getAttestation } from "../../../common/utils/itwAttestationUtils";
 import { useIOStore } from "../../../../../store/hooks";
 import {
-  itwCredentialsSelector
-} from "../../../credentials/store/selectors";
-import {
   enrichPresentationDetails,
   getInvalidCredentials
 } from "../utils/itwRemotePresentationUtils";
@@ -25,6 +22,8 @@ import { assert } from "../../../../../utils/assert";
 import { itwIntegrityKeyTagSelector } from "../../../issuance/store/selectors";
 import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { itwRemotePresentationCredentialsSelector } from "../store/selectors";
+import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
+import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
 import { InvalidCredentialsStatusError } from "./failure";
 
 const NEW_API_ENABLED = true; // TODO: [SIW-2530] Remove after transitioning to API 1.0
@@ -120,11 +119,18 @@ export const createRemoteActorsImplementation = (
       }
     );
 
-    const credentialsSdJwt = itwRemotePresentationCredentialsSelector(
-      store.getState()
-    );
-
     assert(requestObject.dcql_query, "Missing required DCQL query");
+
+    const globalState = store.getState();
+    const credentialsByVct =
+      itwRemotePresentationCredentialsSelector(globalState);
+    const walletAttestationSdJwt =
+      itwWalletInstanceAttestationSelector(globalState)?.["dc+sd-jwt"];
+
+    const credentialsSdJwt = [
+      walletAttestationSdJwt && [WIA_KEYTAG, walletAttestationSdJwt],
+      Object.values(credentialsByVct).map(c => [c.keyTag, c.credential])
+    ].filter(Boolean) as Array<[string, string]>;
 
     // Evaluate the DCQL query against the credentials contained in the Wallet
     const result = Credential.Presentation.evaluateDcqlQuery(
@@ -132,17 +138,9 @@ export const createRemoteActorsImplementation = (
       requestObject.dcql_query as DcqlQuery
     );
 
-    // TODO: refactor after migrating to Credential Data Model 1.0
-    const { credentials, eid } = itwCredentialsSelector(store.getState());
-    const credentialsByType = Object.fromEntries(
-      Object.values(credentials)
-        .concat(eid.value)
-        .map(c => [c.credentialType, c])
-    );
-
     // Check whether any of the requested credential is invalid
     const invalidCredentials = getInvalidCredentials(
-      result.map(c => credentialsByType[c.vct])
+      result.map(c => credentialsByVct[c.vct])
     );
 
     if (invalidCredentials.length > 0) {
@@ -152,7 +150,7 @@ export const createRemoteActorsImplementation = (
     // Add localization to the requested claims
     const presentationDetails = enrichPresentationDetails(
       result,
-      credentialsByType
+      credentialsByVct
     );
 
     return { requestObject, presentationDetails };

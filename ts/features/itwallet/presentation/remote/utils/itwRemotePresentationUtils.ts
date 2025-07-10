@@ -8,7 +8,6 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { validCredentialStatuses } from "../../../common/utils/itwCredentialUtils";
 import { isDefined } from "../../../../../utils/guards";
-import { assert } from "../../../../../utils/assert";
 import {
   EnrichedPresentationDetails,
   ItwRemoteQrRawPayload,
@@ -43,25 +42,28 @@ export const enrichPresentationDetails = (
   presentationDetails: PresentationDetails,
   credentialsByType: Record<string, StoredCredential | undefined>
 ): EnrichedPresentationDetails =>
-  presentationDetails.map(details => {
-    const credential = credentialsByType[details.vct];
+  presentationDetails
+    // We filter out credentials that are not present in the credentialsByType map
+    // so they will not be shown in the UI (the Wallet Attestation)
+    .filter(details => !!credentialsByType[details.vct])
+    .map(details => {
+      const credential = credentialsByType[details.vct] as StoredCredential;
 
-    // This should never happen if we pass the DCQL query evaluation
-    assert(credential, `${details.vct} credential was not found in the wallet`);
+      const parsedClaims = parseClaims(credential.parsedCredential, {
+        exclude: [WellKnownClaim.unique_id]
+      });
 
-    const parsedClaims = parseClaims(credential.parsedCredential, {
-      exclude: [WellKnownClaim.unique_id]
+      return {
+        ...details,
+        // Only include claims that are part of the parsed credential
+        // This ensures that technical claims like `iat` are not displayed to the user
+        claimsToDisplay: details.requiredDisclosures
+          .map(([, claimName]) =>
+            parsedClaims.find(({ id }) => id === claimName)
+          )
+          .filter(isDefined)
+      };
     });
-
-    return {
-      ...details,
-      // Only include claims that are part of the parsed credential
-      // This ensures that technical claims like `iat` are not displayed to the user
-      claimsToDisplay: details.requiredDisclosures
-        .map(([, claimName]) => parsedClaims.find(({ id }) => id === claimName))
-        .filter(isDefined)
-    };
-  });
 
 type PresentationDetail = EnrichedPresentationDetails[number];
 
