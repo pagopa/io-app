@@ -1,8 +1,4 @@
-import {
-  StaticDecodedIOBarcode,
-  IOBarcodeDecoders,
-  RuntimeDecodedIOBarcode
-} from "./decoders";
+import { IOBarcodeDecoders, DecodedIOBarcode } from "./decoders";
 
 export const IO_BARCODE_ALL_FORMATS = ["DATA_MATRIX", "QR_CODE"] as const;
 
@@ -15,9 +11,7 @@ export enum BarcodeFormat {
 }
 export type IOBarcodeFormat = (typeof IO_BARCODE_ALL_FORMATS)[number];
 
-export type IOBarcodeType =
-  | StaticDecodedIOBarcode["type"]
-  | RuntimeDecodedIOBarcode["type"];
+export type IOBarcodeType = DecodedIOBarcode["type"];
 
 export type IOBarcodeOrigin = "camera" | "file";
 
@@ -31,6 +25,6 @@ export const IO_BARCODE_ALL_TYPES = [
  */
 export type IOBarcode = {
   format: IOBarcodeFormat;
-} & (StaticDecodedIOBarcode | RuntimeDecodedIOBarcode);
+} & DecodedIOBarcode;
 
 export type PagoPaBarcode = IOBarcode & { type: "PAGOPA" };
