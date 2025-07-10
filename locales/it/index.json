@@ -24,7 +24,15 @@
       "venerdì",
       "sabato"
     ],
-    "abbr_day_names": ["dom", "lun", "mar", "mer", "gio", "ven", "sab"],
+    "abbr_day_names": [
+      "dom",
+      "lun",
+      "mar",
+      "mer",
+      "gio",
+      "ven",
+      "sab"
+    ],
     "month_names": [
       " ",
       "gennaio",
@@ -55,7 +63,10 @@
       "nov",
       "dic"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes": {
         "zero": "0 minuti",
@@ -5678,6 +5689,13 @@
         "subtitle": "Attiva la possibilità di contattarti in app per ricevere aggiornamenti sul {{initiativeName}}. Questo passaggio è necessario per procedere con la richiesta.",
         "confirmAction": "Ok, attiva",
         "cancelAction": "Annulla"
+      },
+      "enableNotification": {
+        "title": "Non rischiare di perdere l'esito della tua richiesta",
+        "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
+        "action": "Attiva le notifiche",
+        "deny": "Non ora",
+        "success": "Hai attivato le notifiche push"
       }
     },
     "configuration": {

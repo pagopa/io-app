@@ -23,7 +23,15 @@
       "Freitag",
       "Samstag"
     ],
-    "abbr_day_names": ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."],
+    "abbr_day_names": [
+      "So.",
+      "Mo.",
+      "Di.",
+      "Mi.",
+      "Do.",
+      "Fr.",
+      "Sa."
+    ],
     "month_names": [
       " ",
       "Januar",
@@ -54,7 +62,10 @@
       "Nov.",
       "Dez."
     ],
-    "meridian": ["am", "pm"]
+    "meridian": [
+      "am",
+      "pm"
+    ]
   },
   "global": {
     "why": "Warum?",
@@ -4115,6 +4126,13 @@
         "subtitle": "Aktivieren Sie die Möglichkeit, Sie in der App zu kontaktieren, um Aktualisierungen auf dem {{initiativeName}} zu erhalten. Dieser Schritt ist erforderlich, um mit der Anfrage fortzufahren.",
         "title": "Nachrichten aktivieren",
         "confirmAction": "OK, aktiv"
+      },
+      "enableNotification": {
+        "title": "Non rischiare di perdere l'esito della tua richiesta",
+        "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
+        "action": "Attiva le notifiche",
+        "deny": "Non ora",
+        "success": "Sie aktivierten Push -Benachrichtigungen"
       }
     }
   }

@@ -24,7 +24,15 @@
       "Friday",
       "Saturday"
     ],
-    "abbr_day_names": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "abbr_day_names": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ],
     "month_names": [
       " ",
       "January",
@@ -55,7 +63,10 @@
       "Nov",
       "Dec"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes": {
         "zero": "0 minutes",
@@ -5678,6 +5689,13 @@
         "subtitle": "Activate the possibility to contact you in the app to receive updates on the {{initiativeName}}. \nThis step is necessary to proceed with the request.",
         "title": "Activate messages",
         "confirmAction": "Ok, active"
+      },
+      "enableNotification": {
+        "title": "Don't risk losing the outcome of your request",
+        "subtitle": "Activate push notifications to know immediately when you receive a new message in the app.",
+        "action": "Activate notifications",
+        "deny": "Not now",
+        "success": "You activated Push notifications"
       }
     },
     "configuration": {
