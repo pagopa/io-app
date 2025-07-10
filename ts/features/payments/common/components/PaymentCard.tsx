@@ -1,6 +1,7 @@
 import {
   BodySmall,
   H6,
+  hexToRgba,
   IOColors,
   IOSkeleton,
   Tag,
@@ -48,7 +49,7 @@ const usePaymentCardStyles = () => {
   const errorBorderColor = IOColors[theme.errorText];
 
   const skeletonColor = isDarkMode
-    ? IOColors["grey-450"]
+    ? hexToRgba(IOColors["grey-450"], 0.5)
     : IOColors["grey-200"];
 
   return {
