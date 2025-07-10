@@ -13,16 +13,23 @@ import {
   trackItWalletBannerTap
 } from "../../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../../analytics/enum";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+
+type Props = {
+  credential: StoredCredential;
+};
 
 /**
  * Banner promoting IT Wallet upgrade in MDL details to enable
  * driving license usage as identity document.
  */
-export const ItwPresentationWalletUpgradeMDLDetailsBanner = () => {
+export const ItwPresentationWalletUpgradeMDLDetailsBanner = ({
+  credential
+}: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const shouldRender = useIOSelector(
-    itwShouldRenderWalletUpgradeMDLDetailsBannerSelector
+  const shouldRender = useIOSelector(state =>
+    itwShouldRenderWalletUpgradeMDLDetailsBannerSelector(state, credential)
   );
   const { name: routeName } = useRoute();
 

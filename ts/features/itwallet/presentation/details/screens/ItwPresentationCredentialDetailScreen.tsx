@@ -119,8 +119,6 @@ export const ItwPresentationCredentialDetail = ({
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
-  const isDrivingLicense =
-    credential.credentialType === CredentialType.DRIVING_LICENSE;
 
   useDebugInfo(credential);
   usePreventScreenCapture();
@@ -168,7 +166,7 @@ export const ItwPresentationCredentialDetail = ({
     const credentialType = credential.credentialType;
     const contentClaim = parsedCredential[WellKnownClaim.content];
 
-    if (isDrivingLicense && isL3Credential) {
+    if (credentialType === CredentialType.DRIVING_LICENSE && isL3Credential) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
         icon: "qrCode",
@@ -204,8 +202,7 @@ export const ItwPresentationCredentialDetail = ({
     isL3Credential,
     navigation,
     isCheckingPermissions,
-    itwProximityMachineRef,
-    isDrivingLicense
+    itwProximityMachineRef
   ]);
 
   if (status === "unknown") {
@@ -228,7 +225,9 @@ export const ItwPresentationCredentialDetail = ({
       <ContentWrapper>
         <VStack space={24}>
           <ItwPresentationAdditionalInfoSection credential={credential} />
-          {isDrivingLicense && <ItwPresentationWalletUpgradeMDLDetailsBanner />}
+          <ItwPresentationWalletUpgradeMDLDetailsBanner
+            credential={credential}
+          />
           <ItwPresentationCredentialStatusAlert credential={credential} />
           <ItwPresentationCredentialInfoAlert credential={credential} />
           <ItwPresentationClaimsSection credential={credential} />

@@ -13,7 +13,10 @@ import {
 } from "../../../lifecycle/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import { isItwCredential } from "../../utils/itwCredentialUtils";
-import { ItwJwtCredentialStatus } from "../../utils/itwTypesUtils";
+import {
+  ItwJwtCredentialStatus,
+  StoredCredential
+} from "../../utils/itwTypesUtils";
 import {
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
@@ -25,6 +28,7 @@ import {
   isItwEnabledSelector,
   isItwFeedbackBannerEnabledSelector
 } from "./remoteConfig";
+import { CredentialType } from "../../utils/itwMocksUtils";
 
 /**
  * Returns if the discovery banner should be rendered. The banner is rendered if:
@@ -176,10 +180,12 @@ export const makeItwHasActiveBannersAboveWalletSelector =
  * - The user did not close the banner
  */
 export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
-  state: GlobalState
-) =>
+  state: GlobalState,
+  credential: StoredCredential
+): boolean =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  !isItwCredentialSelector(state) &&
+  credential.credentialType === CredentialType.DRIVING_LICENSE &&
+  !isItwCredential(credential.credential) &&
   !itwIsWalletUpgradeMDLDetailsBannerHiddenSelector(state);
