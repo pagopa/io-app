@@ -3,10 +3,11 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { areNotificationPermissionsEnabledSelector } from "../../../appearanceSettings/store/selectors";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { useIODispatch } from "../../../../store/hooks";
 import { setIdPayOnboardingSucceeded } from "../../wallet/store/actions";
 
 const IdPayCompletionScreen = () => {
@@ -15,6 +16,9 @@ const IdPayCompletionScreen = () => {
   const dispatch = useIODispatch();
 
   const isLoading = useSelector(isLoadingSelector);
+  const isPushNotificationEnabled = useIOSelector(
+    areNotificationPermissionsEnabledSelector
+  );
 
   const handleClosePress = () => machine.send({ type: "close" });
 
@@ -24,8 +28,13 @@ const IdPayCompletionScreen = () => {
     headerShown: isLoading
   });
 
+  // Send the event to check notification status only on the first render
   useOnFirstRender(() => {
     dispatch(setIdPayOnboardingSucceeded(true));
+    machine.send({
+      type: "update-notification-status",
+      isPushNotificationEnabled
+    });
   });
 
   if (isLoading) {
@@ -35,7 +44,6 @@ const IdPayCompletionScreen = () => {
       </SafeAreaView>
     );
   }
-
   return (
     <OperationResultScreenContent
       title={I18n.t("idpay.onboarding.success.requestSent.title")}
