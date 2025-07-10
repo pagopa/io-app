@@ -49,6 +49,7 @@ const ItwIpzsPrivacyScreen = () => {
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
       <IOScrollView
         includeContentMargins={false}
+        contentContainerStyle={{ flexGrow: 1 }}
         actions={{
           type: "SingleButton",
           primary: {

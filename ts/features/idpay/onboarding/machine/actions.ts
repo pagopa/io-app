@@ -59,9 +59,12 @@ export const createActionsImplementation = (
     });
   };
 
-  const closeOnboarding = () => {
-    navigation.popToTop();
-  };
+  const navigateToEnableNotificationScreen = () =>
+    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_NOTIFICATIONS
+    });
+
+  const closeOnboarding = () => navigation.popToTop();
 
   const handleSessionExpired = () => {
     dispatch(
@@ -82,6 +85,7 @@ export const createActionsImplementation = (
     navigateToFailureScreen,
     navigateToInitiativeMonitoringScreen,
     navigateToInputFormScreen,
+    navigateToEnableNotificationScreen,
     closeOnboarding,
     handleSessionExpired
   };

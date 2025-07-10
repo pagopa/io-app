@@ -5705,6 +5705,13 @@
       },
       "boolPrerequisites": {
         "header": "Per aderire, dichiari di:"
+      },
+      "enableNotification": {
+        "title": "Don't risk losing the outcome of your request",
+        "subtitle": "Activate push notifications to know immediately when you receive a new message in the app.",
+        "action": "Activate notifications",
+        "deny": "Not now",
+        "success": "You activated Push notifications"
       }
     },
     "configuration": {
