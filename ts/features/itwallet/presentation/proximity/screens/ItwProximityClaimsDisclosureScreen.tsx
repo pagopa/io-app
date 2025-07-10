@@ -58,7 +58,7 @@ export const ItwProximityClaimsDisclosureScreen = () => {
           </ContentWrapper>
         </LoadingScreenContent>
       ),
-      proximityDetails => <ContentView proximityDetails={proximityDetails} />
+      details => <ContentView proximityDetails={details} />
     )
   );
 };
