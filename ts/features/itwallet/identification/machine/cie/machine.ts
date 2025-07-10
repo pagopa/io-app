@@ -1,4 +1,5 @@
 import { assign, fromCallback, fromPromise, setup } from "xstate";
+import { CieError } from "@pagopa/io-react-native-cie";
 import { CieContext, getInitialContext } from "./context";
 import { CieInput } from "./input";
 import { CieEvents } from "./events";
@@ -21,6 +22,12 @@ export const itwCieMachine = setup({
     )
   },
   actions: {
+    resetReadingState: assign(() => ({
+      readProgress: undefined,
+      authorizationUrl: undefined,
+      redirectUrl: undefined,
+      failure: undefined
+    })),
     configureStatusAlerts: notImplemented,
     updateStatusAlert: notImplemented,
     announceEvent: notImplemented,
@@ -57,6 +64,7 @@ export const itwCieMachine = setup({
     ReadingCard: {
       description:
         "Starts the NFC card read and listens for NFC events, errors ans success",
+      entry: "resetReadingState",
       invoke: {
         src: "startCieManager",
         id: "startCieManager",
@@ -65,7 +73,12 @@ export const itwCieMachine = setup({
           serviceProviderUrl: context.serviceProviderUrl
         }),
         onError: {
-          target: "Failure"
+          target: "Failure",
+          actions: [
+            assign(({ event }) => ({ failure: event.error as CieError })),
+            "announceEvent",
+            "trackEvent"
+          ]
         }
       },
       on: {
@@ -114,7 +127,11 @@ export const itwCieMachine = setup({
     },
     Failure: {
       description: "Authentication flow terminated with error",
-      type: "final"
+      on: {
+        retry: {
+          target: "ReadingCard"
+        }
+      }
     }
   }
 });

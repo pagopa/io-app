@@ -18,4 +18,4 @@ export const selectReadProgress = (snapshot: MachineSnapshot) =>
   snapshot.context.readProgress || 0;
 
 export const selectFailure = (snapshot: MachineSnapshot) =>
-  snapshot.context.failure || { name: "GENERIC_ERROR" };
+  snapshot.context.failure;

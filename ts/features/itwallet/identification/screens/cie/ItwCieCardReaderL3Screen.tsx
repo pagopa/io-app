@@ -10,7 +10,6 @@ import {
   selectAuthUrlOption,
   selectCiePin
 } from "../../../machine/eid/selectors";
-import { ItwCieCardReadProgressContent } from "../../components/ItwCieCardReadProgressContent";
 import {
   ItwCieAuthenticationWebview,
   ItwCieAuthorizationWebview
@@ -23,7 +22,8 @@ import {
   selectCurrentState,
   selectRedirectUrl
 } from "../../machine/cie/selectors";
-import { ItwCieCardFailureContent } from "../../components/ItwCieCardFailureContent";
+import { ItwCieCardReadProgressContent } from "../../components/ItwCieCardReadProgressContent";
+import { ItwCieCardReadFailureContent } from "../../components/ItwCieCardReadFailureContent";
 
 export const ItwCieCardReaderL3Screen = () => {
   const pin = ItwEidIssuanceMachineContext.useSelector(selectCiePin);
@@ -59,6 +59,9 @@ const ScreenContent = () => {
   const currentCieState = ItwCieMachineContext.useSelector(selectCurrentState);
   const authRedirectUrl = ItwCieMachineContext.useSelector(selectRedirectUrl);
 
+  /**
+   * Listens for the authRedirectUrl to emit the  "user-identification-completed" event
+   */
   useEffect(() => {
     if (authRedirectUrl !== undefined) {
       issuanceActor.send({
@@ -76,7 +79,7 @@ const ScreenContent = () => {
     case "Authorizing":
       return <ItwCieAuthorizationWebview />;
     case "Failure":
-      return <ItwCieCardFailureContent />;
+      return <ItwCieCardReadFailureContent />;
     default:
       return (
         <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />

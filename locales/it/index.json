@@ -4578,6 +4578,39 @@
               "primaryAction": "Ho capito",
               "secondaryAction": "Non trovo il PIN della CIE"
             }
+          },
+          "failure": {
+            "wrongCard": {
+              "title": "Non siamo riusciti a recuperare i dati dalla carta",
+              "subtitle": "La carta utilizzata non sembra essere una Carta di Identità Elettronica."
+            },
+            "tagLost": {
+              "title": "Hai rimosso il telefono troppo presto!",
+              "subtitle": "Riprova e tieni fermo il telefono per la lettura."
+            },
+            "expired": {
+              "title": "La verifica della CIE non è andata a buon fine",
+              "subtitle": "La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app."
+            },
+            "wrongPin1": {
+              "title": "Il PIN non è corretto",
+              "subtitle": "Hai ancora 2 tentativi, controllalo e riprova.",
+              "secondaryAction": "Hai dimenticato il PIN?"
+            },
+            "wrongPin2": {
+              "title": "Hai inserito un PIN errato per 2 volte",
+              "subtitle": "Al terzo tentativo errato, il PIN verrà bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
+              "secondaryAction": "Hai dimenticato il PIN?"
+            },
+            "locked": {
+              "title": "Hai inserito un PIN errato per troppe volte",
+              "subtitle": "Il PIN della tua CIE è stato bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
+              "secondaryAction": "Hai dimenticato il PUK?"
+            },
+            "generic": {
+              "title": "Non siamo riusciti a recuperare i dati dalla carta",
+              "subtitle": "Se riscontri più volte il problema, attendi qualche minuto e riprova."
+            }
           }
         },
         "cieId": {

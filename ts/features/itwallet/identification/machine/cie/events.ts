@@ -41,7 +41,14 @@ type CompleteAuthentication = {
 };
 
 /**
- * Closed the authentication
+ * Restarts the machine
+ */
+type Retry = {
+  type: "retry";
+};
+
+/**
+ * Closes the authentication
  */
 type Close = {
   type: "close";
@@ -53,4 +60,5 @@ export type CieEvents =
   | CieReadError
   | CieReadSuccess
   | CompleteAuthentication
+  | Retry
   | Close;

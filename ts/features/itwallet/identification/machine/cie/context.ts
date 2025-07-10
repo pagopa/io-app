@@ -34,7 +34,7 @@ export type CieContext = {
   /**
    * Error during CIE manager initialization or CIE read
    */
-  failure: NfcError | undefined;
+  failure: CieError | NfcError | undefined;
 };
 
 export const getInitialContext = (input: CieInput): CieContext => ({
