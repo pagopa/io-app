@@ -1,6 +1,6 @@
 # see https://help.github.com/en/articles/about-code-owners#example-of-a-codeowners-file
 
-* @pagopa/io-app @ChrisMattew @gispada @freddi301
+* @pagopa/io-app @ChrisMattew @gispada @freddi301 @Alessandro-Laregina
 
 /locales/ @pagopa/io-app @thisisjp @ChrisMattew @gispada @freddi301
 /ios/ItaliaApp/it.lproj/ @pagopa/io-app @thisisjp @ChrisMattew @gispada @freddi301
