@@ -164,6 +164,9 @@ const BarcodeScanScreen = () => {
           params: barcode.itwRemoteRequestPayload
         });
         break;
+      case "SEND":
+        // TODO
+        break;
     }
   };
 
