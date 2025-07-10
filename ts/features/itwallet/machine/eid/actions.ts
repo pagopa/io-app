@@ -175,7 +175,7 @@ export const createEidIssuanceActionsImplementation = (
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
       params: {
-        warning: event.warning
+        type: event.warning
       }
     });
   },

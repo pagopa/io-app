@@ -75,7 +75,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
   return (
     <IOScrollViewWithLargeHeader
       title={{
-        label: I18n.t("idpay.onboarding.multiPrerequisites.header"),
+        label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
         section: I18n.t("idpay.onboarding.headerTitle")
       }}
       contextualHelp={emptyContextualHelp}

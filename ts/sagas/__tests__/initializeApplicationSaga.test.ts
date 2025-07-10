@@ -5,7 +5,6 @@ import { InitializedProfile } from "../../../definitions/backend/InitializedProf
 import mockedProfile from "../../__mocks__/initializedProfile";
 
 import { sessionExpired } from "../../features/authentication/common/store/actions";
-import { previousInstallationDataDeleteSuccess } from "../../store/actions/installation";
 import { resetProfileState } from "../../features/settings/common/store/actions";
 import {
   sessionInfoSelector,
@@ -104,8 +103,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
-      .put(previousInstallationDataDeleteSuccess())
-      .next()
       .next()
       .next()
       .fork(notificationPermissionsListener)
@@ -165,8 +162,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
-      .put(previousInstallationDataDeleteSuccess())
-      .next()
       .next()
       .next()
       .fork(notificationPermissionsListener)
@@ -219,8 +214,6 @@ describe("initializeApplicationSaga", () => {
       .call(cancellAllLocalNotifications)
       .next()
       .call(previousInstallationDataDeleteSaga)
-      .next()
-      .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
       .next()
@@ -279,8 +272,6 @@ describe("initializeApplicationSaga", () => {
       .call(cancellAllLocalNotifications)
       .next()
       .call(previousInstallationDataDeleteSaga)
-      .next()
-      .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
       .next()
@@ -353,8 +344,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
-      .put(previousInstallationDataDeleteSuccess())
-      .next()
       .next()
       .next()
       .fork(notificationPermissionsListener)
@@ -412,8 +401,6 @@ describe("initializeApplicationSaga", () => {
       .call(cancellAllLocalNotifications)
       .next()
       .call(previousInstallationDataDeleteSaga)
-      .next()
-      .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
       .next()
