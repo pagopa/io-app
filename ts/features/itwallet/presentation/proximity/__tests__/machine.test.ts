@@ -304,7 +304,7 @@ describe("itwProximityMachine", () => {
       actor.send({ type: "close" });
 
       expect(actor.getSnapshot().value).toStrictEqual("Idle");
-      
+
       expect(checkBluetoothIsActive).toHaveBeenCalledTimes(2);
 
       expect(setFailure).not.toHaveBeenCalled();
