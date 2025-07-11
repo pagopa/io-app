@@ -7,7 +7,7 @@ import { LollipopOriginalURL } from "../../../../../definitions/lollipop/Lollipo
 import { LollipopSignatureInput } from "../../../../../definitions/lollipop/LollipopSignatureInput";
 import { LollipopSignature } from "../../../../../definitions/lollipop/LollipopSignature";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
-import { createClient } from "../../../../../definitions/fast_login/client";
+import { createClient } from "../../../../../definitions/session_manager/client";
 
 const FAST_LOGIN_TIMEOUT_MS = 9000 as Millisecond;
 
