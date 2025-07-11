@@ -8,7 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { Fragment } from "react";
+import { ComponentProps, Fragment } from "react";
 import { View } from "react-native";
 import I18n from "../../../../i18n";
 import {
@@ -82,13 +82,9 @@ const IdPayInitiativeTimelineComponent = ({
     );
   };
 
-  return (
-    <View testID="IDPayTimelineTestID">
-      <ListItemHeader
-        label={I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
-        )}
-        endElement={{
+  const showAllCta: ComponentProps<typeof ListItemHeader>["endElement"] =
+    timeline.length >= size
+      ? {
           type: "buttonLink",
           componentProps: {
             label: I18n.t(
@@ -96,7 +92,16 @@ const IdPayInitiativeTimelineComponent = ({
             ),
             onPress: navigateToOperationsList
           }
-        }}
+        }
+      : undefined;
+
+  return (
+    <View testID="IDPayTimelineTestID">
+      <ListItemHeader
+        label={I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
+        )}
+        endElement={showAllCta}
       />
       {renderTimelineContent()}
       {detailsBottomSheet.bottomSheet}
