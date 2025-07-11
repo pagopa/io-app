@@ -98,8 +98,8 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
  * checks whether the `assurance_level` field is equal to `"high"`,
  * and returns `true` only in that case.
  *
- * @param sdJwt - The SD-JWT string to evaluate
- * @returns `true` if `assurance_level` is `"high"`, `false` otherwise
+ * @param sdJwt - The SD-JWT string to check
+ * @returns boolean indicating if the credential is an ITW credential (L3)
  */
 export const isItwCredential = (sdJwt: string): boolean =>
   pipe(
