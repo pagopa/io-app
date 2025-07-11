@@ -1,4 +1,4 @@
-import { DecodedIOBarcode, IOBarcodeDecoders } from "./decoders";
+import { IOBarcodeDecoders, DecodedIOBarcode } from "./decoders";
 
 export const IO_BARCODE_ALL_FORMATS = ["DATA_MATRIX", "QR_CODE"] as const;
 
@@ -15,9 +15,10 @@ export type IOBarcodeType = DecodedIOBarcode["type"];
 
 export type IOBarcodeOrigin = "camera" | "file";
 
-export const IO_BARCODE_ALL_TYPES = Object.keys(
-  IOBarcodeDecoders
-) as ReadonlyArray<IOBarcodeType>;
+export const IO_BARCODE_ALL_TYPES = [
+  ...Object.keys(IOBarcodeDecoders),
+  "SEND"
+] as ReadonlyArray<IOBarcodeType>;
 
 /**
  * Scanned barcode, it contains the information about the scanned content, its format and its type

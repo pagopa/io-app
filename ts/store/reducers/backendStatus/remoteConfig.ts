@@ -293,6 +293,13 @@ export const pnFrontendUrlSelector = (state: GlobalState) =>
     O.getOrElse(() => "")
   );
 
+export const pnAARQRCodeRegexSelector = (state: GlobalState) =>
+  pipe(
+    state.remoteConfig,
+    O.chainNullableK(config => config.pn.aarQRCodeRegex),
+    O.toUndefined
+  );
+
 export const paymentsConfigSelector = createSelector(
   remoteConfigSelector,
   remoteConfig =>

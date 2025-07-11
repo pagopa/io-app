@@ -9,10 +9,12 @@ import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { GlobalState } from "../../../store/reducers/types";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { decodePosteDataMatrix } from "../../../utils/payment";
 import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/utils/itwRemoteTypeUtils";
 import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
+import { pnAARQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -36,7 +38,7 @@ import { IOBarcodeType } from "./IOBarcode";
 //      type: "MY_NEW_BARCODE_TYPE";    <-- New barcode type
 //      content: string;                <--
 //    };                                <--
-export type DecodedIOBarcode =
+type StaticDecodedIOBarcode =
   | {
       type: "PAGOPA";
       rptId: RptId;
@@ -55,15 +57,29 @@ export type DecodedIOBarcode =
       type: "ITW_REMOTE";
       itwRemoteRequestPayload: ItwRemoteRequestPayload;
     };
+type RuntimeDecodedIOBarcode = {
+  type: "SEND";
+  qrCodeContent: string;
+};
+export type DecodedIOBarcode = StaticDecodedIOBarcode | RuntimeDecodedIOBarcode;
 
 // Barcode decoder function which is used to determine the type and content of a barcode
-type IOBarcodeDecoderFn = (data: string) => O.Option<DecodedIOBarcode>;
+type IOBarcodeStaticDecoderFn = (data: string) => O.Option<DecodedIOBarcode>;
+type IOBarcodeRuntimeDecoderFn = (
+  state: GlobalState,
+  data: string
+) => O.Option<DecodedIOBarcode>;
+type IOBarcodeDecoderFn = IOBarcodeStaticDecoderFn | IOBarcodeRuntimeDecoderFn;
 
-type IOBarcodeDecodersType = {
-  [K in IOBarcodeType]: IOBarcodeDecoderFn;
+type IOBarcodeStaticDecodersType = {
+  [K in StaticDecodedIOBarcode["type"]]: IOBarcodeStaticDecoderFn;
 };
 
-const decodeIdPayBarcode: IOBarcodeDecoderFn = (data: string) =>
+type IOBarcodeRuntimeDecodersType = {
+  [K in RuntimeDecodedIOBarcode["type"]]: IOBarcodeRuntimeDecoderFn;
+};
+
+const decodeIdPayBarcode: IOBarcodeStaticDecoderFn = (data: string) =>
   pipe(
     data.match(
       /^https:\/\/continua\.io\.pagopa\.it\/idpay\/auth\/([a-zA-Z0-9]{8})$/
@@ -72,7 +88,7 @@ const decodeIdPayBarcode: IOBarcodeDecoderFn = (data: string) =>
     O.map(m => ({ type: "IDPAY", authUrl: m[0], trxCode: m[1] }))
   );
 
-const decodePagoPAQRCode: IOBarcodeDecoderFn = (data: string) =>
+const decodePagoPAQRCode: IOBarcodeStaticDecoderFn = (data: string) =>
   pipe(
     PaymentNoticeQrCodeFromString.decode(data),
     E.chain(paymentNotice =>
@@ -87,21 +103,21 @@ const decodePagoPAQRCode: IOBarcodeDecoderFn = (data: string) =>
     O.fromEither
   );
 
-const decodePagoPADataMatrix: IOBarcodeDecoderFn = (data: string) =>
+const decodePagoPADataMatrix: IOBarcodeStaticDecoderFn = (data: string) =>
   pipe(
     data,
     decodePosteDataMatrix,
     O.map(({ e1, e2 }) => ({ type: "PAGOPA", rptId: e1, amount: e2 } as const))
   );
 
-const decodePagoPABarcode: IOBarcodeDecoderFn = (data: string) =>
+const decodePagoPABarcode: IOBarcodeStaticDecoderFn = (data: string) =>
   pipe(
     data,
     decodePagoPADataMatrix,
     O.alt(() => decodePagoPAQRCode(data))
   );
 
-const decodeFciBarcode: IOBarcodeDecoderFn = (data: string) =>
+const decodeFciBarcode: IOBarcodeStaticDecoderFn = (data: string) =>
   pipe(
     data.match(
       /^https:\/\/continua\.io\.pagopa\.it\/fci\/main\?signatureRequestId=([a-zA-Z0-9]+)$/
@@ -113,7 +129,7 @@ const decodeFciBarcode: IOBarcodeDecoderFn = (data: string) =>
     }))
   );
 
-const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
+const decodeItwRemoteBarcode: IOBarcodeStaticDecoderFn = (data: string) =>
   pipe(
     O.fromNullable(
       data.match(/^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/)
@@ -135,6 +151,22 @@ const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
     }))
   );
 
+const decodeSENDAARBarcode: IOBarcodeRuntimeDecoderFn = (
+  state: GlobalState,
+  data: string
+) =>
+  pipe(
+    state,
+    pnAARQRCodeRegexSelector,
+    O.fromNullable,
+    O.map(aarQRCodeRegexString => new RegExp(aarQRCodeRegexString, "i")),
+    O.filter(aarQRCodeRegExp => aarQRCodeRegExp.test(data)),
+    O.fold(
+      () => O.none,
+      _ => O.some({ type: "SEND", qrCodeContent: data })
+    )
+  );
+
 // Each type comes with its own decoded function which is used to identify the barcode content
 // To add a new barcode type, add a new entry to this object
 //
@@ -145,11 +177,15 @@ const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
 //   PAGOPA: decodePagoPABarcode,
 //   MY_NEW_BARCODE_TYPE: decodeMyNewBarcodeType
 // };
-export const IOBarcodeDecoders: IOBarcodeDecodersType = {
+export const IOBarcodeDecoders: IOBarcodeStaticDecodersType = {
   IDPAY: decodeIdPayBarcode,
   PAGOPA: decodePagoPABarcode,
   FCI: decodeFciBarcode,
   ITW_REMOTE: decodeItwRemoteBarcode
+};
+
+export const RuntimeIOBarcodeDecoders: IOBarcodeRuntimeDecodersType = {
+  SEND: decodeSENDAARBarcode
 };
 
 type DecodeOptions = {
@@ -166,6 +202,7 @@ type DecodeOptions = {
  * @returns DecodedIOBarcode {@see DecodedIOBarcode}
  */
 export const decodeIOBarcode = (
+  state: GlobalState,
   value: string | undefined,
   options?: DecodeOptions
 ): O.Option<DecodedIOBarcode> =>
@@ -174,17 +211,23 @@ export const decodeIOBarcode = (
     O.fromNullable,
     O.map(NonEmptyString.decode),
     O.chain(O.fromEither),
-    O.map(value =>
-      Object.entries(IOBarcodeDecoders)
-        .filter(
-          ([type]) =>
-            options?.barcodeTypes?.includes(type as IOBarcodeType) ?? true
-        )
-        .map(([_, decode]) => decode(value.trim()))
-    ),
+    O.map(nonEmptyStringValue => [
+      ...Object.entries(IOBarcodeDecoders)
+        .filter(isDecoderTypeEnabled(options))
+        .map(([_, decode]) => decode(nonEmptyStringValue.trim())),
+
+      ...Object.entries(RuntimeIOBarcodeDecoders)
+        .filter(isDecoderTypeEnabled(options))
+        .map(([_, decode]) => decode(state, nonEmptyStringValue.trim()))
+    ]),
     O.map(A.compact),
     O.chain(A.head)
   );
+
+const isDecoderTypeEnabled =
+  (options?: DecodeOptions) =>
+  ([decoderType]: [string, IOBarcodeDecoderFn]): boolean =>
+    options?.barcodeTypes?.includes(decoderType as IOBarcodeType) ?? true;
 
 /**
  * Barcode decoding for multiple values
@@ -192,13 +235,14 @@ export const decodeIOBarcode = (
  * @returns A list of DecodedIOBarcode {@see DecodedIOBarcode} if at least one barcode is decoded
  */
 export const decodeMultipleIOBarcodes = (
+  state: GlobalState,
   values: Array<string> | undefined,
   options?: DecodeOptions
 ): O.Option<Array<DecodedIOBarcode>> =>
   pipe(
     values,
     O.fromNullable,
-    O.map(A.map(value => decodeIOBarcode(value, options))),
+    O.map(A.map(value => decodeIOBarcode(state, value, options))),
     O.map(A.compact),
     O.filter(A.isNonEmpty)
   );
