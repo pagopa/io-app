@@ -3,7 +3,7 @@ import {
   TransitionPresets
 } from "@react-navigation/stack";
 import { Platform } from "react-native";
-import { ComponentType } from "react";
+import { ComponentType, memo } from "react";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
@@ -77,7 +77,7 @@ export const ItwStackNavigator = () => (
   </ItWalletIssuanceMachineProvider>
 );
 
-const InnerNavigator = () => {
+const InnerNavigator = memo(() => {
   const eidIssuanceMachineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialIssuanceMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
@@ -325,7 +325,7 @@ const InnerNavigator = () => {
       </Stack.Group>
     </Stack.Navigator>
   );
-};
+});
 
 /**
  * A higher-order component which renders the screen only if IT Wallet is enabled.
