@@ -64,6 +64,11 @@ export const createActionsImplementation = (
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_NOTIFICATIONS
     });
 
+  const navigateToEnableMessageScreen = () =>
+    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_MESSAGE
+    });
+
   const closeOnboarding = () => navigation.popToTop();
 
   const handleSessionExpired = () => {
@@ -86,6 +91,7 @@ export const createActionsImplementation = (
     navigateToInitiativeMonitoringScreen,
     navigateToInputFormScreen,
     navigateToEnableNotificationScreen,
+    navigateToEnableMessageScreen,
     closeOnboarding,
     handleSessionExpired
   };
