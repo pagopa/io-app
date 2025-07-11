@@ -89,6 +89,7 @@ PODS:
   - MixpanelReactNative (2.4.1):
     - Mixpanel-swift (= 4.2.0)
     - React-Core
+  - OpenSSL-Universal (3.3.3001)
   - pagopa-io-react-native-cieid (0.3.5):
     - DoubleConversion
     - glog
@@ -110,10 +111,11 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - pagopa-io-react-native-crypto (1.0.1):
+  - pagopa-io-react-native-crypto (1.2.2):
     - DoubleConversion
     - glog
     - hermes-engine
+    - OpenSSL-Universal
     - RCT-Folly (= 2024.11.18.00)
     - RCTRequired
     - RCTTypeSafety
@@ -2386,6 +2388,7 @@ SPEC REPOS:
     - JOSESwift
     - lottie-ios
     - Mixpanel-swift
+    - OpenSSL-Universal
     - Sentry
     - SocketRocket
     - SwiftCBOR
@@ -2669,8 +2672,9 @@ SPEC CHECKSUMS:
   lottie-react-native: 35b7c1125a01f847fa5905d380e54951132d2450
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
   MixpanelReactNative: 37259ace491ca9d927c0f81498e6577a32a69f43
+  OpenSSL-Universal: 6082b0bf950e5636fe0d78def171184e2b3899c2
   pagopa-io-react-native-cieid: fbec2a09807357509e986e1ae831c38e559d4ac2
-  pagopa-io-react-native-crypto: 9fc27db71785efd281454fd0e0d023c4ce1594d0
+  pagopa-io-react-native-crypto: 65c26796bdfab813321fb10c9307960fddcac913
   pagopa-io-react-native-http-client: b2620097b64752b290374f7d2aab64e537f89f03
   pagopa-io-react-native-integrity: 6d5ea10255884e516422e09c5cd937d4dbaa8f27
   pagopa-io-react-native-jwt: 0ac1bc58dbd1e40277c4c9086af7898438a7ea45
