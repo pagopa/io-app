@@ -20,7 +20,10 @@ const IdPayCompletionScreen = () => {
     areNotificationPermissionsEnabledSelector
   );
 
-  const handleClosePress = () => machine.send({ type: "close" });
+  const handleClosePress = () => {
+    dispatch(setIdPayOnboardingSucceeded(true));
+    machine.send({ type: "close" });
+  };
 
   useHeaderSecondLevel({
     title: I18n.t("idpay.onboarding.headerTitle"),
@@ -30,7 +33,6 @@ const IdPayCompletionScreen = () => {
 
   // Send the event to check notification status only on the first render
   useOnFirstRender(() => {
-    dispatch(setIdPayOnboardingSucceeded(true));
     machine.send({
       type: "update-notification-status",
       isPushNotificationEnabled

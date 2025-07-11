@@ -46,6 +46,7 @@ export const EmailNotificationBanner = () => {
         return;
       }
       if (pot.isSome(profile)) {
+        dispatch(setIdPayOnboardingSucceeded(false));
         IOToast.hideAll();
         IOToast.success(
           I18n.t(
@@ -55,7 +56,7 @@ export const EmailNotificationBanner = () => {
         return;
       }
     }
-  }, [profile, prevProfile, canShowBanner]);
+  }, [profile, prevProfile, canShowBanner, dispatch]);
 
   const handleOnCloseBanner = () => {
     dispatch(setIdPayOnboardingSucceeded(false));
