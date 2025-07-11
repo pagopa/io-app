@@ -23,8 +23,8 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
-import { CircularProgress } from "../../../../components/ui/CircularProgress";
-import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { CircularProgress } from "../../../../../components/ui/CircularProgress";
+import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 
 const accessibityTimeout = 100 as Millisecond;
 

@@ -1,9 +1,9 @@
 import { IOButtonProps } from "@pagopa/io-app-design-system";
 import { Platform } from "react-native";
-import I18n from "../../../../i18n";
-import { ItwCieMachineContext } from "../machine/cie/provider";
-import { selectReadProgress } from "../machine/cie/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import I18n from "../../../../../i18n";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { ItwCieMachineContext } from "../machine/provider";
+import { selectReadProgress } from "../machine/selectors";
 import {
   CieCardReadContentProps,
   ItwCieCardReadContent

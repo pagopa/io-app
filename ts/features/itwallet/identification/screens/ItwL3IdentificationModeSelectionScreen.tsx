@@ -24,7 +24,7 @@ import {
 } from "../../analytics";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
-import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
+import { useCieInfoBottomSheet } from "../cie/hooks/useCieInfoBottomSheet";
 import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
 
 export const ItwL3IdentificationModeSelectionScreen = () => {

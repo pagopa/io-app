@@ -56,6 +56,12 @@ export const itwCieMachine = setup({
         "set-service-provider-url": {
           actions: assign(({ event }) => ({ serviceProviderUrl: event.url })),
           target: "ReadingCard"
+        },
+        "webview-error": {
+          actions: assign(({ event }) => ({
+            failure: { name: "WEBVIEW_ERROR", message: event.message }
+          })),
+          target: "ReadingCard"
         }
       }
     },
@@ -106,6 +112,12 @@ export const itwCieMachine = setup({
         "complete-authentication": {
           actions: assign(({ event }) => ({ redirectUrl: event.redirectUrl })),
           target: "Completed"
+        },
+        "webview-error": {
+          actions: assign(({ event }) => ({
+            failure: { name: "WEBVIEW_ERROR", message: event.message }
+          })),
+          target: "ReadingCard"
         }
       }
     },

@@ -16,19 +16,16 @@ import {
 import {
   ItwCieAuthenticationWebview,
   ItwCieAuthorizationWebview
-} from "../../components/ItwCieWebview";
+} from "../components/ItwCieWebView";
+import { ItwCieCardReadProgressContent } from "../components/ItwCieCardReadProgressContent";
+import { ItwCieCardReadFailureContent } from "../components/ItwCieCardReadFailureContent";
 import {
   ItwCieMachineContext,
   ItwCieMachineProvider
-} from "../../machine/cie/provider";
-import {
-  selectCurrentState,
-  selectRedirectUrl
-} from "../../machine/cie/selectors";
-import { ItwCieCardReadProgressContent } from "../../components/ItwCieCardReadProgressContent";
-import { ItwCieCardReadFailureContent } from "../../components/ItwCieCardReadFailureContent";
+} from "../machine/provider";
+import { selectCurrentState, selectRedirectUrl } from "../machine/selectors";
 
-export const ItwCieCardReaderL3Screen = () => {
+export const ItwCieCardReaderScreen = () => {
   const pin = ItwEidIssuanceMachineContext.useSelector(selectCiePin);
   const authUrl = ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
 

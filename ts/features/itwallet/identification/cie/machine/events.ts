@@ -41,6 +41,14 @@ type CompleteAuthentication = {
 };
 
 /**
+ * Event that can be emitted by the CIE webviews
+ */
+type WebViewError = {
+  type: "webview-error";
+  message: string;
+};
+
+/**
  * Restarts the machine
  */
 type Retry = {
@@ -53,4 +61,5 @@ export type CieEvents =
   | CieReadError
   | CieReadSuccess
   | CompleteAuthentication
+  | WebViewError
   | Retry;

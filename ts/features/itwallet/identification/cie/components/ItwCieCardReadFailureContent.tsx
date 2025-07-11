@@ -2,15 +2,15 @@ import type { NfcError } from "@pagopa/io-react-native-cie";
 import { constNull } from "fp-ts/lib/function";
 import { useCallback } from "react";
 import { Linking } from "react-native";
-import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import I18n from "../../../../i18n";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
+import I18n from "../../../../../i18n";
 import {
   trackItWalletCiePinForgotten,
   trackItWalletCiePukForgotten
-} from "../../analytics";
-import { ItwCieMachineContext } from "../machine/cie/provider";
-import { selectFailure } from "../machine/cie/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+} from "../../../analytics";
+import { ItwCieMachineContext } from "../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { selectFailure } from "../machine/selectors";
 import {
   CieCardReadContentProps,
   ItwCieCardReadContent

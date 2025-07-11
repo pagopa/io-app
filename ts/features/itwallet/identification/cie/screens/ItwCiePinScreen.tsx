@@ -24,7 +24,7 @@ import {
   trackItWalletCiePinInfo
 } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { useCieInfoBottomSheet } from "../../hooks/useCieInfoBottomSheet";
+import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 
 const CIE_PIN_LENGTH = 8;
 

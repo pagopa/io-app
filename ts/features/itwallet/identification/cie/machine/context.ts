@@ -1,6 +1,12 @@
 import { CieError, NfcError } from "@pagopa/io-react-native-cie";
 import { CieInput } from "./input";
 
+// Custom error for webview
+type WebViewError = {
+  name: "WEBVIEW_ERROR";
+  message: string;
+};
+
 export type CieContext = {
   /**
    * The PIN code for the CIE card.
@@ -32,9 +38,9 @@ export type CieContext = {
    */
   redirectUrl: string | undefined;
   /**
-   * Error during CIE manager initialization or CIE read
+   * Error during CIE manager initialization, CIE read or webviews load
    */
-  failure: CieError | NfcError | undefined;
+  failure: CieError | NfcError | WebViewError | undefined;
 };
 
 export const getInitialContext = (input: CieInput): CieContext => ({
