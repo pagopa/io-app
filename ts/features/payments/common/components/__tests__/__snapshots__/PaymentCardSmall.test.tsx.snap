@@ -416,7 +416,6 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                               [
                                 {
                                   "aspectRatio": 1.6,
-                                  "backgroundColor": "#E8EBF1",
                                   "borderRadius": 8,
                                   "flex": 1,
                                   "flexBasis": 127,
@@ -425,7 +424,9 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                                   "padding": 16,
                                   "width": 127,
                                 },
-                                undefined,
+                                {
+                                  "backgroundColor": "#E8EBF1",
+                                },
                               ]
                             }
                             testID="PaymentCardSmallTestID"
@@ -535,7 +536,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                                 [
                                   {},
                                   {
-                                    "color": "#555C70",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillio",
                                     "fontSize": 12,
                                     "fontStyle": "normal",
