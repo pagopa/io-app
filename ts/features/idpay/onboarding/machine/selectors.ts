@@ -88,6 +88,18 @@ export const textRequiredCriteriaSelector = createSelector(
     )
 );
 
+export const stepperCountSelector = createSelector(
+  multiRequiredCriteriaSelector,
+  boolRequiredCriteriaSelector,
+  textRequiredCriteriaSelector,
+  pdndCriteriaSelector,
+  (multiCriteria, boolCriteria, textCriteria, pdndCriteria) =>
+    boolCriteria.length +
+    multiCriteria.length +
+    textCriteria.length +
+    (pdndCriteria ? 1 : 0)
+);
+
 export const getMultiSelfDeclarationListFromContext = (
   context: Context.Context
 ) =>

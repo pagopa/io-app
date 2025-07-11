@@ -7,6 +7,7 @@ import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollV
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
+import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   selectCurrentInputTextNumber,
@@ -61,6 +62,7 @@ const InputFormVerificationContent = ({
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <IOScrollViewWithLargeHeader
+        topElement={<IdPayOnboardingStepper />}
         title={{
           label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
           section: I18n.t("idpay.onboarding.navigation.header")

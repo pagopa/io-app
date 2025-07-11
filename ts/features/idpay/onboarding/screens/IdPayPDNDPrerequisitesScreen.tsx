@@ -15,6 +15,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { serviceDetailsByIdPotSelector } from "../../../services/details/store/reducers";
+import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../machine/selectors";
 import { getPDNDCriteriaDescription } from "../utils/strings";
@@ -73,6 +74,7 @@ export const IdPayPDNDPrerequisitesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      topElement={<IdPayOnboardingStepper />}
       includeContentMargins
       title={{
         label: I18n.t("idpay.onboarding.PDNDPrerequisites.title"),
