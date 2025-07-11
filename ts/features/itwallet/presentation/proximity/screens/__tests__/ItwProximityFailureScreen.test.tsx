@@ -9,7 +9,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import { TimeoutError } from "../../utils/itwProximityErrors";
+import { TimeoutError, UntrustedRpError } from "../../utils/itwProximityErrors";
 
 describe("ItwProximityFailureScreen", () => {
   test.each<ProximityFailure>([
@@ -23,7 +23,7 @@ describe("ItwProximityFailureScreen", () => {
     },
     {
       type: ProximityFailureType.UNTRUSTED_RP,
-      reason: new TimeoutError("Untrusted RP")
+      reason: new UntrustedRpError("Untrusted RP")
     }
   ])("should render failure screen for $type", failure => {
     expect(renderComponent(failure)).toMatchSnapshot();
