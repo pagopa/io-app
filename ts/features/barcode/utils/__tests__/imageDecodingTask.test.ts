@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import * as E from "fp-ts/lib/Either";
 
@@ -11,7 +12,14 @@ import { imageDecodingTask } from "../imageDecodingTask";
 import { barcodeDetectionTask } from "../barcodeDetectionTask";
 import { GlobalState } from "../../../../store/reducers/types";
 
-const mockGlobalState = {} as GlobalState;
+const mockGlobalState = {
+  remoteConfig: O.some({
+    pn: {
+      aarQRCodeRegex:
+        "^\\s*https:\\/\\/(dev\\.|test\\.|hotfix\\.|uat\\.)?cittadini\\.notifichedigitali\\.it(\\/[^?]*)?\\?aar=.+\\s*"
+    }
+  })
+} as GlobalState;
 
 describe("imageDecodingTask", () => {
   beforeEach(() => {

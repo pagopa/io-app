@@ -3,7 +3,14 @@ import { decodeIOBarcode } from "../decoders";
 import { IO_BARCODE_ALL_TYPES } from "../IOBarcode";
 import { GlobalState } from "../../../../store/reducers/types";
 
-const fakeGlobalState = {} as GlobalState;
+const fakeGlobalState = {
+  remoteConfig: O.some({
+    pn: {
+      aarQRCodeRegex:
+        "^\\s*https:\\/\\/(dev\\.|test\\.|hotfix\\.|uat\\.)?cittadini\\.notifichedigitali\\.it(\\/[^?]*)?\\?aar=.+\\s*"
+    }
+  })
+} as GlobalState;
 
 describe("test decodeIOBarcode function", () => {
   it("should return unknown if empty value", () => {

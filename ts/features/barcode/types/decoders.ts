@@ -154,14 +154,18 @@ const decodeItwRemoteBarcode: IOBarcodeStaticDecoderFn = (data: string) =>
 const decodeSENDAARBarcode: IOBarcodeRuntimeDecoderFn = (
   state: GlobalState,
   data: string
-) => {
-  const aarQRCodeRegex = pnAARQRCodeRegexSelector(state);
-  const aarQRCodeRegexExp = new RegExp(aarQRCodeRegex, "i");
-  if (aarQRCodeRegexExp.test(data)) {
-    return O.some({ type: "SEND", qrCodeContent: data });
-  }
-  return O.none;
-};
+) =>
+  pipe(
+    state,
+    pnAARQRCodeRegexSelector,
+    O.fromNullable,
+    O.map(aarQRCodeRegexString => new RegExp(aarQRCodeRegexString, "i")),
+    O.filter(aarQRCodeRegExp => aarQRCodeRegExp.test(data)),
+    O.fold(
+      () => O.none,
+      _ => O.some({ type: "SEND", qrCodeContent: data })
+    )
+  );
 
 // Each type comes with its own decoded function which is used to identify the barcode content
 // To add a new barcode type, add a new entry to this object
