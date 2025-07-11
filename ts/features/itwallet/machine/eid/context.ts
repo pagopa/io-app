@@ -1,10 +1,8 @@
-import {
-  type AuthorizationDetail,
-  type Credential
-} from "@pagopa/io-react-native-wallet";
 import type {
   WalletInstanceAttestations,
-  StoredCredential
+  StoredCredential,
+  IssuerConfiguration,
+  CredentialAuthDetail
 } from "../../common/utils/itwTypesUtils";
 import { IssuanceFailure } from "./failure";
 
@@ -23,8 +21,8 @@ export type AuthenticationContext = {
   authUrl: string;
   clientId: string;
   codeVerifier: string;
-  issuerConf: Parameters<Credential.Issuance.ObtainCredential>[0];
-  credentialDefinition: AuthorizationDetail;
+  issuerConf: IssuerConfiguration;
+  credentialDefinition: CredentialAuthDetail;
   callbackUrl: string;
   redirectUri: string;
 };

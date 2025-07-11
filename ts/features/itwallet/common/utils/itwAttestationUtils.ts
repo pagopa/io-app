@@ -1,8 +1,10 @@
 import {
   createCryptoContextFor,
   IntegrityContext,
-  WalletInstance
+  WalletInstance,
+  WalletInstanceAttestation as WalletInstanceAttestationV1
 } from "@pagopa/io-react-native-wallet";
+import { WalletInstanceAttestation as WalletInstanceAttestationV2 } from "@pagopa/io-react-native-wallet-v2";
 import * as Sentry from "@sentry/react-native";
 import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
@@ -12,7 +14,6 @@ import {
   getIntegrityContext
 } from "./itwIntegrityUtils";
 import { WalletInstanceAttestations } from "./itwTypesUtils.ts";
-import { ioRNWProxy } from "./itwIoReactNativeWalletProxy.ts";
 import { Env } from "./environment.ts";
 
 /**
@@ -62,6 +63,10 @@ export const getAttestation = async (
   sessionToken: SessionToken,
   newApiEnabled: boolean = false
 ): Promise<WalletInstanceAttestations> => {
+  const WalletInstanceAttestation = newApiEnabled
+    ? WalletInstanceAttestationV2
+    : WalletInstanceAttestationV1;
+
   const integrityContext = getIntegrityContext(hardwareKeyTag);
 
   await regenerateCryptoKey(WIA_KEYTAG);
@@ -72,14 +77,12 @@ export const getAttestation = async (
     WALLET_PROVIDER_BASE_URL
   );
 
-  const attestation = await ioRNWProxy
-    .WalletInstanceAttestation(newApiEnabled)
-    .getAttestation({
-      wiaCryptoContext,
-      integrityContext,
-      walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
-      appFetch
-    });
+  const attestation = await WalletInstanceAttestation.getAttestation({
+    wiaCryptoContext,
+    integrityContext,
+    walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
+    appFetch
+  });
 
   // Handle legacy attestation format
   if (typeof attestation === "string") {
@@ -106,13 +109,14 @@ export const isWalletInstanceAttestationValid = (
   attestation: string,
   newApiEnabled: boolean = false
 ): boolean => {
+  const WalletInstanceAttestation = newApiEnabled
+    ? WalletInstanceAttestationV2
+    : WalletInstanceAttestationV1;
   // To keep things simple we store the old and new attestation under the same key,
   // so we might end up with a valid old attestation for the new flow.
   // We let decoding fail and catch the error to force the correct attestation to be fetched again.
   try {
-    const { payload } = ioRNWProxy
-      .WalletInstanceAttestation(newApiEnabled)
-      .decode(attestation);
+    const { payload } = WalletInstanceAttestation.decode(attestation);
     const expiryDate = new Date(payload.exp * 1000);
     const now = new Date();
     return now < expiryDate;

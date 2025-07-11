@@ -24,7 +24,10 @@ import { itwDeferredIssuanceScreenContentSelector } from "../../common/store/sel
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
-import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
+import {
+  IssuerConfiguration,
+  LegacyIssuerConfiguration
+} from "../../common/utils/itwTypesUtils";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType
@@ -222,8 +225,11 @@ const getCredentialInvalidStatusDetails = (
       credentialType,
       issuerConf
     }),
-    O.map(({ errorCode, ...rest }) =>
-      Errors.extractErrorMessageFromIssuerConf(errorCode, rest)
+    O.map(params =>
+      Errors.extractErrorMessageFromIssuerConf(params.errorCode, {
+        credentialType: params.credentialType,
+        issuerConf: params.issuerConf as LegacyIssuerConfiguration
+      })
     ),
     O.map(message => message?.[getClaimsFullLocale()]),
     O.toUndefined

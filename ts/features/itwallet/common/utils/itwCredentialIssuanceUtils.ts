@@ -11,7 +11,7 @@ import {
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
 import {
-  IssuerConfiguration,
+  LegacyIssuerConfiguration,
   RequestObject,
   StoredCredential
 } from "./itwTypesUtils";
@@ -81,7 +81,7 @@ export type ObtainCredentialParams = {
   clientId: string;
   codeVerifier: string;
   credentialDefinition: AuthorizationDetail;
-  issuerConf: IssuerConfiguration;
+  issuerConf: LegacyIssuerConfiguration;
 };
 
 /**
@@ -174,6 +174,7 @@ export const obtainCredential = async ({
     credential,
     parsedCredential,
     credentialType,
+    credentialId: credentialType,
     format,
     issuerConf,
     keyTag: credentialKeyTag,

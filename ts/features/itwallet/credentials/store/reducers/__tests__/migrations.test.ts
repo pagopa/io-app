@@ -190,4 +190,64 @@ describe("ITW credentials reducer migrations", () => {
 
     expect(nextState).toStrictEqual(persistedStateAt3);
   });
+
+  it("should migrate from 3 to 4", () => {
+    const basePersistedStateAt3 = {
+      credentials: {
+        PersonIdentificationData: {
+          credentialType: "PersonIdentificationData",
+          storedStatusAttestation: undefined,
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        },
+        MDL: {
+          credentialType: "MDL",
+          storedStatusAttestation: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        }
+      },
+      _persist: {
+        version: 0,
+        rehydrated: false
+      }
+    };
+    const persistedStateAt4 = {
+      credentials: {
+        dc_sd_jwt_PersonIdentificationData: {
+          credentialType: "PersonIdentificationData",
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          storedStatusAttestation: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        },
+        MDL: {
+          credentialType: "MDL",
+          credentialId: "MDL",
+          storedStatusAttestation: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        }
+      },
+      _persist: {
+        version: 0,
+        rehydrated: false
+      }
+    };
+
+    const from3To4Migration = itwCredentialsStateMigrations[3];
+    expect(from3To4Migration).toBeDefined();
+    const nextState = from3To4Migration(basePersistedStateAt3);
+
+    expect(nextState).toStrictEqual(persistedStateAt4);
+  });
 });

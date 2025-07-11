@@ -9,6 +9,7 @@ const mockCredentialType = "org.iso.18013.5.1.mDL";
 const mockCredential: StoredCredential = {
   credential: "",
   credentialType: mockCredentialType,
+  credentialId: "mso_mdoc_mDL",
   format: "mso_mdoc",
   keyTag: "ee1576b6-f5ba-4f49-94c4-507e62786ebc",
   issuerConf: {} as StoredCredential["issuerConf"],

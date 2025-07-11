@@ -34,6 +34,7 @@ export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
   walletInstanceAttestation: string | undefined;
   authenticationContext: AuthenticationContext | undefined;
+  isL3IssuanceEnabled?: boolean;
 };
 
 export type StartAuthFlowActorParams = {
@@ -125,7 +126,7 @@ export const createEidIssuanceActorsImplementation = (
         env,
         walletAttestation: input.walletInstanceAttestation,
         identification: input.identification,
-        isL3IssuanceEnabled: input.isL3IssuanceEnabled || false
+        isL3IssuanceEnabled: !!input.isL3IssuanceEnabled
       });
 
       return {
@@ -151,14 +152,16 @@ export const createEidIssuanceActorsImplementation = (
 
       const authParams = await issuanceUtils.completeAuthFlow({
         ...input.authenticationContext,
-        walletAttestation: input.walletInstanceAttestation
+        walletAttestation: input.walletInstanceAttestation,
+        isL3IssuanceEnabled: !!input.isL3IssuanceEnabled
       });
 
       trackItwRequest(input.identification.mode);
 
       return issuanceUtils.getPid({
         ...authParams,
-        ...input.authenticationContext
+        ...input.authenticationContext,
+        isL3IssuanceEnabled: !!input.isL3IssuanceEnabled
       });
     }
   ),
