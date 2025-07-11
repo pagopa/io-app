@@ -18,7 +18,7 @@ jest.mock("../..", () => {
   const actualModule = jest.requireActual("../..");
   return {
     ...actualModule,
-    handleRegenerateKey: jest
+    handleRegenerateEphermeralKey: jest
       .fn()
       .mockResolvedValue(wrongJwkPublicKey as PublicKey)
   };

@@ -1,12 +1,10 @@
 import { testSaga } from "redux-saga-test-plan";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as reporters from "@pagopa/ts-commons/lib/reporters";
 import { PasswordLogin } from "../../../../../../definitions/session_manager/PasswordLogin";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { lollipopPublicKeySelector } from "../../../../lollipop/store/reducers/lollipop";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import {
   testLoginRequest,
@@ -14,6 +12,7 @@ import {
   loginFailure
 } from "../../store/actions";
 import { handleTestLogin } from "../testLoginSaga";
+import { ephemeralPublicKeySelector } from "../../../../lollipop/store/reducers/lollipop";
 
 const fakePayload: PasswordLogin = {
   username: "ABCDEF12G34H567I" as any,
@@ -45,8 +44,8 @@ describe("handleTestLogin saga", () => {
       .next()
       .select(isFastLoginEnabledSelector)
       .next(false)
-      .select(lollipopPublicKeySelector)
-      .next(O.none)
+      .select(ephemeralPublicKeySelector)
+      .next(undefined)
       .next(E.right(rightResponse))
       .put(
         loginSuccess({
@@ -67,8 +66,8 @@ describe("handleTestLogin saga", () => {
       .next()
       .select(isFastLoginEnabledSelector)
       .next(false)
-      .select(lollipopPublicKeySelector)
-      .next(O.none)
+      .select(ephemeralPublicKeySelector)
+      .next(undefined)
       .next(E.right(responseWithError))
       .put(
         loginFailure({
@@ -91,8 +90,8 @@ describe("handleTestLogin saga", () => {
       .next()
       .select(isFastLoginEnabledSelector)
       .next(false)
-      .select(lollipopPublicKeySelector)
-      .next(O.none)
+      .select(ephemeralPublicKeySelector)
+      .next(undefined)
       .next(validationError)
       .put(
         loginFailure({
@@ -110,8 +109,8 @@ describe("handleTestLogin saga", () => {
       .next()
       .select(isFastLoginEnabledSelector)
       .next(false)
-      .select(lollipopPublicKeySelector)
-      .next(O.none)
+      .select(ephemeralPublicKeySelector)
+      .next(undefined)
       .throw(error)
       .put(
         loginFailure({
@@ -128,8 +127,8 @@ describe("handleTestLogin saga", () => {
       .next()
       .select(isFastLoginEnabledSelector)
       .next(true)
-      .select(lollipopPublicKeySelector)
-      .next(O.some(fakePublicKey))
+      .select(ephemeralPublicKeySelector)
+      .next(fakePublicKey)
       .next(E.right(rightResponse))
       .put(
         loginSuccess({
@@ -157,8 +156,8 @@ describe("handleTestLogin saga", () => {
       .next()
       .select(isFastLoginEnabledSelector)
       .next(false)
-      .select(lollipopPublicKeySelector)
-      .next(O.none)
+      .select(ephemeralPublicKeySelector)
+      .next(undefined)
       .next(leftWithStatus)
       .put(
         loginFailure({

@@ -8,6 +8,7 @@ import {
   PersistPartial,
   persistReducer
 } from "redux-persist";
+import { v4 as uuid } from "uuid";
 import { pipe } from "fp-ts/lib/function";
 import { Action } from "../../../store/actions/types";
 import { isDevEnv } from "../../../utils/environment";
@@ -63,7 +64,11 @@ const migrations: MigrationManifest = {
       ...castedPeviousState,
       keyTag: O.fromNullable(castedPeviousState.keyTag),
       publicKey: O.none,
-      supportedDevice: true
+      supportedDevice: true,
+      ephemeralKey: {
+        ephemeralKeyTag: uuid(),
+        ephemeralPublicKey: undefined
+      }
     };
   },
   "1": (state: PersistedState): PersistedLollipopState =>
@@ -73,7 +78,7 @@ const migrations: MigrationManifest = {
 export type PersistedLollipopState = LollipopState & PersistPartial;
 
 export const lollipopPersistConfig: PersistConfig = {
-  blacklist: ["publicKey", "supportedDevice"],
+  whitelist: ["keyTag"],
   key: "lollipop",
   migrate: createMigrate(migrations, { debug: isDevEnv }),
   storage: AsyncStorage,

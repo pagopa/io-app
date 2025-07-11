@@ -15,7 +15,9 @@ jest.mock("../..", () => {
   const actualModule = jest.requireActual("../..");
   return {
     ...actualModule,
-    handleRegenerateKey: jest.fn().mockResolvedValue(jwkPublicKey as PublicKey)
+    handleRegenerateEphermeralKey: jest
+      .fn()
+      .mockResolvedValue(jwkPublicKey as PublicKey)
   };
 });
 jest.mock("@pagopa/io-react-native-login-utils", () => ({
