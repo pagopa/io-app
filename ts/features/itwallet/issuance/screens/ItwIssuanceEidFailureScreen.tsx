@@ -1,6 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import { useIOToast } from "@pagopa/io-app-design-system";
+import { Linking } from "react-native";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -19,8 +20,8 @@ import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import {
-  ZendeskSubcategoryValue,
-  useItwFailureSupportModal
+  useItwFailureSupportModal,
+  ZendeskSubcategoryValue
 } from "../../common/hooks/useItwFailureSupportModal";
 import { KoState, trackItwKoStateAction } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
@@ -197,6 +198,23 @@ const ContentView = ({ failure }: ContentViewProps) => {
             action: {
               label: I18n.t("global.buttons.retry"),
               onPress: () => machineRef.send({ type: "revoke-wallet-instance" })
+            },
+            secondaryAction: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
+        case IssuanceFailureType.CIE_NOT_REGISTERED:
+          return {
+            title: I18n.t("features.itWallet.issuance.cieNotRegistered.title"),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.cieNotRegistered.subtitle"
+            ),
+            pictogram: "attention",
+            action: {
+              label: I18n.t("global.buttons.findOutMore"),
+              // TODO: replace with the actual URL when available
+              onPress: () => Linking.openURL("https://ioapp.it/")
             },
             secondaryAction: {
               label: I18n.t("global.buttons.close"),

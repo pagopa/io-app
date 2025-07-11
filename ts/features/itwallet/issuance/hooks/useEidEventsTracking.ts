@@ -6,6 +6,7 @@ import {
 } from "../../machine/eid/failure";
 import {
   trackIdNotMatch,
+  trackItwCieIdCieNotRegistered,
   trackItwIdRequestFailure,
   trackItwIdRequestUnexpectedFailure,
   trackItwUnsupportedDevice
@@ -52,6 +53,13 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
         type: failure.type,
         caused_by: "WalletProvider"
       });
+    }
+
+    if (
+      failure.type === IssuanceFailureType.CIE_NOT_REGISTERED &&
+      identification
+    ) {
+      return trackItwCieIdCieNotRegistered(identification.level);
     }
 
     if (failure.type === IssuanceFailureType.UNEXPECTED) {
