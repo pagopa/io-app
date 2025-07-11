@@ -7,8 +7,8 @@ import { useIOSelector } from "../../../../store/hooks";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { CiePreparationType } from "../components/ItwCiePreparationBaseScreenContent";
 import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
+import { CiePreparationType } from "../cie/components/ItwCiePreparationBaseScreenContent";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {
   type: CiePreparationType;
