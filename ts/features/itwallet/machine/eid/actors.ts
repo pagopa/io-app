@@ -154,7 +154,7 @@ export const createEidIssuanceActorsImplementation = (
         walletAttestation: input.walletInstanceAttestation
       });
 
-      trackItwRequest(input.identification.mode);
+      trackItwRequest(input.identification.mode, input.identification.level);
 
       return issuanceUtils.getPid({
         ...authParams,
