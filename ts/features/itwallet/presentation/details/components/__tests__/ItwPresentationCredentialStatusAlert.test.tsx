@@ -11,7 +11,7 @@ import {
   StoredCredential
 } from "../../../../common/utils/itwTypesUtils";
 import * as selectors from "../../../../credentials/store/selectors";
-import { ItWalletIssuanceMachineProvider } from "../../../../machine/provider";
+import { ItwCredentialIssuanceMachineProvider } from "../../../../machine/credential/provider";
 
 type TestCaseParams = [
   ItwCredentialStatus,
@@ -79,9 +79,9 @@ function renderComponent() {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItWalletIssuanceMachineProvider>
+      <ItwCredentialIssuanceMachineProvider>
         <ItwPresentationCredentialStatusAlert credential={mockedMdl} />
-      </ItWalletIssuanceMachineProvider>
+      </ItwCredentialIssuanceMachineProvider>
     ),
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
     {},

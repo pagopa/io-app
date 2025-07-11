@@ -7,8 +7,7 @@ import { ItwBannerSection } from "../components/ItwBannerSection";
 import { ItwL3Section } from "../components/ItwL3Section";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
-
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
 
 /**

@@ -1,7 +1,7 @@
 import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { selectIsLoading } from "../../machine/eid/selectors";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";

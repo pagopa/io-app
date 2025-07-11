@@ -7,7 +7,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected

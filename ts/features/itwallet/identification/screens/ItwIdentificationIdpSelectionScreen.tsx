@@ -9,7 +9,7 @@ import { loadIdps } from "../../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idpsRemoteValueSelector } from "../../../../store/reducers/content";
 import { idps as idpsFallback, SpidIdp } from "../../../../utils/idps";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   trackItWalletSpidIDPSelected,
   trackItWalletSpidIDPSelection

@@ -6,7 +6,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import * as itwLifecycleSelectors from "../../../lifecycle/store/selectors";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
-import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
+import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import * as itwRemoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";

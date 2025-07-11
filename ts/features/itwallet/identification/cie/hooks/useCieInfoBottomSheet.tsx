@@ -1,13 +1,13 @@
 import { VStack } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
 import { useMemo } from "react";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import I18n from "../../../../i18n";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import IOMarkdown from "../../../../components/IOMarkdown";
-import { AnimatedImage } from "../../../../components/AnimatedImage";
-import { renderActionButtons } from "../../../../components/ui/IOScrollView";
-import { CiePreparationType } from "../components/cie/ItwCiePreparationBaseScreenContent";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import I18n from "../../../../../i18n";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import IOMarkdown from "../../../../../components/IOMarkdown";
+import { AnimatedImage } from "../../../../../components/AnimatedImage";
+import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
+import { CiePreparationType } from "../components/ItwCiePreparationBaseScreenContent";
 
 type Props = { type: CiePreparationType; showSecondaryAction?: boolean };
 

@@ -46,7 +46,7 @@ import {
   selectIsLoading,
   selectRequestedCredentialOption
 } from "../../machine/credential/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";

@@ -42,7 +42,7 @@ import {
   selectCredentialTypeOption,
   selectIsLoading
 } from "../../machine/credential/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { ItwOnboardingModuleCredential } from "../components/ItwOnboardingModuleCredential";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard.ts";
 import { ITW_ROUTES } from "../../navigation/routes";

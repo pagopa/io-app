@@ -23,8 +23,8 @@ import {
   trackItWalletIDMethodSelected
 } from "../../analytics";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { useCieInfoBottomSheet } from "../cie/hooks/useCieInfoBottomSheet";
 import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
 
 export const ItwL3IdentificationModeSelectionScreen = () => {
@@ -196,6 +196,7 @@ const useCieIdBottomSheet = () => {
                     type: "select-identification-mode",
                     mode: "cieId"
                   });
+                  bottomSheet.dismiss();
                 }
               },
               secondary: {

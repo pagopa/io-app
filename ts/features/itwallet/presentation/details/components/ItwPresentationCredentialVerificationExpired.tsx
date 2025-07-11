@@ -2,7 +2,7 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import I18n from "../../../../../i18n.ts";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider.tsx";
+import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 

@@ -6,7 +6,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as remoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import {
   ItwL2IdentificationModeSelectionScreen,

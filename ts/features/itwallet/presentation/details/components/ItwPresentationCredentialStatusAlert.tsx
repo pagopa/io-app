@@ -13,7 +13,7 @@ import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.ts
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { format } from "../../../../../utils/dates.ts";
-import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider.tsx";
+import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 

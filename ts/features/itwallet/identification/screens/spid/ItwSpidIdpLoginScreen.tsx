@@ -16,7 +16,7 @@ import {
   selectAuthUrlOption,
   selectIsLoading
 } from "../../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useIOSelector } from "../../../../../store/hooks";
 import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { getEnv } from "../../../common/utils/environment";

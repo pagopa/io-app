@@ -8,7 +8,7 @@ import {
   ItwStoredCredentialsMocks
 } from "../../../../common/utils/itwMocksUtils.ts";
 import { itwCredentialIssuanceMachine } from "../../../../machine/credential/machine.ts";
-import { ItwCredentialIssuanceMachineContext } from "../../../../machine/provider.tsx";
+import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credential/provider.tsx";
 import { ITW_ROUTES } from "../../../../navigation/routes.ts";
 import { ItwPresentationDetailsFooter } from "../ItwPresentationDetailsFooter.tsx";
 import * as remoteConfigSelectors from "../../../../common/store/selectors/remoteConfig.ts";
