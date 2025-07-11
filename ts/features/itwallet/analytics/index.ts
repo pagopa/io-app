@@ -118,9 +118,9 @@ type ItwIdMethod = IdentificationContext["mode"];
 // PROPERTIES TYPES
 type TrackITWalletBannerClosureProperties = {
   banner_id: string;
-  // banner_campaign: string (EVOLUTIVA)
   banner_page: string;
   banner_landing: string;
+  banner_campaign?: string;
 };
 
 type TrackITWalletIDMethodSelected = {

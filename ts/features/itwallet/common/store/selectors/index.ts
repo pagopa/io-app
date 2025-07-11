@@ -13,12 +13,17 @@ import {
 } from "../../../lifecycle/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import { isItwCredential } from "../../utils/itwCredentialUtils";
-import { ItwJwtCredentialStatus } from "../../utils/itwTypesUtils";
+import {
+  ItwJwtCredentialStatus,
+  StoredCredential
+} from "../../utils/itwTypesUtils";
+import { CredentialType } from "../../utils/itwMocksUtils";
 import {
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
   itwIsL3EnabledSelector,
-  itwIsOfflineBannerHiddenSelector
+  itwIsOfflineBannerHiddenSelector,
+  itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
 } from "./preferences";
 import {
   isItwEnabledSelector,
@@ -165,3 +170,23 @@ export const makeItwHasActiveBannersAboveWalletSelector =
       shouldDisplayStatus
     );
   };
+
+/**
+ * Returns whether the IT-Wallet upgrade banner in MDL details should be rendered.
+ * - The IT Wallet feature flag is enabled
+ * - The wallet is not offline
+ * - The L3 feature flag is enabled
+ * - The credential type is DRIVING_LICENSE
+ * - Isn't ITW Credential
+ * - The user did not close the banner
+ */
+export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
+  state: GlobalState,
+  credential: StoredCredential
+): boolean =>
+  isItwEnabledSelector(state) &&
+  !offlineAccessReasonSelector(state) &&
+  itwIsL3EnabledSelector(state) &&
+  credential.credentialType === CredentialType.DRIVING_LICENSE &&
+  !isItwCredential(credential.credential) &&
+  !itwIsWalletUpgradeMDLDetailsBannerHiddenSelector(state);

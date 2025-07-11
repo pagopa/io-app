@@ -41,6 +41,10 @@ export const itwSetOfflineBannerHidden = createStandardAction(
   "ITW_SET_OFFLINE_BANNER_HIDDEN"
 )<boolean>();
 
+export const itwSetWalletUpgradeMDLDetailsBannerHidden = createStandardAction(
+  "ITW_SET_WALLET_UPGRADE_MDL_DETAILS_BANNER_HIDDEN"
+)<boolean>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
   | ActionType<typeof itwCloseDiscoveryBanner>
@@ -51,4 +55,5 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetClaimValuesHidden>
   | ActionType<typeof itwSetWalletInstanceRemotelyActive>
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
-  | ActionType<typeof itwSetOfflineBannerHidden>;
+  | ActionType<typeof itwSetOfflineBannerHidden>
+  | ActionType<typeof itwSetWalletUpgradeMDLDetailsBannerHidden>;
