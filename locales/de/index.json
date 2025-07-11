@@ -3965,9 +3965,12 @@
   "bonusCard": {
     "validUntil": "Gültig bis {{endDate}}",
     "expiring": "Verfällt am {{endDate}}",
-    "expired": "Abgelaufen am {{endDate}}",
+    "expired": "Abgelaufen",
     "paused": "In Pause",
-    "removed": "Entfernt"
+    "removed": "Entfernt",
+    "validUntilWithDate": "Gültig bis {{endDate}}",
+    "expiringWithDate": "Das {{{endDate}} abfällt",
+    "expiredWithDate": "Abgelaufen das {{endDate}}"
   },
   "transaction": {
     "details": {

@@ -6014,9 +6014,12 @@
     "title": "Cosa cambia?"
   },
   "bonusCard": {
-    "validUntil": "Valida fino al {{endDate}}",
-    "expiring": "Scade il {{endDate}}",
-    "expired": "Scaduta il {{endDate}}",
+    "validUntil": "Valida",
+    "validUntilWithDate": "Valida fino al {{endDate}}",
+    "expiring": "In scadenza",
+    "expiringWithDate": "Scade il {{endDate}}",
+    "expired": "Scaduta",
+    "expiredWithDate": "Scaduta il {{endDate}}",
     "paused": "In pausa",
     "removed": "Rimossa"
   },

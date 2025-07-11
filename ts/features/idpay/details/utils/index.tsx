@@ -32,6 +32,12 @@ export const getInitiativeStatus = ({
   return "ACTIVE";
 };
 
+const isEndOfTheDay = (date: Date): boolean => {
+  const endOfDay = new Date(date);
+  endOfDay.setHours(23, 59);
+  return date.getTime() === endOfDay.getTime();
+};
+
 export function IdPayCardStatus({ now, initiative }: InitiativeProps) {
   switch (getInitiativeStatus({ now, initiative })) {
     case "ACTIVE":
@@ -41,29 +47,44 @@ export function IdPayCardStatus({ now, initiative }: InitiativeProps) {
           color="grey-650"
           testID="idpay-card-status-active"
         >
-          {I18n.t("bonusCard.validUntil", {
-            endDate: format(initiative.endDate, "DD/MM/YY")
-          })}
+          {isEndOfTheDay(initiative.endDate)
+            ? I18n.t("bonusCard.validUntilWithDate", {
+                endDate: format(initiative.endDate, "DD/MM/YY")
+              })
+            : I18n.t("bonusCard.validUntil")}
         </LabelMini>
       );
+
     case "EXPIRING":
-      return (
+      return isEndOfTheDay(initiative.endDate) ? (
         <Tag
           testID="idpay-card-status-expiring"
           variant="warning"
-          text={I18n.t("bonusCard.expiring", {
+          text={I18n.t("bonusCard.expiringWithDate", {
             endDate: format(initiative.endDate, "DD/MM/YY")
           })}
         />
-      );
-    case "EXPIRED":
-      return (
+      ) : (
         <Tag
           testID="idpay-card-status-expired"
           variant="error"
-          text={I18n.t("bonusCard.expired", {
+          text={I18n.t("bonusCard.expiring")}
+        />
+      );
+    case "EXPIRED":
+      return isEndOfTheDay(initiative.endDate) ? (
+        <Tag
+          testID="idpay-card-status-expired"
+          variant="error"
+          text={I18n.t("bonusCard.expiredWithDate", {
             endDate: format(initiative.endDate, "DD/MM/YY")
           })}
+        />
+      ) : (
+        <Tag
+          testID="idpay-card-status-expired"
+          variant="error"
+          text={I18n.t("bonusCard.expired")}
         />
       );
     case "PAUSED":
