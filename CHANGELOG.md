@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.9.0-rc.6](https://github.com/pagopa/io-app/compare/3.9.0-rc.5...3.9.0-rc.6) (2025-07-10)
+
+
+### Features
+
+* [[IOBP-1816](https://pagopa.atlassian.net/browse/IOBP-1816)] Enable push notification at IDPay onboarding process ([#7167](https://github.com/pagopa/io-app/issues/7167)) ([c20f8c8](https://github.com/pagopa/io-app/commit/c20f8c87e889dd265b5709a16fbdd7237273a249))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2615](https://pagopa.atlassian.net/browse/SIW-2615)] Fix IPZS WebView not rendering on Android ([#7156](https://github.com/pagopa/io-app/issues/7156)) ([e33923b](https://github.com/pagopa/io-app/commit/e33923b03063c7f9923b931d432fedb654b1f23a))
+
+
+### Chores
+
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] bump jailmonkey to `2.8.3` ([#7129](https://github.com/pagopa/io-app/issues/7129)) ([bf1a9e8](https://github.com/pagopa/io-app/commit/bf1a9e892122b0f8302657b13f054e0da1571470))
+* **IT Wallet:** [[SIW-2692](https://pagopa.atlassian.net/browse/SIW-2692)] Bypass identity match check in `pre` ([#7166](https://github.com/pagopa/io-app/issues/7166)) ([b801541](https://github.com/pagopa/io-app/commit/b8015418fd4a828abbb570d36bc8ce5d02edbc13))
+
 ## [3.9.0-rc.5](https://github.com/pagopa/io-app/compare/3.9.0-rc.4...3.9.0-rc.5) (2025-07-08)
 
 
