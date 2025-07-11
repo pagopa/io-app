@@ -11,17 +11,11 @@ import {
 import { ItwCieMachineContext } from "../machine/provider";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { selectFailure } from "../machine/selectors";
+import { isNfcError } from "../utils/error";
 import {
   CieCardReadContentProps,
   ItwCieCardReadContent
 } from "./ItwCieCardReadContent";
-
-// Utiltiy that verifies if the failure is an NfcError
-const isNfcError = (failure: unknown): failure is NfcError =>
-  failure !== null &&
-  failure !== undefined &&
-  typeof failure === "object" &&
-  "name" in failure;
 
 /**
  * Renders the failure screen content based on the platforms and received failure

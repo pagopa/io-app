@@ -4,6 +4,7 @@ import I18n from "../../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { ItwCieMachineContext } from "../machine/provider";
 import { selectReadProgress } from "../machine/selectors";
+import { trackItWalletCardReadingClose } from "../../../analytics";
 import {
   CieCardReadContentProps,
   ItwCieCardReadContent
@@ -31,7 +32,12 @@ const useProgressContentProps = (): CieCardReadContentProps => {
   const cancelAction: IOButtonProps = {
     variant: "link",
     label: I18n.t("global.buttons.cancel"),
-    onPress: () => issuanceActor.send({ type: "close" })
+    onPress: () => {
+      // On Android, we need to track the manual close when the user taps on the close button
+      // On iOS this event is tracked by the machine, which receives the CANCELLED_BY_USER event from the SDK
+      Platform.select({ android: trackItWalletCardReadingClose })?.();
+      issuanceActor.send({ type: "close" });
+    }
   };
 
   switch (state) {

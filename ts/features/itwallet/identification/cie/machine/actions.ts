@@ -1,6 +1,15 @@
-import { CieManager } from "@pagopa/io-react-native-cie";
+import { CieManager, NfcError } from "@pagopa/io-react-native-cie";
 import { ActionArgs } from "xstate";
 import I18n from "../../../../../i18n";
+import {
+  trackItWalletCardReadingClose,
+  trackItWalletCieCardReadingFailure,
+  trackItWalletCieCardVerifyFailure,
+  trackItWalletErrorPin,
+  trackItWalletLastErrorPin,
+  trackItWalletSecondErrorPin
+} from "../../../analytics";
+import { isNfcError } from "../utils/error";
 import { CieContext } from "./context";
 import { CieEvents } from "./events";
 
@@ -51,5 +60,46 @@ export default {
       "features.itWallet.identification.cie.readingCard.ios.reading.status"
     );
     CieManager.setCurrentAlertMessage(`${progress}\n${label}`);
+  },
+
+  trackError: ({
+    context: { failure }
+  }: ActionArgs<CieContext, CieEvents, CieEvents>) => {
+    if (isNfcError(failure)) {
+      switch (failure.name) {
+        case "WEBVIEW_ERROR": // No tracking
+          return;
+        case "NOT_A_CIE":
+          trackItWalletCieCardReadingFailure({ reason: "unknown card" });
+          return;
+        case "APDU_ERROR":
+          trackItWalletCieCardReadingFailure({ reason: failure.message });
+          return;
+        case "WRONG_PIN":
+          const { attempts } = failure as Extract<
+            NfcError,
+            { name: "WRONG_PIN" }
+          >;
+
+          if (attempts > 1) {
+            trackItWalletErrorPin();
+          } else {
+            trackItWalletSecondErrorPin();
+          }
+          return;
+        case "CARD_BLOCKED":
+          trackItWalletLastErrorPin();
+          return;
+        case "CERTIFICATE_EXPIRED":
+        case "CERTIFICATE_REVOKED":
+          trackItWalletCieCardVerifyFailure();
+          return;
+        case "CANCELLED_BY_USER":
+          trackItWalletCardReadingClose();
+          return;
+      }
+    }
+
+    trackItWalletCieCardReadingFailure({ reason: "KO" });
   }
 };

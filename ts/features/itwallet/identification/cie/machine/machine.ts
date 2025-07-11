@@ -29,7 +29,8 @@ export const itwCieMachine = setup({
       failure: undefined
     })),
     configureStatusAlerts: notImplemented,
-    updateStatusAlert: notImplemented
+    updateStatusAlert: notImplemented,
+    trackError: notImplemented
   }
 }).createMachine({
   /** @xstate-layout N4IgpgJg5mDOIC5QEsAuB3AwssBZAhgMYAWyAdmAHQCSZaAxANoAMAuoqAA4D2say3MhxAAPRAGYAbAEZKAFgDskgKySAnHIBM4qXPEKANCACeE5bOnrpS85Ln25ygL5OjaLDgIlyVAGJhUbzIoelgAgFowgCcAN2RCMHDOKO44iDAo8IBXKIAbFnYkEB4+VAEhIrEEAA4ZSklxTTUdTSbpNUMTCU1JerUeuUkeqWlHSRc3DGw8IlIKSgAlMHwIcihMfCiIegyUqMpOXPxUADNuKIBbSlhUTdRpgjJ8GCiC4RL+QWEqy0lmeuUamUzDklnEcmYjSMpgQ0mk1UomlUCiRakhciBjQmIHcD1mPkWy1WwQ2W3ohBw4SiRPCYBiYDIqDeRQ+ZS+lUQ0iR4kRzAU0mBzHh1U01WU0M5cgRGmYzGq0nEYoxKOxuM8+PmSxWa1J2wpiWpK1pUT2zK4vE+FVAP0k8soOn6zDUzukzE0TolCHEzF64ms4jRkP5wO0qqm6qCVC1xPWmz1lMNEEiWUICVgsDNxQtbKtok5gLklAUQrd7TU1TdSM9ygUhcB1Skwfd1mkYY8M0jlAAgllUMRzsgAF5rcncC6HAKJfC94gMsqEY7lTOs8rfRCaRyFhQKP0KMVAhVqSTV4GUBV-TQKVTKZStNQuVwgMjcdLwIpqjtzMDvbOrjkIcJjy6ADLERPRhhFLkOm3OQ2zxTtaDQH9Sj-a1EC0T0-X+NR2ndflJD+cxNDgiMv0ofxAjmKBkMtNcEDGShVB6EEayaOVqk6GFGgUSgcP6OFASUaoNAUEjPwJaMdTjGiczouFZUoDjzAxRVMQFTC-URW9lADWshnhZxHw-LwyJ7PsB2HYIZNQvNYXlOsQX0fp3QhTRq23XiUVtd0dJc6oxJMglMDHCdUEgaz2TQhANwxRTlOURQ0Qaao5A0zQi0UN17D5JEUVgozw3E+ZfHwZBchyb8WV-SLbPaCEMorQYkVaKVxDSjLi1vK8-ilZhDJcIA */
@@ -94,8 +95,8 @@ export const itwCieMachine = setup({
           ]
         },
         "cie-read-error": {
-          target: "Failure",
-          actions: assign(({ event }) => ({ failure: event.error }))
+          actions: assign(({ event }) => ({ failure: event.error })),
+          target: "Failure"
         },
         "cie-read-success": {
           target: "Authorizing",
@@ -117,7 +118,7 @@ export const itwCieMachine = setup({
           actions: assign(({ event }) => ({
             failure: { name: "WEBVIEW_ERROR", message: event.message }
           })),
-          target: "ReadingCard"
+          target: "Failure"
         }
       }
     },
@@ -127,6 +128,7 @@ export const itwCieMachine = setup({
     },
     Failure: {
       description: "Authentication flow terminated with error",
+      entry: "trackError",
       on: {
         retry: {
           target: "ReadingCard"

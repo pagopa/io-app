@@ -1,11 +1,6 @@
 import { CieError, NfcError } from "@pagopa/io-react-native-cie";
+import { WebViewError } from "../utils/error";
 import { CieInput } from "./input";
-
-// Custom error for webview
-type WebViewError = {
-  name: "WEBVIEW_ERROR";
-  message: string;
-};
 
 export type CieContext = {
   /**
