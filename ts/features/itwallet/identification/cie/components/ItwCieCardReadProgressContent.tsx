@@ -12,6 +12,9 @@ import {
 
 type ReadState = "idle" | "reading" | "completed";
 
+/**
+ * Renders the CIE read progress content based on the current progress and platform
+ */
 export const ItwCieCardReadProgressContent = () => {
   const props = useProgressContentProps();
   return <ItwCieCardReadContent {...props} />;
