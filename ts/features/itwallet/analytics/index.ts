@@ -835,6 +835,13 @@ export const trackItwUpgradeL3Mandatory = (action: ItwL3UpgradeTrigger) => {
   );
 };
 
+export const trackItwCieIdCieNotRegistered = (itwFlow: ItwFlow) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_CIEID_CIE_NOT_REGISTERED,
+    buildEventProperties("KO", "screen_view", { itwFlow })
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
