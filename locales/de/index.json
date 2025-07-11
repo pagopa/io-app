@@ -3967,7 +3967,8 @@
     "expiring": "Verfällt am {{endDate}}",
     "expired": "Abgelaufen am {{endDate}}",
     "paused": "In Pause",
-    "removed": "Entfernt"
+    "removed": "Entfernt",
+    "used": "Gebraucht"
   },
   "transaction": {
     "details": {

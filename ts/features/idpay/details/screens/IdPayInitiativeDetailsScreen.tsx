@@ -315,7 +315,8 @@ const IdPayInitiativeDetailsScreenComponent = () => {
       case InitiativeRewardTypeEnum.DISCOUNT: {
         if (
           getInitiativeStatus({ initiative, now: new Date() }) === "EXPIRED" ||
-          getInitiativeStatus({ initiative, now: new Date() }) === "REMOVED"
+          getInitiativeStatus({ initiative, now: new Date() }) === "REMOVED" ||
+          getInitiativeStatus({ initiative, now: new Date() }) === "USED"
         ) {
           return;
         }
