@@ -16,7 +16,7 @@ export type CieManagerActorInput = {
   isScreenReaderEnabled: boolean;
 };
 
-export const createCieActorsImplementation = () => ({
+export default {
   startCieManager: fromPromise<void, StartCieManagerInput>(
     async ({ input }) => {
       assert(input.serviceProviderUrl, "authenticationUrl should be defined");
@@ -55,4 +55,4 @@ export const createCieActorsImplementation = () => ({
       };
     }
   )
-});
+};

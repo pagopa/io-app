@@ -9,7 +9,7 @@ import { CieEvents } from "./events";
  * @param progress The reading progress value from 0 to 1.
  * @returns A string representing the progress bar with emojis,
  */
-const getProgressEmojis = (progress: number) => {
+export const getProgressEmojis = (progress: number) => {
   // Clamp progress between 0 and 1
   const clampedProgress = Math.max(0, Math.min(1, progress));
 
@@ -23,7 +23,7 @@ const getProgressEmojis = (progress: number) => {
   return blueDotEmoji.repeat(blueDots) + whiteDotyEmoji.repeat(whiteDots);
 };
 
-export const createCieActionsImplementation = () => ({
+export default {
   /**
    * Configures the (idle) status alerts for the iOS NFC system dialog
    */
@@ -52,4 +52,4 @@ export const createCieActionsImplementation = () => ({
     );
     CieManager.setCurrentAlertMessage(`${progress}\n${label}`);
   }
-});
+};
