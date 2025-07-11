@@ -5046,6 +5046,20 @@
             "title": "In attesa di connessione per la verifica...",
             "subtitle": "Attendi qualche secondo..."
           },
+          "loadingStepScreen": {
+            "initial": {
+              "title": "Stiamo comunicando i tuoi dati per la verifica",
+              "subtitle": "Attendi qualche secondo..."
+            },
+            "reminder": {
+              "title": "Ancora un po' di pazienza...",
+              "subtitle": "Stiamo aspettando una risposta dai sistemi dell’ente che richiede i dati."
+            },
+            "final": {
+              "title": "Sembra che le cose vadano un po' a rilento",
+              "subtitle": "Ancora un po' di pazienza..."
+            }
+          },
           "selectiveDisclosure": {
             "title": "Dati richiesti",
             "subtitle": "Saranno mostrati a **{{relyingParty}}** per completare la verifica dei documenti richiesti.",
@@ -5063,6 +5077,11 @@
           "relyingParty": {
             "genericError": {
               "title": "Verifica interrotta",
+              "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
+              "primaryAction": "Chiudi"
+            },
+            "timeout": {
+              "title": "L’app di chi verifica non risponde",
               "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
               "primaryAction": "Chiudi"
             }

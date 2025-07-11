@@ -32,3 +32,9 @@ export const selectFailureOption = (snapshot: MachineSnapshot) =>
 
 export const selectProximityDetails = (snapshot: MachineSnapshot) =>
   snapshot.context.proximityDetails;
+
+export const isInitialLoadingSelector = (snapshot: MachineSnapshot) =>
+  snapshot.matches({ DeviceCommunication: { SendingDocuments: "Initial" } });
+
+export const isReminderLoadingSelector = (snapshot: MachineSnapshot) =>
+  snapshot.matches({ DeviceCommunication: { SendingDocuments: "Reminder" } });
