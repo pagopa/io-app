@@ -3,7 +3,10 @@ import {
   IOSkeleton,
   Icon,
   LabelMini,
-  VSpacer
+  VSpacer,
+  hexToRgba,
+  useIOTheme,
+  useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -20,12 +23,45 @@ export type PaymentCardSmallProps = WithTestID<
   }
 >;
 
+const usePaymentCardStyles = () => {
+  const theme = useIOTheme();
+  const { themeType } = useIOThemeContext();
+
+  const isDarkMode = themeType === "dark";
+
+  const textColorDefault = theme["textHeading-default"];
+  const textColorError: IOColors = isDarkMode ? "error-100" : "error-850";
+  const backgroundColorDefault = IOColors[theme["appBackground-tertiary"]];
+  const backgroundColorError = isDarkMode
+    ? hexToRgba(IOColors["error-400"], 0.2)
+    : IOColors["error-100"];
+
+  const skeletonColor = isDarkMode
+    ? hexToRgba(IOColors["grey-450"], 0.5)
+    : IOColors["grey-200"];
+
+  return {
+    textColorDefault,
+    textColorError,
+    backgroundColorDefault,
+    backgroundColorError,
+    skeletonColor
+  };
+};
+
 const PaymentCardSmall = ({
   testID,
   onPress,
   accessibilityLabel,
   ...props
 }: PaymentCardSmallProps) => {
+  const {
+    textColorDefault,
+    textColorError,
+    backgroundColorDefault,
+    backgroundColorError
+  } = usePaymentCardStyles();
+
   const labelText = useMemo(() => {
     if (props.hpan) {
       return `•••• ${props.hpan}`;
@@ -65,7 +101,14 @@ const PaymentCardSmall = ({
       accessibilityLabel={accessibilityLabel}
     >
       <View
-        style={[styles.card, props.isExpired && styles.cardError]}
+        style={[
+          styles.card,
+          {
+            backgroundColor: props.isExpired
+              ? backgroundColorError
+              : backgroundColorDefault
+          }
+        ]}
         testID={testID}
       >
         <View
@@ -81,7 +124,7 @@ const PaymentCardSmall = ({
               testID={`${testID}-errorIcon`}
               name="errorFilled"
               size={16}
-              color="error-850"
+              color={textColorError}
             />
           )}
         </View>
@@ -90,7 +133,7 @@ const PaymentCardSmall = ({
           weight="Regular"
           ellipsizeMode="tail"
           numberOfLines={1}
-          color={props.isExpired ? "error-850" : "grey-700"}
+          color={props.isExpired ? textColorError : textColorDefault}
         >
           {labelText}
         </LabelMini>
@@ -99,24 +142,26 @@ const PaymentCardSmall = ({
   );
 };
 
-const PaymentCardSmallSkeleton = ({ testID }: WithTestID<unknown>) => (
-  <View style={styles.card} testID={`${testID}-skeleton`}>
-    <IOSkeleton
-      color={IOColors["grey-200"]}
-      shape="square"
-      size={24}
-      radius={12}
-    />
-    <VSpacer size={8} />
-    <IOSkeleton
-      color={IOColors["grey-200"]}
-      shape="rectangle"
-      width={"100%"}
-      height={16}
-      radius={8}
-    />
-  </View>
-);
+const PaymentCardSmallSkeleton = ({ testID }: WithTestID<unknown>) => {
+  const { backgroundColorDefault, skeletonColor } = usePaymentCardStyles();
+
+  return (
+    <View
+      style={[styles.card, { backgroundColor: backgroundColorDefault }]}
+      testID={`${testID}-skeleton`}
+    >
+      <IOSkeleton color={skeletonColor} shape="square" size={24} radius={12} />
+      <VSpacer size={8} />
+      <IOSkeleton
+        color={skeletonColor}
+        shape="rectangle"
+        width={"100%"}
+        height={16}
+        radius={8}
+      />
+    </View>
+  );
+};
 
 export const PAYMENT_CARD_SMALL_WIDTH = 127;
 export const PAYMENT_CARD_SMALL_HEIGHT = 80;
@@ -130,11 +175,7 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     borderRadius: 8,
     padding: 16,
-    aspectRatio: 16 / 10,
-    backgroundColor: IOColors["grey-100"]
-  },
-  cardError: {
-    backgroundColor: IOColors["error-100"]
+    aspectRatio: 16 / 10
   }
 });
 
