@@ -359,7 +359,7 @@ export const ImageClaim = PatternString(PICTURE_URL_REGEX);
 export const PdfClaim = PatternString(PDF_DATA_REGEX);
 
 /**
- * Decoder for a simple list of claims that do not require additional parsing (for instance, nationality codes)
+ * Decoder for a simple list of string claims (for instance, nationality codes)
  */
 export const SimpleListClaim = t.array(t.string);
 
