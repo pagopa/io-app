@@ -17,4 +17,8 @@ export type CieInput = {
    * Current IT Wallet environment
    */
   env: EnvType;
+  /**
+   * Wether the identification flow is for L3 or L2
+   */
+  isL3: boolean;
 };

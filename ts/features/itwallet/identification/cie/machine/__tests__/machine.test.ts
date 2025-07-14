@@ -9,6 +9,7 @@ describe("itwCieMachine", () => {
 
   const mockConfigureStatusAlerts = jest.fn();
   const mockUpdateStatusAlert = jest.fn();
+  const mockTrackSuccess = jest.fn();
   const mockTrackError = jest.fn();
 
   const testMachine = itwCieMachine.provide({
@@ -19,6 +20,7 @@ describe("itwCieMachine", () => {
     actions: {
       configureStatusAlerts: mockConfigureStatusAlerts,
       updateStatusAlert: mockUpdateStatusAlert,
+      trackSuccess: mockTrackSuccess,
       trackError: mockTrackError
     }
   });
@@ -28,7 +30,8 @@ describe("itwCieMachine", () => {
       pin: "12345678",
       authenticationUrl: "http://pagopa.it",
       isScreenReaderEnabled: true,
-      env: "pre"
+      env: "pre",
+      isL3: true
     };
 
     const initialContext = getInitialContext(testInput);
@@ -108,6 +111,8 @@ describe("itwCieMachine", () => {
       redirectUrl: "http://poagopa.it/redirect"
     });
 
+    expect(mockTrackSuccess).toHaveBeenCalled();
+
     expect(actor.getSnapshot().status).toBe("done");
   });
 
@@ -116,7 +121,8 @@ describe("itwCieMachine", () => {
       pin: "12345678",
       authenticationUrl: "http://pagopa.it",
       isScreenReaderEnabled: true,
-      env: "pre"
+      env: "pre",
+      isL3: true
     };
 
     const initialContext = getInitialContext(testInput);
@@ -161,7 +167,8 @@ describe("itwCieMachine", () => {
       pin: "12345678",
       authenticationUrl: "http://pagopa.it",
       isScreenReaderEnabled: true,
-      env: "pre"
+      env: "pre",
+      isL3: true
     };
 
     const initialContext = getInitialContext(testInput);
@@ -206,7 +213,8 @@ describe("itwCieMachine", () => {
       pin: "12345678",
       authenticationUrl: "http://pagopa.it",
       isScreenReaderEnabled: true,
-      env: "pre"
+      env: "pre",
+      isL3: true
     };
 
     const initialContext = getInitialContext(testInput);

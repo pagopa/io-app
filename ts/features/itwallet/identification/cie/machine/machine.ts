@@ -30,6 +30,7 @@ export const itwCieMachine = setup({
     })),
     configureStatusAlerts: notImplemented,
     updateStatusAlert: notImplemented,
+    trackSuccess: notImplemented,
     trackError: notImplemented
   }
 }).createMachine({
@@ -125,6 +126,7 @@ export const itwCieMachine = setup({
     },
     Completed: {
       description: "Authentication flow completed",
+      entry: "trackSuccess",
       type: "final"
     },
     Failure: {

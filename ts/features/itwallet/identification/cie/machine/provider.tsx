@@ -12,12 +12,14 @@ export const ItwCieMachineContext = createActorContext(itwCieMachine);
 type ProviderProps = {
   pin: string;
   authenticationUrl: string;
+  isL3: boolean;
 };
 
 export const ItwCieMachineProvider = ({
   children,
   pin,
-  authenticationUrl
+  authenticationUrl,
+  isL3
 }: PropsWithChildren<ProviderProps>) => {
   const isScreenReaderEnabled = useScreenReaderEnabled();
   const eidIssuanceMachine = itwCieMachine.provide({ actions, actors });
@@ -27,7 +29,7 @@ export const ItwCieMachineProvider = ({
     <ItwCieMachineContext.Provider
       logic={eidIssuanceMachine}
       options={{
-        input: { pin, authenticationUrl, isScreenReaderEnabled, env }
+        input: { pin, authenticationUrl, isScreenReaderEnabled, env, isL3 }
       }}
     >
       {children}

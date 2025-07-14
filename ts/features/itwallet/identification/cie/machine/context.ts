@@ -21,6 +21,10 @@ export type CieContext = {
    */
   env: EnvType;
   /**
+   * Wether the identification flow is for L3 or L2
+   */
+  isL3: boolean;
+  /**
    * The auth service provider url to be used with the CIE auth flow
    */
   serviceProviderUrl: string | undefined;
@@ -48,6 +52,7 @@ export const getInitialContext = (input: CieInput): CieContext => ({
   authenticationUrl: input.authenticationUrl,
   isScreenReaderEnabled: input.isScreenReaderEnabled,
   env: input.env,
+  isL3: input.isL3,
   serviceProviderUrl: undefined,
   readProgress: undefined,
   authorizationUrl: undefined,

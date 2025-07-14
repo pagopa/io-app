@@ -1,15 +1,13 @@
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import I18n from "../../../../../i18n";
-import {
-  trackItWalletCieCardReading,
-  trackItWalletCieCardReadingSuccess
-} from "../../../analytics";
+import { trackItWalletCieCardReading } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
+  isL3FeaturesEnabledSelector,
   selectAuthUrlOption,
   selectCiePin
 } from "../../../machine/eid/selectors";
@@ -28,8 +26,13 @@ import { selectCurrentState, selectRedirectUrl } from "../machine/selectors";
 export const ItwCieCardReaderScreen = () => {
   const pin = ItwEidIssuanceMachineContext.useSelector(selectCiePin);
   const authUrl = ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
+  const isL3 = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
 
-  useFocusEffect(trackItWalletCieCardReading);
+  useFocusEffect(
+    useCallback(() => trackItWalletCieCardReading(isL3 ? "L3" : "L2"), [isL3])
+  );
 
   if (O.isNone(authUrl)) {
     return (
@@ -38,7 +41,11 @@ export const ItwCieCardReaderScreen = () => {
   }
 
   return (
-    <ItwCieMachineProvider pin={pin} authenticationUrl={authUrl.value}>
+    <ItwCieMachineProvider
+      pin={pin}
+      authenticationUrl={authUrl.value}
+      isL3={isL3}
+    >
       <SafeAreaView style={{ flex: 1 }}>
         <ScreenContent />
       </SafeAreaView>
@@ -64,7 +71,6 @@ const ScreenContent = () => {
    */
   useEffect(() => {
     if (authRedirectUrl !== undefined) {
-      trackItWalletCieCardReadingSuccess();
       issuanceActor.send({
         type: "user-identification-completed",
         authRedirectUrl

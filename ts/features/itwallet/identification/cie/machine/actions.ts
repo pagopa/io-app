@@ -2,8 +2,10 @@ import { CieManager } from "@pagopa/io-react-native-cie";
 import { ActionArgs } from "xstate";
 import I18n from "../../../../../i18n";
 import {
+  ItwFlow,
   trackItWalletCardReadingClose,
   trackItWalletCieCardReadingFailure,
+  trackItWalletCieCardReadingSuccess,
   trackItWalletCieCardVerifyFailure,
   trackItWalletErrorPin,
   trackItWalletLastErrorPin,
@@ -62,32 +64,46 @@ export default {
     CieManager.setCurrentAlertMessage(`${progress}\n${label}`);
   },
 
-  trackError: ({
-    context: { failure }
+  trackSuccess: ({
+    context: { isL3 }
   }: ActionArgs<CieContext, CieEvents, CieEvents>) => {
+    trackItWalletCieCardReadingSuccess(isL3 ? "L3" : "L2");
+  },
+
+  trackError: ({
+    context: { failure, isL3 }
+  }: ActionArgs<CieContext, CieEvents, CieEvents>) => {
+    const itw_flow: ItwFlow = isL3 ? "L3" : "L2";
+
     if (isNfcError(failure)) {
       switch (failure.name) {
         case "WEBVIEW_ERROR": // No tracking
           return;
         case "NOT_A_CIE":
-          trackItWalletCieCardReadingFailure({ reason: "unknown card" });
+          trackItWalletCieCardReadingFailure({
+            reason: "unknown card",
+            itw_flow
+          });
           return;
         case "APDU_ERROR":
-          trackItWalletCieCardReadingFailure({ reason: failure.message });
+          trackItWalletCieCardReadingFailure({
+            reason: failure.message,
+            itw_flow
+          });
           return;
         case "WRONG_PIN":
           if (failure.attemptsLeft > 1) {
-            trackItWalletErrorPin();
+            trackItWalletErrorPin(itw_flow);
           } else {
-            trackItWalletSecondErrorPin();
+            trackItWalletSecondErrorPin(itw_flow);
           }
           return;
         case "CARD_BLOCKED":
-          trackItWalletLastErrorPin();
+          trackItWalletLastErrorPin(itw_flow);
           return;
         case "CERTIFICATE_EXPIRED":
         case "CERTIFICATE_REVOKED":
-          trackItWalletCieCardVerifyFailure();
+          trackItWalletCieCardVerifyFailure(itw_flow);
           return;
         case "CANCELLED_BY_USER":
           trackItWalletCardReadingClose();
@@ -95,6 +111,6 @@ export default {
       }
     }
 
-    trackItWalletCieCardReadingFailure({ reason: "KO" });
+    trackItWalletCieCardReadingFailure({ reason: "KO", itw_flow });
   }
 };

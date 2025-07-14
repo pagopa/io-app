@@ -11,6 +11,7 @@ import { ItwCieMachineContext } from "../machine/provider";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { selectFailure } from "../machine/selectors";
 import { isNfcError } from "../utils/error";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import {
   CieCardReadContentProps,
   ItwCieCardReadContent
@@ -27,6 +28,9 @@ export const ItwCieCardReadFailureContent = () => {
 const useFailureContentProps = (): CieCardReadContentProps => {
   const cieActor = ItwCieMachineContext.useActorRef();
   const issuanceActor = ItwEidIssuanceMachineContext.useActorRef();
+  const isL3 = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
   const failure = ItwCieMachineContext.useSelector(selectFailure);
 
   // Display failure information for debug
@@ -43,18 +47,18 @@ const useFailureContentProps = (): CieCardReadContentProps => {
   };
 
   const handlePinForgot = useCallback(() => {
-    trackItWalletCiePinForgotten();
+    trackItWalletCiePinForgotten(isL3 ? "L3" : "L2");
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/"
     ).catch(constNull);
-  }, []);
+  }, [isL3]);
 
   const handlePukForgot = useCallback(() => {
-    trackItWalletCiePukForgotten();
+    trackItWalletCiePukForgotten(isL3 ? "L3" : "L2");
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/recupero-puk/"
     ).catch(constNull);
-  }, []);
+  }, [isL3]);
 
   if (isNfcError(failure)) {
     switch (failure.name) {
