@@ -30,9 +30,9 @@ export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
   const imageSrc = useMemo(() => {
     switch (type) {
       case "card":
-        return require("../../../../../img/features/itWallet/identification/itw_cie_nfc.gif");
+        return require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif");
       case "pin":
-        return require("../../../../../img/features/itWallet/identification/itw_cie_pin.gif");
+        return require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif");
       default:
         return undefined;
     }
