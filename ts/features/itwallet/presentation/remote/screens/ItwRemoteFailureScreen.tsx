@@ -63,7 +63,9 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const { bottomSheet, present } = useItwRemoteUntrustedRPBottomSheet();
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => machineRef.send({ type: "close" }),
-    customBodyMessage: I18n.t(`${i18nNs}.walletInactiveScreen.alert.body`),
+    customLabels: {
+      body: I18n.t(`${i18nNs}.walletInactiveScreen.alert.body`)
+    },
     dismissalContext
   });
 
