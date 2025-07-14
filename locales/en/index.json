@@ -4698,6 +4698,10 @@
           "title": "Documento in arrivo",
           "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
           "primaryAction": "Ho capito"
+        },
+        "cieNotRegistered": {
+          "title": "Registra la CIE in app CieID per continuare",
+          "subtitle": "Per ottenere IT-Wallet, completa prima la registrazione della tua CIE in app CieID e poi riprova."
         }
       },
       "notMatchingIdentityScreen": {
