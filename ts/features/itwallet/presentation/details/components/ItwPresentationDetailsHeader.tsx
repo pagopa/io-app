@@ -6,13 +6,12 @@ import {
 import { useMemo, memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
-import {
-  getCredentialNameFromType,
-  isItwCredential
-} from "../../../common/utils/itwCredentialUtils.ts";
+import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { useIOSelector } from "../../../../../store/hooks";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
 type ItwPresentationDetailsHeaderProps = {
@@ -35,7 +34,7 @@ const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
   const { isExperimental } = useIOExperimentalDesign();
-  const withL3Design = isItwCredential(credential.credential);
+  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const { backgroundColor, textColor, statusBarStyle } =
     getThemeColorByCredentialType(
       credential.credentialType as CredentialType,

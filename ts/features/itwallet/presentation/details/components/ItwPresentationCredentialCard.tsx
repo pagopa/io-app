@@ -17,7 +17,7 @@ import { itwCredentialStatusSelector } from "../../../credentials/store/selector
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
-import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
 type Props = {
@@ -42,7 +42,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   }, [credential.credentialType]);
 
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
-  const withL3Design = isItwCredential(credential.credential);
+  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const handleCardPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
