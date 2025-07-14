@@ -57,6 +57,7 @@ const IdPayEnableMessageScreen = () => {
 
   const onActivate = () => {
     if (!initiativeId || !servicePreferenceResponseSuccess) {
+      IOToast.error(I18n.t("global.genericError"));
       return;
     }
 
