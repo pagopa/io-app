@@ -62,7 +62,7 @@ export const itwCieMachine = setup({
           actions: assign(({ event }) => ({
             failure: { name: "WEBVIEW_ERROR", message: event.message }
           })),
-          target: "ReadingCard"
+          target: "Failure"
         }
       }
     },
@@ -131,7 +131,7 @@ export const itwCieMachine = setup({
       entry: "trackError",
       on: {
         retry: {
-          target: "ReadingCard"
+          target: "WaitingForUrl"
         }
       }
     }

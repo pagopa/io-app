@@ -153,6 +153,13 @@ const useFailureContentProps = (): CieCardReadContentProps => {
           ),
           pictogram: "attention"
         };
+      case "WEBVIEW_ERROR":
+        return {
+          title: I18n.t("features.itWallet.generic.error.title"),
+          subtitle: I18n.t("features.itWallet.generic.error.body"),
+          pictogram: "umbrella",
+          primaryAction: closeAction
+        };
     }
   }
 

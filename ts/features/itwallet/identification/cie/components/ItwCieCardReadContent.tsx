@@ -17,7 +17,7 @@ import {
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Platform, ScrollView, View } from "react-native";
+import { Platform, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -99,12 +99,20 @@ const Actions = (
     ),
     default: (
       <VStack space={24}>
-        {props.primaryAction ? (
-          <IOButton {...props.primaryAction} variant="solid" />
-        ) : null}
-        {props.secondaryAction ? (
-          <IOButton {...props.secondaryAction} variant="link" />
-        ) : null}
+        {props.primaryAction && (
+          <View style={{ alignItems: "center" }}>
+            <View>
+              <IOButton variant="solid" {...props.primaryAction} />
+            </View>
+          </View>
+        )}
+        {props.secondaryAction && (
+          <View style={{ alignItems: "center" }}>
+            <View>
+              <IOButton variant="link" {...props.secondaryAction} />
+            </View>
+          </View>
+        )}
       </VStack>
     )
   });
@@ -114,7 +122,9 @@ const Actions = (
  * TODO: use ProgressLoader from the DS
  * @param props.progress - Progress value from 0 to 1
  */
-const ReadProgressBar = (props: Pick<CieCardReadContentProps, "progress">) => {
+const LinearProgressBar = (
+  props: Pick<CieCardReadContentProps, "progress">
+) => {
   const { progress = 0 } = props;
   const [width, setWidth] = useState(0);
   const progressWidth = useSharedValue(0);
@@ -170,7 +180,7 @@ const ContentIos = (props: CieCardReadContentProps) => (
   <ContentWrapper style={{ flex: 1 }}>
     <VSpacer size={32} />
     <VStack space={16} style={{ flex: 1 }}>
-      <ReadProgressBar progress={props.progress} />
+      <LinearProgressBar progress={props.progress} />
       <HStack space={32}>
         <View style={{ flex: 1, paddingVertical: 8, gap: 4 }}>
           <Title title={props.title} />
@@ -187,16 +197,16 @@ const ContentIos = (props: CieCardReadContentProps) => (
 );
 
 const ContentAndroid = (props: CieCardReadContentProps) => (
-  <ScrollView centerContent={true}>
+  <View style={{ flex: 1, justifyContent: "center" }}>
     <ContentWrapper>
       <VStack space={24}>
         <CircularProgress
-          size={360}
-          radius={180}
+          size={240}
+          radius={120}
           progress={(props.progress || 0) * 100}
           strokeColor={IOColors["blueIO-500"]}
           strokeBgColor={IOColors["grey-200"]}
-          strokeWidth={8}
+          strokeWidth={4}
         >
           <Pictogram size={180} name={props.pictogram} />
         </CircularProgress>
@@ -204,9 +214,13 @@ const ContentAndroid = (props: CieCardReadContentProps) => (
           <Title title={props.title} />
           <Subtitle subtitle={props.subtitle} />
         </VStack>
+        <Actions
+          primaryAction={props.primaryAction}
+          secondaryAction={props.secondaryAction}
+        />
       </VStack>
     </ContentWrapper>
-  </ScrollView>
+  </View>
 );
 
 /**

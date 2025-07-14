@@ -56,6 +56,11 @@ const injectedJavaScript = `
     true;
   `;
 
+const isL3AuthUrl = (url: string) =>
+  Platform.OS === "ios"
+    ? url.includes("authnRequestString")
+    : url.includes("OpenApp");
+
 /**
  * Base WebView component used for the CIE flow
  */
@@ -72,7 +77,7 @@ const ItwCieWebView = (props: ComponentProps<typeof WebView>) => {
         const error = e as Error;
         const webViewError = e as WebViewErrorEvent;
         const webViewHttpError = e as WebViewHttpErrorEvent;
-        if (webViewHttpError.nativeEvent.statusCode) {
+        if (webViewHttpError.nativeEvent?.statusCode) {
           const { description, statusCode } = webViewHttpError.nativeEvent;
           return `WebView http error: ${description} with status code: ${statusCode}`;
         } else if (webViewError.nativeEvent) {
@@ -95,7 +100,7 @@ const ItwCieWebView = (props: ComponentProps<typeof WebView>) => {
       eventTitle === "pagina web non disponibile" ||
       // On Android, if we attempt to access the idp URL twice,
       // we are presented with an error page titled "ERROR".
-      eventTitle === "errore"
+      eventTitle.includes("errore")
     ) {
       handleOnError(new Error(eventTitle));
     }
@@ -130,11 +135,27 @@ export const ItwCieAuthenticationWebview = () => {
     cieActor.send({ type: "set-service-provider-url", url });
   };
 
+  const handleShouldStartLoadWithRequest = (
+    event: WebViewNavigation
+  ): boolean => {
+    // When authenticating with L3 directly, the injected JS does not work so `handleMessage` is never called
+    // To continue we must take the url with `OpenApp` (Android) or `authnRequestString` (iOS)
+    if (isL3AuthUrl(event.url)) {
+      void handleMessage({
+        nativeEvent: { data: event.url }
+      } as WebViewMessageEvent);
+      return false;
+    }
+
+    return true;
+  };
+
   return (
     <>
       <ItwCieWebView
         source={{ uri: authenticationUrl }}
         onMessage={handleMessage}
+        onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
       />
       <View style={StyleSheet.absoluteFillObject}>
         <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />

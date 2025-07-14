@@ -19,7 +19,7 @@ export type CieManagerActorInput = {
 export default {
   startCieManager: fromPromise<void, StartCieManagerInput>(
     async ({ input }) => {
-      assert(input.serviceProviderUrl, "authenticationUrl should be defined");
+      assert(input.serviceProviderUrl, "serviceProviderUrl should be defined");
       // Start the CieManager with the provided pin and authentication URL
       return CieManager.startReading(input.pin, input.serviceProviderUrl);
     }
