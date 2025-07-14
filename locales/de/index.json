@@ -4111,6 +4111,12 @@
       }
     },
     "onboarding": {
+      "enableMessages": {
+        "cancelAction": "Stornieren",
+        "subtitle": "Aktivieren Sie die Möglichkeit, Sie in der App zu kontaktieren, um Aktualisierungen auf dem {{initiativeName}} zu erhalten. Dieser Schritt ist erforderlich, um mit der Anfrage fortzufahren.",
+        "title": "Nachrichten aktivieren",
+        "confirmAction": "OK, aktiv"
+      },
       "enableNotification": {
         "title": "Non rischiare di perdere l'esito della tua richiesta",
         "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
