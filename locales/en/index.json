@@ -5704,10 +5704,10 @@
         "confirmAction": "Ok, active"
       },
       "enableNotification": {
-        "title": "Don't risk losing the outcome of your request",
-        "subtitle": "Activate push notifications to know immediately when you receive a new message in the app.",
-        "action": "Activate notifications",
-        "deny": "Not now",
+        "title": "Non perderti l’esito delle tue richieste",
+        "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
+        "action": "Attiva notifiche push",
+        "deny": "Non attivare",
         "success": "You activated Push notifications"
       }
     },
