@@ -27,9 +27,9 @@ export const useCieInfoBottomSheet = ({
   const imageSrc = useMemo(() => {
     switch (type) {
       case "card":
-        return require("../../../../../img/features/itWallet/identification/cie_card.png");
+        return require("../../../../../../img/features/itWallet/identification/cie_card.png");
       case "pin":
-        return require("../../../../../img/features/itWallet/identification/cie_pin.png");
+        return require("../../../../../../img/features/itWallet/identification/cie_pin.png");
       default:
         return undefined;
     }
