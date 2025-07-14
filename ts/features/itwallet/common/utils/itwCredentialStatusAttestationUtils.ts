@@ -4,7 +4,7 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import { isAfter } from "date-fns";
 import * as t from "io-ts";
-import { StoredCredential } from "./itwTypesUtils";
+import { LegacyIssuerConfiguration, StoredCredential } from "./itwTypesUtils";
 
 export const getCredentialStatusAttestation = async (
   credential: StoredCredential
@@ -12,14 +12,14 @@ export const getCredentialStatusAttestation = async (
   const credentialCryptoContext = createCryptoContextFor(credential.keyTag);
 
   const rawStatusAttestation = await Credential.Status.statusAttestation(
-    credential.issuerConf,
+    credential.issuerConf as LegacyIssuerConfiguration,
     credential.credential,
     credentialCryptoContext
   );
 
   const { parsedStatusAttestation } =
     await Credential.Status.verifyAndParseStatusAttestation(
-      credential.issuerConf,
+      credential.issuerConf as LegacyIssuerConfiguration,
       rawStatusAttestation,
       { credentialCryptoContext }
     );
