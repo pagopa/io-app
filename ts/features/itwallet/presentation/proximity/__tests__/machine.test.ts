@@ -478,7 +478,6 @@ describe("itwProximityMachine", () => {
       generateQrCodeString.mockImplementation(() =>
         Promise.resolve(QR_CODE_STRING)
       );
-      jest.useFakeTimers();
     });
 
     it("should complete full device communication flow from QR display to successful document transmission", async () => {
@@ -496,13 +495,41 @@ describe("itwProximityMachine", () => {
         })
       );
 
+      expect(actor.getSnapshot().tags).toStrictEqual(
+        new Set([ItwPresentationTags.Presenting])
+      );
+
       actor.send({ type: "device-connecting" });
+
+      expect(actor.getSnapshot().value).toStrictEqual({
+        DeviceCommunication: "Connecting"
+      });
+
       actor.send({ type: "device-connected" });
+
+      expect(actor.getSnapshot().value).toStrictEqual({
+        DeviceCommunication: "Connected"
+      });
+
+      expect(navigateToClaimsDisclosureScreen).toHaveBeenCalled();
+
       actor.send({
         type: "device-document-request-received",
         proximityDetails: PROXIMITY_DETAILS,
         verifierRequest: VERIFIER_REQUEST
       });
+
+      expect(actor.getSnapshot().value).toStrictEqual({
+        DeviceCommunication: "ClaimsDisclosure"
+      });
+
+      expect(actor.getSnapshot().context.proximityDetails).toEqual(
+        PROXIMITY_DETAILS
+      );
+      expect(actor.getSnapshot().context.verifierRequest).toEqual(
+        VERIFIER_REQUEST
+      );
+
       actor.send({ type: "holder-consent" });
 
       expect(navigateToSendDocumentsResponseScreen).toHaveBeenCalled();
