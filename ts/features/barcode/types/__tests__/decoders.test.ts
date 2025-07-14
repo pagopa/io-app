@@ -7,7 +7,7 @@ const fakeGlobalState = {
   remoteConfig: O.some({
     pn: {
       aarQRCodeRegex:
-        "^\\s*https:\\/\\/(dev\\.|test\\.|hotfix\\.|uat\\.)?cittadini\\.notifichedigitali\\.it(\\/[^?]*)?\\?aar=.+\\s*"
+        "^\\s*https:\\/\\/(dev\\.|test\\.|hotfix\\.|uat\\.)?cittadini\\.notifichedigitali\\.it(\\/[^?]*)?\\?aar=[^\\s]+"
     }
   })
 } as GlobalState;
@@ -180,6 +180,7 @@ describe("test decodeIOBarcode function", () => {
         true
       ],
       ["https://cittadini.notifichedigitali.it/?aar=", false],
+      ["https://cittadini.notifichedigitali.it/?aar= ", false],
       ["https://other-domain.it/?aar=whatever", false],
       ["https://stage.cittadini.notifichedigitali.it/?aar=whatever", false]
     ];
