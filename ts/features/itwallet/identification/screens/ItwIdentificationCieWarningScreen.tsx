@@ -4,11 +4,13 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
+import { trackItwKoStateAction } from "../../analytics";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { CiePreparationType } from "../cie/components/ItwCiePreparationBaseScreenContent";
+export type CieWarningType = "noPin" | "noCie";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {
   type: CiePreparationType;
@@ -32,11 +34,19 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
+  const reason = type === "card" ? "user_without_cie" : "user_without_pin";
 
   const sectionKey =
     isWalletAlreadyActive || !isL3FeaturesEnabled ? "upgrade" : "issuance";
 
   const handlePrimaryActionPress = () => {
+    trackItwKoStateAction({
+      reason,
+      cta_category: "custom_1",
+      cta_id: I18n.t(
+        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`
+      )
+    });
     if (isWalletAlreadyActive) {
       void Linking.openURL(cieFaqUrls[type]);
     } else {
@@ -45,6 +55,13 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
   };
 
   const handleSecondaryActionPress = () => {
+    trackItwKoStateAction({
+      reason,
+      cta_category: "custom_2",
+      cta_id: I18n.t(
+        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.secondaryAction`
+      )
+    });
     machineRef.send({
       type: isWalletAlreadyActive || !isL3FeaturesEnabled ? "close" : "back"
     });

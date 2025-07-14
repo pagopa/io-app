@@ -8,13 +8,22 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useItwPreventNavigationEvent } from "../../../common/hooks/useItwPreventNavigationEvent";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { trackItWalletCieCardReadingFailure } from "../../../analytics";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 
 export const ItwCieUnexpectedErrorScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
 
   useItwPreventNavigationEvent();
 
-  useOnFirstRender(() => trackItWalletCieCardReadingFailure({ reason: "KO" }));
+  useOnFirstRender(() =>
+    trackItWalletCieCardReadingFailure({
+      reason: "KO",
+      itw_flow: isL3Enabled ? "L3" : "L2"
+    })
+  );
 
   const handleRetry = useCallback(() => {
     machineRef.send({ type: "back" });

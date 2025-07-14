@@ -26,7 +26,7 @@ const ItwIpzsPrivacyScreen = () => {
   );
 
   const handleContinuePress = () => {
-    trackOpenItwTosAccepted();
+    trackOpenItwTosAccepted(isL3 ? "L3" : "L2");
     machineRef.send({ type: "accept-ipzs-privacy" });
   };
 
