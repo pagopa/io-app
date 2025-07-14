@@ -1,4 +1,4 @@
-import { IOBarcodeDecoders, DecodedIOBarcode } from "./decoders";
+import { DecodedIOBarcode, IOBarcodeDecoders } from "./decoders";
 
 export const IO_BARCODE_ALL_FORMATS = ["DATA_MATRIX", "QR_CODE"] as const;
 
