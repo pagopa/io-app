@@ -1,9 +1,12 @@
 import {
   BodySmall,
   H6,
+  hexToRgba,
   IOColors,
   IOSkeleton,
   Tag,
+  useIOTheme,
+  useIOThemeContext,
   VStack,
   WithTestID
 } from "@pagopa/io-app-design-system";
@@ -25,8 +28,6 @@ export type PaymentCardProps = {
   isExpired?: boolean;
 };
 
-const SECONDARY_INFO_TEXT_COLOR: IOColors = "grey-700";
-
 export type PaymentCardComponentProps = WithTestID<
   | ({
       isLoading?: false;
@@ -36,7 +37,34 @@ export type PaymentCardComponentProps = WithTestID<
     }
 >;
 
+const usePaymentCardStyles = () => {
+  const theme = useIOTheme();
+  const { themeType } = useIOThemeContext();
+
+  const isDarkMode = themeType === "dark";
+
+  const textColor = theme["textHeading-default"];
+  const backgroundColor = IOColors[theme["appBackground-tertiary"]];
+  const borderColor = isDarkMode ? IOColors.black : IOColors["grey-200"];
+  const errorBorderColor = IOColors[theme.errorText];
+
+  const skeletonColor = isDarkMode
+    ? hexToRgba(IOColors["grey-450"], 0.5)
+    : IOColors["grey-200"];
+
+  return {
+    textColor,
+    backgroundColor,
+    borderColor,
+    errorBorderColor,
+    skeletonColor
+  };
+};
+
 const PaymentCard = (props: PaymentCardComponentProps) => {
+  const { textColor, backgroundColor, borderColor, errorBorderColor } =
+    usePaymentCardStyles();
+
   if (props.isLoading) {
     return <PaymentCardSkeleton />;
   }
@@ -47,8 +75,8 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
 
   const holderNameText = props.holderName && (
     <BodySmall
-      color={SECONDARY_INFO_TEXT_COLOR}
-      weight="Semibold"
+      color={textColor}
+      weight="Regular"
       accessibilityLabel={I18n.t("wallet.methodDetails.a11y.bpay.owner", {
         fullOwnerName: props.holderName
       })}
@@ -58,7 +86,7 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
   );
 
   const expireDateText = props.expireDate && (
-    <BodySmall weight="Semibold" color={SECONDARY_INFO_TEXT_COLOR}>
+    <BodySmall weight="Regular" color={textColor}>
       {I18n.t("wallet.creditCard.validUntil", {
         expDate: format(props.expireDate, "MM/YY")
       })}
@@ -67,7 +95,7 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
 
   const maskedEmailText = props.holderEmail && (
     <BodySmall
-      color={SECONDARY_INFO_TEXT_COLOR}
+      color={textColor}
       weight="Semibold"
       accessibilityLabel={I18n.t("wallet.methodDetails.a11y.paypal.owner", {
         email: props.holderEmail
@@ -79,7 +107,7 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
 
   const maskedPhoneText = props.holderPhone && (
     <BodySmall
-      color={SECONDARY_INFO_TEXT_COLOR}
+      color={textColor}
       weight="Semibold"
       accessibilityLabel={I18n.t("wallet.methodDetails.a11y.bpay.phone", {
         // we do this to make the screen reader read the number digit by digit,
@@ -121,7 +149,7 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
 
       return (
         <H6
-          color="black"
+          color={textColor}
           accessibilityLabel={I18n.t("wallet.methodDetails.a11y.credit.hpan", {
             circuit: circuitName,
             // we space the hpan to make the screen reader read it digit by digit
@@ -150,7 +178,17 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
   );
 
   return (
-    <View style={[styles.card, props.isExpired && styles.expiredCard]}>
+    <View
+      style={[
+        styles.card,
+        { backgroundColor, borderColor },
+        props.isExpired && {
+          borderColor: errorBorderColor,
+          borderLeftWidth: 9,
+          paddingLeft: 7
+        }
+      ]}
+    >
       <View style={styles.wrapper}>
         <View style={styles.paymentInfo}>
           {renderBankLogo()}
@@ -167,60 +205,58 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
   );
 };
 
-const PaymentCardSkeleton = () => (
-  <View style={styles.card}>
-    <View style={styles.wrapper}>
-      <View style={styles.paymentInfo}>
-        <IOSkeleton
-          color={IOColors["grey-200"]}
-          shape="rectangle"
-          width={"60%"}
-          height={24}
-          radius={28}
-        />
-        <IOSkeleton
-          color={IOColors["grey-200"]}
-          shape="rectangle"
-          width={"20%"}
-          height={24}
-          radius={28}
-        />
+const PaymentCardSkeleton = () => {
+  const { backgroundColor, borderColor, skeletonColor } =
+    usePaymentCardStyles();
+
+  return (
+    <View style={[styles.card, { backgroundColor, borderColor }]}>
+      <View style={styles.wrapper}>
+        <View style={styles.paymentInfo}>
+          <IOSkeleton
+            color={skeletonColor}
+            shape="rectangle"
+            width={"60%"}
+            height={24}
+            radius={28}
+          />
+          <IOSkeleton
+            color={skeletonColor}
+            shape="rectangle"
+            width={"20%"}
+            height={24}
+            radius={28}
+          />
+        </View>
+        <VStack space={8}>
+          <IOSkeleton
+            color={skeletonColor}
+            shape="rectangle"
+            width={"55%"}
+            height={16}
+            radius={28}
+          />
+          <IOSkeleton
+            color={skeletonColor}
+            shape="rectangle"
+            width={"45%"}
+            height={16}
+            radius={28}
+          />
+        </VStack>
       </View>
-      <VStack space={8}>
-        <IOSkeleton
-          color={IOColors["grey-200"]}
-          shape="rectangle"
-          width={"55%"}
-          height={16}
-          radius={28}
-        />
-        <IOSkeleton
-          color={IOColors["grey-200"]}
-          shape="rectangle"
-          width={"45%"}
-          height={16}
-          radius={28}
-        />
-      </VStack>
     </View>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   card: {
     padding: 16,
     paddingTop: 8,
     aspectRatio: 16 / 10,
-    backgroundColor: IOColors["grey-100"],
     borderRadius: 8,
-    borderWidth: 1,
-    borderCurve: "continuous",
-    borderColor: IOColors["grey-200"]
-  },
-  expiredCard: {
-    borderColor: IOColors["error-600"],
-    borderLeftWidth: 9,
-    paddingLeft: 7
+    borderWidth: 2,
+    borderCurve: "continuous"
   },
   wrapper: {
     flex: 1,
