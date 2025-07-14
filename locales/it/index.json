@@ -5698,11 +5698,22 @@
           "BTW_OPEN": "Compreso tra {{value}} e {{value2}}"
         }
       },
+      "inputPrerequisites": {
+        "emptyValueError": "Inserisci i dati per continuare"
+      },
       "multiPrerequisites": {
-        "header": "Dichiari inoltre di:"
+        "header": "Dichiari inoltre di:",
+        "emptyValueError": "Scegli un’opzione per continuare"
       },
       "boolPrerequisites": {
-        "header": "Per aderire, dichiari di:"
+        "header": "Per aderire, dichiari di:",
+        "emptyValueError": "Scegli un’opzione per continuare"
+      },
+      "enableMessages": {
+        "title": "Attiva i messaggi",
+        "subtitle": "Attiva la possibilità di contattarti in app per ricevere aggiornamenti sul {{initiativeName}}. Questo passaggio è necessario per procedere con la richiesta.",
+        "confirmAction": "Ok, attiva",
+        "cancelAction": "Annulla"
       },
       "enableNotification": {
         "title": "Non rischiare di perdere l'esito della tua richiesta",
