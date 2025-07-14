@@ -406,9 +406,9 @@ export const ItwCredentialClaim = ({
               credentialType={credentialType}
             />
           ); // must be the last one to be checked due to overlap with IPatternStringTag
-        } else {
-          return <UnknownClaimItem label={claim.label} _claim={decoded} />;
         }
+
+        return <UnknownClaimItem label={claim.label} _claim={decoded} />;
       }
     )
   );
