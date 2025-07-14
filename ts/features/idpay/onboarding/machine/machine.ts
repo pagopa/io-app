@@ -110,7 +110,8 @@ export const idPayOnboardingMachine = setup({
           guard: "assertServiceId",
           actions: assign(({ event }) => ({
             serviceId: event.serviceId,
-            hasInbox: event.hasInbox
+            hasInbox: event.hasInbox,
+            currentStep: 1
           })),
           target: "LoadingInitiative"
         }
@@ -270,14 +271,23 @@ export const idPayOnboardingMachine = setup({
       on: {
         next: [
           {
+            actions: assign(({ context }) => ({
+              currentStep: context.currentStep + 1
+            })),
             guard: "hasSelfDecalrationList",
             target: "DisplayingSelfDeclarationList"
           },
           {
+            actions: assign(({ context }) => ({
+              currentStep: context.currentStep + 1
+            })),
             target: "AcceptingCriteria"
           }
         ],
         back: {
+          actions: assign(({ context }) => ({
+            currentStep: context.currentStep - 1
+          })),
           target: "#idpay-onboarding.DisplayingInitiativeInfo"
         }
       }
@@ -309,10 +319,16 @@ export const idPayOnboardingMachine = setup({
           on: {
             back: [
               {
+                actions: assign(({ context }) => ({
+                  currentStep: context.currentStep - 1
+                })),
                 guard: "hasPdndCriteria",
                 target: "#idpay-onboarding.DisplayingPdndCriteria"
               },
               {
+                actions: assign(({ context }) => ({
+                  currentStep: context.currentStep - 1
+                })),
                 target: "#idpay-onboarding.DisplayingInitiativeInfo"
               }
             ],
@@ -327,7 +343,10 @@ export const idPayOnboardingMachine = setup({
             next: [
               {
                 guard: "hasMultiSelfDeclarationList",
-                target: "DisplayingMultiSelfDeclarationList"
+                target: "DisplayingMultiSelfDeclarationList",
+                actions: assign(({ context }) => ({
+                  currentStep: context.currentStep + 1
+                }))
               },
               {
                 guard: "hasInputFormDeclaration",
@@ -348,6 +367,7 @@ export const idPayOnboardingMachine = setup({
               on: {
                 "select-multi-consent": {
                   actions: assign(({ context, event }) => ({
+                    currentStep: context.currentStep + 1,
                     selfDeclarationsMultiAnwsers: {
                       ...context.selfDeclarationsMultiAnwsers,
                       [context.selfDeclarationsMultiPage]: event.data
@@ -362,20 +382,29 @@ export const idPayOnboardingMachine = setup({
                       "hasBooleanSelfDeclarationList"
                     ]),
                     target:
-                      "#idpay-onboarding.DisplayingSelfDeclarationList.DisplayingBooleanSelfDeclarationList"
+                      "#idpay-onboarding.DisplayingSelfDeclarationList.DisplayingBooleanSelfDeclarationList",
+                    actions: assign(({ context }) => ({
+                      selfDeclarationsMultiPage:
+                        +context.selfDeclarationsMultiPage - 1,
+                      currentStep: context.currentStep - 1
+                    }))
                   },
                   {
                     guard: and(["isFirstMultiConsentPage", "hasPdndCriteria"]),
-                    target: "#idpay-onboarding.DisplayingPdndCriteria"
+                    target: "#idpay-onboarding.DisplayingPdndCriteria",
+                    actions: assign(({ context }) => ({
+                      selfDeclarationsMultiPage:
+                        +context.selfDeclarationsMultiPage - 1,
+                      currentStep: context.currentStep - 1
+                    }))
                   },
                   {
                     guard: "isFirstMultiConsentPage",
-                    target: "#idpay-onboarding.DisplayingInitiativeInfo"
-                  },
-                  {
+                    target: "#idpay-onboarding.DisplayingInitiativeInfo",
                     actions: assign(({ context }) => ({
                       selfDeclarationsMultiPage:
-                        +context.selfDeclarationsMultiPage - 1
+                        +context.selfDeclarationsMultiPage - 1,
+                      currentStep: context.currentStep - 1
                     }))
                   }
                 ]
@@ -395,7 +424,8 @@ export const idPayOnboardingMachine = setup({
                 {
                   actions: assign(({ context }) => ({
                     selfDeclarationsMultiPage:
-                      +context.selfDeclarationsMultiPage + 1
+                      +context.selfDeclarationsMultiPage + 1,
+                    currentStep: context.currentStep + 1
                   })),
                   target: "DisplayingMultiSelfDeclarationItem"
                 }
@@ -415,7 +445,8 @@ export const idPayOnboardingMachine = setup({
                     selfDeclarationsTextAnswers: {
                       ...context.selfDeclarationsTextAnswers,
                       [context.activeTextConsentPage]: event.criteria
-                    }
+                    },
+                    currentStep: context.currentStep + 1
                   })),
                   target: "EvaluatingInputForm"
                 },
@@ -446,7 +477,8 @@ export const idPayOnboardingMachine = setup({
                   },
                   {
                     actions: assign(({ context }) => ({
-                      activeTextConsentPage: +context.activeTextConsentPage - 1
+                      activeTextConsentPage: +context.activeTextConsentPage - 1,
+                      currentStep: context.currentStep - 1
                     }))
                   }
                 ]
