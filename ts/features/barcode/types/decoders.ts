@@ -177,15 +177,20 @@ const decodeSENDAARBarcode: IOBarcodeRuntimeDecoderFn = (
 //   PAGOPA: decodePagoPABarcode,
 //   MY_NEW_BARCODE_TYPE: decodeMyNewBarcodeType
 // };
-export const IOBarcodeDecoders: IOBarcodeStaticDecodersType = {
+const StaticIOBarcodeDecoders: IOBarcodeStaticDecodersType = {
   IDPAY: decodeIdPayBarcode,
   PAGOPA: decodePagoPABarcode,
   FCI: decodeFciBarcode,
   ITW_REMOTE: decodeItwRemoteBarcode
 };
 
-export const RuntimeIOBarcodeDecoders: IOBarcodeRuntimeDecodersType = {
+const RuntimeIOBarcodeDecoders: IOBarcodeRuntimeDecodersType = {
   SEND: decodeSENDAARBarcode
+};
+
+export const IOBarcodeDecoders = {
+  ...StaticIOBarcodeDecoders,
+  ...RuntimeIOBarcodeDecoders
 };
 
 type DecodeOptions = {
@@ -212,7 +217,7 @@ export const decodeIOBarcode = (
     O.map(NonEmptyString.decode),
     O.chain(O.fromEither),
     O.map(nonEmptyStringValue => [
-      ...Object.entries(IOBarcodeDecoders)
+      ...Object.entries(StaticIOBarcodeDecoders)
         .filter(isDecoderTypeEnabled(options))
         .map(([_, decode]) => decode(nonEmptyStringValue.trim())),
 
