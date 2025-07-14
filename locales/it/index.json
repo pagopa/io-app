@@ -5719,11 +5719,16 @@
           "BTW_OPEN": "Compreso tra {{value}} e {{value2}}"
         }
       },
+      "inputPrerequisites": {
+        "emptyValueError": "Inserisci i dati per continuare"
+      },
       "multiPrerequisites": {
-        "header": "Dichiari inoltre di:"
+        "header": "Dichiari inoltre di:",
+        "emptyValueError": "Scegli un’opzione per continuare"
       },
       "boolPrerequisites": {
-        "header": "Per aderire, dichiari di:"
+        "header": "Per aderire, dichiari di:",
+        "emptyValueError": "Scegli un’opzione per continuare"
       },
       "enableNotification": {
         "title": "Non rischiare di perdere l'esito della tua richiesta",

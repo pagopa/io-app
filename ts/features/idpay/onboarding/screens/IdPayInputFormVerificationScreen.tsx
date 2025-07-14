@@ -1,4 +1,4 @@
-import { H6, TextInput, VSpacer } from "@pagopa/io-app-design-system";
+import { H6, IOToast, TextInput, VSpacer } from "@pagopa/io-app-design-system";
 import { useEffect, useRef, useState } from "react";
 import PagerView from "react-native-pager-view";
 import { SelfDeclarationTextDTO } from "../../../../../definitions/idpay/SelfDeclarationTextDTO";
@@ -52,11 +52,19 @@ const InputFormVerificationContent = ({
   const isLoading = useSelector(isLoadingSelector);
   const [value, setValue] = useState("");
 
-  const handleContinuePress = () =>
+  const handleContinuePress = () => {
+    if (!value.length) {
+      IOToast.error(
+        I18n.t("idpay.onboarding.inputPrerequisites.emptyValueError")
+      );
+      return;
+    }
     machine.send({
       type: "input-text-criteria",
       criteria: { ...criteria, value }
     });
+  };
+
   const goBackOnPress = () => machine.send({ type: "back" });
 
   return (
@@ -74,8 +82,7 @@ const InputFormVerificationContent = ({
           type: "SingleButton",
           primary: {
             label: I18n.t("global.buttons.continue"),
-            onPress: handleContinuePress,
-            disabled: value.length === 0
+            onPress: handleContinuePress
           }
         }}
         includeContentMargins
