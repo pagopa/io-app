@@ -5,32 +5,21 @@ import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { itwSetWalletUpgradeMDLDetailsBannerHidden } from "../../../common/store/actions/preferences";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { itwShouldRenderWalletUpgradeMDLDetailsBannerSelector } from "../../../common/store/selectors";
+import { useIODispatch } from "../../../../../store/hooks";
 import {
   trackITWalletBannerVisualized,
   trackItWalletBannerClosure,
   trackItWalletBannerTap
 } from "../../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../../analytics/enum";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
-
-type Props = {
-  credential: StoredCredential;
-};
 
 /**
  * Banner promoting IT Wallet upgrade in MDL details to enable
  * driving license usage as identity document.
  */
-export const ItwPresentationWalletUpgradeMDLDetailsBanner = ({
-  credential
-}: Props) => {
+export const ItwPresentationWalletUpgradeMDLDetailsBanner = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const shouldRender = useIOSelector(state =>
-    itwShouldRenderWalletUpgradeMDLDetailsBannerSelector(state, credential)
-  );
   const { name: routeName } = useRoute();
 
   const trackBannerProperties = useMemo(
@@ -47,15 +36,9 @@ export const ItwPresentationWalletUpgradeMDLDetailsBanner = ({
 
   useFocusEffect(
     useCallback(() => {
-      if (shouldRender) {
-        trackITWalletBannerVisualized(trackBannerProperties);
-      }
-    }, [trackBannerProperties, shouldRender])
+      trackITWalletBannerVisualized(trackBannerProperties);
+    }, [trackBannerProperties])
   );
-
-  if (!shouldRender) {
-    return null;
-  }
 
   const handleOnPress = () => {
     trackItWalletBannerTap(trackBannerProperties);

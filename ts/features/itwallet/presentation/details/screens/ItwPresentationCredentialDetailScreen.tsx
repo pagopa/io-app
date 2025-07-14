@@ -225,9 +225,6 @@ export const ItwPresentationCredentialDetail = ({
       <ContentWrapper>
         <VStack space={24}>
           <ItwPresentationAdditionalInfoSection credential={credential} />
-          <ItwPresentationWalletUpgradeMDLDetailsBanner
-            credential={credential}
-          />
           <ItwPresentationCredentialStatusAlert credential={credential} />
           <ItwPresentationCredentialInfoAlert credential={credential} />
           <ItwPresentationClaimsSection credential={credential} />
