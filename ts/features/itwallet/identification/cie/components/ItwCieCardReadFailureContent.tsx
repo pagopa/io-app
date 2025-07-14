@@ -1,4 +1,3 @@
-import type { NfcError } from "@pagopa/io-react-native-cie";
 import { constNull } from "fp-ts/lib/function";
 import { useCallback } from "react";
 import { Linking } from "react-native";
@@ -84,13 +83,7 @@ const useFailureContentProps = (): CieCardReadContentProps => {
           secondaryAction: closeAction
         };
       case "WRONG_PIN":
-        // TODO fix this wrong typing on io-react-native-cie
-        const { attempts } = failure as Extract<
-          NfcError,
-          { name: "WRONG_PIN" }
-        >;
-
-        if (attempts > 1) {
+        if (failure.attemptsLeft > 1) {
           return {
             title: I18n.t(
               `features.itWallet.identification.cie.failure.wrongPin1.title`

@@ -24,9 +24,11 @@ export default {
     async ({ input }) => {
       assert(input.serviceProviderUrl, "serviceProviderUrl should be defined");
 
-      if (input.env === "pre") {
-        CieManager.setCustomIdpUrl(cieUatEndpoint);
-      }
+      // If we are in PRE environment we need to use the UAT IDP url
+      // Otherwise, using undefined will reset to the default (PROD)
+      CieManager.setCustomIdpUrl(
+        input.env === "pre" ? cieUatEndpoint : undefined
+      );
 
       // Start the CieManager with the provided pin and authentication URL
       return CieManager.startReading(input.pin, input.serviceProviderUrl);

@@ -1,4 +1,4 @@
-import { CieManager, NfcError } from "@pagopa/io-react-native-cie";
+import { CieManager } from "@pagopa/io-react-native-cie";
 import { ActionArgs } from "xstate";
 import I18n from "../../../../../i18n";
 import {
@@ -76,12 +76,7 @@ export default {
           trackItWalletCieCardReadingFailure({ reason: failure.message });
           return;
         case "WRONG_PIN":
-          const { attempts } = failure as Extract<
-            NfcError,
-            { name: "WRONG_PIN" }
-          >;
-
-          if (attempts > 1) {
+          if (failure.attemptsLeft > 1) {
             trackItWalletErrorPin();
           } else {
             trackItWalletSecondErrorPin();
