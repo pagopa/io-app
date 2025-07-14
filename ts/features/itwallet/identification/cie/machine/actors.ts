@@ -2,6 +2,8 @@ import { fromCallback, fromPromise } from "xstate";
 import { CieManager } from "@pagopa/io-react-native-cie";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { assert } from "../../../../../utils/assert";
+import { EnvType } from "../../../common/utils/environment";
+import { cieUatEndpoint } from "../utils/endpoints";
 import { CieEvents } from "./events";
 
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
@@ -10,6 +12,7 @@ const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
 export type StartCieManagerInput = {
   pin: string;
   serviceProviderUrl?: string;
+  env: EnvType;
 };
 
 export type CieManagerActorInput = {
@@ -20,6 +23,11 @@ export default {
   startCieManager: fromPromise<void, StartCieManagerInput>(
     async ({ input }) => {
       assert(input.serviceProviderUrl, "serviceProviderUrl should be defined");
+
+      if (input.env === "pre") {
+        CieManager.setCustomIdpUrl(cieUatEndpoint);
+      }
+
       // Start the CieManager with the provided pin and authentication URL
       return CieManager.startReading(input.pin, input.serviceProviderUrl);
     }

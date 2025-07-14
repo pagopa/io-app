@@ -1,5 +1,6 @@
 import { CieError, NfcError } from "@pagopa/io-react-native-cie";
 import { WebViewError } from "../utils/error";
+import { EnvType } from "../../../common/utils/environment";
 import { CieInput } from "./input";
 
 export type CieContext = {
@@ -15,6 +16,10 @@ export type CieContext = {
    * Wether the screen reader is enabled or not.
    */
   isScreenReaderEnabled: boolean;
+  /**
+   * Current IT Wallet environment
+   */
+  env: EnvType;
   /**
    * The auth service provider url to be used with the CIE auth flow
    */
@@ -42,6 +47,7 @@ export const getInitialContext = (input: CieInput): CieContext => ({
   pin: input.pin,
   authenticationUrl: input.authenticationUrl,
   isScreenReaderEnabled: input.isScreenReaderEnabled,
+  env: input.env,
   serviceProviderUrl: undefined,
   readProgress: undefined,
   authorizationUrl: undefined,

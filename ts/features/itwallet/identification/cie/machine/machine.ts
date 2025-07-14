@@ -75,7 +75,8 @@ export const itwCieMachine = setup({
         id: "startCieManager",
         input: ({ context }) => ({
           pin: context.pin,
-          serviceProviderUrl: context.serviceProviderUrl
+          serviceProviderUrl: context.serviceProviderUrl,
+          env: context.env
         }),
         onError: {
           target: "Failure",

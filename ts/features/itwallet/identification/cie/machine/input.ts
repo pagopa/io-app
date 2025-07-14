@@ -1,3 +1,5 @@
+import { EnvType } from "../../../common/utils/environment";
+
 export type CieInput = {
   /**
    * The PIN code for the CIE card.
@@ -11,4 +13,8 @@ export type CieInput = {
    * Wether the screen reader is enabled or not.
    */
   isScreenReaderEnabled: boolean;
+  /**
+   * Current IT Wallet environment
+   */
+  env: EnvType;
 };
