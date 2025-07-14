@@ -73,6 +73,7 @@ const checkDetectedBarcodesArray = (
  * Decodes the detected barcodes into IOBarcode objects
  * @param barcodes List of detected barcodes
  * @param format Format of the detected barcodes
+ * @param state Global redux state of the application
  * @param barcodeTypes Accepted types of the detected barcodes
  * @returns TE.Left if the content is not supported, TE.Right with the decoded barcodes otherwise
  */
@@ -102,6 +103,7 @@ const decodeDetectedBarcodes = (
 
 /**
  * Creates a TaskEither that decodes a barcodes from an image URI
+ * @param state Global redux state of the application
  * @param detectOptions object which may contain the uri or the base64 of the image
  * @param barcodeFormats The accepted formats of the barcodes
  * @param acceptedTypes The accepted types of the barcodes

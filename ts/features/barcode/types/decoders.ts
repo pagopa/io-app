@@ -203,7 +203,9 @@ type DecodeOptions = {
 
 /**
  * Returns the type of a barcode. Fallbacks to "UNKNOWN" if no type is found
+ * @param state Global redux state of the application
  * @param value Barcode content
+ * @param options Options to filter the active barcode types
  * @returns DecodedIOBarcode {@see DecodedIOBarcode}
  */
 export const decodeIOBarcode = (
@@ -236,7 +238,9 @@ const isDecoderTypeEnabled =
 
 /**
  * Barcode decoding for multiple values
+ * @param state Global redux state of the application
  * @param values List of barcode contens
+ * @param options Options to filter the active barcode types
  * @returns A list of DecodedIOBarcode {@see DecodedIOBarcode} if at least one barcode is decoded
  */
 export const decodeMultipleIOBarcodes = (
