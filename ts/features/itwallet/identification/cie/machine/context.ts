@@ -8,7 +8,7 @@ export type CieContext = {
    */
   pin: string;
   /**
-   * The URL from which obtain the service provider url and complete the flow.
+   * The URL from which obtain the service provider url and complete the auth flow.
    */
   authenticationUrl: string;
   /**
@@ -16,7 +16,7 @@ export type CieContext = {
    */
   isScreenReaderEnabled: boolean;
   /**
-   * The URL for authentication. It is used as service provider for the CIE authentication.
+   * The auth service provider url to be used with the CIE auth flow
    */
   serviceProviderUrl: string | undefined;
   /**
