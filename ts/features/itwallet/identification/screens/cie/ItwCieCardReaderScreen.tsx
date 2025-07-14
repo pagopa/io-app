@@ -42,8 +42,7 @@ import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { getEnv } from "../../../common/utils/environment";
 import {
   selectAuthUrlOption,
-  selectCiePin,
-  selectIsLoading
+  selectCiePin
 } from "../../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
@@ -160,8 +159,6 @@ export const ItwCieCardReaderScreen = () => {
   useFocusEffect(trackItWalletCieCardReading);
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isMachineLoading =
-    ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const ciePin = ItwEidIssuanceMachineContext.useSelector(selectCiePin);
   const cieAuthUrl =
     ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
@@ -251,10 +248,6 @@ export const ItwCieCardReaderScreen = () => {
       authRedirectUrl: url
     });
   };
-
-  if (isMachineLoading) {
-    return LoadingSpinner;
-  }
 
   const renderCardReaderFooter = () => (
     <View style={{ alignItems: "center" }}>
