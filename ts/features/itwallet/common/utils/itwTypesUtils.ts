@@ -1,8 +1,15 @@
 import {
+  AuthorizationDetail as _legacy_AuthorizationDetail,
+  Credential as _legacy_Credential,
+  Trust as _legacy_Trust,
+  WalletInstance as _legacy_WalletInstance
+} from "@pagopa/io-react-native-wallet";
+import {
+  AuthorizationDetail,
   Credential,
   Trust,
   WalletInstance
-} from "@pagopa/io-react-native-wallet";
+} from "@pagopa/io-react-native-wallet-v2";
 
 /**
  * Alias type for the return type of the start issuance flow operation.
@@ -24,14 +31,41 @@ export type RequestObject = Awaited<
  * Alias type for the relying party entity configuration.
  */
 export type RpEntityConfiguration =
-  Trust.RelyingPartyEntityConfiguration["payload"]["metadata"];
+  Trust.Types.RelyingPartyEntityConfiguration["payload"]["metadata"];
+
+/**
+ * Alias for the IssuerConfiguration type v0.7.1
+ * TODO: [SIW-2530]: remove the legacy type
+ */
+export type LegacyIssuerConfiguration = Awaited<
+  ReturnType<_legacy_Credential.Issuance.EvaluateIssuerTrust>
+>["issuerConf"];
 
 /**
  * Alias for the IssuerConfiguration type
  */
-export type IssuerConfiguration = Awaited<
-  ReturnType<typeof Credential.Issuance.evaluateIssuerTrust>
->["issuerConf"];
+export type IssuerConfiguration =
+  | Awaited<ReturnType<Credential.Issuance.EvaluateIssuerTrust>>["issuerConf"]
+  | LegacyIssuerConfiguration;
+
+/**
+ * Alias for the AuthorizationDetail type
+ * TODO: [SIW-2530]: remove the legacy type
+ */
+export type CredentialAuthDetail =
+  | AuthorizationDetail
+  | _legacy_AuthorizationDetail;
+
+/**
+ * Alias for the AccessToken type
+ * TODO: [SIW-2530]: remove the legacy type
+ */
+export type CredentialAccessToken = Awaited<
+  ReturnType<
+    | Credential.Issuance.AuthorizeAccess
+    | _legacy_Credential.Issuance.AuthorizeAccess
+  >
+>["accessToken"];
 
 /**
  * Alias for the ParseCredential type
@@ -81,6 +115,7 @@ export type StoredCredential = {
   format: string;
   parsedCredential: ParsedCredential;
   credentialType: string;
+  credentialId: string;
   issuerConf: IssuerConfiguration;
   storedStatusAttestation?: StoredStatusAttestation;
   /**
@@ -105,6 +140,8 @@ export type ItwCredentialStatus =
   | ItwJwtCredentialStatus;
 
 export type ItwAuthLevel = "L2" | "L3";
+
+export type CredentialFormat = "dc+sd-jwt" | "mso_mdoc" | "vc+sd-jwt"; // TODO: [SIW-2530] remove legacy format
 
 export type WalletInstanceAttestations = {
   jwt: string;
