@@ -1,20 +1,32 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import { INonEmptyStringTag } from "@pagopa/ts-commons/lib/strings";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { upsertServicePreference } from "../../../services/details/store/actions/preference";
-import { servicePreferenceResponseSuccessByIdSelector } from "../../../services/details/store/reducers";
+import {
+  isErrorServicePreferenceSelector,
+  servicePreferenceResponseSuccessByIdSelector
+} from "../../../services/details/store/reducers";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { useFirstRender } from "../../../services/common/hooks/useFirstRender";
 
 const IdPayEnableMessageScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
   const dispatch = useIODispatch();
+  const isFirstRender = useFirstRender();
 
   const { serviceId } = useSelector(state => state.context);
+
+  const isErrorServicePreference = useIOSelector(state =>
+    isErrorServicePreferenceSelector(state, serviceId as ServiceId)
+  );
 
   const initiative = useSelector(selectInitiative);
 
@@ -37,7 +49,13 @@ const IdPayEnableMessageScreen = () => {
     )
   );
 
-  const onSuccess = () => {
+  useEffect(() => {
+    if (!isFirstRender && isErrorServicePreference) {
+      IOToast.error(I18n.t("global.genericError"));
+    }
+  }, [isFirstRender, isErrorServicePreference]);
+
+  const onActivate = () => {
     if (!initiativeId || !servicePreferenceResponseSuccess) {
       return;
     }
@@ -45,11 +63,14 @@ const IdPayEnableMessageScreen = () => {
     dispatch(
       upsertServicePreference.request({
         ...servicePreferenceResponseSuccess.value,
-        id: serviceId as string & INonEmptyStringTag,
+        id: serviceId as ServiceId,
         inbox: true
       })
     );
-    machine.send({ type: "next" });
+
+    if (!isErrorServicePreference) {
+      machine.send({ type: "next" });
+    }
   };
 
   return (
@@ -61,7 +82,7 @@ const IdPayEnableMessageScreen = () => {
       })}
       action={{
         label: I18n.t("idpay.onboarding.enableMessages.confirmAction"),
-        onPress: onSuccess
+        onPress: onActivate
       }}
       secondaryAction={{
         label: I18n.t("idpay.onboarding.enableMessages.cancelAction"),
