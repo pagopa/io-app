@@ -5697,6 +5697,12 @@
         "header": "To proceed, you declare that:",
         "emptyValueError": "Select an option to continue"
       },
+      "enableMessages": {
+        "cancelAction": "Cancel",
+        "subtitle": "Activate the possibility to contact you in the app to receive updates on the {{initiativeName}}. \nThis step is necessary to proceed with the request.",
+        "title": "Activate messages",
+        "confirmAction": "Ok, active"
+      },
       "enableNotification": {
         "title": "Don't risk losing the outcome of your request",
         "subtitle": "Activate push notifications to know immediately when you receive a new message in the app.",
