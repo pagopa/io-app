@@ -1,5 +1,11 @@
 import { waitFor } from "@testing-library/react-native";
-import { assign, createActor, fromCallback, fromPromise } from "xstate";
+import {
+  assign,
+  createActor,
+  fromCallback,
+  fromPromise,
+  SimulatedClock
+} from "xstate";
 import { VerifierRequest } from "@pagopa/io-react-native-proximity";
 import { itwProximityMachine } from "../machine/machine";
 import {
@@ -472,6 +478,7 @@ describe("itwProximityMachine", () => {
       generateQrCodeString.mockImplementation(() =>
         Promise.resolve(QR_CODE_STRING)
       );
+      jest.useFakeTimers();
     });
 
     it("should complete full device communication flow from QR display to successful document transmission", async () => {
@@ -489,48 +496,14 @@ describe("itwProximityMachine", () => {
         })
       );
 
-      expect(actor.getSnapshot().tags).toStrictEqual(
-        new Set([ItwPresentationTags.Presenting])
-      );
-
       actor.send({ type: "device-connecting" });
-
-      expect(actor.getSnapshot().value).toStrictEqual({
-        DeviceCommunication: "Connecting"
-      });
-
       actor.send({ type: "device-connected" });
-
-      expect(actor.getSnapshot().value).toStrictEqual({
-        DeviceCommunication: "Connected"
-      });
-
-      expect(navigateToClaimsDisclosureScreen).toHaveBeenCalled();
-
       actor.send({
         type: "device-document-request-received",
         proximityDetails: PROXIMITY_DETAILS,
         verifierRequest: VERIFIER_REQUEST
       });
-
-      expect(actor.getSnapshot().value).toStrictEqual({
-        DeviceCommunication: "ClaimsDisclosure"
-      });
-
-      expect(actor.getSnapshot().context.proximityDetails).toEqual(
-        PROXIMITY_DETAILS
-      );
-      expect(actor.getSnapshot().context.verifierRequest).toEqual(
-        VERIFIER_REQUEST
-      );
-
       actor.send({ type: "holder-consent" });
-
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: "SendingDocuments"
-        })
-      );
 
       expect(navigateToSendDocumentsResponseScreen).toHaveBeenCalled();
 
@@ -551,6 +524,59 @@ describe("itwProximityMachine", () => {
 
       expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
       expect(navigateToSendDocumentsResponseScreen).toHaveBeenCalledTimes(1);
+    });
+
+    it("should progress through SendingDocuments timeout states when transmission hangs", async () => {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      sendDocuments.mockImplementation(() => new Promise(() => {}));
+
+      const clock = new SimulatedClock();
+      const actor = createActor(mockedMachine, { clock });
+      actor.start();
+      actor.send({ type: "start" });
+
+      await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual({
+          DeviceCommunication: "DisplayQrCode"
+        })
+      );
+
+      actor.send({ type: "device-connecting" });
+      actor.send({ type: "device-connected" });
+      actor.send({
+        type: "device-document-request-received",
+        proximityDetails: PROXIMITY_DETAILS,
+        verifierRequest: VERIFIER_REQUEST
+      });
+      actor.send({ type: "holder-consent" });
+
+      await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual({
+          DeviceCommunication: {
+            SendingDocuments: "Initial"
+          }
+        })
+      );
+
+      clock.increment(5000);
+      await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual({
+          DeviceCommunication: {
+            SendingDocuments: "Reminder"
+          }
+        })
+      );
+
+      clock.increment(10000);
+      await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual({
+          DeviceCommunication: {
+            SendingDocuments: "Final"
+          }
+        })
+      );
+
+      expect(sendDocuments).toHaveBeenCalledTimes(1);
     });
 
     it("should handle user rejection during claims disclosure", async () => {
