@@ -1,27 +1,17 @@
-import { generate } from "@pagopa/io-react-native-crypto";
-import {
-  AuthorizationDetail,
-  createCryptoContextFor,
-  Credential
-} from "@pagopa/io-react-native-wallet";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
-import { v4 as uuidv4 } from "uuid";
 import { type IdentificationContext } from "../../machine/eid/context";
-import { StoredCredential } from "./itwTypesUtils";
 import {
-  DPOP_KEYTAG,
-  regenerateCryptoKey,
-  WIA_KEYTAG
-} from "./itwCryptoContextUtils";
+  CredentialAccessToken,
+  CredentialAuthDetail,
+  IssuerConfiguration,
+  StoredCredential
+} from "./itwTypesUtils";
 import { Env } from "./environment";
+import * as IssuanceUtilsV1 from "./itwIssuanceUtils.v1";
+import * as IssuanceUtilsV2 from "./itwIssuanceUtils.v2";
 
-type AccessToken = Awaited<
-  ReturnType<typeof Credential.Issuance.authorizeAccess>
->["accessToken"];
-
-type IssuerConf = Parameters<Credential.Issuance.ObtainCredential>[0];
-
-const CREDENTIAL_TYPE = "PersonIdentificationData";
+// TODO: [SIW-2530] After fully migrating to the new API, move the content of itwIssuanceUtils.v2
+// to itwIssuanceUtils, then delete itwIssuanceUtils.v1 and itwIssuanceUtils.v2
 
 type StartAuthFlowParams = {
   env: Env;
@@ -41,72 +31,20 @@ type StartAuthFlowParams = {
  * @param isL3IssuanceEnabled flag that indicates that we need to issue an L3 PID
  * @returns Authentication params to use when completing the flow.
  */
-const startAuthFlow = async ({
-  env,
-  walletAttestation,
-  identification,
-  isL3IssuanceEnabled
-}: StartAuthFlowParams) => {
-  const startFlow: Credential.Issuance.StartFlow = () => ({
-    issuerUrl: env.WALLET_PID_PROVIDER_BASE_URL,
-    credentialType: CREDENTIAL_TYPE
-  });
-
-  // L3 issuance is enabled when the user is in L3 mode and the identification mode is level L3
-  const isL3 = isL3IssuanceEnabled && identification.level === "L3";
-
-  // When issuing an L3 PID, we should not provide an IDP hint
-  const idpHint = getIdpHint(identification, env, isL3);
-
-  const { issuerUrl, credentialType } = startFlow();
-
-  const { issuerConf } = await Credential.Issuance.evaluateIssuerTrust(
-    issuerUrl
-  );
-
-  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
-
-  const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
-    await Credential.Issuance.startUserAuthorization(
-      issuerConf,
-      credentialType,
-      {
-        walletInstanceAttestation: walletAttestation,
-        redirectUri: env.ISSUANCE_REDIRECT_URI,
-        wiaCryptoContext
-      }
-    );
-
-  // Obtain the Authorization URL
-  const { authUrl } = await Credential.Issuance.buildAuthorizationUrl(
-    issuerRequestUri,
-    clientId,
-    issuerConf,
-    idpHint
-  );
-
-  return {
-    authUrl,
-    issuerConf,
-    clientId,
-    codeVerifier,
-    credentialDefinition,
-    redirectUri: env.ISSUANCE_REDIRECT_URI
-  };
-};
+const startAuthFlow = async (params: StartAuthFlowParams) =>
+  params.isL3IssuanceEnabled
+    ? IssuanceUtilsV2.startAuthFlow(params)
+    : IssuanceUtilsV1.startAuthFlow(params);
 
 type CompleteAuthFlowParams = {
   callbackUrl: string;
-  issuerConf: IssuerConf;
+  issuerConf: IssuerConfiguration;
   clientId: string;
   codeVerifier: string;
   walletAttestation: string;
   redirectUri: string;
+  isL3IssuanceEnabled: boolean;
 };
-
-export type CompleteAuthFlowResult = Awaited<
-  ReturnType<typeof completeAuthFlow>
->;
 
 /**
  * Function to complete the authentication flow. It must be invoked after `startAuthFlow`
@@ -116,45 +54,22 @@ export type CompleteAuthFlowResult = Awaited<
  * @param callbackUrl - The callback url from which the code to get the access token is extracted.
  * @returns Authentication tokens.
  */
-const completeAuthFlow = async ({
-  callbackUrl,
-  clientId,
-  codeVerifier,
-  issuerConf,
-  walletAttestation,
-  redirectUri
-}: CompleteAuthFlowParams) => {
-  const { code } =
-    await Credential.Issuance.completeUserAuthorizationWithQueryMode(
-      callbackUrl
-    );
-
-  await regenerateCryptoKey(DPOP_KEYTAG);
-  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
-  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
-
-  const { accessToken } = await Credential.Issuance.authorizeAccess(
-    issuerConf,
-    code,
-    clientId,
-    redirectUri,
-    codeVerifier,
-    {
-      walletInstanceAttestation: walletAttestation,
-      wiaCryptoContext,
-      dPopCryptoContext
-    }
-  );
-
-  return { accessToken, dPoPContext: dPopCryptoContext };
-};
+const completeAuthFlow = async (params: CompleteAuthFlowParams) =>
+  params.isL3IssuanceEnabled
+    ? IssuanceUtilsV2.completeAuthFlow(
+        params as IssuanceUtilsV2.CompleteAuthFlowParams
+      )
+    : IssuanceUtilsV1.completeAuthFlow(
+        params as IssuanceUtilsV1.CompleteAuthFlowParams
+      );
 
 type PidIssuanceParams = {
-  issuerConf: IssuerConf;
-  accessToken: AccessToken;
+  issuerConf: IssuerConfiguration;
+  accessToken: CredentialAccessToken;
   clientId: string;
   dPoPContext: CryptoContext;
-  credentialDefinition: AuthorizationDetail;
+  credentialDefinition: CredentialAuthDetail;
+  isL3IssuanceEnabled: boolean;
 };
 
 /**
@@ -162,49 +77,10 @@ type PidIssuanceParams = {
  * It must be called after `startAuthFlow` and `completeAuthFlow`.
  * @returns The stored credential.
  */
-const getPid = async ({
-  issuerConf,
-  clientId,
-  accessToken,
-  dPoPContext,
-  credentialDefinition
-}: PidIssuanceParams): Promise<StoredCredential> => {
-  const credentialKeyTag = uuidv4().toString();
-  await generate(credentialKeyTag);
-  const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
-
-  const { credential, format } = await Credential.Issuance.obtainCredential(
-    issuerConf,
-    accessToken,
-    clientId,
-    credentialDefinition,
-    {
-      credentialCryptoContext,
-      dPopCryptoContext: dPoPContext
-    }
-  );
-
-  const { parsedCredential, issuedAt, expiration } =
-    await Credential.Issuance.verifyAndParseCredential(
-      issuerConf,
-      credential,
-      format,
-      { credentialCryptoContext }
-    );
-
-  return {
-    parsedCredential,
-    issuerConf,
-    keyTag: credentialKeyTag,
-    credentialType: CREDENTIAL_TYPE,
-    format,
-    credential,
-    jwt: {
-      expiration: expiration.toISOString(),
-      issuedAt: issuedAt?.toISOString()
-    }
-  };
-};
+const getPid = async (params: PidIssuanceParams): Promise<StoredCredential> =>
+  params.isL3IssuanceEnabled
+    ? IssuanceUtilsV2.getPid(params as IssuanceUtilsV2.PidIssuanceParams)
+    : IssuanceUtilsV1.getPid(params as IssuanceUtilsV1.PidIssuanceParams);
 
 export { startAuthFlow, completeAuthFlow, getPid };
 
@@ -245,7 +121,11 @@ const SPID_IDP_HINTS: { [key: string]: string } = {
  * @param env the environment currently in use
  * @param isL3 flag that indicates that we need to issue an L3 PID
  */
-const getIdpHint = (idCtx: IdentificationContext, env: Env, isL3: boolean) => {
+export const getIdpHint = (
+  idCtx: IdentificationContext,
+  env: Env,
+  isL3: boolean
+) => {
   if (isL3) {
     // When issuing an L3 PID, we should not provide an IDP hint
     return undefined;
@@ -267,7 +147,7 @@ const getIdpHint = (idCtx: IdentificationContext, env: Env, isL3: boolean) => {
  * @throws {@link Error} if the IDP ID is not present in the map
  * @returns
  */
-const getSpidProductionIdpHint = (spidIdpId: string) => {
+export const getSpidProductionIdpHint = (spidIdpId: string) => {
   if (!(spidIdpId in SPID_IDP_HINTS)) {
     throw new Error(`Unknown idp ${spidIdpId}`);
   }

@@ -1,4 +1,5 @@
 import { IOToast } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import I18n from "../../../../i18n";
 import {
@@ -12,6 +13,7 @@ import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { openWebUrl } from "../../../../utils/url";
+import { trackItwNfcNotSupported } from "../../analytics";
 
 const NFC_NOT_SUPPORTED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/35541811236113-Cosa-serve-per-usare-IT-Wallet";
@@ -23,6 +25,8 @@ export const ItwNfcNotSupportedComponent = () => {
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
+
+  useFocusEffect(trackItwNfcNotSupported);
 
   const goBack = useCallback(() => navigation.goBack(), [navigation]);
 

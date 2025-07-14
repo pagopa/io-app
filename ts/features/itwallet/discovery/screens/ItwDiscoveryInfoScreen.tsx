@@ -1,14 +1,10 @@
 import { useCallback } from "react";
-import { useFocusEffect } from "@react-navigation/native";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoComponent.tsx";
 import { ItwPaywallComponent } from "../components/ItwPaywallComponent.tsx";
 import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
-import {
-  trackItWalletActivationStart,
-  trackItWalletIntroScreen
-} from "../../analytics/index.ts";
+import { trackItWalletActivationStart } from "../../analytics/index.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwHasNfcFeatureSelector } from "../../identification/store/selectors/index.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
@@ -34,14 +30,6 @@ export const ItwDiscoveryInfoScreen = ({
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
 
-  useFocusEffect(
-    useCallback(() => {
-      if (!isL3 || hasNfcFeature) {
-        trackItWalletIntroScreen();
-      }
-    }, [hasNfcFeature, isL3])
-  );
-
   useOnFirstRender(() => {
     if (!isL3) {
       machineRef.send({ type: "start", isL3: false });
@@ -54,9 +42,9 @@ export const ItwDiscoveryInfoScreen = ({
   });
 
   const handleContinuePress = useCallback(() => {
-    trackItWalletActivationStart();
+    trackItWalletActivationStart(isL3 ? "L3" : "L2");
     machineRef.send({ type: "accept-tos" });
-  }, [machineRef]);
+  }, [machineRef, isL3]);
 
   if (!isL3) {
     return <ItwDiscoveryInfoComponent onContinuePress={handleContinuePress} />;
