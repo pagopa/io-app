@@ -1,6 +1,7 @@
 import { createActor, waitFor } from "xstate";
 import { CieManager } from "@pagopa/io-react-native-cie";
 import actors, { StartCieManagerInput } from "../actors";
+import { getCieUatEndpoint } from "../../../../../authentication/login/cie/utils/endpoints";
 
 // Mock the CieManager
 jest.mock("@pagopa/io-react-native-cie", () => ({
@@ -8,7 +9,8 @@ jest.mock("@pagopa/io-react-native-cie", () => ({
     startReading: jest.fn(),
     stopReading: jest.fn(),
     addListener: jest.fn(),
-    removeListener: jest.fn()
+    removeListener: jest.fn(),
+    setCustomIdpUrl: jest.fn()
   }
 }));
 
@@ -25,10 +27,11 @@ describe("CIE Machine Actors", () => {
   });
 
   describe("startCieManager", () => {
-    it("should start CieManager with valid input", async () => {
+    it("should start CieManager with valid input and UAT CIE", async () => {
       const validInput: StartCieManagerInput = {
         pin: "12345678",
-        serviceProviderUrl: "https://example.com"
+        serviceProviderUrl: "https://example.com",
+        env: "pre"
       };
 
       const actor = createActor(actors.startCieManager, {
@@ -38,6 +41,32 @@ describe("CIE Machine Actors", () => {
 
       await waitFor(actor, state => state.status === "done");
 
+      expect(mockCieManager.setCustomIdpUrl).toHaveBeenCalledWith(
+        getCieUatEndpoint()
+      );
+
+      expect(mockCieManager.startReading).toHaveBeenCalledWith(
+        validInput.pin,
+        validInput.serviceProviderUrl
+      );
+    });
+
+    it("should start CieManager with valid input and PROD CIE", async () => {
+      const validInput: StartCieManagerInput = {
+        pin: "12345678",
+        serviceProviderUrl: "https://example.com",
+        env: "prod"
+      };
+
+      const actor = createActor(actors.startCieManager, {
+        input: validInput
+      });
+      actor.start();
+
+      await waitFor(actor, state => state.status === "done");
+
+      expect(mockCieManager.setCustomIdpUrl).toHaveBeenCalledWith(undefined);
+
       expect(mockCieManager.startReading).toHaveBeenCalledWith(
         validInput.pin,
         validInput.serviceProviderUrl
@@ -46,7 +75,8 @@ describe("CIE Machine Actors", () => {
 
     it("should throw assertion error when serviceProviderUrl is missing", async () => {
       const invalidInput: StartCieManagerInput = {
-        pin: "12345678"
+        pin: "12345678",
+        env: "pre"
       };
 
       const actor = createActor(actors.startCieManager, {
@@ -60,7 +90,8 @@ describe("CIE Machine Actors", () => {
     it("should handle CieManager.startReading rejection", async () => {
       const validInput: StartCieManagerInput = {
         pin: "12345678",
-        serviceProviderUrl: "https://example.com"
+        serviceProviderUrl: "https://example.com",
+        env: "pre"
       };
 
       mockCieManager.startReading.mockRejectedValue("");
