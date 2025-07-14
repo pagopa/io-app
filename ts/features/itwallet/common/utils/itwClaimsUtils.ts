@@ -359,6 +359,11 @@ export const ImageClaim = PatternString(PICTURE_URL_REGEX);
 export const PdfClaim = PatternString(PDF_DATA_REGEX);
 
 /**
+ * Decoder for a simple list of claims that do not require additional parsing (for instance, nationality codes)
+ */
+export const SimpleListClaim = t.array(t.string);
+
+/**
  * Decoder type for the claim field of the credential.
  * It includes all the possible types of claims and fallbacks to string.
  * To add more custom objects to the union:
@@ -381,6 +386,8 @@ export const ClaimValue = t.union([
   BoolClaim,
   // Otherwise parse an url value
   UrlClaim,
+  // Otherwise parse a list of strings
+  SimpleListClaim,
   // Otherwise fallback to string
   StringClaim,
   // Otherwise fallback to empty string
@@ -539,23 +546,33 @@ export const getClaimDisplayValue = (
       decoded => {
         if (PlaceOfBirthClaim.is(decoded)) {
           return `${decoded.locality} (${decoded.country})`;
-        } else if (SimpleDateClaim.is(decoded)) {
+        }
+        if (SimpleDateClaim.is(decoded)) {
           return decoded.toString();
-        } else if (ImageClaim.is(decoded)) {
+        }
+        if (ImageClaim.is(decoded)) {
           return decoded;
-        } else if (DrivingPrivilegesClaim.is(decoded)) {
+        }
+        if (DrivingPrivilegesClaim.is(decoded)) {
           return decoded.map(e => e.driving_privilege);
-        } else if (FiscalCodeClaim.is(decoded)) {
+        }
+        if (FiscalCodeClaim.is(decoded)) {
           return pipe(
             decoded,
             extractFiscalCode,
             O.getOrElseW(() => decoded)
           );
-        } else if (BoolClaim.is(decoded)) {
+        }
+        if (BoolClaim.is(decoded)) {
           return I18n.t(
             `features.itWallet.presentation.credentialDetails.boolClaim.${decoded}`
           );
-        } else if (StringClaim.is(decoded) || EmptyStringClaim.is(decoded)) {
+        }
+        if (
+          SimpleListClaim.is(decoded) ||
+          StringClaim.is(decoded) ||
+          EmptyStringClaim.is(decoded)
+        ) {
           return decoded; // must be the last one to be checked due to overlap with IPatternStringTag
         }
 

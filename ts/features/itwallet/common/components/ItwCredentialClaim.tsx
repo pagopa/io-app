@@ -23,6 +23,7 @@ import {
   PlaceOfBirthClaimType,
   SimpleDate,
   SimpleDateClaim,
+  SimpleListClaim,
   StringClaim
 } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
@@ -338,7 +339,8 @@ export const ItwCredentialClaim = ({
         const decoded = hidden ? HIDDEN_CLAIM_TEXT : _decoded;
         if (PlaceOfBirthClaim.is(decoded)) {
           return <PlaceOfBirthClaimItem label={claim.label} claim={decoded} />;
-        } else if (SimpleDateClaim.is(decoded)) {
+        }
+        if (SimpleDateClaim.is(decoded)) {
           return (
             <DateClaimItem
               label={claim.label}
@@ -350,11 +352,14 @@ export const ItwCredentialClaim = ({
               }
             />
           );
-        } else if (ImageClaim.is(decoded)) {
+        }
+        if (ImageClaim.is(decoded)) {
           return <ImageClaimItem label={claim.label} claim={decoded} />;
-        } else if (PdfClaim.is(decoded)) {
+        }
+        if (PdfClaim.is(decoded)) {
           return <AttachmentsClaimItem name={claim.label} />;
-        } else if (DrivingPrivilegesClaim.is(decoded)) {
+        }
+        if (DrivingPrivilegesClaim.is(decoded)) {
           return decoded.map((elem, index) => (
             <Fragment key={`${index}_${claim.label}_${elem.driving_privilege}`}>
               {index !== 0 && <Divider />}
@@ -365,16 +370,27 @@ export const ItwCredentialClaim = ({
               />
             </Fragment>
           ));
-        } else if (FiscalCodeClaim.is(decoded)) {
+        }
+        if (FiscalCodeClaim.is(decoded)) {
           const fiscalCode = pipe(
             decoded,
             extractFiscalCode,
             O.getOrElseW(() => decoded)
           );
           return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
-        } else if (BoolClaim.is(decoded)) {
-          return <BoolClaimItem label={claim.label} claim={decoded} />; // m
-        } else if (EmptyStringClaim.is(decoded)) {
+        }
+        if (BoolClaim.is(decoded)) {
+          return <BoolClaimItem label={claim.label} claim={decoded} />;
+        }
+        if (SimpleListClaim.is(decoded)) {
+          return (
+            <PlainTextClaimItem
+              label={claim.label}
+              claim={decoded.join(", ")}
+            />
+          );
+        }
+        if (EmptyStringClaim.is(decoded)) {
           return null; // We want to hide the claim if it's empty
         }
         if (StringClaim.is(decoded)) {
