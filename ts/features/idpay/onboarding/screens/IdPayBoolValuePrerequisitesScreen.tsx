@@ -1,4 +1,4 @@
-import { Divider, ListItemSwitch } from "@pagopa/io-app-design-system";
+import { Divider, IOToast, ListItemSwitch } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -6,6 +6,7 @@ import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollV
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
+import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   areAllSelfDeclarationsToggledSelector,
@@ -25,7 +26,14 @@ const IdPayBoolValuePrerequisitesScreen = () => {
     areAllSelfDeclarationsToggledSelector
   );
 
-  const continueOnPress = () => machine.send({ type: "next" });
+  const continueOnPress = () => {
+    if (!areAllSelfCriteriaBoolAccepted) {
+      IOToast.error("Scegli un’opzione per continuare");
+      return;
+    }
+    machine.send({ type: "next" });
+  };
+
   const goBackOnPress = () => machine.send({ type: "back" });
 
   const toggleCriteria =
@@ -40,6 +48,7 @@ const IdPayBoolValuePrerequisitesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      topElement={<IdPayOnboardingStepper />}
       title={{
         label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
         section: I18n.t("idpay.onboarding.navigation.header")
@@ -51,8 +60,7 @@ const IdPayBoolValuePrerequisitesScreen = () => {
         type: "SingleButton",
         primary: {
           label: I18n.t("global.buttons.continue"),
-          onPress: continueOnPress,
-          disabled: !areAllSelfCriteriaBoolAccepted
+          onPress: continueOnPress
         }
       }}
       includeContentMargins
