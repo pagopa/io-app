@@ -5686,11 +5686,16 @@
           "BTW_OPEN": "Compreso tra {{value}} e {{value2}}"
         }
       },
+      "inputPrerequisites": {
+        "emptyValueError": "Enter the required information to continue"
+      },
       "multiPrerequisites": {
-        "header": "Dichiari inoltre di:"
+        "header": "You also declare that:",
+        "emptyValueError": "Select an option to continue"
       },
       "boolPrerequisites": {
-        "header": "Per aderire, dichiari di:"
+        "header": "To proceed, you declare that:",
+        "emptyValueError": "Select an option to continue"
       },
       "enableNotification": {
         "title": "Don't risk losing the outcome of your request",
