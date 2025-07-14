@@ -80,8 +80,7 @@ const InputFormVerificationContent = ({
           type: "SingleButton",
           primary: {
             label: I18n.t("global.buttons.continue"),
-            onPress: handleContinuePress,
-            disabled: value.length === 0
+            onPress: handleContinuePress
           }
         }}
         includeContentMargins
