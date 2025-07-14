@@ -1,7 +1,18 @@
 import { ProximityEvents } from "./events.ts";
 
+/**
+ * Thrown when an operation times out
+ */
+export class TimeoutError extends Error {
+  constructor(message?: string) {
+    super(message);
+    this.name = this.constructor.name;
+  }
+}
+
 export enum ProximityFailureType {
   RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
+  TIMEOUT = "TIMEOUT",
   UNEXPECTED = "UNEXPECTED"
 }
 
@@ -10,6 +21,7 @@ export enum ProximityFailureType {
  */
 export type ReasonTypeByFailure = {
   [ProximityFailureType.RELYING_PARTY_GENERIC]: Error;
+  [ProximityFailureType.TIMEOUT]: TimeoutError;
   [ProximityFailureType.UNEXPECTED]: unknown;
 };
 
@@ -38,6 +50,13 @@ export const mapEventToFailure = (event: ProximityEvents): ProximityFailure => {
   }
 
   const { error } = event;
+
+  if (error instanceof TimeoutError) {
+    return {
+      type: ProximityFailureType.TIMEOUT,
+      reason: error
+    };
+  }
 
   return {
     type: ProximityFailureType.RELYING_PARTY_GENERIC,
