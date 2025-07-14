@@ -150,8 +150,8 @@ describe("Test SecurityScreen", () => {
         if (
           selector ===
           // eslint-disable-next-line @typescript-eslint/no-var-requires
-          require("../../../../../store/reducers/persistedPreferences")
-            .isIdPayLocallyEnabledSelector
+          require("../../../../../store/reducers/backendStatus/remoteConfig")
+            .isIdPayCiePaymentCodeEnabledSelector
         ) {
           return true;
         }
