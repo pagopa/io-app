@@ -6,12 +6,13 @@ import PagerView from "react-native-pager-view";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   multiRequiredCriteriaSelector,
   selectCurrentMultiSelfDeclarationPage
 } from "../machine/selectors";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 
 const IdPayMultiValuePrerequisitesScreen = () => {
   const pagerRef = useRef<PagerView>(null);
@@ -79,6 +80,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
 
   return (
     <IOScrollViewWithLargeHeader
+      topElement={<IdPayOnboardingStepper />}
       title={{
         label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
         section: I18n.t("idpay.onboarding.headerTitle")
