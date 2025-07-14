@@ -77,9 +77,11 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
 
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => machineRef.send({ type: "back" }),
-    customBodyMessage: I18n.t(
-      "features.itWallet.presentation.proximity.selectiveDisclosure.alert.message"
-    )
+    customLabels: {
+      body: I18n.t(
+        "features.itWallet.presentation.proximity.selectiveDisclosure.alert.message"
+      )
+    }
   });
 
   useHeaderSecondLevel({ title: "", goBack: dismissalDialog.show });

@@ -156,7 +156,7 @@ export const createEidIssuanceActorsImplementation = (
         isL3IssuanceEnabled: !!input.isL3IssuanceEnabled
       });
 
-      trackItwRequest(input.identification.mode);
+      trackItwRequest(input.identification.mode, input.identification.level);
 
       return issuanceUtils.getPid({
         ...authParams,
