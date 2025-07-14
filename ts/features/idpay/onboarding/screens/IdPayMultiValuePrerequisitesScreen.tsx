@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { H6, RadioGroup } from "@pagopa/io-app-design-system";
+import { H6, IOToast, RadioGroup } from "@pagopa/io-app-design-system";
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
@@ -60,17 +60,22 @@ const MultiValuePrerequisiteItemScreenContent = ({
   >(undefined);
 
   const handleContinuePress = () => {
-    if (selectedValueIndex !== undefined) {
-      machine.send({
-        type: "select-multi-consent",
-        data: {
-          _type: selfDeclaration._type,
-          value: selfDeclaration.value[selectedValueIndex],
-          code: selfDeclaration.code
-        }
-      });
+    if (selectedValueIndex === undefined) {
+      IOToast.error(
+        I18n.t("idpay.onboarding.boolPrerequisites.emptyValueError")
+      );
+      return;
     }
+    machine.send({
+      type: "select-multi-consent",
+      data: {
+        _type: selfDeclaration._type,
+        value: selfDeclaration.value[selectedValueIndex],
+        code: selfDeclaration.code
+      }
+    });
   };
+
   const handleGoBack = () => machine.send({ type: "back" });
 
   return (
@@ -88,7 +93,6 @@ const MultiValuePrerequisiteItemScreenContent = ({
         type: "SingleButton",
         primary: {
           onPress: handleContinuePress,
-          disabled: selectedValueIndex === undefined,
           label: I18n.t("global.buttons.continue")
         }
       }}
