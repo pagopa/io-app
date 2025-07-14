@@ -273,7 +273,7 @@ export const itwEidIssuanceMachine = setup({
         src: "getWalletAttestation",
         input: ({ context }) => ({
           integrityKeyTag: context.integrityKeyTag,
-          isL3IssuanceEnabled: false // TODO this is a temporary fix, we should use context.isL3FeaturesEnabled when the new issuance flow is completed
+          isL3IssuanceEnabled: context.isL3FeaturesEnabled
         }),
         onDone: [
           {
@@ -522,7 +522,8 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  identification: context.identification
+                  identification: context.identification,
+                  isL3IssuanceEnabled: context.isL3FeaturesEnabled
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -653,6 +654,7 @@ export const itwEidIssuanceMachine = setup({
               tags: [ItwTags.Loading],
               invoke: {
                 src: "startAuthFlow",
+                // eslint-disable-next-line sonarjs/no-identical-functions
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
@@ -746,7 +748,8 @@ export const itwEidIssuanceMachine = setup({
             input: ({ context }) => ({
               identification: context.identification,
               authenticationContext: context.authenticationContext,
-              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+              isL3IssuanceEnabled: context.isL3FeaturesEnabled
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
