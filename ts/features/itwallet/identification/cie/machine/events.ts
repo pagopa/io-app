@@ -1,5 +1,9 @@
 import { NfcError, NfcEvent } from "@pagopa/io-react-native-cie";
 
+/**
+ * Event dispatched when the service provider url is fetched with the authentication url provided
+ * After this event, the machine can start the authentication flow with CIE SDK
+ */
 type SetServiceProviderUrl = {
   type: "set-service-provider-url";
   url: string;
