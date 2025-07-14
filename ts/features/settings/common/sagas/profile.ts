@@ -27,6 +27,7 @@ import {
 } from "../../../../store/actions/crossSessions";
 import { navigateToRemoveAccountSuccess } from "../../../../store/actions/navigation";
 import {
+  clearCache,
   loadBonusBeforeRemoveAccount,
   profileLoadFailure,
   profileLoadRequest,
@@ -383,9 +384,7 @@ function* checkStoreHashedFiscalCode(
   ) {
     // delete current store pin
     yield* call(deletePin);
-    // Refactor: a similar check is also implemented inside the `startupSaga`.
-    // Consider aligning both flows or centralizing this logic to avoid duplicated behaviors.
-    // See related Jira task: https://pagopa.atlassian.net/browse/IOPID-3047
+    yield* put(clearCache());
     yield* put(
       differentProfileLoggedIn({
         isNewInstall: checkIsDifferentFiscalCode === undefined

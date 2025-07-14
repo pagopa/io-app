@@ -20,7 +20,7 @@ import {
   InitialContext
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
-import { CieWarningType } from "../../../identification/screens/ItwIdentificationCieWarningScreen.tsx";
+import { CiePreparationType } from "../../../identification/components/cie/ItwCiePreparationBaseScreenContent";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -67,6 +67,7 @@ describe("itwEidIssuanceMachine", () => {
   const hasValidWalletInstanceAttestation = jest.fn();
   const hasIntegrityKeyTag = jest.fn();
   const isL3FeaturesEnabled = jest.fn();
+  const isL2Fallback = jest.fn();
   const resetWalletInstance = jest.fn();
   const trackWalletInstanceCreation = jest.fn();
   const trackWalletInstanceRevocation = jest.fn();
@@ -131,7 +132,8 @@ describe("itwEidIssuanceMachine", () => {
       isOperationAborted,
       hasValidWalletInstanceAttestation,
       hasIntegrityKeyTag,
-      isL3FeaturesEnabled
+      isL3FeaturesEnabled,
+      isL2Fallback
     }
   });
 
@@ -213,7 +215,9 @@ describe("itwEidIssuanceMachine", () => {
 
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
-        UserIdentification: "L3Identification"
+        UserIdentification: {
+          Identification: "L3"
+        }
       })
     );
     expect(navigateToL3IdentificationScreen).toHaveBeenCalledTimes(1);
@@ -222,7 +226,9 @@ describe("itwEidIssuanceMachine", () => {
 
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
-        UserIdentification: "L2Identification"
+        UserIdentification: {
+          Identification: "L2"
+        }
       })
     );
 
@@ -270,7 +276,8 @@ describe("itwEidIssuanceMachine", () => {
         mode: "spid",
         level: "L2",
         idpId: idps[0].id
-      }
+      },
+      isL2Fallback: true
     });
 
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -325,7 +332,8 @@ describe("itwEidIssuanceMachine", () => {
       authenticationContext: expect.objectContaining({
         callbackUrl: "http://test.it"
       }),
-      eid: ItwStoredCredentialsMocks.eid
+      eid: ItwStoredCredentialsMocks.eid,
+      isL2Fallback: true
     });
 
     /**
@@ -348,7 +356,7 @@ describe("itwEidIssuanceMachine", () => {
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: "L2Identification" },
+      value: { UserIdentification: { Identification: "L2" } },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA }
@@ -378,8 +386,6 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-
-      isL3FeaturesEnabled: false,
       identification: {
         mode: "cieId",
         level: "L2"
@@ -423,7 +429,7 @@ describe("itwEidIssuanceMachine", () => {
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: "L3Identification" },
+      value: { UserIdentification: { Identification: "L3" } },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
@@ -447,7 +453,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: "PreparationCie"
+        CiePin: "PreparationPin"
       }
     });
 
@@ -487,7 +493,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: "StartingCieAuthFlow"
+        CiePin: "PreparationCie"
       }
     });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
@@ -504,7 +510,11 @@ describe("itwEidIssuanceMachine", () => {
         isCIEAuthenticationSupported: true
       }
     });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+
+    // Need to trigger "next" to move from PreparationCie to StartingCieAuthFlow
+    actor.send({ type: "next" });
+
     await waitFor(() => expect(startAuthFlow).toHaveBeenCalledTimes(1));
 
     // Auth flow started
@@ -549,7 +559,7 @@ describe("itwEidIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: {
         UserIdentification: {
-          CiePin: "InsertingCardPin"
+          CiePin: "PreparationPin"
         }
       },
       context: {
@@ -572,8 +582,7 @@ describe("itwEidIssuanceMachine", () => {
      */
 
     actor.send({
-      type: "cie-pin-entered",
-      pin: "12345678"
+      type: "next"
     });
 
     expect(actor.getSnapshot().value).toStrictEqual({
@@ -586,11 +595,7 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      identification: {
-        mode: "ciePin",
-        level: "L3",
-        pin: "12345678"
-      },
+      identification: undefined,
       cieContext: {
         isNFCEnabled: false,
         isCIEAuthenticationSupported: true
@@ -608,18 +613,14 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: "StartingCieAuthFlow"
+        CiePin: "InsertingCardPin"
       }
     });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      identification: {
-        mode: "ciePin",
-        level: "L3",
-        pin: "12345678"
-      },
+      identification: undefined,
       cieContext: {
         isNFCEnabled: true,
         isCIEAuthenticationSupported: true
@@ -730,7 +731,9 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "accept-ipzs-privacy" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: "L3Identification"
+      UserIdentification: {
+        Identification: "L3"
+      }
     });
   });
 
@@ -934,7 +937,7 @@ describe("itwEidIssuanceMachine", () => {
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: "L2Identification" }
+      value: { UserIdentification: { Identification: "L2" } }
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
@@ -1073,7 +1076,9 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "start-reissuing" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: "L2Identification"
+      UserIdentification: {
+        Identification: "L2"
+      }
     });
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
@@ -1193,7 +1198,7 @@ describe("itwEidIssuanceMachine", () => {
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: "L2Identification" },
+      value: { UserIdentification: { Identification: "L2" } },
       context: {
         isReissuing: true
       }
@@ -1216,7 +1221,7 @@ describe("itwEidIssuanceMachine", () => {
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: "L3Identification" },
+      value: { UserIdentification: { Identification: "L3" } },
       context: {
         isReissuing: false
       }
@@ -1313,7 +1318,7 @@ describe("itwEidIssuanceMachine", () => {
       undefined,
       initialSnapshot,
       {
-        value: { UserIdentification: "L3Identification" },
+        value: { UserIdentification: { Identification: "L3" } },
         context: {
           ...InitialContext,
           integrityKeyTag: T_INTEGRITY_KEY,
@@ -1329,17 +1334,21 @@ describe("itwEidIssuanceMachine", () => {
     actor.start();
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: "L3Identification"
+      UserIdentification: {
+        Identification: "L3"
+      }
     });
 
-    const testWarningType: CieWarningType = "noCie" as CieWarningType;
+    const testWarningType: CiePreparationType = "card";
 
     actor.send({ type: "go-to-cie-warning", warning: testWarningType });
 
     await waitFor(() => {
       expect(actor.getSnapshot().value).toStrictEqual({
         UserIdentification: {
-          CieWarning: "L3Identification"
+          CiePin: {
+            CieWarning: "Identification"
+          }
         }
       });
     });
@@ -1353,55 +1362,7 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: "L3Identification" },
-      context: {
-        integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: { jwt: T_WIA },
-        isL3FeaturesEnabled: true
-      }
-    } as MachineSnapshot);
-
-    const actor = createActor(mockedMachine, { snapshot });
-    actor.start();
-
-    actor.send({ type: "select-identification-mode", mode: "ciePin" });
-
-    expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: {
-        CiePin: "PreparationCie"
-      }
-    });
-
-    expect(navigateToCiePreparationScreen).toHaveBeenCalledTimes(1);
-
-    actor.send({ type: "next" });
-
-    expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: {
-        CiePin: "PreparationPin"
-      }
-    });
-
-    expect(navigateToCiePinPreparationScreen).toHaveBeenCalledTimes(1);
-
-    actor.send({ type: "next" });
-
-    expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: {
-        CiePin: "InsertingCardPin"
-      }
-    });
-
-    expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
-  });
-
-  it("Should return to PreparationPin when navigating back from CieWarning", async () => {
-    isL3FeaturesEnabled.mockImplementation(() => true);
-    const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine
-    ).getSnapshot();
-    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: "L3Identification" },
+      value: { UserIdentification: { Identification: "L3" } },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
@@ -1420,13 +1381,55 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: "PreparationCie"
+        CiePin: "PreparationPin"
       }
     });
 
-    expect(navigateToCiePreparationScreen).toHaveBeenCalledTimes(1);
+    expect(navigateToCiePinPreparationScreen).toHaveBeenCalledTimes(1);
 
     actor.send({ type: "next" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "InsertingCardPin"
+      }
+    });
+
+    expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "next" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "InsertingCardPin"
+      }
+    });
+
+    expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should return to PreparationPin when navigating back from CieWarning", async () => {
+    isL3FeaturesEnabled.mockImplementation(() => true);
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: { Identification: "L3" } },
+      context: {
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        isL3FeaturesEnabled: true,
+        cieContext: {
+          isNFCEnabled: true,
+          isCIEAuthenticationSupported: true
+        }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "select-identification-mode", mode: "ciePin" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
@@ -1434,13 +1437,17 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
 
-    const testWarningType: CieWarningType = "noCie" as CieWarningType;
+    expect(navigateToCiePinPreparationScreen).toHaveBeenCalledTimes(1);
+
+    const testWarningType: CiePreparationType = "card";
 
     actor.send({ type: "go-to-cie-warning", warning: testWarningType });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CieWarning: "PreparationPin"
+        CiePin: {
+          CieWarning: "PreparationPin"
+        }
       }
     });
 
@@ -1456,6 +1463,7 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
   });
+
   it("Should initialize the machine context with L3 active", async () => {
     const actor = createActor(mockedMachine);
     actor.start();

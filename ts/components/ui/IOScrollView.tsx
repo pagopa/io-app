@@ -96,6 +96,7 @@ type IOScrollView = WithTestID<
     centerContent?: boolean;
     refreshControlProps?: RefreshControlProps;
     contentContainerStyle?: ViewStyle;
+    topElement?: React.ReactNode;
   }>
 >;
 
@@ -155,6 +156,7 @@ const styles = StyleSheet.create({
 export const IOScrollView = ({
   headerConfig,
   children,
+  topElement,
   actions,
   snapOffset,
   excludeSafeAreaMargins = false,
@@ -318,6 +320,7 @@ export const IOScrollView = ({
           centerContent ? styles.centerContentWrapper : {}
         ]}
       >
+        {topElement}
         {children}
       </Animated.ScrollView>
       {actions && (

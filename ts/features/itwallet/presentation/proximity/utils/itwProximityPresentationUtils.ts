@@ -9,7 +9,21 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { parseClaims } from "../../../common/utils/itwClaimsUtils";
 import { assert } from "../../../../../utils/assert";
+import { TimeoutError } from "../machine/failure";
 import { ProximityDetails } from "./itwProximityTypeUtils";
+
+export const promiseWithTimeout = <T>(
+  promise: Promise<T>,
+  timeoutMs: number
+) => {
+  const timeout = new Promise<never>((_, reject) => {
+    setTimeout(() => {
+      reject(new TimeoutError("Request timed out"));
+    }, timeoutMs);
+  });
+
+  return Promise.race<T>([promise, timeout]);
+};
 
 export const getProximityDetails = (
   request: VerifierRequest["request"],

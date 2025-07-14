@@ -294,26 +294,6 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                             <View>
                               <Text
                                 allowFontScaling={true}
-                                dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#0E0F13",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                Documenti su IO: come funziona
-                              </Text>
-                              <Text
-                                allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
                                 style={
@@ -330,17 +310,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                                   ]
                                 }
                               >
-                                Da oggi puoi aggiungere al Portafoglio di IO 
-                                <Text
-                                  style={
-                                    {
-                                      "fontWeight": "600",
-                                    }
-                                  }
-                                >
-                                  la versione digitale dei tuoi documenti
-                                </Text>
-                                 personali, come la Patente di guida e la Tessera Sanitaria.
+                                Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app!
                               </Text>
                               <View
                                 style={
@@ -367,7 +337,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                                   ]
                                 }
                               >
-                                Attiva la funzionalità 
+                                Hanno lo 
                                 <Text
                                   style={
                                     {
@@ -375,9 +345,9 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                                     }
                                   }
                                 >
-                                  Documenti su IO
+                                  stesso valore legale
                                 </Text>
-                                 per averli sempre a portata di mano sul tuo dispositivo.
+                                 di quelli fisici, in specifici contesti d'uso.
                               </Text>
                               <View
                                 style={
@@ -424,7 +394,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                                   ]
                                 }
                               >
-                                Avrai bisogno delle credenziali 
+                                Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre 
                                 <Text
                                   style={
                                     {
@@ -432,9 +402,9 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                                     }
                                   }
                                 >
-                                  SPID
+                                  4 Milioni
                                 </Text>
-                                 o 
+                                 di persone stanno già usando i 
                                 <Text
                                   style={
                                     {
@@ -442,9 +412,9 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                                     }
                                   }
                                 >
-                                  CIE
+                                  Documenti su IO
                                 </Text>
-                                 (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati.
+                                !
                               </Text>
                             </View>
                             <View
@@ -1562,8 +1532,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true and 
                                         ]
                                       }
                                     >
-                                      L'unico Wallet di Stato:
-pubblico, sicuro, gratuito.
+                                      L'unico portafoglio digitale di Stato: pubblico, sicuro, gratuito.
                                     </Text>
                                   </View>
                                   <View
@@ -2351,7 +2320,7 @@ pubblico, sicuro, gratuito.
                                           }
                                           testID="infoScreenBody"
                                         >
-                                          Nuovi documenti ufficiali, solo sull’app IO
+                                          I nuovi documenti digitali ufficiali, solo sull’app IO
                                         </Text>
                                       </View>
                                     </View>
@@ -2542,7 +2511,7 @@ pubblico, sicuro, gratuito.
                                       data={
                                         [
                                           {
-                                            "content": "Ottienilo con la tua **Carta di Identità Elettronica (CIE)** e il suo **PIN**.
+                                            "content": "Ottienilo con la tua **Carta di Identità Elettronica (CIE)** e il suo **PIN per associarlo alla tua identità**.
 
 
 IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantenerli al sicuro.",
@@ -2550,12 +2519,12 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                                             "title": "Facile, sicuro, ufficiale",
                                           },
                                           {
-                                            "content": "ISEE, titoli di studio, certificazione a uso elettorale e altri: potrai aggiungere all’app IO nuovi documenti ufficiali.",
+                                            "content": "Titoli di studio, attestati di residenza e altri: potrai aggiungere all’app IO nuovi documenti ufficiali.",
                                             "icon": "fiscalCodeIndividual",
                                             "title": "Nuovi documenti in arrivo",
                                           },
                                           {
-                                            "content": "Con IT-Wallet mostri il codice QR dei tuoi documenti digitali: chi verifica non dovrà tenere in mano il tuo dispositivo.",
+                                            "content": "Con IT-Wallet mostri il codice QR della tua Patente digitale: chi verifica non dovrà tenere in mano il tuo dispositivo.",
                                             "icon": "website",
                                             "title": "Tutto nelle tue mani",
                                           },
@@ -2734,7 +2703,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                                                     }
                                                   }
                                                 >
-                                                  PIN
+                                                  PIN per associarlo alla tua identità
                                                 </Text>
                                                 .
                                               </Text>
@@ -2908,7 +2877,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                                                   ]
                                                 }
                                               >
-                                                ISEE, titoli di studio, certificazione a uso elettorale e altri: potrai aggiungere all’app IO nuovi documenti ufficiali.
+                                                Titoli di studio, attestati di residenza e altri: potrai aggiungere all’app IO nuovi documenti ufficiali.
                                               </Text>
                                             </View>
                                           </View>
@@ -3050,7 +3019,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                                                   ]
                                                 }
                                               >
-                                                Con IT-Wallet mostri il codice QR dei tuoi documenti digitali: chi verifica non dovrà tenere in mano il tuo dispositivo.
+                                                Con IT-Wallet mostri il codice QR della tua Patente digitale: chi verifica non dovrà tenere in mano il tuo dispositivo.
                                               </Text>
                                             </View>
                                           </View>

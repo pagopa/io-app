@@ -24,6 +24,7 @@ import {
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwSetAuthLevel } from "../../common/store/actions/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -175,7 +176,7 @@ export const createEidIssuanceActionsImplementation = (
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
       params: {
-        warning: event.warning
+        type: event.warning
       }
     });
   },
@@ -248,10 +249,12 @@ export const createEidIssuanceActionsImplementation = (
       const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(state);
       const walletInstanceAttestation =
         itwWalletInstanceAttestationSelector(state);
+      const isWhitelisted = itwIsL3EnabledSelector(state);
 
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
-        walletInstanceAttestation
+        walletInstanceAttestation,
+        isWhitelisted
       };
     }
   )

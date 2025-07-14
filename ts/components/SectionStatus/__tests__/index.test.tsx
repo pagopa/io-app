@@ -16,6 +16,9 @@ import SectionStatusComponent from "../index";
 import { PersistedFeaturesState } from "../../../features/common/store/reducers";
 import { ItWalletState } from "../../../features/itwallet/common/store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
+import { CredentialType } from "../../../features/itwallet/common/utils/itwMocksUtils";
+import { StoredCredential } from "../../../features/itwallet/common/utils/itwTypesUtils";
+import { ItwCredentialsState } from "../../../features/itwallet/credentials/store/reducers";
 
 jest.mock("../../../utils/url");
 
@@ -59,7 +62,9 @@ const mockSectionStatusState = (
     } as Config),
     features: {
       itWallet: {
-        credentials: { eid: O.some({}) },
+        credentials: {
+          credentials: { [CredentialType.PID]: {} as StoredCredential }
+        } as ItwCredentialsState,
         issuance: { integrityKeyTag: O.some("key-tag") }
       } as ItWalletState
     } as PersistedFeaturesState
@@ -179,7 +184,9 @@ describe("Section Status Component should return null", () => {
         sectionStatus: O.none,
         features: {
           itWallet: {
-            credentials: { eid: O.some({}) },
+            credentials: {
+              credentials: { [CredentialType.PID]: {} as StoredCredential }
+            } as ItwCredentialsState,
             issuance: { integrityKeyTag: O.some("key-tag") }
           } as ItWalletState
         } as PersistedFeaturesState

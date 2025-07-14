@@ -1,5 +1,3 @@
-import * as R from "fp-ts/lib/Record";
-import { identity, pipe } from "fp-ts/lib/function";
 import { assign } from "xstate";
 import { StackActions } from "@react-navigation/native";
 import NavigationService from "../../../../../navigation/NavigationService";
@@ -7,7 +5,7 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useIOStore } from "../../../../../store/hooks";
 import ROUTES from "../../../../../navigation/routes";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { itwCredentialsByTypeSelector } from "../../../credentials/store/selectors";
+import { itwCredentialsSelector } from "../../../credentials/store/selectors";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 
@@ -17,10 +15,9 @@ export const createProximityActionsImplementation = (
 ) => ({
   onInit: assign<Context, ProximityEvents, unknown, ProximityEvents, any>(
     () => {
-      const credentialsByType = itwCredentialsByTypeSelector(store.getState());
-
+      const credentialsByType = itwCredentialsSelector(store.getState());
       return {
-        credentialsByType: pipe(credentialsByType, R.filterMap(identity))
+        credentialsByType
       };
     }
   ),

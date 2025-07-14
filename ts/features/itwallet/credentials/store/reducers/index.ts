@@ -1,10 +1,8 @@
-import * as O from "fp-ts/lib/Option";
 import { createMigrate, PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { isDevEnv } from "../../../../../utils/environment";
 import itwCreateSecureStorage from "../../../common/store/storages/itwSecureStorage";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
@@ -13,14 +11,14 @@ import {
   itwCredentialsStateMigrations
 } from "./migrations";
 
+type CredentialsRecord = { [credentialKey: string]: StoredCredential };
+
 export type ItwCredentialsState = {
-  eid: O.Option<StoredCredential>;
-  credentials: Array<O.Option<StoredCredential>>;
+  credentials: CredentialsRecord;
 };
 
 export const itwCredentialsInitialState: ItwCredentialsState = {
-  eid: O.none,
-  credentials: []
+  credentials: {}
 };
 
 const reducer = (
@@ -29,36 +27,32 @@ const reducer = (
 ): ItwCredentialsState => {
   switch (action.type) {
     case getType(itwCredentialsStore): {
-      const { [CredentialType.PID]: eid, ...otherCredentials } =
-        action.payload.reduce(
-          (acc, c) => ({ ...acc, [c.credentialType]: c }),
-          {} as { [K in CredentialType]?: StoredCredential }
-        );
-
-      // Can't add other credentials when there is no eID
-      if (!eid && O.isNone(state.eid)) {
-        return state;
-      }
+      const addedCredentials = action.payload.reduce(
+        (acc, c) => ({ ...acc, [c.credentialId]: c }),
+        {} as CredentialsRecord
+      );
 
       return {
-        eid: eid ? O.some(eid) : state.eid,
-        credentials: getUpsertedCredentials(state.credentials, otherCredentials)
+        ...state,
+        credentials: {
+          ...state.credentials,
+          ...addedCredentials
+        }
       };
     }
 
     case getType(itwCredentialsRemove): {
-      // Do not remove the eID singularly
-      if (action.payload.credentialType === CredentialType.PID) {
-        return state;
-      }
+      // Remove all credentials with the same type
+      const otherCredentials = Object.values(state.credentials)
+        .filter(c => c.credentialType !== action.payload.credentialType)
+        .reduce(
+          (acc, c) => ({ ...acc, [c.credentialId]: c }),
+          {} as CredentialsRecord
+        );
 
       return {
         ...state,
-        credentials: state.credentials.filter(
-          x =>
-            O.isSome(x) &&
-            x.value.credentialType !== action.payload.credentialType
-        )
+        credentials: otherCredentials
       };
     }
 
@@ -78,28 +72,5 @@ const itwCredentialsPersistConfig: PersistConfig = {
 };
 
 const persistedReducer = persistReducer(itwCredentialsPersistConfig, reducer);
-
-/**
- * Get the new list of credentials overwriting those of the same type, if present.
- */
-const getUpsertedCredentials = (
-  credentials: ItwCredentialsState["credentials"],
-  newCredentials: { [K in CredentialType]?: StoredCredential }
-): ItwCredentialsState["credentials"] => {
-  const originalCredentials = credentials.reduce(
-    (acc, credentialOption) =>
-      O.isSome(credentialOption)
-        ? {
-            ...acc,
-            [credentialOption.value.credentialType]: credentialOption.value
-          }
-        : acc,
-    {} as Record<CredentialType, StoredCredential>
-  );
-
-  return Object.values({ ...originalCredentials, ...newCredentials }).map(
-    O.some
-  );
-};
 
 export default persistedReducer;

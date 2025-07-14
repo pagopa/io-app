@@ -1,10 +1,8 @@
-import {
-  type AuthorizationDetail,
-  type Credential
-} from "@pagopa/io-react-native-wallet";
 import type {
   WalletInstanceAttestations,
-  StoredCredential
+  StoredCredential,
+  IssuerConfiguration,
+  CredentialAuthDetail
 } from "../../common/utils/itwTypesUtils";
 import { IssuanceFailure } from "./failure";
 
@@ -23,8 +21,8 @@ export type AuthenticationContext = {
   authUrl: string;
   clientId: string;
   codeVerifier: string;
-  issuerConf: Parameters<Credential.Issuance.ObtainCredential>[0];
-  credentialDefinition: AuthorizationDetail;
+  issuerConf: IssuerConfiguration;
+  credentialDefinition: CredentialAuthDetail;
   callbackUrl: string;
   redirectUri: string;
 };
@@ -46,6 +44,8 @@ export type Context = {
   // Flag to check if IT Wallet L3 features are enabled and thus we should allow to request
   // a PID credential and upgrade the existing credentials to L3
   isL3FeaturesEnabled: boolean | undefined;
+  // Flag to check if the user chose to fallback to L2 issuance
+  isL2Fallback: boolean;
 };
 
 export const InitialContext: Context = {
@@ -57,5 +57,6 @@ export const InitialContext: Context = {
   eid: undefined,
   failure: undefined,
   isReissuing: false,
-  isL3FeaturesEnabled: undefined
+  isL3FeaturesEnabled: undefined,
+  isL2Fallback: false
 };

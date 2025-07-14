@@ -17,6 +17,8 @@ export type Context = {
   readonly failure: O.Option<OnboardingFailure>;
   readonly activeTextConsentPage: number;
   readonly selfDeclarationsTextAnswers: Record<string, SelfDeclarationTextDTO>;
+  readonly isPushNotificationsEnabled: boolean;
+  readonly currentStep: number;
 };
 
 export const InitialContext: Context = {
@@ -29,5 +31,7 @@ export const InitialContext: Context = {
   selfDeclarationsBoolAnswers: {},
   failure: O.none,
   activeTextConsentPage: 0,
-  selfDeclarationsTextAnswers: {}
+  selfDeclarationsTextAnswers: {},
+  isPushNotificationsEnabled: false,
+  currentStep: 0
 };
