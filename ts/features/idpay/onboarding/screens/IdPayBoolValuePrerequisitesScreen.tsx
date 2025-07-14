@@ -1,4 +1,4 @@
-import { Divider, ListItemSwitch } from "@pagopa/io-app-design-system";
+import { Divider, IOToast, ListItemSwitch } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -25,7 +25,14 @@ const IdPayBoolValuePrerequisitesScreen = () => {
     areAllSelfDeclarationsToggledSelector
   );
 
-  const continueOnPress = () => machine.send({ type: "next" });
+  const continueOnPress = () => {
+    if (!areAllSelfCriteriaBoolAccepted) {
+      IOToast.error("Scegli un’opzione per continuare");
+      return;
+    }
+    machine.send({ type: "next" });
+  };
+
   const goBackOnPress = () => machine.send({ type: "back" });
 
   const toggleCriteria =
@@ -51,8 +58,7 @@ const IdPayBoolValuePrerequisitesScreen = () => {
         type: "SingleButton",
         primary: {
           label: I18n.t("global.buttons.continue"),
-          onPress: continueOnPress,
-          disabled: !areAllSelfCriteriaBoolAccepted
+          onPress: continueOnPress
         }
       }}
       includeContentMargins
