@@ -4121,7 +4121,8 @@
         "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
         "action": "Attiva notifiche push",
         "deny": "Non attivare",
-        "success": "Sie aktivierten Push -Benachrichtigungen"
+        "success": "Sie aktivierten Push -Benachrichtigungen",
+        "advice": "Consigliato"
       }
     }
   }
