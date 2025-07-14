@@ -103,4 +103,38 @@ describe("CIE Machine Actors", () => {
       expect(actor.start).toThrow();
     });
   });
+
+  describe("cieManagerActor", () => {
+    it("should setup listeners and keep listening for events", async () => {
+      const actor = createActor(actors.cieManagerActor, {
+        input: {
+          isScreenReaderEnabled: true
+        }
+      });
+      actor.start();
+
+      // Setup events
+
+      expect(CieManager.addListener).toHaveBeenCalledTimes(3);
+      expect(CieManager.addListener).toHaveBeenNthCalledWith(
+        1,
+        "onEvent",
+        expect.any(Function)
+      );
+      expect(CieManager.addListener).toHaveBeenNthCalledWith(
+        2,
+        "onError",
+        expect.any(Function)
+      );
+      expect(CieManager.addListener).toHaveBeenNthCalledWith(
+        3,
+        "onSuccess",
+        expect.any(Function)
+      );
+
+      expect(CieManager.stopReading).not.toHaveBeenCalled();
+
+      expect(actor.getSnapshot().status).toBe("active");
+    });
+  });
 });
