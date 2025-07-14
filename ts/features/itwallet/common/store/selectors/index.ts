@@ -17,7 +17,6 @@ import {
   ItwJwtCredentialStatus,
   StoredCredential
 } from "../../utils/itwTypesUtils";
-import { CredentialType } from "../../utils/itwMocksUtils";
 import {
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,

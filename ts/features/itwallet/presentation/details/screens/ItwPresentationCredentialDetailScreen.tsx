@@ -51,7 +51,6 @@ import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
 import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
 import { selectIsLoading } from "../../proximity/machine/selectors.ts";
 import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
-import { ItwPresentationWalletUpgradeMDLDetailsBanner } from "../components/ItwPresentationWalletUpgradeMDLDetailsBanner.tsx";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
