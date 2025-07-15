@@ -1,17 +1,18 @@
 /* eslint-disable no-underscore-dangle */
-import { H6, RadioGroup } from "@pagopa/io-app-design-system";
+import { H6, IOToast, RadioGroup } from "@pagopa/io-app-design-system";
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   multiRequiredCriteriaSelector,
   selectCurrentMultiSelfDeclarationPage
 } from "../machine/selectors";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 
 const IdPayMultiValuePrerequisitesScreen = () => {
   const pagerRef = useRef<PagerView>(null);
@@ -59,21 +60,27 @@ const MultiValuePrerequisiteItemScreenContent = ({
   >(undefined);
 
   const handleContinuePress = () => {
-    if (selectedValueIndex !== undefined) {
-      machine.send({
-        type: "select-multi-consent",
-        data: {
-          _type: selfDeclaration._type,
-          value: selfDeclaration.value[selectedValueIndex],
-          code: selfDeclaration.code
-        }
-      });
+    if (selectedValueIndex === undefined) {
+      IOToast.error(
+        I18n.t("idpay.onboarding.boolPrerequisites.emptyValueError")
+      );
+      return;
     }
+    machine.send({
+      type: "select-multi-consent",
+      data: {
+        _type: selfDeclaration._type,
+        value: selfDeclaration.value[selectedValueIndex],
+        code: selfDeclaration.code
+      }
+    });
   };
+
   const handleGoBack = () => machine.send({ type: "back" });
 
   return (
     <IOScrollViewWithLargeHeader
+      topElement={<IdPayOnboardingStepper />}
       title={{
         label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
         section: I18n.t("idpay.onboarding.headerTitle")
@@ -86,7 +93,6 @@ const MultiValuePrerequisiteItemScreenContent = ({
         type: "SingleButton",
         primary: {
           onPress: handleContinuePress,
-          disabled: selectedValueIndex === undefined,
           label: I18n.t("global.buttons.continue")
         }
       }}
