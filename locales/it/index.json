@@ -4698,6 +4698,10 @@
           "title": "Documento in arrivo",
           "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
           "primaryAction": "Ho capito"
+        },
+        "cieNotRegistered": {
+          "title": "Registra la CIE in app CieID per continuare",
+          "subtitle": "Per ottenere IT-Wallet, completa prima la registrazione della tua CIE in app CieID e poi riprova."
         }
       },
       "notMatchingIdentityScreen": {
@@ -5716,11 +5720,12 @@
         "cancelAction": "Annulla"
       },
       "enableNotification": {
-        "title": "Non rischiare di perdere l'esito della tua richiesta",
+        "title": "Non perderti l’esito delle tue richieste",
         "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
-        "action": "Attiva le notifiche",
-        "deny": "Non ora",
-        "success": "Hai attivato le notifiche push"
+        "action": "Attiva notifiche push",
+        "deny": "Non attivare",
+        "success": "Hai attivato le notifiche push",
+        "advice": "Consigliato"
       }
     },
     "configuration": {
