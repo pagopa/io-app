@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "3.9.0-rc.5",
+  "version": "3.9.0-rc.6",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -62,7 +62,7 @@
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-cie": "^1.0.1",
     "@pagopa/io-react-native-cieid": "^0.3.5",
-    "@pagopa/io-react-native-crypto": "^1.0.1",
+    "@pagopa/io-react-native-crypto": "^1.2.2",
     "@pagopa/io-react-native-http-client": "1.0.5",
     "@pagopa/io-react-native-integrity": "^0.3.2",
     "@pagopa/io-react-native-jwt": "^2.1.0",
@@ -103,7 +103,7 @@
     "hastscript": "^7.0.2",
     "hoist-non-react-statics": "^3.0.1",
     "io-ts": "^2.2.16",
-    "jail-monkey": "^2.8.0",
+    "jail-monkey": "^2.8.3",
     "jwk-thumbprint": "^0.1.4",
     "lodash": "^4.17.21",
     "lottie-react-native": "^7.2.2",

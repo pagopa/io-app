@@ -5,6 +5,7 @@ import { SelfDeclarationTextDTO } from "../../../../../definitions/idpay/SelfDec
 export type StartOnboarding = {
   readonly type: "start-onboarding";
   readonly serviceId: string;
+  readonly hasInbox: boolean;
 };
 
 export type ToggleBoolCriteria = {
