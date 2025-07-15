@@ -176,34 +176,39 @@ export const insertNewLinesIfNeededOnMatch = (
 ): string => {
   const matchStartIndex = imageMatch.index;
   const matchEndIndex = matchStartIndex + imageMatch[0].length;
-  const sanitizedMarkdownContent = insertNewLineAtIndexIfNeeded(
-    markdownContent,
-    matchEndIndex
-  );
-  return insertNewLineAtIndexIfNeeded(
-    sanitizedMarkdownContent,
-    matchStartIndex - 1,
-    true
-  );
-};
 
-const insertNewLineAtIndexIfNeeded = (
-  markdownContent: string,
-  baseIndex: number,
-  insertAfterIndex: boolean = false
-) => {
-  if (baseIndex >= 0 && baseIndex < markdownContent.length) {
-    const character = markdownContent[baseIndex];
-    if (character !== "\n") {
-      const index = insertAfterIndex ? baseIndex + 1 : baseIndex;
-      return [
-        markdownContent.slice(0, index),
-        "\n\n",
-        markdownContent.slice(index)
-      ].join("");
-    }
+  // eslint-disable-next-line functional/no-let
+  let result = markdownContent;
+
+  // Check and add newlines before start index
+  const beforeSubstring = result.substring(0, matchStartIndex);
+  const newlinesBefore = (beforeSubstring.match(/\n/g) || []).length;
+
+  // eslint-disable-next-line functional/no-let
+  let endIndexAfterFirstInsertion = matchEndIndex;
+  if (newlinesBefore < 2) {
+    const newlinesToAdd = 2 - newlinesBefore;
+    const newlinesPrefix = "\n".repeat(newlinesToAdd);
+    result =
+      beforeSubstring + newlinesPrefix + result.substring(matchStartIndex);
+    // Update endIndex since we modified the string
+    endIndexAfterFirstInsertion += newlinesToAdd;
   }
-  return markdownContent;
+
+  // Check and add newlines after end index
+  const afterSubstring = result.substring(endIndexAfterFirstInsertion);
+  const newlinesAfter = (afterSubstring.match(/\n/g) || []).length;
+
+  if (newlinesAfter < 2) {
+    const newlinesToAdd = 2 - newlinesAfter;
+    const newlinesSuffix = "\n".repeat(newlinesToAdd);
+    result =
+      result.substring(0, endIndexAfterFirstInsertion) +
+      newlinesSuffix +
+      afterSubstring;
+  }
+
+  return result;
 };
 
 export const isTxtParentNode = (node: TxtNode): node is TxtParentNode =>
