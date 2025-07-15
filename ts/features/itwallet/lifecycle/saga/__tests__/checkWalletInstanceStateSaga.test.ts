@@ -15,13 +15,17 @@ import {
   getStatusOrResetWalletInstance
 } from "../checkWalletInstanceStateSaga";
 import { handleWalletInstanceResetSaga } from "../handleWalletInstanceResetSaga";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn
 }));
 
 describe("checkWalletInstanceStateSaga", () => {
+  const mockPid = {
+    credentialType: "PersonIdentificationData",
+    credentialId: "dc_sd_jwt_PersonIdentificationData",
+    format: "dc+sd-jwt"
+  } as StoredCredential;
   // TODO: improve the mocked store's typing, do not use DeepPartial
   it("Does not check the wallet state when the wallet is INSTALLED", () => {
     const store: DeepPartial<GlobalState> = {
@@ -106,7 +110,7 @@ describe("checkWalletInstanceStateSaga", () => {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
           },
           credentials: {
-            credentials: { [CredentialType.PID]: {} as StoredCredential }
+            credentials: { [mockPid.credentialId]: mockPid }
           },
           environment: {
             env: "prod"
@@ -136,7 +140,7 @@ describe("checkWalletInstanceStateSaga", () => {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
           },
           credentials: {
-            credentials: { [CredentialType.PID]: {} as StoredCredential }
+            credentials: { [mockPid.credentialId]: mockPid }
           },
           environment: {
             env: "prod"
@@ -164,7 +168,7 @@ describe("checkWalletInstanceStateSaga", () => {
         itWallet: {
           issuance: { integrityKeyTag: O.none },
           credentials: {
-            credentials: { [CredentialType.PID]: {} as StoredCredential }
+            credentials: { [mockPid.credentialId]: mockPid }
           }
         }
       }
