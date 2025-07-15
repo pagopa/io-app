@@ -1,8 +1,7 @@
 import { Trust } from "@pagopa/io-react-native-wallet-v2";
 
 /**
- * This file contains utility functions and types related to handling
- * failures in the context of common xStare flows
+ * This file contains utility functions related to failures in the context of common xState flows
  */
 
 /**
