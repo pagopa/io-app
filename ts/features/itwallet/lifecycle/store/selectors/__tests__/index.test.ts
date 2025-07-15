@@ -36,7 +36,11 @@ describe("IT Wallet lifecycle selectors", () => {
       applicationChangeState("active"),
       itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3"),
       itwCredentialsStore([
-        { credentialType: CredentialType.PID }
+        {
+          credentialType: CredentialType.PID,
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          format: "dc+sd-jwt"
+        }
       ] as Array<StoredCredential>)
     ]);
     expect(itwLifecycleIsInstalledSelector(globalState)).toEqual(false);
@@ -60,7 +64,12 @@ describe("IT Wallet lifecycle selectors", () => {
         applicationChangeState("active"),
         itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3"),
         itwCredentialsStore([
-          { credentialType: CredentialType.PID, credential }
+          {
+            credentialType: CredentialType.PID,
+            credential,
+            credentialId: "dc_sd_jwt_PersonIdentificationData",
+            format: "dc+sd-jwt"
+          }
         ] as Array<StoredCredential>)
       ]);
       expect(itwLifecycleIsInstalledSelector(globalState)).toEqual(false);

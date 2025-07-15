@@ -18,6 +18,8 @@ export type Context = {
   readonly activeTextConsentPage: number;
   readonly selfDeclarationsTextAnswers: Record<string, SelfDeclarationTextDTO>;
   readonly isPushNotificationsEnabled: boolean;
+  readonly hasInbox: boolean;
+  readonly currentStep: number;
 };
 
 export const InitialContext: Context = {
@@ -31,5 +33,7 @@ export const InitialContext: Context = {
   failure: O.none,
   activeTextConsentPage: 0,
   selfDeclarationsTextAnswers: {},
-  isPushNotificationsEnabled: false
+  isPushNotificationsEnabled: false,
+  hasInbox: false,
+  currentStep: 0
 };
