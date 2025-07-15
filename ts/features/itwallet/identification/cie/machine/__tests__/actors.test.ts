@@ -1,7 +1,7 @@
 import { createActor, waitFor } from "xstate";
 import { CieManager } from "@pagopa/io-react-native-cie";
 import { cieMachineActors, StartCieManagerInput } from "../actors";
-import { getCieUatEndpoint } from "../../../../../authentication/login/cie/utils/endpoints";
+import { cieUatEndpoint } from "../../utils/endpoints";
 
 // Mock the CieManager
 jest.mock("@pagopa/io-react-native-cie", () => ({
@@ -42,7 +42,7 @@ describe("CIE Machine Actors", () => {
       await waitFor(actor, state => state.status === "done");
 
       expect(mockCieManager.setCustomIdpUrl).toHaveBeenCalledWith(
-        getCieUatEndpoint()
+        cieUatEndpoint
       );
 
       expect(mockCieManager.startReading).toHaveBeenCalledWith(
