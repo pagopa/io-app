@@ -170,6 +170,14 @@ export const sanitizeMarkdownForImages = (
   );
 };
 
+const anyWhitespaceCharacterButNewLineSet = new Set([
+  " ",
+  "\t",
+  "\r",
+  "\f",
+  "\v"
+]);
+
 export const insertNewLinesIfNeededOnMatch = (
   markdownContent: string,
   imageMatch: RegExpExecArray
@@ -178,37 +186,47 @@ export const insertNewLinesIfNeededOnMatch = (
   const matchEndIndex = matchStartIndex + imageMatch[0].length;
 
   // eslint-disable-next-line functional/no-let
-  let result = markdownContent;
-
-  // Check and add newlines before start index
-  const beforeSubstring = result.substring(0, matchStartIndex);
-  const newlinesBefore = (beforeSubstring.match(/\n/g) || []).length;
+  let endNewLineOccurrences = 0;
+  // eslint-disable-next-line functional/no-let
+  let j = matchEndIndex;
+  while (j < markdownContent.length) {
+    const character = markdownContent[j];
+    if (character === "\n") {
+      endNewLineOccurrences++;
+    } else if (!anyWhitespaceCharacterButNewLineSet.has(character)) {
+      break;
+    }
+    j++;
+  }
+  const newLinesToAddToEnd = "\n".repeat(
+    Math.max(0, 2 - endNewLineOccurrences)
+  );
+  const intermediateMarkdownContent =
+    markdownContent.slice(0, matchEndIndex) +
+    newLinesToAddToEnd +
+    markdownContent.slice(matchEndIndex);
 
   // eslint-disable-next-line functional/no-let
-  let endIndexAfterFirstInsertion = matchEndIndex;
-  if (newlinesBefore < 2) {
-    const newlinesToAdd = 2 - newlinesBefore;
-    const newlinesPrefix = "\n".repeat(newlinesToAdd);
-    result =
-      beforeSubstring + newlinesPrefix + result.substring(matchStartIndex);
-    // Update endIndex since we modified the string
-    endIndexAfterFirstInsertion += newlinesToAdd;
+  let startNewLineOccurrences = 0;
+  // eslint-disable-next-line functional/no-let
+  let i = Math.max(0, matchStartIndex - 1);
+  while (i >= 0) {
+    const character = intermediateMarkdownContent[i];
+    if (character === "\n") {
+      startNewLineOccurrences++;
+    } else if (!anyWhitespaceCharacterButNewLineSet.has(character)) {
+      break;
+    }
+    i--;
   }
-
-  // Check and add newlines after end index
-  const afterSubstring = result.substring(endIndexAfterFirstInsertion);
-  const newlinesAfter = (afterSubstring.match(/\n/g) || []).length;
-
-  if (newlinesAfter < 2) {
-    const newlinesToAdd = 2 - newlinesAfter;
-    const newlinesSuffix = "\n".repeat(newlinesToAdd);
-    result =
-      result.substring(0, endIndexAfterFirstInsertion) +
-      newlinesSuffix +
-      afterSubstring;
-  }
-
-  return result;
+  const newLinesToAddToStart = "\n".repeat(
+    Math.max(0, 2 - startNewLineOccurrences)
+  );
+  return (
+    intermediateMarkdownContent.slice(0, matchStartIndex) +
+    newLinesToAddToStart +
+    intermediateMarkdownContent.slice(matchStartIndex)
+  );
 };
 
 export const isTxtParentNode = (node: TxtNode): node is TxtParentNode =>
