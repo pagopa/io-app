@@ -54,7 +54,6 @@ export const itwCieMachine = setup({
     WaitingForUrl: {
       description:
         "Waits for the service provider url to start the authentication flow",
-      entry: "resetReadingState",
       on: {
         "set-service-provider-url": {
           actions: assign(({ event }) => ({ serviceProviderUrl: event.url })),
@@ -71,6 +70,7 @@ export const itwCieMachine = setup({
     ReadingCard: {
       description:
         "Starts the NFC card read and listens for NFC events, errors ans success",
+      entry: "resetReadingState",
       invoke: {
         src: "startCieManager",
         id: "startCieManager",
@@ -134,7 +134,7 @@ export const itwCieMachine = setup({
       entry: "trackError",
       on: {
         retry: {
-          target: "WaitingForUrl"
+          target: "ReadingCard"
         }
       }
     }

@@ -202,7 +202,7 @@ describe("itwCieMachine", () => {
       type: "retry"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("WaitingForUrl");
+    expect(actor.getSnapshot().value).toStrictEqual("ReadingCard");
     expect(actor.getSnapshot().context).toStrictEqual({
       ...initialContext
     });
