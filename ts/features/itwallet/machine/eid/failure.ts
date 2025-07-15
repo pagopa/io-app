@@ -5,6 +5,7 @@ import {
 } from "@pagopa/io-react-native-integrity";
 import { CryptoError, CryptoErrorCodes } from "@pagopa/io-react-native-crypto";
 import { Trust } from "@pagopa/io-react-native-wallet-v2";
+import { isFederationError } from "../../common/utils/itwFailureUtils";
 import { type EidIssuanceEvents } from "./events";
 
 const {
@@ -12,14 +13,6 @@ const {
   isWalletProviderResponseError,
   WalletProviderResponseErrorCodes: Codes
 } = Errors;
-
-/**
- * Guard used to check if the error is a `FederationError`.
- */
-export const isFederationError = (
-  error: unknown
-): error is Trust.Errors.FederationError =>
-  error instanceof Trust.Errors.FederationError;
 
 export enum IssuanceFailureType {
   UNEXPECTED = "UNEXPECTED",
