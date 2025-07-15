@@ -32,6 +32,7 @@ import CieCardReadingAnimation, {
   ReadingState
 } from "../../../../authentication/login/cie/components/CieCardReadingAnimation";
 import {
+  ItwFlow,
   trackItWalletCieCardReading,
   trackItWalletCieCardReadingFailure,
   trackItWalletCieCardReadingSuccess,
@@ -41,6 +42,7 @@ import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDial
 import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { getEnv } from "../../../common/utils/environment";
 import {
+  isL3FeaturesEnabledSelector,
   selectAuthUrlOption,
   selectCiePin
 } from "../../../machine/eid/selectors";
@@ -136,13 +138,14 @@ const getTextForState = (
 };
 
 const getMixpanelHandler = (
-  state: ReadingState
+  state: ReadingState,
+  itw_flow: ItwFlow
 ): ((...args: Array<unknown>) => void) => {
   const events: Record<ReadingState, (...args: Array<unknown>) => void> = {
     [ReadingState.waiting_card]: () => null,
     [ReadingState.reading]: () => null,
     [ReadingState.completed]: () => null,
-    [ReadingState.error]: trackItWalletErrorCardReading
+    [ReadingState.error]: () => trackItWalletErrorCardReading(itw_flow)
   };
   return events[state];
 };
@@ -155,8 +158,16 @@ export const ItwCieCardReaderScreen = () => {
   const navigation = useNavigation<StackNavigationProp<ItwParamsList>>();
   const env = useIOSelector(selectItwEnv);
   const { ISSUANCE_REDIRECT_URI } = getEnv(env);
+  const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+  const itw_flow = isL3Enabled ? "L3" : "L2";
 
-  useFocusEffect(trackItWalletCieCardReading);
+  useFocusEffect(
+    useCallback(() => {
+      trackItWalletCieCardReading(itw_flow);
+    }, [itw_flow])
+  );
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const ciePin = ItwEidIssuanceMachineContext.useSelector(selectCiePin);
@@ -196,7 +207,7 @@ export const ItwCieCardReaderScreen = () => {
     handleAccessibilityAnnouncement(event);
     // Wait a few seconds before showing the consent web view to display the success message
     if (event === Cie.CieEvent.completed) {
-      trackItWalletCieCardReadingSuccess();
+      trackItWalletCieCardReadingSuccess(itw_flow);
       setTimeout(
         () => {
           setIdentificationStep(IdentificationStep.CONSENT);
@@ -216,7 +227,10 @@ export const ItwCieCardReaderScreen = () => {
         break;
       case Cie.CieErrorType.NFC_ERROR:
         if (error.message === "APDU not supported") {
-          trackItWalletCieCardReadingFailure({ reason: error.message });
+          trackItWalletCieCardReadingFailure({
+            reason: error.message,
+            itw_flow
+          });
         }
         setReadingState(ReadingState.error);
         break;
@@ -227,7 +241,10 @@ export const ItwCieCardReaderScreen = () => {
         });
         break;
       case Cie.CieErrorType.TAG_NOT_VALID:
-        trackItWalletCieCardReadingFailure({ reason: "unknown card" });
+        trackItWalletCieCardReadingFailure({
+          reason: "unknown card",
+          itw_flow
+        });
         navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD);
         break;
       case Cie.CieErrorType.CERTIFICATE_ERROR:
@@ -236,7 +253,7 @@ export const ItwCieCardReaderScreen = () => {
       case Cie.CieErrorType.GENERIC:
       case Cie.CieErrorType.AUTHENTICATION_ERROR:
       default:
-        trackItWalletCieCardReadingFailure({ reason: "KO" });
+        trackItWalletCieCardReadingFailure({ reason: "KO", itw_flow });
         navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR);
         break;
     }
@@ -274,7 +291,7 @@ export const ItwCieCardReaderScreen = () => {
       isScreenReaderEnabled
     );
 
-    getMixpanelHandler(readingState)();
+    getMixpanelHandler(readingState, itw_flow)();
 
     return (
       <ScrollView
