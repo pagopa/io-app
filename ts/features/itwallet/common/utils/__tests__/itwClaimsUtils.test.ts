@@ -7,7 +7,8 @@ import {
   getCredentialExpireDays,
   getFiscalCodeFromCredential,
   ImageClaim,
-  SimpleDateClaim
+  SimpleDateClaim,
+  SimpleListClaim
 } from "../itwClaimsUtils";
 import { StoredCredential } from "../itwTypesUtils";
 import { ItwStoredCredentialsMocks } from "../itwMocksUtils";
@@ -235,5 +236,16 @@ describe("SimpleDateClaim", () => {
       const paddedDate = paddedResult.right;
       expect(paddedDate.toString()).toBe("19/11/2024");
     }
+  });
+});
+
+describe("SimpleListClaim", () => {
+  it.each([
+    [["IT"], true],
+    [["IT", "EN"], true],
+    ["not_a_list", false],
+    [123, false]
+  ])("should evaluate a claim of %p as %p", (data, expected) => {
+    expect(SimpleListClaim.is(data)).toBe(expected);
   });
 });
