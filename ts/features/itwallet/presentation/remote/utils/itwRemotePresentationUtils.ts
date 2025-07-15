@@ -42,28 +42,33 @@ export const enrichPresentationDetails = (
   presentationDetails: PresentationDetails,
   credentialsByType: Record<string, StoredCredential | undefined>
 ): EnrichedPresentationDetails =>
-  presentationDetails
-    // We filter out credentials that are not present in the credentialsByType map
-    // so they will not be shown in the UI (the Wallet Attestation)
-    .filter(details => !!credentialsByType[details.vct])
-    .map(details => {
-      const credential = credentialsByType[details.vct] as StoredCredential;
+  presentationDetails.map(details => {
+    const credential = credentialsByType[details.vct];
 
-      const parsedClaims = parseClaims(credential.parsedCredential, {
-        exclude: [WellKnownClaim.unique_id]
-      });
-
+    // When the credential is not found, it is not available as a `StoredCredential`, so we hide it from the user.
+    // The raw credential is still used for the presentation. Currently this only happens for the Wallet Attestation.
+    if (!credential) {
       return {
         ...details,
-        // Only include claims that are part of the parsed credential
-        // This ensures that technical claims like `iat` are not displayed to the user
-        claimsToDisplay: details.requiredDisclosures
-          .map(([, claimName]) =>
-            parsedClaims.find(({ id }) => id === claimName)
-          )
-          .filter(isDefined)
+        claimsToDisplay: [], // Hide from user
+        credentialType: details.vct
       };
+    }
+
+    const parsedClaims = parseClaims(credential.parsedCredential, {
+      exclude: [WellKnownClaim.unique_id]
     });
+
+    return {
+      ...details,
+      credentialType: credential.credentialType,
+      // Only include claims that are part of the parsed credential
+      // This ensures that technical claims like `iat` are not displayed to the user
+      claimsToDisplay: details.requiredDisclosures
+        .map(([, claimName]) => parsedClaims.find(({ id }) => id === claimName))
+        .filter(isDefined)
+    };
+  });
 
 type PresentationDetail = EnrichedPresentationDetails[number];
 

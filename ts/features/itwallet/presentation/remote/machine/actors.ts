@@ -1,7 +1,6 @@
-import { Credential } from "@pagopa/io-react-native-wallet";
 import { fromPromise } from "xstate";
 import * as O from "fp-ts/lib/Option";
-import { Trust } from "@pagopa/io-react-native-wallet-v2";
+import { Trust, Credential } from "@pagopa/io-react-native-wallet-v2";
 import {
   DcqlQuery,
   EnrichedPresentationDetails,
@@ -156,7 +155,7 @@ export const createRemoteActorsImplementation = (
 
     const credentialsSdJwt = [
       walletAttestationSdJwt && [WIA_KEYTAG, walletAttestationSdJwt],
-      Object.values(credentialsByVct).map(c => [c.keyTag, c.credential])
+      ...Object.values(credentialsByVct).map(c => [c.keyTag, c.credential])
     ].filter(Boolean) as Array<[string, string]>;
 
     // Evaluate the DCQL query against the credentials contained in the Wallet
@@ -167,7 +166,7 @@ export const createRemoteActorsImplementation = (
 
     // Check whether any of the requested credential is invalid
     const invalidCredentials = getInvalidCredentials(
-      result.map(c => credentialsByVct[c.vct])
+      result.map(c => credentialsByVct[c.vct]).filter(Boolean)
     );
 
     if (invalidCredentials.length > 0) {
