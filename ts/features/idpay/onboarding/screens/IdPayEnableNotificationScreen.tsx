@@ -1,6 +1,7 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { Badge, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
+import { View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
@@ -30,6 +31,16 @@ const IdPayEnableNotificationScreen = () => {
 
   return (
     <OperationResultScreenContent
+      topElement={
+        <View style={{ alignItems: "center" }}>
+          <VSpacer size={8} />
+          <Badge
+            text={I18n.t("idpay.onboarding.enableNotification.advice")}
+            variant="highlight"
+          />
+          <VSpacer size={8} />
+        </View>
+      }
       pictogram="reactivate"
       title={I18n.t("idpay.onboarding.enableNotification.title")}
       subtitle={I18n.t("idpay.onboarding.enableNotification.subtitle")}
