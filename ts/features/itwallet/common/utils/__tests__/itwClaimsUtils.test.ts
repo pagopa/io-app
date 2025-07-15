@@ -243,6 +243,7 @@ describe("SimpleListClaim", () => {
   it.each([
     [["IT"], true],
     [["IT", "EN"], true],
+    [[{ item: 1 }, { item: 2 }], false],
     ["not_a_list", false],
     [123, false]
   ])("should evaluate a claim of %p as %p", (data, expected) => {
