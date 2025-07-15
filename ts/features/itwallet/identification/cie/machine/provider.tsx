@@ -3,8 +3,8 @@ import { PropsWithChildren } from "react";
 import { useScreenReaderEnabled } from "../../../../../utils/accessibility";
 import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { useIOSelector } from "../../../../../store/hooks";
-import actions from "./actions";
-import actors from "./actors";
+import { cieMachineActions } from "./actions";
+import { cieMachineActors } from "./actors";
 import { itwCieMachine } from "./machine";
 
 export const ItwCieMachineContext = createActorContext(itwCieMachine);
@@ -22,7 +22,10 @@ export const ItwCieMachineProvider = ({
   isL3
 }: PropsWithChildren<ProviderProps>) => {
   const isScreenReaderEnabled = useScreenReaderEnabled();
-  const eidIssuanceMachine = itwCieMachine.provide({ actions, actors });
+  const eidIssuanceMachine = itwCieMachine.provide({
+    actions: cieMachineActions,
+    actors: cieMachineActors
+  });
   const env = useIOSelector(selectItwEnv);
 
   return (

@@ -19,7 +19,7 @@ export type CieManagerActorInput = {
   isScreenReaderEnabled: boolean;
 };
 
-export default {
+export const cieMachineActors = {
   startCieManager: fromPromise<void, StartCieManagerInput>(
     async ({ input }) => {
       assert(input.serviceProviderUrl, "serviceProviderUrl should be defined");

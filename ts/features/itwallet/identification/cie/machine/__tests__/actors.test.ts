@@ -1,6 +1,6 @@
 import { createActor, waitFor } from "xstate";
 import { CieManager } from "@pagopa/io-react-native-cie";
-import actors, { StartCieManagerInput } from "../actors";
+import { cieMachineActors, StartCieManagerInput } from "../actors";
 import { getCieUatEndpoint } from "../../../../../authentication/login/cie/utils/endpoints";
 
 // Mock the CieManager
@@ -34,7 +34,7 @@ describe("CIE Machine Actors", () => {
         env: "pre"
       };
 
-      const actor = createActor(actors.startCieManager, {
+      const actor = createActor(cieMachineActors.startCieManager, {
         input: validInput
       });
       actor.start();
@@ -58,7 +58,7 @@ describe("CIE Machine Actors", () => {
         env: "prod"
       };
 
-      const actor = createActor(actors.startCieManager, {
+      const actor = createActor(cieMachineActors.startCieManager, {
         input: validInput
       });
       actor.start();
@@ -79,7 +79,7 @@ describe("CIE Machine Actors", () => {
         env: "pre"
       };
 
-      const actor = createActor(actors.startCieManager, {
+      const actor = createActor(cieMachineActors.startCieManager, {
         input: invalidInput
       });
 
@@ -96,7 +96,7 @@ describe("CIE Machine Actors", () => {
 
       mockCieManager.startReading.mockRejectedValue("");
 
-      const actor = createActor(actors.startCieManager, {
+      const actor = createActor(cieMachineActors.startCieManager, {
         input: validInput
       });
 
@@ -106,7 +106,7 @@ describe("CIE Machine Actors", () => {
 
   describe("cieManagerActor", () => {
     it("should setup listeners and keep listening for events", async () => {
-      const actor = createActor(actors.cieManagerActor, {
+      const actor = createActor(cieMachineActors.cieManagerActor, {
         input: {
           isScreenReaderEnabled: true
         }

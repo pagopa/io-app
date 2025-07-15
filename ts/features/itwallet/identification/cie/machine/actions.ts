@@ -34,7 +34,7 @@ export const getProgressEmojis = (progress: number) => {
   return blueDotEmoji.repeat(blueDots) + whiteDotyEmoji.repeat(whiteDots);
 };
 
-export default {
+export const cieMachineActions = {
   /**
    * Configures the (idle) status alerts for the iOS NFC system dialog
    */
