@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import * as E from "fp-ts/lib/Either";
 
@@ -8,7 +9,17 @@ jest.mock("./../barcodeDetectionTask", () => ({
 import { QRCodeScanResult } from "rn-qr-generator";
 import { BarcodeFailure } from "../../types/failure";
 import { imageDecodingTask } from "../imageDecodingTask";
-import { barcodeDetectionTask } from "./../barcodeDetectionTask";
+import { barcodeDetectionTask } from "../barcodeDetectionTask";
+import { GlobalState } from "../../../../store/reducers/types";
+
+const mockGlobalState = {
+  remoteConfig: O.some({
+    pn: {
+      aarQRCodeRegex:
+        "^\\s*https:\\/\\/(dev\\.|test\\.|hotfix\\.|uat\\.)?cittadini\\.notifichedigitali\\.it(\\/[^?]*)?\\?aar=[^\\s]+"
+    }
+  })
+} as GlobalState;
 
 describe("imageDecodingTask", () => {
   beforeEach(() => {
@@ -21,7 +32,7 @@ describe("imageDecodingTask", () => {
       (): TE.TaskEither<BarcodeFailure, QRCodeScanResult> =>
         TE.left({ reason: "UNEXPECTED" })
     );
-    const result = await imageDecodingTask({ uri: "test" })();
+    const result = await imageDecodingTask(mockGlobalState, { uri: "test" })();
     expect(result).toEqual(E.left({ reason: "UNEXPECTED" }));
   });
 
@@ -30,7 +41,7 @@ describe("imageDecodingTask", () => {
       (): TE.TaskEither<BarcodeFailure, QRCodeScanResult> =>
         TE.right({ type: "QRCode", values: [] })
     );
-    const result = await imageDecodingTask({ uri: "test" })();
+    const result = await imageDecodingTask(mockGlobalState, { uri: "test" })();
     expect(result).toEqual(E.left({ reason: "BARCODE_NOT_FOUND" }));
   });
 
@@ -39,7 +50,7 @@ describe("imageDecodingTask", () => {
       (): TE.TaskEither<BarcodeFailure, QRCodeScanResult> =>
         TE.right({ type: "PDF417", values: ["Hello!"] })
     );
-    const result = await imageDecodingTask({ uri: "test" })();
+    const result = await imageDecodingTask(mockGlobalState, { uri: "test" })();
     expect(result).toEqual(E.left({ reason: "UNSUPPORTED_FORMAT" }));
   });
 
@@ -48,7 +59,9 @@ describe("imageDecodingTask", () => {
       (): TE.TaskEither<BarcodeFailure, QRCodeScanResult> =>
         TE.right({ type: "DataMatrix", values: ["Hello!"] })
     );
-    const result = await imageDecodingTask({ uri: "test" }, ["QR_CODE"])();
+    const result = await imageDecodingTask(mockGlobalState, { uri: "test" }, [
+      "QR_CODE"
+    ])();
     expect(result).toEqual(E.left({ reason: "UNSUPPORTED_FORMAT" }));
   });
 
@@ -57,7 +70,7 @@ describe("imageDecodingTask", () => {
       (): TE.TaskEither<BarcodeFailure, QRCodeScanResult> =>
         TE.right({ type: "QRCode", values: ["Hello!"] })
     );
-    const result = await imageDecodingTask({ uri: "test" })();
+    const result = await imageDecodingTask(mockGlobalState, { uri: "test" })();
     expect(result).toEqual(
       E.left({
         reason: "UNKNOWN_CONTENT",
@@ -79,7 +92,7 @@ describe("imageDecodingTask", () => {
           ]
         })
     );
-    const result = await imageDecodingTask({ uri: "test" })();
+    const result = await imageDecodingTask(mockGlobalState, { uri: "test" })();
     expect(result).toEqual(
       E.right([
         {
@@ -110,7 +123,7 @@ describe("imageDecodingTask", () => {
           ]
         })
     );
-    const result = await imageDecodingTask({ uri: "test" })();
+    const result = await imageDecodingTask(mockGlobalState, { uri: "test" })();
     expect(result).toEqual(
       E.right([
         {
