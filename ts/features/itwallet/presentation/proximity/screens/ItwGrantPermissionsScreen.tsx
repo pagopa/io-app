@@ -9,6 +9,13 @@ import { ItwProximityMachineContext } from "../machine/provider";
 import { selectIsPermissionsRequiredState } from "../machine/selectors";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
+import {
+  trackItwProximityBluetoothAccess,
+  trackItwProximityBluetoothAccessClose,
+  trackItwProximityBluetoothAccessDenied,
+  trackItwProximityBluetoothAccessGoToSettings
+} from "../analytics";
+import { useFocusEffect } from "@react-navigation/native";
 
 export const ItwGrantPermissionsScreen = () => {
   const navigation = useIONavigation();
@@ -19,11 +26,17 @@ export const ItwGrantPermissionsScreen = () => {
 
   useHeaderSecondLevel({
     title: "",
-    goBack: navigation.goBack
+    goBack: () => {
+      trackItwProximityBluetoothAccessClose();
+      navigation.goBack();
+    }
   });
+
+  useFocusEffect(trackItwProximityBluetoothAccess);
 
   useEffect(() => {
     if (isPermissionRequiredState) {
+      trackItwProximityBluetoothAccessDenied();
       Alert.alert(
         I18n.t(
           "features.itWallet.presentation.proximity.permissionsRequired.alert.title"
@@ -94,7 +107,10 @@ export const ItwGrantPermissionsScreen = () => {
       label: I18n.t(
         "features.itWallet.presentation.proximity.grantPermissions.actions.primary"
       ),
-      onPress: openAppSettings
+      onPress: () => {
+        trackItwProximityBluetoothAccessGoToSettings();
+        openAppSettings();
+      }
     },
     secondary: {
       label: I18n.t(

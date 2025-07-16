@@ -30,7 +30,8 @@ export const itwProximityMachine = setup({
     navigateToClaimsDisclosureScreen: notImplemented,
     navigateToSendDocumentsResponseScreen: notImplemented,
     navigateToWallet: notImplemented,
-    closeProximity: notImplemented
+    closeProximity: notImplemented,
+    trackQrCodeGenerationOutcome: notImplemented
   },
   actors: {
     checkPermissions: fromPromise<boolean, void>(notImplemented),
@@ -226,14 +227,21 @@ export const itwProximityMachine = setup({
           invoke: {
             src: "generateQrCodeString",
             onDone: {
-              actions: assign(({ event }) => ({
-                qrCodeString: event.output,
-                isQRCodeGenerationError: false
-              })),
+              actions: [
+                assign(({ event }) => ({
+                  qrCodeString: event.output,
+                  isQRCodeGenerationError: false
+                })),
+                "trackQrCodeGenerationOutcome"
+              ],
               target: "#itwProximityMachine.DeviceCommunication"
             },
             onError: {
-              actions: "setQRCodeGenerationError",
+              actions: [
+                "setQRCodeGenerationError",
+                "trackQrCodeGenerationOutcome",
+                "setFailure"
+              ],
               target: "QRCodeGenerationError"
             }
           }

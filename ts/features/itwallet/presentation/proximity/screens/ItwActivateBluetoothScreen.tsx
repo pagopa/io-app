@@ -9,6 +9,13 @@ import { openBluetoothPreferences } from "../utils";
 import { selectIsBluetoothRequiredState } from "../machine/selectors";
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { useFocusEffect } from "@react-navigation/native";
+import {
+  trackItwProximityBluetoothActivation,
+  trackItwProximityBluetoothActivationClose,
+  trackItwProximityBluetoothActivationGoToSettings,
+  trackItwProximityBluetoothNotActivated
+} from "../analytics";
 
 export const ItwActivateBluetoothScreen = () => {
   const navigation = useIONavigation();
@@ -19,11 +26,17 @@ export const ItwActivateBluetoothScreen = () => {
 
   useHeaderSecondLevel({
     title: "",
-    goBack: navigation.goBack
+    goBack: () => {
+      trackItwProximityBluetoothActivationClose();
+      navigation.goBack();
+    }
   });
+
+  useFocusEffect(trackItwProximityBluetoothActivation);
 
   useEffect(() => {
     if (isBluetoothRequiredState) {
+      trackItwProximityBluetoothNotActivated();
       Alert.alert(
         I18n.t(
           "features.itWallet.presentation.proximity.bluetoothRequired.alert.title"
@@ -85,7 +98,10 @@ export const ItwActivateBluetoothScreen = () => {
       label: I18n.t(
         "features.itWallet.presentation.proximity.activateBluetooth.actions.primary"
       ),
-      onPress: openBluetoothPreferences
+      onPress: () => {
+        trackItwProximityBluetoothActivationGoToSettings();
+        openBluetoothPreferences();
+      }
     },
     secondary: {
       label: I18n.t(

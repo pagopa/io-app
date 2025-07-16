@@ -1,4 +1,4 @@
-import { assign } from "xstate";
+import { ActionArgs, assign } from "xstate";
 import { StackActions } from "@react-navigation/native";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -8,6 +8,10 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 import { itwCredentialsSelector } from "../../../credentials/store/selectors";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
+import {
+  trackItwProximityQrCode,
+  trackItwProximityQrCodeLoadingFailure
+} from "../analytics";
 
 export const createProximityActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -68,5 +72,15 @@ export const createProximityActionsImplementation = (
 
   closeProximity: () => {
     NavigationService.dispatchNavigationAction(StackActions.popToTop());
+  },
+
+  trackQrCodeGenerationOutcome: ({
+    context
+  }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
+    if (context.isQRCodeGenerationError) {
+      trackItwProximityQrCodeLoadingFailure();
+    } else {
+      trackItwProximityQrCode();
+    }
   }
 });

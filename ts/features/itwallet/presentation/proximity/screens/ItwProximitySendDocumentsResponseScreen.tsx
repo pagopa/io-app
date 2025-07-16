@@ -5,6 +5,7 @@ import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwar
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import I18n from "../../../../../i18n.ts";
 import { selectIsSuccess } from "../machine/selectors.ts";
+import { trackItwProximityPresentationCompleted } from "../analytics";
 
 export const ItwProximitySendDocumentsResponseScreen = () => {
   const machineRef = ItwProximityMachineContext.useActorRef();
@@ -19,6 +20,8 @@ export const ItwProximitySendDocumentsResponseScreen = () => {
   // that occurs when any failure causes the machine to transition to the `Failure` state
   if (!isSuccess) {
     return <ItwProximityLoadingStepScreen />;
+  } else {
+    trackItwProximityPresentationCompleted();
   }
 
   return (

@@ -25,6 +25,10 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { assert } from "../../../../../utils/assert";
 import { getError } from "../../../../../utils/errors";
 import { ProximityEvents } from "./events";
+import {
+  trackItwProximityBluetoothBlock,
+  trackItwProximityBluetoothBlockAction
+} from "../analytics";
 
 const PERMISSIONS_TO_CHECK: Array<Permission> =
   Platform.OS === "android"
@@ -71,13 +75,19 @@ export const createProximityActorsImplementation = () => {
     );
 
     if (permissionsToRequest.length > 0) {
+      trackItwProximityBluetoothBlock();
       // Request only the missing permissions
       const requestResults = await requestMultiple(permissionsToRequest);
 
-      // Verify if all requested permissions are granted
-      return permissionsToRequest.every(
+      const allPermissionsGranted = permissionsToRequest.every(
         permission => requestResults[permission] === RESULTS.GRANTED
       );
+
+      const userAction = allPermissionsGranted ? "allow" : "not_allow";
+      trackItwProximityBluetoothBlockAction(userAction);
+
+      // Verify if all requested permissions are granted
+      return allPermissionsGranted;
     }
     return true;
   });
