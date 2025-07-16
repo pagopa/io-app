@@ -4647,6 +4647,13 @@
               "continueAlt": "Aggiungi documento",
               "close": "Continua più tardi"
             }
+          },
+          "successL3": {
+            "title": "Il tuo IT-Wallet è pronto!",
+            "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale di Stato.",
+            "actions": {
+              "continue": "Esplora IT-Wallet"
+            }
           }
         },
         "emptyWallet": {
