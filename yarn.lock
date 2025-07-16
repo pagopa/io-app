@@ -17785,7 +17785,7 @@ __metadata:
 
 "react-native-pdf@patch:react-native-pdf@npm%3A6.7.7#./.yarn/patches/react-native-pdf-npm-6.7.7-7aa1e3a631.patch::locator=italia-app%40workspace%3A.":
   version: 6.7.7
-  resolution: "react-native-pdf@patch:react-native-pdf@npm%3A6.7.7#./.yarn/patches/react-native-pdf-npm-6.7.7-7aa1e3a631.patch::version=6.7.7&hash=31831a&locator=italia-app%40workspace%3A."
+  resolution: "react-native-pdf@patch:react-native-pdf@npm%3A6.7.7#./.yarn/patches/react-native-pdf-npm-6.7.7-7aa1e3a631.patch::version=6.7.7&hash=0e934d&locator=italia-app%40workspace%3A."
   dependencies:
     crypto-js: 4.2.0
     deprecated-react-native-prop-types: ^2.3.0
@@ -17793,7 +17793,7 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-blob-util: ">=0.13.7"
-  checksum: c010a21f505e9825b42a780fe054027c00f205cf2fabdbcc8da66cb27a9406da5c72d58fb1f1d7ced1d08e40b143a020889df6b7ed13450c1780e670a02b9f88
+  checksum: fc3090754994be10532354a60af16c5c6ef3e8bb154a55a8c12dd4cb2269617172cf7081d410d523f04deb01266ef76a46e8da7ab558395d1039856babefa123
   languageName: node
   linkType: hard
 
