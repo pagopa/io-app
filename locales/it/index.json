@@ -5510,7 +5510,7 @@
       "beneficiaryDetails": {
         "infobox": {
           "title": "Cosa ti permette di fare?",
-          "rulesButton": "Leggi le regole"
+          "rulesButton": "Leggi il regolamento"
         },
         "infoModal": {
           "title": "Regole dell'iniziativa",
@@ -5533,7 +5533,7 @@
         "protocolNumber": "Numero di protocollo",
         "lastUpdate": "Saldo aggiornato al {{dateString}}",
         "buttons": {
-          "privacy": "Preferenze & Privacy",
+          "privacy": "Preferenze e Privacy",
           "unsubscribe": "Rimuovi {{initiativeName}}",
           "requestHelp": "Chiedi aiuto"
         }
