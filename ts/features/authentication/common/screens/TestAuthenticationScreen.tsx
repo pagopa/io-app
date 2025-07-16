@@ -24,7 +24,7 @@ import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isMixpanelEnabled } from "../../../../store/reducers/persistedPreferences";
 import { getAppVersion } from "../../../../utils/appVersion";
-import { handleRegenerateEphermeralKey } from "../../../lollipop";
+import { handleRegenerateEphemeralKey } from "../../../lollipop";
 import { ephemeralKeyTagSelector } from "../../../lollipop/store/reducers/lollipop";
 import { testLoginCleanUp, testLoginRequest } from "../../common/store/actions";
 import { testLoginSelector } from "../store/reducers/testLogin";
@@ -125,7 +125,7 @@ const TestAuthenticationScreen = () => {
         O.map((keyTag: string) =>
           TE.tryCatch(
             () =>
-              handleRegenerateEphermeralKey(keyTag, mixpanelEnabled, dispatch),
+              handleRegenerateEphemeralKey(keyTag, mixpanelEnabled, dispatch),
             E.toError
           )
         ),

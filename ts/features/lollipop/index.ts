@@ -16,8 +16,8 @@ import { SignatureAlgorithm } from "./httpSignature/types/SignatureAlgorithms";
 import { SignatureComponents } from "./httpSignature/types/SignatureComponents";
 import { toCryptoError } from "./utils/crypto";
 import {
-  lollipopRemoveEphermeralPublicKey,
-  lollipopSetEphermeralPublicKey
+  lollipopRemoveEphemeralPublicKey,
+  lollipopSetEphemeralPublicKey
 } from "./store/actions/lollipop";
 
 export type LollipopConfig = {
@@ -76,7 +76,7 @@ export const chainSignPromises = (
  * Regenerate publicKey, it returns a Promise
  * with publicKey, if it was succesfully generated
  */
-export const handleRegenerateEphermeralKey = (
+export const handleRegenerateEphemeralKey = (
   keyTag: string,
   isMixpanelEnabled: boolean | null,
   dispatch: AppDispatch
@@ -90,11 +90,11 @@ export const handleRegenerateEphermeralKey = (
         if (isMixpanelEnabled) {
           trackLollipopKeyGenerationFailure(error.message);
         }
-        dispatch(lollipopRemoveEphermeralPublicKey());
+        dispatch(lollipopRemoveEphemeralPublicKey());
         return T.of(undefined);
       },
       key => {
-        dispatch(lollipopSetEphermeralPublicKey({ publicKey: key }));
+        dispatch(lollipopSetEphemeralPublicKey({ publicKey: key }));
         if (isMixpanelEnabled) {
           trackLollipopKeyGenerationSuccess(key.kty);
         }

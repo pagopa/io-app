@@ -18,7 +18,7 @@ import {
 } from "../utils/login";
 import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
-import { getLollipopLoginHeaders, handleRegenerateEphermeralKey } from "..";
+import { getLollipopLoginHeaders, handleRegenerateEphemeralKey } from "..";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../authentication/login/cie/utils";
 import { selectedIdentityProviderSelector } from "../../authentication/common/store/selectors";
@@ -83,7 +83,7 @@ export const useLollipopLoginSource = (
 
     void pipe(
       () =>
-        handleRegenerateEphermeralKey(
+        handleRegenerateEphemeralKey(
           ephemeralKeyTag,
           mixpanelEnabled,
           dispatch

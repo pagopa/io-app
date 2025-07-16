@@ -1,9 +1,9 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import {
   lollipopKeyTagSave,
-  lollipopRemoveEphermeralPublicKey,
+  lollipopRemoveEphemeralPublicKey,
   lollipopRemovePublicKey,
-  lollipopSetEphermeralPublicKey,
+  lollipopSetEphemeralPublicKey,
   lollipopSetPublicKey,
   lollipopSetSupportedDevice
 } from "../lollipop";
@@ -34,13 +34,13 @@ describe("Lollipop Actions", () => {
     const payload: { publicKey: PublicKey } = {
       publicKey: "test-ephemeral-key" as unknown as PublicKey
     };
-    const action = lollipopSetEphermeralPublicKey(payload);
+    const action = lollipopSetEphemeralPublicKey(payload);
     expect(action.type).toBe("LOLLIPOP_SET_EPHEMERAL_PUBLIC_KEY");
     expect(action.payload).toEqual(payload);
   });
 
   it("should create an action to remove an ephemeral public key", () => {
-    const action = lollipopRemoveEphermeralPublicKey();
+    const action = lollipopRemoveEphemeralPublicKey();
     expect(action.type).toBe("LOLLIPOP_REMOVE_EPHEMERAL_PUBLIC_KEY");
   });
 

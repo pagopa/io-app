@@ -4,9 +4,9 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import {
   lollipopKeyTagSave,
-  lollipopRemoveEphermeralPublicKey,
+  lollipopRemoveEphemeralPublicKey,
   lollipopRemovePublicKey,
-  lollipopSetEphermeralPublicKey,
+  lollipopSetEphemeralPublicKey,
   lollipopSetPublicKey,
   lollipopSetSupportedDevice
 } from "../../actions/lollipop";
@@ -57,12 +57,12 @@ describe("Lollipop state", () => {
     expect(newLollipopState.publicKey).toBe(O.none);
   });
 
-  it("should handle lollipopSetEphermeralPublicKey action", () => {
+  it("should handle lollipopSetEphemeralPublicKey action", () => {
     const lollipopState = testable?.lollipopSelector(globalState);
     const ephemeralPublicKey = "ephemeralPublicKey" as unknown as PublicKey;
     const newLollipopState = lollipopReducer(
       lollipopState,
-      lollipopSetEphermeralPublicKey({
+      lollipopSetEphemeralPublicKey({
         publicKey: ephemeralPublicKey
       })
     );
@@ -71,17 +71,17 @@ describe("Lollipop state", () => {
     );
   });
 
-  it("should handle lollipopRemoveEphermeralPublicKey action", () => {
+  it("should handle lollipopRemoveEphemeralPublicKey action", () => {
     const lollipopState = testable?.lollipopSelector(globalState);
     const stateWithEphemeralPublicKey = lollipopReducer(
       lollipopState,
-      lollipopSetEphermeralPublicKey({
+      lollipopSetEphemeralPublicKey({
         publicKey: "ephemeralPublicKey" as unknown as PublicKey
       })
     );
     const newLollipopState = lollipopReducer(
       stateWithEphemeralPublicKey,
-      lollipopRemoveEphermeralPublicKey()
+      lollipopRemoveEphemeralPublicKey()
     );
     expect(newLollipopState.ephemeralKey.ephemeralPublicKey).toBe(undefined);
   });

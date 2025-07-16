@@ -9,9 +9,9 @@ import { v4 as uuid } from "uuid";
 import { Action } from "../../../../store/actions/types";
 import {
   lollipopKeyTagSave,
-  lollipopRemoveEphermeralPublicKey,
+  lollipopRemoveEphemeralPublicKey,
   lollipopRemovePublicKey,
-  lollipopSetEphermeralPublicKey,
+  lollipopSetEphemeralPublicKey,
   lollipopSetPublicKey,
   lollipopSetSupportedDevice
 } from "../actions/lollipop";
@@ -76,7 +76,7 @@ export default function lollipopReducer(
         ...state,
         publicKey: O.none
       };
-    case getType(lollipopSetEphermeralPublicKey):
+    case getType(lollipopSetEphemeralPublicKey):
       return {
         ...state,
         ephemeralKey: {
@@ -84,11 +84,11 @@ export default function lollipopReducer(
           ephemeralPublicKey: action.payload.publicKey
         }
       };
-    case getType(lollipopRemoveEphermeralPublicKey):
+    case getType(lollipopRemoveEphemeralPublicKey):
     case getType(loginFailure):
       // Clear the ephemeral public key from state.
       // For loginFailure: ensures a clean state if the user attempts to log in again.
-      // For lollipopRemoveEphermeralPublicKey: used to explicitly discard the public key.
+      // For lollipopRemoveEphemeralPublicKey: used to explicitly discard the public key.
       return {
         ...state,
         ephemeralKey: {
