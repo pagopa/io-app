@@ -139,7 +139,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             // while the refunded amount is always 0
             label: I18n.t("idpay.initiative.beneficiaryDetails.spentUntilNow"),
             value:
-              initiativeDetails.accruedCents === undefined
+              initiativeDetails.accruedCents !== undefined
                 ? formatNumberCurrencyOrDefault(initiativeDetails.accruedCents)
                 : undefined,
             testID: "accruedTestID"
