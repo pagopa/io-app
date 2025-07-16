@@ -4344,6 +4344,12 @@
         "title": "La versione digitale dei tuoi documenti, su IO",
         "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **4 Milioni** di persone stanno già usando i **Documenti su IO**!",
         "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
+        "dismissalDialog": {
+          "title": "Vuoi rinunciare ai documenti digitali su IO?",
+          "body": "Potrai attivarli in qualsiasi altro momento, se cambi idea.",
+          "confirm": "Si, rinuncia",
+          "cancel": "No, torna indietro"
+        },
         "upcomingWalletBanner": {
           "title": "Novità in arrivo: i tuoi Documenti su IO",
           "content": "Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!",
@@ -4396,7 +4402,13 @@
           },
           "tos": "Premendo **Ottieni IT-Wallet** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}})",
           "anchorAction": "Scopri tutti i vantaggi",
-          "primaryAction": "Ottieni IT-Wallet"
+          "primaryAction": "Ottieni IT-Wallet",
+          "dismissalDialog": {
+            "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
+            "body": "Otterrai una versione digitale dei tuoi documenti con funzionalità ridotte.",
+            "confirm": "Si, rinuncia",
+            "cancel": "No, torna indietro"
+          }
         },
         "offlineBanner": {
           "title": "Novità: i tuoi documenti anche offline",
@@ -4686,6 +4698,10 @@
           "title": "Documento in arrivo",
           "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
           "primaryAction": "Ho capito"
+        },
+        "cieNotRegistered": {
+          "title": "Registra la CIE in app CieID per continuare",
+          "subtitle": "Per ottenere IT-Wallet, completa prima la registrazione della tua CIE in app CieID e poi riprova."
         }
       },
       "notMatchingIdentityScreen": {
@@ -5693,18 +5709,30 @@
           "BTW_OPEN": "Compreso tra {{value}} e {{value2}}"
         }
       },
+      "inputPrerequisites": {
+        "emptyValueError": "Enter the required information to continue"
+      },
       "multiPrerequisites": {
-        "header": "Dichiari inoltre di:"
+        "header": "You also declare that:",
+        "emptyValueError": "Select an option to continue"
       },
       "boolPrerequisites": {
-        "header": "Per aderire, dichiari di:"
+        "header": "To proceed, you declare that:",
+        "emptyValueError": "Select an option to continue"
+      },
+      "enableMessages": {
+        "cancelAction": "Cancel",
+        "subtitle": "Activate the possibility to contact you in the app to receive updates on the {{initiativeName}}. \nThis step is necessary to proceed with the request.",
+        "title": "Activate messages",
+        "confirmAction": "Ok, active"
       },
       "enableNotification": {
-        "title": "Don't risk losing the outcome of your request",
-        "subtitle": "Activate push notifications to know immediately when you receive a new message in the app.",
-        "action": "Activate notifications",
-        "deny": "Not now",
-        "success": "You activated Push notifications"
+        "title": "Non perderti l’esito delle tue richieste",
+        "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
+        "action": "Attiva notifiche push",
+        "deny": "Non attivare",
+        "success": "You activated Push notifications",
+        "advice": "Consigliato"
       }
     },
     "configuration": {
