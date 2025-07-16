@@ -12,6 +12,7 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { selectFailure } from "../machine/selectors";
 import { isNfcError } from "../utils/error";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import {
   CieCardReadContentProps,
   ItwCieCardReadContent
@@ -36,9 +37,18 @@ const useFailureContentProps = (): CieCardReadContentProps => {
   // Display failure information for debug
   useDebugInfo({ failure });
 
+  const dismissalDialog = useItwDismissalDialog({
+    handleDismiss: () => issuanceActor.send({ type: "close" })
+  });
+
   const retryAction: CieCardReadContentProps["primaryAction"] = {
     label: I18n.t("global.buttons.retry"),
     onPress: () => cieActor.send({ type: "retry" })
+  };
+
+  const closeDialogAction: CieCardReadContentProps["secondaryAction"] = {
+    label: I18n.t("global.buttons.close"),
+    onPress: dismissalDialog.show
   };
 
   const closeAction: CieCardReadContentProps["secondaryAction"] = {
@@ -84,7 +94,7 @@ const useFailureContentProps = (): CieCardReadContentProps => {
           ),
           pictogram: "empty",
           primaryAction: retryAction,
-          secondaryAction: closeAction
+          secondaryAction: closeDialogAction
         };
       case "WRONG_PIN":
         if (failure.attemptsLeft > 1) {
@@ -113,7 +123,7 @@ const useFailureContentProps = (): CieCardReadContentProps => {
               `features.itWallet.identification.cie.failure.wrongPin2.subtitle`
             ),
             pictogram: "attention",
-            primaryAction: closeAction,
+            primaryAction: closeDialogAction,
             secondaryAction: {
               label: I18n.t(
                 `features.itWallet.identification.cie.failure.wrongPin2.secondaryAction`
@@ -148,7 +158,8 @@ const useFailureContentProps = (): CieCardReadContentProps => {
           subtitle: I18n.t(
             `features.itWallet.identification.cie.failure.expired.subtitle`
           ),
-          pictogram: "attention"
+          pictogram: "attention",
+          primaryAction: closeAction
         };
       case "WEBVIEW_ERROR":
         return {
