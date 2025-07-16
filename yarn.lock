@@ -5074,9 +5074,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shopify/react-native-skia@npm:2.0.0-next.3":
-  version: 2.0.0-next.3
-  resolution: "@shopify/react-native-skia@npm:2.0.0-next.3"
+"@shopify/react-native-skia@npm:2.1.1":
+  version: 2.1.1
+  resolution: "@shopify/react-native-skia@npm:2.1.1"
   dependencies:
     canvaskit-wasm: 0.40.0
     react-reconciler: 0.31.0
@@ -5091,7 +5091,7 @@ __metadata:
       optional: true
   bin:
     setup-skia-web: scripts/setup-canvaskit.js
-  checksum: 5ced0a63839ecb2e7c4f17235ebb01486b88451bfd3b1a5eb137cd5603be1414dea8ddc105abc62213f8b4374557b2b7168a0d406972f85efb7ee60727eb6eba
+  checksum: 84416f1ec432cc8fdcecbb349b93f17605e74199365e085673fcd3922613d2514bcb6e9db43c4995860879851c131395c4cb946d0d30594895d0f6e7f95a4cb8
   languageName: node
   linkType: hard
 
@@ -13020,7 +13020,7 @@ __metadata:
     "@redux-saga/testing-utils": ^1.1.3
     "@sentry/react-native": ^6.11.0
     "@shopify/flash-list": ~1.8.0
-    "@shopify/react-native-skia": 2.0.0-next.3
+    "@shopify/react-native-skia": 2.1.1
     "@stylistic/eslint-plugin-js": ^2.1.0
     "@testing-library/jest-native": ^3.4.3
     "@testing-library/react-native": ^13.2.0
