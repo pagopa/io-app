@@ -1,13 +1,14 @@
 This file describes the reason for the patches applied.
 
-### react-native-pdf+6.7.7
-Created on **16/03/2024**
+### react-native-pdf-npm-6.7.7-7aa1e3a631.patch
+Created on **16/07/2025**
 
 #### Reason:
-- Make PDF annotations on iOS read-only to align with Android behaviour.
+- Make PDF annotations on iOS read-only to align with Android behaviour;
+- Update Android dependencies to the latest versions to support 16KB page size.
 
 
-### react-native-device-info+14.0.4
+### react-native-device-info-npm-14.0.4-9bb10f6c3d.patch
 Created on **15/12/2021**
 
 #### Reason:
@@ -18,7 +19,7 @@ Created on **15/12/2021**
     - `getMacAddressSync`
 
 
-### react-native-i18n+2.0.15
+### react-native-i18n-npm-2.0.15-7f3cf7cee6.patch
 Created on **05/08/2020**
 
 #### Reason:
@@ -30,7 +31,7 @@ Updated on **29/08/2022**
 
 - This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
 
-### react-native-push-notification+8.1.1
+### react-native-push-notification-npm-8.1.1-bcb0d8a65e.patch
 Created on **10/05/2021**
 
 #### Reason:
@@ -43,7 +44,7 @@ Updated on **31/01/2024**
   This works since we are not using local notifications anymore (and the library has to be replaced - since it is deprecated) and the
   remote notifications do not trigger the Exact Alarms API.
 
-### react-native-screen-brightness+2.0.0-alpha
+### react-native-screen-brightness-npm-2.0.0-alpha-22c6aeb21e.patch
 Created on **16/08/2021**
 
 #### Reason:
@@ -65,7 +66,7 @@ Updated on **23/04/2025**
   the bottom-sheet content instead of the bottom-sheet background layer (chosen by the author as a default).
 
 
-### react-native-webview+13.13.5
+### react-native-webview-npm-13.13.5-802657184f.patch
 
 Updated on **13/07/2023**
 
@@ -73,7 +74,7 @@ Updated on **13/07/2023**
 
 - This patch applies security fixes to avoid access on camera and microphone without user permission.
 
-### react-native-calendar-events+2.2.0.patch
+### react-native-calendar-events-npm-2.2.0-7c2fb115c6.patch
 
 Created on **16/01/2023**
 
@@ -85,7 +86,7 @@ Created on **16/01/2023**
   initially another library was used, react-native-add-calendar-event, which treated event's Id as long
 
 
-### react-native-reanimated+3.17.5.patch
+### react-native-reanimated-npm-3.17.5-134bd4e99e.patch
 
 Created on **19/05/2025**
 
