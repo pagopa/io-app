@@ -8,7 +8,7 @@ import {
   ItwCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils.ts";
-import { hasL3Design } from "../../../common/utils/itwCredentialUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 type Props = {
   credential: StoredCredential;
@@ -29,7 +29,7 @@ const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
   const { status } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
-  const withL3Design = hasL3Design(credential);
+  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   if (!validStates.includes(status)) {
     return null;

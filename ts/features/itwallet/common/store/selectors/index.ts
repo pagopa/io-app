@@ -3,16 +3,15 @@ import * as O from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
-  itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector,
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
 import {
+  itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsOperationalOrValid,
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
-import { isItwCredential } from "../../utils/itwCredentialUtils";
 import { ItwJwtCredentialStatus } from "../../utils/itwTypesUtils";
 import {
   itwIsDiscoveryBannerHiddenSelector,
@@ -106,13 +105,6 @@ export const itwShouldRenderOfflineBannerSelector = (state: GlobalState) =>
   itwLifecycleIsValidSelector(state) &&
   !itwIsOfflineBannerHiddenSelector(state);
 
-const isItwCredentialSelector = (state: GlobalState) =>
-  pipe(
-    itwCredentialsEidSelector(state),
-    O.map(eid => isItwCredential(eid.credential)),
-    O.getOrElse(() => false)
-  );
-
 /**
  * Returns if the L3 upgrade banner should be rendered. The banner is rendered if:
  * - The user has online access (not available in the mini-app)
@@ -124,7 +116,7 @@ export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
   !offlineAccessReasonSelector(state) &&
   isItwEnabledSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  !isItwCredentialSelector(state);
+  !itwLifecycleIsITWalletValidSelector(state);
 
 /**
  * Returns whether the new IT-Wallet variant should be rendered.
@@ -137,7 +129,7 @@ export const itwShouldRenderNewITWalletSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  isItwCredentialSelector(state);
+  itwLifecycleIsITWalletValidSelector(state);
 
 /**
  * Factory function that creates a selector to determine if any banners
