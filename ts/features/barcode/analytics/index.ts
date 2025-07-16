@@ -110,10 +110,10 @@ export const trackBarcodeScanFailure = (
   flow: BarcodeAnalyticsFlow,
   failure: BarcodeFailure
 ) => {
-  const trackFn = (flow: BarcodeAnalyticsFlow, reason: string) => {
+  const trackFn = (internalFlow: BarcodeAnalyticsFlow, reason: string) => {
     void mixpanelTrack(
       "QRCODE_SCAN_FAILURE",
-      buildEventProperties("KO", undefined, { flow, reason })
+      buildEventProperties("KO", undefined, { flow: internalFlow, reason })
     );
   };
 
