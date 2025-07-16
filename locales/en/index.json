@@ -5622,7 +5622,7 @@
         "message": {
           "GENERIC": {
             "title": "Si è verificato un errore imprevisto",
-            "subtitle": "Siamo già a lavoro per risolverlo: ti invitiamo a riprovare più tardi."
+            "subtitle": "Siamo già a lavoro per risolverlo. Prova più tardi ad accedere all’iniziativa."
           },
           "INITIATIVE_NOT_FOUND": {
             "title": "Non riusciamo a trovare quest’iniziativa",
