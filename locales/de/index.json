@@ -4110,12 +4110,19 @@
       }
     },
     "onboarding": {
+      "enableMessages": {
+        "cancelAction": "Stornieren",
+        "subtitle": "Aktivieren Sie die Möglichkeit, Sie in der App zu kontaktieren, um Aktualisierungen auf dem {{initiativeName}} zu erhalten. Dieser Schritt ist erforderlich, um mit der Anfrage fortzufahren.",
+        "title": "Nachrichten aktivieren",
+        "confirmAction": "OK, aktiv"
+      },
       "enableNotification": {
-        "title": "Non rischiare di perdere l'esito della tua richiesta",
+        "title": "Non perderti l’esito delle tue richieste",
         "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
-        "action": "Attiva le notifiche",
-        "deny": "Non ora",
-        "success": "Sie aktivierten Push -Benachrichtigungen"
+        "action": "Attiva notifiche push",
+        "deny": "Non attivare",
+        "success": "Sie aktivierten Push -Benachrichtigungen",
+        "advice": "Consigliato"
       }
     }
   }

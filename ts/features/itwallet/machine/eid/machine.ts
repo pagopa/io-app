@@ -6,6 +6,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { assert } from "../../../../utils/assert.ts";
+import { trackItWalletIntroScreen } from "../../analytics";
 import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
@@ -100,7 +101,10 @@ export const itwEidIssuanceMachine = setup({
     }),
     setIsReissuing: assign({
       isReissuing: true
-    })
+    }),
+    trackIntroScreen: ({ context }) => {
+      trackItWalletIntroScreen(context.isL3FeaturesEnabled ? "L3" : "L2");
+    }
   },
   actors: {
     getCieStatus: fromPromise<CieContext>(notImplemented),
@@ -181,7 +185,7 @@ export const itwEidIssuanceMachine = setup({
     TosAcceptance: {
       description:
         "Display of the ToS to the user who must accept in order to proceed with the issuance of the eID",
-      entry: "navigateToTosScreen",
+      entry: ["navigateToTosScreen", "trackIntroScreen"],
       on: {
         "accept-tos": [
           {
