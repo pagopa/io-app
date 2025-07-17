@@ -293,6 +293,13 @@ export const pnFrontendUrlSelector = (state: GlobalState) =>
     O.getOrElse(() => "")
   );
 
+export const pnAARQRCodeRegexSelector = (state: GlobalState) =>
+  pipe(
+    state.remoteConfig,
+    O.chainNullableK(config => config.pn.aarQRCodeRegex),
+    O.toUndefined
+  );
+
 export const paymentsConfigSelector = createSelector(
   remoteConfigSelector,
   remoteConfig =>
@@ -353,6 +360,17 @@ export const isIdPayEnabledSelector = createSelector(
       O.getOrElse(() => false)
     )
 );
+
+export const isIdPayCiePaymentCodeEnabledSelector = (state: GlobalState) =>
+  pipe(state, remoteConfigSelector, remoteConfig =>
+    isPropertyWithMinAppVersionEnabled({
+      remoteConfig,
+      mainLocalFlag: true,
+      configPropertyName: "idPay",
+      optionalLocalFlag: true,
+      optionalConfig: "cie_payments"
+    })
+  );
 
 export const idPayOnboardingRequiresAppUpdateSelector = (state: GlobalState) =>
   pipe(

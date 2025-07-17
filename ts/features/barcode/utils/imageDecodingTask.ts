@@ -5,6 +5,7 @@ import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import { Eq } from "fp-ts/lib/string";
 import { QRCodeDetectOptions, CodeType as RNQRCodeType } from "rn-qr-generator";
+import { GlobalState } from "../../../store/reducers/types";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { decodeMultipleIOBarcodes } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
@@ -72,16 +73,18 @@ const checkDetectedBarcodesArray = (
  * Decodes the detected barcodes into IOBarcode objects
  * @param barcodes List of detected barcodes
  * @param format Format of the detected barcodes
+ * @param state Global redux state of the application
  * @param barcodeTypes Accepted types of the detected barcodes
  * @returns TE.Left if the content is not supported, TE.Right with the decoded barcodes otherwise
  */
 const decodeDetectedBarcodes = (
   barcodes: Array<string>,
   format: IOBarcodeFormat,
+  state: GlobalState,
   barcodeTypes?: Array<IOBarcodeType>
 ): TE.TaskEither<BarcodeFailure, Array<IOBarcode>> =>
   pipe(
-    decodeMultipleIOBarcodes(barcodes, { barcodeTypes }),
+    decodeMultipleIOBarcodes(state, barcodes, { barcodeTypes }),
     O.map(decodedBarcodes =>
       pipe(
         decodedBarcodes,
@@ -100,12 +103,14 @@ const decodeDetectedBarcodes = (
 
 /**
  * Creates a TaskEither that decodes a barcodes from an image URI
+ * @param state Global redux state of the application
  * @param detectOptions object which may contain the uri or the base64 of the image
  * @param barcodeFormats The accepted formats of the barcodes
  * @param acceptedTypes The accepted types of the barcodes
  * @returns Array of decoded barcodes
  */
 export const imageDecodingTask = (
+  state: GlobalState,
   detectOptions: QRCodeDetectOptions,
   barcodeFormats?: Array<IOBarcodeFormat>,
   barcodeTypes?: Array<IOBarcodeType>
@@ -124,6 +129,6 @@ export const imageDecodingTask = (
     ),
     TE.chain(({ format, values }) =>
       // Decodes the detected barcodes and check if the content is supported
-      decodeDetectedBarcodes(values, format, barcodeTypes)
+      decodeDetectedBarcodes(values, format, state, barcodeTypes)
     )
   );

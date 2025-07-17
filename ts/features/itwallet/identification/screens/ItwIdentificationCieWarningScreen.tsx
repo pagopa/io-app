@@ -1,21 +1,19 @@
 import { Linking } from "react-native";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import {
-  OperationResultScreenContent,
-  OperationResultScreenContentProps
-} from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { TranslationKeys } from "../../../../../locales/locales";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-
+import { trackItwKoStateAction } from "../../analytics";
 export type CieWarningType = "noPin" | "noCie";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { CiePreparationType } from "../components/cie/ItwCiePreparationBaseScreenContent";
+import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {
-  warning: CieWarningType;
+  type: CiePreparationType;
 };
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -23,70 +21,77 @@ type ScreenProps = IOStackNavigationRouteProps<
   "ITW_IDENTIFICATION_CIE_WARNING"
 >;
 
-const cieFaqUrls: Record<CieWarningType, string> = {
-  noPin:
-    "https://assistenza.ioapp.it/hc/it/articles/30724125085713-Ho-dimenticato-il-PIN-della-CIE",
+const cieFaqUrls: Record<CiePreparationType, string> = {
+  pin: "https://assistenza.ioapp.it/hc/it/articles/30724125085713-Ho-dimenticato-il-PIN-della-CIE",
   // TODO: update the URL when the new one is available
-  noCie:
-    "https://assistenza.ioapp.it/hc/it/articles/30724116346129-Cos-%C3%A8-la-CIE-e-come-richiederla"
+  card: "https://assistenza.ioapp.it/hc/it/articles/30724116346129-Cos-%C3%A8-la-CIE-e-come-richiederla"
 };
 
 export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
+  const { type } = params.route.params;
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const { warning } = params.route.params;
-  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isWalletAlreadyActive = useIOSelector(itwLifecycleIsValidSelector);
+  const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+  const reason = type === "card" ? "user_without_cie" : "user_without_pin";
 
-  const sectionKey = isItwValid ? "toCieFAQ" : "toL2Identification";
+  const sectionKey =
+    isWalletAlreadyActive || !isL3FeaturesEnabled ? "upgrade" : "issuance";
 
-  const t = (key: "title" | "subtitle" | "primaryAction" | "closeAction") =>
-    I18n.t(
-      `features.itWallet.identification.cieWarning.${warning}.${sectionKey}.${key}` as TranslationKeys
-    );
-
-  const closeIdentification = () => {
-    machineRef.send({ type: "close" });
+  const handlePrimaryActionPress = () => {
+    trackItwKoStateAction({
+      reason,
+      cta_category: "custom_1",
+      cta_id: I18n.t(
+        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`
+      )
+    });
+    if (isWalletAlreadyActive) {
+      void Linking.openURL(cieFaqUrls[type]);
+    } else {
+      machineRef.send({ type: "go-to-l2-identification" });
+    }
   };
 
-  const back = () => {
-    machineRef.send({ type: "back" });
+  const handleSecondaryActionPress = () => {
+    trackItwKoStateAction({
+      reason,
+      cta_category: "custom_2",
+      cta_id: I18n.t(
+        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.secondaryAction`
+      )
+    });
+    machineRef.send({
+      type: isWalletAlreadyActive || !isL3FeaturesEnabled ? "close" : "back"
+    });
   };
-
-  const goToL2Identification = () => {
-    machineRef.send({ type: "go-to-l2-identification" });
-  };
-
-  const getOperationResultScreenContentProps =
-    (): OperationResultScreenContentProps => {
-      const primaryAction = {
-        label: t("primaryAction"),
-        onPress: isItwValid
-          ? () => Linking.openURL(cieFaqUrls[warning])
-          : goToL2Identification
-      };
-
-      const secondaryAction = {
-        label: t("closeAction"),
-        onPress: isItwValid ? closeIdentification : back
-      };
-
-      return {
-        title: t("title"),
-        subtitle: t("subtitle"),
-        pictogram: "attention",
-        action: primaryAction,
-        secondaryAction
-      };
-    };
 
   useHeaderSecondLevel({
     title: ""
   });
 
-  const resultScreenProps = getOperationResultScreenContentProps();
-
   return (
     <OperationResultScreenContent
-      {...resultScreenProps}
+      title={I18n.t(
+        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.title`
+      )}
+      subtitle={I18n.t(
+        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.subtitle`
+      )}
+      pictogram={"attention"}
+      action={{
+        label: I18n.t(
+          `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`
+        ),
+        onPress: handlePrimaryActionPress
+      }}
+      secondaryAction={{
+        label: I18n.t(
+          `features.itWallet.identification.cie.warning.${type}.${sectionKey}.secondaryAction`
+        ),
+        onPress: handleSecondaryActionPress
+      }}
       isHeaderVisible={true}
     />
   );

@@ -4240,14 +4240,6 @@
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         "dgc": "Attestati di Laurea, Dottorato e Master"
       },
-      "ipzsPrivacy": {
-        "title": "I tuoi Documenti su IO sono al sicuro",
-        "titleL3": "I tuoi Documenti sono al sicuro",
-        "warning": "Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.",
-        "button": {
-          "label": "Continua"
-        }
-      },
       "wallet": {
         "active": "Attivo",
         "inactive": "Non attivo",
@@ -4352,6 +4344,12 @@
         "title": "La versione digitale dei tuoi documenti, su IO",
         "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **4 Milioni** di persone stanno già usando i **Documenti su IO**!",
         "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
+        "dismissalDialog": {
+          "title": "Vuoi rinunciare ai documenti digitali su IO?",
+          "body": "Potrai attivarli in qualsiasi altro momento, se cambi idea.",
+          "confirm": "Si, rinuncia",
+          "cancel": "No, torna indietro"
+        },
         "upcomingWalletBanner": {
           "title": "Novità in arrivo: i tuoi Documenti su IO",
           "content": "Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!",
@@ -4404,129 +4402,29 @@
           },
           "tos": "Premendo **Ottieni IT-Wallet** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}})",
           "anchorAction": "Scopri tutti i vantaggi",
-          "primaryAction": "Ottieni IT-Wallet"
+          "primaryAction": "Ottieni IT-Wallet",
+          "dismissalDialog": {
+            "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
+            "body": "Otterrai una versione digitale dei tuoi documenti con funzionalità ridotte.",
+            "confirm": "Si, rinuncia",
+            "cancel": "No, torna indietro"
+          }
         },
         "offlineBanner": {
           "title": "Novità: i tuoi documenti anche offline",
           "content": "Da oggi puoi usare i tuoi documenti su IO anche senza connessione a internet.",
           "action": "Scopri di più"
+        },
+        "ipzsPrivacy": {
+          "title": "I tuoi Documenti su IO sono al sicuro",
+          "titleL3": "I tuoi Documenti sono al sicuro",
+          "warning": "Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.",
+          "button": {
+            "label": "Continua"
+          }
         }
       },
       "identification": {
-        "cieWarning": {
-          "noPin": {
-            "toCieFAQ": {
-              "title": "Non puoi continuare senza il PIN della CIE",
-              "subtitle": "Se hai registrato un contatto di recupero quando hai richiesto la CIE, puoi reimpostare il PIN con l’app CieID.\n\n In alternativa, rivolgiti al tuo Comune per recuperare il PIN della tua carta.",
-              "primaryAction": "Scopri cosa puoi fare",
-              "closeAction": "Chiudi"
-            },
-            "toL2Identification": {
-              "title": "Continua senza i vantaggi di IT-Wallet",
-              "subtitle": "Se non hai il PIN della CIE, puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
-              "primaryAction": "Continua senza IT-Wallet",
-              "closeAction": "Torna indietro"
-            }
-          },
-          "noCie": {
-            "toCieFAQ": {
-              "title": "Non puoi continuare senza la carta di identità elettronica (CIE)",
-              "subtitle": "Per ottenere i vantaggi di IT-Wallet è necessario autenticarsi con la CIE.\n\n Richiedere la CIE è facile e veloce, scopri cosa puoi fare.",
-              "primaryAction": "Scopri cosa puoi fare",
-              "closeAction": "Chiudi"
-            },
-            "toL2Identification": {
-              "title": "Continua senza i vantaggi di IT-Wallet",
-              "subtitle": "Se non hai la CIE, puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
-              "primaryAction": "Continua senza IT-Wallet",
-              "closeAction": "Torna indietro"
-            }
-          }
-        },
-        "l3": {
-          "mode": {
-            "title": "Verifica la tua identità con CIE",
-            "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet e associare i documenti alla tua identità.",
-            "primaryAction": "Inizia",
-            "secondaryAction": "Non ho la CIE",
-            "ciePin": {
-              "header": "Avrai bisogno di:",
-              "card": "La tua Carta di Identità Elettronica (CIE)",
-              "pin": "Il PIN della CIE a 8 cifre"
-            },
-            "cieId": {
-              "header": "In alternativa:",
-              "title": "Continua sull'app CieID",
-              "subtitle": "Utile se hai già installato l’app CieID e registrato la CIE"
-            },
-            "bottomSheet": {
-              "cie": {
-                "title": "Continua sull’app CieID",
-                "content": "Per completare la verifica della tua identità sull’app CieID avrai bisogno di:\n\n * La Carta di Identità Elettronica\n * Il PIN a 8 cifre della CIE\n\nSe hai già installato l’app e hai già registrato la CIE, usa l’app CieID come alternativa più veloce.",
-                "action": "Continua sull’app CieID",
-                "cancel": "Non ora"
-              },
-              "cieInfo": {
-                "title": "Carta di identità elettronica (CIE)",
-                "content": "La CIE è la Carta d'Identità in formato elettronico introdotto in Italia per sostituire la tradizionale carta d'identità cartacea.\n\nTi è utile averla per:\n * Accedere ai servizi online della Pubblica Amministrazione (es. INPS, Agenzia delle Entrate)\n * Identificarti ufficialmente in Italia e all’estero\n * Viaggiare nei Paesi dell’UE e in altri che la accettano al posto del passaporto.",
-                "primaryAction": "Ho capito",
-                "secondaryAction": "Non ho la CIE"
-              },
-              "pin": {
-                "title": "PIN della CIE",
-                "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
-                "primaryAction": "Ho capito",
-                "secondaryAction": "Non trovo il PIN della CIE"
-              },
-              "noCie": {
-                "title": "Se non hai la CIE puoi \ncontinuare senza i vantaggi di IT-Wallet",
-                "description": "Puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
-                "content": {
-                  "firstAttention": "Non potrai usare la Patente come documento d'identità",
-                  "secondAttention": "Non potrai usare IT-Wallet per accedere ai servizi digitali della PA",
-                  "thirdAttention": "Non potrai ottenere i nuovi documenti disponibili solo con IT-Wallet"
-                },
-                "primaryAction": "Continua senza IT-Wallet",
-                "secondaryAction": "Torna indietro"
-              }
-            },
-            "preparationScreen": {
-              "cie": {
-                "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
-                "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
-                "buttonLink": "Cos'è la CIE?",
-                "primaryAction": "Ho pronta la CIE",
-                "secondaryAction": "Non ho la CIE"
-              },
-              "ciePin": {
-                "title": "Prepara il PIN della tua Carta di Identità \nElettronica (CIE)",
-                "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell'identità.",
-                "buttonLink": "Cos'è il PIN della CIE?",
-                "primaryAction": "Ho pronto il PIN",
-                "secondaryAction": "Non trovo il PIN della CIE"
-              }
-            }
-          }
-        },
-        "mode": {
-          "title": "Verifica la tua identità",
-          "description": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
-          "header": "Scegli come identificarti",
-          "method": {
-            "spid": {
-              "title": "SPID",
-              "subtitle": "Usa credenziali e app (o SMS)"
-            },
-            "ciePin": {
-              "title": "CIE + PIN",
-              "subtitle": "Usa Carta d’Identità Elettronica e PIN"
-            },
-            "cieId": {
-              "title": "CieID",
-              "subtitle": "Usa credenziali e app CieID"
-            }
-          }
-        },
         "nfc": {
           "title": "Attiva l'NFC per continuare",
           "description": "Per consentire a IO di leggere la tua CIE, attiva l'NFC dalle Impostazioni del tuo dispositivo.",
@@ -4540,19 +4438,162 @@
           "primaryAction": "Apri impostazioni",
           "secondaryAction": "Continua"
         },
-        "notMatchingIdentityScreen": {
-          "title": "Stai accedendo con un nuovo dispositivo",
-          "message": "Quando accedi all'app IO da un dispositivo diverso da quello abituale (ad esempio quello di un'altra persona) per motivi di sicurezza queste funzionalità vengono reimpostate:\n\n- Documenti su IO",
-          "banner": {
-            "title": "Ti suggeriamo di accedere all'app solo dal tuo dispositivo."
+        "mode": {
+          "l2": {
+            "title": "Verifica la tua identità",
+            "description": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
+            "header": "Scegli come identificarti",
+            "method": {
+              "spid": {
+                "title": "SPID",
+                "subtitle": "Usa credenziali e app (o SMS)"
+              },
+              "ciePin": {
+                "title": "CIE + PIN",
+                "subtitle": "Usa Carta d’Identità Elettronica e PIN"
+              },
+              "cieId": {
+                "title": "CieID",
+                "subtitle": "Usa credenziali e app CieID"
+              }
+            }
           },
-          "alert": {
-            "title": "Vuoi davvero uscire?",
-            "message": "Dovrai entrare di nuovo con SPID o CIE per usare l'app."
+          "l3": {
+            "screen": {
+              "title": "Verifica la tua identità con CIE",
+              "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet.",
+              "primaryAction": "Inizia",
+              "secondaryAction": "Non ho la CIE",
+              "requirements": {
+                "header": "Avrai bisogno di:",
+                "card": "La tua Carta di Identità Elettronica (CIE)",
+                "pin": "Il PIN della CIE a 8 cifre"
+              },
+              "otherMethods": {
+                "header": "In alternativa:",
+                "title": "Continua sull'app CieID",
+                "subtitle": "Utile se hai già installato l’app CieID e registrato la CIE"
+              }
+            },
+            "bottomSheet": {
+              "cieId": {
+                "title": "Continua sull’app CieID",
+                "content": "Per completare la verifica della tua identità sull’app CieID avrai bisogno di:\n\n * La Carta di Identità Elettronica\n * Il PIN a 8 cifre della CIE\n\nSe hai già installato l’app e hai già registrato la CIE, usa l’app CieID come alternativa più veloce.",
+                "primaryAction": "Continua sull’app CieID",
+                "secondaryAction": "Non ora"
+              },
+              "noCie": {
+                "title": "Se non hai  la CIE puoi continuare senza i vantaggi di IT-Wallet",
+                "content": "Puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
+                "warnings": [
+                  "Non potrai usare la Patente come documento d'identità",
+                  "Non potrai usare IT-Wallet per accedere ai servizi digitali della PA",
+                  "Non potrai ottenere i nuovi documenti disponibili solo con IT-Wallet"
+                ],
+                "primaryAction": "Continua senza IT-Wallet",
+                "secondaryAction": "Torna indietro"
+              }
+            }
           }
         },
-        "loading": {
-          "cieId": {
+        "cie": {
+          "prepare": {
+            "pin": {
+              "title": "Prepara il PIN della tua carta di identità elettronica (CIE)",
+              "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell’identità.",
+              "buttonLink": "Cos’è il PIN della CIE?",
+              "cta": "Inserisci il PIN della CIE"
+            },
+            "card": {
+              "title": "Prepara la tua carta di identità elettronica (CIE)",
+              "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
+              "cta": "Inizia lettura CIE",
+              "buttonLink": "Cos’è la CIE?"
+            }
+          },
+          "inputPin": {
+            "title": "Inserisci il PIN della CIE",
+            "buttonLink": "Dove trovo il PIN della CIE?"
+          },
+          "readingCard": {
+            "android": {
+              "idle": {
+                "title": "Appoggia la CIE alla parte alta del telefono",
+                "action": "Annulla"
+              },
+              "progress": {
+                "title": "La lettura è in corso",
+                "content": "Non muovere la carta.",
+                "action": "Annulla"
+              },
+              "completed": {
+                "title": "Lettura completata!",
+                "action": "Chiudi"
+              }
+            },
+            "ios": {
+              "idle": {
+                "title": "Appoggia il retro del telefono sulla CIE, a questa altezza.",
+                "status": "{{ progress }}\nSe la lettura non parte, rimuovi la cover del telefono."
+              },
+              "progress": {
+                "title": "Lettura in corso...",
+                "content": "Non muovere la carta.",
+                "status": "{{ progress }}\nLa lettura è in corso, non muovere o spostare la carta. "
+              },
+              "completed": {
+                "title": "Lettura completata!",
+                "status": "{{ progress }}\nFatto!"
+              }
+            }
+          },
+          "warning": {
+            "card": {
+              "issuance": {
+                "title": "Continua senza i vantaggi di IT-Wallet",
+                "subtitle": "Se non hai la CIE, puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
+                "primaryAction": "Continua senza IT-Wallet",
+                "secondaryAction": "Torna indietro"
+              },
+              "upgrade": {
+                "title": "Non puoi continuare senza la Carta di Identità Elettronica (CIE)",
+                "subtitle": "Per ottenere i vantaggi di IT-Wallet è necessario autenticarsi con la CIE.\n\nRichiedere la CIE è facile e veloce, scopri cosa puoi fare.",
+                "primaryAction": "Scopri cosa puoi fare",
+                "secondaryAction": "Chiudi"
+              }
+            },
+            "pin": {
+              "issuance": {
+                "title": "Continua senza i vantaggi di IT-Wallet",
+                "subtitle": "Se non hai il PIN della CIE, puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
+                "primaryAction": "Continua senza IT-Wallet",
+                "secondaryAction": "Torna indietro"
+              },
+              "upgrade": {
+                "title": "Non puoi continuare senza il PIN della CIE",
+                "subtitle": "Se hai registrato un contatto di recupero quando hai richiesto la CIE, puoi reimpostare il PIN con l’app CieID.\n\n In alternativa, rivolgiti al tuo Comune per recuperare il PIN della tua carta.",
+                "primaryAction": "Scopri cosa puoi fare",
+                "secondaryAction": "Chiudi"
+              }
+            }
+          },
+          "bottomSheet": {
+            "card": {
+              "title": "Carta di identità elettronica (CIE)",
+              "content": "La CIE è la Carta d'Identità in formato elettronico introdotto in Italia per sostituire la tradizionale carta d'identità cartacea.\n\nTi è utile averla per:\n * Accedere ai servizi online della Pubblica Amministrazione (es. INPS, Agenzia delle Entrate)\n * Identificarti ufficialmente in Italia e all’estero\n * Viaggiare nei Paesi dell’UE e in altri che la accettano al posto del passaporto.",
+              "primaryAction": "Ho capito",
+              "secondaryAction": "Non ho la CIE"
+            },
+            "pin": {
+              "title": "PIN della CIE",
+              "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
+              "primaryAction": "Ho capito",
+              "secondaryAction": "Non trovo il PIN della CIE"
+            }
+          }
+        },
+        "cieId": {
+          "loading": {
             "title": "Connessione con la tua app CieID in corso...",
             "subtitle": "Autorizza l'accesso nell'app CieID per continuare oppure annulla la connessione",
             "cancel": "Annulla connessione"
@@ -4573,6 +4614,7 @@
         "eidPreview": {
           "title": "Identità verificata",
           "subtitle": "Stai attivando **Documenti su IO** come:",
+          "subtitleL3": "Ci siamo quasi! Stai per ottenere **IT-Wallet** come:",
           "actions": {
             "primary": "Continua",
             "secondary": "Annulla"
@@ -4657,6 +4699,21 @@
           "title": "Documento in arrivo",
           "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
           "primaryAction": "Ho capito"
+        },
+        "cieNotRegistered": {
+          "title": "Registra la CIE in app CieID per continuare",
+          "subtitle": "Per ottenere IT-Wallet, completa prima la registrazione della tua CIE in app CieID e poi riprova."
+        }
+      },
+      "notMatchingIdentityScreen": {
+        "title": "Stai accedendo con un nuovo dispositivo",
+        "message": "Quando accedi all'app IO da un dispositivo diverso da quello abituale (ad esempio quello di un'altra persona) per motivi di sicurezza queste funzionalità vengono reimpostate:\n\n- Documenti su IO",
+        "banner": {
+          "title": "Ti suggeriamo di accedere all'app solo dal tuo dispositivo."
+        },
+        "alert": {
+          "title": "Vuoi davvero uscire?",
+          "message": "Dovrai entrare di nuovo con SPID o CIE per usare l'app."
         }
       },
       "unsupportedDevice": {
@@ -4788,6 +4845,13 @@
             "title": "Verifica la versione digitale del documento",
             "content": "È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.",
             "primaryAction": "Inizia"
+          },
+          "mdl": {
+            "walletUpgradeBanner": {
+              "title": "Novità IT-Wallet",
+              "content": "Ottieni IT-Wallet per usare la tua Patente anche come documento d'identità!",
+              "action": "Ottieni IT-Wallet"
+            }
           }
         },
         "ctas": {
@@ -4999,6 +5063,20 @@
             "title": "In attesa di connessione per la verifica...",
             "subtitle": "Attendi qualche secondo..."
           },
+          "loadingStepScreen": {
+            "initial": {
+              "title": "Stiamo comunicando i tuoi dati per la verifica",
+              "subtitle": "Attendi qualche secondo..."
+            },
+            "reminder": {
+              "title": "Ancora un po' di pazienza...",
+              "subtitle": "Stiamo aspettando una risposta dai sistemi dell’ente che richiede i dati."
+            },
+            "final": {
+              "title": "Sembra che le cose vadano un po' a rilento",
+              "subtitle": "Ancora un po' di pazienza..."
+            }
+          },
           "selectiveDisclosure": {
             "title": "Dati richiesti",
             "subtitle": "Saranno mostrati a **{{relyingParty}}** per completare la verifica dei documenti richiesti.",
@@ -5016,6 +5094,11 @@
           "relyingParty": {
             "genericError": {
               "title": "Verifica interrotta",
+              "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
+              "primaryAction": "Chiudi"
+            },
+            "timeout": {
+              "title": "L’app di chi verifica non risponde",
               "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
               "primaryAction": "Chiudi"
             }
@@ -5435,7 +5518,7 @@
       "beneficiaryDetails": {
         "infobox": {
           "title": "Cosa ti permette di fare?",
-          "rulesButton": "Leggi le regole"
+          "rulesButton": "Leggi il regolamento"
         },
         "infoModal": {
           "title": "Regole dell'iniziativa",
@@ -5458,7 +5541,7 @@
         "protocolNumber": "Numero di protocollo",
         "lastUpdate": "Saldo aggiornato al {{dateString}}",
         "buttons": {
-          "privacy": "Preferenze & Privacy",
+          "privacy": "Preferenze e Privacy",
           "unsubscribe": "Rimuovi {{initiativeName}}",
           "requestHelp": "Chiedi aiuto"
         }
@@ -5547,7 +5630,7 @@
         "message": {
           "GENERIC": {
             "title": "Si è verificato un errore imprevisto",
-            "subtitle": "Siamo già a lavoro per risolverlo: ti invitiamo a riprovare più tardi."
+            "subtitle": "Siamo già a lavoro per risolverlo. Prova più tardi ad accedere all’iniziativa."
           },
           "INITIATIVE_NOT_FOUND": {
             "title": "Non riusciamo a trovare quest’iniziativa",
@@ -5627,11 +5710,30 @@
           "BTW_OPEN": "Compreso tra {{value}} e {{value2}}"
         }
       },
+      "inputPrerequisites": {
+        "emptyValueError": "Inserisci i dati per continuare"
+      },
       "multiPrerequisites": {
-        "header": "Dichiari inoltre di:"
+        "header": "Dichiari inoltre di:",
+        "emptyValueError": "Scegli un’opzione per continuare"
       },
       "boolPrerequisites": {
-        "header": "Per aderire, dichiari di:"
+        "header": "Per aderire, dichiari di:",
+        "emptyValueError": "Scegli un’opzione per continuare"
+      },
+      "enableMessages": {
+        "title": "Attiva i messaggi",
+        "subtitle": "Attiva la possibilità di contattarti in app per ricevere aggiornamenti sul {{initiativeName}}. Questo passaggio è necessario per procedere con la richiesta.",
+        "confirmAction": "Ok, attiva",
+        "cancelAction": "Annulla"
+      },
+      "enableNotification": {
+        "title": "Non perderti l’esito delle tue richieste",
+        "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
+        "action": "Attiva notifiche push",
+        "deny": "Non attivare",
+        "success": "Hai attivato le notifiche push",
+        "advice": "Consigliato"
       }
     },
     "configuration": {

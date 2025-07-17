@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 });
 
 const isAuthenticationUrl = (url: string) => {
-  const authUrlRegex = /\/(livello1|livello2|nextUrl|openApp)(\/|\?|$)/;
+  const authUrlRegex = /livello1|livello2|nextUrl|OpenApp/;
   return authUrlRegex.test(url);
 };
 
@@ -59,7 +59,7 @@ const ItwCieIdLoginScreen = () => {
   );
 
   useHeaderSecondLevel({
-    title: I18n.t("features.itWallet.identification.mode.title"),
+    title: I18n.t("features.itWallet.identification.mode.l2.title"),
     supportRequest: false,
     goBack: dismissalDialog.show
   });

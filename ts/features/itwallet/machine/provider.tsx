@@ -2,7 +2,6 @@ import { useIOToast } from "@pagopa/io-app-design-system";
 import { createActorContext } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
 import { JSX } from "react";
-import { itwBypassIdentityMatch } from "../../../config";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../store/hooks";
 import { selectItwEnv } from "../common/store/selectors/environment";
@@ -37,7 +36,7 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
 
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
     guards: createEidIssuanceGuardsImplementation(store, {
-      bypassIdentityMatch: itwBypassIdentityMatch
+      bypassIdentityMatch: env.BYPASS_IDENTITY_MATCH
     }),
     actions: createEidIssuanceActionsImplementation(navigation, store, toast),
     actors: createEidIssuanceActorsImplementation(env, store)

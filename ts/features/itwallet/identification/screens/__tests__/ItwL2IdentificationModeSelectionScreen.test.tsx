@@ -90,7 +90,7 @@ const renderComponent = (isL3FeaturesEnabled = false, eidReissuing = false) => {
     const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
     const snapshot: typeof initialSnapshot = {
       ...initialSnapshot,
-      value: { UserIdentification: "L2Identification" },
+      value: { UserIdentification: { Identification: "L2" } },
       context: {
         ...initialSnapshot.context,
         isL3FeaturesEnabled,

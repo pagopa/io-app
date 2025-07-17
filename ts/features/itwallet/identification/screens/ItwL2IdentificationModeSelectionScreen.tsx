@@ -45,21 +45,26 @@ export const ItwL2IdentificationModeSelectionScreen = (
       }
     }, [eidReissuing, machineRef])
   );
-  useFocusEffect(trackItWalletIDMethod);
+
+  useFocusEffect(
+    useCallback(() => {
+      trackItWalletIDMethod("L2");
+    }, [])
+  );
 
   const handleSpidPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "spid" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "spid", itw_flow: "L2" });
   }, [machineRef]);
 
   const handleCiePinPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin", itw_flow: "L2" });
   }, [machineRef]);
 
   const handleCieIdPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "cieId", itw_flow: "L2" });
   }, [machineRef]);
 
   const disabledIdentificationMethods = useIOSelector(
@@ -87,22 +92,26 @@ export const ItwL2IdentificationModeSelectionScreen = (
 
   return (
     <IOScrollViewWithLargeHeader
-      title={{ label: I18n.t("features.itWallet.identification.mode.title") }}
-      description={I18n.t("features.itWallet.identification.mode.description")}
+      title={{
+        label: I18n.t("features.itWallet.identification.mode.l2.title")
+      }}
+      description={I18n.t(
+        "features.itWallet.identification.mode.l2.description"
+      )}
       headerActionsProp={{ showHelp: true }}
     >
       <ContentWrapper>
         <ListItemHeader
-          label={I18n.t("features.itWallet.identification.mode.header")}
+          label={I18n.t("features.itWallet.identification.mode.l2.header")}
         />
         <VStack space={8}>
           {!isSpidDisabled && (
             <ModuleNavigation
               title={I18n.t(
-                "features.itWallet.identification.mode.method.spid.title"
+                "features.itWallet.identification.mode.l2.method.spid.title"
               )}
               subtitle={I18n.t(
-                "features.itWallet.identification.mode.method.spid.subtitle"
+                "features.itWallet.identification.mode.l2.method.spid.subtitle"
               )}
               testID="Spid"
               icon="spid"
@@ -114,10 +123,10 @@ export const ItwL2IdentificationModeSelectionScreen = (
             !isL3FeaturesEnabled && (
               <ModuleNavigation
                 title={I18n.t(
-                  "features.itWallet.identification.mode.method.ciePin.title"
+                  "features.itWallet.identification.mode.l2.method.ciePin.title"
                 )}
                 subtitle={I18n.t(
-                  "features.itWallet.identification.mode.method.ciePin.subtitle"
+                  "features.itWallet.identification.mode.l2.method.ciePin.subtitle"
                 )}
                 testID="CiePin"
                 icon="fiscalCodeIndividual"
@@ -127,10 +136,10 @@ export const ItwL2IdentificationModeSelectionScreen = (
           {!isCieIdDisabled && (
             <ModuleNavigation
               title={I18n.t(
-                "features.itWallet.identification.mode.method.cieId.title"
+                "features.itWallet.identification.mode.l2.method.cieId.title"
               )}
               subtitle={I18n.t(
-                "features.itWallet.identification.mode.method.cieId.subtitle"
+                "features.itWallet.identification.mode.l2.method.cieId.subtitle"
               )}
               icon="device"
               testID="CieID"

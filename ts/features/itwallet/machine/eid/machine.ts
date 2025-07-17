@@ -6,6 +6,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { assert } from "../../../../utils/assert.ts";
+import { trackItWalletIntroScreen } from "../../analytics";
 import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
@@ -30,6 +31,12 @@ export const itwEidIssuanceMachine = setup({
     events: {} as EidIssuanceEvents
   },
   actions: {
+    onInit: notImplemented,
+
+    /**
+     * Navigation
+     */
+
     navigateToTosScreen: notImplemented,
     navigateToIpzsPrivacyScreen: notImplemented,
     navigateToL2IdentificationScreen: notImplemented,
@@ -49,18 +56,32 @@ export const itwEidIssuanceMachine = setup({
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
     navigateToCieWarningScreen: notImplemented,
+    closeIssuance: notImplemented,
+
+    /**
+     * Store update
+     */
+
     storeIntegrityKeyTag: notImplemented,
     cleanupIntegrityKeyTag: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
+    storeAuthLevel: notImplemented,
     storeEidCredential: notImplemented,
-    closeIssuance: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
+
+    /**
+     * Analytics
+     */
+
     trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
-    storeAuthLevel: notImplemented,
+
+    /**
+     * Context manipulation
+     */
+
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-    onInit: notImplemented,
     /**
      * Save the final redirect url in the machine context for later reuse.
      * This action is the same for the three identification methods.
@@ -80,16 +101,19 @@ export const itwEidIssuanceMachine = setup({
     }),
     setIsReissuing: assign({
       isReissuing: true
-    })
+    }),
+    trackIntroScreen: ({ context }) => {
+      trackItWalletIntroScreen(context.isL3FeaturesEnabled ? "L3" : "L2");
+    }
   },
   actors: {
+    getCieStatus: fromPromise<CieContext>(notImplemented),
     createWalletInstance: fromPromise<string>(notImplemented),
     revokeWalletInstance: fromPromise<void>(notImplemented),
     getWalletAttestation: fromPromise<
       WalletInstanceAttestations,
       GetWalletAttestationActorParams
     >(notImplemented),
-    getCieStatus: fromPromise<CieContext>(notImplemented),
     requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
       notImplemented
     ),
@@ -153,7 +177,7 @@ export const itwEidIssuanceMachine = setup({
           },
           {
             actions: "setIsReissuing",
-            target: "UserIdentification.L2Identification"
+            target: "UserIdentification.Identification.L2"
           }
         ]
       }
@@ -161,7 +185,7 @@ export const itwEidIssuanceMachine = setup({
     TosAcceptance: {
       description:
         "Display of the ToS to the user who must accept in order to proceed with the issuance of the eID",
-      entry: "navigateToTosScreen",
+      entry: ["navigateToTosScreen", "trackIntroScreen"],
       on: {
         "accept-tos": [
           {
@@ -249,7 +273,7 @@ export const itwEidIssuanceMachine = setup({
         src: "getWalletAttestation",
         input: ({ context }) => ({
           integrityKeyTag: context.integrityKeyTag,
-          isL3IssuanceEnabled: false // TODO this is a temporary fix, we should use context.isL3FeaturesEnabled when the new issuance flow is completed
+          isL3IssuanceEnabled: context.isL3FeaturesEnabled
         }),
         onDone: [
           {
@@ -308,127 +332,101 @@ export const itwEidIssuanceMachine = setup({
     UserIdentification: {
       description:
         "User identification flow. Once we get the user token we can continue to the eID issuance",
-      initial: "EvaluateIdentificationLevel",
+      initial: "Identification",
       states: {
-        EvaluateIdentificationLevel: {
-          always: [
-            {
-              guard: and(["isL3FeaturesEnabled", not("isL2Fallback")]),
-              target: "L3Identification"
-            },
-            {
-              target: "L2Identification"
-            }
-          ]
-        },
-        L3Identification: {
-          description: "Navigates to the L3 identification screen",
-          entry: [
-            "navigateToL3IdentificationScreen",
-            assign({
-              isL2Fallback: false
-            })
-          ],
-          on: {
-            "select-identification-mode": [
-              {
-                guard: ({ event }) => event.mode === "ciePin",
-                target: "CiePin"
-              },
-              {
-                guard: ({ event, context }) =>
-                  event.mode === "cieId" &&
-                  context.isL3FeaturesEnabled === true,
-                actions: assign(() => ({
-                  identification: {
-                    mode: "cieId",
-                    level: "L3"
-                  }
-                })),
-                target: "CieID"
-              }
-            ],
-            "go-to-l2-identification": {
-              target: "L2Identification",
-              actions: assign({
-                isL2Fallback: true
-              })
-            },
-            "go-to-cie-warning": {
-              target: "CieWarning.L3Identification"
-            },
-            back: {
-              target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
-            }
-          }
-        },
-        L2Identification: {
-          description: "Navigates to the L2 identification screen",
-          entry: "navigateToL2IdentificationScreen",
-          on: {
-            "select-identification-mode": [
-              {
-                guard: ({ event }) => event.mode === "spid",
-                target: "Spid"
-              },
-              {
-                guard: ({ event }) => event.mode === "ciePin",
-                target: "CiePin"
-              },
-              {
-                guard: ({ event }) => event.mode === "cieId",
-                actions: assign(() => ({
-                  identification: {
-                    mode: "cieId",
-                    level: "L2"
-                  }
-                })),
-                target: "CieID"
-              }
-            ],
-            back: [
-              {
-                guard: "isReissuing",
-                target: "#itwEidIssuanceMachine.Idle"
-              },
-              {
-                guard: "isL3FeaturesEnabled",
-                target: "L3Identification"
-              },
-              {
-                target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
-              }
-            ]
-          }
-        },
-        CieWarning: {
-          description: "Navigates to and handles the CIE warning screen.",
-          entry: "navigateToCieWarningScreen",
-          initial: "ModeSelection",
+        Identification: {
+          initial: "EvaluateInitialState",
           states: {
-            L3Identification: {
+            EvaluateInitialState: {
+              description:
+                "Identification phase needs different behaviors depending on the level of identification",
+              always: [
+                {
+                  guard: and(["isL3FeaturesEnabled", not("isL2Fallback")]),
+                  target: "L3"
+                },
+                {
+                  target: "L2"
+                }
+              ]
+            },
+            L2: {
+              description: "Navigates to the L2 identification screen",
+              entry: "navigateToL2IdentificationScreen",
               on: {
-                back: "#itwEidIssuanceMachine.UserIdentification.L3Identification"
+                "select-identification-mode": [
+                  {
+                    guard: ({ event }) => event.mode === "spid",
+                    target: "#itwEidIssuanceMachine.UserIdentification.Spid"
+                  },
+                  {
+                    guard: ({ event }) => event.mode === "ciePin",
+                    target: "#itwEidIssuanceMachine.UserIdentification.CiePin"
+                  },
+                  {
+                    guard: ({ event }) => event.mode === "cieId",
+                    actions: assign(() => ({
+                      identification: {
+                        mode: "cieId",
+                        level: "L2"
+                      }
+                    })),
+                    target: "#itwEidIssuanceMachine.UserIdentification.CieID"
+                  }
+                ],
+                back: [
+                  {
+                    guard: "isReissuing",
+                    target: "#itwEidIssuanceMachine.Idle"
+                  },
+                  {
+                    guard: "isL3FeaturesEnabled",
+                    target:
+                      "#itwEidIssuanceMachine.UserIdentification.Identification.L3"
+                  },
+                  {
+                    target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
+                  }
+                ]
               }
             },
-            PreparationCie: {
+            L3: {
+              description: "Navigates to the L3 identification screen",
+              entry: [
+                "navigateToL3IdentificationScreen",
+                assign({
+                  isL2Fallback: false
+                })
+              ],
               on: {
-                back: "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie"
+                "select-identification-mode": [
+                  {
+                    guard: ({ event }) => event.mode === "ciePin",
+                    target: "#itwEidIssuanceMachine.UserIdentification.CiePin"
+                  },
+                  {
+                    guard: ({ event }) => event.mode === "cieId",
+                    actions: assign(() => ({
+                      identification: {
+                        mode: "cieId",
+                        level: "L3"
+                      }
+                    })),
+                    target: "#itwEidIssuanceMachine.UserIdentification.CieID"
+                  }
+                ],
+                "go-to-l2-identification": {
+                  target: "L2",
+                  actions: assign({ isL2Fallback: true })
+                },
+                "go-to-cie-warning": {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.CiePin.CieWarning.Identification"
+                },
+                back: {
+                  target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
+                }
               }
-            },
-            PreparationPin: {
-              on: {
-                back: "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
-              }
-            }
-          },
-          on: {
-            "go-to-l2-identification": {
-              target:
-                "#itwEidIssuanceMachine.UserIdentification.L2Identification"
-            },
-            close: {
-              actions: ["closeIssuance"]
             }
           }
         },
@@ -483,7 +481,7 @@ export const itwEidIssuanceMachine = setup({
           on: {
             back: {
               target:
-                "#itwEidIssuanceMachine.UserIdentification.EvaluateIdentificationLevel"
+                "#itwEidIssuanceMachine.UserIdentification.Identification.EvaluateInitialState"
             }
           },
           onDone: {
@@ -512,7 +510,7 @@ export const itwEidIssuanceMachine = setup({
                 },
                 back: {
                   target:
-                    "#itwEidIssuanceMachine.UserIdentification.L2Identification"
+                    "#itwEidIssuanceMachine.UserIdentification.Identification.L2"
                 }
               }
             },
@@ -524,7 +522,8 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  identification: context.identification
+                  identification: context.identification,
+                  isL3IssuanceEnabled: context.isL3FeaturesEnabled
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -565,102 +564,31 @@ export const itwEidIssuanceMachine = setup({
         CiePin: {
           description:
             "This state handles the entire CIE + pin identification flow",
-          initial: "EvaluateInitialState",
+          initial: "PreparationPin",
           states: {
-            EvaluateInitialState: {
-              always: [
-                {
-                  guard: "isL3FeaturesEnabled",
-                  target: "PreparationCie"
-                },
-                { target: "InsertingCardPin" }
-              ]
-            },
-            PreparationCie: {
-              description:
-                "This state handles the CIE preparation screen, where the user is informed about the CIE card",
-              entry: "navigateToCiePreparationScreen",
-              on: {
-                next: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
-                },
-                "go-to-cie-warning": {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.CieWarning.PreparationCie"
-                },
-                back: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.EvaluateIdentificationLevel"
-                },
-                close: {
-                  actions: ["closeIssuance"]
-                }
-              }
-            },
             PreparationPin: {
               description:
                 "This state handles the CIE PIN preparation screen, where the user is informed about the CIE PIN",
               entry: "navigateToCiePinPreparationScreen",
               on: {
-                next: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.CiePin.InsertingCardPin"
-                },
-                "go-to-cie-warning": {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.CieWarning.PreparationPin"
-                },
-                back: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie"
-                },
-                close: {
-                  actions: ["closeIssuance"]
-                }
-              }
-            },
-            InsertingCardPin: {
-              entry: [
-                assign(() => ({ authenticationContext: undefined })), // Reset the authentication context, otherwise retries will use stale data
-                "navigateToCiePinScreen"
-              ],
-              on: {
-                "cie-pin-entered": [
+                next: [
                   {
                     guard: "isNFCEnabled",
-                    target: "StartingCieAuthFlow",
-                    actions: assign(({ event }) => ({
-                      identification: {
-                        mode: "ciePin",
-                        level: "L3",
-                        pin: event.pin
-                      }
-                    }))
+                    target: "InsertingCardPin"
                   },
                   {
-                    target:
-                      "#itwEidIssuanceMachine.UserIdentification.CiePin.RequestingNfcActivation",
-                    actions: assign(({ event }) => ({
-                      identification: {
-                        level: "L3",
-                        mode: "ciePin",
-                        pin: event.pin
-                      }
-                    }))
+                    target: "RequestingNfcActivation"
                   }
                 ],
-                back: [
-                  {
-                    guard: "isL3FeaturesEnabled",
-                    target:
-                      "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
-                  },
-                  {
-                    target:
-                      "#itwEidIssuanceMachine.UserIdentification.L2Identification"
-                  }
-                ]
+                "go-to-cie-warning": {
+                  target: "CieWarning.PreparationPin"
+                },
+                back: {
+                  target: "#itwEidIssuanceMachine.UserIdentification"
+                },
+                close: {
+                  actions: "closeIssuance"
+                }
               }
             },
             RequestingNfcActivation: {
@@ -672,11 +600,50 @@ export const itwEidIssuanceMachine = setup({
                       isNFCEnabled: true
                     })
                   })),
-                  target: "StartingCieAuthFlow"
+                  target: "InsertingCardPin"
                 },
                 back: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.EvaluateIdentificationLevel"
+                  target: "#itwEidIssuanceMachine.UserIdentification"
+                }
+              }
+            },
+            InsertingCardPin: {
+              entry: [
+                assign(() => ({ authenticationContext: undefined })), // Reset the authentication context, otherwise retries will use stale data
+                "navigateToCiePinScreen"
+              ],
+              on: {
+                "cie-pin-entered": {
+                  target: "PreparationCie",
+                  actions: assign(({ event }) => ({
+                    identification: {
+                      mode: "ciePin",
+                      level: "L3",
+                      pin: event.pin
+                    }
+                  }))
+                },
+                back: {
+                  target: "PreparationPin"
+                }
+              }
+            },
+            PreparationCie: {
+              description:
+                "This state handles the CIE preparation screen, where the user is informed about the CIE card",
+              entry: "navigateToCiePreparationScreen",
+              on: {
+                next: {
+                  target: "StartingCieAuthFlow"
+                },
+                "go-to-cie-warning": {
+                  target: "CieWarning.PreparationCie"
+                },
+                back: {
+                  target: "PreparationPin"
+                },
+                close: {
+                  actions: "closeIssuance"
                 }
               }
             },
@@ -687,6 +654,7 @@ export const itwEidIssuanceMachine = setup({
               tags: [ItwTags.Loading],
               invoke: {
                 src: "startAuthFlow",
+                // eslint-disable-next-line sonarjs/no-identical-functions
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
@@ -705,7 +673,7 @@ export const itwEidIssuanceMachine = setup({
                 }
               },
               back: {
-                target: "InsertingCardPin"
+                target: "PreparationCie"
               }
             },
             ReadingCieCard: {
@@ -713,19 +681,48 @@ export const itwEidIssuanceMachine = setup({
                 "Read the CIE card and get back a url to continue the PID issuing flow. This state also handles errors when reading the card.",
               on: {
                 "user-identification-completed": {
-                  target: "Completed",
+                  target: "#itwEidIssuanceMachine.UserIdentification.Completed",
                   actions: ["completeUserIdentification", "storeAuthLevel"]
                 },
                 close: {
                   target: "#itwEidIssuanceMachine.UserIdentification"
                 },
                 back: {
-                  target: "InsertingCardPin"
+                  target: "PreparationCie"
                 }
               }
             },
-            Completed: {
-              type: "final"
+            CieWarning: {
+              description: "Navigates to and handles the CIE warning screen.",
+              entry: "navigateToCieWarningScreen",
+              initial: "Identification",
+              states: {
+                Identification: {
+                  on: {
+                    back: "#itwEidIssuanceMachine.UserIdentification.Identification.L3"
+                  }
+                },
+                PreparationCie: {
+                  on: {
+                    back: "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationCie"
+                  }
+                },
+                PreparationPin: {
+                  on: {
+                    back: "#itwEidIssuanceMachine.UserIdentification.CiePin.PreparationPin"
+                  }
+                }
+              },
+              on: {
+                "go-to-l2-identification": {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.Identification.L2",
+                  actions: assign({ isL2Fallback: true })
+                },
+                close: {
+                  actions: "closeIssuance"
+                }
+              }
             }
           },
           onDone: {
@@ -751,7 +748,8 @@ export const itwEidIssuanceMachine = setup({
             input: ({ context }) => ({
               identification: context.identification,
               authenticationContext: context.authenticationContext,
-              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+              isL3IssuanceEnabled: context.isL3FeaturesEnabled
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
