@@ -5732,7 +5732,7 @@
         "enableEmailBanner": {
           "title": "Non perderti aggiornamenti importanti",
           "content": "Attiva l’inoltro via email per avere tutte le comunicazioni anche fuori dall'app.",
-          "cta": "Avvisami via email",
+          "cta": "Aggiornami via email",
           "successOutcome": "Hai attivato le notifiche via email"
         }
       }
