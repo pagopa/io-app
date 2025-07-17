@@ -4614,6 +4614,7 @@
         "eidPreview": {
           "title": "Identità verificata",
           "subtitle": "Stai attivando **Documenti su IO** come:",
+          "subtitleL3": "Ci siamo quasi! Stai per ottenere **IT-Wallet** come:",
           "actions": {
             "primary": "Continua",
             "secondary": "Annulla"
