@@ -107,7 +107,9 @@ export const itwEidIssuanceMachine = setup({
     }
   },
   actors: {
-    verifyTrustFederation: fromPromise<void>(notImplemented),
+    verifyTrustFederation: fromPromise<void, GetWalletAttestationActorParams>(
+      notImplemented
+    ),
     getCieStatus: fromPromise<CieContext>(notImplemented),
     createWalletInstance: fromPromise<string>(notImplemented),
     revokeWalletInstance: fromPromise<void>(notImplemented),
@@ -202,6 +204,7 @@ export const itwEidIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         input: ({ context }) => ({
+          integrityKeyTag: context.integrityKeyTag,
           isL3IssuanceEnabled: context.isL3FeaturesEnabled
         }),
         src: "verifyTrustFederation",
