@@ -38,9 +38,9 @@ export const useItwProximityEventsTracking = ({ failure }: Params) => {
           (typeof failure.reason === "object" &&
             Object.keys(failure.reason).length === 0);
 
-            return trackItwProximityUnexpectedFailure(
-              shouldSerializeReason ? serializedFailure : failure
-            );
+        return trackItwProximityUnexpectedFailure(
+          shouldSerializeReason ? serializedFailure : failure
+        );
     }
   }, [failure, hasGiventConsent]);
 };

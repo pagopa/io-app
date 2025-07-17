@@ -36,7 +36,9 @@ export const itwProximityMachine = setup({
     trackQrCodeGenerationOutcome: notImplemented
   },
   actors: {
-    checkPermissions: fromPromise<boolean, CheckPermissionsInput>(notImplemented),
+    checkPermissions: fromPromise<boolean, CheckPermissionsInput>(
+      notImplemented
+    ),
     checkBluetoothIsActive: fromPromise<boolean, void>(notImplemented),
     startProximityFlow: fromPromise<void, StartProximityFlowInput>(
       notImplemented
@@ -220,7 +222,10 @@ export const itwProximityMachine = setup({
               target: "GeneratingQRCodeString"
             },
             onError: {
-              actions: ["setQRCodeGenerationError", "trackQrCodeGenerationOutcome"],
+              actions: [
+                "setQRCodeGenerationError",
+                "trackQrCodeGenerationOutcome"
+              ],
               target: "QRCodeGenerationError"
             }
           }
@@ -271,7 +276,10 @@ export const itwProximityMachine = setup({
               target: "GeneratingQRCodeString"
             },
             onError: {
-              actions: ["setQRCodeGenerationError", "trackQrCodeGenerationOutcome"],
+              actions: [
+                "setQRCodeGenerationError",
+                "trackQrCodeGenerationOutcome"
+              ],
               target: "QRCodeGenerationError"
             }
           }

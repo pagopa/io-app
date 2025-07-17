@@ -136,19 +136,21 @@ export function trackItwProximityContinuePresentation() {
 
 // #region ERRORS
 
-export const trackItwProximityQrCodeLoadingFailure = (reason: ItwProximityFailure) => {
+export const trackItwProximityQrCodeLoadingFailure = (
+  reason: ItwProximityFailure
+) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_QR_CODE_LOADING_FAILURE,
     buildEventProperties("KO", "screen_view", { reason })
   );
 };
 
-export const trackItwProximityRPGenericFailure = ( reason: ItwProximityGenericFailure
+export const trackItwProximityRPGenericFailure = (
+  reason: ItwProximityGenericFailure
 ) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_GENRIC_ERROR,
-    buildEventProperties("KO", "screen_view", { reason
-    })
+    buildEventProperties("KO", "screen_view", { reason })
   );
 };
 
@@ -159,7 +161,9 @@ export const trackItwProximityTimeout = (reason: ItwProximityFailure) => {
   );
 };
 
-export const trackItwProximityUnexpectedFailure = (reason: ItwProximityFailure) => {
+export const trackItwProximityUnexpectedFailure = (
+  reason: ItwProximityFailure
+) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_UNEXPECTED_FAILURE,
     buildEventProperties("KO", "screen_view", { reason })
