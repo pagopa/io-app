@@ -60,29 +60,6 @@ PODS:
   - jail-monkey (2.8.3):
     - React-Core
   - JOSESwift (3.0.0)
-  - lottie-ios (4.5.0)
-  - lottie-react-native (7.2.2):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - lottie-ios (= 4.5.0)
-    - RCT-Folly (= 2024.11.18.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
   - Mixpanel-swift (4.2.0):
     - Mixpanel-swift/Complete (= 4.2.0)
   - Mixpanel-swift/Complete (4.2.0)
@@ -2266,7 +2243,6 @@ DEPENDENCIES:
   - "IoReactNativeCie (from `../node_modules/@pagopa/io-react-native-cie`)"
   - "IoReactNativeProximity (from `../node_modules/@pagopa/io-react-native-proximity`)"
   - jail-monkey (from `../node_modules/jail-monkey`)
-  - lottie-react-native (from `../node_modules/lottie-react-native`)
   - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
   - "pagopa-io-react-native-cieid (from `../node_modules/@pagopa/io-react-native-cieid`)"
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
@@ -2386,7 +2362,6 @@ SPEC REPOS:
     - CieSDK
     - IOWalletProximity
     - JOSESwift
-    - lottie-ios
     - Mixpanel-swift
     - OpenSSL-Universal
     - Sentry
@@ -2429,8 +2404,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@pagopa/io-react-native-proximity"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
-  lottie-react-native:
-    :path: "../node_modules/lottie-react-native"
   MixpanelReactNative:
     :path: "../node_modules/mixpanel-react-native"
   pagopa-io-react-native-cieid:
@@ -2668,8 +2641,6 @@ SPEC CHECKSUMS:
   IOWalletProximity: 55d5527de91a971dbcdbdda1838860c9860683ac
   jail-monkey: 9298d04aa09f8c9cdcf04e7bf597ea423b52b5bf
   JOSESwift: 7784b1b844194d0f534eb6ac4fba5af683bccc79
-  lottie-ios: a881093fab623c467d3bce374367755c272bdd59
-  lottie-react-native: 35b7c1125a01f847fa5905d380e54951132d2450
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
   MixpanelReactNative: 37259ace491ca9d927c0f81498e6577a32a69f43
   OpenSSL-Universal: 6082b0bf950e5636fe0d78def171184e2b3899c2
