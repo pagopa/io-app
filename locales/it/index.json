@@ -5518,7 +5518,7 @@
       "beneficiaryDetails": {
         "infobox": {
           "title": "Cosa ti permette di fare?",
-          "rulesButton": "Leggi le regole"
+          "rulesButton": "Leggi il regolamento"
         },
         "infoModal": {
           "title": "Regole dell'iniziativa",
@@ -5541,7 +5541,7 @@
         "protocolNumber": "Numero di protocollo",
         "lastUpdate": "Saldo aggiornato al {{dateString}}",
         "buttons": {
-          "privacy": "Preferenze & Privacy",
+          "privacy": "Preferenze e Privacy",
           "unsubscribe": "Rimuovi {{initiativeName}}",
           "requestHelp": "Chiedi aiuto"
         }
@@ -5630,7 +5630,7 @@
         "message": {
           "GENERIC": {
             "title": "Si è verificato un errore imprevisto",
-            "subtitle": "Siamo già a lavoro per risolverlo: ti invitiamo a riprovare più tardi."
+            "subtitle": "Siamo già a lavoro per risolverlo. Prova più tardi ad accedere all’iniziativa."
           },
           "INITIATIVE_NOT_FOUND": {
             "title": "Non riusciamo a trovare quest’iniziativa",
