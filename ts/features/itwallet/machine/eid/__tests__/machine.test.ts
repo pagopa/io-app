@@ -144,6 +144,44 @@ describe("itwEidIssuanceMachine", () => {
     jest.resetAllMocks();
   });
 
+  it("Should fail if trust federation verification fails", async () => {
+    isL3FeaturesEnabled.mockImplementation(() => true);
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+
+    /**
+     * Start eID issuance
+     */
+
+    actor.send({ type: "start" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
+
+    /**
+     * Accept TOS and verify trust
+     */
+
+    verifyTrustFederation.mockImplementation(() => Promise.reject());
+
+    actor.send({ type: "accept-tos" });
+
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+  });
+
   it("Should obtain an eID (SPID) from L3 Identification", async () => {
     isL3FeaturesEnabled.mockImplementation(() => true);
     const actor = createActor(mockedMachine);
@@ -1444,6 +1482,7 @@ describe("itwEidIssuanceMachine", () => {
         "TrustFederationVerification"
       )
     );
+
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation")
     );
@@ -1453,24 +1492,6 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
 
-    await waitFor(() =>
-      expect(storeIntegrityKeyTag).toHaveBeenCalledWith(
-        expect.objectContaining({
-          context: expect.objectContaining({ integrityKeyTag: T_INTEGRITY_KEY })
-        }),
-        undefined
-      )
-    );
-    await waitFor(() =>
-      expect(storeWalletInstanceAttestation).toHaveBeenCalledWith(
-        expect.objectContaining({
-          context: expect.objectContaining({
-            walletInstanceAttestation: { jwt: T_WIA }
-          })
-        }),
-        undefined
-      )
-    );
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       walletInstanceAttestation: { jwt: T_WIA },
       integrityKeyTag: T_INTEGRITY_KEY

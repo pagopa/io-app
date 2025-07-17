@@ -59,31 +59,38 @@ export const createEidIssuanceActorsImplementation = (
   env: Env,
   store: ReturnType<typeof useIOStore>
 ) => ({
-  verifyTrustFederation: fromPromise(async () => {
-    // Evaluate the issuer trust
-    const trustAnchorEntityConfig =
-      await Trust.Build.getTrustAnchorEntityConfiguration(
-        env.WALLET_TA_BASE_URL
-      );
-    const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
-
-    // Create the trust chain for the PID provider
-    const builtChainJwts = await Trust.Build.buildTrustChain(
-      env.WALLET_PID_PROVIDER_BASE_URL,
-      trustAnchorKey
-    );
-
-    // Perform full validation on the built chain
-    await Trust.Verify.verifyTrustChain(
-      trustAnchorEntityConfig,
-      builtChainJwts,
-      {
-        connectTimeout: 10000,
-        readTimeout: 10000,
-        requireCrl: true
+  verifyTrustFederation: fromPromise<void, GetWalletAttestationActorParams>(
+    async ({ input }) => {
+      // If the L3 issuance is not enabled, we don't need to verify the trust federation
+      if (!input.isL3IssuanceEnabled) {
+        return;
       }
-    );
-  }),
+
+      // Evaluate the issuer trust
+      const trustAnchorEntityConfig =
+        await Trust.Build.getTrustAnchorEntityConfiguration(
+          env.WALLET_TA_BASE_URL
+        );
+      const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
+
+      // Create the trust chain for the PID provider
+      const builtChainJwts = await Trust.Build.buildTrustChain(
+        env.WALLET_PID_PROVIDER_BASE_URL,
+        trustAnchorKey
+      );
+
+      // Perform full validation on the built chain
+      await Trust.Verify.verifyTrustChain(
+        trustAnchorEntityConfig,
+        builtChainJwts,
+        {
+          connectTimeout: 10000,
+          readTimeout: 10000,
+          requireCrl: true
+        }
+      );
+    }
+  ),
 
   createWalletInstance: fromPromise<string>(async () => {
     const sessionToken = sessionTokenSelector(store.getState());
