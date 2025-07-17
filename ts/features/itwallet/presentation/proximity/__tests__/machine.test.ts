@@ -9,6 +9,7 @@ import {
 import { VerifierRequest } from "@pagopa/io-react-native-proximity";
 import { itwProximityMachine } from "../machine/machine";
 import {
+  CheckPermissionsInput,
   ProximityCommunicationLogicActorInput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
@@ -48,6 +49,7 @@ describe("itwProximityMachine", () => {
   const onInit = jest.fn();
   const setFailure = jest.fn();
   const setQRCodeGenerationError = jest.fn();
+  const setHasGivenConsent = jest.fn();
   const navigateToGrantPermissionsScreen = jest.fn();
   const navigateToBluetoothActivationScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
@@ -71,6 +73,7 @@ describe("itwProximityMachine", () => {
       setQRCodeGenerationError: assign({
         isQRCodeGenerationError: true
       }),
+      setHasGivenConsent,
       navigateToGrantPermissionsScreen,
       navigateToBluetoothActivationScreen,
       navigateToFailureScreen,
@@ -81,7 +84,9 @@ describe("itwProximityMachine", () => {
       onInit: assign(onInit)
     },
     actors: {
-      checkPermissions: fromPromise<boolean, void>(checkPermissions),
+      checkPermissions: fromPromise<boolean, CheckPermissionsInput>(
+        checkPermissions
+      ),
       checkBluetoothIsActive: fromPromise<boolean, void>(
         checkBluetoothIsActive
       ),
