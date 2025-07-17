@@ -8,8 +8,8 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as URLUTILS from "../../../../../utils/url";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
-import { PN_QR_SCAN_ROUTES } from "../../navigation/navigator";
 import { SendQrScanRedirectScreen } from "../SendQrScanRedirectScreen";
+import PN_ROUTES from "../../../navigation/routes";
 
 type navType = ReturnType<(typeof IONAV)["useIONavigation"]>;
 
@@ -57,7 +57,7 @@ function renderComponent() {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <SendQrScanRedirectScreen aarUrl={aarUrl} />,
-    PN_QR_SCAN_ROUTES.QR_SCAN_FLOW,
+    PN_ROUTES.QR_SCAN_FLOW,
     {},
     createStore(appReducer, globalState as any)
   );

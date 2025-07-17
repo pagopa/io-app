@@ -167,15 +167,13 @@ const BarcodeScanScreen = () => {
       case "SEND":
         // TODO navigate to AAR screen/flow. It is not
         // implemented yet so we keep treating it as an error
+        //
         // navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         //   screen: PN_ROUTES.MAIN,
         //   params: {
-        //     screen: PN_QR_SCAN_ROUTES.MAIN,
+        //     screen: PN_ROUTES.QR_SCAN_FLOW,
         //     params: {
-        //       screen: PN_QR_SCAN_ROUTES.QR_SCAN_FLOW,
-        //       params: {
-        //         aarUrl: barcode.qrCodeContent
-        //       }
+        //       aarUrl: barcode.qrCodeContent
         //     }
         //   }
         // });

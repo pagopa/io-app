@@ -1,18 +1,13 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { SendQrScanRedirectScreen } from "../components/SendQrScanRedirectScreen";
-import {
-  PN_QR_SCAN_ROUTES,
-  PnQrCodeScanParamList
-} from "../navigation/navigator";
+import { PnParamsList } from "../../navigation/params";
+import PN_ROUTES from "../../navigation/routes";
 
 export type SendQRScanFlowProps = {
   aarUrl: string;
 };
 
-type RouteProps = RouteProp<
-  PnQrCodeScanParamList,
-  typeof PN_QR_SCAN_ROUTES.QR_SCAN_FLOW
->;
+type RouteProps = RouteProp<PnParamsList, typeof PN_ROUTES.QR_SCAN_FLOW>;
 
 export const SendQrScanFlow = () => {
   const route = useRoute<RouteProps>();

@@ -4,8 +4,8 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as REDIRECT_SCREEN from "../../components/SendQrScanRedirectScreen";
-import { PN_QR_SCAN_ROUTES } from "../../navigation/navigator";
 import { SendQrScanFlow } from "../QrScanFlow";
+import PN_ROUTES from "../../../navigation/routes";
 
 describe("SendQrScanFlow", () => {
   const mockAarUrl = "https://test-url.com";
@@ -30,7 +30,7 @@ function renderComponent(aarUrl: string) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <SendQrScanFlow />,
-    PN_QR_SCAN_ROUTES.QR_SCAN_FLOW,
+    PN_ROUTES.QR_SCAN_FLOW,
     { aarUrl },
     createStore(appReducer, globalState as any)
   );

@@ -168,7 +168,7 @@ exports[`SendQrScanRedirectScreen should match snapshot 1`] = `
                     ]
                   }
                 >
-                  PN_QR_CODE_SCAN_FLOW
+                  PN_QR_SCAN_FLOW
                 </Text>
               </View>
               <View
