@@ -104,7 +104,9 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   navigateToWallet: () => {
-    toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
+    toast.success(
+      I18n.t("features.itWallet.issuance.eidResult.successL2.toast")
+    );
     navigation.reset({
       index: 1,
       routes: [
@@ -224,7 +226,9 @@ export const createEidIssuanceActionsImplementation = (
   resetWalletInstance: () => {
     store.dispatch(itwLifecycleWalletReset());
     store.dispatch(itwSetAuthLevel(undefined));
-    toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
+    toast.success(
+      I18n.t("features.itWallet.issuance.eidResult.successL2.toast")
+    );
   },
 
   trackWalletInstanceCreation: () => {
