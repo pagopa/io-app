@@ -180,13 +180,6 @@ const BarcodeScanScreen = () => {
             }
           }
         });
-        // TODO navigate to AAR screen/flow. It is not
-        // implemented yet so we keep treating it as an error
-        // handleBarcodeError({
-        //   content: "",
-        //   format: "QR_CODE",
-        //   reason: "UNKNOWN_CONTENT"
-        // });
         break;
     }
   };
