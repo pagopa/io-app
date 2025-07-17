@@ -36,6 +36,7 @@ import {
 } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
+import { isItwCredential } from "../../common/utils/itwCredentialUtils";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
@@ -72,6 +73,8 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute();
+
+  const isL3 = isItwCredential(eid.credential);
 
   const mixPanelCredential = useMemo(
     () => CREDENTIALS_MAP[eid.credentialType],
@@ -163,7 +166,11 @@ const ContentView = ({ eid }: ContentViewProps) => {
             <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
           </HStack>
           <IOMarkdown
-            content={I18n.t("features.itWallet.issuance.eidPreview.subtitle")}
+            content={I18n.t(
+              `features.itWallet.issuance.eidPreview.${
+                isL3 ? "subtitleL3" : "subtitle"
+              }`
+            )}
           />
           <ItwCredentialPreviewClaimsList data={eid} releaserVisible={false} />
         </VStack>

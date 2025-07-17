@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 import { VSpacer, Banner } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 
+import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idpayInitiativeInstrumentsGet } from "../../configuration/store/actions";
@@ -18,7 +19,7 @@ export type IdPayCodeCIEBannerParams = {
 };
 
 const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
-  const bannerViewRef = useRef(null);
+  const bannerViewRef = useRef<View>(null);
   const navigation =
     useNavigation<IOStackNavigationProp<IdPayCodeParamsList>>();
   const dispatch = useIODispatch();
@@ -74,7 +75,7 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
           labelClose={I18n.t(
             "idpay.initiative.discountDetails.IDPayCode.banner.close"
           )}
-          viewRef={bannerViewRef}
+          ref={bannerViewRef}
         />
         <VSpacer size={24} />
       </>
