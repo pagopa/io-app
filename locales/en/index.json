@@ -3797,6 +3797,35 @@
       "title": "Questo servizio non è più attivo su IO"
     },
     "pn": {
+      "aar": {
+        "serviceActivation": {
+          "headerAction": "Chiudi",
+          "feature1": {
+            "part1": "Attiva SEND su IO e ricevi in app le ",
+            "part2": "comunicazioni a valore legale",
+            "part3": " che ti inviano gli enti"
+          },
+          "feature2": {
+            "part1": "Se leggi la comunicazione online in tempo, ",
+            "part2": "eviti la raccomandata e risparmi"
+          },
+          "feature3": {
+            "part1": "Se previsto un pagamento, puoi usare il tuo ",
+            "part2": "metodo preferito"
+          },
+          "footer": {
+            "part1": "Premendo ",
+            "part2": "Attiva SEND su IO",
+            "part3": " dichiari di aver letto e compreso l’",
+            "part4": "Informativa Privacy",
+            "part5": " e i ",
+            "part6": "Termini e Condizioni d’uso",
+            "part7": "."
+          },
+          "primaryAction": "Attiva SEND su IO",
+          "title": "Ricevi su IO le tue prossime notifiche SEND"
+        }
+      },
       "reminderBanner": {
         "title": "Risparmia sui costi di notifica!",
         "body": "Scopri e attiva SEND su IO per ricevere le comunicazioni a valore legale direttamente in app.",
