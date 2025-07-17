@@ -29,13 +29,13 @@ export const ItwIssuanceEidResultScreen = () => {
     return (
       <OperationResultScreenContent
         pictogram="success"
-        title={I18n.t("features.itWallet.issuance.eidResult.successL3.title")}
+        title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
         subtitle={I18n.t(
-          "features.itWallet.issuance.eidResult.successL3.subtitle"
+          "features.itWallet.issuance.eidResult.success.subtitle"
         )}
         action={{
           label: I18n.t(
-            "features.itWallet.issuance.eidResult.successL3.actions.continue"
+            "features.itWallet.issuance.eidResult.success.actions.continue"
           ),
           onPress: handleBackToWallet
         }}
@@ -47,17 +47,19 @@ export const ItwIssuanceEidResultScreen = () => {
   return (
     <OperationResultScreenContent
       pictogram="success"
-      title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
-      subtitle={I18n.t("features.itWallet.issuance.eidResult.success.subtitle")}
+      title={I18n.t("features.itWallet.issuance.eidResult.successL2.title")}
+      subtitle={I18n.t(
+        "features.itWallet.issuance.eidResult.successL2.subtitle"
+      )}
       action={{
         label: I18n.t(
-          "features.itWallet.issuance.eidResult.success.actions.continue"
+          "features.itWallet.issuance.eidResult.successL2.actions.continue"
         ),
         onPress: handleContinue
       }}
       secondaryAction={{
         label: I18n.t(
-          "features.itWallet.issuance.eidResult.success.actions.close"
+          "features.itWallet.issuance.eidResult.successL2.actions.close"
         ),
         onPress: () => {
           handleBackToWallet();

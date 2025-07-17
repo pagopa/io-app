@@ -4639,7 +4639,7 @@
           }
         },
         "eidResult": {
-          "success": {
+          "successL2": {
             "title": "È tutto pronto!",
             "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
             "toast": "Fatto!",
@@ -4649,7 +4649,7 @@
               "close": "Continua più tardi"
             }
           },
-          "successL3": {
+          "success": {
             "title": "Il tuo IT-Wallet è pronto!",
             "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale di Stato.",
             "actions": {
