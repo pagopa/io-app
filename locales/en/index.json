@@ -3922,9 +3922,9 @@
           "cta": "Accedi alla versione web"
         }
       },
-      "qrCodeScan":{
-        "success":{
-          "openSendScreen":{
+      "qrCodeScan": {
+        "success": {
+          "openSendScreen": {
             "title": "Per accedere ai documenti vai sul sito web di SEND",
             "body": "Per visualizzare i documenti online devi andare sul sito web di SEND. Presto potrai farlo direttamente da IO!",
             "firstCta": "Vai su SEND",

@@ -47,6 +47,9 @@ import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { paymentAnalyticsDataSelector } from "../../payments/history/store/selectors";
 import { isIdPayLocallyEnabledSelector } from "../../../store/reducers/persistedPreferences.ts";
 import { ITW_REMOTE_ROUTES } from "../../itwallet/presentation/remote/navigation/routes.ts";
+import PN_ROUTES from "../../pn/navigation/routes.ts";
+import { MESSAGES_ROUTES } from "../../messages/navigation/routes.ts";
+import { PN_QR_SCAN_ROUTES } from "../../pn/qrCodeScan/navigation/navigator.tsx";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -165,13 +168,25 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "SEND":
+        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_QR_SCAN_ROUTES.MAIN,
+            params: {
+              screen: PN_QR_SCAN_ROUTES.QR_SCAN_FLOW,
+              params: {
+                aarUrl: barcode.qrCodeContent
+              }
+            }
+          }
+        });
         // TODO navigate to AAR screen/flow. It is not
         // implemented yet so we keep treating it as an error
-        handleBarcodeError({
-          content: "",
-          format: "QR_CODE",
-          reason: "UNKNOWN_CONTENT"
-        });
+        // handleBarcodeError({
+        //   content: "",
+        //   format: "QR_CODE",
+        //   reason: "UNKNOWN_CONTENT"
+        // });
         break;
     }
   };
