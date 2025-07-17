@@ -1,12 +1,19 @@
 import { fireEvent } from "@testing-library/react-native";
-import * as URLUTILS from "../../../../../utils/url";
-import { renderComponent } from "../../../../settings/common/components/__tests__/ProfileMainScreenTopBanner.test";
-import { SendQrScanRedirectScreen } from "../SendQrScanRedirectScreen";
+import { createStore } from "redux";
 import * as IONAV from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as URLUTILS from "../../../../../utils/url";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import { PN_QR_SCAN_ROUTES } from "../../navigation/navigator";
+import { SendQrScanRedirectScreen } from "../SendQrScanRedirectScreen";
 
 type navType = ReturnType<(typeof IONAV)["useIONavigation"]>;
+
+const aarUrl = "https://example.com";
 
 describe("SendQrScanRedirectScreen", () => {
   const mockOpenWebUrl = jest.fn();
@@ -22,17 +29,13 @@ describe("SendQrScanRedirectScreen", () => {
     jest.clearAllMocks();
   });
 
-  const aarUrl = "https://example.com";
-  const renderScreen = () =>
-    renderComponent(<SendQrScanRedirectScreen aarUrl={aarUrl} />);
-
   it("should match snapshot", () => {
-    const { toJSON } = renderScreen();
+    const { toJSON } = renderComponent();
     expect(toJSON()).toMatchSnapshot();
   });
 
   it("calls openWebUrl with aarUrl when primary action is pressed", () => {
-    const { getByTestId } = renderScreen();
+    const { getByTestId } = renderComponent();
     const button = getByTestId("primary-action"); // the function should not have been called before the button press
     expect(mockOpenWebUrl).toHaveBeenCalledTimes(0);
     fireEvent(button, "press");
@@ -41,7 +44,7 @@ describe("SendQrScanRedirectScreen", () => {
   });
 
   it("calls navigation.navigate when secondary action is pressed", () => {
-    const { getByTestId } = renderScreen();
+    const { getByTestId } = renderComponent();
     const button = getByTestId("secondary-action");
     fireEvent(button, "press");
     expect(mockNavigate).toHaveBeenCalledTimes(1);
@@ -50,3 +53,12 @@ describe("SendQrScanRedirectScreen", () => {
     });
   });
 });
+function renderComponent() {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  return renderScreenWithNavigationStoreContext<GlobalState>(
+    () => <SendQrScanRedirectScreen aarUrl={aarUrl} />,
+    PN_QR_SCAN_ROUTES.QR_SCAN_FLOW,
+    {},
+    createStore(appReducer, globalState as any)
+  );
+}

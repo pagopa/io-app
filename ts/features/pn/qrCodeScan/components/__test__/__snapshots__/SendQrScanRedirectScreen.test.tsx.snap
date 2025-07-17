@@ -1,1167 +1,903 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ProfileMainScreenTopBanner should match snapshot for all possible results of settingsBannerToShowSelector: Appearance Settings banner 1`] = `
-<View
-  style={
-    {
-      "paddingHorizontal": 24,
-    }
-  }
->
-  <View
-    style={
-      {
-        "height": 16,
-      }
-    }
-  />
-  <View
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={false}
-    collapsable={false}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    testID="appearance-settings-banner"
-  >
-    <View
-      style={
-        [
-          {
-            "alignContent": "center",
-            "alignItems": "flex-start",
-            "borderCurve": "continuous",
-            "borderRadius": 8,
-            "flexDirection": "row",
-            "padding": 16,
-          },
-          {
-            "backgroundColor": "#F4F5F8",
-          },
-          {
-            "transform": [
-              {
-                "scale": undefined,
-              },
-            ],
-          },
-        ]
-      }
-    >
-      <View
-        accessibilityLabel="Do you want to change the typeface used in the app? Edit typeface style"
-        accessibilityRole="button"
-        accessible={true}
-        style={
-          {
-            "alignSelf": "center",
-            "flex": 1,
-            "gap": 4,
-          }
-        }
-      >
-        <Text
-          allowFontScaling={true}
-          dynamicTypeRamp="headline"
-          maxFontSizeMultiplier={1.5}
-          style={
-            [
-              {},
-              {
-                "color": "#031344",
-                "fontFamily": "Titillio",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "600",
-                "lineHeight": 24,
-              },
-            ]
-          }
-        >
-          Do you want to change the typeface used in the app?
-        </Text>
-        <View
-          accessibilityElementsHidden={true}
-          accessibilityLabel="Edit typeface style"
-          accessibilityRole="button"
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          importantForAccessibility="no-hide-descendants"
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          pointerEvents="none"
-        >
-          <View
-            style={
-              {
-                "height": 8,
-              }
-            }
-          />
-          <Text
-            accessibilityElementsHidden={true}
-            accessible={false}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            importantForAccessibility="no-hide-descendants"
-            maxFontSizeMultiplier={1.5}
-            numberOfLines={1}
-            style={
-              [
-                {},
-                {
-                  "color": "#0B3EE3",
-                  "fontFamily": "Titillio",
-                  "fontSize": 16,
-                  "fontStyle": "normal",
-                  "fontWeight": "600",
-                  "lineHeight": undefined,
-                },
-              ]
-            }
-          >
-            Edit typeface style
-          </Text>
-        </View>
-      </View>
-      <View
-        style={
-          [
-            {
-              "marginRight": -16,
-            },
-            {
-              "alignSelf": "center",
-            },
-          ]
-        }
-      >
-        <RNSVGSvgView
-          align="xMidYMid"
-          bbHeight={80}
-          bbWidth={80}
-          focusable={false}
-          height={80}
-          meetOrSlice={0}
-          minX={0}
-          minY={0}
-          style={
-            [
-              {
-                "backgroundColor": "transparent",
-                "borderWidth": 0,
-              },
-              {
-                "flex": 0,
-                "height": 80,
-                "width": 80,
-              },
-            ]
-          }
-          vbHeight={240}
-          vbWidth={240}
-          width={80}
-        >
-          <RNSVGGroup
-            fill={
-              {
-                "payload": 4278190080,
-                "type": 0,
-              }
-            }
-          >
-            <RNSVGPath
-              d="M133.94 165.85c-2.88 0-5.61-1.57-7.03-4.28-1.01-1.92-1.2-4.12-.53-6.18.66-2.04 2.07-3.69 3.98-4.64 6.87-3.44 17.93-6.91 24.11-8.73-2.58-2.4-4.34-6.01-4.32-9.54 0-2.68 1.14-9.19 11.43-11.65 16.11-3.86 78.12 18.71 80.75 19.67l-1.37 3.76c-.16-.06-16.14-5.89-33.81-11.18-29.21-8.75-40.4-9.37-44.64-8.36-5.38 1.29-8.35 4.05-8.36 7.77-.01 3.88 3.08 7.55 5.86 8.23.89.22 1.51 1.01 1.52 1.92 0 .91-.6 1.71-1.48 1.95-.18.05-18.53 5.04-27.9 9.73-.94.47-1.63 1.28-1.96 2.29-.33 1.03-.24 2.13.27 3.09.96 1.83 3.13 2.61 5.04 1.82 9.09-3.77 20.95-8.25 26.02-8.25h.12l-.06 4c-3.34-.08-12.27 2.85-24.55 7.94-1.01.42-2.05.62-3.08.62l-.01.02Z"
-              fill={
-                {
-                  "payload": 4278927075,
-                  "type": 0,
-                }
-              }
-              propList={
-                [
-                  "fill",
-                ]
-              }
-            />
-            <RNSVGPath
-              d="M137.85 182.28c-3.78 0-7.45-2.01-9.39-5.54-2.16-3.92-1.62-8.82 1.33-12.19l1.47-1.68 3.01 2.63-1.47 1.68c-1.85 2.11-2.18 5.17-.83 7.63 1.76 3.21 5.81 4.41 9.02 2.67 12.01-6.5 20.06-9.57 23.94-9.11l-.47 3.97c-2.88-.34-10.93 2.9-21.57 8.66-1.6.87-3.33 1.28-5.04 1.28Z"
-              fill={
-                {
-                  "payload": 4278927075,
-                  "type": 0,
-                }
-              }
-              propList={
-                [
-                  "fill",
-                ]
-              }
-            />
-            <RNSVGPath
-              d="M240.77 205.74c-39.81-19.17-81.44-13.88-92.88-10.51-2.82.83-5.84.2-8.1-1.68-2.34-1.95-3.52-5.04-3.07-8.05l.77-5.2 3.96.59-.77 5.2c-.25 1.64.4 3.33 1.67 4.39 1.23 1.03 2.88 1.37 4.41.92 11.83-3.48 54.8-8.97 95.75 10.74l-1.73 3.6h-.01ZM169.987 142.243l-.698 3.938 10.349 1.834.698-3.938-10.349-1.834Z"
-              fill={
-                {
-                  "payload": 4278927075,
-                  "type": 0,
-                }
-              }
-              propList={
-                [
-                  "fill",
-                ]
-              }
-            />
-            <RNSVGPath
-              d="M191.551 162.85c-10.44-5.97-15.77-22.75-15.99-23.46l3.82-1.19c.05.16 5.09 15.99 14.16 21.18l-1.99 3.47ZM163.743 148.684l-3.982.379 2.843 29.855 3.982-.379-2.843-29.855Z"
-              fill={
-                {
-                  "payload": 4278927075,
-                  "type": 0,
-                }
-              }
-              propList={
-                [
-                  "fill",
-                ]
-              }
-            />
-            <RNSVGPath
-              d="M85.52 154.04c32.872 0 59.52-26.648 59.52-59.52S118.392 35 85.52 35 26 61.648 26 94.52s26.648 59.52 59.52 59.52Z"
-              fill={
-                {
-                  "payload": 4289392367,
-                  "type": 0,
-                }
-              }
-              propList={
-                [
-                  "fill",
-                ]
-              }
-            />
-            <RNSVGPath
-              d="M82.4798 130.63c2.5626 0 4.64-2.077 4.64-4.64 0-2.563-2.0774-4.64-4.64-4.64-2.5626 0-4.64 2.077-4.64 4.64 0 2.563 2.0774 4.64 4.64 4.64ZM82.24 114.86c-.83 0-1.5-.67-1.5-1.5 0-18.43 5.9-22.29 12.15-26.38.95-.62 1.93-1.26 2.88-1.96 4.85-3.55 6.86-9.58 5.11-15.38-1.34-4.42-5.25-9.26-12.22-9.58h-.26c-.24 0-.54.01-.88-.04-4.42-.72-11.67 1.68-15.44 6.38-2.86 3.57-3.33 7.82-1.41 12.63.31.77-.07 1.64-.84 1.95-.77.31-1.64-.07-1.95-.84-2.93-7.34-.61-12.54 1.85-15.62 4.57-5.7 13.04-8.31 18.26-7.46.11.02.22 0 .33 0h.47c7.14.32 12.87 4.81 14.96 11.71 2.12 7.03-.32 14.36-6.22 18.67-1.01.74-2.03 1.4-3.01 2.05-5.79 3.79-10.79 7.06-10.79 23.87 0 .83-.67 1.5-1.5 1.5h.01Z"
-              fill={
-                {
-                  "payload": 4278240714,
-                  "type": 0,
-                }
-              }
-              propList={
-                [
-                  "fill",
-                ]
-              }
-            />
-          </RNSVGGroup>
-        </RNSVGSvgView>
-      </View>
-      <View
-        style={
-          {
-            "opacity": 0.6,
-            "position": "absolute",
-            "right": 10,
-            "top": 10,
-          }
-        }
-      >
-        <View
-          accessibilityLabel="Close the banner and do not show it again"
-          accessibilityRole="button"
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": false,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={8}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-        >
-          <View
-            style={
-              [
-                {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                },
-                {
-                  "height": 24,
-                  "width": 24,
-                },
-                false,
-              ]
-            }
-          >
-            <RNSVGSvgView
-              accessibilityElementsHidden={true}
-              accessibilityLabel=""
-              accessible={false}
-              align="xMidYMid"
-              animatedProps={
-                {
-                  "color": undefined,
-                }
-              }
-              bbHeight={36}
-              bbWidth={36}
-              color="#0E0F13"
-              focusable={false}
-              height={36}
-              importantForAccessibility="no-hide-descendants"
-              meetOrSlice={0}
-              minX={0}
-              minY={0}
-              style={
-                [
-                  {
-                    "backgroundColor": "transparent",
-                    "borderWidth": 0,
-                  },
-                  {
-                    "flex": 0,
-                    "height": 36,
-                    "width": 36,
-                  },
-                ]
-              }
-              vbHeight={24}
-              vbWidth={24}
-              width={36}
-            >
-              <RNSVGGroup
-                fill={
-                  {
-                    "payload": 4278190080,
-                    "type": 0,
-                  }
-                }
-              >
-                <RNSVGPath
-                  clipRule={0}
-                  d="M16.7071 8.70711c.3905-.39053.3905-1.02369 0-1.41422-.3905-.39052-1.0237-.39052-1.4142 0L12 10.5858 8.70711 7.29289c-.39053-.39052-1.02369-.39052-1.41422 0-.39052.39053-.39052 1.02369 0 1.41422L10.5858 12l-3.29291 3.2929c-.39052.3905-.39052 1.0237 0 1.4142.39053.3905 1.02369.3905 1.41422 0L12 13.4142l3.2929 3.2929c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L13.4142 12l3.2929-3.29289Z"
-                  fill={
-                    {
-                      "type": 2,
-                    }
-                  }
-                  fillRule={0}
-                  propList={
-                    [
-                      "fill",
-                      "fillRule",
-                    ]
-                  }
-                />
-              </RNSVGGroup>
-            </RNSVGSvgView>
-          </View>
-        </View>
-      </View>
-    </View>
-  </View>
-</View>
-`;
-
-exports[`ProfileMainScreenTopBanner should match snapshot for all possible results of settingsBannerToShowSelector: no banner 1`] = `null`;
-
-exports[`ProfileMainScreenTopBanner should match snapshot for all possible results of settingsBannerToShowSelector: notifications banner 1`] = `
-<View
-  style={
-    {
-      "paddingHorizontal": 24,
-    }
-  }
->
-  <View
-    style={
-      {
-        "height": 16,
-      }
-    }
-  />
-  <View
-    accessibilityRole="button"
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    onTouchEnd={[Function]}
-    testID="notifications-banner"
-  >
-    <View
-      style={
-        [
-          {
-            "borderCurve": "continuous",
-            "borderRadius": 12,
-            "padding": 16,
-          },
-          {
-            "backgroundColor": "#FFD9D9",
-          },
-          {
-            "transform": [
-              {
-                "scale": undefined,
-              },
-            ],
-          },
-        ]
-      }
-    >
-      <View
-        style={
-          {
-            "alignItems": "center",
-            "display": "flex",
-            "flexDirection": "row",
-            "gap": 18,
-          }
-        }
-      >
-        <RNSVGSvgView
-          accessibilityElementsHidden={true}
-          accessibilityLabel=""
-          accessible={false}
-          align="xMidYMid"
-          bbHeight={36}
-          bbWidth={36}
-          color="#5D1313"
-          focusable={false}
-          height={36}
-          importantForAccessibility="no-hide-descendants"
-          meetOrSlice={0}
-          minX={0}
-          minY={0}
-          style={
-            [
-              {
-                "backgroundColor": "transparent",
-                "borderWidth": 0,
-              },
-              {
-                "flex": 0,
-                "height": 36,
-                "width": 36,
-              },
-            ]
-          }
-          vbHeight={24}
-          vbWidth={24}
-          width={36}
-        >
-          <RNSVGGroup
-            fill={
-              {
-                "payload": 4278190080,
-                "type": 0,
-              }
-            }
-          >
-            <RNSVGPath
-              clipRule={0}
-              d="M7.00702 1c-.73494 0-1.41405.39209-1.78152 1.02856L.2756 11.0274c-.36747.6365-.36747 1.4206 0 2.0571l4.9499 8.8783c.36747.6365 1.04658 1.0286 1.78152 1.0286h9.94288c.7349 0 1.414-.3921 1.7815-1.0286l4.993-8.8783c.3675-.6365.3675-1.4206 0-2.0571l-4.993-8.99884C18.3639 1.39209 17.6848 1 16.9499 1H7.00702Zm5.02608 13.5549c.5676 0 1.0283-.4601 1.0283-1.0277V5.52583c0-.56758-.4601-1.02769-1.0277-1.02769-.5676 0-1.0282.46011-1.0282 1.02769v8.00137c0 .5676.4601 1.0277 1.0276 1.0277Zm0 1.9431c.8436 0 1.5275.6839 1.5275 1.5275 0 .8436-.6839 1.5275-1.5275 1.5275-.8436 0-1.5274-.6839-1.5274-1.5275 0-.8436.6838-1.5275 1.5274-1.5275Z"
-              fill={
-                {
-                  "type": 2,
-                }
-              }
-              fillRule={0}
-              propList={
-                [
-                  "fill",
-                  "fillRule",
-                ]
-              }
-            />
-          </RNSVGGroup>
-        </RNSVGSvgView>
-        <View
-          style={
-            {
-              "flex": 1,
-              "marginBottom": -6,
-              "marginTop": -6,
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "display": "flex",
-                "flexDirection": "column",
-                "gap": 12,
-              }
-            }
-          >
-            <Text
-              allowFontScaling={true}
-              dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.5}
-              style={
-                [
-                  {},
-                  {
-                    "color": "#5D1313",
-                    "fontFamily": "Titillio",
-                    "fontSize": 16,
-                    "fontStyle": "normal",
-                    "fontWeight": "400",
-                    "lineHeight": 24,
-                  },
-                ]
-              }
-            >
-              Turn on push notifications to know when you get a message on IO.
-            </Text>
-            <Text
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              maxFontSizeMultiplier={1.5}
-              numberOfLines={1}
-              style={
-                [
-                  {},
-                  {
-                    "color": "#5D1313",
-                    "fontFamily": "Titillio",
-                    "fontSize": 16,
-                    "fontStyle": "normal",
-                    "fontWeight": "600",
-                    "lineHeight": 20,
-                  },
-                ]
-              }
-            >
-              Turn on push notifications
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
-  </View>
-</View>
-`;
-
 exports[`SendQrScanRedirectScreen should match snapshot 1`] = `
-<RNCSafeAreaView
-  edges={
-    {
-      "bottom": "additive",
-      "left": "additive",
-      "right": "additive",
-      "top": "additive",
-    }
-  }
+<View
   style={
     {
-      "flexGrow": 1,
+      "flex": 1,
     }
   }
 >
-  <RCTScrollView
-    alwaysBounceVertical={false}
-    centerContent={true}
-    contentContainerStyle={
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
       [
         {
-          "alignContent": "center",
-          "alignItems": "stretch",
-          "flexGrow": 1,
-          "justifyContent": "center",
-          "padding": 24,
+          "flex": 1,
         },
-        false,
+        undefined,
       ]
     }
   >
-    <View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+    >
       <View
+        collapsable={false}
+        pointerEvents="box-none"
+        style={
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
+        }
+      >
+        <View
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
+          onLayout={[Function]}
+          pointerEvents="box-none"
+          style={null}
+        >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
+                  },
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
+              }
+            />
+          </View>
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              pointerEvents="none"
+              style={
+                {
+                  "height": 0,
+                }
+              }
+            />
+            <View
+              pointerEvents="box-none"
+              style={
+                {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  {
+                    "alignItems": "flex-start",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginStart": 0,
+                    "opacity": 1,
+                  }
+                }
+              />
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  {
+                    "justifyContent": "center",
+                    "marginHorizontal": 16,
+                    "maxWidth": 718,
+                    "opacity": 1,
+                  }
+                }
+              >
+                <Text
+                  accessibilityRole="header"
+                  aria-level="1"
+                  collapsable={false}
+                  numberOfLines={1}
+                  onLayout={[Function]}
+                  style={
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  PN_QR_CODE_SCAN_FLOW
+                </Text>
+              </View>
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  {
+                    "alignItems": "flex-end",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginEnd": 0,
+                    "opacity": 1,
+                  }
+                }
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+      <RNSScreenContainer
+        onLayout={[Function]}
         style={
           {
-            "alignItems": "center",
+            "flex": 1,
           }
         }
       >
-        <RNSVGSvgView
-          align="xMidYMid"
-          bbHeight={120}
-          bbWidth={120}
-          focusable={false}
-          height={120}
-          meetOrSlice={0}
-          minX={0}
-          minY={0}
+        <RNSScreen
+          activityState={2}
+          collapsable={false}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
+          pointerEvents="box-none"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
+          sheetCornerRadius={-1}
+          sheetElevation={24}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
             [
               {
-                "backgroundColor": "transparent",
-                "borderWidth": 0,
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
               },
               {
-                "flex": 0,
-                "height": 120,
-                "width": 120,
+                "zIndex": undefined,
               },
             ]
           }
-          vbHeight={240}
-          vbWidth={240}
-          width={120}
         >
-          <RNSVGGroup
-            fill={
-              {
-                "payload": 4278190080,
-                "type": 0,
-              }
-            }
-          >
-            <RNSVGPath
-              d="M53 79.67V176.89C53 179.31 54.82 181.34 57.22 181.61L130.76 189.83C133.58 190.14 136.04 187.94 136.04 185.11V157.64L132.52 153.43L126.87 148.28L117.74 142.9L114.37 141.84C114.37 141.84 109.26 140.57 108.35 140.4C107.44 140.23 102.55 139.16 102.18 139.17C101.8 139.18 99.32 136.26 99.32 136.26L98.33 133.36L99.09 128.5L100.9 124.79L97.64 122.58L92.49 119.66L91.23 115.62L93.72 112.56C93.72 112.56 96.53 110.82 95.27 110.48C94.01 110.14 93.77 107.42 93.72 107.18C93.67 106.94 94.53 104.52 94.53 104.52L96.37 102.44L101.07 101.12L104.88 101.05L116.73 102.78L136.06 109.39V60.36C136.06 57.94 134.24 55.91 131.84 55.64L81.72 50.03C80.07 49.85 78.43 50.45 77.29 51.66L54.42 76.07C53.51 77.05 53 78.33 53 79.67Z"
-              fill={
-                {
-                  "payload": 4289392367,
-                  "type": 0,
-                }
-              }
-              propList={
-                [
-                  "fill",
-                ]
-              }
-            />
-            <RNSVGPath
-              d="M184.761 148.98C170.311 129.45 144.301 98.46 136.051 98.46V94.46C149.021 94.46 184.031 141.26 187.981 146.6L184.771 148.98H184.761Z"
-              fill={
-                {
-                  "payload": 4278927075,
-                  "type": 0,
-                }
-              }
-              propList={
-                [
-                  "fill",
-                ]
-              }
-            />
-            <RNSVGPath
-              d="M120.621 119.85C102.161 117.43 92.9907 113.81 91.7807 108.48C91.0407 105.21 93.6207 102.54 95.2607 101.47C104.451 95.57 133.511 107.08 136.791 108.41L135.291 112.12C123.631 107.39 103.041 101.23 97.4407 104.83C97.4407 104.83 95.3807 106.27 95.6907 107.6C95.8907 108.45 98.0507 112.85 121.151 115.88L120.631 119.85H120.621Z"
-              fill={
-                {
-                  "payload": 4278927075,
-                  "type": 0,
-                }
-              }
-              propList={
-                [
-                  "fill",
-                ]
-              }
-            />
-            <RNSVGPath
-              d="M120.47 133.07C93.3003 127.36 89.6403 121.72 89.2503 117.97C88.7303 112.93 95.0003 110.02 95.7203 109.7L97.3403 113.36C95.9203 113.99 93.0503 115.85 93.2403 117.56C93.3903 118.93 95.8403 123.81 121.31 129.16L120.49 133.07H120.47Z"
-              fill={
-                {
-                  "payload": 4278927075,
-                  "type": 0,
-                }
-              }
-              propList={
-                [
-                  "fill",
-                ]
-              }
-            />
-            <RNSVGPath
-              d="M156.79 190.27C154.36 186.91 151.98 183.4 149.46 179.68C138.08 162.89 126.31 145.52 110.88 143.97C102.61 143.14 97.6501 140.67 96.1201 136.62C94.0601 131.18 99.2501 125.49 99.4701 125.25L102.41 127.97L100.94 126.61L102.41 127.96C101.37 129.1 98.8801 132.62 99.8601 135.21C100.79 137.64 104.84 139.34 111.28 139.98C128.57 141.72 140.87 159.87 152.77 177.43C155.27 181.12 157.63 184.61 160.03 187.92L156.79 190.26V190.27Z"
-              fill={
-                {
-                  "payload": 4278927075,
-                  "type": 0,
-                }
-              }
-              propList={
-                [
-                  "fill",
-                ]
-              }
-            />
-            <RNSVGPath
-              d="M120.58 78.59C120.58 78.59 120.49 78.59 120.44 78.59L75.7097 74.37C74.8797 74.29 74.2797 73.56 74.3597 72.74C74.4397 71.91 75.1797 71.3 75.9897 71.39L120.72 75.61C121.55 75.69 122.15 76.42 122.07 77.24C122 78.02 121.34 78.6 120.58 78.6V78.59Z"
-              fill={
-                {
-                  "payload": 4278240714,
-                  "type": 0,
-                }
-              }
-              propList={
-                [
-                  "fill",
-                ]
-              }
-            />
-            <RNSVGPath
-              d="M119.41 91.05C119.41 91.05 119.32 91.05 119.27 91.05L74.5398 86.83C73.7098 86.75 73.1098 86.02 73.1898 85.2C73.2698 84.37 74.0098 83.77 74.8198 83.85L119.55 88.07C120.38 88.15 120.98 88.88 120.9 89.7C120.83 90.48 120.17 91.06 119.41 91.06V91.05Z"
-              fill={
-                {
-                  "payload": 4278240714,
-                  "type": 0,
-                }
-              }
-              propList={
-                [
-                  "fill",
-                ]
-              }
-            />
-          </RNSVGGroup>
-        </RNSVGSvgView>
-        <View
-          style={
-            {
-              "height": 24,
-            }
-          }
-        />
-      </View>
-      <Text
-        accessibilityRole="header"
-        allowFontScaling={true}
-        dynamicTypeRamp="title2"
-        maxFontSizeMultiplier={1.5}
-        style={
-          [
-            {},
-            {
-              "color": "#0E0F13",
-              "fontFamily": "Titillio",
-              "fontSize": 22,
-              "fontStyle": "normal",
-              "fontWeight": "600",
-              "lineHeight": 33,
-            },
-            {
-              "textAlign": "center",
-            },
-          ]
-        }
-      >
-        Per accedere ai documenti vai sul sito web di SEND
-      </Text>
-      <View
-        style={
-          {
-            "height": 8,
-          }
-        }
-      />
-      <Text
-        allowFontScaling={true}
-        dynamicTypeRamp="body"
-        maxFontSizeMultiplier={1.5}
-        style={
-          [
-            {},
-            {
-              "color": "#555C70",
-              "fontFamily": "Titillio",
-              "fontSize": 16,
-              "fontStyle": "normal",
-              "fontWeight": "400",
-              "lineHeight": 24,
-            },
-            {
-              "textAlign": "center",
-            },
-          ]
-        }
-      >
-        Per visualizzare i documenti online devi andare sul sito web di SEND. Presto potrai farlo direttamente da IO!
-      </Text>
-      <View
-        style={
-          {
-            "alignItems": "center",
-          }
-        }
-      >
-        <View
-          style={
-            {
-              "height": 24,
-            }
-          }
-        />
-        <View>
           <View
-            accessibilityLabel="Vai su SEND"
-            accessibilityRole="button"
-            accessibilityState={
-              {
-                "busy": false,
-                "checked": undefined,
-                "disabled": false,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
             collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               {
-                "alignSelf": "auto",
-                "flexShrink": 1,
+                "opacity": 1,
               }
             }
-            testID="primary-action"
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            collapsable={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
+            pointerEvents="box-none"
+            style={
+              [
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+              ]
+            }
+            transitionSpec={
+              {
+                "close": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+              }
+            }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
               style={
                 [
                   {
-                    "alignItems": "center",
-                    "borderCurve": "continuous",
-                    "elevation": 0,
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "overflow": "hidden",
-                    "textAlignVertical": "center",
+                    "flex": 1,
                   },
-                  false,
-                  {
-                    "backgroundColor": undefined,
-                  },
-                  {
-                    "paddingHorizontal": 24,
-                  },
-                  {
-                    "backgroundColor": "#0B3EE3",
-                    "borderColor": "#FFFFFF",
-                    "borderRadius": 8,
-                    "borderWidth": 0,
-                    "height": 48,
-                  },
-                  {},
+                  undefined,
+                  null,
                 ]
               }
             >
               <View
+                collapsable={false}
+                enabled={false}
+                handlerTag={-1}
+                handlerType="PanGestureHandler"
+                needsOffscreenAlphaCompositing={false}
+                onGestureHandlerEvent={[Function]}
+                onGestureHandlerStateChange={[Function]}
                 style={
-                  [
-                    {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    },
-                    {
-                      "columnGap": 8,
-                    },
-                    false,
-                  ]
+                  {
+                    "flex": 1,
+                    "transform": [
+                      {
+                        "translateX": 0,
+                      },
+                      {
+                        "translateX": 0,
+                      },
+                    ],
+                  }
                 }
               >
-                <Text
-                  accessibilityElementsHidden={true}
-                  accessible={false}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
-                  importantForAccessibility="no-hide-descendants"
-                  maxFontSizeMultiplier={1.5}
-                  numberOfLines={1}
+                <View
+                  pointerEvents="box-none"
                   style={
                     [
-                      {},
                       {
-                        "color": "#0E0F13",
-                        "fontFamily": "Titillio",
-                        "fontSize": 16,
-                        "fontStyle": "normal",
-                        "fontWeight": "600",
-                        "lineHeight": undefined,
+                        "flex": 1,
+                        "overflow": "hidden",
                       },
                       [
                         {
-                          "textAlign": "auto",
+                          "backgroundColor": "#FFFFFF",
                         },
-                        {
-                          "color": "#FFFFFF",
-                        },
-                        {
-                          "color": undefined,
-                        },
+                        undefined,
                       ],
                     ]
                   }
                 >
-                  Vai su SEND
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        style={
-          {
-            "alignItems": "center",
-          }
-        }
-      >
-        <View
-          style={
-            {
-              "height": 24,
-            }
-          }
-        />
-        <View>
-          <View
-            accessibilityLabel="Chiudi"
-            accessibilityRole="button"
-            accessibilityState={
-              {
-                "busy": false,
-                "checked": undefined,
-                "disabled": false,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              {
-                "bottom": 14,
-                "left": 24,
-                "right": 24,
-                "top": 14,
-              }
-            }
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              {
-                "alignSelf": "flex-start",
-              }
-            }
-            testID="secondary-action"
-          >
-            <View
-              style={
-                [
-                  {
-                    "alignItems": "center",
-                    "borderCurve": "continuous",
-                    "elevation": 0,
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "overflow": "hidden",
-                    "textAlignVertical": "center",
-                  },
-                  false,
-                  {},
-                  {
-                    "paddingHorizontal": 0,
-                  },
-                  {
-                    "backgroundColor": "transparent",
-                    "borderColor": "#0B3EE3",
-                    "borderRadius": 8,
-                    "borderWidth": 0,
-                    "height": undefined,
-                  },
-                  {},
-                ]
-              }
-            >
-              <View
-                style={
-                  [
-                    {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    },
-                    {
-                      "columnGap": 8,
-                    },
-                    false,
-                  ]
-                }
-              >
-                <Text
-                  accessibilityElementsHidden={true}
-                  accessible={false}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
-                  importantForAccessibility="no-hide-descendants"
-                  maxFontSizeMultiplier={1.5}
-                  numberOfLines={1}
-                  style={
-                    [
-                      {},
+                  <View
+                    style={
                       {
-                        "color": "#0E0F13",
-                        "fontFamily": "Titillio",
-                        "fontSize": 16,
-                        "fontStyle": "normal",
-                        "fontWeight": "600",
-                        "lineHeight": 20,
-                      },
-                      [
+                        "flex": 1,
+                        "flexDirection": "column-reverse",
+                      }
+                    }
+                  >
+                    <View
+                      style={
                         {
-                          "textAlign": "auto",
-                        },
-                        {
-                          "color": "#0B3EE3",
-                        },
-                        {
-                          "color": undefined,
-                        },
-                      ],
-                    ]
-                  }
-                >
-                  Chiudi
-                </Text>
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
+                        style={
+                          {
+                            "flexGrow": 1,
+                          }
+                        }
+                      >
+                        <RCTScrollView
+                          alwaysBounceVertical={false}
+                          centerContent={true}
+                          contentContainerStyle={
+                            [
+                              {
+                                "alignContent": "center",
+                                "alignItems": "stretch",
+                                "flexGrow": 1,
+                                "justifyContent": "center",
+                                "padding": 24,
+                              },
+                              false,
+                            ]
+                          }
+                        >
+                          <View>
+                            <View
+                              style={
+                                {
+                                  "alignItems": "center",
+                                }
+                              }
+                            >
+                              <RNSVGSvgView
+                                align="xMidYMid"
+                                bbHeight={120}
+                                bbWidth={120}
+                                focusable={false}
+                                height={120}
+                                meetOrSlice={0}
+                                minX={0}
+                                minY={0}
+                                style={
+                                  [
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderWidth": 0,
+                                    },
+                                    {
+                                      "flex": 0,
+                                      "height": 120,
+                                      "width": 120,
+                                    },
+                                  ]
+                                }
+                                vbHeight={240}
+                                vbWidth={240}
+                                width={120}
+                              >
+                                <RNSVGGroup
+                                  fill={
+                                    {
+                                      "payload": 4278190080,
+                                      "type": 0,
+                                    }
+                                  }
+                                >
+                                  <RNSVGPath
+                                    d="M53 79.67V176.89C53 179.31 54.82 181.34 57.22 181.61L130.76 189.83C133.58 190.14 136.04 187.94 136.04 185.11V157.64L132.52 153.43L126.87 148.28L117.74 142.9L114.37 141.84C114.37 141.84 109.26 140.57 108.35 140.4C107.44 140.23 102.55 139.16 102.18 139.17C101.8 139.18 99.32 136.26 99.32 136.26L98.33 133.36L99.09 128.5L100.9 124.79L97.64 122.58L92.49 119.66L91.23 115.62L93.72 112.56C93.72 112.56 96.53 110.82 95.27 110.48C94.01 110.14 93.77 107.42 93.72 107.18C93.67 106.94 94.53 104.52 94.53 104.52L96.37 102.44L101.07 101.12L104.88 101.05L116.73 102.78L136.06 109.39V60.36C136.06 57.94 134.24 55.91 131.84 55.64L81.72 50.03C80.07 49.85 78.43 50.45 77.29 51.66L54.42 76.07C53.51 77.05 53 78.33 53 79.67Z"
+                                    fill={
+                                      {
+                                        "payload": 4289392367,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M184.761 148.98C170.311 129.45 144.301 98.46 136.051 98.46V94.46C149.021 94.46 184.031 141.26 187.981 146.6L184.771 148.98H184.761Z"
+                                    fill={
+                                      {
+                                        "payload": 4278927075,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M120.621 119.85C102.161 117.43 92.9907 113.81 91.7807 108.48C91.0407 105.21 93.6207 102.54 95.2607 101.47C104.451 95.57 133.511 107.08 136.791 108.41L135.291 112.12C123.631 107.39 103.041 101.23 97.4407 104.83C97.4407 104.83 95.3807 106.27 95.6907 107.6C95.8907 108.45 98.0507 112.85 121.151 115.88L120.631 119.85H120.621Z"
+                                    fill={
+                                      {
+                                        "payload": 4278927075,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M120.47 133.07C93.3003 127.36 89.6403 121.72 89.2503 117.97C88.7303 112.93 95.0003 110.02 95.7203 109.7L97.3403 113.36C95.9203 113.99 93.0503 115.85 93.2403 117.56C93.3903 118.93 95.8403 123.81 121.31 129.16L120.49 133.07H120.47Z"
+                                    fill={
+                                      {
+                                        "payload": 4278927075,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M156.79 190.27C154.36 186.91 151.98 183.4 149.46 179.68C138.08 162.89 126.31 145.52 110.88 143.97C102.61 143.14 97.6501 140.67 96.1201 136.62C94.0601 131.18 99.2501 125.49 99.4701 125.25L102.41 127.97L100.94 126.61L102.41 127.96C101.37 129.1 98.8801 132.62 99.8601 135.21C100.79 137.64 104.84 139.34 111.28 139.98C128.57 141.72 140.87 159.87 152.77 177.43C155.27 181.12 157.63 184.61 160.03 187.92L156.79 190.26V190.27Z"
+                                    fill={
+                                      {
+                                        "payload": 4278927075,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M120.58 78.59C120.58 78.59 120.49 78.59 120.44 78.59L75.7097 74.37C74.8797 74.29 74.2797 73.56 74.3597 72.74C74.4397 71.91 75.1797 71.3 75.9897 71.39L120.72 75.61C121.55 75.69 122.15 76.42 122.07 77.24C122 78.02 121.34 78.6 120.58 78.6V78.59Z"
+                                    fill={
+                                      {
+                                        "payload": 4278240714,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M119.41 91.05C119.41 91.05 119.32 91.05 119.27 91.05L74.5398 86.83C73.7098 86.75 73.1098 86.02 73.1898 85.2C73.2698 84.37 74.0098 83.77 74.8198 83.85L119.55 88.07C120.38 88.15 120.98 88.88 120.9 89.7C120.83 90.48 120.17 91.06 119.41 91.06V91.05Z"
+                                    fill={
+                                      {
+                                        "payload": 4278240714,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                </RNSVGGroup>
+                              </RNSVGSvgView>
+                              <View
+                                style={
+                                  {
+                                    "height": 24,
+                                  }
+                                }
+                              />
+                            </View>
+                            <Text
+                              accessibilityRole="header"
+                              allowFontScaling={true}
+                              dynamicTypeRamp="title2"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 33,
+                                  },
+                                  {
+                                    "textAlign": "center",
+                                  },
+                                ]
+                              }
+                            >
+                              Per accedere ai documenti vai sul sito web di SEND
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 8,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="body"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 24,
+                                  },
+                                  {
+                                    "textAlign": "center",
+                                  },
+                                ]
+                              }
+                            >
+                              Per visualizzare i documenti online devi andare sul sito web di SEND. Presto potrai farlo direttamente da IO!
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "alignItems": "center",
+                                }
+                              }
+                            >
+                              <View
+                                style={
+                                  {
+                                    "height": 24,
+                                  }
+                                }
+                              />
+                              <View>
+                                <View
+                                  accessibilityLabel="Vai su SEND"
+                                  accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "busy": false,
+                                      "checked": undefined,
+                                      "disabled": false,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                  style={
+                                    {
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
+                                    }
+                                  }
+                                  testID="primary-action"
+                                >
+                                  <View
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderCurve": "continuous",
+                                          "elevation": 0,
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                          "overflow": "hidden",
+                                          "textAlignVertical": "center",
+                                        },
+                                        false,
+                                        {
+                                          "backgroundColor": undefined,
+                                        },
+                                        {
+                                          "paddingHorizontal": 24,
+                                        },
+                                        {
+                                          "backgroundColor": "#0B3EE3",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
+                                        },
+                                        {},
+                                      ]
+                                    }
+                                  >
+                                    <View
+                                      style={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
+                                          },
+                                          {
+                                            "columnGap": 8,
+                                          },
+                                          false,
+                                        ]
+                                      }
+                                    >
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": undefined,
+                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#FFFFFF",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
+                                          ]
+                                        }
+                                      >
+                                        Vai su SEND
+                                      </Text>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "alignItems": "center",
+                                }
+                              }
+                            >
+                              <View
+                                style={
+                                  {
+                                    "height": 24,
+                                  }
+                                }
+                              />
+                              <View>
+                                <View
+                                  accessibilityLabel="Chiudi"
+                                  accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "busy": false,
+                                      "checked": undefined,
+                                      "disabled": false,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  hitSlop={
+                                    {
+                                      "bottom": 14,
+                                      "left": 24,
+                                      "right": 24,
+                                      "top": 14,
+                                    }
+                                  }
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                  style={
+                                    {
+                                      "alignSelf": "flex-start",
+                                    }
+                                  }
+                                  testID="secondary-action"
+                                >
+                                  <View
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderCurve": "continuous",
+                                          "elevation": 0,
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                          "overflow": "hidden",
+                                          "textAlignVertical": "center",
+                                        },
+                                        false,
+                                        {},
+                                        {
+                                          "paddingHorizontal": 0,
+                                        },
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderColor": "#0B3EE3",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": undefined,
+                                        },
+                                        {},
+                                      ]
+                                    }
+                                  >
+                                    <View
+                                      style={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
+                                          },
+                                          {
+                                            "columnGap": 8,
+                                          },
+                                          false,
+                                        ]
+                                      }
+                                    >
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
+                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
+                                          ]
+                                        }
+                                      >
+                                        Chiudi
+                                      </Text>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </RCTScrollView>
+                      </RNCSafeAreaView>
+                    </View>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
-  </RCTScrollView>
-</RNCSafeAreaView>
+  </RNCSafeAreaProvider>
+</View>
 `;
