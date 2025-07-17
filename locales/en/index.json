@@ -4852,6 +4852,13 @@
             "title": "Verifica la versione digitale del documento",
             "content": "È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.",
             "primaryAction": "Inizia"
+          },
+          "mdl": {
+            "walletUpgradeBanner": {
+              "title": "Novità IT-Wallet",
+              "content": "Ottieni IT-Wallet per usare la tua Patente anche come documento d'identità!",
+              "action": "Ottieni IT-Wallet"
+            }
           }
         },
         "ctas": {
