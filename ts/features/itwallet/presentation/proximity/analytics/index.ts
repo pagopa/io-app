@@ -149,7 +149,7 @@ export const trackItwProximityRPGenericFailure = (
   reason: ItwProximityGenericFailure
 ) => {
   void mixpanelTrack(
-    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_GENRIC_ERROR,
+    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_GENERIC_ERROR,
     buildEventProperties("KO", "screen_view", { reason })
   );
 };
