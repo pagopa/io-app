@@ -20,6 +20,7 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
+  GetWalletAttestationActorInput,
   GetWalletAttestationActorOutput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
@@ -149,8 +150,10 @@ describe("itwCredentialIssuanceMachine", () => {
       trackCredentialIssuingDataShareAccepted
     },
     actors: {
-      getWalletAttestation:
-        fromPromise<GetWalletAttestationActorOutput>(getWalletAttestation),
+      getWalletAttestation: fromPromise<
+        GetWalletAttestationActorOutput,
+        GetWalletAttestationActorInput
+      >(getWalletAttestation),
       requestCredential: fromPromise<
         RequestCredentialActorOutput,
         RequestCredentialActorInput
@@ -160,7 +163,7 @@ describe("itwCredentialIssuanceMachine", () => {
         ObtainCredentialActorInput
       >(obtainCredential),
       obtainStatusAttestation: fromPromise<
-        StoredCredential,
+        Array<StoredCredential>,
         ObtainStatusAttestationActorInput
       >(obtainStatusAttestation)
     },
@@ -303,10 +306,12 @@ describe("itwCredentialIssuanceMachine", () => {
     );
     expect(actor.getSnapshot().context).toEqual(
       expect.objectContaining<Partial<Context>>({
-        credential: {
-          ...ItwStoredCredentialsMocks.ts,
-          storedStatusAttestation: T_STORED_STATUS_ATTESTATION
-        }
+        credentials: [
+          {
+            ...ItwStoredCredentialsMocks.ts,
+            storedStatusAttestation: T_STORED_STATUS_ATTESTATION
+          }
+        ]
       })
     );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
@@ -400,7 +405,7 @@ describe("itwCredentialIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
       value: "DisplayingCredentialPreview",
       context: {
-        credential: ItwStoredCredentialsMocks.ts
+        credentials: [ItwStoredCredentialsMocks.ts]
       }
     } as MachineSnapshot);
 
@@ -413,7 +418,7 @@ describe("itwCredentialIssuanceMachine", () => {
       "DisplayingCredentialPreview"
     );
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      credential: ItwStoredCredentialsMocks.ts
+      credentials: [ItwStoredCredentialsMocks.ts]
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
 
