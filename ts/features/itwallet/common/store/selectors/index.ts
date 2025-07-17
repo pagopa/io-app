@@ -17,7 +17,8 @@ import {
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
   itwIsL3EnabledSelector,
-  itwIsOfflineBannerHiddenSelector
+  itwIsOfflineBannerHiddenSelector,
+  itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
 } from "./preferences";
 import {
   isItwEnabledSelector,
@@ -157,3 +158,20 @@ export const makeItwHasActiveBannersAboveWalletSelector =
       shouldDisplayStatus
     );
   };
+
+/**
+ * Returns whether the IT-Wallet upgrade banner in MDL details should be rendered.
+ * - The IT Wallet feature flag is enabled
+ * - The wallet is not offline
+ * - The L3 feature flag is enabled
+ * - Isn't ITW Credential
+ * - The user did not close the banner
+ */
+export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
+  state: GlobalState
+): boolean =>
+  isItwEnabledSelector(state) &&
+  !offlineAccessReasonSelector(state) &&
+  itwIsL3EnabledSelector(state) &&
+  !itwLifecycleIsITWalletValidSelector(state) &&
+  !itwIsWalletUpgradeMDLDetailsBannerHiddenSelector(state);

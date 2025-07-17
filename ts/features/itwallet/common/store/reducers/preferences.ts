@@ -11,7 +11,8 @@ import {
   itwSetFiscalCodeWhitelisted,
   itwSetReviewPending,
   itwSetWalletInstanceRemotelyActive,
-  itwUnflagCredentialAsRequested
+  itwUnflagCredentialAsRequested,
+  itwSetWalletUpgradeMDLDetailsBannerHidden
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
@@ -38,6 +39,8 @@ export type ItwPreferencesState = {
   isFiscalCodeWhitelisted?: boolean;
   // Indicates whether the offline banner should be hidden
   offlineBannerHidden?: boolean;
+  // Indicates whether the IT-wallet upgrade banner in MDL details should be hidden
+  walletUpgradeMDLDetailsBannerHidden?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -137,10 +140,18 @@ const reducer = (
         isFiscalCodeWhitelisted: action.payload
       };
     }
+
     case getType(itwSetOfflineBannerHidden): {
       return {
         ...state,
         offlineBannerHidden: action.payload
+      };
+    }
+
+    case getType(itwSetWalletUpgradeMDLDetailsBannerHidden): {
+      return {
+        ...state,
+        walletUpgradeMDLDetailsBannerHidden: action.payload
       };
     }
 
