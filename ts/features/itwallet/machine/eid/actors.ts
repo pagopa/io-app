@@ -74,7 +74,7 @@ export const createEidIssuanceActorsImplementation = (
     );
 
     // Perform full validation on the built chain
-    return Trust.Verify.verifyTrustChain(
+    await Trust.Verify.verifyTrustChain(
       trustAnchorEntityConfig,
       builtChainJwts,
       {

@@ -1399,7 +1399,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
   });
 
-  it("Should go to Wallet Instance Creation if there is no integrity key tag but a valid WIA exists", async () => {
+  it("Should go to Wallet Instance Creation and then IpzsPrivacyAcceptance if there is no integrity key tag but a valid WIA exists", async () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
@@ -1415,20 +1415,30 @@ describe("itwEidIssuanceMachine", () => {
     const actor = createActor(mockedMachine, {
       snapshot
     });
-    actor.start();
 
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
+    createWalletInstance.mockImplementation(
+      () =>
+        new Promise(resolve => setTimeout(() => resolve(T_INTEGRITY_KEY), 10))
+    );
+    getWalletAttestation.mockImplementation(
+      () =>
+        new Promise(resolve => setTimeout(() => resolve({ jwt: T_WIA }), 10))
+    );
+
     hasIntegrityKeyTag.mockImplementation(() => false);
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
 
+    actor.start();
     actor.send({ type: "accept-tos" });
 
     expect(actor.getSnapshot().value).toStrictEqual(
       "TrustFederationVerification"
     );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
-    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
-
+    await waitFor(() => {
+      expect(verifyTrustFederation).toHaveBeenCalledTimes(1);
+    });
     await waitFor(() =>
       expect(actor.getSnapshot().value).not.toStrictEqual(
         "TrustFederationVerification"
@@ -1437,6 +1447,39 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation")
     );
+
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+
+    await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(storeIntegrityKeyTag).toHaveBeenCalledWith(
+        expect.objectContaining({
+          context: expect.objectContaining({ integrityKeyTag: T_INTEGRITY_KEY })
+        }),
+        undefined
+      )
+    );
+    await waitFor(() =>
+      expect(storeWalletInstanceAttestation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          context: expect.objectContaining({
+            walletInstanceAttestation: { jwt: T_WIA }
+          })
+        }),
+        undefined
+      )
+    );
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+      walletInstanceAttestation: { jwt: T_WIA },
+      integrityKeyTag: T_INTEGRITY_KEY
+    });
+
+    // Wallet instance creation and attestation obtainment success
+
+    // Navigate to ipzs privacy screen
+    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
   });
 
   it("Should navigate to CieWarning screen when 'go-to-cie-warning' event is received", async () => {
