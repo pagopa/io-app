@@ -2,8 +2,7 @@ import { generate } from "@pagopa/io-react-native-crypto";
 import {
   AuthorizationDetail,
   createCryptoContextFor,
-  Credential,
-  Trust
+  Credential
 } from "@pagopa/io-react-native-wallet-v2";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import { v4 as uuidv4 } from "uuid";
@@ -62,25 +61,6 @@ const startAuthFlow = async ({
   const idpHint = getIdpHint(identification, env, isL3);
 
   const { issuerUrl, credentialId } = startFlow();
-
-  // Evaluate the issuer trust
-  const trustAnchorEntityConfig =
-    await Trust.Build.getTrustAnchorEntityConfiguration(env.WALLET_TA_BASE_URL);
-
-  const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
-
-  // Create the trust chain for the Relying Party
-  const builtChainJwts = await Trust.Build.buildTrustChain(
-    issuerUrl,
-    trustAnchorKey
-  );
-
-  // Perform full validation on the built chainW
-  await Trust.Verify.verifyTrustChain(trustAnchorEntityConfig, builtChainJwts, {
-    connectTimeout: 10000,
-    readTimeout: 10000,
-    requireCrl: true
-  });
 
   const { issuerConf } = await Credential.Issuance.evaluateIssuerTrust(
     issuerUrl

@@ -1,6 +1,7 @@
 import cieManager from "@pagopa/react-native-cie";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
+import { Trust } from "@pagopa/io-react-native-wallet-v2";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
@@ -58,6 +59,32 @@ export const createEidIssuanceActorsImplementation = (
   env: Env,
   store: ReturnType<typeof useIOStore>
 ) => ({
+  verifyTrustFederation: fromPromise(async () => {
+    // Evaluate the issuer trust
+    const trustAnchorEntityConfig =
+      await Trust.Build.getTrustAnchorEntityConfiguration(
+        env.WALLET_TA_BASE_URL
+      );
+    const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
+
+    // Create the trust chain for the PID provider
+    const builtChainJwts = await Trust.Build.buildTrustChain(
+      env.WALLET_PID_PROVIDER_BASE_URL,
+      trustAnchorKey
+    );
+
+    // Perform full validation on the built chain
+    return Trust.Verify.verifyTrustChain(
+      trustAnchorEntityConfig,
+      builtChainJwts,
+      {
+        connectTimeout: 10000,
+        readTimeout: 10000,
+        requireCrl: true
+      }
+    );
+  }),
+
   createWalletInstance: fromPromise<string>(async () => {
     const sessionToken = sessionTokenSelector(store.getState());
     assert(sessionToken, "sessionToken is undefined");

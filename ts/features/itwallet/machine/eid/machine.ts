@@ -107,6 +107,7 @@ export const itwEidIssuanceMachine = setup({
     }
   },
   actors: {
+    verifyTrustFederation: fromPromise<void>(notImplemented),
     getCieStatus: fromPromise<CieContext>(notImplemented),
     createWalletInstance: fromPromise<string>(notImplemented),
     revokeWalletInstance: fromPromise<void>(notImplemented),
@@ -189,6 +190,23 @@ export const itwEidIssuanceMachine = setup({
       on: {
         "accept-tos": [
           {
+            // Verify the trust federation
+            target: "TrustFederationVerification"
+          }
+        ]
+      }
+    },
+    TrustFederationVerification: {
+      description:
+        "Verification of the trust federation. This state verifies the trust chain of the wallet provider with the PID provider.",
+      tags: [ItwTags.Loading],
+      invoke: {
+        input: ({ context }) => ({
+          isL3IssuanceEnabled: context.isL3FeaturesEnabled
+        }),
+        src: "verifyTrustFederation",
+        onDone: [
+          {
             // When no integrity hardware key exists,
             // we need to create a new integrity key tag and a new wallet instance
             guard: not("hasIntegrityKeyTag"),
@@ -204,6 +222,12 @@ export const itwEidIssuanceMachine = setup({
             // If both integrity key tag and wallet instance attestation are valid,
             // we can proceed to the IPZS privacy acceptance
             target: "IpzsPrivacyAcceptance"
+          }
+        ],
+        onError: [
+          {
+            actions: "setFailure",
+            target: "#itwEidIssuanceMachine.Failure"
           }
         ]
       }
