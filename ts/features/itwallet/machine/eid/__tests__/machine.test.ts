@@ -1417,11 +1417,23 @@ describe("itwEidIssuanceMachine", () => {
     });
     actor.start();
 
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
     hasIntegrityKeyTag.mockImplementation(() => false);
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
 
     actor.send({ type: "accept-tos" });
 
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).not.toStrictEqual(
+        "TrustFederationVerification"
+      )
+    );
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation")
     );
