@@ -1,5 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { fireEvent, render } from "@testing-library/react-native";
+import { JSX } from "react";
 import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import I18n from "../../../../../i18n";
 import { ReceiptListItemTransaction } from "../ReceiptListItemTransaction";
