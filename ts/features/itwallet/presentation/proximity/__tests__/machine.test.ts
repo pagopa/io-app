@@ -57,6 +57,7 @@ describe("itwProximityMachine", () => {
   const navigateToSendDocumentsResponseScreen = jest.fn();
   const navigateToWallet = jest.fn();
   const closeProximity = jest.fn();
+  const trackQrCodeGenerationOutcome = jest.fn();
 
   const checkPermissions = jest.fn();
   const checkBluetoothIsActive = jest.fn();
@@ -81,6 +82,7 @@ describe("itwProximityMachine", () => {
       navigateToSendDocumentsResponseScreen,
       navigateToWallet,
       closeProximity,
+      trackQrCodeGenerationOutcome,
       onInit: assign(onInit)
     },
     actors: {
