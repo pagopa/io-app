@@ -15,7 +15,8 @@ import {
   cloneElement,
   forwardRef,
   isValidElement,
-  PropsWithChildren
+  PropsWithChildren,
+  ReactNode
 } from "react";
 import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -40,6 +41,7 @@ type OperationResultScreenContentProps = WithTestID<
     action?: ButtonProps;
     secondaryAction?: ButtonProps;
     isHeaderVisible?: boolean;
+    topElement?: ReactNode;
   } & GraphicAssetProps
 >;
 
@@ -71,7 +73,8 @@ const OperationResultScreenContent = forwardRef<
       children,
       testID,
       isHeaderVisible,
-      subtitleProps
+      subtitleProps,
+      topElement = undefined
     },
     ref
   ) => (
@@ -103,6 +106,7 @@ const OperationResultScreenContent = forwardRef<
             <VSpacer size={24} />
           </View>
         )}
+        {topElement}
         <H3 accessibilityRole="header" style={{ textAlign: "center" }}>
           {title}
         </H3>
