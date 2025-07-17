@@ -15,8 +15,8 @@ type Props = {
  * part of the credential claims
  */
 const ItwPresentationAdditionalInfoSection = ({ credential }: Props) => {
-  const shouldRenderWalletUpgradeMdlBanner = useIOSelector(state =>
-    itwShouldRenderWalletUpgradeMDLDetailsBannerSelector(state)
+  const shouldRenderWalletUpgradeMdlBanner = useIOSelector(
+    itwShouldRenderWalletUpgradeMDLDetailsBannerSelector
   );
   switch (credential.credentialType) {
     case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
