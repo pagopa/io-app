@@ -7,7 +7,8 @@ import {
   ProximityCommunicationLogicActorInput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
-  StartProximityFlowInput
+  StartProximityFlowInput,
+  CheckPermissionsInput
 } from "./actors";
 import { mapEventToFailure } from "./failure";
 
@@ -24,6 +25,7 @@ export const itwProximityMachine = setup({
     onInit: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     setQRCodeGenerationError: assign({ isQRCodeGenerationError: true }),
+    setHasGivenConsent: assign({ hasGiventConsent: true }),
     navigateToGrantPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
@@ -34,7 +36,7 @@ export const itwProximityMachine = setup({
     trackQrCodeGenerationOutcome: notImplemented
   },
   actors: {
-    checkPermissions: fromPromise<boolean, void>(notImplemented),
+    checkPermissions: fromPromise<boolean, CheckPermissionsInput>(notImplemented),
     checkBluetoothIsActive: fromPromise<boolean, void>(notImplemented),
     startProximityFlow: fromPromise<void, StartProximityFlowInput>(
       notImplemented
@@ -76,6 +78,7 @@ export const itwProximityMachine = setup({
           description: "Check if the device permissions have been granted",
           invoke: {
             src: "checkPermissions",
+            input: { isSilent: false },
             onDone: [
               {
                 guard: ({ event }) => !!event.output,
@@ -109,6 +112,7 @@ export const itwProximityMachine = setup({
           description: "Check if the device permissions have been granted",
           invoke: {
             src: "checkPermissions",
+            input: { isSilent: true },
             onDone: [
               {
                 guard: ({ event }) => !!event.output,
@@ -216,7 +220,7 @@ export const itwProximityMachine = setup({
               target: "GeneratingQRCodeString"
             },
             onError: {
-              actions: "setQRCodeGenerationError",
+              actions: ["setQRCodeGenerationError", "trackQrCodeGenerationOutcome"],
               target: "QRCodeGenerationError"
             }
           }
@@ -239,8 +243,7 @@ export const itwProximityMachine = setup({
             onError: {
               actions: [
                 "setQRCodeGenerationError",
-                "trackQrCodeGenerationOutcome",
-                "setFailure"
+                "trackQrCodeGenerationOutcome"
               ],
               target: "QRCodeGenerationError"
             }
@@ -268,7 +271,7 @@ export const itwProximityMachine = setup({
               target: "GeneratingQRCodeString"
             },
             onError: {
-              actions: "setQRCodeGenerationError",
+              actions: ["setQRCodeGenerationError", "trackQrCodeGenerationOutcome"],
               target: "QRCodeGenerationError"
             }
           }
@@ -341,6 +344,7 @@ export const itwProximityMachine = setup({
           description: "Displays the requested claims",
           on: {
             "holder-consent": {
+              actions: "setHasGivenConsent",
               target:
                 "#itwProximityMachine.DeviceCommunication.SendingDocuments"
             },

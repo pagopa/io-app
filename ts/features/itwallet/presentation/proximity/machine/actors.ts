@@ -24,11 +24,11 @@ import {
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { assert } from "../../../../../utils/assert";
 import { getError } from "../../../../../utils/errors";
-import { ProximityEvents } from "./events";
 import {
   trackItwProximityBluetoothBlock,
   trackItwProximityBluetoothBlockAction
 } from "../analytics";
+import { ProximityEvents } from "./events";
 
 const PERMISSIONS_TO_CHECK: Array<Permission> =
   Platform.OS === "android"
@@ -42,6 +42,10 @@ const PERMISSIONS_TO_CHECK: Array<Permission> =
     : [PERMISSIONS.IOS.BLUETOOTH]; // iOS permissions required are Bluetooth and location.
 
 const SEND_RESPONSE_TIMEOUT_MS = 20000;
+
+export type CheckPermissionsInput = {
+  isSilent?: boolean;
+};
 
 export type StartProximityFlowInput = {
   isRestarting?: boolean;
@@ -65,7 +69,9 @@ export type SendDocumentsActorOutput = Awaited<
 >;
 
 export const createProximityActorsImplementation = () => {
-  const checkPermissions = fromPromise<boolean, void>(async () => {
+  const checkPermissions = fromPromise<boolean, CheckPermissionsInput>(async ({ input }) => {
+    const isSilent = input?.isSilent || false;
+
     // Check current permission status
     const statuses = await checkMultiple(PERMISSIONS_TO_CHECK);
 
@@ -75,7 +81,9 @@ export const createProximityActorsImplementation = () => {
     );
 
     if (permissionsToRequest.length > 0) {
-      trackItwProximityBluetoothBlock();
+      if (!isSilent) {
+        trackItwProximityBluetoothBlock();
+      }
       // Request only the missing permissions
       const requestResults = await requestMultiple(permissionsToRequest);
 
@@ -84,7 +92,9 @@ export const createProximityActorsImplementation = () => {
       );
 
       const userAction = allPermissionsGranted ? "allow" : "not_allow";
-      trackItwProximityBluetoothBlockAction(userAction);
+      if (!isSilent) {
+        trackItwProximityBluetoothBlockAction(userAction);
+      }
 
       // Verify if all requested permissions are granted
       return allPermissionsGranted;

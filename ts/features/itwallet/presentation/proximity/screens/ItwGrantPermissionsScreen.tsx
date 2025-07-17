@@ -1,6 +1,7 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
 import { useEffect, useMemo } from "react";
 import { Alert, Platform } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../../i18n";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { openAppSettings } from "../../../../../utils/appSettings";
@@ -15,7 +16,6 @@ import {
   trackItwProximityBluetoothAccessDenied,
   trackItwProximityBluetoothAccessGoToSettings
 } from "../analytics";
-import { useFocusEffect } from "@react-navigation/native";
 
 export const ItwGrantPermissionsScreen = () => {
   const navigation = useIONavigation();

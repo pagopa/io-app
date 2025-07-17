@@ -6,12 +6,14 @@ import { useIOStore } from "../../../../../store/hooks";
 import ROUTES from "../../../../../navigation/routes";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { itwCredentialsSelector } from "../../../credentials/store/selectors";
-import { Context } from "./context";
-import { ProximityEvents } from "./events";
 import {
   trackItwProximityQrCode,
   trackItwProximityQrCodeLoadingFailure
 } from "../analytics";
+import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
+import { Context } from "./context";
+import { ProximityEvents } from "./events";
+import { mapEventToFailure } from "./failure";
 
 export const createProximityActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -75,10 +77,13 @@ export const createProximityActionsImplementation = (
   },
 
   trackQrCodeGenerationOutcome: ({
-    context
+    context,
+    event
   }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
     if (context.isQRCodeGenerationError) {
-      trackItwProximityQrCodeLoadingFailure();
+      const failure = mapEventToFailure(event);
+      const serializedFailure = serializeFailureReason(failure);
+      trackItwProximityQrCodeLoadingFailure(serializedFailure);
     } else {
       trackItwProximityQrCode();
     }

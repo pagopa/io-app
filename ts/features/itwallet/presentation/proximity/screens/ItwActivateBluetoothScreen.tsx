@@ -1,6 +1,7 @@
 import { Alert, Platform } from "react-native";
 import { ListItemInfo } from "@pagopa/io-app-design-system";
 import { useEffect, useMemo } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../../i18n";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { ItwProximityMachineContext } from "../machine/provider";
@@ -9,7 +10,6 @@ import { openBluetoothPreferences } from "../utils";
 import { selectIsBluetoothRequiredState } from "../machine/selectors";
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useFocusEffect } from "@react-navigation/native";
 import {
   trackItwProximityBluetoothActivation,
   trackItwProximityBluetoothActivationClose,

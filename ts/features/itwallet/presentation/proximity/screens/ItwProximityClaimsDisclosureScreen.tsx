@@ -8,6 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { useFocusEffect } from "@react-navigation/native";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import I18n from "../../../../../i18n.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
@@ -26,7 +27,6 @@ import { ISSUER_MOCK_NAME } from "../../../common/utils/itwMocksUtils.ts";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 import { ProximityDetails } from "../utils/itwProximityTypeUtils.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
-import { useFocusEffect } from "@react-navigation/native";
 import {
   trackItwProximityContinuePresentation,
   trackItwProximityDataShare
@@ -41,8 +41,6 @@ export const ItwProximityClaimsDisclosureScreen = () => {
   usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
-
-  useFocusEffect(trackItwProximityDataShare);
 
   return pipe(
     proximityDetails,
@@ -82,6 +80,8 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
+
+  useFocusEffect(trackItwProximityDataShare);
 
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => machineRef.send({ type: "back" }),
