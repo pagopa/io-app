@@ -13,7 +13,8 @@ import {
   landingScreenBannerOrderSelector,
   pnMessagingServiceIdSelector,
   pnPrivacyUrlsSelector,
-  fimsServiceIdInCookieDisabledListSelector
+  fimsServiceIdInCookieDisabledListSelector,
+  pnAARQRCodeRegexSelector
 } from "../remoteConfig";
 import * as appVersion from "../../../../utils/appVersion";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -666,5 +667,33 @@ describe("fimsServiceIdInCookieDisabledListSelector", () => {
       testServiceId
     );
     expect(result).toBe(true);
+  });
+});
+
+describe("pnAARQRCodeRegexSelector", () => {
+  it("should return undefined for 'O.none' remote config", () => {
+    const state = { remoteConfig: O.none } as GlobalState;
+    const aarQRCodeRegex = pnAARQRCodeRegexSelector(state);
+    expect(aarQRCodeRegex).toBeUndefined();
+  });
+  it("should return undefined for undefined aarQRCodeRegex", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {}
+      })
+    } as GlobalState;
+    const aarQRCodeRegex = pnAARQRCodeRegexSelector(state);
+    expect(aarQRCodeRegex).toBeUndefined();
+  });
+  it("should return value stored in remoteConfig.pn.aarQRCodeRegex", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          aarQRCodeRegex: "some-regex"
+        }
+      })
+    } as GlobalState;
+    const aarQRCodeRegex = pnAARQRCodeRegexSelector(state);
+    expect(aarQRCodeRegex).toBe("some-regex");
   });
 });

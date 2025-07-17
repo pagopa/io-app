@@ -41,7 +41,7 @@ const IdPayEnableNotificationScreen = () => {
           <VSpacer size={8} />
         </View>
       }
-      pictogram="reactivate"
+      pictogram="activate"
       title={I18n.t("idpay.onboarding.enableNotification.title")}
       subtitle={I18n.t("idpay.onboarding.enableNotification.subtitle")}
       action={{

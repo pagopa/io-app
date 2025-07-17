@@ -47,7 +47,7 @@ import { itwSetReviewPending } from "../../../common/store/actions/preferences.t
 import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
-import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
 import { selectIsLoading } from "../../proximity/machine/selectors.ts";
 import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
@@ -115,7 +115,7 @@ export const ItwPresentationCredentialDetail = ({
     ItwProximityMachineContext.useSelector(selectIsLoading);
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const isL3Credential = isItwCredential(credential.credential);
+  const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
