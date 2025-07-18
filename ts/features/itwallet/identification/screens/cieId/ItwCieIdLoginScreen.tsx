@@ -5,7 +5,7 @@ import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import { selectAuthUrlOption } from "../../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import I18n from "../../../../../i18n";
 import { originSchemasWhiteList } from "../../../../authentication/common/utils/originSchemasWhiteList";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";

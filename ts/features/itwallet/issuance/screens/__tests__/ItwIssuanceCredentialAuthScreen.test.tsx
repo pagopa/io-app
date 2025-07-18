@@ -4,7 +4,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
-import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
+import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "../ItwIssuanceCredentialTrustIssuerScreen";
 

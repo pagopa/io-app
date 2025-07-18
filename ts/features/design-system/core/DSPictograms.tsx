@@ -13,6 +13,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
+import { JSX } from "react";
 import {
   DSAssetViewerBox,
   assetItemGutter

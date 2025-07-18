@@ -37,7 +37,7 @@ import {
   selectFailureOption,
   selectIssuerConfigurationOption
 } from "../../machine/credential/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
 
 // Errors that allow a user to send a support request to Zendesk
