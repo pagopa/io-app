@@ -11,7 +11,8 @@ import { ItwTags } from "../../tags";
 import {
   GetWalletAttestationActorParams,
   RequestEidActorParams,
-  StartAuthFlowActorParams
+  StartAuthFlowActorParams,
+  VerifyTrustFederationParams
 } from "../actors";
 import {
   AuthenticationContext,
@@ -112,7 +113,9 @@ describe("itwEidIssuanceMachine", () => {
       })
     },
     actors: {
-      verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
+      verifyTrustFederation: fromPromise<void, VerifyTrustFederationParams>(
+        verifyTrustFederation
+      ),
       createWalletInstance: fromPromise<string>(createWalletInstance),
       revokeWalletInstance: fromPromise<void>(revokeWalletInstance),
       getWalletAttestation: fromPromise<

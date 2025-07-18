@@ -49,6 +49,10 @@ export type GetWalletAttestationActorParams = {
   isL3IssuanceEnabled?: boolean;
 };
 
+export type VerifyTrustFederationParams = {
+  isL3IssuanceEnabled?: boolean;
+};
+
 /**
  * Creates the actors for the eid issuance machine
  * @param env - The environment to use for the IT Wallet API calls
@@ -59,7 +63,7 @@ export const createEidIssuanceActorsImplementation = (
   env: Env,
   store: ReturnType<typeof useIOStore>
 ) => ({
-  verifyTrustFederation: fromPromise<void, GetWalletAttestationActorParams>(
+  verifyTrustFederation: fromPromise<void, VerifyTrustFederationParams>(
     async ({ input }) => {
       // If the L3 issuance is not enabled, we don't need to verify the trust federation
       if (!input.isL3IssuanceEnabled) {

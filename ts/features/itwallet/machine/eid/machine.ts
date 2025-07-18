@@ -10,7 +10,8 @@ import { trackItWalletIntroScreen } from "../../analytics";
 import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
-  StartAuthFlowActorParams
+  StartAuthFlowActorParams,
+  VerifyTrustFederationParams
 } from "./actors";
 import {
   AuthenticationContext,
@@ -107,7 +108,7 @@ export const itwEidIssuanceMachine = setup({
     }
   },
   actors: {
-    verifyTrustFederation: fromPromise<void, GetWalletAttestationActorParams>(
+    verifyTrustFederation: fromPromise<void, VerifyTrustFederationParams>(
       notImplemented
     ),
     getCieStatus: fromPromise<CieContext>(notImplemented),
@@ -204,7 +205,6 @@ export const itwEidIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         input: ({ context }) => ({
-          integrityKeyTag: context.integrityKeyTag,
           isL3IssuanceEnabled: context.isL3FeaturesEnabled
         }),
         src: "verifyTrustFederation",
