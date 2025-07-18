@@ -4,7 +4,7 @@
 import { useCallback } from "react";
 import I18n from "../../../../../i18n";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useItwPreventNavigationEvent } from "../../../common/hooks/useItwPreventNavigationEvent";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { trackItWalletCieCardReadingFailure } from "../../../analytics";

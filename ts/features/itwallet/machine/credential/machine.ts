@@ -112,7 +112,7 @@ export const itwCredentialIssuanceMachine = setup({
     },
     CheckingWalletInstanceAttestation: {
       description:
-        "This is a state with the only purpose of checking the WIA and decide weather to get a new one or not",
+        "This is a state with the only purpose of checking the WIA and decide wether to get a new one or not",
       tags: [ItwTags.Loading],
       always: [
         {
