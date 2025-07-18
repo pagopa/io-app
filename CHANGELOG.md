@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.10.0-rc.2](https://github.com/pagopa/io-app/compare/3.10.0-rc.1...3.10.0-rc.2) (2025-07-17)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2665](https://pagopa.atlassian.net/browse/SIW-2665)] Add IT-Wallet upgrade banner in MDL details ([#7161](https://github.com/pagopa/io-app/issues/7161)) ([e564740](https://github.com/pagopa/io-app/commit/e5647402e0b7bd63bbcf55e060b823cf2c74c047))
+
+
+### Chores
+
+* [[IOPLT-1166](https://pagopa.atlassian.net/browse/IOPLT-1166)] remove resolutions on types/react ([#7120](https://github.com/pagopa/io-app/issues/7120)) ([19ba684](https://github.com/pagopa/io-app/commit/19ba684bd81ba7e815d3a6fba39e7c135ef1840e)), closes [pagopa/io-app-design-system#482](https://github.com/pagopa/io-app-design-system/issues/482)
+* **IT Wallet:** [[SIW-2218](https://pagopa.atlassian.net/browse/SIW-2218)] IT-Wallet preview screen ([#7189](https://github.com/pagopa/io-app/issues/7189)) ([2b1d7bc](https://github.com/pagopa/io-app/commit/2b1d7bc4d38f56dcca91e3f70ee03d491bc100d6))
+
+## [3.10.0-rc.1](https://github.com/pagopa/io-app/compare/3.10.0-rc.0...3.10.0-rc.1) (2025-07-16)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2658](https://pagopa.atlassian.net/browse/SIW-2658)] Extract authentication level (L2/L3) from claim verification ([#7175](https://github.com/pagopa/io-app/issues/7175)) ([1d49b2a](https://github.com/pagopa/io-app/commit/1d49b2a756de3bea8bfefe7509aa0d035c73938b))
+* [[IOCOM-2458](https://pagopa.atlassian.net/browse/IOCOM-2458),[IOCOM-2459](https://pagopa.atlassian.net/browse/IOCOM-2459)] Support for SEND's AAR QRCode when scanning a QRCode ([#7177](https://github.com/pagopa/io-app/issues/7177)) ([8856ae6](https://github.com/pagopa/io-app/commit/8856ae60fb8e9df3cb74230db1763d48889950fe)), closes [io-services-metadata#1006](https://github.com/pagopa/io-services-metadata/issues/1006) [io-dev-api-server#501](https://github.com/pagopa/io-dev-api-server/issues/501)
+
+
+### Chores
+
+* [[IOCOM-2479](https://pagopa.atlassian.net/browse/IOCOM-2479)] android crashing on pdf attachment opening ([#7170](https://github.com/pagopa/io-app/issues/7170)) ([2590402](https://github.com/pagopa/io-app/commit/25904023918b8583c187f6e610f2b7a5d34e52bd))
+
 ## [3.10.0-rc.0](https://github.com/pagopa/io-app/compare/3.9.0-rc.6...3.10.0-rc.0) (2025-07-15)
 
 
