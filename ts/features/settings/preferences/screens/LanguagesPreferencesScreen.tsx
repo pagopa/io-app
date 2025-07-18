@@ -52,7 +52,7 @@ const LanguagesPreferencesScreen = () => {
   const viewRef = createRef<View>();
   const dispatch = useIODispatch();
   const toast = useIOToast();
-  const selectedLanguage = useRef<string | undefined>();
+  const selectedLanguage = useRef<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const { showModal } = useContext(LightModalContext);
   const profile = useIOSelector(profileSelector, _.isEqual);
@@ -218,7 +218,7 @@ const LanguagesPreferencesScreen = () => {
         <VSpacer size={16} />
         {isBannerVisible && (
           <Banner
-            viewRef={viewRef}
+            ref={viewRef}
             color="neutral"
             content={bannerInfoSelector.message[getFullLocale()]}
             pictogramName="charity"
