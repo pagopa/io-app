@@ -12,6 +12,7 @@ import {
 } from "../machine/selectors";
 import I18n from "../../../../../i18n";
 import { ItwRetryableQRCode } from "../../../common/components/ItwRetryableQRCode";
+import { trackItwProximityQrCodeLoadingRetry } from "../analytics";
 
 const QR_WIDTH =
   Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
@@ -29,6 +30,7 @@ export const useItwPresentQRCode = () => {
   );
 
   const handleRetry = useCallback(() => {
+    trackItwProximityQrCodeLoadingRetry();
     machineRef.send({ type: "retry" });
   }, [machineRef]);
 

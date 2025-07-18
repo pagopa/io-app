@@ -51,6 +51,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/se
 import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
 import { selectIsLoading } from "../../proximity/machine/selectors.ts";
 import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
+import { trackItwProximityShowQrCode } from "../../proximity/analytics";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -171,7 +172,10 @@ export const ItwPresentationCredentialDetail = ({
         icon: "qrCode",
         iconPosition: "end",
         loading: isCheckingPermissions,
-        onPress: () => itwProximityMachineRef.send({ type: "start" })
+        onPress: () => {
+          trackItwProximityShowQrCode();
+          itwProximityMachineRef.send({ type: "start" });
+        }
       };
     }
 
