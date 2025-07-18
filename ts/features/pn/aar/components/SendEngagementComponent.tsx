@@ -108,6 +108,7 @@ export const SendEngagmentComponent = ({
           asLink
           weight="Semibold"
           onPress={() => openWebUrlIfNotLoading(privacyUrl)}
+          testID="privacy-link"
         >
           {I18n.t("features.pn.aar.serviceActivation.footer.part4")}
         </Body>
@@ -116,6 +117,7 @@ export const SendEngagmentComponent = ({
           asLink
           weight="Semibold"
           onPress={() => openWebUrlIfNotLoading(tosUrl)}
+          testID="tos-link"
         >
           {I18n.t("features.pn.aar.serviceActivation.footer.part6")}
         </Body>
