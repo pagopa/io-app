@@ -81,7 +81,7 @@ const WalletPaymentPspBanner = () => {
         <Banner
           color="neutral"
           pictogramName="help"
-          viewRef={bannerViewRef}
+          ref={bannerViewRef}
           title={bannerConfig.title?.[localeFallback]}
           content={bannerConfig.description[localeFallback]}
           action={bannerConfig.action?.label[localeFallback] ?? ""}

@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import * as Sentry from "@sentry/react-native";
 import { ErrorEvent, TransactionEvent } from "@sentry/core";
+import { JSX } from "react";
 import RootContainer from "./RootContainer";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
