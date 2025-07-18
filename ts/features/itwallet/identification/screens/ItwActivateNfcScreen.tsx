@@ -4,27 +4,35 @@ import {
   ListItemHeader,
   ListItemInfo
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { Alert } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../../i18n";
-import * as cieUtils from "../../../../authentication/login/cie/utils/cie";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import I18n from "../../../../i18n";
+import * as cieUtils from "../../../authentication/login/cie/utils/cie";
 import {
   trackItWalletCieNfcActivation,
   trackItWalletCieNfcGoToSettings
-} from "../../../analytics";
+} from "../../analytics";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
 
 export const ItwActivateNfcScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
 
-  useFocusEffect(trackItWalletCieNfcActivation);
+  useFocusEffect(
+    useCallback(() => {
+      trackItWalletCieNfcActivation(isL3FeaturesEnabled ? "L3" : "L2");
+    }, [isL3FeaturesEnabled])
+  );
 
   const openSettings = useCallback(async () => {
-    trackItWalletCieNfcGoToSettings();
+    trackItWalletCieNfcGoToSettings(isL3FeaturesEnabled ? "L3" : "L2");
     await cieUtils.openNFCSettings();
-  }, []);
+  }, [isL3FeaturesEnabled]);
 
   const onContinue = useCallback(async () => {
     const isNfcEnabled = await cieUtils.isNfcEnabled();

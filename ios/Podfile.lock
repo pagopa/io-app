@@ -12,7 +12,7 @@ PODS:
   - hermes-engine (0.78.2):
     - hermes-engine/Pre-built (= 0.78.2)
   - hermes-engine/Pre-built (0.78.2)
-  - IoReactNativeCie (1.0.1):
+  - IoReactNativeCie (1.1.0):
     - CieSDK (~> 0.1.11)
     - DoubleConversion
     - glog
@@ -60,35 +60,13 @@ PODS:
   - jail-monkey (2.8.3):
     - React-Core
   - JOSESwift (3.0.0)
-  - lottie-ios (4.5.0)
-  - lottie-react-native (7.2.2):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - lottie-ios (= 4.5.0)
-    - RCT-Folly (= 2024.11.18.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
   - Mixpanel-swift (4.2.0):
     - Mixpanel-swift/Complete (= 4.2.0)
   - Mixpanel-swift/Complete (4.2.0)
   - MixpanelReactNative (2.4.1):
     - Mixpanel-swift (= 4.2.0)
     - React-Core
+  - OpenSSL-Universal (3.3.3001)
   - pagopa-io-react-native-cieid (0.3.5):
     - DoubleConversion
     - glog
@@ -110,10 +88,11 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - pagopa-io-react-native-crypto (1.0.1):
+  - pagopa-io-react-native-crypto (1.2.2):
     - DoubleConversion
     - glog
     - hermes-engine
+    - OpenSSL-Universal
     - RCT-Folly (= 2024.11.18.00)
     - RCTRequired
     - RCTTypeSafety
@@ -1585,7 +1564,7 @@ PODS:
     - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
-  - react-native-skia (2.0.0-next.3):
+  - react-native-skia (2.1.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2264,7 +2243,6 @@ DEPENDENCIES:
   - "IoReactNativeCie (from `../node_modules/@pagopa/io-react-native-cie`)"
   - "IoReactNativeProximity (from `../node_modules/@pagopa/io-react-native-proximity`)"
   - jail-monkey (from `../node_modules/jail-monkey`)
-  - lottie-react-native (from `../node_modules/lottie-react-native`)
   - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
   - "pagopa-io-react-native-cieid (from `../node_modules/@pagopa/io-react-native-cieid`)"
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
@@ -2384,8 +2362,8 @@ SPEC REPOS:
     - CieSDK
     - IOWalletProximity
     - JOSESwift
-    - lottie-ios
     - Mixpanel-swift
+    - OpenSSL-Universal
     - Sentry
     - SocketRocket
     - SwiftCBOR
@@ -2426,8 +2404,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@pagopa/io-react-native-proximity"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
-  lottie-react-native:
-    :path: "../node_modules/lottie-react-native"
   MixpanelReactNative:
     :path: "../node_modules/mixpanel-react-native"
   pagopa-io-react-native-cieid:
@@ -2660,17 +2636,16 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   hermes-engine: 2771b98fb813fdc6f92edd7c9c0035ecabf9fee7
-  IoReactNativeCie: 54bdf08a12242b95af9caabfe7e045a06bec6f0c
+  IoReactNativeCie: 091338a61e72448dfda28e4404a70276b80ad29f
   IoReactNativeProximity: 3efb5d2d87ea676bfd962fc710e81da1726f5dee
   IOWalletProximity: 55d5527de91a971dbcdbdda1838860c9860683ac
   jail-monkey: 9298d04aa09f8c9cdcf04e7bf597ea423b52b5bf
   JOSESwift: 7784b1b844194d0f534eb6ac4fba5af683bccc79
-  lottie-ios: a881093fab623c467d3bce374367755c272bdd59
-  lottie-react-native: 35b7c1125a01f847fa5905d380e54951132d2450
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
   MixpanelReactNative: 37259ace491ca9d927c0f81498e6577a32a69f43
+  OpenSSL-Universal: 6082b0bf950e5636fe0d78def171184e2b3899c2
   pagopa-io-react-native-cieid: fbec2a09807357509e986e1ae831c38e559d4ac2
-  pagopa-io-react-native-crypto: 9fc27db71785efd281454fd0e0d023c4ce1594d0
+  pagopa-io-react-native-crypto: 65c26796bdfab813321fb10c9307960fddcac913
   pagopa-io-react-native-http-client: b2620097b64752b290374f7d2aab64e537f89f03
   pagopa-io-react-native-integrity: 6d5ea10255884e516422e09c5cd937d4dbaa8f27
   pagopa-io-react-native-jwt: 0ac1bc58dbd1e40277c4c9086af7898438a7ea45
@@ -2723,7 +2698,7 @@ SPEC CHECKSUMS:
   react-native-render-html: 05a7d4490ffc85c88094601207f3e48a90533476
   react-native-safe-area-context: 9d72abf6d8473da73033b597090a80b709c0b2f1
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
-  react-native-skia: 7418be9e71b2fb067a6e2a9513b10cce1c98d454
+  react-native-skia: 33146f57c307b433e89080d628b43132774c5c7f
   react-native-slider: 5299110eb902bc5169b1dd94192aa28e1bf15ad8
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
   react-native-webview: 079eca50edf657503318b66687dadfb903731aa8

@@ -11,7 +11,7 @@ import {
   StoredCredential
 } from "../../../../common/utils/itwTypesUtils";
 import * as selectors from "../../../../credentials/store/selectors";
-import { ItWalletIssuanceMachineProvider } from "../../../../machine/provider";
+import { ItwCredentialIssuanceMachineProvider } from "../../../../machine/credential/provider";
 
 type TestCaseParams = [
   ItwCredentialStatus,
@@ -64,10 +64,11 @@ function renderComponent() {
   const mockedMdl: StoredCredential = {
     credential: "",
     credentialType: "MDL",
+    credentialId: "dc_sd_jwt_mDL",
     parsedCredential: {
       expiry_date: { value: "2100-09-04", name: "exp" }
     },
-    format: "vc+sd-jwt",
+    format: "dc+sd-jwt",
     keyTag: "1",
     issuerConf: {} as StoredCredential["issuerConf"],
     jwt: {
@@ -79,9 +80,9 @@ function renderComponent() {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItWalletIssuanceMachineProvider>
+      <ItwCredentialIssuanceMachineProvider>
         <ItwPresentationCredentialStatusAlert credential={mockedMdl} />
-      </ItWalletIssuanceMachineProvider>
+      </ItwCredentialIssuanceMachineProvider>
     ),
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
     {},

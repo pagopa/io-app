@@ -24,6 +24,7 @@ import {
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwSetAuthLevel } from "../../common/store/actions/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -155,9 +156,15 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCieReadCardScreen: () => {
+  navigateToCieReadCardL2Screen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L2
+    });
+  },
+
+  navigateToCieReadCardL3Screen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L3
     });
   },
 
@@ -248,10 +255,12 @@ export const createEidIssuanceActionsImplementation = (
       const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(state);
       const walletInstanceAttestation =
         itwWalletInstanceAttestationSelector(state);
+      const isWhitelisted = itwIsL3EnabledSelector(state);
 
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
-        walletInstanceAttestation
+        walletInstanceAttestation,
+        isWhitelisted
       };
     }
   )

@@ -3921,6 +3921,16 @@
           "info": "Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio",
           "cta": "Accedi alla versione web"
         }
+      },
+      "qrCodeScan": {
+        "success": {
+          "openSendScreen": {
+            "title": "Per accedere ai documenti vai sul sito web di SEND",
+            "body": "Per visualizzare i documenti online devi andare sul sito web di SEND. Presto potrai farlo direttamente da IO!",
+            "firstCta": "Vai su SEND",
+            "secondCta": "Chiudi"
+          }
+        }
       }
     },
     "fci": {
@@ -4344,6 +4354,12 @@
         "title": "La versione digitale dei tuoi documenti, su IO",
         "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **4 Milioni** di persone stanno già usando i **Documenti su IO**!",
         "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
+        "dismissalDialog": {
+          "title": "Vuoi rinunciare ai documenti digitali su IO?",
+          "body": "Potrai attivarli in qualsiasi altro momento, se cambi idea.",
+          "confirm": "Si, rinuncia",
+          "cancel": "No, torna indietro"
+        },
         "upcomingWalletBanner": {
           "title": "Novità in arrivo: i tuoi Documenti su IO",
           "content": "Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!",
@@ -4396,7 +4412,13 @@
           },
           "tos": "Premendo **Ottieni IT-Wallet** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}})",
           "anchorAction": "Scopri tutti i vantaggi",
-          "primaryAction": "Ottieni IT-Wallet"
+          "primaryAction": "Ottieni IT-Wallet",
+          "dismissalDialog": {
+            "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
+            "body": "Otterrai una versione digitale dei tuoi documenti con funzionalità ridotte.",
+            "confirm": "Si, rinuncia",
+            "cancel": "No, torna indietro"
+          }
         },
         "offlineBanner": {
           "title": "Novità: i tuoi documenti anche offline",
@@ -4509,9 +4531,9 @@
                 "title": "Appoggia la CIE alla parte alta del telefono",
                 "action": "Annulla"
               },
-              "progress": {
+              "reading": {
                 "title": "La lettura è in corso",
-                "content": "Non muovere la carta.",
+                "subtitle": "Non muovere la carta.",
                 "action": "Annulla"
               },
               "completed": {
@@ -4522,16 +4544,16 @@
             "ios": {
               "idle": {
                 "title": "Appoggia il retro del telefono sulla CIE, a questa altezza.",
-                "status": "{{ progress }}\nSe la lettura non parte, rimuovi la cover del telefono."
+                "status": "⚪⚪⚪⚪⚪⚪⚪⚪\nSe la lettura non parte, rimuovi la cover del telefono."
               },
-              "progress": {
+              "reading": {
                 "title": "Lettura in corso...",
-                "content": "Non muovere la carta.",
-                "status": "{{ progress }}\nLa lettura è in corso, non muovere o spostare la carta. "
+                "subtitle": "Non muovere la carta.",
+                "status": "La lettura è in corso, non muovere o spostare la carta. "
               },
               "completed": {
                 "title": "Lettura completata!",
-                "status": "{{ progress }}\nFatto!"
+                "status": "🔵🔵🔵🔵🔵🔵🔵🔵\nFatto!"
               }
             }
           },
@@ -4578,6 +4600,39 @@
               "primaryAction": "Ho capito",
               "secondaryAction": "Non trovo il PIN della CIE"
             }
+          },
+          "failure": {
+            "wrongCard": {
+              "title": "Non siamo riusciti a recuperare i dati dalla carta",
+              "subtitle": "La carta utilizzata non sembra essere una Carta di Identità Elettronica."
+            },
+            "tagLost": {
+              "title": "Hai rimosso il telefono troppo presto!",
+              "subtitle": "Riprova e tieni fermo il telefono per la lettura."
+            },
+            "expired": {
+              "title": "La verifica della CIE non è andata a buon fine",
+              "subtitle": "La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app."
+            },
+            "wrongPin1": {
+              "title": "Il PIN non è corretto",
+              "subtitle": "Hai ancora 2 tentativi, controllalo e riprova.",
+              "secondaryAction": "Hai dimenticato il PIN?"
+            },
+            "wrongPin2": {
+              "title": "Hai inserito un PIN errato per 2 volte",
+              "subtitle": "Al terzo tentativo errato, il PIN verrà bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
+              "secondaryAction": "Hai dimenticato il PIN?"
+            },
+            "locked": {
+              "title": "Hai inserito un PIN errato per troppe volte",
+              "subtitle": "Il PIN della tua CIE è stato bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
+              "secondaryAction": "Hai dimenticato il PUK?"
+            },
+            "generic": {
+              "title": "Non siamo riusciti a recuperare i dati dalla carta",
+              "subtitle": "Se riscontri più volte il problema, attendi qualche minuto e riprova."
+            }
           }
         },
         "cieId": {
@@ -4602,6 +4657,7 @@
         "eidPreview": {
           "title": "Identità verificata",
           "subtitle": "Stai attivando **Documenti su IO** come:",
+          "subtitleL3": "Ci siamo quasi! Stai per ottenere **IT-Wallet** come:",
           "actions": {
             "primary": "Continua",
             "secondary": "Annulla"
@@ -4686,6 +4742,10 @@
           "title": "Documento in arrivo",
           "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
           "primaryAction": "Ho capito"
+        },
+        "cieNotRegistered": {
+          "title": "Registra la CIE in app CieID per continuare",
+          "subtitle": "Per ottenere IT-Wallet, completa prima la registrazione della tua CIE in app CieID e poi riprova."
         }
       },
       "notMatchingIdentityScreen": {
@@ -4828,6 +4888,13 @@
             "title": "Verifica la versione digitale del documento",
             "content": "È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.",
             "primaryAction": "Inizia"
+          },
+          "mdl": {
+            "walletUpgradeBanner": {
+              "title": "Novità IT-Wallet",
+              "content": "Ottieni IT-Wallet per usare la tua Patente anche come documento d'identità!",
+              "action": "Ottieni IT-Wallet"
+            }
           }
         },
         "ctas": {
@@ -5039,6 +5106,20 @@
             "title": "In attesa di connessione per la verifica...",
             "subtitle": "Attendi qualche secondo..."
           },
+          "loadingStepScreen": {
+            "initial": {
+              "title": "Stiamo comunicando i tuoi dati per la verifica",
+              "subtitle": "Attendi qualche secondo..."
+            },
+            "reminder": {
+              "title": "Ancora un po' di pazienza...",
+              "subtitle": "Stiamo aspettando una risposta dai sistemi dell’ente che richiede i dati."
+            },
+            "final": {
+              "title": "Sembra che le cose vadano un po' a rilento",
+              "subtitle": "Ancora un po' di pazienza..."
+            }
+          },
           "selectiveDisclosure": {
             "title": "Dati richiesti",
             "subtitle": "Saranno mostrati a **{{relyingParty}}** per completare la verifica dei documenti richiesti.",
@@ -5056,6 +5137,11 @@
           "relyingParty": {
             "genericError": {
               "title": "Verifica interrotta",
+              "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
+              "primaryAction": "Chiudi"
+            },
+            "timeout": {
+              "title": "L’app di chi verifica non risponde",
               "subtitle": "Un problema ha impedito la comunicazione con chi ha richiesto la verifica dei dati. Prova di nuovo.",
               "primaryAction": "Chiudi"
             }
@@ -5475,7 +5561,7 @@
       "beneficiaryDetails": {
         "infobox": {
           "title": "Cosa ti permette di fare?",
-          "rulesButton": "Leggi le regole"
+          "rulesButton": "Read the rules"
         },
         "infoModal": {
           "title": "Regole dell'iniziativa",
@@ -5498,7 +5584,7 @@
         "protocolNumber": "Numero di protocollo",
         "lastUpdate": "Saldo aggiornato al {{dateString}}",
         "buttons": {
-          "privacy": "Preferenze & Privacy",
+          "privacy": "Preferenze e Privacy",
           "unsubscribe": "Rimuovi {{initiativeName}}",
           "requestHelp": "Chiedi aiuto"
         }
@@ -5587,7 +5673,7 @@
         "message": {
           "GENERIC": {
             "title": "Si è verificato un errore imprevisto",
-            "subtitle": "Siamo già a lavoro per risolverlo: ti invitiamo a riprovare più tardi."
+            "subtitle": "Siamo già a lavoro per risolverlo. Prova più tardi ad accedere all’iniziativa."
           },
           "INITIATIVE_NOT_FOUND": {
             "title": "Non riusciamo a trovare quest’iniziativa",
@@ -5667,18 +5753,30 @@
           "BTW_OPEN": "Compreso tra {{value}} e {{value2}}"
         }
       },
+      "inputPrerequisites": {
+        "emptyValueError": "Enter the required information to continue"
+      },
       "multiPrerequisites": {
-        "header": "Dichiari inoltre di:"
+        "header": "You also declare that:",
+        "emptyValueError": "Select an option to continue"
       },
       "boolPrerequisites": {
-        "header": "Per aderire, dichiari di:"
+        "header": "To proceed, you declare that:",
+        "emptyValueError": "Select an option to continue"
+      },
+      "enableMessages": {
+        "cancelAction": "Cancel",
+        "subtitle": "Activate the possibility to contact you in the app to receive updates on the {{initiativeName}}. \nThis step is necessary to proceed with the request.",
+        "title": "Activate messages",
+        "confirmAction": "Ok, active"
       },
       "enableNotification": {
-        "title": "Don't risk losing the outcome of your request",
-        "subtitle": "Activate push notifications to know immediately when you receive a new message in the app.",
-        "action": "Activate notifications",
-        "deny": "Not now",
-        "success": "You activated Push notifications"
+        "title": "Non perderti l’esito delle tue richieste",
+        "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
+        "action": "Attiva notifiche push",
+        "deny": "Non attivare",
+        "success": "You activated Push notifications",
+        "advice": "Consigliato"
       }
     },
     "configuration": {

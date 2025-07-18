@@ -23,8 +23,9 @@ import {
   trackItWalletCiePinEnter,
   trackItWalletCiePinInfo
 } from "../../../analytics";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
-import { useCieInfoBottomSheet } from "../../hooks/useCieInfoBottomSheet";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -38,6 +39,10 @@ export const ItwCiePinScreen = () => {
 
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+  const itw_flow = isL3Enabled ? "L3" : "L2";
 
   const [pin, setPin] = useState("");
   const pinPadViewRef = useRef<View>(null);
@@ -59,9 +64,9 @@ export const ItwCiePinScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      trackItWalletCiePinEnter();
+      trackItWalletCiePinEnter(itw_flow);
       setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
-    }, [])
+    }, [itw_flow])
   );
 
   useHeaderSecondLevel({
@@ -104,7 +109,7 @@ export const ItwCiePinScreen = () => {
               "features.itWallet.identification.cie.inputPin.buttonLink"
             )}
             onPress={() => {
-              trackItWalletCiePinInfo();
+              trackItWalletCiePinInfo(itw_flow);
               pinInfoBottomSheet.present();
             }}
           />
