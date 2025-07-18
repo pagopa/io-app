@@ -276,7 +276,6 @@ export const useNoCieBottomSheet = () => {
             {
               type: "TwoButtons",
               primary: {
-                icon: "cie",
                 label: I18n.t(
                   "features.itWallet.identification.mode.l3.bottomSheet.noCie.primaryAction"
                 ),

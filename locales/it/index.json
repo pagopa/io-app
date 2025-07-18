@@ -4094,7 +4094,7 @@
       "onboarding": {
         "title": "Cosa vuoi aggiungere al Portafoglio?",
         "sections": {
-          "itw": "Documenti",
+          "itw": "Documenti su IO",
           "other": "Altro"
         },
         "badge": {
@@ -4441,27 +4441,27 @@
         "mode": {
           "l2": {
             "title": "Verifica la tua identità",
-            "description": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
+            "description": "È un passaggio di sicurezza necessario per aggiungere i tuoi documenti digitali su IO.",
             "header": "Scegli come identificarti",
             "method": {
               "spid": {
-                "title": "SPID",
-                "subtitle": "Usa credenziali e app (o SMS)"
+                "title": "Usa SPID",
+                "subtitle": "Necessarie credenziali e app (o SMS)"
               },
               "ciePin": {
-                "title": "CIE + PIN",
-                "subtitle": "Usa Carta d’Identità Elettronica e PIN"
+                "title": "Usa CIE + PIN",
+                "subtitle": "Usa la Carta di Identità Elettronica e il suo PIN a 8 cifre"
               },
               "cieId": {
-                "title": "CieID",
-                "subtitle": "Usa credenziali e app CieID"
+                "title": "Usa l'app CieID",
+                "subtitle": "Necessarie credenziali e app CieID"
               }
             }
           },
           "l3": {
             "screen": {
               "title": "Verifica la tua identità con CIE",
-              "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet.",
+              "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet e associare i documenti alla tua identità.",
               "primaryAction": "Inizia",
               "secondaryAction": "Non ho la CIE",
               "requirements": {
@@ -4499,13 +4499,13 @@
         "cie": {
           "prepare": {
             "pin": {
-              "title": "Prepara il PIN della tua carta di identità elettronica (CIE)",
+              "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)",
               "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell’identità.",
               "buttonLink": "Cos’è il PIN della CIE?",
               "cta": "Inserisci il PIN della CIE"
             },
             "card": {
-              "title": "Prepara la tua carta di identità elettronica (CIE)",
+              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
               "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
               "cta": "Inizia lettura CIE",
               "buttonLink": "Cos’è la CIE?"
@@ -4579,8 +4579,8 @@
           },
           "bottomSheet": {
             "card": {
-              "title": "Carta di identità elettronica (CIE)",
-              "content": "La CIE è la Carta d'Identità in formato elettronico introdotto in Italia per sostituire la tradizionale carta d'identità cartacea.\n\nTi è utile averla per:\n * Accedere ai servizi online della Pubblica Amministrazione (es. INPS, Agenzia delle Entrate)\n * Identificarti ufficialmente in Italia e all’estero\n * Viaggiare nei Paesi dell’UE e in altri che la accettano al posto del passaporto.",
+              "title": "Carta di Identità Elettronica (CIE)",
+              "content": "La CIE è la Carta di Identità in formato elettronico introdotto in Italia per sostituire la tradizionale Carta di Identità cartacea.\n\nTi è utile averla per:\n * Accedere ai servizi online della Pubblica Amministrazione (es. INPS, Agenzia delle Entrate)\n * Identificarti ufficialmente in Italia e all’estero\n * Viaggiare nei Paesi dell’UE e in altri che la accettano al posto del passaporto.",
               "primaryAction": "Ho capito",
               "secondaryAction": "Non ho la CIE"
             },
