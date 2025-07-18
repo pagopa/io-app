@@ -3576,7 +3576,7 @@
           }
         },
         "eidResult": {
-          "success": {
+          "successL2": {
             "title": "Alles ist bereit!",
             "subtitle": "Du kannst nun das erste Dokument in das IO-Konto aufnehmen.",
             "toast": "Erledigt!",
@@ -3584,6 +3584,13 @@
               "continue": "Erstes Dokument hinzufügen",
               "continueAlt": "Dokument hinzufügen",
               "close": "Später fortfahren"
+            }
+          },
+          "success": {
+            "title": "Il tuo IT-Wallet è pronto!",
+            "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale di Stato.",
+            "actions": {
+              "continue": "Esplora IT-Wallet"
             }
           }
         },

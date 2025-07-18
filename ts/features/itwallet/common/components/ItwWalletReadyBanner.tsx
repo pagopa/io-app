@@ -36,7 +36,7 @@ export const ItwWalletReadyBanner = () => {
           : "features.itWallet.issuance.eidResult.success.subtitle"
       )}
       action={I18n.t(
-        "features.itWallet.issuance.eidResult.success.actions.continueAlt"
+        "features.itWallet.issuance.eidResult.successL2.actions.continueAlt"
       )}
       color="turquoise"
       onPress={handleOnPress}

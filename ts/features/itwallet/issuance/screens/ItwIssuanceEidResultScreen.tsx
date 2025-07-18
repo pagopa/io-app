@@ -5,10 +5,13 @@ import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackAddFirstCredential, trackBackToWallet } from "../../analytics";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
 export const ItwIssuanceEidResultScreen = () => {
   const route = useRoute();
 
+  const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   useItwDisableGestureNavigation();
@@ -19,27 +22,49 @@ export const ItwIssuanceEidResultScreen = () => {
     trackAddFirstCredential();
   };
 
-  const handleClose = async () => {
-    machineRef.send({ type: "go-to-wallet" });
-    trackBackToWallet({ exit_page: route.name, credential: "ITW_ID_V2" });
-  };
+  const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
 
+  // The user successfully activated IT-Wallet
+  if (isItWalletValid) {
+    return (
+      <OperationResultScreenContent
+        pictogram="success"
+        title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
+        subtitle={I18n.t(
+          "features.itWallet.issuance.eidResult.success.subtitle"
+        )}
+        action={{
+          label: I18n.t(
+            "features.itWallet.issuance.eidResult.success.actions.continue"
+          ),
+          onPress: handleBackToWallet
+        }}
+      />
+    );
+  }
+
+  // The user successfully activated Documenti su IO
   return (
     <OperationResultScreenContent
       pictogram="success"
-      title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
-      subtitle={I18n.t("features.itWallet.issuance.eidResult.success.subtitle")}
+      title={I18n.t("features.itWallet.issuance.eidResult.successL2.title")}
+      subtitle={I18n.t(
+        "features.itWallet.issuance.eidResult.successL2.subtitle"
+      )}
       action={{
         label: I18n.t(
-          "features.itWallet.issuance.eidResult.success.actions.continue"
+          "features.itWallet.issuance.eidResult.successL2.actions.continue"
         ),
         onPress: handleContinue
       }}
       secondaryAction={{
         label: I18n.t(
-          "features.itWallet.issuance.eidResult.success.actions.close"
+          "features.itWallet.issuance.eidResult.successL2.actions.close"
         ),
-        onPress: handleClose
+        onPress: () => {
+          handleBackToWallet();
+          trackBackToWallet({ exit_page: route.name, credential: "ITW_ID_V2" });
+        }
       }}
     />
   );
