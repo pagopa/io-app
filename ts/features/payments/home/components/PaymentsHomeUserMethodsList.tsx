@@ -156,7 +156,7 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
           action={I18n.t("features.payments.methods.banner.action")}
           onPress={handleOnAddMethodPress}
           color="neutral"
-          viewRef={bannerRef}
+          ref={bannerRef}
           labelClose={I18n.t("global.buttons.close")}
           onClose={() => dispatch(paymentsSetAddMethodsBannerVisible(false))}
         />

@@ -17,7 +17,7 @@ import { format } from "./dates";
  * @param callback
  */
 export const setAccessibilityFocus = <T extends Component>(
-  nodeReference: RefObject<T>,
+  nodeReference: RefObject<T | null>,
   executionDelay: Millisecond = 0 as Millisecond, // default: execute immediately,
   callback?: () => void
 ) => {
