@@ -6,6 +6,7 @@ import {
 } from "../machine/provider";
 import IdPayBoolValuePrerequisitesScreen from "../screens/IdPayBoolValuePrerequisitesScreen";
 import IdPayCompletionScreen from "../screens/IdPayCompletionScreen";
+import IdPayEnableMessageScreen from "../screens/IdPayEnableMessageScreen";
 import IdPayEnableNotificationScreen from "../screens/IdPayEnableNotificationScreen";
 import IdPayFailureScreen from "../screens/IdPayFailureScreen";
 import { IdPayInitiativeDetailsScreen } from "../screens/IdPayInitiativeDetailsScreen";
@@ -41,6 +42,11 @@ export const InnerNavigator = () => {
         }
       }}
     >
+      <Stack.Screen
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_MESSAGE}
+        component={IdPayEnableMessageScreen}
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS}
         component={IdPayInitiativeDetailsScreen}

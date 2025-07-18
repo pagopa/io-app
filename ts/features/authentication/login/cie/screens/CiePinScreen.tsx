@@ -268,7 +268,7 @@ const CiePinScreen = () => {
               />
               <VSpacer size={24} />
               <Banner
-                viewRef={bannerRef}
+                ref={bannerRef}
                 color="neutral"
                 title={I18n.t("login.help_banner_title")}
                 content={I18n.t("login.help_banner_content")}

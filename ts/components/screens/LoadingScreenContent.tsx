@@ -16,8 +16,8 @@ import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
 import { WithTestID } from "../../types/WithTestID";
 import {
   AnimatedPictogram,
-  AnimatedPictogramSource
-} from "../ui/AnimatedPictogramComponent";
+  IOAnimatedPictograms
+} from "../ui/AnimatedPictogram";
 
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +32,7 @@ type LoadingScreenContentProps = WithTestID<{
   contentTitle: string;
   children?: ReactNode;
   headerVisible?: boolean;
-  animatedPictogramSource?: AnimatedPictogramSource;
+  animatedPictogramSource?: IOAnimatedPictograms;
 }>;
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
@@ -77,7 +77,11 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
             importantForAccessibility={"no-hide-descendants"}
           >
             {animatedPictogramSource ? (
-              <AnimatedPictogram source={animatedPictogramSource} />
+              <AnimatedPictogram
+                name={animatedPictogramSource}
+                size={120}
+                loop={true}
+              />
             ) : (
               <LoadingIndicator />
             )}

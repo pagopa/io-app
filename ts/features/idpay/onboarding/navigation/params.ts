@@ -3,6 +3,7 @@ import { IdPayOnboardingRoutes } from "./routes";
 
 export type IdPayOnboardingParamsList = {
   [IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]: InitiativeDetailsScreenParams;
+  [IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_MESSAGE]: undefined;
   [IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS]: undefined;
   [IdPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE]: undefined;
   [IdPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION]: undefined;

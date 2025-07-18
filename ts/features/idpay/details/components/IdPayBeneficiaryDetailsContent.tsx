@@ -1,6 +1,4 @@
 import {
-  Body,
-  BodySmall,
   Divider,
   IOSkeleton,
   ListItemAction,
@@ -12,7 +10,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
-import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { ReactNode } from "react";
@@ -36,12 +33,12 @@ import { format } from "../../../../utils/dates";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { useIdPaySupportModal } from "../../common/hooks/useIdPaySupportModal";
 import { formatNumberCurrencyOrDefault } from "../../common/utils/strings";
-import { IdPayUnsubscriptionRoutes } from "../../unsubscription/navigation/routes";
 import { IDPayDetailsRoutes } from "../navigation";
 import {
   IdPayInitiativeRulesInfoBox,
   IdPayInitiativeRulesInfoBoxSkeleton
 } from "./IdPayInitiativeRulesInfoBox";
+import { IdPayinitiativeStatusItem } from "./IdPayInitiativeStatusItem";
 
 type TableRow = WithTestID<{
   label: string;
@@ -74,11 +71,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     return <BeneficiaryDetailsContentSkeleton />;
   }
 
-  const {
-    initiativeId,
-    initiativeName,
-    initiativeRewardType: initiativeType
-  } = initiativeDetails;
+  const { initiativeRewardType: initiativeType } = initiativeDetails;
 
   const ruleInfoBox = pipe(
     beneficiaryDetails.ruleDescription,
@@ -89,19 +82,10 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     )
   );
 
-  const statusString = pipe(
-    initiativeDetails.status,
-    O.fromNullable,
-    O.map(status =>
-      I18n.t(`idpay.initiative.details.initiativeCard.statusLabels.${status}`)
-    ),
-    O.getOrElse(() => "-")
-  );
-
   const endDateString = pipe(
     initiativeDetails.endDate,
     O.fromNullable,
-    O.map(formatDate("DD/MM/YYYY")),
+    O.map(formatDate("DD/MM/YYYY, HH:mm")),
     O.getOrElse(() => "-")
   );
 
@@ -109,14 +93,14 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     beneficiaryDetails.fruitionStartDate,
     O.fromNullable,
     O.map(formatDate("DD MMM YYYY")),
-    O.getOrElse(() => "-")
+    O.getOrElseW(() => undefined)
   );
 
   const fruitionEndDateString = pipe(
     beneficiaryDetails.fruitionEndDate,
     O.fromNullable,
     O.map(formatDate("DD MMM YYYY")),
-    O.getOrElse(() => "-")
+    O.getOrElseW(() => undefined)
   );
 
   const rewardRuleRow = pipe(
@@ -139,16 +123,6 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     O.getOrElse<TableRow>(() => ({ label: "-", value: "-" }))
   );
 
-  const lastUpdateString = pipe(
-    beneficiaryDetails.updateDate,
-    O.fromNullable,
-    O.map(formatDate("DD MMMM YYYY, HH:mm")),
-    O.map(dateString =>
-      I18n.t("idpay.initiative.beneficiaryDetails.lastUpdate", { dateString })
-    ),
-    O.toUndefined
-  );
-
   const onboardingDateString = pipe(
     onboardingStatus.onboardingOkDate,
     O.fromNullable,
@@ -164,9 +138,10 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             // in DISCOUNT initiatives, the spent amount is held in the accrued field,
             // while the refunded amount is always 0
             label: I18n.t("idpay.initiative.beneficiaryDetails.spentUntilNow"),
-            value: formatNumberCurrencyOrDefault(
-              initiativeDetails.accruedCents
-            ),
+            value:
+              initiativeDetails.accruedCents !== undefined
+                ? formatNumberCurrencyOrDefault(initiativeDetails.accruedCents)
+                : undefined,
             testID: "accruedTestID"
           }
         ];
@@ -208,34 +183,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     startIdPaySupport(IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY);
   };
 
-  const handleUnsubscribePress = () => {
-    pipe(
-      sequenceS(O.Monad)({
-        initiativeName: O.fromNullable(initiativeName),
-        initiativeType: O.fromNullable(initiativeType)
-      }),
-      O.map(({ initiativeName, initiativeType }) => {
-        navigation.navigate(
-          IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN,
-          {
-            screen: IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION,
-            params: {
-              initiativeId,
-              initiativeName,
-              initiativeType
-            }
-          }
-        );
-      })
-    );
-  };
-
   const summaryData = [
-    {
-      label: I18n.t("idpay.initiative.beneficiaryDetails.status"),
-      value: statusString,
-      testID: "statusTestID"
-    },
     {
       label: I18n.t("idpay.initiative.beneficiaryDetails.endDate"),
       value: endDateString,
@@ -246,7 +194,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       value: formatNumberCurrencyOrDefault(initiativeDetails.amountCents),
       testID: "amountTestID"
     },
-    ...getTypeDependantTableRows()
+    ...getTypeDependantTableRows().filter(row => row.value)
   ];
 
   const enrollmentData = [
@@ -254,11 +202,6 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       label: I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDate"),
       value: onboardingDateString,
       testID: "onboardingDateTestID"
-    },
-    {
-      label: I18n.t("idpay.initiative.beneficiaryDetails.protocolNumber"),
-      value: "-",
-      testID: "protocolTestID"
     }
   ];
 
@@ -276,19 +219,22 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     rewardRuleRow
   ];
 
-  const renderTableRow = (data: Array<TableRow>) =>
-    data.map((row, i) => (
-      <View key={row.testID}>
-        <ListItemInfo
-          key={row.testID}
-          label={row.label}
-          value={row.value}
-          testID={row.testID}
-        />
-        {i !== data.length - 1 && <Divider />}
-      </View>
-    ));
+  const canShowRulesData = !!spendingRulesData.filter(rule => rule.value);
 
+  const renderTableRow = (data: Array<TableRow>) =>
+    data
+      .filter(el => el.value)
+      .map((row, i) => (
+        <View key={row.testID}>
+          <ListItemInfo
+            key={row.testID}
+            label={row.label}
+            value={row.value}
+            testID={row.testID}
+          />
+          {i !== data.length - 1 && <Divider />}
+        </View>
+      ));
   const renderBeneficiaryDetailsContent = () => {
     switch (initiativeType) {
       case InitiativeRewardTypeEnum.DISCOUNT:
@@ -298,16 +244,19 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             <ListItemHeader
               label={I18n.t("idpay.initiative.beneficiaryDetails.summary")}
             />
+            <IdPayinitiativeStatusItem status={initiativeDetails.status} />
             {renderTableRow(summaryData)}
             <VSpacer size={8} />
-            <BodySmall weight="Regular">{lastUpdateString}</BodySmall>
-            <VSpacer size={8} />
-            <ListItemHeader
-              label={I18n.t(
-                "idpay.initiative.beneficiaryDetails.spendingRules"
-              )}
-            />
-            {renderTableRow(spendingRulesData)}
+            {canShowRulesData && (
+              <>
+                <ListItemHeader
+                  label={I18n.t(
+                    "idpay.initiative.beneficiaryDetails.spendingRules"
+                  )}
+                />
+                {renderTableRow(spendingRulesData)}
+              </>
+            )}
             <ListItemHeader
               label={I18n.t(
                 "idpay.initiative.beneficiaryDetails.enrollmentDetails"
@@ -315,18 +264,14 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             />
             {renderTableRow(enrollmentData)}
             <VSpacer size={16} />
-            <Body weight="Semibold" asLink onPress={handlePrivacyLinkPress}>
-              {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
-            </Body>
-            <VSpacer size={16} />
-            <Body weight="Semibold" asLink onPress={handleUnsubscribePress}>
-              {I18n.t(
-                "idpay.initiative.beneficiaryDetails.buttons.unsubscribe",
-                {
-                  initiativeName
-                }
+            <ListItemAction
+              icon="security"
+              variant="primary"
+              label={I18n.t(
+                "idpay.initiative.beneficiaryDetails.buttons.privacy"
               )}
-            </Body>
+              onPress={handlePrivacyLinkPress}
+            />
           </>
         );
       default:

@@ -2,6 +2,8 @@
 // and push a new element into the whatsNewVersions array
 // TODO: this logic will be remoted. Jira ticket: IOPID-424
 
+import { JSX } from "react";
+
 export const ACTIVE_VERSION = 0;
 
 type WhatsNew = {

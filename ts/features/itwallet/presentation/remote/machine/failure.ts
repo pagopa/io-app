@@ -1,4 +1,5 @@
 import { Credential, Errors } from "@pagopa/io-react-native-wallet";
+import { Trust } from "@pagopa/io-react-native-wallet-v2";
 import { isDefined } from "../../../../../utils/guards.ts";
 import { RemoteEvents } from "./events.ts";
 
@@ -44,6 +45,14 @@ const isRequestObjectInvalidError = (
   error instanceof Credential.Presentation.Errors.DcqlError;
 
 /**
+ * Guard used to check if the error is a `FederationError`.
+ */
+export const isFederationError = (
+  error: unknown
+): error is Trust.Errors.FederationError =>
+  error instanceof Trust.Errors.FederationError;
+
+/**
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
  */
 export type ReasonTypeByFailure = {
@@ -58,7 +67,7 @@ export type ReasonTypeByFailure = {
   [RemoteFailureType.INVALID_CREDENTIALS_STATUS]: {
     invalidCredentials: Array<string>;
   };
-  [RemoteFailureType.UNTRUSTED_RP]: string;
+  [RemoteFailureType.UNTRUSTED_RP]: Trust.Errors.FederationError;
   [RemoteFailureType.UNEXPECTED]: unknown;
 };
 
@@ -114,6 +123,12 @@ export const mapEventToFailure = (event: RemoteEvents): RemoteFailure => {
   if (isRequestObjectInvalidError(error)) {
     return {
       type: RemoteFailureType.INVALID_REQUEST_OBJECT,
+      reason: error
+    };
+  }
+  if (isFederationError(error)) {
+    return {
+      type: RemoteFailureType.UNTRUSTED_RP,
       reason: error
     };
   }
