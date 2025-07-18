@@ -14,13 +14,11 @@ import { Route, useRoute } from "@react-navigation/native";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  AccessibilityInfo,
   Image,
   LayoutChangeEvent,
   SafeAreaView,
   StyleSheet,
-  View,
-  findNodeHandle
+  View
 } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
@@ -34,12 +32,13 @@ import { IOScrollView } from "../../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { setAccessibilityFocus } from "../../../../../utils/accessibility";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../../utils/url";
 import { CgnAddressListItem } from "../../components/merchants/CgnAddressListItem";
 import { CgnMerchantDiscountItem } from "../../components/merchants/CgnMerchantsDiscountItem";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 
 export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -113,11 +112,8 @@ const CgnMerchantDetailScreen = () => {
   const titleRef = useRef(null);
 
   useOnFirstRender(() => {
-    if (isReady(merchantDetail) && titleRef.current) {
-      const node = findNodeHandle(titleRef.current);
-      if (node) {
-        AccessibilityInfo.setAccessibilityFocus(node);
-      }
+    if (isReady(merchantDetail) && titleRef) {
+      setAccessibilityFocus(titleRef);
     }
   });
 
