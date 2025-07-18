@@ -4,6 +4,7 @@ import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
 import { PNActivationBannerFlowScreen } from "../reminderBanner/screens/PnReminderBannerFlow";
 import { SendEngagementScreen } from "../aar/screen/SendEngagementScreen";
+import { SendQrScanFlow } from "../qrCodeScan/screens/QrScanFlow";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -26,6 +27,13 @@ export const PnStackNavigator = () => (
     <Stack.Screen
       name={PN_ROUTES.ACTIVATION_BANNER_FLOW}
       component={PNActivationBannerFlowScreen}
+      options={{
+        headerShown: false
+      }}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.QR_SCAN_FLOW}
+      component={SendQrScanFlow}
       options={{
         headerShown: false
       }}

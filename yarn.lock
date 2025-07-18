@@ -3901,15 +3901,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-cie@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@pagopa/io-react-native-cie@npm:1.0.1"
+"@pagopa/io-react-native-cie@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@pagopa/io-react-native-cie@npm:1.1.0"
   dependencies:
     zod: ^3.24.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: bdc10cbb5d56fb19b0c0fbaa479b554d7baac9175af3635a47d83778919765fe927062394d9c2160e4df5de9b9d0c6d09ce856e2fa007c8f2a8aa4e5443915b3
+  checksum: bb710bd00442755fbc5a0c1279922c929ae447f56465216941efba4a17d5166f463efa1d577c584e1aafbd2d24e6e1065c15859c86573a5543472b535dce0543
   languageName: node
   linkType: hard
 
@@ -5072,9 +5072,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shopify/react-native-skia@npm:2.0.0-next.3":
-  version: 2.0.0-next.3
-  resolution: "@shopify/react-native-skia@npm:2.0.0-next.3"
+"@shopify/react-native-skia@npm:2.1.1":
+  version: 2.1.1
+  resolution: "@shopify/react-native-skia@npm:2.1.1"
   dependencies:
     canvaskit-wasm: 0.40.0
     react-reconciler: 0.31.0
@@ -5089,7 +5089,7 @@ __metadata:
       optional: true
   bin:
     setup-skia-web: scripts/setup-canvaskit.js
-  checksum: 5ced0a63839ecb2e7c4f17235ebb01486b88451bfd3b1a5eb137cd5603be1414dea8ddc105abc62213f8b4374557b2b7168a0d406972f85efb7ee60727eb6eba
+  checksum: 84416f1ec432cc8fdcecbb349b93f17605e74199365e085673fcd3922613d2514bcb6e9db43c4995860879851c131395c4cb946d0d30594895d0f6e7f95a4cb8
   languageName: node
   linkType: hard
 
@@ -12945,7 +12945,7 @@ __metadata:
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
     "@pagopa/io-app-design-system": 5.7.3
     "@pagopa/io-pagopa-commons": ^3.1.0
-    "@pagopa/io-react-native-cie": ^1.0.1
+    "@pagopa/io-react-native-cie": ^1.1.0
     "@pagopa/io-react-native-cieid": ^0.3.5
     "@pagopa/io-react-native-crypto": ^1.2.2
     "@pagopa/io-react-native-http-client": 1.0.5
@@ -12982,7 +12982,7 @@ __metadata:
     "@redux-saga/testing-utils": ^1.1.3
     "@sentry/react-native": ^6.11.0
     "@shopify/flash-list": ~1.8.0
-    "@shopify/react-native-skia": 2.0.0-next.3
+    "@shopify/react-native-skia": 2.1.1
     "@stylistic/eslint-plugin-js": ^2.1.0
     "@testing-library/jest-native": ^3.4.3
     "@testing-library/react-native": ^13.2.0
@@ -13048,7 +13048,6 @@ __metadata:
     jwk-thumbprint: ^0.1.4
     lint-staged: ^13.2.0
     lodash: ^4.17.21
-    lottie-react-native: ^7.2.2
     metro-babel-register: ^0.72.1
     mixpanel-react-native: 2.4.1
     mockdate: ^3.0.2
@@ -14339,23 +14338,6 @@ __metadata:
   bin:
     loose-envify: cli.js
   checksum: 6517e24e0cad87ec9888f500c5b5947032cdfe6ef65e1c1936a0c48a524b81e65542c9c3edc91c97d5bddc806ee2a985dbc79be89215d613b1de5db6d1cfe6f4
-  languageName: node
-  linkType: hard
-
-"lottie-react-native@npm:^7.2.2":
-  version: 7.2.2
-  resolution: "lottie-react-native@npm:7.2.2"
-  peerDependencies:
-    "@lottiefiles/dotlottie-react": ^0.6.5
-    react: "*"
-    react-native: ">=0.46"
-    react-native-windows: ">=0.63.x"
-  peerDependenciesMeta:
-    "@lottiefiles/dotlottie-react":
-      optional: true
-    react-native-windows:
-      optional: true
-  checksum: bfe9e14d5edeb5271b213478d9292b4ba63ba00a86eef1ab1cb9d914003fba0c31c4bcdc039ff8ba1da5c0ee0ebf4efe68079fb2fb0e4a272153202c8a886d57
   languageName: node
   linkType: hard
 

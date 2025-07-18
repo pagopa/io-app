@@ -3,8 +3,19 @@ import {
   IOPictogramSizeScale,
   Pictogram
 } from "@pagopa/io-app-design-system";
-import LottieView, { LottieViewProps } from "lottie-react-native";
-import { useReducedMotion } from "react-native-reanimated";
+import {
+  Skia,
+  Canvas,
+  useClock,
+  Skottie,
+  Group
+} from "@shopify/react-native-skia";
+import {
+  useReducedMotion,
+  useDerivedValue,
+  useSharedValue
+} from "react-native-reanimated";
+import { useEffect } from "react";
 
 /* Animated Pictograms */
 import empty from "../../../assets/animated-pictograms/Empty.json";
@@ -40,7 +51,7 @@ export type IOAnimatedPictograms = keyof typeof IOAnimatedPictogramsAssets;
 export type AnimatedPictogram = {
   name: IOAnimatedPictograms;
   size: IOPictogramSizeScale;
-  loop: LottieViewProps["loop"];
+  loop?: boolean;
 };
 
 const staticPictogramsMap: Record<IOAnimatedPictograms, IOPictograms> = {
@@ -70,19 +81,50 @@ export const AnimatedPictogram = ({
 }: AnimatedPictogram) => {
   const reduceMotion = useReducedMotion();
 
+  const animation = Skia.Skottie.Make(
+    JSON.stringify(IOAnimatedPictogramsAssets[name])
+  );
+
+  const originalSizeAsset = IOAnimatedPictogramsAssets[name].w;
+
+  // See https://shopify.github.io/react-native-skia/docs/skottie
+  // for reference
+  const animationStartTime = useSharedValue(0);
+  const clock = useClock();
+
+  useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    animationStartTime.value = clock.value;
+  }, [name, animationStartTime, clock]);
+
+  const frame = useDerivedValue(() => {
+    const fps = animation.fps();
+    const duration = animation.duration();
+    const totalFrames = duration * fps;
+
+    const elapsedTime = (clock.value - animationStartTime.value) / 1000;
+    const currentFrame = Math.floor(elapsedTime * fps);
+
+    return loop
+      ? currentFrame % totalFrames
+      : Math.min(currentFrame, totalFrames - 1);
+  });
+
   if (reduceMotion) {
     return <Pictogram name={staticPictogramsMap[name]} size={size} />;
   }
 
   return (
-    <LottieView
-      autoPlay={true}
-      loop={loop}
+    <Canvas
       style={{
-        width: size * sizeMultiplier,
-        height: size * sizeMultiplier
+        width: size,
+        height: size,
+        transform: [{ scale: sizeMultiplier }]
       }}
-      source={IOAnimatedPictogramsAssets[name]}
-    />
+    >
+      <Group transform={[{ scale: size / originalSizeAsset }]}>
+        <Skottie animation={animation} frame={frame} />
+      </Group>
+    </Canvas>
   );
 };
