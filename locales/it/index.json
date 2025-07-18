@@ -3921,6 +3921,16 @@
           "info": "Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio",
           "cta": "Accedi alla versione web"
         }
+      },
+      "qrCodeScan": {
+        "success": {
+          "openSendScreen": {
+            "title": "Per accedere ai documenti vai sul sito web di SEND",
+            "body": "Per visualizzare i documenti online devi andare sul sito web di SEND. Presto potrai farlo direttamente da IO!",
+            "firstCta": "Vai su SEND",
+            "secondCta": "Chiudi"
+          }
+        }
       }
     },
     "fci": {
@@ -4614,6 +4624,7 @@
         "eidPreview": {
           "title": "Identità verificata",
           "subtitle": "Stai attivando **Documenti su IO** come:",
+          "subtitleL3": "Ci siamo quasi! Stai per ottenere **IT-Wallet** come:",
           "actions": {
             "primary": "Continua",
             "secondary": "Annulla"
@@ -4844,6 +4855,13 @@
             "title": "Verifica la versione digitale del documento",
             "content": "È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.",
             "primaryAction": "Inizia"
+          },
+          "mdl": {
+            "walletUpgradeBanner": {
+              "title": "Novità IT-Wallet",
+              "content": "Ottieni IT-Wallet per usare la tua Patente anche come documento d'identità!",
+              "action": "Ottieni IT-Wallet"
+            }
           }
         },
         "ctas": {
@@ -5510,7 +5528,7 @@
       "beneficiaryDetails": {
         "infobox": {
           "title": "Cosa ti permette di fare?",
-          "rulesButton": "Leggi le regole"
+          "rulesButton": "Leggi il regolamento"
         },
         "infoModal": {
           "title": "Regole dell'iniziativa",
@@ -5533,7 +5551,7 @@
         "protocolNumber": "Numero di protocollo",
         "lastUpdate": "Saldo aggiornato al {{dateString}}",
         "buttons": {
-          "privacy": "Preferenze & Privacy",
+          "privacy": "Preferenze e Privacy",
           "unsubscribe": "Rimuovi {{initiativeName}}",
           "requestHelp": "Chiedi aiuto"
         }
@@ -5622,7 +5640,7 @@
         "message": {
           "GENERIC": {
             "title": "Si è verificato un errore imprevisto",
-            "subtitle": "Siamo già a lavoro per risolverlo: ti invitiamo a riprovare più tardi."
+            "subtitle": "Siamo già a lavoro per risolverlo. Prova più tardi ad accedere all’iniziativa."
           },
           "INITIATIVE_NOT_FOUND": {
             "title": "Non riusciamo a trovare quest’iniziativa",

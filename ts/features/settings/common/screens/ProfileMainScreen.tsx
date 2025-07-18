@@ -78,7 +78,7 @@ const ProfileMainScreenFC = () => {
     itwLifecycleIsOperationalOrValid
   );
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
-  const idResetTap = useRef<number>();
+  const idResetTap = useRef<number>(undefined);
 
   const handleContinue = useCallback(() => {
     trackPressLogoutConfirmFromIO();

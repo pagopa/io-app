@@ -89,7 +89,7 @@ export const ItwDiscoveryBanner = ({
     <View style={!ignoreMargins && styles.margins}>
       <Banner
         testID="itwDiscoveryBannerTestID"
-        viewRef={bannerRef}
+        ref={bannerRef}
         title={withTitle ? title : undefined}
         content={content}
         action={action}
