@@ -4123,6 +4123,9 @@
         "deny": "Non attivare",
         "success": "Sie aktivierten Push -Benachrichtigungen",
         "advice": "Consigliato"
+      },
+      "failToRetry": {
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
       }
     }
   }
