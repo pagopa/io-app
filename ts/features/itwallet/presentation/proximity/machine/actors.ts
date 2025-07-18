@@ -14,14 +14,12 @@ import {
   parseError,
   parseVerifierRequest
 } from "@pagopa/io-react-native-proximity";
-import { Trust } from "@pagopa/io-react-native-wallet-v2";
 import {
   generateAcceptedFields,
   getDocuments,
   getProximityDetails,
   promiseWithTimeout
 } from "../utils/itwProximityPresentationUtils";
-import { Env } from "../../../common/utils/environment";
 import { assert } from "../../../../../utils/assert";
 import { getError } from "../../../../../utils/errors";
 import { Context } from "./context";
@@ -68,7 +66,7 @@ export type SendDocumentsActorOutput = Awaited<
   ReturnType<typeof Proximity.sendResponse>
 >;
 
-export const createProximityActorsImplementation = (env: Env) => {
+export const createProximityActorsImplementation = () => {
   const checkPermissions = fromPromise<boolean>(async () => {
     // Check current permission status
     const statuses = await checkMultiple(PERMISSIONS_TO_CHECK);
@@ -102,16 +100,7 @@ export const createProximityActorsImplementation = (env: Env) => {
         // The proximity flow must be closed before restarting
         await Proximity.close().catch(constUndefined);
       }
-
-      // TODO: "https://pre.verifier.wallet.ipzs.it"
-      const entityConfiguration =
-        await Trust.Build.getRelyingPartyEntityConfiguration(
-          env.VERIFIER_BASE_URL
-        );
-
-      await Proximity.start({
-        certificates: entityConfiguration.payload.jwks.keys[0].x5c
-      });
+      await Proximity.start();
     }
   );
 
