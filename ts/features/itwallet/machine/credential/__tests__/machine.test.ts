@@ -266,15 +266,17 @@ describe("itwCredentialIssuanceMachine", () => {
 
     obtainCredential.mockImplementation(() =>
       Promise.resolve({
-        credential: ItwStoredCredentialsMocks.ts
+        credentials: [ItwStoredCredentialsMocks.ts]
       })
     );
 
     obtainStatusAttestation.mockImplementation(() =>
-      Promise.resolve({
-        ...ItwStoredCredentialsMocks.ts,
-        storedStatusAttestation: T_STORED_STATUS_ATTESTATION
-      })
+      Promise.resolve([
+        {
+          ...ItwStoredCredentialsMocks.ts,
+          storedStatusAttestation: T_STORED_STATUS_ATTESTATION
+        }
+      ])
     );
 
     actor.send({
