@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { SendEngagmentComponent } from "../components/SendEngagementComponent";
+import { SendEngagementComponent } from "../components/SendEngagementComponent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -74,7 +74,7 @@ export const SendEngagementScreen = () => {
     );
   }
   return (
-    <SendEngagmentComponent
+    <SendEngagementComponent
       isLoading={screenStatus === "Activating"}
       onPrimaryAction={onActivateService}
       onClose={onClose}

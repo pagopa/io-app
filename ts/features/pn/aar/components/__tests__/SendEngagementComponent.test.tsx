@@ -5,7 +5,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
-import { SendEngagmentComponent } from "../SendEngagementComponent";
+import { SendEngagementComponent } from "../SendEngagementComponent";
 import { GlobalState } from "../../../../../store/reducers/types";
 import * as urlUtils from "../../../../../utils/url";
 
@@ -144,7 +144,7 @@ const renderComponent = (
   const store = createStore(appReducer, testState as any);
   return renderScreenWithNavigationStoreContext(
     () => (
-      <SendEngagmentComponent
+      <SendEngagementComponent
         isLoading={isLoading}
         onClose={onClose}
         onPrimaryAction={onPrimaryAction}

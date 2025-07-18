@@ -5,17 +5,17 @@ import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/
 import { openWebUrl } from "../../../../utils/url";
 import I18n from "../../../../i18n";
 
-export type SendEngagmentComponentProps = {
+export type SendEngagementComponentProps = {
   isLoading: boolean;
   onClose: () => void;
   onPrimaryAction: () => void;
 };
 
-export const SendEngagmentComponent = ({
+export const SendEngagementComponent = ({
   isLoading,
   onClose,
   onPrimaryAction
-}: SendEngagmentComponentProps) => {
+}: SendEngagementComponentProps) => {
   const { privacy: privacyUrl, tos: tosUrl } = useIOSelector(
     pnPrivacyUrlsSelector
   );
