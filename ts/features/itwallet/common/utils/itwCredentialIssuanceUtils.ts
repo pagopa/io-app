@@ -38,7 +38,7 @@ export type ObtainCredentialParams = {
   pid: StoredCredential;
   clientId: string;
   codeVerifier: string;
-  credentialDefinition: AuthorizationDetail;
+  credentialDefinition?: AuthorizationDetail;
   issuerConf: IssuerConfiguration;
   isNewIssuanceFlowEnabled: boolean;
 };

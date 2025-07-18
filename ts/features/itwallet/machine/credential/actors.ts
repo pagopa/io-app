@@ -109,7 +109,10 @@ export const createCredentialIssuanceActorsImplementation = (
     assert(issuerConf, "issuerConf is undefined");
     assert(clientId, "clientId is undefined");
     assert(codeVerifier, "codeVerifier is undefined");
-    assert(credentialDefinition, "codeVerifier is undefined");
+    assert(
+      isNewIssuanceFlowEnabled || credentialDefinition,
+      "credentialDefinition is undefined"
+    );
     assert(O.isSome(eid), "eID is undefined");
 
     return await credentialIssuanceUtils.obtainCredential({
