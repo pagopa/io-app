@@ -42,7 +42,7 @@ export const ItwActivateNfcScreen = () => {
     } else {
       Alert.alert(I18n.t("authentication.cie.nfc.activeNfcAlert"), "", [
         {
-          text: I18n.t("global.buttons.cancel"),
+          text: I18n.t("global.buttons.close"),
           style: "cancel"
         },
         {
