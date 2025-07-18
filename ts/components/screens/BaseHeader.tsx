@@ -19,7 +19,6 @@ import {
   PureComponent,
   ReactNode,
   Ref,
-  RefObject,
   useCallback
 } from "react";
 import {
@@ -184,7 +183,7 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
         return;
       }
       setAccessibilityFocus(
-        this.firstElementRef as RefObject<View>,
+        this.firstElementRef,
         setAccessibilityTimeout,
         this.props.onAccessibilityNavigationHeaderFocus
       );

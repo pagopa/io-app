@@ -1,21 +1,21 @@
 import { VStack } from "@pagopa/io-app-design-system";
-import { StyleSheet, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useMemo } from "react";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import I18n from "../../../../i18n";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import IOMarkdown from "../../../../components/IOMarkdown";
-import { AnimatedImage } from "../../../../components/AnimatedImage";
-import { renderActionButtons } from "../../../../components/ui/IOScrollView";
-import { CiePreparationType } from "../components/cie/ItwCiePreparationBaseScreenContent";
+import { StyleSheet, View } from "react-native";
+import { AnimatedImage } from "../../../../../components/AnimatedImage";
+import IOMarkdown from "../../../../../components/IOMarkdown";
+import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
+import I18n from "../../../../../i18n";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
   ItwFlow,
   trackItwCieInfoBottomSheet,
   trackItwPinInfoBottomSheet,
   trackItwUserWithoutL3Requirements
-} from "../../analytics";
-import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
+} from "../../../analytics";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { CiePreparationType } from "../components/ItwCiePreparationBaseScreenContent";
 
 type Props = { type: CiePreparationType; showSecondaryAction?: boolean };
 
@@ -60,9 +60,9 @@ export const useCieInfoBottomSheet = ({
   const imageSrc = useMemo(() => {
     switch (type) {
       case "card":
-        return require("../../../../../img/features/itWallet/identification/cie_card.png");
+        return require("../../../../../../img/features/itWallet/identification/cie_card.png");
       case "pin":
-        return require("../../../../../img/features/itWallet/identification/cie_pin.png");
+        return require("../../../../../../img/features/itWallet/identification/cie_pin.png");
       default:
         return undefined;
     }
