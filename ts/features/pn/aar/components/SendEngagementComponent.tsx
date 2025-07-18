@@ -1,10 +1,8 @@
-import { useEffect } from "react";
 import { Body, FeatureInfo, H3, VSpacer } from "@pagopa/io-app-design-system";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useIOSelector } from "../../../../store/hooks";
 import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import I18n from "../../../../i18n";
 
 export type SendEngagmentComponentProps = {
@@ -18,7 +16,6 @@ export const SendEngagmentComponent = ({
   onClose,
   onPrimaryAction
 }: SendEngagmentComponentProps) => {
-  const navigation = useIONavigation();
   const { privacy: privacyUrl, tos: tosUrl } = useIOSelector(
     pnPrivacyUrlsSelector
   );
@@ -27,11 +24,6 @@ export const SendEngagmentComponent = ({
       openWebUrl(url);
     }
   };
-  useEffect(() => {
-    navigation.setOptions({
-      headerShown: true
-    });
-  }, [navigation]);
   return (
     <IOScrollView
       actions={{

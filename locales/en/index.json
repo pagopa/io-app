@@ -3799,7 +3799,7 @@
     "pn": {
       "aar": {
         "serviceActivation": {
-          "headerAction": "Chiudi",
+          "failure": "Non riusciamo ad attivare il servizio SEND",
           "feature1": {
             "part1": "Attiva SEND su IO e ricevi in app le ",
             "part2": "comunicazioni a valore legale",
@@ -3822,7 +3822,9 @@
             "part6": "Termini e Condizioni d’uso",
             "part7": "."
           },
+          "headerAction": "Chiudi",
           "primaryAction": "Attiva SEND su IO",
+          "serviceActivated": "Hai attivato SEND su IO",
           "title": "Ricevi su IO le tue prossime notifiche SEND"
         }
       },
