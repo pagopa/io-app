@@ -12,13 +12,15 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
+  AccessibilityInfo,
   Image,
   LayoutChangeEvent,
   SafeAreaView,
   StyleSheet,
-  View
+  View,
+  findNodeHandle
 } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
@@ -37,6 +39,7 @@ import { CgnAddressListItem } from "../../components/merchants/CgnAddressListIte
 import { CgnMerchantDiscountItem } from "../../components/merchants/CgnMerchantsDiscountItem";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 
 export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -106,6 +109,18 @@ const CgnMerchantDetailScreen = () => {
       );
     }
   };
+
+  const titleRef = useRef(null);
+
+  useOnFirstRender(() => {
+    if (isReady(merchantDetail) && titleRef.current) {
+      const node = findNodeHandle(titleRef.current);
+      if (node) {
+        AccessibilityInfo.setAccessibilityFocus(node);
+      }
+    }
+  });
+
   // -------    render
 
   useHeaderSecondLevel({
@@ -150,7 +165,9 @@ const CgnMerchantDetailScreen = () => {
               <VSpacer size={24} />
             </View>
           )}
-          <H1>{merchantDetail.value.name}</H1>
+          <H1 accessible={true} importantForAccessibility="yes" ref={titleRef}>
+            {merchantDetail.value.name}
+          </H1>
           <VSpacer size={24} />
           <ListItemHeader
             label={I18n.t("bonus.cgn.merchantDetail.title.deals")}
