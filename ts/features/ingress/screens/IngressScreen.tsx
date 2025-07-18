@@ -22,7 +22,6 @@ import {
   trackIngressTimeout
 } from "../analytics";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
-import waiting from "../../../../assets/animated-pictograms/Waiting.json";
 import { startupLoadSuccess } from "../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../store/reducers/startup";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
@@ -123,7 +122,7 @@ export const IngressScreen = () => {
       <LoadingScreenContent
         testID="ingress-screen-loader-id"
         contentTitle={contentTitle}
-        animatedPictogramSource={waiting}
+        animatedPictogramSource="waiting"
       />
     </>
   );
