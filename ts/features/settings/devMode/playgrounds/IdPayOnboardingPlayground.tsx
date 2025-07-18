@@ -162,6 +162,11 @@ const testServices: ReadonlyArray<TestService> = [
     serviceId: "TESTSRV16",
     label: "KO - Recesso",
     willFail: true
+  },
+  {
+    serviceId: "TESTSRV18",
+    label: "KO - Troppe richieste",
+    willFail: true
   }
 ];
 
