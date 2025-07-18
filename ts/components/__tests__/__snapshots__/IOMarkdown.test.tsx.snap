@@ -1075,7 +1075,21 @@ exports[`IOMarkdown Should match snapshot 1`] = `
                           }
                         >
                           Here is an image:
-
+                        </Text>
+                        <View
+                          style={
+                            {
+                              "height": 8,
+                            }
+                          }
+                        />
+                        <View
+                          style={
+                            {
+                              "marginVertical": 16,
+                            }
+                          }
+                        >
                           <Image
                             accessibilityIgnoresInvertColors={true}
                             accessibilityLabel="Alt text"
@@ -1092,7 +1106,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
                               }
                             }
                           />
-                        </Text>
+                        </View>
                         <View
                           style={
                             {
