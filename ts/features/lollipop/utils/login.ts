@@ -11,7 +11,7 @@ import URLParse from "url-parse";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import pako from "pako";
 import { last } from "fp-ts/lib/Array";
-import { getLollipopLoginHeaders, handleRegenerateKey } from "..";
+import { getLollipopLoginHeaders, handleRegenerateEphemeralKey } from "..";
 import { AppDispatch } from "../../../App";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { toBase64EncodedThumbprint } from "./crypto";
@@ -105,7 +105,7 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
 ) =>
   pipe(
     TE.tryCatch(
-      () => handleRegenerateKey(keyTag, isMixpanelEnabled, dispatch),
+      () => handleRegenerateEphemeralKey(keyTag, isMixpanelEnabled, dispatch),
       E.toError
     ),
     TE.chain(publicKey =>

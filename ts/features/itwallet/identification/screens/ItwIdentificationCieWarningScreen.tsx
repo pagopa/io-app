@@ -4,13 +4,13 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { trackItwKoStateAction } from "../../analytics";
-export type CieWarningType = "noPin" | "noCie";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { CiePreparationType } from "../components/cie/ItwCiePreparationBaseScreenContent";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { CiePreparationType } from "../cie/components/ItwCiePreparationBaseScreenContent";
+export type CieWarningType = "noPin" | "noCie";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {
   type: CiePreparationType;
