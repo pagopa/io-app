@@ -1,5 +1,6 @@
 import { createStore } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
@@ -9,6 +10,7 @@ import * as requestinfo from "../../store/selectors";
 import * as IOHooks from "../../../../../../store/hooks";
 import * as commonStoreSelector from "../../../../common/store/selectors";
 import { SessionToken } from "../../../../../../types/SessionToken";
+import * as useLollipopLoginSource from "../../../../../lollipop/hooks/useLollipopLoginSource";
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
@@ -30,6 +32,13 @@ describe("IdpLoginScreen", () => {
   const mockDispatch = jest.fn();
 
   jest.spyOn(IOHooks, "useIODispatch").mockReturnValue(mockDispatch);
+
+  jest.spyOn(useLollipopLoginSource, "useLollipopLoginSource").mockReturnValue({
+    lollipopCheckStatus: { status: "none", url: O.none },
+    retryLollipopLogin: jest.fn(),
+    shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
+    webviewSource: { uri: "https://example.com/login" }
+  });
 
   jest
     .spyOn(commonStoreSelector, "loggedOutWithIdpAuthSelector")
