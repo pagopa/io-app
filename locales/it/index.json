@@ -5726,6 +5726,9 @@
         "deny": "Non attivare",
         "success": "Hai attivato le notifiche push",
         "advice": "Consigliato"
+      },
+      "failToRetry": {
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
       }
     },
     "configuration": {
