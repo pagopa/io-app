@@ -45,7 +45,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { itwGradientColors } from "../../common/utils/constants.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors";
 import { selectIsLoading } from "../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { trackItwDiscoveryPlus, trackItwIntroBack } from "../../analytics";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
