@@ -1,11 +1,21 @@
-import { Errors } from "@pagopa/io-react-native-wallet";
+import { Errors as ErrorsV1 } from "@pagopa/io-react-native-wallet";
+import { Errors as ErrorsV2 } from "@pagopa/io-react-native-wallet-v2";
+import { IssuerResponseErrorCode } from "@pagopa/io-react-native-wallet-v2/src/utils/error-codes";
 import { CredentialIssuanceEvents } from "./events";
 
 const {
-  isIssuerResponseError,
-  isWalletProviderResponseError,
+  isIssuerResponseError: isIssuerResponseErrorV1,
+  isWalletProviderResponseError: isWalletProviderResponseErrorV1
+} = ErrorsV1;
+
+const {
+  isIssuerResponseError: isIssuerResponseErrorV2,
+  isWalletProviderResponseError: isWalletProviderResponseErrorV2,
+  // The error codes are the same in both V1 and V2, so for simplicity,
+  // we’ll use those provided by V2 directly.
+  // TODO: [SIW-2530] After fully migrating to the new API, the above comment can be removed
   IssuerResponseErrorCodes: Codes
-} = Errors;
+} = ErrorsV2;
 
 export enum CredentialIssuanceFailureType {
   UNEXPECTED = "UNEXPECTED",
@@ -19,10 +29,10 @@ export enum CredentialIssuanceFailureType {
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
  */
 export type ReasonTypeByFailure = {
-  [CredentialIssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
-  [CredentialIssuanceFailureType.INVALID_STATUS]: Errors.IssuerResponseError;
-  [CredentialIssuanceFailureType.ASYNC_ISSUANCE]: Errors.IssuerResponseError;
-  [CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC]: Errors.WalletProviderResponseError;
+  [CredentialIssuanceFailureType.ISSUER_GENERIC]: ErrorsV2.IssuerResponseError;
+  [CredentialIssuanceFailureType.INVALID_STATUS]: ErrorsV2.IssuerResponseError;
+  [CredentialIssuanceFailureType.ASYNC_ISSUANCE]: ErrorsV2.IssuerResponseError;
+  [CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC]: ErrorsV2.WalletProviderResponseError;
   [CredentialIssuanceFailureType.UNEXPECTED]: unknown;
 };
 
@@ -38,6 +48,15 @@ type TypedCredentialIssuanceFailures = {
  */
 export type CredentialIssuanceFailure =
   TypedCredentialIssuanceFailures[keyof TypedCredentialIssuanceFailures];
+
+// TODO: [SIW-2530] After fully migrating to the new API, remove this layer in favor of `isIssuerResponseErrorV2`
+const isIssuerResponseError = (
+  error: unknown,
+  code?: IssuerResponseErrorCode
+): error is ErrorsV2.IssuerResponseError =>
+  [isIssuerResponseErrorV1, isIssuerResponseErrorV2].some(cb =>
+    cb(error, code)
+  );
 
 /**
  * Maps an event dispatched by the credential issuance machine to a failure object.
@@ -79,7 +98,10 @@ export const mapEventToFailure = (
     };
   }
 
-  if (isWalletProviderResponseError(error)) {
+  if (
+    isWalletProviderResponseErrorV1(error) ||
+    isWalletProviderResponseErrorV2(error)
+  ) {
     return {
       type: CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC,
       reason: error
