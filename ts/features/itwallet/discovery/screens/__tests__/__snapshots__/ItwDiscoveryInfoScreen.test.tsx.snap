@@ -1407,7 +1407,26 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true and 
                                       }
                                       end={
                                         JsiSkPoint {
-                                          "CanvasKit": undefined,
+                                          "CanvasKit": {
+                                            "MakeBlendMode": [MockFunction],
+                                            "MakeCanvas": [MockFunction],
+                                            "MakeColor": [MockFunction],
+                                            "MakeColorFilter": [MockFunction],
+                                            "MakeFont": [MockFunction],
+                                            "MakeImage": [MockFunction],
+                                            "MakeImageFilter": [MockFunction],
+                                            "MakeManagedAnimation": [MockFunction],
+                                            "MakeMatrix": [MockFunction],
+                                            "MakePaint": [MockFunction],
+                                            "MakePath": [MockFunction],
+                                            "MakePicture": [MockFunction],
+                                            "MakeRuntimeEffect": [MockFunction],
+                                            "MakeShader": [MockFunction],
+                                            "MakeSkottieAnimation": [MockFunction],
+                                            "MakeTextBlob": [MockFunction],
+                                            "MakeTypeface": [MockFunction],
+                                            "MakeVertices": [MockFunction],
+                                          },
                                           "__typename__": "Point",
                                           "dispose": [Function],
                                           "ref": Float32Array [
@@ -1419,7 +1438,26 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true and 
                                       mode="repeat"
                                       start={
                                         JsiSkPoint {
-                                          "CanvasKit": undefined,
+                                          "CanvasKit": {
+                                            "MakeBlendMode": [MockFunction],
+                                            "MakeCanvas": [MockFunction],
+                                            "MakeColor": [MockFunction],
+                                            "MakeColorFilter": [MockFunction],
+                                            "MakeFont": [MockFunction],
+                                            "MakeImage": [MockFunction],
+                                            "MakeImageFilter": [MockFunction],
+                                            "MakeManagedAnimation": [MockFunction],
+                                            "MakeMatrix": [MockFunction],
+                                            "MakePaint": [MockFunction],
+                                            "MakePath": [MockFunction],
+                                            "MakePicture": [MockFunction],
+                                            "MakeRuntimeEffect": [MockFunction],
+                                            "MakeShader": [MockFunction],
+                                            "MakeSkottieAnimation": [MockFunction],
+                                            "MakeTextBlob": [MockFunction],
+                                            "MakeTypeface": [MockFunction],
+                                            "MakeVertices": [MockFunction],
+                                          },
                                           "__typename__": "Point",
                                           "dispose": [Function],
                                           "ref": Float32Array [

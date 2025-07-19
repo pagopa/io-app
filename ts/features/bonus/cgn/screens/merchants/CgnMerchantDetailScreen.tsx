@@ -12,7 +12,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Image,
   LayoutChangeEvent,
@@ -32,6 +32,8 @@ import { IOScrollView } from "../../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { setAccessibilityFocus } from "../../../../../utils/accessibility";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../../utils/url";
 import { CgnAddressListItem } from "../../components/merchants/CgnAddressListItem";
 import { CgnMerchantDiscountItem } from "../../components/merchants/CgnMerchantsDiscountItem";
@@ -106,6 +108,15 @@ const CgnMerchantDetailScreen = () => {
       );
     }
   };
+
+  const titleRef = useRef(null);
+
+  useOnFirstRender(() => {
+    if (isReady(merchantDetail) && titleRef) {
+      setAccessibilityFocus(titleRef);
+    }
+  });
+
   // -------    render
 
   useHeaderSecondLevel({
@@ -150,7 +161,9 @@ const CgnMerchantDetailScreen = () => {
               <VSpacer size={24} />
             </View>
           )}
-          <H1>{merchantDetail.value.name}</H1>
+          <H1 accessible={true} importantForAccessibility="yes" ref={titleRef}>
+            {merchantDetail.value.name}
+          </H1>
           <VSpacer size={24} />
           <ListItemHeader
             label={I18n.t("bonus.cgn.merchantDetail.title.deals")}
