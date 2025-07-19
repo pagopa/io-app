@@ -3,7 +3,7 @@ import { ItwProximityLoadingStepScreen } from "../components/ItwProximityLoading
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
-import I18n from "../../../../../i18n.ts";
+import I18n from "../../../../../i18n";
 import { selectIsSuccess } from "../machine/selectors.ts";
 
 export const ItwProximitySendDocumentsResponseScreen = () => {

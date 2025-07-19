@@ -33,6 +33,10 @@ export type DeviceConnected = {
   type: "device-connected";
 };
 
+export type DeviceDisconnected = {
+  type: "device-disconnected";
+};
+
 export type DeviceError = {
   type: "device-error";
   error: Error;
@@ -58,5 +62,6 @@ export type ProximityEvents =
   | Retry
   | DeviceConnecting
   | DeviceConnected
+  | DeviceDisconnected
   | DeviceError
   | DeviceDocumentRequestReceived;
