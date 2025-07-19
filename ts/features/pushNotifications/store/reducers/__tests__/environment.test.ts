@@ -10,7 +10,7 @@ import {
 } from "../../actions/environment";
 import { notificationsInfoScreenConsent } from "../../actions/profileNotificationPermissions";
 import {
-  areNotificationPermissionsEnabled,
+  areNotificationPermissionsEnabledSelector,
   environmentReducer,
   INITIAL_STATE
 } from "../environment";
@@ -108,7 +108,7 @@ describe("environmentReducer", () => {
   });
 });
 
-describe("areNotificationPermissionsEnabled selector", () => {
+describe("areNotificationPermissionsEnabledSelector", () => {
   it("should output 'true' when 'systemNotificationsEnabled' is 'true'", () => {
     const state = {
       notifications: {
@@ -118,7 +118,7 @@ describe("areNotificationPermissionsEnabled selector", () => {
       }
     } as GlobalState;
     const notificationPermissionsEnabled =
-      areNotificationPermissionsEnabled(state);
+      areNotificationPermissionsEnabledSelector(state);
     expect(notificationPermissionsEnabled).toBe(true);
   });
   it("should output 'false' when 'systemNotificationsEnabled' is 'false'", () => {
@@ -130,7 +130,7 @@ describe("areNotificationPermissionsEnabled selector", () => {
       }
     } as GlobalState;
     const notificationPermissionsEnabled =
-      areNotificationPermissionsEnabled(state);
+      areNotificationPermissionsEnabledSelector(state);
     expect(notificationPermissionsEnabled).toBe(false);
   });
 });

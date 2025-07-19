@@ -1,5 +1,5 @@
 import { call, put, select } from "typed-redux-saga/macro";
-import { areNotificationPermissionsEnabled } from "../store/reducers/environment";
+import { areNotificationPermissionsEnabledSelector } from "../store/reducers/environment";
 import { updateSystemNotificationsEnabled } from "../store/actions/environment";
 import { checkNotificationPermissions } from "../utils";
 import { pendingMessageStateSelector } from "../store/reducers/pendingMessage";
@@ -35,7 +35,7 @@ export function* updateNotificationPermissionsIfNeeded(
   // Retrieve the in-memory redux value of the
   // notification receival permission
   const storedNotificationPermissions = yield* select(
-    areNotificationPermissionsEnabled
+    areNotificationPermissionsEnabledSelector
   );
   // If it is different, compared to the input one
   if (systemNotificationPermissions !== storedNotificationPermissions) {

@@ -1,11 +1,11 @@
 import { GlobalState } from "../../../../store/reducers/types";
-import { areNotificationPermissionsEnabled } from "../../../pushNotifications/store/reducers/environment";
+import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
 
 export const showAppearanceSettingsBannerSelector = (state: GlobalState) =>
   state.features.appearanceSettings.showAppearanceBanner;
 
 export const settingsBannerToShowSelector = (state: GlobalState) => {
-  const notificationsEnabled = areNotificationPermissionsEnabled(state);
+  const notificationsEnabled = areNotificationPermissionsEnabledSelector(state);
 
   if (!notificationsEnabled) {
     return "NOTIFICATIONS";
@@ -18,7 +18,3 @@ export const settingsBannerToShowSelector = (state: GlobalState) => {
     ? "APPEARANCE_SETTINGS_BANNER"
     : undefined;
 };
-
-export const areNotificationPermissionsEnabledSelector = (
-  state: GlobalState
-): boolean => areNotificationPermissionsEnabled(state);
