@@ -1415,126 +1415,114 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                               }
                             >
                               <View
-                                exiting={[Function]}
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "center",
-                                  }
-                                }
+                                skipExiting={true}
                               >
                                 <View
-                                  accessibilityRole="progressbar"
-                                  accessible={true}
+                                  exiting={[Function]}
                                   style={
                                     {
-                                      "height": 24,
-                                      "width": 24,
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
                                     }
                                   }
-                                  testID="LoadingSpinnerTestID"
                                 >
                                   <View
-                                    collapsable={false}
+                                    accessibilityRole="progressbar"
+                                    accessible={true}
                                     style={
                                       {
-                                        "transform": [
-                                          {
-                                            "rotateZ": "0deg",
-                                          },
-                                        ],
+                                        "height": 24,
+                                        "width": 24,
                                       }
                                     }
-                                    testID="LoadingSpinnerAnimatedTestID"
+                                    testID="LoadingSpinnerTestID"
                                   >
-                                    <RNSVGSvgView
-                                      align="xMidYMid"
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      fill="none"
-                                      focusable={false}
-                                      height={24}
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
+                                    <View
+                                      collapsable={false}
                                       style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
-                                        ]
+                                        {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        }
                                       }
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
+                                      testID="LoadingSpinnerAnimatedTestID"
                                     >
-                                      <RNSVGGroup
-                                        fill={null}
-                                        propList={
+                                      <RNSVGSvgView
+                                        align="xMidYMid"
+                                        bbHeight={24}
+                                        bbWidth={24}
+                                        fill="none"
+                                        focusable={false}
+                                        height={24}
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
                                           [
-                                            "fill",
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 24,
+                                              "width": 24,
+                                            },
                                           ]
                                         }
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={24}
                                       >
-                                        <RNSVGDefs>
-                                          <RNSVGLinearGradient
-                                            gradient={
-                                              [
-                                                0,
-                                                16777215,
-                                                1,
-                                                -1,
-                                              ]
-                                            }
-                                            gradientTransform={null}
-                                            gradientUnits={0}
-                                            name="spinner-secondHalf"
-                                            x1="0%"
-                                            x2="100%"
-                                            y1="0%"
-                                            y2="0%"
-                                          />
-                                          <RNSVGLinearGradient
-                                            gradient={
-                                              [
-                                                0,
-                                                -1,
-                                                1,
-                                                -1,
-                                              ]
-                                            }
-                                            gradientTransform={null}
-                                            gradientUnits={0}
-                                            name="spinner-firstHalf"
-                                            x1="0%"
-                                            x2="100%"
-                                            y1="0%"
-                                            y2="0%"
-                                          />
-                                        </RNSVGDefs>
                                         <RNSVGGroup
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
+                                          fill={null}
                                           propList={
                                             [
-                                              "strokeWidth",
+                                              "fill",
                                             ]
                                           }
-                                          strokeWidth={3}
                                         >
-                                          <RNSVGPath
-                                            d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
+                                          <RNSVGDefs>
+                                            <RNSVGLinearGradient
+                                              gradient={
+                                                [
+                                                  0,
+                                                  16777215,
+                                                  1,
+                                                  -1,
+                                                ]
+                                              }
+                                              gradientTransform={null}
+                                              gradientUnits={0}
+                                              name="spinner-secondHalf"
+                                              x1="0%"
+                                              x2="100%"
+                                              y1="0%"
+                                              y2="0%"
+                                            />
+                                            <RNSVGLinearGradient
+                                              gradient={
+                                                [
+                                                  0,
+                                                  -1,
+                                                  1,
+                                                  -1,
+                                                ]
+                                              }
+                                              gradientTransform={null}
+                                              gradientUnits={0}
+                                              name="spinner-firstHalf"
+                                              x1="0%"
+                                              x2="100%"
+                                              y1="0%"
+                                              y2="0%"
+                                            />
+                                          </RNSVGDefs>
+                                          <RNSVGGroup
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -1543,61 +1531,77 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                             }
                                             propList={
                                               [
-                                                "stroke",
+                                                "strokeWidth",
                                               ]
                                             }
-                                            stroke={
-                                              {
-                                                "brushRef": "spinner-secondHalf",
-                                                "type": 1,
+                                            strokeWidth={3}
+                                          >
+                                            <RNSVGPath
+                                              d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
+                                              fill={
+                                                {
+                                                  "payload": 4278190080,
+                                                  "type": 0,
+                                                }
                                               }
-                                            }
-                                          />
-                                          <RNSVGPath
-                                            d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
-                                            fill={
-                                              {
-                                                "payload": 4278190080,
-                                                "type": 0,
+                                              propList={
+                                                [
+                                                  "stroke",
+                                                ]
                                               }
-                                            }
-                                            propList={
-                                              [
-                                                "stroke",
-                                              ]
-                                            }
-                                            stroke={
-                                              {
-                                                "brushRef": "spinner-firstHalf",
-                                                "type": 1,
+                                              stroke={
+                                                {
+                                                  "brushRef": "spinner-secondHalf",
+                                                  "type": 1,
+                                                }
                                               }
-                                            }
-                                          />
-                                          <RNSVGPath
-                                            d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
-                                            fill={
-                                              {
-                                                "payload": 4278190080,
-                                                "type": 0,
+                                            />
+                                            <RNSVGPath
+                                              d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                              fill={
+                                                {
+                                                  "payload": 4278190080,
+                                                  "type": 0,
+                                                }
                                               }
-                                            }
-                                            propList={
-                                              [
-                                                "stroke",
-                                                "strokeLinecap",
-                                              ]
-                                            }
-                                            stroke={
-                                              {
-                                                "payload": 4294967295,
-                                                "type": 0,
+                                              propList={
+                                                [
+                                                  "stroke",
+                                                ]
                                               }
-                                            }
-                                            strokeLinecap={1}
-                                          />
+                                              stroke={
+                                                {
+                                                  "brushRef": "spinner-firstHalf",
+                                                  "type": 1,
+                                                }
+                                              }
+                                            />
+                                            <RNSVGPath
+                                              d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                              fill={
+                                                {
+                                                  "payload": 4278190080,
+                                                  "type": 0,
+                                                }
+                                              }
+                                              propList={
+                                                [
+                                                  "stroke",
+                                                  "strokeLinecap",
+                                                ]
+                                              }
+                                              stroke={
+                                                {
+                                                  "payload": 4294967295,
+                                                  "type": 0,
+                                                }
+                                              }
+                                              strokeLinecap={1}
+                                            />
+                                          </RNSVGGroup>
                                         </RNSVGGroup>
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
