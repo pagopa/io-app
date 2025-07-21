@@ -130,7 +130,10 @@ type TrackITWalletIDMethodSelected = {
 
 type TrackITWalletSpidIDPSelected = { idp: string };
 
-type TrackItWalletCieCardReadingFailure = { reason: string; itw_flow: ItwFlow };
+type TrackItWalletCieCardReadingFailure = {
+  reason: string | undefined;
+  itw_flow: ItwFlow;
+};
 
 export type ItwStatus = "not_active" | "L2" | "L3";
 export type ItwId = "not_available" | "valid" | "not_valid";
@@ -740,6 +743,13 @@ export function trackItWalletLastErrorPin(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_PIN_LAST_ERROR,
     buildEventProperties("UX", "error", { itw_flow })
+  );
+}
+
+export function trackItWalletCardReadingClose() {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CIE_CARD_READING_CLOSE,
+    buildEventProperties("UX", "error")
   );
 }
 

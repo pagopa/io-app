@@ -35,6 +35,7 @@ export const idPayOnboardingMachine = setup({
     navigateToFailureToRetryScreen: notImplementedStub,
     navigateToInitiativeMonitoringScreen: notImplementedStub,
     closeOnboarding: notImplementedStub,
+    closeOnboardingSuccess: notImplementedStub,
     handleSessionExpired: notImplementedStub,
     navigateToInputFormScreen: notImplementedStub,
     navigateToEnableNotificationScreen: notImplementedStub,
@@ -552,7 +553,7 @@ export const idPayOnboardingMachine = setup({
           target: "Idle"
         },
         close: {
-          actions: "closeOnboarding",
+          actions: "closeOnboardingSuccess",
           target: "Idle"
         }
       }
@@ -572,7 +573,7 @@ export const idPayOnboardingMachine = setup({
             guard: "shouldShowEnableNotificationOnClose"
           },
           {
-            actions: "closeOnboarding"
+            actions: "closeOnboardingSuccess"
           }
         ]
       }
