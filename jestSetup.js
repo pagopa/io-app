@@ -70,6 +70,7 @@ jest.mock("react-native-reanimated", () => {
 
   return {
     ...Reanimated,
+    LayoutAnimationConfig: require("react-native").View,
     useScrollViewOffset: jest.fn,
     useReducedMotion: jest.fn
   };
