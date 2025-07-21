@@ -16,7 +16,7 @@ import {
   selectFailureOption,
   selectIdentification
 } from "../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import {

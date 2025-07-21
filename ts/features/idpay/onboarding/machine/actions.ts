@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
+import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayOnboardingRoutes } from "../navigation/routes";
 import * as Context from "./context";
@@ -71,6 +72,9 @@ export const createActionsImplementation = (
 
   const closeOnboarding = () => navigation.popToTop();
 
+  const closeOnboardingSuccess = () =>
+    navigation.navigate(SERVICES_ROUTES.SERVICES_HOME);
+
   const handleSessionExpired = () => {
     dispatch(
       refreshSessionToken.request({
@@ -93,6 +97,7 @@ export const createActionsImplementation = (
     navigateToEnableNotificationScreen,
     navigateToEnableMessageScreen,
     closeOnboarding,
+    closeOnboardingSuccess,
     handleSessionExpired
   };
 };
