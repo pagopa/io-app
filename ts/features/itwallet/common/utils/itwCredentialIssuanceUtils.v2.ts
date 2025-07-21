@@ -1,6 +1,5 @@
 import { generate } from "@pagopa/io-react-native-crypto";
 import {
-  AuthorizationDetail,
   createCryptoContextFor,
   Credential
 } from "@pagopa/io-react-native-wallet-v2";
@@ -85,8 +84,6 @@ export type ObtainCredentialParams = {
   pid: StoredCredential;
   clientId: string;
   codeVerifier: string;
-  // TODO: [SIW-2530] After fully migrating to the new API, remove credentialDefinition since it can be obtained from `tokenResponse.authorization_details`
-  credentialDefinition: AuthorizationDetail;
   issuerConf: IssuerConf;
 };
 
@@ -113,8 +110,6 @@ export const obtainCredential = async ({
   walletInstanceAttestation,
   clientId,
   codeVerifier,
-  // TODO: [SIW-2530] After fully migrating to the new API, remove credentialDefinition since it can be obtained from `tokenResponse.authorization_details`
-  credentialDefinition: _,
   issuerConf
 }: ObtainCredentialParams) => {
   // Get WIA crypto context
