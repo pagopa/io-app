@@ -78,8 +78,9 @@ export const createEidIssuanceActorsImplementation = (
       const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
 
       // Create the trust chain for the PID provider
+      // TODO: [SIW-2530] Move "1-0" to WALLET_PID_PROVIDER_BASE_URL after migrating to the new API
       const builtChainJwts = await Trust.Build.buildTrustChain(
-        env.WALLET_PID_PROVIDER_BASE_URL,
+        new URL("1-0", env.WALLET_PID_PROVIDER_BASE_URL).toString(),
         trustAnchorKey
       );
 
