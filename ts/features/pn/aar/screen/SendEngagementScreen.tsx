@@ -19,7 +19,7 @@ export const SendEngagementScreen = () => {
     areNotificationPermissionsEnabledSelector
   );
 
-  const onActivationSucceeded = useCallback(() => {
+  const onSENDActivationSucceeded = useCallback(() => {
     toast.success(I18n.t("features.pn.aar.serviceActivation.serviceActivated"));
     if (notificationPermissionsEnabled) {
       navigation.popToTop();
@@ -27,7 +27,7 @@ export const SendEngagementScreen = () => {
       // TODO navigate to push notifications screen
     }
   }, [navigation, notificationPermissionsEnabled, toast]);
-  const onActivationFailed = useCallback(() => {
+  const onSENDActivationFailed = useCallback(() => {
     navigation.setOptions({
       headerShown: false
     });
@@ -45,12 +45,12 @@ export const SendEngagementScreen = () => {
       dispatch(
         pnActivationUpsert.request({
           value: true,
-          onSuccess: onActivationSucceeded,
-          onFailure: onActivationFailed
+          onSuccess: onSENDActivationSucceeded,
+          onFailure: onSENDActivationFailed
         })
       );
     },
-    [dispatch, navigation, onActivationFailed, onActivationSucceeded]
+    [dispatch, navigation, onSENDActivationFailed, onSENDActivationSucceeded]
   );
   const onClose = useCallback(() => {
     if (screenStatus !== "Activating") {
