@@ -5,8 +5,8 @@ import {
   StoredCredential
 } from "./itwTypesUtils";
 import { Env } from "./environment";
-import * as CredentialIssuanceUtilsV1 from "./itwCredentialIssuanceUtilsV1";
-import * as CredentialIssuanceUtilsV2 from "./itwCredentialIssuanceUtilsV2";
+import * as CredentialIssuanceUtilsV1 from "./itwCredentialIssuanceUtils.v1";
+import * as CredentialIssuanceUtilsV2 from "./itwCredentialIssuanceUtils.v2";
 
 // TODO: [SIW-2530] After fully migrating to the new API, move the content of itwCredentialIssuanceUtilsV2
 // to itwCredentialIssuanceUtils
