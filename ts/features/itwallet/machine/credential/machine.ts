@@ -220,12 +220,21 @@ export const itwCredentialIssuanceMachine = setup({
               issuerConf: context.issuerConf,
               isNewIssuanceFlowEnabled: context.isWhiteListed
             }),
-            onDone: {
-              target: "ObtainingStatusAttestation",
-              actions: assign(({ event }) => ({
-                credentials: event.output.credentials
-              }))
-            },
+            onDone: [
+              {
+                // TODO: [SIW-2700]
+                // For now, the `ObtainingStatusAttestation` is skipped for L3 issuance
+                // until the status assertion flow is aligned with version 1.0
+                guard: ({ context }) => !!context.isWhiteListed,
+                target: "Completed"
+              },
+              {
+                target: "ObtainingStatusAttestation",
+                actions: assign(({ event }) => ({
+                  credentials: event.output.credentials
+                }))
+              }
+            ],
             onError: {
               target: "#itwCredentialIssuanceMachine.Failure",
               actions: "setFailure"
@@ -242,19 +251,10 @@ export const itwCredentialIssuanceMachine = setup({
                 credentials: event.output
               }))
             },
-            onError: [
-              {
-                // TODO: [SIW-2700]
-                // For now, this step is skipped for L3 issuance
-                // until the status assertion flow is aligned with version 1.0
-                guard: ({ context }) => !!context.isWhiteListed,
-                target: "Completed"
-              },
-              {
-                target: "#itwCredentialIssuanceMachine.Failure",
-                actions: "setFailure"
-              }
-            ]
+            onError: {
+              target: "#itwCredentialIssuanceMachine.Failure",
+              actions: "setFailure"
+            }
           }
         },
         Completed: {
