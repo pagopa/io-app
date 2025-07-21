@@ -31,13 +31,7 @@ export const PnStackNavigator = () => (
         headerShown: false
       }}
     />
-    <Stack.Screen
-      name={PN_ROUTES.QR_SCAN_FLOW}
-      component={SendQrScanFlow}
-      options={{
-        headerShown: false
-      }}
-    />
+    <Stack.Screen name={PN_ROUTES.QR_SCAN_FLOW} component={SendQrScanFlow} />
     <Stack.Group
       screenOptions={{
         presentation: "modal"
