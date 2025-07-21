@@ -116,7 +116,6 @@ export const ItwCiePinScreen = () => {
                 "features.itWallet.identification.cie.inputPin.buttonLink"
               )}
               onPress={() => {
-                Keyboard.dismiss();
                 trackItWalletCiePinInfo(itw_flow);
                 pinInfoBottomSheet.present();
               }}
