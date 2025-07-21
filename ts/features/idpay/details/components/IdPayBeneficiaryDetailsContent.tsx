@@ -32,7 +32,7 @@ import {
 import { format } from "../../../../utils/dates";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { useIdPaySupportModal } from "../../common/hooks/useIdPaySupportModal";
-import { formatNumberCurrencyOrDefault } from "../../common/utils/strings";
+import { formatNumberCurrencyCentsOrDefault } from "../../common/utils/strings";
 import { IDPayDetailsRoutes } from "../navigation";
 import {
   IdPayInitiativeRulesInfoBox,
@@ -110,7 +110,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       if (rewardValueType === RewardValueTypeEnum.ABSOLUTE) {
         return {
           label: I18n.t("idpay.initiative.beneficiaryDetails.spendValue"),
-          value: formatNumberCurrencyOrDefault(rewardValue),
+          value: formatNumberCurrencyCentsOrDefault(rewardValue),
           testID: "spendValueTestID"
         };
       }
@@ -120,7 +120,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
         testID: "spendPercentageTestID"
       };
     }),
-    O.getOrElse<TableRow>(() => ({ label: "-", value: "-" }))
+    O.getOrElse<TableRow>(() => ({ label: "-", value: undefined }))
   );
 
   const onboardingDateString = pipe(
@@ -140,7 +140,9 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             label: I18n.t("idpay.initiative.beneficiaryDetails.spentUntilNow"),
             value:
               initiativeDetails.accruedCents !== undefined
-                ? formatNumberCurrencyOrDefault(initiativeDetails.accruedCents)
+                ? formatNumberCurrencyCentsOrDefault(
+                    initiativeDetails.accruedCents
+                  )
                 : undefined,
             testID: "accruedTestID"
           }
@@ -149,14 +151,14 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
         return [
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
-            value: formatNumberCurrencyOrDefault(
+            value: formatNumberCurrencyCentsOrDefault(
               initiativeDetails.accruedCents
             ),
             testID: "accruedTestID"
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
-            value: formatNumberCurrencyOrDefault(
+            value: formatNumberCurrencyCentsOrDefault(
               initiativeDetails.refundedCents
             ),
             testID: "refundedTestID"
@@ -191,7 +193,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     },
     {
       label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
-      value: formatNumberCurrencyOrDefault(initiativeDetails.amountCents),
+      value: formatNumberCurrencyCentsOrDefault(initiativeDetails.amountCents),
       testID: "amountTestID"
     },
     ...getTypeDependantTableRows().filter(row => row.value)
@@ -219,7 +221,8 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     rewardRuleRow
   ];
 
-  const canShowRulesData = !!spendingRulesData.filter(rule => rule.value);
+  const canShowRulesData =
+    spendingRulesData.filter(rule => rule.value)?.length > 0;
 
   const renderTableRow = (data: Array<TableRow>) =>
     data
