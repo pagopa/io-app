@@ -50,6 +50,7 @@ const T_ONBOARDING_STATUS_DATE = new Date(2023, 2, 2);
 const T_ONBOARDING_OK_DATE = new Date(2023, 8, 8, 23, 21);
 const T_ONBOARDING_OK_DATE_STRING = "08 set 2023, 23:21";
 const T_REWARD_VALUE = 3000;
+const T_REWARD_VALUE_PERCENTAGE = 30;
 const T_REWARD_VALUE_PERCENTAGE_STRING = "30%";
 const T_REWARD_VALUE_ABSOLUTE_STRING = "30,00 €";
 
@@ -204,7 +205,10 @@ const renderComponent = (
       fruitionEndDate: T_FRUITION_END_DATE,
       rewardRule: {
         rewardValueType,
-        rewardValue: T_REWARD_VALUE
+        rewardValue:
+          rewardValueType === RewardValueTypeEnum.PERCENTAGE
+            ? T_REWARD_VALUE_PERCENTAGE
+            : T_REWARD_VALUE
       }
     },
     onboardingStatus: {
