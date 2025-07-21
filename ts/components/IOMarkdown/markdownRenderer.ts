@@ -170,40 +170,63 @@ export const sanitizeMarkdownForImages = (
   );
 };
 
+const anyWhitespaceCharacterButNewLineSet = new Set([
+  " ",
+  "\t",
+  "\r",
+  "\f",
+  "\v"
+]);
+
 export const insertNewLinesIfNeededOnMatch = (
   markdownContent: string,
   imageMatch: RegExpExecArray
 ): string => {
   const matchStartIndex = imageMatch.index;
   const matchEndIndex = matchStartIndex + imageMatch[0].length;
-  const sanitizedMarkdownContent = insertNewLineAtIndexIfNeeded(
-    markdownContent,
-    matchEndIndex
-  );
-  return insertNewLineAtIndexIfNeeded(
-    sanitizedMarkdownContent,
-    matchStartIndex - 1,
-    true
-  );
-};
 
-const insertNewLineAtIndexIfNeeded = (
-  markdownContent: string,
-  baseIndex: number,
-  insertAfterIndex: boolean = false
-) => {
-  if (baseIndex >= 0 && baseIndex < markdownContent.length) {
-    const character = markdownContent[baseIndex];
-    if (character !== "\n") {
-      const index = insertAfterIndex ? baseIndex + 1 : baseIndex;
-      return [
-        markdownContent.slice(0, index),
-        "\n\n",
-        markdownContent.slice(index)
-      ].join("");
+  // eslint-disable-next-line functional/no-let
+  let endNewLineOccurrences = 0;
+  // eslint-disable-next-line functional/no-let
+  let j = matchEndIndex;
+  while (j < markdownContent.length) {
+    const character = markdownContent[j];
+    if (character === "\n") {
+      endNewLineOccurrences++;
+    } else if (!anyWhitespaceCharacterButNewLineSet.has(character)) {
+      break;
     }
+    j++;
   }
-  return markdownContent;
+  const newLinesToAddToEnd = "\n".repeat(
+    Math.max(0, 2 - endNewLineOccurrences)
+  );
+  const intermediateMarkdownContent =
+    markdownContent.slice(0, matchEndIndex) +
+    newLinesToAddToEnd +
+    markdownContent.slice(matchEndIndex);
+
+  // eslint-disable-next-line functional/no-let
+  let startNewLineOccurrences = 0;
+  // eslint-disable-next-line functional/no-let
+  let i = Math.max(0, matchStartIndex - 1);
+  while (i >= 0) {
+    const character = intermediateMarkdownContent[i];
+    if (character === "\n") {
+      startNewLineOccurrences++;
+    } else if (!anyWhitespaceCharacterButNewLineSet.has(character)) {
+      break;
+    }
+    i--;
+  }
+  const newLinesToAddToStart = "\n".repeat(
+    Math.max(0, 2 - startNewLineOccurrences)
+  );
+  return (
+    intermediateMarkdownContent.slice(0, matchStartIndex) +
+    newLinesToAddToStart +
+    intermediateMarkdownContent.slice(matchStartIndex)
+  );
 };
 
 export const isTxtParentNode = (node: TxtNode): node is TxtParentNode =>

@@ -117,6 +117,7 @@ export type AppParamsList = {
 
   [ITW_ROUTES.MAIN]: NavigatorScreenParams<ItwParamsList>;
   [ITW_REMOTE_ROUTES.MAIN]: NavigatorScreenParams<ItwRemoteParamsList>;
+  [SERVICES_ROUTES.SERVICES_HOME]: undefined;
 };
 
 /**

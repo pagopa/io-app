@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.10.0-rc.3](https://github.com/pagopa/io-app/compare/3.10.0-rc.2...3.10.0-rc.3) (2025-07-18)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2216](https://pagopa.atlassian.net/browse/SIW-2216)] New CIE SDK implementation for CIE+PIN  ([#7155](https://github.com/pagopa/io-app/issues/7155)) ([19f558f](https://github.com/pagopa/io-app/commit/19f558f8e7b59e1018f17adafe35db55bd72c5b5))
+* [[IOCOM-2461](https://pagopa.atlassian.net/browse/IOCOM-2461)] SEND scan success/redirect screen ([#7178](https://github.com/pagopa/io-app/issues/7178)) ([6a0ebe8](https://github.com/pagopa/io-app/commit/6a0ebe813496165032cf51bea96e6165d321b6d9))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2742](https://pagopa.atlassian.net/browse/SIW-2742)] Rollback authentication URL regex inside CieID flow ([#7193](https://github.com/pagopa/io-app/issues/7193)) ([71f5861](https://github.com/pagopa/io-app/commit/71f5861e2d35c8272f11adba2a598d1b9456c366))
+* [[IOCOM-2486](https://pagopa.atlassian.net/browse/IOCOM-2486)] Fix for images on IOMarkdown ([#7184](https://github.com/pagopa/io-app/issues/7184)) ([d0cf09f](https://github.com/pagopa/io-app/commit/d0cf09f374b9cb98067edbebbf90b0f087b6ddf4))
+
+
+### Chores
+
+* [[IOPLT-1263](https://pagopa.atlassian.net/browse/IOPLT-1263)] Replace `lottie-react-native` with `skottie` (`skia` library) ([#7187](https://github.com/pagopa/io-app/issues/7187)) ([bab0052](https://github.com/pagopa/io-app/commit/bab0052341d9ef1dab1418adc02e477fec958078))
+
 ## [3.10.0-rc.2](https://github.com/pagopa/io-app/compare/3.10.0-rc.1...3.10.0-rc.2) (2025-07-17)
 
 

@@ -90,7 +90,7 @@ export const itwTrustmarkMachine = setup({
   states: {
     CheckingWalletInstanceAttestation: {
       tags: [ItwTags.Loading],
-      description: "Checks the WIA and decide weather to get a new one or not",
+      description: "Checks the WIA and decide wether to get a new one or not",
       always: [
         {
           guard: not("hasValidWalletInstanceAttestation"),
