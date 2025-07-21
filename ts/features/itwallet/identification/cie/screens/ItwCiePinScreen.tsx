@@ -9,7 +9,13 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Keyboard, KeyboardAvoidingView, Platform, View } from "react-native";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -95,43 +101,46 @@ export const ItwCiePinScreen = () => {
         style={{ flex: 1 }}
         keyboardVerticalOffset={headerHeight}
       >
-        <ContentWrapper>
-          <H2>
-            {I18n.t("features.itWallet.identification.cie.inputPin.title")}
-          </H2>
-          <VSpacer size={8} />
-          <IOButton
-            variant="link"
-            label={I18n.t(
-              "features.itWallet.identification.cie.inputPin.buttonLink"
-            )}
-            accessibilityLabel={I18n.t(
-              "features.itWallet.identification.cie.inputPin.buttonLink"
-            )}
-            onPress={() => {
-              trackItWalletCiePinInfo(itw_flow);
-              pinInfoBottomSheet.present();
-            }}
-          />
-          <VSpacer size={24} />
-          <View style={{ flex: 1 }}>
-            <OTPInput
-              ref={pinPadViewRef}
-              secret
-              value={pin}
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <ContentWrapper>
+            <H2>
+              {I18n.t("features.itWallet.identification.cie.inputPin.title")}
+            </H2>
+            <VSpacer size={8} />
+            <IOButton
+              variant="link"
+              label={I18n.t(
+                "features.itWallet.identification.cie.inputPin.buttonLink"
+              )}
               accessibilityLabel={I18n.t(
-                "authentication.cie.pin.accessibility.label"
+                "features.itWallet.identification.cie.inputPin.buttonLink"
               )}
-              accessibilityHint={I18n.t(
-                "authentication.cie.pin.accessibility.hint"
-              )}
-              onValueChange={onPinChanged}
-              length={CIE_PIN_LENGTH}
-              autoFocus={isFocused}
-              key={isFocused ? "focused" : "unfocused"}
+              onPress={() => {
+                Keyboard.dismiss();
+                trackItWalletCiePinInfo(itw_flow);
+                pinInfoBottomSheet.present();
+              }}
             />
-          </View>
-        </ContentWrapper>
+            <VSpacer size={24} />
+            <View style={{ flex: 1 }}>
+              <OTPInput
+                ref={pinPadViewRef}
+                secret
+                value={pin}
+                accessibilityLabel={I18n.t(
+                  "authentication.cie.pin.accessibility.label"
+                )}
+                accessibilityHint={I18n.t(
+                  "authentication.cie.pin.accessibility.hint"
+                )}
+                onValueChange={onPinChanged}
+                length={CIE_PIN_LENGTH}
+                autoFocus={isFocused}
+                key={isFocused ? "focused" : "unfocused"}
+              />
+            </View>
+          </ContentWrapper>
+        </ScrollView>
       </KeyboardAvoidingView>
       {pinInfoBottomSheet.bottomSheet}
     </SafeAreaView>
