@@ -7,7 +7,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Image, StyleSheet } from "react-native";
+import { Image } from "react-native";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 
 type Props = {
@@ -30,7 +30,11 @@ const IdPayOnboardingServiceHeader = (props: Props) => {
         <VStack>
           <Image
             accessibilityIgnoresInvertColors
-            style={styles.logo}
+            style={{
+              width: "100%",
+              height: 270,
+              flex: 1
+            }}
             source={{ uri: logoURL }}
           />
           <ContentWrapper>
@@ -52,13 +56,5 @@ const Skeleton = () => (
     </ContentWrapper>
   </VStack>
 );
-
-const styles = StyleSheet.create({
-  logo: {
-    width: "100%",
-    height: 270,
-    flex: 1
-  }
-});
 
 export { IdPayOnboardingServiceHeader };
