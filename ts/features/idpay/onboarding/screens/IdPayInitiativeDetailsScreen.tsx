@@ -13,7 +13,7 @@ import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponen
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { servicePreferenceResponseSuccessByIdSelector } from "../../../services/details/store/reducers";
 import { isLoadingSelector } from "../../common/machine/selectors";
@@ -23,6 +23,8 @@ import { IdPayOnboardingServiceHeader } from "../components/IdPayOnboardingServi
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
 import { IdPayOnboardingParamsList } from "../navigation/params";
+import { loadServicePreference } from "../../../services/details/store/actions/preference";
+import { ServiceId } from "../../../../../definitions/auth/ServiceId";
 
 export type InitiativeDetailsScreenParams = {
   serviceId?: string;
@@ -38,6 +40,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
 
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
+  const dispatch = useIODispatch();
 
   const servicePreferenceResponseSuccess = useIOSelector(state =>
     servicePreferenceResponseSuccessByIdSelector(
@@ -48,13 +51,19 @@ const IdPayInitiativeDetailsScreenComponent = () => {
 
   useEffect(() => {
     if (params.serviceId !== undefined) {
+      dispatch(loadServicePreference.request(params.serviceId as ServiceId));
       machine.send({
         type: "start-onboarding",
         serviceId: params.serviceId,
         hasInbox: servicePreferenceResponseSuccess?.value.inbox ?? false
       });
     }
-  }, [machine, params, servicePreferenceResponseSuccess?.value.inbox]);
+  }, [
+    dispatch,
+    machine,
+    params,
+    servicePreferenceResponseSuccess?.value.inbox
+  ]);
 
   const initiative = useSelector(selectInitiative);
   const isLoading = useSelector(isLoadingSelector);
