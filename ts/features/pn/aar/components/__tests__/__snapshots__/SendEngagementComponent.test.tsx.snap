@@ -1006,7 +1006,7 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                     ]
                                   }
                                 >
-                                  Se previsto un pagamento, puoi usare il tuo 
+                                  Puoi pagare direttamente in app: è 
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -1026,7 +1026,7 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                     ]
                                   }
                                 >
-                                  metodo preferito
+                                  facile e veloce
                                 </Text>
                               </Text>
                             </View>
@@ -2876,7 +2876,7 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                     ]
                                   }
                                 >
-                                  Se previsto un pagamento, puoi usare il tuo 
+                                  Puoi pagare direttamente in app: è 
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -2896,7 +2896,7 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                     ]
                                   }
                                 >
-                                  metodo preferito
+                                  facile e veloce
                                 </Text>
                               </Text>
                             </View>
