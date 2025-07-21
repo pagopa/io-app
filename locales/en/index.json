@@ -5570,7 +5570,7 @@
         }
       },
       "discountDetails": {
-        "authorizeButton": "Autorizza un pagamento",
+        "authorizeButton": "Usa il bonus",
         "addExpenseButton": "Aggiungi spesa",
         "bottomSheetOptions": {
           "scanQr": "Inquadra un codice QR",

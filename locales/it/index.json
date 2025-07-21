@@ -5574,7 +5574,7 @@
           "scanQr": "Inquadra un codice QR",
           "generateBarcode": "Crea un codice sconto"
         },
-        "authorizeButton": "Autorizza un pagamento",
+        "authorizeButton": "Usa il bonus",
         "addExpenseButton": "Aggiungi spesa",
         "IDPayCode": {
           "banner": {
