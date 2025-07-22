@@ -1,4 +1,4 @@
-import { SendQRScanFlowScreenProps } from "../qrCodeScan/screens/SendQRScanFlowScreen";
+import { SendQRScanFlowScreenProps } from "../aar/screen/SendQRScanFlowScreen";
 import { MessageAttachmentScreenRouteParams } from "../screens/MessageAttachmentScreen";
 import { MessageDetailsScreenRouteParams } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreenRouteParams } from "../screens/PaidPaymentScreen";

@@ -4,7 +4,7 @@ import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
 import { PNActivationBannerFlowScreen } from "../reminderBanner/screens/PnReminderBannerFlow";
 import { SendEngagementScreen } from "../aar/screen/SendEngagementScreen";
-import { SendQRScanFlowScreen } from "../qrCodeScan/screens/SendQRScanFlowScreen";
+import { SendQRScanFlowScreen } from "../aar/screen/SendQRScanFlowScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
