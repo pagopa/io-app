@@ -36,7 +36,7 @@ export const DSAnimatedPictograms = () => {
     { name: "scanCardAndroid", label: "Scan Card (Android)", loop: true },
     { name: "umbrella", label: "Umbrella", loop: true },
     { name: "error", label: "Error", loop: true },
-    { name: "fatalError", label: "Fatal Error", loop: true },
+    { name: "fatalError", label: "Fatal Error", loop: false },
     { name: "lock", label: "Lock", loop: true },
     { name: "search", label: "Search", loop: true },
     { name: "success", label: "Success", loop: true },
@@ -85,6 +85,7 @@ export const DSAnimatedPictograms = () => {
       >
         <View style={{ marginVertical: IOVisualCostants.appMarginDefault }}>
           <AnimatedPictogram
+            key={getCurrentPictogram()?.name || pictogramsRefs[0].name}
             size={pictogramSize}
             name={getCurrentPictogram()?.name || pictogramsRefs[0].name}
             loop={getCurrentPictogram()?.loop || pictogramsRefs[0].loop}

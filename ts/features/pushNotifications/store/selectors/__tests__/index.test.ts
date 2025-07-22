@@ -4,7 +4,7 @@ import {
 } from "..";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { userFromSuccessLoginSelector } from "../../../../authentication/loginInfo/store/selectors";
-import { areNotificationPermissionsEnabled } from "../../reducers/environment";
+import { areNotificationPermissionsEnabledSelector } from "../../reducers/environment";
 import * as DISMISSAL_SELECTORS from "../notificationsBannerDismissed";
 
 type JestMock = ReturnType<typeof jest.fn>;
@@ -13,7 +13,7 @@ jest.mock("../../../../authentication/loginInfo/store/selectors", () => ({
 }));
 
 jest.mock("../../reducers/environment", () => ({
-  areNotificationPermissionsEnabled: jest.fn()
+  areNotificationPermissionsEnabledSelector: jest.fn()
 }));
 jest.mock("../notificationsBannerDismissed", () => ({
   shouldResetNotificationBannerDismissStateSelector: jest.fn(),
@@ -74,7 +74,7 @@ describe("isPushNotificationsBannerRenderableSelector", () => {
                 DISMISSAL_SELECTORS.pushNotificationsBannerForceDismissionDateSelector as unknown as JestMock
               ).mockImplementation(() => forceDismissionDate);
               (
-                areNotificationPermissionsEnabled as unknown as JestMock
+                areNotificationPermissionsEnabledSelector as unknown as JestMock
               ).mockImplementation(() => notificationsEnabled);
               (
                 userFromSuccessLoginSelector as unknown as JestMock

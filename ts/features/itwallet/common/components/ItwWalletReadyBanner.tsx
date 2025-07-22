@@ -24,7 +24,7 @@ export const ItwWalletReadyBanner = () => {
   };
 
   const bannerTitle = !isNewItwRenderable
-    ? I18n.t("features.itWallet.issuance.eidResult.success.title")
+    ? I18n.t("features.itWallet.issuance.eidResult.successL2.title")
     : undefined;
 
   return (
@@ -33,10 +33,10 @@ export const ItwWalletReadyBanner = () => {
       content={I18n.t(
         isNewItwRenderable
           ? "features.itWallet.issuance.emptyWallet.itwReadyBanner.content"
-          : "features.itWallet.issuance.eidResult.success.subtitle"
+          : "features.itWallet.issuance.eidResult.successL2.subtitle"
       )}
       action={I18n.t(
-        "features.itWallet.issuance.eidResult.success.actions.continueAlt"
+        "features.itWallet.issuance.eidResult.successL2.actions.continueAlt"
       )}
       color="turquoise"
       onPress={handleOnPress}

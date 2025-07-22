@@ -11,7 +11,8 @@ import { ItwTags } from "../../tags";
 import {
   GetWalletAttestationActorParams,
   RequestEidActorParams,
-  StartAuthFlowActorParams
+  StartAuthFlowActorParams,
+  VerifyTrustFederationParams
 } from "../actors";
 import {
   AuthenticationContext,
@@ -20,7 +21,7 @@ import {
   InitialContext
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
-import { CiePreparationType } from "../../../identification/components/cie/ItwCiePreparationBaseScreenContent";
+import { CiePreparationType } from "../../../identification/cie/components/ItwCiePreparationBaseScreenContent";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -41,7 +42,8 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToCiePreparationScreen = jest.fn();
   const navigateToCiePinPreparationScreen = jest.fn();
   const navigateToCiePinScreen = jest.fn();
-  const navigateToCieReadCardScreen = jest.fn();
+  const navigateToCieReadCardL2Screen = jest.fn();
+  const navigateToCieReadCardL3Screen = jest.fn();
   const navigateToNfcInstructionsScreen = jest.fn();
   const navigateToCieIdLoginScreen = jest.fn();
   const navigateToCieWarningScreen = jest.fn();
@@ -55,6 +57,7 @@ describe("itwEidIssuanceMachine", () => {
   const handleSessionExpired = jest.fn();
   const onInit = jest.fn();
 
+  const verifyTrustFederation = jest.fn();
   const createWalletInstance = jest.fn();
   const getCieStatus = jest.fn();
   const getWalletAttestation = jest.fn();
@@ -89,7 +92,8 @@ describe("itwEidIssuanceMachine", () => {
       navigateToCiePreparationScreen,
       navigateToCiePinPreparationScreen,
       navigateToCiePinScreen,
-      navigateToCieReadCardScreen,
+      navigateToCieReadCardL2Screen,
+      navigateToCieReadCardL3Screen,
       navigateToNfcInstructionsScreen,
       navigateToCieIdLoginScreen,
       navigateToCieWarningScreen,
@@ -111,6 +115,9 @@ describe("itwEidIssuanceMachine", () => {
       })
     },
     actors: {
+      verifyTrustFederation: fromPromise<void, VerifyTrustFederationParams>(
+        verifyTrustFederation
+      ),
       createWalletInstance: fromPromise<string>(createWalletInstance),
       revokeWalletInstance: fromPromise<void>(revokeWalletInstance),
       getWalletAttestation: fromPromise<
@@ -142,6 +149,44 @@ describe("itwEidIssuanceMachine", () => {
     jest.resetAllMocks();
   });
 
+  it("Should fail if trust federation verification fails", async () => {
+    isL3FeaturesEnabled.mockImplementation(() => true);
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+
+    /**
+     * Start eID issuance
+     */
+
+    actor.send({ type: "start" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
+
+    /**
+     * Accept TOS and verify trust
+     */
+
+    verifyTrustFederation.mockImplementation(() => Promise.reject());
+
+    actor.send({ type: "accept-tos" });
+
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+  });
+
   it("Should obtain an eID (SPID) from L3 Identification", async () => {
     isL3FeaturesEnabled.mockImplementation(() => true);
     const actor = createActor(mockedMachine);
@@ -164,20 +209,37 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
     /**
-     * Accept TOS and request WIA
+     * Accept TOS and verify trust
      */
 
-    createWalletInstance.mockImplementation(() =>
-      Promise.resolve(T_INTEGRITY_KEY)
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+
+    createWalletInstance.mockImplementation(
+      () =>
+        new Promise(resolve => setTimeout(() => resolve(T_INTEGRITY_KEY), 10))
     );
-    getWalletAttestation.mockImplementation(() =>
-      Promise.resolve({ jwt: T_WIA })
+    getWalletAttestation.mockImplementation(
+      () =>
+        new Promise(resolve => setTimeout(() => resolve({ jwt: T_WIA }), 10))
     );
 
     actor.send({ type: "accept-tos" });
 
-    expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    /**
+     * Wallet Instance creation and attestation obtainment
+     */
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation")
+    );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+
     await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
     await waitFor(() =>
@@ -661,17 +723,29 @@ describe("itwEidIssuanceMachine", () => {
      * Accept TOS and request WIA
      */
 
-    createWalletInstance.mockImplementation(() =>
-      Promise.resolve(T_INTEGRITY_KEY)
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+
+    createWalletInstance.mockImplementation(
+      () =>
+        new Promise(resolve => setTimeout(() => resolve(T_INTEGRITY_KEY), 10))
     );
-    getWalletAttestation.mockImplementation(() =>
-      Promise.resolve({ jwt: T_WIA })
+    getWalletAttestation.mockImplementation(
+      () =>
+        new Promise(resolve => setTimeout(() => resolve({ jwt: T_WIA }), 10))
     );
 
     actor.send({ type: "accept-tos" });
 
     expect(actor.getSnapshot().value).toStrictEqual(
-      "WalletInstanceAttestationObtainment"
+      "TrustFederationVerification"
+    );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual(
+        "WalletInstanceAttestationObtainment"
+      )
     );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     expect(createWalletInstance).toHaveBeenCalledTimes(0);
@@ -721,6 +795,13 @@ describe("itwEidIssuanceMachine", () => {
     );
 
     actor.send({ type: "accept-tos" });
+
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
@@ -787,19 +868,36 @@ describe("itwEidIssuanceMachine", () => {
      * Accept TOS and request WIA
      */
 
-    createWalletInstance.mockImplementation(() => Promise.reject({}));
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+
+    createWalletInstance.mockImplementation(
+      () => new Promise((__, reject) => setTimeout(() => reject({}), 10))
+    );
+
     isSessionExpired.mockImplementation(() => true);
 
     actor.send({ type: "accept-tos" });
 
-    expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation")
+    );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+
+    await waitFor(() => expect(handleSessionExpired).toHaveBeenCalled());
     await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(0));
 
     // Wallet instance creation failed
 
-    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance")
+    );
   });
 
   it("Should return to TOS acceptance if session expires when obtaining a Wallet Instance Attestation ", async () => {
@@ -826,16 +924,28 @@ describe("itwEidIssuanceMachine", () => {
      * Accept TOS and request WIA
      */
 
-    createWalletInstance.mockImplementation(() =>
-      Promise.resolve(T_INTEGRITY_KEY)
-    );
-    getWalletAttestation.mockImplementation(() => Promise.reject({}));
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
+    createWalletInstance.mockImplementation(
+      () =>
+        new Promise(resolve => setTimeout(() => resolve(T_INTEGRITY_KEY), 10))
+    );
+    getWalletAttestation.mockImplementation(
+      () => new Promise((__, reject) => setTimeout(() => reject({}), 10))
+    );
     isSessionExpired.mockImplementation(() => true);
 
     actor.send({ type: "accept-tos" });
 
-    expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation")
+    );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
@@ -868,21 +978,33 @@ describe("itwEidIssuanceMachine", () => {
     /**
      * Accept TOS and request WIA
      */
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
-    createWalletInstance.mockImplementation(() => Promise.reject({}));
-
+    createWalletInstance.mockImplementation(
+      () => new Promise((__, reject) => setTimeout(() => reject({}), 10))
+    );
     isSessionExpired.mockImplementation(() => false);
 
     actor.send({ type: "accept-tos" });
 
-    expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation")
+    );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(0));
 
     // Wallet instance creation failed
 
-    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("Failure")
+    );
   });
 
   it("Should fail when obtaining Wallet Instance Attestation", async () => {
@@ -908,24 +1030,38 @@ describe("itwEidIssuanceMachine", () => {
     /**
      * Accept TOS and request WIA
      */
-
-    createWalletInstance.mockImplementation(() =>
-      Promise.resolve(T_INTEGRITY_KEY)
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+    createWalletInstance.mockImplementation(
+      () =>
+        new Promise(resolve => setTimeout(() => resolve(T_INTEGRITY_KEY), 10))
     );
-    getWalletAttestation.mockImplementation(() => Promise.reject({}));
+
+    getWalletAttestation.mockImplementation(
+      () => new Promise((__, reject) => setTimeout(() => reject({}), 10))
+    );
 
     isSessionExpired.mockImplementation(() => false);
 
     actor.send({ type: "accept-tos" });
 
-    expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation")
+    );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
 
     // Wallet instance creation failed
 
-    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("Failure")
+    );
   });
 
   it("Should fail when requesting eID (user identification or eID request failed)", async () => {
@@ -1004,12 +1140,24 @@ describe("itwEidIssuanceMachine", () => {
      * Accept TOS and request WIA
      */
 
-    createWalletInstance.mockImplementation(() => Promise.reject({}));
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+
+    createWalletInstance.mockImplementation(
+      () => new Promise((__, reject) => setTimeout(() => reject({}), 10))
+    );
     isSessionExpired.mockImplementation(() => true);
 
     actor.send({ type: "accept-tos" });
 
-    expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation")
+    );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(0));
@@ -1260,15 +1408,27 @@ describe("itwEidIssuanceMachine", () => {
      * Accept TOS and request WIA
      */
 
-    createWalletInstance.mockImplementation(() =>
-      Promise.resolve(T_INTEGRITY_KEY)
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+    createWalletInstance.mockImplementation(
+      () =>
+        new Promise(resolve => setTimeout(() => resolve(T_INTEGRITY_KEY), 10))
     );
-    getWalletAttestation.mockImplementation(() => Promise.reject({})); // Simulate failure
+    getWalletAttestation.mockImplementation(
+      () => new Promise((__, reject) => setTimeout(() => reject({}), 10))
+    );
     isSessionExpired.mockImplementation(() => false); // Session not expired
 
     actor.send({ type: "accept-tos" });
 
-    expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation")
+    );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
     await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
@@ -1282,7 +1442,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
   });
 
-  it("Should go to Wallet Instance Creation if there is no integrity key tag but a valid WIA exists", async () => {
+  it("Should go to Wallet Instance Creation and then IpzsPrivacyAcceptance if there is no integrity key tag but a valid WIA exists", async () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
@@ -1298,14 +1458,54 @@ describe("itwEidIssuanceMachine", () => {
     const actor = createActor(mockedMachine, {
       snapshot
     });
-    actor.start();
+
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+    createWalletInstance.mockImplementation(
+      () =>
+        new Promise(resolve => setTimeout(() => resolve(T_INTEGRITY_KEY), 10))
+    );
+    getWalletAttestation.mockImplementation(
+      () =>
+        new Promise(resolve => setTimeout(() => resolve({ jwt: T_WIA }), 10))
+    );
 
     hasIntegrityKeyTag.mockImplementation(() => false);
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
 
+    actor.start();
     actor.send({ type: "accept-tos" });
 
-    expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => {
+      expect(verifyTrustFederation).toHaveBeenCalledTimes(1);
+    });
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).not.toStrictEqual(
+        "TrustFederationVerification"
+      )
+    );
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation")
+    );
+
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+
+    await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+      walletInstanceAttestation: { jwt: T_WIA },
+      integrityKeyTag: T_INTEGRITY_KEY
+    });
+
+    // Wallet instance creation and attestation obtainment success
+
+    // Navigate to ipzs privacy screen
+    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
   });
 
   it("Should navigate to CieWarning screen when 'go-to-cie-warning' event is received", async () => {
