@@ -86,7 +86,7 @@ const WalletCardsContainer = () => {
  * Renders the banners that are displayed at the top of the wallet screen
  */
 const WalletBannersContainer = memo(() => (
-  <VStack>
+  <VStack space={16}>
     <ItwEnvironmentAlert />
     <ItwUpgradeBanner />
     <ItwWalletNotAvailableBanner />
