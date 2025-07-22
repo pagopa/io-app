@@ -3797,6 +3797,37 @@
       "title": "Questo servizio non è più attivo su IO"
     },
     "pn": {
+      "aar": {
+        "serviceActivation": {
+          "failure": "Non riusciamo ad attivare il servizio SEND",
+          "feature1": {
+            "part1": "Attiva SEND su IO e ricevi in app le ",
+            "part2": "comunicazioni a valore legale",
+            "part3": " che ti inviano gli enti"
+          },
+          "feature2": {
+            "part1": "Se leggi la comunicazione online in tempo, ",
+            "part2": "eviti la raccomandata e risparmi"
+          },
+          "feature3": {
+            "part1": "Puoi pagare direttamente in app: è ",
+            "part2": "facile e veloce"
+          },
+          "footer": {
+            "part1": "Premendo ",
+            "part2": "Attiva SEND su IO",
+            "part3": " dichiari di aver letto e compreso l’",
+            "part4": "Informativa Privacy",
+            "part5": " e i ",
+            "part6": "Termini e Condizioni d’uso",
+            "part7": "."
+          },
+          "headerAction": "Chiudi",
+          "primaryAction": "Attiva SEND su IO",
+          "serviceActivated": "Hai attivato SEND su IO",
+          "title": "Ricevi su IO le tue prossime notifiche SEND"
+        }
+      },
       "reminderBanner": {
         "title": "Risparmia sui costi di notifica!",
         "body": "Scopri e attiva SEND su IO per ricevere le comunicazioni a valore legale direttamente in app.",
@@ -4510,7 +4541,7 @@
           "prepare": {
             "pin": {
               "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell’identità.",
+              "content": "Dovrai digitarlo per completare la verifica dell’identità.",
               "buttonLink": "Cos’è il PIN della CIE?",
               "cta": "Inserisci il PIN della CIE"
             },

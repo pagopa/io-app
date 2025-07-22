@@ -15,7 +15,7 @@ import { isArchivingDisabledSelector } from "../../../messages/store/reducers/ar
 import NavigationService from "../../../../navigation/NavigationService";
 import { navigateToMainNavigatorAction } from "../../../../store/actions/navigation";
 import { resetMessageArchivingAction } from "../../../messages/store/actions/archiving";
-import { areNotificationPermissionsEnabled } from "../../store/reducers/environment";
+import { areNotificationPermissionsEnabledSelector } from "../../store/reducers/environment";
 import { updateSystemNotificationsEnabled } from "../../store/actions/environment";
 import { checkNotificationPermissions } from "../../utils";
 import { trackNotificationPermissionsStatus } from "../../analytics";
@@ -110,14 +110,14 @@ describe("updateNotificationPermissionsIfNeeded", () => {
   it("should not call the analytics event and not dispatch 'updateSystemNotificationsEnabled' when system permissions are 'false' and in-memory data are 'false'", () => {
     testSaga(updateNotificationPermissionsIfNeeded, false)
       .next()
-      .select(areNotificationPermissionsEnabled)
+      .select(areNotificationPermissionsEnabledSelector)
       .next(false)
       .isDone();
   });
   it("should call the analytics event and dispatch 'updateSystemNotificationsEnabled(false)' when system permissions are 'false' and in-memory data are 'true'", () => {
     testSaga(updateNotificationPermissionsIfNeeded, false)
       .next()
-      .select(areNotificationPermissionsEnabled)
+      .select(areNotificationPermissionsEnabledSelector)
       .next(true)
       .call(trackNotificationPermissionsStatus, false)
       .next()
@@ -128,7 +128,7 @@ describe("updateNotificationPermissionsIfNeeded", () => {
   it("should not call the analytics event if 'skipAnalyticsTracking' input is 'true' and dispatch 'updateSystemNotificationsEnabled(false)' when system permissions are 'false' and in-memory data are 'true'", () => {
     testSaga(updateNotificationPermissionsIfNeeded, false, true)
       .next()
-      .select(areNotificationPermissionsEnabled)
+      .select(areNotificationPermissionsEnabledSelector)
       .next(true)
       .put(updateSystemNotificationsEnabled(false))
       .next()
@@ -137,7 +137,7 @@ describe("updateNotificationPermissionsIfNeeded", () => {
   it("should call the analytics event and dispatch 'updateSystemNotificationsEnabled(true)' when system permissions are 'true' and in-memory data are 'false'", () => {
     testSaga(updateNotificationPermissionsIfNeeded, true)
       .next()
-      .select(areNotificationPermissionsEnabled)
+      .select(areNotificationPermissionsEnabledSelector)
       .next(false)
       .call(trackNotificationPermissionsStatus, true)
       .next()
@@ -148,7 +148,7 @@ describe("updateNotificationPermissionsIfNeeded", () => {
   it("should not call the analytics event if 'skipAnalyticsTracking' input is 'true' and dispatch 'updateSystemNotificationsEnabled(true)' when system permissions are 'true' and in-memory data are 'false'", () => {
     testSaga(updateNotificationPermissionsIfNeeded, true, true)
       .next()
-      .select(areNotificationPermissionsEnabled)
+      .select(areNotificationPermissionsEnabledSelector)
       .next(false)
       .put(updateSystemNotificationsEnabled(true))
       .next()
@@ -157,7 +157,7 @@ describe("updateNotificationPermissionsIfNeeded", () => {
   it("should not call the analytics event and not dispatch 'updateSystemNotificationsEnabled' when system permissions are 'true' and in-memory data are 'true'", () => {
     testSaga(updateNotificationPermissionsIfNeeded, true)
       .next()
-      .select(areNotificationPermissionsEnabled)
+      .select(areNotificationPermissionsEnabledSelector)
       .next(true)
       .isDone();
   });
