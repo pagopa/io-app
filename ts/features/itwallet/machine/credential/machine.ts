@@ -96,7 +96,7 @@ export const itwCredentialIssuanceMachine = setup({
     },
     TrustFederationVerification: {
       description:
-        "Verification of the trust federation. This state verifies the trust chain of the wallet provider with the PID provider.",
+        "Verification of the trust federation. This state verifies the trust chain of the wallet provider with the EAA provider.",
       tags: [ItwTags.Loading],
       invoke: {
         input: ({ context }) => ({
@@ -122,7 +122,7 @@ export const itwCredentialIssuanceMachine = setup({
         onError: [
           {
             actions: "setFailure",
-            target: "#itwEidIssuanceMachine.Failure"
+            target: "#itwCredentialIssuanceMachine.Failure"
           }
         ]
       }
