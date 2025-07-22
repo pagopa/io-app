@@ -9,7 +9,7 @@ import {
   SendDocumentsActorOutput,
   StartProximityFlowInput
 } from "./actors";
-import { mapEventToFailure, ProximityFailureType } from "./failure";
+import { mapEventToFailure } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -28,6 +28,8 @@ export const itwProximityMachine = setup({
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
+    navigateToSendDocumentsResponseScreen: notImplemented,
+    navigateToWallet: notImplemented,
     closeProximity: notImplemented
   },
   actors: {
@@ -303,12 +305,7 @@ export const itwProximityMachine = setup({
           target: "DeviceCommunication.ClaimsDisclosure"
         },
         "device-error": {
-          actions: assign({
-            failure: ({ event }) => ({
-              type: ProximityFailureType.RELYING_PARTY_GENERIC,
-              reason: event.payload
-            })
-          }),
+          actions: "setFailure",
           target: "Failure"
         }
       },
@@ -324,11 +321,11 @@ export const itwProximityMachine = setup({
           }
         },
         Connecting: {
-          entry: "navigateToClaimsDisclosureScreen",
           description:
             "Initiates the connection between the device and the verifier"
         },
         Connected: {
+          entry: "navigateToClaimsDisclosureScreen",
           description:
             "The device has successfully established a connection with the verifier"
         },
@@ -345,7 +342,7 @@ export const itwProximityMachine = setup({
           }
         },
         SendingDocuments: {
-          tags: [ItwPresentationTags.Loading],
+          initial: "Initial",
           description: "Sends the required documents to the verifier app",
           invoke: {
             id: "sendDocuments",
@@ -355,11 +352,35 @@ export const itwProximityMachine = setup({
               verifiedRequest: context.verifierRequest
             }),
             onDone: {
-              // TODO: [SIW-2430]
+              target: "#itwProximityMachine.Success"
             },
             onError: {
               actions: "setFailure",
               target: "#itwProximityMachine.Failure"
+            }
+          },
+          states: {
+            Initial: {
+              entry: "navigateToSendDocumentsResponseScreen",
+              description: "Initial loading state",
+              after: {
+                5000: {
+                  target:
+                    "#itwProximityMachine.DeviceCommunication.SendingDocuments.Reminder"
+                }
+              }
+            },
+            Reminder: {
+              description: "Loading state when the process is taking too long",
+              after: {
+                10000: {
+                  target:
+                    "#itwProximityMachine.DeviceCommunication.SendingDocuments.Final"
+                }
+              }
+            },
+            Final: {
+              description: "Final loading state"
             }
           }
         },
@@ -377,6 +398,14 @@ export const itwProximityMachine = setup({
               target: "#itwProximityMachine.Idle"
             }
           }
+        }
+      }
+    },
+    Success: {
+      description: "The documents have been successfully sent to the Verifier",
+      on: {
+        close: {
+          actions: "navigateToWallet"
         }
       }
     },

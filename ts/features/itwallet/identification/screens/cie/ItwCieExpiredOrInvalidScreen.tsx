@@ -2,16 +2,24 @@ import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../../i18n";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useItwPreventNavigationEvent } from "../../../common/hooks/useItwPreventNavigationEvent";
 import { trackItWalletCieCardVerifyFailure } from "../../../analytics";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 
 export const ItwCieExpiredOrInvalidScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
 
   useItwPreventNavigationEvent();
 
-  useFocusEffect(trackItWalletCieCardVerifyFailure);
+  useFocusEffect(
+    useCallback(() => {
+      trackItWalletCieCardVerifyFailure(isL3Enabled ? "L3" : "L2");
+    }, [isL3Enabled])
+  );
 
   const handleClose = useCallback(() => {
     machineRef.send({ type: "close" });

@@ -1,15 +1,11 @@
-import {
-  ListItemHeader,
-  VSpacer,
-  WithTestID
-} from "@pagopa/io-app-design-system";
+import { ListItemHeader, WithTestID } from "@pagopa/io-app-design-system";
 import { Platform, StyleSheet } from "react-native";
 import Animated, {
   FadeInDown,
   FadeOutDown,
   LinearTransition
 } from "react-native-reanimated";
-import { useMemo } from "react";
+import { JSX, useMemo } from "react";
 import { WalletCard } from "../types";
 import { renderWalletCardFn } from "../utils";
 
@@ -41,7 +37,7 @@ export const WalletCardsCategoryContainer = ({
   const headerComponent = useMemo(
     () => (
       <>
-        {header ? <ListItemHeader {...header} /> : <VSpacer size={16} />}
+        {header && <ListItemHeader {...header} />}
         {topElement}
       </>
     ),

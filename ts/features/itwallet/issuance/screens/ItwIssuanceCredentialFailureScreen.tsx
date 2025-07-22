@@ -14,7 +14,7 @@ import {
   getFullLocale
 } from "../../../../utils/locale";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { trackWalletCreationFailed } from "../../analytics";
+import { trackItwKoStateAction } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import {
   ZendeskSubcategoryValue,
@@ -24,7 +24,10 @@ import { itwDeferredIssuanceScreenContentSelector } from "../../common/store/sel
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
-import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
+import {
+  IssuerConfiguration,
+  LegacyIssuerConfiguration
+} from "../../common/utils/itwTypesUtils";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType
@@ -34,7 +37,7 @@ import {
   selectFailureOption,
   selectIssuerConfigurationOption
 } from "../../machine/credential/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
 
 // Errors that allow a user to send a support request to Zendesk
@@ -89,7 +92,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   const closeIssuance = () => {
     machineRef.send({ type: "close" });
-    trackWalletCreationFailed({
+    trackItwKoStateAction({
       reason: failure.reason,
       cta_category: "custom_2",
       cta_id: "close_issuance"
@@ -222,8 +225,11 @@ const getCredentialInvalidStatusDetails = (
       credentialType,
       issuerConf
     }),
-    O.map(({ errorCode, ...rest }) =>
-      Errors.extractErrorMessageFromIssuerConf(errorCode, rest)
+    O.map(params =>
+      Errors.extractErrorMessageFromIssuerConf(params.errorCode, {
+        credentialType: params.credentialType,
+        issuerConf: params.issuerConf as LegacyIssuerConfiguration
+      })
     ),
     O.map(message => message?.[getClaimsFullLocale()]),
     O.toUndefined

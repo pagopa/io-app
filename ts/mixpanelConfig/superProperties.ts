@@ -27,10 +27,7 @@ import {
   ItwStatus,
   mapEidStatusToMixpanel
 } from "../features/itwallet/analytics";
-import {
-  itwCredentialsByTypeSelector,
-  itwCredentialsEidStatusSelector
-} from "../features/itwallet/credentials/store/selectors";
+import { itwCredentialsEidStatusSelector, itwCredentialsSelector } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
@@ -160,7 +157,7 @@ const credentialStatusHandler = (
   type: string,
   state: GlobalState
 ): ItwCredentialMixpanelStatus => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
+  const credentialsByType = itwCredentialsSelector(state);
   return getCredentialMixpanelStatus(credentialsByType[type]);
 };
 

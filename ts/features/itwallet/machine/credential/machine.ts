@@ -1,5 +1,8 @@
 import { assign, fromPromise, not, setup } from "xstate";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import {
+  LegacyIssuerConfiguration,
+  StoredCredential
+} from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorOutput,
@@ -109,7 +112,7 @@ export const itwCredentialIssuanceMachine = setup({
     },
     CheckingWalletInstanceAttestation: {
       description:
-        "This is a state with the only purpose of checking the WIA and decide weather to get a new one or not",
+        "This is a state with the only purpose of checking the WIA and decide wether to get a new one or not",
       tags: [ItwTags.Loading],
       always: [
         {
@@ -206,7 +209,7 @@ export const itwCredentialIssuanceMachine = setup({
               codeVerifier: context.codeVerifier,
               credentialDefinition: context.credentialDefinition,
               requestedCredential: context.requestedCredential,
-              issuerConf: context.issuerConf
+              issuerConf: context.issuerConf as LegacyIssuerConfiguration
             }),
             onDone: {
               target: "ObtainingStatusAttestation",

@@ -1,10 +1,18 @@
 import { ProximityEvents } from "./events.ts";
 
-export class InvalidRequestedDocumentsError extends Error {}
+/**
+ * Thrown when an operation times out
+ */
+export class TimeoutError extends Error {
+  constructor(message?: string) {
+    super(message);
+    this.name = this.constructor.name;
+  }
+}
 
 export enum ProximityFailureType {
-  INVALID_REQUESTED_DOCUMENTS = "INVALID_REQUESTED_DOCUMENTS",
   RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
+  TIMEOUT = "TIMEOUT",
   UNEXPECTED = "UNEXPECTED"
 }
 
@@ -12,8 +20,8 @@ export enum ProximityFailureType {
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
  */
 export type ReasonTypeByFailure = {
-  [ProximityFailureType.INVALID_REQUESTED_DOCUMENTS]: InvalidRequestedDocumentsError;
   [ProximityFailureType.RELYING_PARTY_GENERIC]: Error;
+  [ProximityFailureType.TIMEOUT]: TimeoutError;
   [ProximityFailureType.UNEXPECTED]: unknown;
 };
 
@@ -43,15 +51,15 @@ export const mapEventToFailure = (event: ProximityEvents): ProximityFailure => {
 
   const { error } = event;
 
-  if (error instanceof InvalidRequestedDocumentsError) {
+  if (error instanceof TimeoutError) {
     return {
-      type: ProximityFailureType.INVALID_REQUESTED_DOCUMENTS,
+      type: ProximityFailureType.TIMEOUT,
       reason: error
     };
   }
 
   return {
-    type: ProximityFailureType.UNEXPECTED,
-    reason: String(error)
+    type: ProximityFailureType.RELYING_PARTY_GENERIC,
+    reason: error
   };
 };

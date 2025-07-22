@@ -1,15 +1,14 @@
 import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { decode } from "@pagopa/io-react-native-jwt";
-import * as E from "fp-ts/lib/Either";
+import { SdJwt } from "@pagopa/io-react-native-wallet-v2";
 import I18n from "../../../../i18n";
 import { CredentialType } from "./itwMocksUtils";
-import { ItwCredentialStatus, StoredCredential } from "./itwTypesUtils";
+import { ItwCredentialStatus } from "./itwTypesUtils";
 
-export const itwCredentialNameByCredentialType: {
-  [type: string]: string;
-} = {
+export const itwGetCredentialNameByCredentialType = (
+  isItwCredential: boolean
+): Record<string, string> => ({
   [CredentialType.EUROPEAN_DISABILITY_CARD]: I18n.t(
     "features.itWallet.credentialName.dc"
   ),
@@ -19,20 +18,25 @@ export const itwCredentialNameByCredentialType: {
   [CredentialType.DRIVING_LICENSE]: I18n.t(
     "features.itWallet.credentialName.mdl"
   ),
-  [CredentialType.PID]: I18n.t("features.itWallet.credentialName.eid"),
+  [CredentialType.PID]: I18n.t(
+    isItwCredential
+      ? "features.itWallet.credentialName.pid"
+      : "features.itWallet.credentialName.eid"
+  ),
   [CredentialType.DEGREE_CERTIFICATES]: I18n.t(
     "features.itWallet.credentialName.dgc"
   ),
   [CredentialType.MDL]: I18n.t("features.itWallet.credentialName.mdl")
-};
+});
 
 export const getCredentialNameFromType = (
   credentialType: string | undefined,
-  withDefault: string = ""
+  withDefault: string = "",
+  isItwCredential: boolean = false
 ): string =>
   pipe(
     O.fromNullable(credentialType),
-    O.map(type => itwCredentialNameByCredentialType[type]),
+    O.map(type => itwGetCredentialNameByCredentialType(isItwCredential)[type]),
     O.getOrElse(() => withDefault)
   );
 
@@ -90,32 +94,20 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
 ];
 
 /**
- * Checks if a credential is an ITW enabled credential by checking the
- * JWT header's typ parameter.
+ * Extracts the verification claim from the SD-JWT,
+ * checks whether the `assurance_level` field is equal to `"high"`,
+ * and returns `true` only in that case.
+ *
+ * This must be used **only for eID**, since credentials obtained
+ * with the old eID always have `assurance_level` set to `"high"`.
+ *
  * @param sdJwt - The SD-JWT string to check
  * @returns boolean indicating if the credential is an ITW credential (L3)
  */
 export const isItwCredential = (sdJwt: string): boolean =>
   pipe(
-    E.tryCatch(() => decode(sdJwt), E.toError),
-    E.map(({ protectedHeader }) => protectedHeader.typ === "dc+sd-jwt"),
-    E.getOrElse(() => false)
+    O.tryCatch(() => SdJwt.getVerification(sdJwt)),
+    O.chain(O.fromNullable),
+    O.chainNullableK(({ assurance_level }) => assurance_level === "high"),
+    O.getOrElse(() => false)
   );
-
-/**
- * Credential types that support the L3 design
- */
-const credentialsWithL3Design: ReadonlyArray<string> = [
-  CredentialType.DRIVING_LICENSE
-];
-
-/**
- * Checks if a credential has L3 design.
- * It checks if the credential type is in the list of credentials with L3 design
- * and if it is an ITW credential.
- * @param credential - The stored credential to check
- * @returns boolean indicating if the credential supports L3 design
- */
-export const hasL3Design = (credential: StoredCredential): boolean =>
-  credentialsWithL3Design.includes(credential.credentialType) &&
-  isItwCredential(credential.credential);

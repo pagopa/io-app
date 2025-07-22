@@ -1,9 +1,9 @@
 import { createActor } from "xstate";
 import { createStore } from "redux";
 import {
-  InvalidRequestedDocumentsError,
   ProximityFailure,
-  ProximityFailureType
+  ProximityFailureType,
+  TimeoutError
 } from "../../machine/failure";
 import { itwProximityMachine } from "../../machine/machine";
 import { ItwProximityMachineContext } from "../../machine/provider";
@@ -17,12 +17,12 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 describe("ItwProximityFailureScreen", () => {
   test.each<ProximityFailure>([
     {
-      type: ProximityFailureType.INVALID_REQUESTED_DOCUMENTS,
-      reason: new InvalidRequestedDocumentsError("Invalid requested documents")
-    },
-    {
       type: ProximityFailureType.RELYING_PARTY_GENERIC,
       reason: new Error("RP generic error")
+    },
+    {
+      type: ProximityFailureType.TIMEOUT,
+      reason: new TimeoutError("Request timed out")
     }
   ])("should render failure screen for $type", failure => {
     expect(renderComponent(failure)).toMatchSnapshot();

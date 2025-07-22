@@ -31,6 +31,7 @@ import {
 } from "../types/IOBarcode";
 import { decodeIOBarcode } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
+import { useIOStore } from "../../../store/hooks";
 
 type IOBarcodeFormatsType = {
   [K in IOBarcodeFormat]: BarcodeFormat;
@@ -161,6 +162,7 @@ export const useIOBarcodeCameraScanner = ({
   barcodeTypes,
   isLoading = false
 }: IOBarcodeCameraScannerConfiguration): IOBarcodeCameraScanner => {
+  const store = useIOStore();
   const acceptedFormats = useMemo<Array<IOBarcodeFormat>>(
     () => barcodeFormats || ["QR_CODE", "DATA_MATRIX"],
     [barcodeFormats]
@@ -176,7 +178,7 @@ export const useIOBarcodeCameraScanner = ({
 
   // This handles the resting state of the scanner after a scan
   // It is necessary to avoid multiple scans of the same barcode
-  const scannerReactivateTimeoutHandler = useRef<number>();
+  const scannerReactivateTimeoutHandler = useRef<number>(undefined);
   const [isResting, setIsResting] = useState(false);
 
   /**
@@ -193,7 +195,7 @@ export const useIOBarcodeCameraScanner = ({
         })),
         E.chain(format =>
           pipe(
-            decodeIOBarcode(detectedBarcode.value, {
+            decodeIOBarcode(store.getState(), detectedBarcode.value, {
               barcodeTypes
             }),
             E.fromOption<BarcodeFailure>(() => ({
@@ -205,7 +207,7 @@ export const useIOBarcodeCameraScanner = ({
           )
         )
       ),
-    [acceptedFormats, barcodeTypes]
+    [acceptedFormats, barcodeTypes, store]
   );
 
   /**

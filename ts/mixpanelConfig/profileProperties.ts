@@ -22,10 +22,6 @@ import {
   ItwStatus,
   mapEidStatusToMixpanel
 } from "../features/itwallet/analytics";
-import {
-  itwCredentialsByTypeSelector,
-  itwCredentialsEidStatusSelector
-} from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
 import { fontPreferenceSelector } from "../store/reducers/persistedPreferences.ts";
@@ -46,6 +42,7 @@ import {
   serviceConfigHandler,
   welfareStatusHandler
 } from "./mixpanelPropertyUtils";
+import { itwCredentialsEidStatusSelector, itwCredentialsSelector } from "../features/itwallet/credentials/store/selectors";
 
 type ProfileProperties = {
   BIOMETRIC_TECHNOLOGY: BiometricsType;
@@ -174,6 +171,6 @@ const credentialStatusHandler = (
   type: string,
   state: GlobalState
 ): ItwCredentialMixpanelStatus => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
+  const credentialsByType = itwCredentialsSelector(state);
   return getCredentialMixpanelStatus(credentialsByType[type]);
 };

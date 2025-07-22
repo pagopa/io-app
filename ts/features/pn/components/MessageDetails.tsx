@@ -9,7 +9,8 @@ import {
   Icon,
   Tag,
   VSpacer,
-  useFooterActionsMeasurements
+  useFooterActionsMeasurements,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
@@ -18,7 +19,6 @@ import I18n from "../../../i18n";
 import { PNMessage } from "../store/types/types";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { MessageDetailsHeader } from "../../messages/components/MessageDetail/MessageDetailsHeader";
-import { MessageDetailsTagBox } from "../../messages/components/MessageDetail/MessageDetailsTagBox";
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
 import { UIMessageId } from "../../messages/types";
 import {
@@ -46,13 +46,15 @@ export const MessageDetails = ({
   payments,
   serviceId
 }: MessageDetailsProps) => {
-  const presentPaymentsBottomSheetRef = useRef<() => void>();
+  const presentPaymentsBottomSheetRef = useRef<() => void>(undefined);
   const partitionedAttachments = pipe(
     message.attachments,
     O.fromNullable,
     O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => []),
     RA.partition(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
   );
+
+  const theme = useIOTheme();
 
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
     useFooterActionsMeasurements();
@@ -78,25 +80,21 @@ export const MessageDetails = ({
             subject={message.subject}
             createdAt={message.created_at}
           >
-            <MessageDetailsTagBox>
-              <Tag
-                text={I18n.t("features.pn.details.badge.legalValue")}
-                variant="legalMessage"
-              />
-            </MessageDetailsTagBox>
+            <Tag
+              text={I18n.t("features.pn.details.badge.legalValue")}
+              variant="legalMessage"
+            />
             {attachmentList.length > 0 && (
-              <MessageDetailsTagBox>
-                <Icon
-                  name="attachment"
-                  accessibilityLabel={I18n.t(
-                    "messageDetails.accessibilityAttachmentIcon"
-                  )}
-                  testID="attachment-tag"
-                  size={16}
-                />
-              </MessageDetailsTagBox>
+              <Icon
+                color={theme["icon-default"]}
+                name="attachment"
+                accessibilityLabel={I18n.t(
+                  "messageDetails.accessibilityAttachmentIcon"
+                )}
+                testID="attachment-tag"
+                size={16}
+              />
             )}
-            <VSpacer size={8} />
           </MessageDetailsHeader>
           <MessageCancelledContent
             isCancelled={isCancelled}

@@ -3,9 +3,7 @@ import {
   ContentWrapper,
   H6,
   IOButton,
-  LabelMini,
   Pictogram,
-  Tag,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -17,14 +15,14 @@ import { pipe } from "fp-ts/lib/function";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
   InitiativeDTO,
-  InitiativeRewardTypeEnum,
-  StatusEnum
+  InitiativeRewardTypeEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
-import { BonusStatus } from "../../../../components/BonusCard/type";
+import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import {
@@ -32,13 +30,13 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { format } from "../../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { useFIMSAuthenticationFlow } from "../../../fims/common/hooks";
 import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 import { ConfigurationMode } from "../../configuration/types";
-import { IdPayInitiativeLastUpdateCounter } from "../components/IdPayInitiativeLastUpdateCounter";
 import { IdPayInitiativeDiscountSettingsComponent } from "../components/IdPayInitiativeDiscountSettingsComponent";
+import { IdPayInitiativeLastUpdateCounter } from "../components/IdPayInitiativeLastUpdateCounter";
 import { IdPayInitiativeRefundSettingsComponent } from "../components/IdPayInitiativeRefundSettingsComponent";
 import {
   IdPayInitiativeTimelineComponent,
@@ -52,8 +50,7 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import { useFIMSAuthenticationFlow } from "../../../fims/common/hooks";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { getInitiativeStatus, IdPayCardStatus } from "../utils";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -64,7 +61,7 @@ type IdPayInitiativeDetailsScreenRouteProps = RouteProp<
   "IDPAY_DETAILS_MONITORING"
 >;
 
-const IdPayInitiativeDetailsScreen = () => {
+const IdPayInitiativeDetailsScreenComponent = () => {
   const route = useRoute<IdPayInitiativeDetailsScreenRouteProps>();
 
   const { initiativeId } = route.params;
@@ -313,7 +310,13 @@ const IdPayInitiativeDetailsScreen = () => {
     rewardType?: InitiativeRewardTypeEnum
   ): IOScrollViewActions | undefined => {
     switch (rewardType) {
-      case InitiativeRewardTypeEnum.DISCOUNT:
+      case InitiativeRewardTypeEnum.DISCOUNT: {
+        if (
+          getInitiativeStatus({ initiative, now: new Date() }) === "EXPIRED" ||
+          getInitiativeStatus({ initiative, now: new Date() }) === "REMOVED"
+        ) {
+          return;
+        }
         return {
           type: "SingleButton",
           primary: {
@@ -321,6 +324,7 @@ const IdPayInitiativeDetailsScreen = () => {
             onPress: discountBottomSheet.present
           }
         };
+      }
       case InitiativeRewardTypeEnum.EXPENSE:
         return {
           type: "SingleButton",
@@ -366,6 +370,11 @@ const IdPayInitiativeDetailsScreen = () => {
   );
 };
 
+const IdPayInitiativeDetailsScreen = withAppRequiredUpdate(
+  IdPayInitiativeDetailsScreenComponent,
+  "idpay.initiative_details"
+);
+
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
     alignItems: "center",
@@ -377,61 +386,3 @@ const styles = StyleSheet.create({
 });
 
 export { IdPayInitiativeDetailsScreen };
-
-export function IdPayCardStatus({
-  now,
-  initiative
-}: {
-  now: Date;
-  initiative: InitiativeDTO;
-}) {
-  const getInitiativeStatus = (): BonusStatus => {
-    if (initiative.status === StatusEnum.UNSUBSCRIBED) {
-      return "REMOVED";
-    }
-
-    if (now > initiative.endDate) {
-      return "EXPIRED";
-    }
-
-    const next7Days = new Date(new Date(now).setDate(now.getDate() + 7));
-    if (next7Days > initiative.endDate) {
-      return "EXPIRING";
-    }
-
-    return "ACTIVE";
-  };
-
-  switch (getInitiativeStatus()) {
-    case "ACTIVE":
-      return (
-        <LabelMini weight="Regular" color="grey-650">
-          {I18n.t("bonusCard.validUntil", {
-            endDate: format(initiative.endDate, "DD/MM/YY")
-          })}
-        </LabelMini>
-      );
-    case "EXPIRING":
-      return (
-        <Tag
-          variant="warning"
-          text={I18n.t("bonusCard.expiring", {
-            endDate: format(initiative.endDate, "DD/MM/YY")
-          })}
-        />
-      );
-    case "EXPIRED":
-      return (
-        <Tag
-          variant="error"
-          text={I18n.t("bonusCard.expired", {
-            endDate: format(initiative.endDate, "DD/MM/YY")
-          })}
-        />
-      );
-    case "PAUSED":
-      return <Tag variant="info" text={I18n.t("bonusCard.paused")} />;
-    case "REMOVED":
-      return <Tag variant="error" text={I18n.t("bonusCard.removed")} />;
-  }
-}

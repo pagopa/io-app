@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ItwProximityFailureScreen should render failure screen for INVALID_REQUESTED_DOCUMENTS 1`] = `
+exports[`ItwProximityFailureScreen should render failure screen for RELYING_PARTY_GENERIC 1`] = `
 <View
   style={
     {
@@ -791,7 +791,7 @@ exports[`ItwProximityFailureScreen should render failure screen for INVALID_REQU
 </View>
 `;
 
-exports[`ItwProximityFailureScreen should render failure screen for RELYING_PARTY_GENERIC 1`] = `
+exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] = `
 <View
   style={
     {
@@ -1394,7 +1394,7 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                                 ]
                               }
                             >
-                              Verifica interrotta
+                              L’app di chi verifica non risponde
                             </Text>
                             <View
                               style={

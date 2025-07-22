@@ -11,6 +11,8 @@ import {
   ItwFailure,
   ItwFailureType
 } from "../../../common/utils/ItwFailureTypes.ts";
+import { trackItwRemoteDeepLinkFailure } from "../analytics";
+import { trackItwKoStateAction } from "../../../analytics";
 
 type Props = {
   /**
@@ -48,8 +50,17 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
 
   const supportModalAction = {
     label: I18n.t("features.itWallet.support.button"),
-    onPress: supportModal.present
+    onPress: () => {
+      trackItwKoStateAction({
+        reason: failure,
+        cta_category: "custom_1",
+        cta_id: I18n.t("features.itWallet.support.button")
+      });
+      supportModal.present();
+    }
   };
+
+  trackItwRemoteDeepLinkFailure(failure);
 
   return (
     <>
@@ -68,6 +79,13 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
             "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.secondaryAction"
           ),
           onPress: () => {
+            trackItwKoStateAction({
+              reason: failure,
+              cta_category: "custom_2",
+              cta_id: I18n.t(
+                "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.secondaryAction"
+              )
+            });
             navigation.popToTop();
           }
         }}

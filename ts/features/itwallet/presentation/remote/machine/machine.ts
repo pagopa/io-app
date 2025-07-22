@@ -1,5 +1,5 @@
 import { and, assign, fromPromise, not, setup } from "xstate";
-import { InitialContext, Context } from "./context";
+import { Context, InitialContext } from "./context";
 import { mapEventToFailure, RemoteFailureType } from "./failure";
 import { RemoteEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
@@ -31,7 +31,8 @@ export const itwRemoteMachine = setup({
     navigateToIdentificationModeScreen: notImplemented,
     navigateToAuthResponseScreen: notImplemented,
     navigateToBarcodeScanScreen: notImplemented,
-    closePresentation: notImplemented
+    closePresentation: notImplemented,
+    trackRemoteDataShare: notImplemented
   },
   actors: {
     evaluateRelyingPartyTrust: fromPromise<
@@ -120,12 +121,7 @@ export const itwRemoteMachine = setup({
           actions: assign(({ event }) => event.output)
         },
         onError: {
-          actions: assign({
-            failure: {
-              type: RemoteFailureType.UNTRUSTED_RP,
-              reason: "RP is not trusted"
-            }
-          }),
+          actions: "setFailure",
           target: "Failure"
         }
       }
@@ -173,7 +169,7 @@ export const itwRemoteMachine = setup({
       }
     },
     ClaimsDisclosure: {
-      entry: "navigateToClaimsDisclosureScreen",
+      entry: ["navigateToClaimsDisclosureScreen", "trackRemoteDataShare"],
       description:
         "Display the list of claims to disclose for the verifiable presentation",
       on: {

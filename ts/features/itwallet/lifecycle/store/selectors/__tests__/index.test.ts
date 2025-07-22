@@ -36,7 +36,11 @@ describe("IT Wallet lifecycle selectors", () => {
       applicationChangeState("active"),
       itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3"),
       itwCredentialsStore([
-        { credentialType: CredentialType.PID }
+        {
+          credentialType: CredentialType.PID,
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          format: "dc+sd-jwt"
+        }
       ] as Array<StoredCredential>)
     ]);
     expect(itwLifecycleIsInstalledSelector(globalState)).toEqual(false);
@@ -46,7 +50,7 @@ describe("IT Wallet lifecycle selectors", () => {
 
   it.each([
     [
-      "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRjK3NkLWp3dCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik1hcmlvIFJvc3NpIiwiaWF0IjoxNTE2MjM5MDIyfQ.uKkt3jqXmbu_QZ5Dkb1uF2Q9b38YhKX3GnyP8BVVH0g-darsMz9h1N3i-RWmwmt4ABlchqIqz1b6M_ssmbBP1Q",
+      "eyJraWQiOiItRl82VWdhOG4zVmVnalkyVTdZVUhLMXpMb2FELU5QVGM2M1JNSVNuTGF3IiwidHlwIjoiZGMrc2Qtand0IiwiYWxnIjoiRVMyNTYifQ.eyJfc2QiOlsiMHExRDVKbWF2NnBRYUVoX0pfRmN2X3VOTk1RSWdDeWhRT3hxbFk0bDNxVSIsIktDSi1BVk52ODhkLXhqNnNVSUFPSnhGbmJVaDNySFhES2tJSDFsRnFiUnMiLCJNOWxvOVl4RE5JWHJBcTJxV2VpQ0E0MHpwSl96WWZGZFJfNEFFQUxjUnRVIiwiY3pnalVrMG5xUkNzd1NoQ2hDamRTNkExLXY0N2RfcVRDU0ZJdklIaE1vSSIsIm5HblFyN2NsbTN0ZlRwOHlqTF91SHJEU090elIyUFZiOFM3R2VMZEFxQlEiLCJ4TklWd2xwU3NhWjhDSlNmMGd6NXhfNzVWUldXYzZWMW1scGVqZENycVVzIl0sInN1YiI6IjIxNmY4OTQ2LTllY2ItNDgxOS05MzA5LWMwNzZmMzRhN2UxMSIsIl9zZF9hbGciOiJzaGEtMjU2IiwidmN0IjoiUGVyc29uSWRlbnRpZmljYXRpb25EYXRhIiwidmN0I2ludGVncml0eSI6IjEzZTI1ODg4YWM3YjhhM2E2ZDYxNDQwZGE3ODdmY2NjODE2NTRlNjEwODU3MzJiY2FjZDg5YjM2YWVjMzI2NzUiLCJpc3MiOiJodHRwczovL3ByZS5laWQud2FsbGV0LmlwenMuaXQiLCJpc3N1aW5nX2NvdW50cnkiOiJJVCIsImlzc3VpbmdfYXV0aG9yaXR5IjoiSXN0aXR1dG8gUG9saWdyYWZpY28gZSBaZWNjYSBkZWxsbyBTdGF0byIsImNuZiI6eyJqd2siOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsImtpZCI6IlJ2M1ctRWlLcHZCVHlrNXlaeHZyZXYtN01EQjZTbHpVQ0JvX0NRampkZFUiLCJ4IjoiMFdveDdRdHlQcUJ5ZzM1TUhfWHlDY25kNUxlLUptMEFYSGxVZ0RCQTAzWSIsInkiOiJlRWhWdmcxSlBxTmQzRFRTYTRtR0RHQmx3WTZOUC1FWmJMYk5GWFNYd0lnIn19LCJleHAiOjE3NTE1NDY1NzYsInN0YXR1cyI6eyJzdGF0dXNfYXNzZXJ0aW9uIjp7ImNyZWRlbnRpYWxfaGFzaF9hbGciOiJzaGEtMjU2In19fQ.XqB-0BJmBr5vwahsbsnE5oqrlxzvxHc-k2NZX93Z_gNMIj4ZqKe7g03r40VnbpfLd2exofd_XZRKtqF_EkFfZA~WyJxTGxVdkNKY3hwX3d4MVY5dHFPbFFRIiwidmVyaWZpY2F0aW9uIix7ImV2aWRlbmNlIjpbeyJhdHRlc3RhdGlvbiI6eyJkYXRlX29mX2lzc3VhbmNlIjoiMjAyNS0wNi0yMyIsInZvdWNoZXIiOnsib3JnYW5pemF0aW9uIjoiTWluaXN0ZXJvIGRlbGwnSW50ZXJubyJ9LCJ0eXBlIjoiZGlnaXRhbF9hdHRlc3RhdGlvbiIsInJlZmVyZW5jZV9udW1iZXIiOiIxMjM0NTY3ODkifSwidGltZSI6IjIwMjUtMDYtMjNUMTM6MTQ6MjVaIiwidHlwZSI6InZvdWNoIn1dLCJ0cnVzdF9mcmFtZXdvcmsiOiJpdF9jaWUiLCJhc3N1cmFuY2VfbGV2ZWwiOiJoaWdoIn1d",
       true
     ], // IT-Wallet
     [
@@ -60,7 +64,12 @@ describe("IT Wallet lifecycle selectors", () => {
         applicationChangeState("active"),
         itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3"),
         itwCredentialsStore([
-          { credentialType: CredentialType.PID, credential }
+          {
+            credentialType: CredentialType.PID,
+            credential,
+            credentialId: "dc_sd_jwt_PersonIdentificationData",
+            format: "dc+sd-jwt"
+          }
         ] as Array<StoredCredential>)
       ]);
       expect(itwLifecycleIsInstalledSelector(globalState)).toEqual(false);

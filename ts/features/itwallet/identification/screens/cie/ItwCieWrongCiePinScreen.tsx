@@ -10,7 +10,7 @@ import I18n from "../../../../../i18n";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { WithTestID } from "../../../../../types/WithTestID";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useItwPreventNavigationEvent } from "../../../common/hooks/useItwPreventNavigationEvent";
 import {
   trackItWalletCiePinForgotten,
@@ -20,6 +20,7 @@ import {
   trackItWalletLastErrorPin,
   trackItWalletSecondErrorPin
 } from "../../../analytics";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 
 export type ItwCieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
@@ -45,6 +46,10 @@ type Messages = {
 
 export const ItwCieWrongCiePinScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+  const itw_flow = isL3Enabled ? "L3" : "L2";
 
   useItwPreventNavigationEvent();
 
@@ -57,42 +62,45 @@ export const ItwCieWrongCiePinScreen = () => {
     >();
   const { remainingCount } = route.params;
 
-  const handleTrackPinErrors = (key: number) => {
-    switch (key) {
-      case 2:
-        trackItWalletErrorPin();
-        break;
-      case 1:
-        trackItWalletSecondErrorPin();
-        break;
-      case 0:
-        trackItWalletLastErrorPin();
-        break;
-    }
-  };
+  const handleTrackPinErrors = useCallback(
+    (key: number) => {
+      switch (key) {
+        case 2:
+          trackItWalletErrorPin(itw_flow);
+          break;
+        case 1:
+          trackItWalletSecondErrorPin(itw_flow);
+          break;
+        case 0:
+          trackItWalletLastErrorPin(itw_flow);
+          break;
+      }
+    },
+    [itw_flow]
+  );
 
   const handleRetry = useCallback(() => {
-    trackItWalletCieRetryPin();
+    trackItWalletCieRetryPin(itw_flow);
     machineRef.send({ type: "back" });
-  }, [machineRef]);
+  }, [machineRef, itw_flow]);
 
   const handleClose = useCallback(() => {
     machineRef.send({ type: "close" });
   }, [machineRef]);
 
   const didYouForgetPin = useCallback(() => {
-    trackItWalletCiePinForgotten();
+    trackItWalletCiePinForgotten(itw_flow);
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/"
     ).catch(constNull);
-  }, []);
+  }, [itw_flow]);
 
   const didYouForgetPuk = useCallback(() => {
-    trackItWalletCiePukForgotten();
+    trackItWalletCiePukForgotten(itw_flow);
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/recupero-puk/"
     ).catch(constNull);
-  }, []);
+  }, [itw_flow]);
 
   const createMessageAction = useCallback(
     <T extends string>({
@@ -190,7 +198,7 @@ export const ItwCieWrongCiePinScreen = () => {
         ? messages[key]
         : defaultMessageThatShouldNeverHappen;
     },
-    [defaultMessageThatShouldNeverHappen, messages]
+    [defaultMessageThatShouldNeverHappen, messages, handleTrackPinErrors]
   );
 
   return <OperationResultScreenContent {...getMessage(remainingCount)} />;

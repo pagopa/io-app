@@ -39,7 +39,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       switch (failure.type) {
-        case ProximityFailureType.INVALID_REQUESTED_DOCUMENTS:
         case ProximityFailureType.RELYING_PARTY_GENERIC:
           return {
             title: I18n.t(`${i18nNs}.relyingParty.genericError.title`),
@@ -49,6 +48,16 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 `${i18nNs}.relyingParty.genericError.primaryAction`
               ),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
+        case ProximityFailureType.TIMEOUT:
+          return {
+            title: I18n.t(`${i18nNs}.relyingParty.timeout.title`),
+            subtitle: I18n.t(`${i18nNs}.relyingParty.timeout.subtitle`),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(`${i18nNs}.relyingParty.timeout.primaryAction`),
               onPress: () => machineRef.send({ type: "close" })
             }
           };

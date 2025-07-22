@@ -8,13 +8,14 @@ import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
-import { ItwActivateNfcScreen } from "../identification/screens/cie/ItwActivateNfcScreen";
-import { ItwCieCardReaderScreen } from "../identification/screens/cie/ItwCieCardReaderScreen";
-import { ItwCieExpiredOrInvalidScreen } from "../identification/screens/cie/ItwCieExpiredOrInvalidScreen";
-import { ItwCiePinScreen } from "../identification/screens/cie/ItwCiePinScreen";
-import { ItwCieUnexpectedErrorScreen } from "../identification/screens/cie/ItwCieUnexpectedErrorScreen";
-import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrongCardScreen";
-import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
+import { ItwActivateNfcScreen } from "../identification/screens/ItwActivateNfcScreen.tsx";
+import { ItwCieCardReaderL2Screen } from "../identification/screens/cie/ItwCieCardReaderL2Screen";
+import { ItwCieCardReaderScreen as ItwCieCardReaderL3Screen } from "../identification/cie/screens/ItwCieCardReaderScreen";
+import { ItwCieExpiredOrInvalidScreen } from "../identification/screens/cie/ItwCieExpiredOrInvalidScreen.tsx";
+import { ItwCiePinScreen } from "../identification/cie/screens/ItwCiePinScreen.tsx";
+import { ItwCieUnexpectedErrorScreen } from "../identification/screens/cie/ItwCieUnexpectedErrorScreen.tsx";
+import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrongCardScreen.tsx";
+import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWrongCiePinScreen.tsx";
 import ItwCieIdLoginScreen from "../identification/screens/cieId/ItwCieIdLoginScreen";
 import { ItwIdentificationIdpSelectionScreen } from "../identification/screens/ItwIdentificationIdpSelectionScreen";
 import ItwSpidIdpLoginScreen from "../identification/screens/spid/ItwSpidIdpLoginScreen";
@@ -27,11 +28,6 @@ import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidP
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import { ItwIdentityNotMatchingScreen } from "../lifecycle/screens/ItwIdentityNotMatchingScreen";
 import { ItwLifecycleWalletRevocationScreen } from "../lifecycle/screens/ItwLifecycleWalletRevocationScreen";
-import {
-  ItWalletIssuanceMachineProvider,
-  ItwCredentialIssuanceMachineContext,
-  ItwEidIssuanceMachineContext
-} from "../machine/provider";
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModal } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
@@ -40,8 +36,8 @@ import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/detail
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
-import { ItwCiePreparationScreen } from "../identification/screens/cie/ItwCiePreparationScreen";
-import { ItwCiePinPreparationScreen } from "../identification/screens/cie/ItwCiePinPreparationScreen";
+import { ItwCiePreparationCardScreen } from "../identification/cie/screens/ItwCiePreparationCardScreen.tsx";
+import { ItwCiePreparationPinScreen } from "../identification/cie/screens/ItwCiePreparationPinScreen.tsx";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { useIOSelector } from "../../../store/hooks";
@@ -56,10 +52,20 @@ import {
 import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/ItwGrantPermissionsScreen.tsx";
 import { ItwActivateBluetoothScreen } from "../presentation/proximity/screens/ItwActivateBluetoothScreen.tsx";
 import { ItwProximityClaimsDisclosureScreen } from "../presentation/proximity/screens/ItwProximityClaimsDisclosureScreen.tsx";
+import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximity/screens/ItwProximitySendDocumentsResponseScreen.tsx";
 import { ItwProximityFailureScreen } from "../presentation/proximity/screens/ItwProximityFailureScreen.tsx";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
 import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
+import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/ItwPresentationPidDetailScreen.tsx";
 import { ItwIssuanceUpcomingCredentialScreen } from "../issuance/screens/ItwIssuanceUpcomingCredentialScreen";
+import {
+  ItwEidIssuanceMachineContext,
+  ItwEidIssuanceMachineProvider
+} from "../machine/eid/provider";
+import {
+  ItwCredentialIssuanceMachineContext,
+  ItwCredentialIssuanceMachineProvider
+} from "../machine/credential/provider";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -68,11 +74,13 @@ const Stack = createStackNavigator<ItwParamsList>();
 const hiddenHeader = { headerShown: false };
 
 export const ItwStackNavigator = () => (
-  <ItWalletIssuanceMachineProvider>
-    <ItwProximityMachineProvider>
-      <InnerNavigator />
-    </ItwProximityMachineProvider>
-  </ItWalletIssuanceMachineProvider>
+  <ItwEidIssuanceMachineProvider>
+    <ItwCredentialIssuanceMachineProvider>
+      <ItwProximityMachineProvider>
+        <InnerNavigator />
+      </ItwProximityMachineProvider>
+    </ItwCredentialIssuanceMachineProvider>
+  </ItwEidIssuanceMachineProvider>
 );
 
 const InnerNavigator = () => {
@@ -151,19 +159,24 @@ const InnerNavigator = () => {
       {/* IDENTIFICATION CIE + PIN */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN}
-        component={ItwCiePreparationScreen}
+        component={ItwCiePreparationCardScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN}
-        component={ItwCiePinPreparationScreen}
+        component={ItwCiePreparationPinScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}
         component={ItwCiePinScreen}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN}
-        component={ItwCieCardReaderScreen}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L2}
+        component={ItwCieCardReaderL2Screen}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L3}
+        component={ItwCieCardReaderL3Screen}
         options={hiddenHeader}
       />
       <Stack.Screen
@@ -267,6 +280,10 @@ const InnerNavigator = () => {
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL}
         component={ItwPresentationCredentialFiscalCodeModal}
       />
+      <Stack.Screen
+        name={ITW_ROUTES.PRESENTATION.PID_DETAIL}
+        component={ItwPresentationPidDetailScreen}
+      />
       {/* LIFECYCLE */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}
@@ -296,6 +313,10 @@ const InnerNavigator = () => {
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.CLAIMS_DISCLOSURE}
           component={ItwProximityClaimsDisclosureScreen}
+        />
+        <Stack.Screen
+          name={ITW_ROUTES.PROXIMITY.SEND_DOCUMENTS_RESPONSE}
+          component={ItwProximitySendDocumentsResponseScreen}
         />
         <Stack.Screen
           name={ITW_ROUTES.PROXIMITY.FAILURE}

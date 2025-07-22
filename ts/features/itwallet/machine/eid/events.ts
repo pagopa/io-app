@@ -1,6 +1,6 @@
 import { ErrorActorEvent } from "xstate";
 import { SpidIdp } from "../../../../utils/idps";
-import { CieWarningType } from "../../identification/screens/ItwIdentificationCieWarningScreen";
+import { CiePreparationType } from "../../identification/cie/components/ItwCiePreparationBaseScreenContent";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
@@ -36,7 +36,7 @@ export type SelectIdentificationMode = {
 
 export type GoToCieWarning = {
   type: "go-to-cie-warning";
-  warning: CieWarningType;
+  warning: CiePreparationType;
 };
 
 export type SelectSpidIdp = {

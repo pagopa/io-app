@@ -1,5 +1,5 @@
 import { ItwDiscoveryInfoScreenNavigationParams } from "../discovery/screens/ItwDiscoveryInfoScreen";
-import { ItwCieWrongCiePinScreenNavigationParams } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
+import { ItwCieWrongCiePinScreenNavigationParams } from "../identification/screens/cie/ItwCieWrongCiePinScreen.tsx";
 import { ItwIssuanceCredentialAsyncContinuationNavigationParams } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialTrustIssuerNavigationParams } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
 import { ItwPresentationCredentialAttachmentNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
@@ -37,7 +37,8 @@ export type ItwParamsList = {
   [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L2]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L3]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE
     .WRONG_PIN]: ItwCieWrongCiePinScreenNavigationParams;
   [ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD]: undefined;
@@ -67,6 +68,7 @@ export type ItwParamsList = {
     .CREDENTIAL_CARD_MODAL]: ItwPresentationCredentialCardModalNavigationParams;
   [ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL]: undefined;
   [ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED]: undefined;
+  [ITW_ROUTES.PRESENTATION.PID_DETAIL]: undefined;
   // OTHERS
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
   [ITW_ROUTES.WALLET_REVOCATION_SCREEN]: undefined;

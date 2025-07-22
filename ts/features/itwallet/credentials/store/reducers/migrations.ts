@@ -5,7 +5,7 @@ import { MigrationManifest, PersistedState } from "redux-persist";
 
 type MigrationState = PersistedState & Record<string, any>;
 
-export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 1;
+export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 3;
 
 export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 0
@@ -55,5 +55,47 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
           pipe(credential, O.map(addIatExpProperties))
       )
     };
-  }
+  },
+
+  // Version 2
+  // Migrate store to key:credential Record and removes Option
+  "2": (state: MigrationState) => {
+    const mapCredential = (credential: O.Option<Record<string, any>>) =>
+      pipe(
+        credential,
+        O.map(c => ({ [c.credentialType]: c })),
+        O.getOrElse(() => ({}))
+      );
+
+    const { eid, credentials, ...other } = state;
+
+    const credentialsByType = credentials.reduce(
+      (
+        acc: { [type: string]: Record<string, any> },
+        c: O.Option<Record<string, any>>
+      ) => ({ ...acc, ...mapCredential(c) }),
+      {} as { [type: string]: Record<string, any> }
+    );
+
+    return {
+      ...other,
+      credentials: {
+        ...mapCredential(eid),
+        ...credentialsByType
+      }
+    };
+  },
+
+  // Version 3
+  // Add credentialId and use it as key, with fallback to credentialType
+  "3": (state: MigrationState) => ({
+    ...state,
+    credentials: Object.fromEntries(
+      Object.values<Record<string, any>>(state.credentials).map(credential => {
+        const credentialId =
+          credential.credentialId ?? credential.credentialType;
+        return [credentialId, { ...credential, credentialId }];
+      })
+    )
+  })
 };
