@@ -231,3 +231,13 @@ export const itwCredentialsEidStatusSelector = createSelector(
       O.toUndefined
     )
 );
+
+/**
+ * Return a list of all credentials of the same type, mainly used for clean up operations.
+ * @param key The type of credential
+ * @returns A list of StoredCredential
+ */
+export const itwCredentialsListByTypeSelector = (key: string) =>
+  createSelector(itwCredentialsByTypeSelector, credentials =>
+    Object.values(credentials[key])
+  );

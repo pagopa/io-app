@@ -8,7 +8,10 @@ import ROUTES from "../../../../navigation/routes";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
-import { itwCredentialsStore } from "../../credentials/store/actions";
+import {
+  itwCredentialTypeRemove,
+  itwCredentialsStore
+} from "../../credentials/store/actions";
 import {
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
@@ -221,6 +224,7 @@ export const createEidIssuanceActionsImplementation = (
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.eid, "eID is undefined");
+    store.dispatch(itwCredentialTypeRemove(context.eid.credentialType));
     store.dispatch(itwCredentialsStore([context.eid]));
   },
 
