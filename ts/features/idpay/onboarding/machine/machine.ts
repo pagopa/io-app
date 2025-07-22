@@ -386,8 +386,10 @@ export const idPayOnboardingMachine = setup({
                     target:
                       "#idpay-onboarding.DisplayingSelfDeclarationList.DisplayingBooleanSelfDeclarationList",
                     actions: assign(({ context }) => ({
-                      selfDeclarationsMultiPage:
-                        +context.selfDeclarationsMultiPage - 1,
+                      selfDeclarationsMultiPage: Math.max(
+                        0,
+                        +context.selfDeclarationsMultiPage - 1
+                      ),
                       currentStep: context.currentStep - 1
                     }))
                   },
@@ -395,8 +397,10 @@ export const idPayOnboardingMachine = setup({
                     guard: and(["isFirstMultiConsentPage", "hasPdndCriteria"]),
                     target: "#idpay-onboarding.DisplayingPdndCriteria",
                     actions: assign(({ context }) => ({
-                      selfDeclarationsMultiPage:
-                        +context.selfDeclarationsMultiPage - 1,
+                      selfDeclarationsMultiPage: Math.max(
+                        0,
+                        +context.selfDeclarationsMultiPage - 1
+                      ),
                       currentStep: context.currentStep - 1
                     }))
                   },
@@ -404,8 +408,10 @@ export const idPayOnboardingMachine = setup({
                     guard: "isFirstMultiConsentPage",
                     target: "#idpay-onboarding.DisplayingInitiativeInfo",
                     actions: assign(({ context }) => ({
-                      selfDeclarationsMultiPage:
-                        +context.selfDeclarationsMultiPage - 1,
+                      selfDeclarationsMultiPage: Math.max(
+                        0,
+                        +context.selfDeclarationsMultiPage - 1
+                      ),
                       currentStep: context.currentStep - 1
                     }))
                   }
