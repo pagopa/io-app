@@ -1,6 +1,7 @@
 import { Credential, Errors } from "@pagopa/io-react-native-wallet";
 import { Trust } from "@pagopa/io-react-native-wallet-v2";
 import { isDefined } from "../../../../../utils/guards.ts";
+import { isFederationError } from "../../../common/utils/itwFailureUtils.ts";
 import { RemoteEvents } from "./events.ts";
 
 const { CredentialsNotFoundError } = Credential.Presentation.Errors;
@@ -43,14 +44,6 @@ const isRequestObjectInvalidError = (
 ): error is InvalidRequestObjectError =>
   error instanceof Credential.Presentation.Errors.InvalidRequestObjectError ||
   error instanceof Credential.Presentation.Errors.DcqlError;
-
-/**
- * Guard used to check if the error is a `FederationError`.
- */
-export const isFederationError = (
-  error: unknown
-): error is Trust.Errors.FederationError =>
-  error instanceof Trust.Errors.FederationError;
 
 /**
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
