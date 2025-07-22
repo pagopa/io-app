@@ -17,8 +17,8 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import { trackItwKoStateAction } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import {
-  ZendeskSubcategoryValue,
-  useItwFailureSupportModal
+  useItwFailureSupportModal,
+  ZendeskSubcategoryValue
 } from "../../common/hooks/useItwFailureSupportModal";
 import { itwDeferredIssuanceScreenContentSelector } from "../../common/store/selectors/remoteConfig";
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
@@ -39,6 +39,7 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils.ts";
 
 // Errors that allow a user to send a support request to Zendesk
 const zendeskAssistanceErrors = [
@@ -176,6 +177,36 @@ const ContentView = ({ failure }: ContentViewProps) => {
             ...(supportModal.hasContactMethods
               ? { action: supportModalAction, secondaryAction: closeAction }
               : { action: closeAction, secondaryAction: supportModalAction })
+          };
+        }
+        case CredentialIssuanceFailureType.UNTRUSTED_ISS: {
+          return {
+            title: I18n.t(
+              `features.itWallet.issuance.issuerNotTrustedCommonError.title`
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.issuerNotTrustedCommonError.subtitle",
+              {
+                credential: getCredentialNameFromType(
+                  O.toUndefined(credentialType)
+                )
+              }
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                `features.itWallet.issuance.issuerNotTrustedCommonError.primaryAction`
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                `features.itWallet.issuance.issuerNotTrustedCommonError.secondaryAction`
+              ),
+              onPress: () => {
+                supportModal.present();
+              }
+            }
           };
         }
       }

@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
+import { Trust } from "@pagopa/io-react-native-wallet-v2";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
@@ -14,6 +15,10 @@ import { type Context } from "./context";
 
 export type GetWalletAttestationActorInput = {
   isNewIssunceFlowEnabled?: boolean;
+};
+
+export type VerifyTrustFederationActorInput = {
+  isNewIssuanceFlowEnabled?: boolean;
 };
 
 export type GetWalletAttestationActorOutput = Awaited<
@@ -46,6 +51,41 @@ export const createCredentialIssuanceActorsImplementation = (
   env: Env,
   store: ReturnType<typeof useIOStore>
 ) => {
+  const verifyTrustFederation = fromPromise<
+    void,
+    VerifyTrustFederationActorInput
+  >(async ({ input }) => {
+    // If the L3 issuance is not enabled, we don't need to verify the trust federation
+    if (!input.isNewIssuanceFlowEnabled) {
+      return;
+    }
+
+    // Evaluate the issuer trust
+    const trustAnchorEntityConfig =
+      await Trust.Build.getTrustAnchorEntityConfiguration(
+        env.WALLET_TA_BASE_URL
+      );
+    const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
+
+    // Create the trust chain for the PID provider
+    // TODO: [SIW-2530] Move "1-0" to WALLET_EAA_PROVIDER_BASE_URL after migrating to the new API
+    const builtChainJwts = await Trust.Build.buildTrustChain(
+      new URL("1-0", env.WALLET_EAA_PROVIDER_BASE_URL).toString(),
+      trustAnchorKey
+    );
+
+    // Perform full validation on the built chain
+    await Trust.Verify.verifyTrustChain(
+      trustAnchorEntityConfig,
+      builtChainJwts,
+      {
+        connectTimeout: 10000,
+        readTimeout: 10000,
+        requireCrl: true
+      }
+    );
+  });
+
   const getWalletAttestation = fromPromise<
     GetWalletAttestationActorOutput,
     GetWalletAttestationActorInput
@@ -153,6 +193,7 @@ export const createCredentialIssuanceActorsImplementation = (
   });
 
   return {
+    verifyTrustFederation,
     getWalletAttestation,
     requestCredential,
     obtainCredential,
