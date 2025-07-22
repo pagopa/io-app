@@ -20,7 +20,7 @@ import { itwCredentialsEidStatusSelector } from "../../credentials/store/selecto
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
 import { itwShouldRenderNewItWalletSelector } from "../../common/store/selectors";
 import { ItwOfflineWalletBanner } from "../../common/components/ItwOfflineWalletBanner.tsx";
-import { ItwWalletId } from "../../common/components/itwWalletID.tsx";
+import { ItwWalletId } from "../../common/components/ItwWalletId.tsx";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils.ts";
 
 const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
