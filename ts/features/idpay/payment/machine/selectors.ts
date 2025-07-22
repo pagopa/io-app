@@ -1,4 +1,5 @@
 import { SnapshotFrom } from "xstate";
+import { IdPayTags } from "../../common/machine/tags";
 import { idPayPaymentMachine } from "./machine";
 
 type MachineSnapshot = SnapshotFrom<typeof idPayPaymentMachine>;
@@ -7,7 +8,7 @@ export const isAuthorizingSelector = (snapshot: MachineSnapshot) =>
   snapshot.matches("Authorizing");
 
 export const isCancellingSelector = (snapshot: MachineSnapshot) =>
-  snapshot.matches("Cancelling");
+  snapshot.hasTag(IdPayTags.LoadingCancelling);
 
 export const isCancelledSelector = (snapshot: MachineSnapshot) =>
   snapshot.matches("AuthorizationCancelled");
