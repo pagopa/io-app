@@ -8,7 +8,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useEffect } from "react";
-import { ServiceId } from "../../../../../definitions/auth/ServiceId";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
