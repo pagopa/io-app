@@ -4760,6 +4760,12 @@
           "body": "Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.",
           "primaryAction": "Ho capito"
         },
+        "issuerNotTrustedCommonError": {
+          "title": "Un problema non permette di continuare",
+          "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere IT-Wallet. Riprova.\nSe il problema persiste, contatta l’assistenza.",
+          "primaryAction": "Ho capito",
+          "secondaryAction": "Mostra dettagli"
+        },
         "credentialAlreadyAdded": {
           "title": "Hai già questo documento",
           "body": "La versione digitale del documento è già presente nel tuo Portafoglio.",
@@ -5570,7 +5576,7 @@
         }
       },
       "discountDetails": {
-        "authorizeButton": "Autorizza un pagamento",
+        "authorizeButton": "Usa il bonus",
         "addExpenseButton": "Aggiungi spesa",
         "bottomSheetOptions": {
           "scanQr": "Inquadra un codice QR",
@@ -5756,10 +5762,8 @@
       },
       "headerTitle": "Adesione all'iniziativa",
       "beforeContinue": {
-        "text1": "Proseguendo accetti i ",
-        "tosLink": "Termini e condizioni d'uso",
-        "text2": " del servizio e confermi di avere letto l' ",
-        "privacyLink": "Informativa privacy"
+        "text": "By clicking Continue, you declare that you have read, understood, and accepted the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions]({{tosUrl}}) of use.",
+        "requestBonus": "Request bonus"
       },
       "navigation": {
         "header": "Adesione all'iniziativa"
