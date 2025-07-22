@@ -226,7 +226,10 @@ export const itwCredentialIssuanceMachine = setup({
                 // For now, the `ObtainingStatusAttestation` is skipped for L3 issuance
                 // until the status assertion flow is aligned with version 1.0
                 guard: ({ context }) => !!context.isWhiteListed,
-                target: "Completed"
+                target: "Completed",
+                actions: assign(({ event }) => ({
+                  credentials: event.output.credentials
+                }))
               },
               {
                 target: "ObtainingStatusAttestation",
