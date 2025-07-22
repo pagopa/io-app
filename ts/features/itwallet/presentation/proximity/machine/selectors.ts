@@ -39,5 +39,5 @@ export const isInitialLoadingSelector = (snapshot: MachineSnapshot) =>
 export const isReminderLoadingSelector = (snapshot: MachineSnapshot) =>
   snapshot.matches({ DeviceCommunication: { SendingDocuments: "Reminder" } });
 
-export const hasGiventConsentSelector = (snapshot: MachineSnapshot) =>
-  snapshot.context.hasGiventConsent;
+export const hasGivenConsentSelector = (snapshot: MachineSnapshot) =>
+  snapshot.context.hasGivenConsent;

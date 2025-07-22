@@ -8,6 +8,7 @@ import {
 
 type ItwProximityFailure = {
   reason: unknown;
+  type: string;
 };
 
 type ItwProximityGenericFailure = ItwProximityFailure & {
@@ -136,37 +137,48 @@ export function trackItwProximityContinuePresentation() {
 
 // #region ERRORS
 
-export const trackItwProximityQrCodeLoadingFailure = (
-  reason: ItwProximityFailure
-) => {
+export const trackItwProximityQrCodeLoadingFailure = ({
+  reason,
+  type
+}: ItwProximityFailure) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_QR_CODE_LOADING_FAILURE,
-    buildEventProperties("KO", "screen_view", { reason })
+    buildEventProperties("KO", "screen_view", { reason, type })
   );
 };
 
-export const trackItwProximityRPGenericFailure = (
-  reason: ItwProximityGenericFailure
-) => {
+export const trackItwProximityRPGenericFailure = ({
+  proximity_sharing_status,
+  reason,
+  type
+}: ItwProximityGenericFailure) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_GENERIC_ERROR,
-    buildEventProperties("KO", "screen_view", { reason })
+    buildEventProperties("KO", "screen_view", {
+      proximity_sharing_status,
+      reason,
+      type
+    })
   );
 };
 
-export const trackItwProximityTimeout = (reason: ItwProximityFailure) => {
+export const trackItwProximityTimeout = ({
+  reason,
+  type
+}: ItwProximityFailure) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_TIMEOUT,
-    buildEventProperties("KO", "screen_view", { reason })
+    buildEventProperties("KO", "screen_view", { reason, type })
   );
 };
 
-export const trackItwProximityUnexpectedFailure = (
-  reason: ItwProximityFailure
-) => {
+export const trackItwProximityUnexpectedFailure = ({
+  reason,
+  type
+}: ItwProximityFailure) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_UNEXPECTED_FAILURE,
-    buildEventProperties("KO", "screen_view", { reason })
+    buildEventProperties("KO", "screen_view", { reason, type })
   );
 };
 

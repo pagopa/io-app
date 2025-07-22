@@ -1,6 +1,6 @@
 import { Alert, Platform } from "react-native";
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../../i18n";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
@@ -32,7 +32,11 @@ export const ItwActivateBluetoothScreen = () => {
     }
   });
 
-  useFocusEffect(trackItwProximityBluetoothActivation);
+  useFocusEffect(
+    useCallback(() => {
+      trackItwProximityBluetoothActivation();
+    }, [])
+  );
 
   useEffect(() => {
     if (isBluetoothRequiredState) {

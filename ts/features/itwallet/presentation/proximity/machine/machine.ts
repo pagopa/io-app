@@ -25,7 +25,7 @@ export const itwProximityMachine = setup({
     onInit: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     setQRCodeGenerationError: assign({ isQRCodeGenerationError: true }),
-    setHasGivenConsent: assign({ hasGiventConsent: true }),
+    setHasGivenConsent: assign({ hasGivenConsent: true }),
     navigateToGrantPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToFailureScreen: notImplemented,

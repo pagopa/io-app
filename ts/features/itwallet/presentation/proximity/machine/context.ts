@@ -33,7 +33,7 @@ export type Context = {
    * A boolean value indicating whether the user has given consent
    * to share their credentials with the Relying Party
    */
-  hasGiventConsent?: boolean;
+  hasGivenConsent?: boolean;
 };
 
 export const InitialContext: Context = {

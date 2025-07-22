@@ -92,8 +92,8 @@ export const createProximityActorsImplementation = () => {
           permission => requestResults[permission] === RESULTS.GRANTED
         );
 
-        const userAction = allPermissionsGranted ? "allow" : "not_allow";
         if (!isSilent) {
+          const userAction = allPermissionsGranted ? "allow" : "not_allow";
           trackItwProximityBluetoothBlockAction(userAction);
         }
 

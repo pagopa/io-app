@@ -7,7 +7,7 @@ import {
   trackItwProximityUnexpectedFailure
 } from "../analytics";
 import { ItwProximityMachineContext } from "../machine/provider";
-import { hasGiventConsentSelector } from "../machine/selectors";
+import { hasGivenConsentSelector } from "../machine/selectors";
 
 type Params = {
   failure: ProximityFailure;
@@ -17,16 +17,17 @@ type Params = {
  * Track errors occurred during the proximity presentation flow for analytics.
  */
 export const useItwProximityEventsTracking = ({ failure }: Params) => {
-  const hasGiventConsent = ItwProximityMachineContext.useSelector(
-    hasGiventConsentSelector
+  const hasGivenConsent = ItwProximityMachineContext.useSelector(
+    hasGivenConsentSelector
   );
   useEffect(() => {
     const serializedFailure = serializeFailureReason(failure);
     switch (failure.type) {
       case ProximityFailureType.RELYING_PARTY_GENERIC:
         return trackItwProximityRPGenericFailure({
-          reason: serializedFailure,
-          proximity_sharing_status: hasGiventConsent ? "post" : "pre"
+          reason: serializedFailure.reason,
+          type: serializedFailure.type,
+          proximity_sharing_status: hasGivenConsent ? "post" : "pre"
         });
 
       case ProximityFailureType.TIMEOUT:
@@ -42,5 +43,5 @@ export const useItwProximityEventsTracking = ({ failure }: Params) => {
           shouldSerializeReason ? serializedFailure : failure
         );
     }
-  }, [failure, hasGiventConsent]);
+  }, [failure, hasGivenConsent]);
 };

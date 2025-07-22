@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { ItwProximityLoadingStepScreen } from "../components/ItwProximityLoadingStepScreen.tsx";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation";
@@ -16,12 +17,16 @@ export const ItwProximitySendDocumentsResponseScreen = () => {
 
   const closeMachine = () => machineRef.send({ type: "close" });
 
+  useEffect(() => {
+    if (isSuccess) {
+      trackItwProximityPresentationCompleted();
+    }
+  }, [isSuccess]);
+
   // We need to ensure that the current state is not `Success` to prevent a visual glitch
   // that occurs when any failure causes the machine to transition to the `Failure` state
   if (!isSuccess) {
     return <ItwProximityLoadingStepScreen />;
-  } else {
-    trackItwProximityPresentationCompleted();
   }
 
   return (
