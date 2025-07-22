@@ -38,8 +38,7 @@ export const idPayOnboardingMachine = setup({
     handleSessionExpired: notImplementedStub,
     navigateToInputFormScreen: notImplementedStub,
     navigateToEnableNotificationScreen: notImplementedStub,
-    navigateToEnableMessageScreen: notImplementedStub,
-    navigateToLoadingScreen: notImplementedStub
+    navigateToEnableMessageScreen: notImplementedStub
   },
   actors: {
     getInitiativeInfo: fromPromise<InitiativeDataDTO, string>(
@@ -518,7 +517,7 @@ export const idPayOnboardingMachine = setup({
         src: "acceptRequiredCriteria",
         input: ({ context }) => context,
         onDone: {
-          target: "OnLoading"
+          target: "OnboardingCompleted"
         },
         onError: [
           {
@@ -532,15 +531,6 @@ export const idPayOnboardingMachine = setup({
             target: "OnboardingFailure"
           }
         ]
-      }
-    },
-
-    OnLoading: {
-      entry: "navigateToLoadingScreen",
-      on: {
-        next: {
-          target: "OnboardingCompleted"
-        }
       }
     },
 
