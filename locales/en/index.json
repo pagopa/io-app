@@ -3797,6 +3797,37 @@
       "title": "Questo servizio non è più attivo su IO"
     },
     "pn": {
+      "aar": {
+        "serviceActivation": {
+          "failure": "Non riusciamo ad attivare il servizio SEND",
+          "feature1": {
+            "part1": "Attiva SEND su IO e ricevi in app le ",
+            "part2": "comunicazioni a valore legale",
+            "part3": " che ti inviano gli enti"
+          },
+          "feature2": {
+            "part1": "Se leggi la comunicazione online in tempo, ",
+            "part2": "eviti la raccomandata e risparmi"
+          },
+          "feature3": {
+            "part1": "Puoi pagare direttamente in app: è ",
+            "part2": "facile e veloce"
+          },
+          "footer": {
+            "part1": "Premendo ",
+            "part2": "Attiva SEND su IO",
+            "part3": " dichiari di aver letto e compreso l’",
+            "part4": "Informativa Privacy",
+            "part5": " e i ",
+            "part6": "Termini e Condizioni d’uso",
+            "part7": "."
+          },
+          "headerAction": "Chiudi",
+          "primaryAction": "Attiva SEND su IO",
+          "serviceActivated": "Hai attivato SEND su IO",
+          "title": "Ricevi su IO le tue prossime notifiche SEND"
+        }
+      },
       "reminderBanner": {
         "title": "Risparmia sui costi di notifica!",
         "body": "Scopri e attiva SEND su IO per ricevere le comunicazioni a valore legale direttamente in app.",
@@ -3920,6 +3951,16 @@
           "expand": "mostra gli stati precedenti",
           "info": "Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio",
           "cta": "Accedi alla versione web"
+        }
+      },
+      "qrCodeScan": {
+        "success": {
+          "openSendScreen": {
+            "title": "Per accedere ai documenti vai sul sito web di SEND",
+            "body": "Per visualizzare i documenti online devi andare sul sito web di SEND. Presto potrai farlo direttamente da IO!",
+            "firstCta": "Vai su SEND",
+            "secondCta": "Chiudi"
+          }
         }
       }
     },
@@ -4094,7 +4135,7 @@
       "onboarding": {
         "title": "Cosa vuoi aggiungere al portafoglio?",
         "sections": {
-          "itw": "Documenti",
+          "itw": "Documenti su IO",
           "other": "Altro"
         },
         "badge": {
@@ -4441,27 +4482,27 @@
         "mode": {
           "l2": {
             "title": "Verifica la tua identità",
-            "description": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
+            "description": "È un passaggio di sicurezza necessario per aggiungere i tuoi documenti digitali su IO.",
             "header": "Scegli come identificarti",
             "method": {
               "spid": {
-                "title": "SPID",
-                "subtitle": "Usa credenziali e app (o SMS)"
+                "title": "Usa SPID",
+                "subtitle": "Necessarie credenziali e app (o SMS)"
               },
               "ciePin": {
-                "title": "CIE + PIN",
-                "subtitle": "Usa Carta d’Identità Elettronica e PIN"
+                "title": "Usa CIE + PIN",
+                "subtitle": "Usa la Carta di Identità Elettronica e il suo PIN a 8 cifre"
               },
               "cieId": {
-                "title": "CieID",
-                "subtitle": "Usa credenziali e app CieID"
+                "title": "Usa l'app CieID",
+                "subtitle": "Necessarie credenziali e app CieID"
               }
             }
           },
           "l3": {
             "screen": {
               "title": "Verifica la tua identità con CIE",
-              "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet.",
+              "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet e associare i documenti alla tua identità.",
               "primaryAction": "Inizia",
               "secondaryAction": "Non ho la CIE",
               "requirements": {
@@ -4499,13 +4540,13 @@
         "cie": {
           "prepare": {
             "pin": {
-              "title": "Prepara il PIN della tua carta di identità elettronica (CIE)",
-              "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell’identità.",
+              "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)",
+              "content": "Dovrai digitarlo per completare la verifica dell’identità.",
               "buttonLink": "Cos’è il PIN della CIE?",
               "cta": "Inserisci il PIN della CIE"
             },
             "card": {
-              "title": "Prepara la tua carta di identità elettronica (CIE)",
+              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
               "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
               "cta": "Inizia lettura CIE",
               "buttonLink": "Cos’è la CIE?"
@@ -4521,9 +4562,9 @@
                 "title": "Appoggia la CIE alla parte alta del telefono",
                 "action": "Annulla"
               },
-              "progress": {
+              "reading": {
                 "title": "La lettura è in corso",
-                "content": "Non muovere la carta.",
+                "subtitle": "Non muovere la carta.",
                 "action": "Annulla"
               },
               "completed": {
@@ -4534,16 +4575,16 @@
             "ios": {
               "idle": {
                 "title": "Appoggia il retro del telefono sulla CIE, a questa altezza.",
-                "status": "{{ progress }}\nSe la lettura non parte, rimuovi la cover del telefono."
+                "status": "⚪⚪⚪⚪⚪⚪⚪⚪\nSe la lettura non parte, rimuovi la cover del telefono."
               },
-              "progress": {
+              "reading": {
                 "title": "Lettura in corso...",
-                "content": "Non muovere la carta.",
-                "status": "{{ progress }}\nLa lettura è in corso, non muovere o spostare la carta. "
+                "subtitle": "Non muovere la carta.",
+                "status": "La lettura è in corso, non muovere o spostare la carta. "
               },
               "completed": {
                 "title": "Lettura completata!",
-                "status": "{{ progress }}\nFatto!"
+                "status": "🔵🔵🔵🔵🔵🔵🔵🔵\nFatto!"
               }
             }
           },
@@ -4579,8 +4620,8 @@
           },
           "bottomSheet": {
             "card": {
-              "title": "Carta di identità elettronica (CIE)",
-              "content": "La CIE è la Carta d'Identità in formato elettronico introdotto in Italia per sostituire la tradizionale carta d'identità cartacea.\n\nTi è utile averla per:\n * Accedere ai servizi online della Pubblica Amministrazione (es. INPS, Agenzia delle Entrate)\n * Identificarti ufficialmente in Italia e all’estero\n * Viaggiare nei Paesi dell’UE e in altri che la accettano al posto del passaporto.",
+              "title": "Carta di Identità Elettronica (CIE)",
+              "content": "La CIE è la Carta di Identità in formato elettronico introdotto in Italia per sostituire la tradizionale Carta di Identità cartacea.\n\nTi è utile averla per:\n * Accedere ai servizi online della Pubblica Amministrazione (es. INPS, Agenzia delle Entrate)\n * Identificarti ufficialmente in Italia e all’estero\n * Viaggiare nei Paesi dell’UE e in altri che la accettano al posto del passaporto.",
               "primaryAction": "Ho capito",
               "secondaryAction": "Non ho la CIE"
             },
@@ -4589,6 +4630,39 @@
               "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
               "primaryAction": "Ho capito",
               "secondaryAction": "Non trovo il PIN della CIE"
+            }
+          },
+          "failure": {
+            "wrongCard": {
+              "title": "Non siamo riusciti a recuperare i dati dalla carta",
+              "subtitle": "La carta utilizzata non sembra essere una Carta di Identità Elettronica."
+            },
+            "tagLost": {
+              "title": "Hai rimosso il telefono troppo presto!",
+              "subtitle": "Riprova e tieni fermo il telefono per la lettura."
+            },
+            "expired": {
+              "title": "La verifica della CIE non è andata a buon fine",
+              "subtitle": "La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app."
+            },
+            "wrongPin1": {
+              "title": "Il PIN non è corretto",
+              "subtitle": "Hai ancora 2 tentativi, controllalo e riprova.",
+              "secondaryAction": "Hai dimenticato il PIN?"
+            },
+            "wrongPin2": {
+              "title": "Hai inserito un PIN errato per 2 volte",
+              "subtitle": "Al terzo tentativo errato, il PIN verrà bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
+              "secondaryAction": "Hai dimenticato il PIN?"
+            },
+            "locked": {
+              "title": "Hai inserito un PIN errato per troppe volte",
+              "subtitle": "Il PIN della tua CIE è stato bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
+              "secondaryAction": "Hai dimenticato il PUK?"
+            },
+            "generic": {
+              "title": "Non siamo riusciti a recuperare i dati dalla carta",
+              "subtitle": "Se riscontri più volte il problema, attendi qualche minuto e riprova."
             }
           }
         },
@@ -4639,7 +4713,7 @@
           }
         },
         "eidResult": {
-          "success": {
+          "successL2": {
             "title": "È tutto pronto!",
             "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
             "toast": "Fatto!",
@@ -4647,6 +4721,13 @@
               "continue": "Aggiungi primo documento",
               "continueAlt": "Aggiungi documento",
               "close": "Continua più tardi"
+            }
+          },
+          "success": {
+            "title": "Il tuo IT-Wallet è pronto!",
+            "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale di Stato.",
+            "actions": {
+              "continue": "Esplora IT-Wallet"
             }
           }
         },
@@ -4678,6 +4759,12 @@
           "title": "La Motorizzazione Civile ha preso in carico la tua richiesta",
           "body": "Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.",
           "primaryAction": "Ho capito"
+        },
+        "issuerNotTrustedCommonError": {
+          "title": "Un problema non permette di continuare",
+          "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere IT-Wallet. Riprova.\nSe il problema persiste, contatta l’assistenza.",
+          "primaryAction": "Ho capito",
+          "secondaryAction": "Mostra dettagli"
         },
         "credentialAlreadyAdded": {
           "title": "Hai già questo documento",
@@ -4845,6 +4932,13 @@
             "title": "Verifica la versione digitale del documento",
             "content": "È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.",
             "primaryAction": "Inizia"
+          },
+          "mdl": {
+            "walletUpgradeBanner": {
+              "title": "Novità IT-Wallet",
+              "content": "Ottieni IT-Wallet per usare la tua Patente anche come documento d'identità!",
+              "action": "Ottieni IT-Wallet"
+            }
           }
         },
         "ctas": {
@@ -5482,7 +5576,7 @@
         }
       },
       "discountDetails": {
-        "authorizeButton": "Autorizza un pagamento",
+        "authorizeButton": "Usa il bonus",
         "addExpenseButton": "Aggiungi spesa",
         "bottomSheetOptions": {
           "scanQr": "Inquadra un codice QR",
@@ -5511,7 +5605,7 @@
       "beneficiaryDetails": {
         "infobox": {
           "title": "Cosa ti permette di fare?",
-          "rulesButton": "Leggi le regole"
+          "rulesButton": "Read the rules"
         },
         "infoModal": {
           "title": "Regole dell'iniziativa",
@@ -5534,7 +5628,7 @@
         "protocolNumber": "Numero di protocollo",
         "lastUpdate": "Saldo aggiornato al {{dateString}}",
         "buttons": {
-          "privacy": "Preferenze & Privacy",
+          "privacy": "Preferenze e Privacy",
           "unsubscribe": "Rimuovi {{initiativeName}}",
           "requestHelp": "Chiedi aiuto"
         }
@@ -5623,7 +5717,7 @@
         "message": {
           "GENERIC": {
             "title": "Si è verificato un errore imprevisto",
-            "subtitle": "Siamo già a lavoro per risolverlo: ti invitiamo a riprovare più tardi."
+            "subtitle": "Siamo già a lavoro per risolverlo. Prova più tardi ad accedere all’iniziativa."
           },
           "INITIATIVE_NOT_FOUND": {
             "title": "Non riusciamo a trovare quest’iniziativa",
@@ -5668,10 +5762,8 @@
       },
       "headerTitle": "Adesione all'iniziativa",
       "beforeContinue": {
-        "text1": "Proseguendo accetti i ",
-        "tosLink": "Termini e condizioni d'uso",
-        "text2": " del servizio e confermi di avere letto l' ",
-        "privacyLink": "Informativa privacy"
+        "text": "By clicking Continue, you declare that you have read, understood, and accepted the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions]({{tosUrl}}) of use.",
+        "requestBonus": "Request bonus"
       },
       "navigation": {
         "header": "Adesione all'iniziativa"

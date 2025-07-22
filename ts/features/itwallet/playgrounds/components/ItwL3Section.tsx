@@ -10,7 +10,7 @@ import { useCallback } from "react";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwIsL3EnabledSelector } from "../../../../features/itwallet/common/store/selectors/preferences";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { itwSetFiscalCodeWhitelisted } from "../../common/store/actions/preferences";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { CredentialL3Key } from "../../common/utils/itwMocksUtils";

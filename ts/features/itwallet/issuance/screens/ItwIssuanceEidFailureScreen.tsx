@@ -16,7 +16,7 @@ import {
   selectFailureOption,
   selectIdentification
 } from "../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import {
@@ -219,6 +219,30 @@ const ContentView = ({ failure }: ContentViewProps) => {
             secondaryAction: {
               label: I18n.t("global.buttons.close"),
               onPress: () => machineRef.send({ type: "close" })
+            }
+          };
+        case IssuanceFailureType.UNTRUSTED_ISS:
+          return {
+            title: I18n.t(
+              `features.itWallet.issuance.issuerNotTrustedCommonError.title`
+            ),
+            subtitle: I18n.t(
+              `features.itWallet.issuance.issuerNotTrustedCommonError.subtitle`
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                `features.itWallet.issuance.issuerNotTrustedCommonError.primaryAction`
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                `features.itWallet.issuance.issuerNotTrustedCommonError.secondaryAction`
+              ),
+              onPress: () => {
+                supportModal.present();
+              }
             }
           };
       }

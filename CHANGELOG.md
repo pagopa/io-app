@@ -2,6 +2,57 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.10.0-rc.4](https://github.com/pagopa/io-app/compare/3.10.0-rc.3...3.10.0-rc.4) (2025-07-21)
+
+
+### Features
+
+* [[IOBP-1875](https://pagopa.atlassian.net/browse/IOBP-1875)] Add remote configuration support for banner status message `label_cta` ([#7195](https://github.com/pagopa/io-app/issues/7195)) ([1bdb6b6](https://github.com/pagopa/io-app/commit/1bdb6b6e42bc21693e336af268c54e7f4248c5b5))
+* [[IOCOM-2462](https://pagopa.atlassian.net/browse/IOCOM-2462)] SEND service activation screen from AAR ([#7201](https://github.com/pagopa/io-app/issues/7201)) ([e1cd414](https://github.com/pagopa/io-app/commit/e1cd41448b511a117ed0d9b99ebd6635449866fb))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2703](https://pagopa.atlassian.net/browse/SIW-2703),[SIW-2748](https://pagopa.atlassian.net/browse/SIW-2748)]  Bottom sheet and keyboard layout on CIE PIN screen and copy update ([#7203](https://github.com/pagopa/io-app/issues/7203)) ([e1dcc3f](https://github.com/pagopa/io-app/commit/e1dcc3fffda97a0a662d57ada7b972d150090380))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2220](https://pagopa.atlassian.net/browse/SIW-2220)] IT-Wallet activation success screen ([#7191](https://github.com/pagopa/io-app/issues/7191)) ([98b20fe](https://github.com/pagopa/io-app/commit/98b20feea6504114f3d0c30f2a656ac29286bc00))
+* **IT Wallet:** [[SIW-2528](https://pagopa.atlassian.net/browse/SIW-2528),[SIW-2529](https://pagopa.atlassian.net/browse/SIW-2529),[SIW-2622](https://pagopa.atlassian.net/browse/SIW-2622),[SIW-2623](https://pagopa.atlassian.net/browse/SIW-2623),[SIW-2626](https://pagopa.atlassian.net/browse/SIW-2626),[SIW-2630](https://pagopa.atlassian.net/browse/SIW-2630)] Update IT Wallet copy  ([#7197](https://github.com/pagopa/io-app/issues/7197)) ([3bd7dff](https://github.com/pagopa/io-app/commit/3bd7dff26531a74cb1c9c9dcb9c6490fcd4a1a7c))
+
+## [3.10.0-rc.3](https://github.com/pagopa/io-app/compare/3.10.0-rc.2...3.10.0-rc.3) (2025-07-18)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2216](https://pagopa.atlassian.net/browse/SIW-2216)] New CIE SDK implementation for CIE+PIN  ([#7155](https://github.com/pagopa/io-app/issues/7155)) ([19f558f](https://github.com/pagopa/io-app/commit/19f558f8e7b59e1018f17adafe35db55bd72c5b5))
+* [[IOCOM-2461](https://pagopa.atlassian.net/browse/IOCOM-2461)] SEND scan success/redirect screen ([#7178](https://github.com/pagopa/io-app/issues/7178)) ([6a0ebe8](https://github.com/pagopa/io-app/commit/6a0ebe813496165032cf51bea96e6165d321b6d9))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2742](https://pagopa.atlassian.net/browse/SIW-2742)] Rollback authentication URL regex inside CieID flow ([#7193](https://github.com/pagopa/io-app/issues/7193)) ([71f5861](https://github.com/pagopa/io-app/commit/71f5861e2d35c8272f11adba2a598d1b9456c366))
+* [[IOCOM-2486](https://pagopa.atlassian.net/browse/IOCOM-2486)] Fix for images on IOMarkdown ([#7184](https://github.com/pagopa/io-app/issues/7184)) ([d0cf09f](https://github.com/pagopa/io-app/commit/d0cf09f374b9cb98067edbebbf90b0f087b6ddf4))
+
+
+### Chores
+
+* [[IOPLT-1263](https://pagopa.atlassian.net/browse/IOPLT-1263)] Replace `lottie-react-native` with `skottie` (`skia` library) ([#7187](https://github.com/pagopa/io-app/issues/7187)) ([bab0052](https://github.com/pagopa/io-app/commit/bab0052341d9ef1dab1418adc02e477fec958078))
+
+## [3.10.0-rc.2](https://github.com/pagopa/io-app/compare/3.10.0-rc.1...3.10.0-rc.2) (2025-07-17)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2665](https://pagopa.atlassian.net/browse/SIW-2665)] Add IT-Wallet upgrade banner in MDL details ([#7161](https://github.com/pagopa/io-app/issues/7161)) ([e564740](https://github.com/pagopa/io-app/commit/e5647402e0b7bd63bbcf55e060b823cf2c74c047))
+
+
+### Chores
+
+* [[IOPLT-1166](https://pagopa.atlassian.net/browse/IOPLT-1166)] remove resolutions on types/react ([#7120](https://github.com/pagopa/io-app/issues/7120)) ([19ba684](https://github.com/pagopa/io-app/commit/19ba684bd81ba7e815d3a6fba39e7c135ef1840e)), closes [pagopa/io-app-design-system#482](https://github.com/pagopa/io-app-design-system/issues/482)
+* **IT Wallet:** [[SIW-2218](https://pagopa.atlassian.net/browse/SIW-2218)] IT-Wallet preview screen ([#7189](https://github.com/pagopa/io-app/issues/7189)) ([2b1d7bc](https://github.com/pagopa/io-app/commit/2b1d7bc4d38f56dcca91e3f70ee03d491bc100d6))
+
 ## [3.10.0-rc.1](https://github.com/pagopa/io-app/compare/3.10.0-rc.0...3.10.0-rc.1) (2025-07-16)
 
 

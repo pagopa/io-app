@@ -44,7 +44,7 @@ const WalletPaymentFeebackBanner = () => {
       <Banner
         color="neutral"
         pictogramName="feedback"
-        viewRef={bannerViewRef}
+        ref={bannerViewRef}
         title={feedbackBannerConfig.title?.[localeFallback]}
         content={feedbackBannerConfig.description[localeFallback]}
         // Starting from version 5.1.3 of the Design System, the `action` property,

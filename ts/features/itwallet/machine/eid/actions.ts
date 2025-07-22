@@ -104,7 +104,9 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   navigateToWallet: () => {
-    toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
+    toast.success(
+      I18n.t("features.itWallet.issuance.eidResult.successL2.toast")
+    );
     navigation.reset({
       index: 1,
       routes: [
@@ -156,9 +158,15 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCieReadCardScreen: () => {
+  navigateToCieReadCardL2Screen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L2
+    });
+  },
+
+  navigateToCieReadCardL3Screen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L3
     });
   },
 
@@ -224,7 +232,9 @@ export const createEidIssuanceActionsImplementation = (
   resetWalletInstance: () => {
     store.dispatch(itwLifecycleWalletReset());
     store.dispatch(itwSetAuthLevel(undefined));
-    toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
+    toast.success(
+      I18n.t("features.itWallet.issuance.eidResult.successL2.toast")
+    );
   },
 
   trackWalletInstanceCreation: () => {

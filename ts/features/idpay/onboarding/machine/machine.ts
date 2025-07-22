@@ -34,6 +34,7 @@ export const idPayOnboardingMachine = setup({
     navigateToFailureScreen: notImplementedStub,
     navigateToInitiativeMonitoringScreen: notImplementedStub,
     closeOnboarding: notImplementedStub,
+    closeOnboardingSuccess: notImplementedStub,
     handleSessionExpired: notImplementedStub,
     navigateToInputFormScreen: notImplementedStub,
     navigateToEnableNotificationScreen: notImplementedStub,
@@ -179,6 +180,10 @@ export const idPayOnboardingMachine = setup({
     },
 
     DisplayingInitiativeInfo: {
+      entry: "navigateToInitiativeDetailsScreen",
+      actions: assign(() => ({
+        currentStep: 1
+      })),
       on: {
         next: [
           {
@@ -285,9 +290,6 @@ export const idPayOnboardingMachine = setup({
           }
         ],
         back: {
-          actions: assign(({ context }) => ({
-            currentStep: context.currentStep - 1
-          })),
           target: "#idpay-onboarding.DisplayingInitiativeInfo"
         }
       }
@@ -384,8 +386,10 @@ export const idPayOnboardingMachine = setup({
                     target:
                       "#idpay-onboarding.DisplayingSelfDeclarationList.DisplayingBooleanSelfDeclarationList",
                     actions: assign(({ context }) => ({
-                      selfDeclarationsMultiPage:
-                        +context.selfDeclarationsMultiPage - 1,
+                      selfDeclarationsMultiPage: Math.max(
+                        0,
+                        +context.selfDeclarationsMultiPage - 1
+                      ),
                       currentStep: context.currentStep - 1
                     }))
                   },
@@ -393,8 +397,10 @@ export const idPayOnboardingMachine = setup({
                     guard: and(["isFirstMultiConsentPage", "hasPdndCriteria"]),
                     target: "#idpay-onboarding.DisplayingPdndCriteria",
                     actions: assign(({ context }) => ({
-                      selfDeclarationsMultiPage:
-                        +context.selfDeclarationsMultiPage - 1,
+                      selfDeclarationsMultiPage: Math.max(
+                        0,
+                        +context.selfDeclarationsMultiPage - 1
+                      ),
                       currentStep: context.currentStep - 1
                     }))
                   },
@@ -402,8 +408,10 @@ export const idPayOnboardingMachine = setup({
                     guard: "isFirstMultiConsentPage",
                     target: "#idpay-onboarding.DisplayingInitiativeInfo",
                     actions: assign(({ context }) => ({
-                      selfDeclarationsMultiPage:
-                        +context.selfDeclarationsMultiPage - 1,
+                      selfDeclarationsMultiPage: Math.max(
+                        0,
+                        +context.selfDeclarationsMultiPage - 1
+                      ),
                       currentStep: context.currentStep - 1
                     }))
                   }
@@ -539,7 +547,7 @@ export const idPayOnboardingMachine = setup({
           target: "Idle"
         },
         close: {
-          actions: "closeOnboarding",
+          actions: "closeOnboardingSuccess",
           target: "Idle"
         }
       }
@@ -559,7 +567,7 @@ export const idPayOnboardingMachine = setup({
             guard: "shouldShowEnableNotificationOnClose"
           },
           {
-            actions: "closeOnboarding"
+            actions: "closeOnboardingSuccess"
           }
         ]
       }

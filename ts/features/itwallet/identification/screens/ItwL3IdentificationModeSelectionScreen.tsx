@@ -28,8 +28,8 @@ import {
   trackItwUserWithoutL3Requirements
 } from "../../analytics";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { useCieInfoBottomSheet } from "../cie/hooks/useCieInfoBottomSheet";
 import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
 
 export const ItwL3IdentificationModeSelectionScreen = () => {
@@ -276,7 +276,6 @@ export const useNoCieBottomSheet = () => {
             {
               type: "TwoButtons",
               primary: {
-                icon: "cie",
                 label: I18n.t(
                   "features.itWallet.identification.mode.l3.bottomSheet.noCie.primaryAction"
                 ),

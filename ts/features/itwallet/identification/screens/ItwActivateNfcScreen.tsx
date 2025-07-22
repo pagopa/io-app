@@ -4,18 +4,18 @@ import {
   ListItemHeader,
   ListItemInfo
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { Alert } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../../i18n";
-import * as cieUtils from "../../../../authentication/login/cie/utils/cie";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import I18n from "../../../../i18n";
+import * as cieUtils from "../../../authentication/login/cie/utils/cie";
 import {
   trackItWalletCieNfcActivation,
   trackItWalletCieNfcGoToSettings
-} from "../../../analytics";
-import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+} from "../../analytics";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
 
 export const ItwActivateNfcScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -42,7 +42,7 @@ export const ItwActivateNfcScreen = () => {
     } else {
       Alert.alert(I18n.t("authentication.cie.nfc.activeNfcAlert"), "", [
         {
-          text: I18n.t("global.buttons.cancel"),
+          text: I18n.t("global.buttons.close"),
           style: "cancel"
         },
         {
