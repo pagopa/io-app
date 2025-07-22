@@ -1,6 +1,6 @@
 import { ListItemHeader, Optional, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useMemo } from "react";
+import { ReactNode, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
@@ -98,10 +98,12 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   // When the new Wallet UI is renderable and there are no
   // banners between the header and the cards, the vertical space
   // has to be removed.
-  const Container = useMemo(
-    () => (!hasActiveBannersAboveWallet && isNewItwRenderable ? View : VStack),
-    [hasActiveBannersAboveWallet, isNewItwRenderable]
-  );
+  const Container = ({ children }: { children: ReactNode }) => {
+    if (!hasActiveBannersAboveWallet && isNewItwRenderable) {
+      return <View>{children}</View>;
+    }
+    return <VStack space={16}>{children}</VStack>;
+  };
 
   return (
     <Container>
@@ -117,7 +119,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           />
         </View>
       )}
-      <VStack>
+      <VStack space={16}>
         <ItwOfflineWalletBanner />
         <WalletCardsCategoryContainer
           key={`cards_category_itw`}

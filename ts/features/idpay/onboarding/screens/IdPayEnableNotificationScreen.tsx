@@ -5,7 +5,7 @@ import { View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { areNotificationPermissionsEnabledSelector } from "../../../appearanceSettings/store/selectors";
+import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
 import { openSystemNotificationSettingsScreen } from "../../../pushNotifications/utils";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 
