@@ -27,7 +27,10 @@ import {
   ItwStatus,
   mapEidStatusToMixpanel
 } from "../features/itwallet/analytics";
-import { itwCredentialsEidStatusSelector, itwCredentialsSelector } from "../features/itwallet/credentials/store/selectors";
+import {
+  itwCredentialsEidStatusSelector,
+  itwCredentialsSelector
+} from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";

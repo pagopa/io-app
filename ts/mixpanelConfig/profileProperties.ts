@@ -31,6 +31,10 @@ import {
 } from "../features/pn/analytics/index.ts";
 import { isPnServiceEnabled } from "../features/pn/reminderBanner/reducer/bannerDismiss.ts";
 import {
+  itwCredentialsEidStatusSelector,
+  itwCredentialsSelector
+} from "../features/itwallet/credentials/store/selectors";
+import {
   cgnStatusHandler,
   loginSessionConfigHandler,
   mixpanelOptInHandler,
@@ -42,7 +46,6 @@ import {
   serviceConfigHandler,
   welfareStatusHandler
 } from "./mixpanelPropertyUtils";
-import { itwCredentialsEidStatusSelector, itwCredentialsSelector } from "../features/itwallet/credentials/store/selectors";
 
 type ProfileProperties = {
   BIOMETRIC_TECHNOLOGY: BiometricsType;
