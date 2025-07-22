@@ -131,7 +131,7 @@ export const itwCredentialIssuanceMachine = setup({
       invoke: {
         src: "getWalletAttestation",
         input: ({ context }) => ({
-          isNewIssunceFlowEnabled: context.isWhiteListed
+          isNewIssuanceFlowEnabled: context.isWhiteListed
         }),
         onDone: {
           target: "RequestingCredential",

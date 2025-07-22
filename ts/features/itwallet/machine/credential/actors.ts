@@ -13,7 +13,7 @@ import { Env } from "../../common/utils/environment";
 import { type Context } from "./context";
 
 export type GetWalletAttestationActorInput = {
-  isNewIssunceFlowEnabled?: boolean;
+  isNewIssuanceFlowEnabled?: boolean;
 };
 
 export type GetWalletAttestationActorOutput = Awaited<
@@ -50,7 +50,7 @@ export const createCredentialIssuanceActorsImplementation = (
     GetWalletAttestationActorOutput,
     GetWalletAttestationActorInput
   >(async ({ input }) => {
-    const { isNewIssunceFlowEnabled } = input;
+    const { isNewIssuanceFlowEnabled } = input;
     const sessionToken = sessionTokenSelector(store.getState());
     const integrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
 
@@ -61,7 +61,7 @@ export const createCredentialIssuanceActorsImplementation = (
       env,
       integrityKeyTag.value,
       sessionToken,
-      isNewIssunceFlowEnabled
+      isNewIssuanceFlowEnabled
     );
   });
 
