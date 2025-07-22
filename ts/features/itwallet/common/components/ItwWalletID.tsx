@@ -1,11 +1,10 @@
 import { View, StyleSheet } from "react-native";
-import { memo, useState } from "react";
+import { useState } from "react";
 import {
   HStack,
   Body,
   Icon,
   IOButton,
-  IOColors,
   IOIconsProps
 } from "@pagopa/io-app-design-system";
 import {
@@ -17,16 +16,21 @@ import {
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
-import { IT_WALLET_ID_LOGO } from "../utils/constants";
+import { IT_WALLET_ID_GRADIENT, IT_WALLET_ID_LOGO } from "../utils/constants";
 import { ItwJwtCredentialStatus } from "../utils/itwTypesUtils";
+import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
+import { useIOSelector } from "../../../../store/hooks";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 type Props = {
-  onShow: () => void;
+  isStacked?: boolean;
   pidStatus?: ItwJwtCredentialStatus;
 };
-type WalletIDAllowedStatus = Exclude<ItwJwtCredentialStatus, "valid">;
 
-const walletIdStatusMap: Record<WalletIDAllowedStatus, IOIconsProps> = {
+type WalletIdAllowedStatus = Exclude<ItwJwtCredentialStatus, "valid">;
+
+const walletIdStatusMap: Record<WalletIdAllowedStatus, IOIconsProps> = {
   jwtExpiring: {
     name: "warningFilled",
     color: "warning-850"
@@ -37,29 +41,44 @@ const walletIdStatusMap: Record<WalletIDAllowedStatus, IOIconsProps> = {
   }
 };
 
-export const ItwWalletID = memo(({ pidStatus, onShow }: Props) => (
-  <View style={styles.itwWalletID}>
-    <BackgroundGradient />
-    <HStack style={styles.hStack} space={8}>
-      <Icon name={IT_WALLET_ID_LOGO} color="blueIO-500" />
-      <Body weight="Semibold" color="grey-850">
-        {I18n.t("features.itWallet.walletID.title")}
-      </Body>
-      <ItwWalletIDStatus pidStatus={pidStatus} />
-    </HStack>
-    <IOButton
-      color="primary"
-      variant="link"
-      label={I18n.t("features.itWallet.walletID.show")}
-      onPress={onShow}
-    />
-  </View>
-));
+export const ItwWalletId = (props: Props) => {
+  const navigation = useIONavigation();
+  const pidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
-const ItwWalletIDStatus = ({ pidStatus }: Pick<Props, "pidStatus">) =>
+  const handleCtaPress = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.PID_DETAIL
+    });
+  };
+
+  return (
+    <View
+      style={[styles.container, props.isStacked && styles.containerStacked]}
+    >
+      <BackgroundGradient />
+      <View style={styles.content}>
+        <HStack space={8}>
+          <Icon name={IT_WALLET_ID_LOGO} color="blueIO-500" />
+          <Body weight="Semibold" color="grey-850">
+            {I18n.t("features.itWallet.walletID.title")}
+          </Body>
+          <ItwWalletIdStatus pidStatus={pidStatus} />
+        </HStack>
+        <IOButton
+          color="primary"
+          variant="link"
+          label={I18n.t("features.itWallet.walletID.show")}
+          onPress={handleCtaPress}
+        />
+      </View>
+    </View>
+  );
+};
+
+const ItwWalletIdStatus = ({ pidStatus }: Pick<Props, "pidStatus">) =>
   pipe(
     O.fromNullable(pidStatus),
-    O.filter((s): s is WalletIDAllowedStatus => s in walletIdStatusMap),
+    O.filter((s): s is WalletIdAllowedStatus => s in walletIdStatusMap),
     O.fold(constNull, status => {
       const iconProps = walletIdStatusMap[status];
 
@@ -68,7 +87,10 @@ const ItwWalletIDStatus = ({ pidStatus }: Pick<Props, "pidStatus">) =>
   );
 
 const BackgroundGradient = () => {
-  const [{ width, height }, setDimensions] = useState({ width: 0, height: 0 });
+  const [{ width, height }, setDimensions] = useState({
+    width: 0,
+    height: 0
+  });
 
   return (
     <Canvas
@@ -83,8 +105,8 @@ const BackgroundGradient = () => {
       <RoundedRect x={0} y={0} width={width} height={height} r={8}>
         <LinearGradient
           start={vec(0, 0)}
-          end={vec(0, height)}
-          colors={[IOColors.white, IOColors.white + "00"]}
+          end={vec(width, 0)}
+          colors={IT_WALLET_ID_GRADIENT}
         />
       </RoundedRect>
     </Canvas>
@@ -92,14 +114,20 @@ const BackgroundGradient = () => {
 };
 
 const styles = StyleSheet.create({
-  itwWalletID: {
+  container: {
+    marginHorizontal: -8,
+    marginBottom: 16,
+    height: 56
+  },
+  containerStacked: {
+    height: 96,
+    marginBottom: -40 // This allows the header to slide under the underlying component
+  },
+  content: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: 16,
     paddingHorizontal: 24
-  },
-  hStack: {
-    alignItems: "center"
   }
 });
