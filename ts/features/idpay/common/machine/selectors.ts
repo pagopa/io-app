@@ -6,6 +6,3 @@ export const isLoadingSelector = (snapshot: AnyMachineSnapshot) =>
 
 export const isUpsertingSelector = (snapshot: AnyMachineSnapshot) =>
   snapshot.hasTag(IdPayTags.Upserting);
-
-export const isLoadingPaymentSelector = (snapshot: AnyMachineSnapshot) =>
-  snapshot.hasTag(IdPayTags.LoadingPayment);

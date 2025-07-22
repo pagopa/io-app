@@ -96,7 +96,7 @@ export const idPayPaymentMachine = setup({
     },
 
     Cancelling: {
-      tags: [IdPayTags.LoadingCancelling],
+      tags: [IdPayTags.Loading, IdPayTags.DisableButtons],
       invoke: {
         id: "deletePayment",
         src: "deletePayment",
@@ -121,7 +121,7 @@ export const idPayPaymentMachine = setup({
     },
 
     Authorizing: {
-      tags: [IdPayTags.LoadingPayment],
+      tags: [IdPayTags.Loading, IdPayTags.DisableButtons],
       invoke: {
         id: "authorizePayment",
         src: "authorizePayment",

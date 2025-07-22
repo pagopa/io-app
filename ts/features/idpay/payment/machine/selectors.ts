@@ -8,7 +8,7 @@ export const isAuthorizingSelector = (snapshot: MachineSnapshot) =>
   snapshot.matches("Authorizing");
 
 export const isCancellingSelector = (snapshot: MachineSnapshot) =>
-  snapshot.hasTag(IdPayTags.LoadingCancelling);
+  snapshot.matches("Cancelling");
 
 export const isCancelledSelector = (snapshot: MachineSnapshot) =>
   snapshot.matches("AuthorizationCancelled");
@@ -18,3 +18,6 @@ export const failureSelector = (snapshot: MachineSnapshot) =>
 
 export const transactionDataSelector = (snapshot: MachineSnapshot) =>
   snapshot.context.transactionData;
+
+export const areButtonsDisabledSelector = (snapshot: MachineSnapshot) =>
+  snapshot.hasTag(IdPayTags.DisableButtons);

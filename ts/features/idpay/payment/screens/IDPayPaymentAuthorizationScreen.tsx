@@ -18,10 +18,7 @@ import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import {
-  isLoadingPaymentSelector,
-  isLoadingSelector
-} from "../../common/machine/selectors";
+import { isLoadingSelector } from "../../common/machine/selectors";
 import {
   formatDateOrDefault,
   formatNumberCurrencyCents,
@@ -29,8 +26,8 @@ import {
 } from "../../common/utils/strings";
 import { IdPayPaymentMachineContext } from "../machine/provider";
 import {
+  areButtonsDisabledSelector,
   isAuthorizingSelector,
-  isCancellingSelector,
   transactionDataSelector
 } from "../machine/selectors";
 import { IdPayPaymentParamsList } from "../navigation/params";
@@ -60,11 +57,9 @@ const IDPayPaymentAuthorizationScreen = () => {
 
   const transactionData = useSelector(transactionDataSelector);
   const isLoading = useSelector(isLoadingSelector);
-  const isLoadingPayment = useSelector(isLoadingPaymentSelector);
   const isAuthorizing = useSelector(isAuthorizingSelector);
-  const isCancelling = useSelector(isCancellingSelector);
-  const areButtonsDisabled =
-    isLoading || isAuthorizing || isLoadingPayment || isCancelling;
+  const areButtonsDisabled = useSelector(areButtonsDisabledSelector);
+  const showSkeletons = isLoading && !transactionData;
 
   const handleCancel = () => {
     if (areButtonsDisabled) {
@@ -94,7 +89,7 @@ const IDPayPaymentAuthorizationScreen = () => {
   };
 
   const renderContent = () => {
-    if (!isLoading && O.isSome(transactionData)) {
+    if (O.isSome(transactionData) && !showSkeletons) {
       return <AuthorizationScreenContent data={transactionData.value} />;
     }
     return <AuthorizationScreenSkeleton />;
@@ -114,7 +109,7 @@ const IDPayPaymentAuthorizationScreen = () => {
           label: I18n.t("global.buttons.confirm"),
           onPress: handleConfirm,
           disabled: areButtonsDisabled,
-          loading: isLoading || isAuthorizing || isLoadingPayment
+          loading: isLoading || isAuthorizing
         },
         secondary: {
           label: I18n.t("idpay.payment.authorization.deny"),
