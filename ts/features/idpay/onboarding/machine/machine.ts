@@ -578,7 +578,7 @@ export const idPayOnboardingMachine = setup({
     OnboardingFailure: {
       entry: "navigateToFailureScreen",
       on: {
-        next: {
+        "check-details": {
           actions: "navigateToInitiativeMonitoringScreen"
         }
       }
