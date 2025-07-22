@@ -212,22 +212,32 @@ const getCredentialInvalidStatusDetails = (
   failure: CredentialIssuanceFailure,
   { credentialType, issuerConf }: GetCredentialInvalidStatusDetailsParams
 ) => {
-  const errorCodeOption = pipe(
+  const { errorCodeOption, credentialConfigurationId } = pipe(
     failure,
     O.fromPredicate(isInvalidStatusFailure),
-    O.chainEitherK(x => StatusAttestationError.decode(x.reason?.reason)),
-    O.map(x => x.error)
+    O.map(({ reason }) => ({
+      errorCodeOption: pipe(
+        O.of(reason?.reason),
+        O.chainEitherK(StatusAttestationError.decode),
+        O.map(({ error }) => error)
+      ),
+      credentialConfigurationId: O.fromNullable(reason?.credentialId)
+    })),
+    O.getOrElse(() => ({
+      errorCodeOption: O.none as O.Option<string>,
+      credentialConfigurationId: credentialType
+    }))
   );
 
   const localizedMessage = pipe(
     sequenceS(O.Monad)({
       errorCode: errorCodeOption,
-      credentialType,
+      credentialConfigurationId,
       issuerConf
     }),
     O.map(params =>
       Errors.extractErrorMessageFromIssuerConf(params.errorCode, {
-        credentialType: params.credentialType,
+        credentialType: params.credentialConfigurationId,
         issuerConf: params.issuerConf as LegacyIssuerConfiguration
       })
     ),
