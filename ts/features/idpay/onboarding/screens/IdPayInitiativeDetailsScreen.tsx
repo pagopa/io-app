@@ -8,11 +8,13 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useEffect } from "react";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferenceResponseSuccessByIdSelector } from "../../../services/details/store/reducers";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayOnboardingDescriptionSkeleton } from "../components/IdPayOnboardingDescriptionSkeleton";
@@ -35,6 +37,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
 
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
+  const dispatch = useIODispatch();
 
   const servicePreferenceResponseSuccess = useIOSelector(state =>
     servicePreferenceResponseSuccessByIdSelector(
@@ -45,13 +48,19 @@ const IdPayInitiativeDetailsScreenComponent = () => {
 
   useEffect(() => {
     if (params.serviceId !== undefined) {
+      dispatch(loadServicePreference.request(params.serviceId as ServiceId));
       machine.send({
         type: "start-onboarding",
         serviceId: params.serviceId,
         hasInbox: servicePreferenceResponseSuccess?.value.inbox ?? false
       });
     }
-  }, [machine, params, servicePreferenceResponseSuccess?.value.inbox]);
+  }, [
+    dispatch,
+    machine,
+    params,
+    servicePreferenceResponseSuccess?.value.inbox
+  ]);
 
   const initiative = useSelector(selectInitiative);
   const isLoading = useSelector(isLoadingSelector);
