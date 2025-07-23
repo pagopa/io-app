@@ -17,19 +17,15 @@ import {
 } from "./itwRemoteTypeUtils";
 
 /**
- * Maps a vct to the corresponding credential type, used in UI contexts
+ * Maps a vct name to the corresponding credential type, used in UI contexts
  * Note: although this list is unlikely to change, you should ensure to have
  * a fallback when dealing with this list to prevent unwanted behaviours
  */
 const credentialTypesByVct: { [vct: string]: CredentialType } = {
-  "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json":
-    CredentialType.PID,
-  "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/mdl.json":
-    CredentialType.DRIVING_LICENSE,
-  "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/europeandisabilitycard.json":
-    CredentialType.EUROPEAN_DISABILITY_CARD,
-  "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/europeanhealthinsurancecard.json":
-    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+  personidentificationdata: CredentialType.PID,
+  mdl: CredentialType.DRIVING_LICENSE,
+  europeandisabilitycard: CredentialType.EUROPEAN_DISABILITY_CARD,
+  europeanhealthinsurancecard: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
 };
 
 /**
@@ -37,8 +33,16 @@ const credentialTypesByVct: { [vct: string]: CredentialType } = {
  * @param vct credential vct
  * @returns credential type as string, undefine if not found
  */
-export const getCredentialTypeByVct = (vct: string): string | undefined =>
-  credentialTypesByVct[vct];
+export const getCredentialTypeByVct = (vct: string): string | undefined => {
+  // Extracts the name from the vct. For example:
+  // From "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json"
+  // Gets "/personidentificationdata.json"
+  const match = vct.match(/\/([^/]+)\.json$/);
+  // Extracts "personidentificationdata"
+  const name = match ? match[1] : null;
+  // Tries to match the extracted value to a credential type
+  return name ? credentialTypesByVct[name] : undefined;
+};
 
 /**
  * Validate the QR code parameters by starting the presentation flow.
