@@ -839,6 +839,10 @@
         "body": "Per la tua sicurezza, di tanto in tanto dobbiamo verificare la tua identità",
         "linkButtonLabel": "Leggi come fare"
       },
+      "active_session_login": {
+        "title": "Accedi subito",
+        "body": "Autenticati ora per usare l’app senza interruzioni. Così sarà sempre pronta quando ti serve."
+      },
       "cie_bottom_sheet": {
         "title": "Come vuoi entrare?",
         "module_cie_pin": {

@@ -73,6 +73,7 @@ import { identificationRequest } from "../../../../identification/store/actions"
 import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { itwOfflineAccessAvailableSelector } from "../../../../itwallet/common/store/selectors";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",
@@ -93,6 +94,8 @@ export const LandingScreen = () => {
   const itwOfflineAccessAvailable = useIOSelector(
     itwOfflineAccessAvailableSelector
   );
+
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const {
     navigateToIdpSelection,
@@ -263,6 +266,7 @@ export const LandingScreen = () => {
   }, [isCieSupported, navigation]);
 
   const LandingScreenComponent = () => {
+    // TODO: edit this in order to show the close icon only if active session login is perfomed
     useHeaderSecondLevel({
       title: "",
       supportRequest: true,
@@ -275,6 +279,11 @@ export const LandingScreen = () => {
         accessibilityLabel: I18n.t(
           "authentication.landing.useful_resources.bottomSheet.title"
         )
+      },
+      thirdAction: {
+        icon: "closeLarge",
+        accessibilityLabel: I18n.t("global.buttons.close"),
+        onPress: () => navigation.goBack()
       }
     });
 
@@ -354,29 +363,39 @@ export const LandingScreen = () => {
 
     return (
       <View style={{ flex: 1 }} testID="LandingScreen">
-        {isSessionExpiredRef.current ? (
+        {isSessionExpiredRef.current || isActiveSessionLogin ? (
           <LandingSessionExpiredComponent
             ref={accessibilityFirstFocuseViewRef}
             pictogramName={"identityCheck"}
-            title={I18n.t("authentication.landing.session_expired.title")}
-            content={I18n.t("authentication.landing.session_expired.body")}
-            buttonLink={{
-              label: I18n.t(
-                "authentication.landing.session_expired.linkButtonLabel"
-              ),
-              color: "primary",
-              icon: "instruction",
-              onPress: () => {
-                trackHelpCenterCtaTapped(
-                  sessionExpired.toString(),
-                  helpCenterHowToDoWhenSessionIsExpiredUrl,
-                  routeName
-                );
-                openWebUrl(helpCenterHowToDoWhenSessionIsExpiredUrl, () => {
-                  error(I18n.t("global.jserror.title"));
-                });
+            title={
+              isActiveSessionLogin
+                ? I18n.t("authentication.landing.active_session_login.title")
+                : I18n.t("authentication.landing.session_expired.title")
+            }
+            content={
+              isActiveSessionLogin
+                ? I18n.t("authentication.landing.active_session_login.body")
+                : I18n.t("authentication.landing.session_expired.body")
+            }
+            {...(!isActiveSessionLogin && {
+              buttonLink: {
+                label: I18n.t(
+                  "authentication.landing.session_expired.linkButtonLabel"
+                ),
+                color: "primary",
+                icon: "instruction",
+                onPress: () => {
+                  trackHelpCenterCtaTapped(
+                    sessionExpired.toString(),
+                    helpCenterHowToDoWhenSessionIsExpiredUrl,
+                    routeName
+                  );
+                  openWebUrl(helpCenterHowToDoWhenSessionIsExpiredUrl, () => {
+                    error(I18n.t("global.jserror.title"));
+                  });
+                }
               }
-            }}
+            })}
           />
         ) : (
           <Carousel

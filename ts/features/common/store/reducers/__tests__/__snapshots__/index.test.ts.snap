@@ -159,6 +159,11 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "SEND_ACTIVATION_REMINDER": true,
   },
   "loginFeatures": {
+    "activeSessionLogin": {
+      "isActiveSessionLogin": false,
+      "isActiveSessionLoginFailed": false,
+      "isUserLoggedIn": false,
+    },
     "cieLogin": {
       "isCieIDTourGuideEnabled": true,
       "useUat": false,

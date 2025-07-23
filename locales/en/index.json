@@ -839,6 +839,10 @@
         "body": "We need to check your identity from time to time for security reasons",
         "linkButtonLabel": "Read more"
       },
+      "active_session_login": {
+        "title": "Accedi subito",
+        "body": "Autenticati ora per usare l’app senza interruzioni. Così sarà sempre pronta quando ti serve."
+      },
       "cie_bottom_sheet": {
         "title": "How do you want to login?",
         "module_cie_pin": {
