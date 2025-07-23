@@ -195,7 +195,8 @@ const styles = StyleSheet.create({
     height: 16,
     backgroundColor: WALLET_L3_BG_COLOR,
     borderBottomStartRadius: 16,
-    borderBottomEndRadius: 16
+    borderBottomEndRadius: 16,
+    borderCurve: "continuous"
   }
 });
 
