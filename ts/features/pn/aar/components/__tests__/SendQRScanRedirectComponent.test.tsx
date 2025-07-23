@@ -29,10 +29,6 @@ jest.mock("@react-navigation/native", () => {
   };
 });
 
-jest.mock("react-native-haptic-feedback", () => ({
-  trigger: jest.fn()
-}));
-
 describe("SendQRScanRedirectComponent", () => {
   const mockOpenWebUrl = jest.fn();
   beforeAll(() => {

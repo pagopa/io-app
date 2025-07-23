@@ -16,7 +16,7 @@ export const SystemNotificationPermissionsScreen = () => {
   const navigation = useIONavigation();
 
   const onDismiss = useCallback(() => {
-    trackSystemNotificationPermissionScreenOutcome("dismiss");
+    trackSystemNotificationPermissionScreenOutcome("dismiss", "authentication");
     navigation.goBack();
   }, [navigation]);
 
@@ -36,7 +36,7 @@ export const SystemNotificationPermissionsScreen = () => {
       )
     });
 
-    trackSystemNotificationPermissionScreenShown();
+    trackSystemNotificationPermissionScreenShown("authentication");
     dispatch(setEngagementScreenShown());
   }, [dispatch, navigation, onDismiss]);
 
@@ -50,7 +50,10 @@ export const SystemNotificationPermissionsScreen = () => {
         primary: {
           label: I18n.t("notifications.modal.primaryButton"),
           onPress: () => {
-            trackSystemNotificationPermissionScreenOutcome("activate");
+            trackSystemNotificationPermissionScreenOutcome(
+              "activate",
+              "authentication"
+            );
             openSystemNotificationSettingsScreen();
             navigation.goBack();
           },
