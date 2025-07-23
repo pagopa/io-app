@@ -4,9 +4,9 @@ import {
   createStackNavigator
 } from "@react-navigation/stack";
 import I18n from "../../../i18n";
+import { SendQrScanPushEngagementScreen } from "../aar/screen/SendAARPushEngagementScreen";
 import { SendEngagementScreen } from "../aar/screen/SendEngagementScreen";
 import { SendQrScanFlow } from "../qrCodeScan/screens/QrScanFlow";
-import { SendQrScanPushEngagementScreen } from "../aar/screen/SendAARPushEngagementScreen";
 import { PNActivationBannerFlowScreen } from "../reminderBanner/screens/PnReminderBannerFlow";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
@@ -44,39 +44,32 @@ export const PnStackNavigator = () => (
         headerShown: false
       }}
     />
-    <Stack.Group
-      screenOptions={{
-        presentation: "modal"
-      }}
-    >
-      <Stack.Screen
-        name={PN_ROUTES.ENGAGEMENT_SCREEN}
-        component={SendEngagementScreen}
-      />
-      <Stack.Screen
-        name={PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT}
-        component={SendQrScanPushEngagementScreen}
-        options={{
-          presentation: "modal",
-          headerShown: true,
-          animationEnabled: true,
+    <Stack.Screen
+      name={PN_ROUTES.ENGAGEMENT_SCREEN}
+      component={SendEngagementScreen}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT}
+      component={SendQrScanPushEngagementScreen}
+      options={{
+        headerShown: true,
+        animationEnabled: true,
 
-          header: (props: StackHeaderProps) => (
-            <HeaderSecondLevel
-              title=""
-              ignoreSafeAreaMargin={false}
-              type="singleAction"
-              firstAction={{
-                icon: "closeMedium",
-                accessibilityLabel: I18n.t(
-                  "features.pn.aar.serviceActivation.headerAction"
-                ),
-                onPress: props.navigation.popToTop
-              }}
-            />
-          )
-        }}
-      />
-    </Stack.Group>
+        header: (props: StackHeaderProps) => (
+          <HeaderSecondLevel
+            title=""
+            ignoreSafeAreaMargin={false}
+            type="singleAction"
+            firstAction={{
+              icon: "closeMedium",
+              accessibilityLabel: I18n.t(
+                "features.pn.aar.serviceActivation.headerAction"
+              ),
+              onPress: props.navigation.popToTop
+            }}
+          />
+        )
+      }}
+    />
   </Stack.Navigator>
 );
