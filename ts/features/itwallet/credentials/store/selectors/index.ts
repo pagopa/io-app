@@ -239,5 +239,9 @@ export const itwCredentialsEidStatusSelector = createSelector(
  */
 export const itwCredentialsListByTypeSelector = (key: string) =>
   createSelector(itwCredentialsByTypeSelector, credentials =>
-    Object.values(credentials[key])
+    pipe(
+      O.fromNullable(credentials[key]),
+      O.map(Object.values),
+      O.getOrElse<Array<StoredCredential>>(() => [])
+    )
   );
