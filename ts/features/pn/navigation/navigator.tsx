@@ -35,15 +35,9 @@ export const PnStackNavigator = () => (
       name={PN_ROUTES.QR_SCAN_FLOW}
       component={SendQRScanFlowScreen}
     />
-    <Stack.Group
-      screenOptions={{
-        presentation: "modal"
-      }}
-    >
-      <Stack.Screen
-        name={PN_ROUTES.ENGAGEMENT_SCREEN}
-        component={SendEngagementScreen}
-      />
-    </Stack.Group>
+    <Stack.Screen
+      name={PN_ROUTES.ENGAGEMENT_SCREEN}
+      component={SendEngagementScreen}
+    />
   </Stack.Navigator>
 );
