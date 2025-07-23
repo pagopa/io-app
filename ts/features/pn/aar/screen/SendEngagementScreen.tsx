@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { SendEngagementComponent } from "../components/SendEngagementComponent";
@@ -7,6 +7,11 @@ import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { pnActivationUpsert } from "../../store/actions";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
+import {
+  trackSendActivationModalDialog,
+  trackSendActivationModalDialogActivationDismissed,
+  trackSendActivationModalDialogActivationStart
+} from "../analytics";
 
 export const SendEngagementScreen = () => {
   const [screenStatus, setScreenStatus] = useState<
@@ -36,6 +41,7 @@ export const SendEngagementScreen = () => {
 
   const onActivateService = useCallback(
     (isRetry: boolean = false) => {
+      trackSendActivationModalDialogActivationStart();
       if (isRetry) {
         navigation.setOptions({
           headerShown: true
@@ -54,9 +60,19 @@ export const SendEngagementScreen = () => {
   );
   const onClose = useCallback(() => {
     if (screenStatus !== "Activating") {
+      trackSendActivationModalDialogActivationDismissed();
       navigation.popToTop();
     }
   }, [navigation, screenStatus]);
+
+  useEffect(() => {
+    // Make sure that nothing sets screenStatus to Waiting,
+    // otherwise there will be a double event tracking
+    if (screenStatus === "Waiting") {
+      trackSendActivationModalDialog();
+    }
+  }, [screenStatus]);
+
   if (screenStatus === "Failed") {
     return (
       <OperationResultScreenContent

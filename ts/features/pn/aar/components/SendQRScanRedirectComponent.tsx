@@ -9,6 +9,11 @@ import PN_ROUTES from "../../navigation/routes";
 import { useIOStore } from "../../../../store/hooks";
 import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
+import {
+  trackSendQRCodeScanRedirect,
+  trackSendQRCodeScanRedirectConfirmed,
+  trackSendQRCodeScanRedirectDismissed
+} from "../analytics";
 
 export type SendQRScanRedirectComponentProps = {
   aarUrl: string;
@@ -20,6 +25,9 @@ export const SendQRScanRedirectComponent = ({
   const navigation = useIONavigation();
 
   const handleOpenSendScreen = useCallback(() => {
+    // Analytics
+    trackSendQRCodeScanRedirectConfirmed();
+
     // Open external browser (this is an async process)
     openWebUrl(aarUrl);
 
@@ -54,6 +62,7 @@ export const SendQRScanRedirectComponent = ({
   }, [aarUrl, navigation, store]);
 
   const handleCloseScreen = useCallback(() => {
+    trackSendQRCodeScanRedirectDismissed();
     navigation.popToTop();
   }, [navigation]);
 
@@ -72,6 +81,7 @@ export const SendQRScanRedirectComponent = ({
         />
       )
     });
+    trackSendQRCodeScanRedirect();
   }, [handleCloseScreen, navigation]);
 
   return (
