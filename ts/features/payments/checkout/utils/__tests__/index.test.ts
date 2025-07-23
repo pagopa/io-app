@@ -89,10 +89,18 @@ describe("getPspFlagType", () => {
     expect(result).toBe("none");
   });
 
-  it("should return 'customer' when psp.onUs is true", () => {
+  it("should return 'customer' when psp.onUs is true and pspList is not empty", () => {
+    const psp = { onUs: true, idBundle: "1" };
+    const result = getPspFlagType(psp, [
+      { onUs: true, taxPayerFee: 1, idBundle: "1" }
+    ]);
+    expect(result).toBe("customer");
+  });
+
+  it("should return 'none' when pspList is empty", () => {
     const psp = { onUs: true, idBundle: "1" };
     const result = getPspFlagType(psp, []);
-    expect(result).toBe("customer");
+    expect(result).toBe("none");
   });
 
   it("should return 'unique' when pspList has only one element", () => {
