@@ -76,7 +76,7 @@ export const mapEventToFailure = (
     LegacyErrors.isWalletProviderResponseError(
       error,
       Codes.WalletInstanceIntegrityFailed
-    ) // TODO: [SIW-2530]: remove after full migration to v1.0.0
+    ) // TODO: [SIW-2530]: remove after full migration to API 1.0
   ) {
     return {
       type: IssuanceFailureType.UNSUPPORTED_DEVICE,
@@ -86,7 +86,7 @@ export const mapEventToFailure = (
 
   if (
     isIssuerResponseError(error) ||
-    LegacyErrors.isIssuerResponseError(error) // TODO: [SIW-2530]: remove after full migration to v1.0.0
+    LegacyErrors.isIssuerResponseError(error) // TODO: [SIW-2530]: remove after full migration to API 1.0
   ) {
     return {
       type: IssuanceFailureType.ISSUER_GENERIC,
@@ -96,7 +96,7 @@ export const mapEventToFailure = (
 
   if (
     isWalletProviderResponseError(error) ||
-    LegacyErrors.isWalletProviderResponseError(error) // TODO: [SIW-2530]: remove after full migration to v1.0.0
+    LegacyErrors.isWalletProviderResponseError(error) // TODO: [SIW-2530]: remove after full migration to API 1.0
   ) {
     return {
       type: IssuanceFailureType.WALLET_PROVIDER_GENERIC,
