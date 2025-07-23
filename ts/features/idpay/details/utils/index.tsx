@@ -20,6 +20,11 @@ export const getInitiativeStatus = ({
     return "REMOVED";
   }
 
+  // TODO replace with initiative.status === "USED" when the API is updated
+  if (initiative.status === StatusEnum.SUSPENDED) {
+    return "USED";
+  }
+
   if (now > initiative.endDate) {
     return "EXPIRED";
   }
@@ -80,6 +85,14 @@ export function IdPayCardStatus({ now, initiative }: InitiativeProps) {
           testID="idpay-card-status-removed"
           variant="error"
           text={I18n.t("bonusCard.removed")}
+        />
+      );
+    case "USED":
+      return (
+        <Tag
+          testID="idpay-card-status-used"
+          variant="success"
+          text={I18n.t("bonusCard.used")}
         />
       );
   }
