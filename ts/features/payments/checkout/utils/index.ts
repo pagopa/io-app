@@ -35,7 +35,7 @@ export const getPspFlagType = (
   psp: Bundle,
   pspList?: ReadonlyArray<Bundle>
 ): PaymentAnalyticsSelectedPspFlag => {
-  if (!pspList) {
+  if (!pspList || pspList.length === 0) {
     return "none";
   }
   if (psp.onUs) {
