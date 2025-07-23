@@ -9,11 +9,36 @@ import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUt
 import { validCredentialStatuses } from "../../../common/utils/itwCredentialUtils";
 import { isDefined } from "../../../../../utils/guards";
 import { assert } from "../../../../../utils/assert";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   EnrichedPresentationDetails,
   ItwRemoteQrRawPayload,
   PresentationDetails
 } from "./itwRemoteTypeUtils";
+
+/**
+ * Maps a vct to the corresponding credential type, used in UI contexts
+ * Note: although this list is unlikely to change, you should ensure to have
+ * a fallback when dealing with this list to prevent unwanted behaviours
+ */
+const credentialTypesByVct: { [vct: string]: CredentialType } = {
+  "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json":
+    CredentialType.PID,
+  "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/mdl.json":
+    CredentialType.DRIVING_LICENSE,
+  "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/europeandisabilitycard.json":
+    CredentialType.EUROPEAN_DISABILITY_CARD,
+  "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/europeanhealthinsurancecard.json":
+    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+};
+
+/**
+ * Utility function which returns the credentila type associated to the provided vct
+ * @param vct credential vct
+ * @returns credential type as string, undefine if not found
+ */
+export const getCredentialTypeByVct = (vct: string): string | undefined =>
+  credentialTypesByVct[vct];
 
 /**
  * Validate the QR code parameters by starting the presentation flow.
@@ -44,7 +69,8 @@ export const enrichPresentationDetails = (
   credentialsByType: Record<string, StoredCredential | undefined>
 ): EnrichedPresentationDetails =>
   presentationDetails.map(details => {
-    const credential = credentialsByType[details.vct];
+    const credentialType = getCredentialTypeByVct(details.vct);
+    const credential = credentialType && credentialsByType[credentialType];
 
     // This should never happen if we pass the DCQL query evaluation
     assert(credential, `${details.vct} credential was not found in the wallet`);
@@ -102,7 +128,20 @@ export const groupCredentialsByPurpose = (
 /**
  * Return a list of credential types that have an invalid status.
  */
-export const getInvalidCredentials = (credentials: Array<StoredCredential>) =>
-  credentials
+export const getInvalidCredentials = (
+  presentationDetails: PresentationDetails,
+  credentialsByType: Record<string, StoredCredential | undefined>
+) =>
+  presentationDetails
+    // Retries the type from the VCT map
+    .map(({ vct }) => getCredentialTypeByVct(vct))
+    // Removes undefined
+    .filter(isDefined)
+    // Retrieve the credential using the type from the previous step
+    .map(type => credentialsByType[type])
+    // Removes undefined
+    .filter(isDefined)
+    // Removes credential with valid statuses
     .filter(c => !validCredentialStatuses.includes(getCredentialStatus(c)))
+    // Gets the invalid credential's type
     .map(c => c.credentialType);
