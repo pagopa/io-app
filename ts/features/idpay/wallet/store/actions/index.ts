@@ -72,10 +72,15 @@ export const idPayInitiativesFromInstrumentRefreshStop = createStandardAction(
   "IDPAY_INITIATIVES_FROM_INSTRUMENT_REFRESH_STOP"
 )();
 
+export const setIdPayOnboardingSucceeded = createStandardAction(
+  "IDPAY_ONBOARDING_SUCCEEDED_SET"
+)<boolean>();
+
 export type IdPayWalletActions =
   | ActionType<typeof idPayWalletGet>
   | ActionType<typeof idPayInitiativesFromInstrumentGet>
   | ActionType<typeof idpayInitiativesInstrumentEnroll>
   | ActionType<typeof idpayInitiativesInstrumentDelete>
   | ActionType<typeof idPayInitiativesFromInstrumentRefreshStart>
-  | ActionType<typeof idPayInitiativesFromInstrumentRefreshStop>;
+  | ActionType<typeof idPayInitiativesFromInstrumentRefreshStop>
+  | ActionType<typeof setIdPayOnboardingSucceeded>;
