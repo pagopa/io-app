@@ -75,6 +75,11 @@ export const createActionsImplementation = (
   const closeOnboardingSuccess = () =>
     navigation.navigate(SERVICES_ROUTES.SERVICES_HOME);
 
+  const navigateToLoadingScreen = () =>
+    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_LOADING
+    });
+
   const handleSessionExpired = () => {
     dispatch(
       refreshSessionToken.request({
@@ -96,6 +101,7 @@ export const createActionsImplementation = (
     navigateToInputFormScreen,
     navigateToEnableNotificationScreen,
     navigateToEnableMessageScreen,
+    navigateToLoadingScreen,
     closeOnboarding,
     closeOnboardingSuccess,
     handleSessionExpired
