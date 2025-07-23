@@ -161,23 +161,13 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
         <View
           style={[
             styles.removeHorizontalMargin,
-            styles.clip,
+            styles.clipContainer,
             {
               backgroundColor: IOColors[theme["appBackground-primary"]]
             }
           ]}
         >
-          <View
-            style={[
-              styles.removeHorizontalMargin,
-              {
-                height: 16,
-                backgroundColor: WALLET_L3_BG_COLOR,
-                borderBottomStartRadius: 16,
-                borderBottomEndRadius: 16
-              }
-            ]}
-          />
+          <View style={[styles.removeHorizontalMargin, styles.clip]} />
         </View>
         {content}
       </View>
@@ -196,10 +186,16 @@ const styles = StyleSheet.create({
     paddingBottom: 300,
     marginBottom: -300
   },
-  clip: {
+  clipContainer: {
     marginTop: -14, // Takes 14 pixel from the above component
     height: 18,
     marginBottom: 2
+  },
+  clip: {
+    height: 16,
+    backgroundColor: WALLET_L3_BG_COLOR,
+    borderBottomStartRadius: 16,
+    borderBottomEndRadius: 16
   }
 });
 
