@@ -19,6 +19,7 @@ import {
   selectIsWalletLoading,
   selectWalletCategories,
   selectWalletOtherCards,
+  shouldRenderItwCardsContainerSelector,
   shouldRenderWalletEmptyStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
@@ -42,6 +43,9 @@ const WalletCardsContainer = () => {
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
   );
+  const shouldRenderItwCardsContainer = useIOSelector(
+    shouldRenderItwCardsContainerSelector
+  );
 
   useItwWalletInstanceRevocationAlert();
 
@@ -59,11 +63,15 @@ const WalletCardsContainer = () => {
     }
     return (
       <View testID="walletCardsContainerTestID" style={{ flex: 1 }}>
-        <ItwWalletCardsContainer />
+        {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
         <OtherWalletCardsContainer />
       </View>
     );
-  }, [shouldRenderEmptyState, shouldRenderLoadingState]);
+  }, [
+    shouldRenderEmptyState,
+    shouldRenderLoadingState,
+    shouldRenderItwCardsContainer
+  ]);
 
   return (
     <Animated.View
