@@ -190,7 +190,7 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   it("Should obtain a credential with a valid status attestation", async () => {
