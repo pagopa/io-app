@@ -137,8 +137,8 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
 
     return (
       <WalletCardsCategoryContainer
-        key={`cards_category_other`}
-        testID={`otherWalletCardsContainerTestID`}
+        key="cards_category_other"
+        testID="otherWalletCardsContainerTestID"
         cards={cards}
         header={sectionHeader}
         bottomElement={<WalletCardsCategoryRetryErrorBanner />}
