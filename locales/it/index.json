@@ -5819,6 +5819,10 @@
         "deny": "Non attivare",
         "success": "Hai attivato le notifiche push",
         "advice": "Consigliato"
+      },
+      "loading": {
+        "subtitle": "Attendi qualche secondo",
+        "title": "Stiamo elaborando la tua richiesta"
       }
     },
     "configuration": {
