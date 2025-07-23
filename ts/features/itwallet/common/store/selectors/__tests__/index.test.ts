@@ -1,10 +1,10 @@
-import * as O from "fp-ts/lib/Option";
 import {
   isItwDiscoveryBannerRenderableSelector,
   itwOfflineAccessAvailableSelector,
   itwShouldRenderFeedbackBannerSelector,
   itwShouldRenderL3UpgradeBannerSelector,
-  itwShouldRenderOfflineBannerSelector
+  itwShouldRenderOfflineBannerSelector,
+  itwShouldRenderWalletUpgradeMDLDetailsBannerSelector
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
@@ -169,15 +169,15 @@ describe("itwShouldRenderL3UpgradeBannerSelector", () => {
   });
 
   it.each`
-    itwEnabled | offlineAccessReason                       | isL3Enabled | eid       | expected
-    ${true}    | ${undefined}                              | ${true}     | ${O.none} | ${true}
-    ${true}    | ${undefined}                              | ${true}     | ${O.none} | ${true}
-    ${true}    | ${undefined}                              | ${false}    | ${O.none} | ${false}
-    ${true}    | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${O.none} | ${false}
-    ${false}   | ${undefined}                              | ${true}     | ${O.none} | ${true}
+    itwEnabled | offlineAccessReason                       | isL3Enabled | isEidL3  | expected
+    ${true}    | ${undefined}                              | ${true}     | ${false} | ${true}
+    ${true}    | ${undefined}                              | ${true}     | ${false} | ${true}
+    ${true}    | ${undefined}                              | ${false}    | ${false} | ${false}
+    ${true}    | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${false} | ${false}
+    ${false}   | ${undefined}                              | ${true}     | ${false} | ${true}
   `(
-    "should return $expected when offlineAccessReason is $offlineAccessReason, isL3Enabled is $isL3Enabled, eid is $eid",
-    ({ offlineAccessReason, isL3Enabled, eid, expected }) => {
+    "should return $expected when offlineAccessReason is $offlineAccessReason, isL3Enabled is $isL3Enabled, isEidL3 is $isEidL3",
+    ({ offlineAccessReason, isL3Enabled, isEidL3, expected }) => {
       jest
         .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
         .mockReturnValue(true);
@@ -188,11 +188,63 @@ describe("itwShouldRenderL3UpgradeBannerSelector", () => {
         .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
         .mockReturnValue(isL3Enabled);
       jest
-        .spyOn(credentialsSelectors, "itwCredentialsEidSelector")
-        .mockReturnValue(eid);
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(isEidL3);
 
       expect(
         itwShouldRenderL3UpgradeBannerSelector({} as unknown as GlobalState)
+      ).toBe(expected);
+    }
+  );
+});
+
+describe("itwShouldRenderWalletUpgradeMDLDetailsBannerSelector", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  it.each`
+    isWalletValid | offlineAccessReason                       | isL3Enabled | isEidL3  | isBannerHidden | expected
+    ${true}       | ${undefined}                              | ${true}     | ${false} | ${false}       | ${true}
+    ${true}       | ${undefined}                              | ${true}     | ${false} | ${true}        | ${false}
+    ${true}       | ${undefined}                              | ${true}     | ${true}  | ${false}       | ${false}
+    ${true}       | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${false} | ${false}       | ${false}
+    ${false}      | ${undefined}                              | ${true}     | ${false} | ${false}       | ${false}
+    ${true}       | ${undefined}                              | ${false}    | ${false} | ${false}       | ${false}
+  `(
+    "should return $expected when isWalletValid=$isWalletValid, offlineAccessReason=$offlineAccessReason, isL3Enabled=$isL3Enabled, isEidL3=$isEidL3, isBannerHidden=$isBannerHidden",
+    ({
+      isWalletValid,
+      offlineAccessReason,
+      isL3Enabled,
+      isEidL3,
+      isBannerHidden,
+      expected
+    }) => {
+      jest
+        .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
+        .mockReturnValue(isWalletValid);
+      jest
+        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+        .mockReturnValue(offlineAccessReason);
+      jest
+        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .mockReturnValue(isL3Enabled);
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(isEidL3);
+      jest
+        .spyOn(
+          preferencesSelectors,
+          "itwIsWalletUpgradeMDLDetailsBannerHiddenSelector"
+        )
+        .mockReturnValue(isBannerHidden);
+
+      expect(
+        itwShouldRenderWalletUpgradeMDLDetailsBannerSelector(
+          {} as unknown as GlobalState
+        )
       ).toBe(expected);
     }
   );

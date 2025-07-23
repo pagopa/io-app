@@ -1,14 +1,11 @@
 import {
   Body,
-  FooterActions,
   H6,
-  HSpacer,
+  IOButton,
   IOColors,
   IOSkeleton,
-  Icon,
   VSpacer,
-  VStack,
-  useIOTheme
+  VStack
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -21,24 +18,10 @@ type Props = {
 
 const IdPayInitiativeRulesInfoBox = (props: Props) => {
   const { content } = props;
-  const theme = useIOTheme();
 
-  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
+  const { bottomSheet, present } = useIOBottomSheetModal({
     component: <IOMarkdown content={content} />,
-    title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
-    footer: (
-      <FooterActions
-        actions={{
-          type: "SingleButton",
-          primary: {
-            label: I18n.t(
-              "idpay.initiative.beneficiaryDetails.infoModal.button"
-            ),
-            onPress: () => dismiss()
-          }
-        }}
-      />
-    )
+    title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title")
   });
 
   return (
@@ -51,11 +34,15 @@ const IdPayInitiativeRulesInfoBox = (props: Props) => {
         </Body>
         <VSpacer size={16} />
         <View style={{ flexDirection: "row" }}>
-          <Icon name="categLearning" color={theme["interactiveElem-default"]} />
-          <HSpacer size={8} />
-          <Body weight="Semibold" asLink onPress={() => present()}>
-            {I18n.t("idpay.initiative.beneficiaryDetails.infobox.rulesButton")}
-          </Body>
+          <IOButton
+            iconPosition="end"
+            variant="link"
+            label={I18n.t(
+              "idpay.initiative.beneficiaryDetails.infobox.rulesButton"
+            )}
+            onPress={present}
+            icon="categLearning"
+          />
         </View>
       </View>
       <VSpacer size={16} />

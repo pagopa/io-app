@@ -5,7 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { Alert, Linking, View } from "react-native";
 import {
   launchImageLibrary,
@@ -37,6 +37,7 @@ import { BarcodeFailure } from "../types/failure";
 import { getUniqueBarcodes } from "../utils/getUniqueBarcodes";
 import { imageDecodingTask } from "../utils/imageDecodingTask";
 import { imageGenerationTask } from "../utils/imageGenerationTask";
+import { useIOStore } from "../../../store/hooks";
 
 type IOBarcodeFileReader = {
   /**
@@ -111,6 +112,7 @@ const useIOBarcodeFileReader = ({
   barcodeTypes,
   barcodeAnalyticsFlow
 }: IOBarcodeFileReaderConfiguration): IOBarcodeFileReader => {
+  const store = useIOStore();
   const [isFilePickerVisible, setFilePickerVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -162,7 +164,12 @@ const useIOBarcodeFileReader = ({
       O.chain(O.fromNullable),
       TE.fromOption<BarcodeFailure>(() => ({ reason: "INVALID_FILE" })),
       TE.chain(base64 =>
-        imageDecodingTask({ base64 }, barcodeFormats, barcodeTypes)
+        imageDecodingTask(
+          store.getState(),
+          { base64 },
+          barcodeFormats,
+          barcodeTypes
+        )
       ),
       TE.mapLeft(handleBarcodeError),
       TE.map(handleBarcodeSuccess)
@@ -195,9 +202,14 @@ const useIOBarcodeFileReader = ({
       TE.map(
         A.reduce(
           Promise.resolve([] as Array<IOBarcode>),
-          async (barcodes, { uri }) =>
+          async (barcodes, { uri: internalUri }) =>
             pipe(
-              imageDecodingTask({ uri }, barcodeFormats, barcodeTypes),
+              imageDecodingTask(
+                store.getState(),
+                { uri: internalUri },
+                barcodeFormats,
+                barcodeTypes
+              ),
               TE.map(async decodedBarcodes => [
                 ...(await barcodes),
                 ...decodedBarcodes

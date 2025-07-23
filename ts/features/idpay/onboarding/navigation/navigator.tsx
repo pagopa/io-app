@@ -6,10 +6,12 @@ import {
 } from "../machine/provider";
 import IdPayBoolValuePrerequisitesScreen from "../screens/IdPayBoolValuePrerequisitesScreen";
 import IdPayCompletionScreen from "../screens/IdPayCompletionScreen";
+import IdPayEnableMessageScreen from "../screens/IdPayEnableMessageScreen";
 import IdPayEnableNotificationScreen from "../screens/IdPayEnableNotificationScreen";
 import IdPayFailureScreen from "../screens/IdPayFailureScreen";
 import { IdPayInitiativeDetailsScreen } from "../screens/IdPayInitiativeDetailsScreen";
 import IdPayInputFormVerificationScreen from "../screens/IdPayInputFormVerificationScreen";
+import IdPayLoadingScreen from "../screens/IdPayLoadingScreen";
 import IdPayMultiValuePrerequisitesScreen from "../screens/IdPayMultiValuePrerequisitesScreen";
 import IdPayPDNDPrerequisitesScreen from "../screens/IdPayPDNDPrerequisitesScreen";
 import { IdPayOnboardingParamsList } from "./params";
@@ -41,6 +43,11 @@ export const InnerNavigator = () => {
         }
       }}
     >
+      <Stack.Screen
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_MESSAGE}
+        component={IdPayEnableMessageScreen}
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS}
         component={IdPayInitiativeDetailsScreen}
@@ -74,6 +81,12 @@ export const InnerNavigator = () => {
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE}
         component={IdPayFailureScreen}
+        options={{ gestureEnabled: false, headerShown: false }}
+      />
+
+      <Stack.Screen
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_LOADING}
+        component={IdPayLoadingScreen}
         options={{ gestureEnabled: false, headerShown: false }}
       />
     </Stack.Navigator>

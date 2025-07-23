@@ -5,6 +5,7 @@ import { SelfDeclarationTextDTO } from "../../../../../definitions/idpay/SelfDec
 export type StartOnboarding = {
   readonly type: "start-onboarding";
   readonly serviceId: string;
+  readonly hasInbox: boolean;
 };
 
 export type ToggleBoolCriteria = {
@@ -39,6 +40,10 @@ export type UpdatePushNotificationSetting = {
   readonly isPushNotificationEnabled: boolean;
 };
 
+export type CheckDetails = {
+  readonly type: "check-details";
+};
+
 export type IdPayOnboardingEvents =
   | StartOnboarding
   | SelectMultiConsent
@@ -47,4 +52,5 @@ export type IdPayOnboardingEvents =
   | Next
   | Back
   | Close
-  | UpdatePushNotificationSetting;
+  | UpdatePushNotificationSetting
+  | CheckDetails;

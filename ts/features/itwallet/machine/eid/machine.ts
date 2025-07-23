@@ -6,10 +6,12 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { assert } from "../../../../utils/assert.ts";
+import { trackItWalletIntroScreen } from "../../analytics";
 import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
-  StartAuthFlowActorParams
+  StartAuthFlowActorParams,
+  VerifyTrustFederationParams
 } from "./actors";
 import {
   AuthenticationContext,
@@ -51,7 +53,8 @@ export const itwEidIssuanceMachine = setup({
     navigateToCiePreparationScreen: notImplemented,
     navigateToCiePinPreparationScreen: notImplemented,
     navigateToCiePinScreen: notImplemented,
-    navigateToCieReadCardScreen: notImplemented,
+    navigateToCieReadCardL2Screen: notImplemented,
+    navigateToCieReadCardL3Screen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
     navigateToCieWarningScreen: notImplemented,
@@ -100,9 +103,15 @@ export const itwEidIssuanceMachine = setup({
     }),
     setIsReissuing: assign({
       isReissuing: true
-    })
+    }),
+    trackIntroScreen: ({ context }) => {
+      trackItWalletIntroScreen(context.isL3FeaturesEnabled ? "L3" : "L2");
+    }
   },
   actors: {
+    verifyTrustFederation: fromPromise<void, VerifyTrustFederationParams>(
+      notImplemented
+    ),
     getCieStatus: fromPromise<CieContext>(notImplemented),
     createWalletInstance: fromPromise<string>(notImplemented),
     revokeWalletInstance: fromPromise<void>(notImplemented),
@@ -181,9 +190,26 @@ export const itwEidIssuanceMachine = setup({
     TosAcceptance: {
       description:
         "Display of the ToS to the user who must accept in order to proceed with the issuance of the eID",
-      entry: "navigateToTosScreen",
+      entry: ["navigateToTosScreen", "trackIntroScreen"],
       on: {
         "accept-tos": [
+          {
+            // Verify the trust federation
+            target: "TrustFederationVerification"
+          }
+        ]
+      }
+    },
+    TrustFederationVerification: {
+      description:
+        "Verification of the trust federation. This state verifies the trust chain of the wallet provider with the PID provider.",
+      tags: [ItwTags.Loading],
+      invoke: {
+        input: ({ context }) => ({
+          isL3IssuanceEnabled: context.isL3FeaturesEnabled
+        }),
+        src: "verifyTrustFederation",
+        onDone: [
           {
             // When no integrity hardware key exists,
             // we need to create a new integrity key tag and a new wallet instance
@@ -200,6 +226,12 @@ export const itwEidIssuanceMachine = setup({
             // If both integrity key tag and wallet instance attestation are valid,
             // we can proceed to the IPZS privacy acceptance
             target: "IpzsPrivacyAcceptance"
+          }
+        ],
+        onError: [
+          {
+            actions: "setFailure",
+            target: "#itwEidIssuanceMachine.Failure"
           }
         ]
       }
@@ -269,7 +301,7 @@ export const itwEidIssuanceMachine = setup({
         src: "getWalletAttestation",
         input: ({ context }) => ({
           integrityKeyTag: context.integrityKeyTag,
-          isL3IssuanceEnabled: false // TODO this is a temporary fix, we should use context.isL3FeaturesEnabled when the new issuance flow is completed
+          isL3IssuanceEnabled: context.isL3FeaturesEnabled
         }),
         onDone: [
           {
@@ -518,7 +550,8 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  identification: context.identification
+                  identification: context.identification,
+                  isL3IssuanceEnabled: context.isL3FeaturesEnabled
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -628,9 +661,17 @@ export const itwEidIssuanceMachine = setup({
                 "This state handles the CIE preparation screen, where the user is informed about the CIE card",
               entry: "navigateToCiePreparationScreen",
               on: {
-                next: {
-                  target: "StartingCieAuthFlow"
-                },
+                next: [
+                  {
+                    guard: "isL3FeaturesEnabled",
+                    actions: "navigateToCieReadCardL3Screen",
+                    target: "StartingCieAuthFlow"
+                  },
+                  {
+                    actions: "navigateToCieReadCardL2Screen",
+                    target: "StartingCieAuthFlow"
+                  }
+                ],
                 "go-to-cie-warning": {
                   target: "CieWarning.PreparationCie"
                 },
@@ -645,10 +686,10 @@ export const itwEidIssuanceMachine = setup({
             StartingCieAuthFlow: {
               description:
                 "Start the preliminary phase of the CIE identification flow.",
-              entry: "navigateToCieReadCardScreen",
               tags: [ItwTags.Loading],
               invoke: {
                 src: "startAuthFlow",
+                // eslint-disable-next-line sonarjs/no-identical-functions
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
@@ -742,7 +783,8 @@ export const itwEidIssuanceMachine = setup({
             input: ({ context }) => ({
               identification: context.identification,
               authenticationContext: context.authenticationContext,
-              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+              isL3IssuanceEnabled: context.isL3FeaturesEnabled
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),

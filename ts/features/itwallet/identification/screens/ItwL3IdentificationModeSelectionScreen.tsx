@@ -9,7 +9,7 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { useCallback } from "react";
 import { View } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -20,11 +20,16 @@ import { useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
   trackItWalletIDMethod,
-  trackItWalletIDMethodSelected
+  trackItWalletIDMethodSelected,
+  trackItwContinueWithCieID,
+  trackItwContinueWithCieIDClose,
+  trackItwGoToCieIDApp,
+  trackItwUserWithoutL3Bottomsheet,
+  trackItwUserWithoutL3Requirements
 } from "../../analytics";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { useCieInfoBottomSheet } from "../cie/hooks/useCieInfoBottomSheet";
 import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
 
 export const ItwL3IdentificationModeSelectionScreen = () => {
@@ -32,6 +37,13 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
   const isWalletAlreadyActivated = useIOSelector(itwLifecycleIsValidSelector);
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
+  );
+  const { name: routeName } = useRoute();
+
+  useFocusEffect(
+    useCallback(() => {
+      trackItWalletIDMethod("L3");
+    }, [])
   );
 
   const cieIdBottomSheet = useCieIdBottomSheet();
@@ -45,22 +57,26 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
     showSecondaryAction: isL3FeaturesEnabled
   });
 
-  useFocusEffect(trackItWalletIDMethod);
-
   const handlePrimaryActionPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin", itw_flow: "L3" });
   }, [machineRef]);
 
   const handleSecondaryActionPress = useCallback(() => {
     if (isWalletAlreadyActivated) {
+      trackItwUserWithoutL3Requirements({
+        screen_name: routeName,
+        reason: "user_without_cie",
+        position: "screen"
+      });
       // If the user is in the L3 upgrade flow, he cannot proceed without a CIE card
       machineRef.send({ type: "go-to-cie-warning", warning: "card" });
     } else {
+      trackItwUserWithoutL3Bottomsheet();
       // If the user is activating the IT Wallet, we provide an L2 fallback
       noCieBottomSheet.present();
     }
-  }, [isWalletAlreadyActivated, noCieBottomSheet, machineRef]);
+  }, [isWalletAlreadyActivated, noCieBottomSheet, machineRef, routeName]);
 
   return (
     <IOScrollViewWithLargeHeader
@@ -153,7 +169,10 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
           description={I18n.t(
             "features.itWallet.identification.mode.l3.screen.otherMethods.subtitle"
           )}
-          onPress={cieIdBottomSheet.present}
+          onPress={() => {
+            trackItwContinueWithCieID();
+            cieIdBottomSheet.present();
+          }}
           testID="l3-cie-id-nav"
         />
         {cieIdBottomSheet.bottomSheet}
@@ -175,6 +194,10 @@ const useCieIdBottomSheet = () => {
     title: I18n.t(
       "features.itWallet.identification.mode.l3.bottomSheet.cieId.title"
     ),
+    onDismiss: () => {
+      // Track the dismissal of the bottom sheet also when the user closes it with the X button
+      trackItwContinueWithCieIDClose();
+    },
     component: (
       <VStack space={24}>
         <IOMarkdown
@@ -192,10 +215,12 @@ const useCieIdBottomSheet = () => {
                   "features.itWallet.identification.mode.l3.bottomSheet.cieId.primaryAction"
                 ),
                 onPress: () => {
+                  trackItwGoToCieIDApp();
                   machineRef.send({
                     type: "select-identification-mode",
                     mode: "cieId"
                   });
+                  bottomSheet.dismiss();
                 }
               },
               secondary: {
@@ -251,7 +276,6 @@ export const useNoCieBottomSheet = () => {
             {
               type: "TwoButtons",
               primary: {
-                icon: "cie",
                 label: I18n.t(
                   "features.itWallet.identification.mode.l3.bottomSheet.noCie.primaryAction"
                 ),
