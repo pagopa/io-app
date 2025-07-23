@@ -115,22 +115,8 @@ describe("index", () => {
                   event_category: "UX",
                   event_type: "action",
                   flow,
-                  code:
-                    barcodeType === "IDPAY"
-                      ? "idpay"
-                      : barcodeType === "SEND"
-                      ? "SEND"
-                      : barcodeType === "PAGOPA"
-                      ? format === "DATA_MATRIX"
-                        ? "data_matrix"
-                        : "avviso"
-                      : undefined,
-                  data_entry:
-                    origin === "camera"
-                      ? "qr code"
-                      : origin === "file"
-                      ? "file"
-                      : undefined
+                  code: codeFromTypeAndFormat(barcodeType, format),
+                  data_entry: dataEntryFromOrigin(origin)
                 });
               })
             )
@@ -139,3 +125,17 @@ describe("index", () => {
     );
   });
 });
+
+const codeFromTypeAndFormat = (barcodeType: string, format: string) =>
+  barcodeType === "IDPAY"
+    ? "idpay"
+    : barcodeType === "SEND"
+    ? "SEND"
+    : barcodeType === "PAGOPA"
+    ? format === "DATA_MATRIX"
+      ? "data_matrix"
+      : "avviso"
+    : undefined;
+
+const dataEntryFromOrigin = (origin: string) =>
+  origin === "camera" ? "qr code" : origin === "file" ? "file" : undefined;
