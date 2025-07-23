@@ -18,8 +18,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
 import { IT_WALLET_ID_GRADIENT, IT_WALLET_ID_LOGO } from "../utils/constants";
 import { ItwJwtCredentialStatus } from "../utils/itwTypesUtils";
-import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
-import { useIOSelector } from "../../../../store/hooks";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 
@@ -41,9 +39,8 @@ const walletIdStatusMap: Record<WalletIdAllowedStatus, IOIconsProps> = {
   }
 };
 
-export const ItwWalletId = (props: Props) => {
+export const ItwWalletId = ({ isStacked, pidStatus }: Props) => {
   const navigation = useIONavigation();
-  const pidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   const handleCtaPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -52,22 +49,20 @@ export const ItwWalletId = (props: Props) => {
   };
 
   return (
-    <View
-      style={[styles.container, props.isStacked && styles.containerStacked]}
-    >
+    <View style={[styles.container, isStacked && styles.containerStacked]}>
       <BackgroundGradient />
       <View style={styles.content}>
         <HStack space={8}>
           <Icon name={IT_WALLET_ID_LOGO} color="blueIO-500" />
           <Body weight="Semibold" color="grey-850">
-            {I18n.t("features.itWallet.walletID.title")}
+            {I18n.t("features.itWallet.walletId.title")}
           </Body>
           <ItwWalletIdStatus pidStatus={pidStatus} />
         </HStack>
         <IOButton
           color="primary"
           variant="link"
-          label={I18n.t("features.itWallet.walletID.show")}
+          label={I18n.t("features.itWallet.walletId.show")}
           onPress={handleCtaPress}
         />
       </View>
