@@ -217,15 +217,17 @@ const getCredentialInvalidStatusDetails = (
     O.fromPredicate(isInvalidStatusFailure),
     O.map(({ reason }) => ({
       errorCodeOption: pipe(
-        O.of(reason?.reason),
-        O.chainEitherK(StatusAttestationError.decode),
+        O.fromEither(StatusAttestationError.decode(reason?.reason)),
         O.map(({ error }) => error)
       ),
-      credentialConfigurationId: O.fromNullable(reason?.credentialId)
+      credentialConfigurationId: pipe(
+        O.fromNullable(reason?.credentialId),
+        O.alt(() => credentialType)
+      )
     })),
     O.getOrElse(() => ({
       errorCodeOption: O.none as O.Option<string>,
-      credentialConfigurationId: credentialType
+      credentialConfigurationId: O.none as O.Option<string>
     }))
   );
 
