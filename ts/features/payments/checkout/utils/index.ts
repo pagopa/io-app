@@ -35,7 +35,7 @@ export const getPspFlagType = (
   psp: Bundle,
   pspList?: ReadonlyArray<Bundle>
 ): PaymentAnalyticsSelectedPspFlag => {
-  if (!pspList) {
+  if (!pspList || pspList.length === 0) {
     return "none";
   }
   if (psp.onUs) {
@@ -44,8 +44,11 @@ export const getPspFlagType = (
   if (pspList.length === 1) {
     return "unique";
   }
-  const cheaperPsp = _.orderBy(pspList, psp => psp.taxPayerFee)[0];
-  return cheaperPsp.idBundle === psp.idBundle ? "cheaper" : "none";
+  const fees = pspList
+    .map(p => p.taxPayerFee)
+    .filter((fee): fee is number => typeof fee === "number");
+  const minFee = Math.min(...fees);
+  return psp.taxPayerFee === minFee ? "cheaper" : "none";
 };
 
 export const getPaymentPhaseFromStep = (
