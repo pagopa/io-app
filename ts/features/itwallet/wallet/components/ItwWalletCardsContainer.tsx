@@ -22,6 +22,7 @@ import { itwShouldRenderNewItWalletSelector } from "../../common/store/selectors
 import { ItwOfflineWalletBanner } from "../../common/components/ItwOfflineWalletBanner.tsx";
 import { ItwWalletId } from "../../common/components/ItwWalletId.tsx";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils.ts";
+import { ITW_ROUTES } from "../../navigation/routes.ts";
 
 const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
   "jwtExpiring",
@@ -60,10 +61,21 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       [eidInfoBottomSheet.dismiss]
     )
   );
+
+  const handleNavigateToItwId = useCallback(() => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.PID_DETAIL
+    });
+  }, [navigation]);
+
   const sectionHeader = useMemo((): React.ReactElement => {
     if (isNewItwRenderable) {
       return (
-        <ItwWalletId pidStatus={eidStatus} isStacked={cards.length !== 0} />
+        <ItwWalletId
+          pidStatus={eidStatus}
+          isStacked={cards.length !== 0}
+          onShowPress={handleNavigateToItwId}
+        />
       );
     }
     return (
@@ -92,7 +104,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     eidInfoBottomSheet.present,
     isNewItwRenderable,
     cards,
-    eidStatus
+    eidStatus,
+    handleNavigateToItwId
   ]);
 
   return (

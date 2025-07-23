@@ -1,5 +1,4 @@
 import { Banner } from "@pagopa/io-app-design-system";
-import { useMemo } from "react";
 import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -15,14 +14,6 @@ export const ItwWalletReadyBanner = () => {
   const shouldRender = useIOSelector(itwShouldRenderWalletReadyBannerSelector);
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
 
-  const bannerTitle = useMemo(
-    () =>
-      !isNewItwRenderable
-        ? I18n.t("features.itWallet.issuance.eidResult.successL2.title")
-        : undefined,
-    [isNewItwRenderable]
-  );
-
   if (!shouldRender) {
     return null;
   }
@@ -36,7 +27,11 @@ export const ItwWalletReadyBanner = () => {
   return (
     <View style={{ marginHorizontal: -8 }}>
       <Banner
-        title={bannerTitle}
+        title={
+          isNewItwRenderable
+            ? undefined
+            : I18n.t("features.itWallet.issuance.eidResult.successL2.title")
+        }
         content={I18n.t(
           isNewItwRenderable
             ? "features.itWallet.issuance.emptyWallet.itwReadyBanner.content"

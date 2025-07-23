@@ -18,12 +18,11 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
 import { IT_WALLET_ID_GRADIENT, IT_WALLET_ID_LOGO } from "../utils/constants";
 import { ItwJwtCredentialStatus } from "../utils/itwTypesUtils";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../navigation/routes";
 
 type Props = {
   isStacked?: boolean;
   pidStatus?: ItwJwtCredentialStatus;
+  onShowPress: () => void;
 };
 
 type WalletIdAllowedStatus = Exclude<ItwJwtCredentialStatus, "valid">;
@@ -39,36 +38,26 @@ const walletIdStatusMap: Record<WalletIdAllowedStatus, IOIconsProps> = {
   }
 };
 
-export const ItwWalletId = ({ isStacked, pidStatus }: Props) => {
-  const navigation = useIONavigation();
-
-  const handleCtaPress = () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.PID_DETAIL
-    });
-  };
-
-  return (
-    <View style={[styles.container, isStacked && styles.containerStacked]}>
-      <BackgroundGradient />
-      <View style={styles.content}>
-        <HStack space={8}>
-          <Icon name={IT_WALLET_ID_LOGO} color="blueIO-500" />
-          <Body weight="Semibold" color="grey-850">
-            {I18n.t("features.itWallet.walletId.title")}
-          </Body>
-          <ItwWalletIdStatus pidStatus={pidStatus} />
-        </HStack>
-        <IOButton
-          color="primary"
-          variant="link"
-          label={I18n.t("features.itWallet.walletId.show")}
-          onPress={handleCtaPress}
-        />
-      </View>
+export const ItwWalletId = ({ isStacked, pidStatus, onShowPress }: Props) => (
+  <View style={[styles.container, isStacked && styles.containerStacked]}>
+    <BackgroundGradient />
+    <View style={styles.content}>
+      <HStack space={8}>
+        <Icon name={IT_WALLET_ID_LOGO} color="blueIO-500" />
+        <Body weight="Semibold" color="grey-850">
+          {I18n.t("features.itWallet.walletId.title")}
+        </Body>
+        <ItwWalletIdStatus pidStatus={pidStatus} />
+      </HStack>
+      <IOButton
+        color="primary"
+        variant="link"
+        label={I18n.t("features.itWallet.walletId.show")}
+        onPress={onShowPress}
+      />
     </View>
-  );
-};
+  </View>
+);
 
 const ItwWalletIdStatus = ({ pidStatus }: Pick<Props, "pidStatus">) =>
   pipe(
