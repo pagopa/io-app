@@ -5827,6 +5827,10 @@
           "cta": "Notify me via email",
           "successOutcome": "You've enabled email notifications"
         }
+      },
+      "loading": {
+        "subtitle": "Attendi qualche secondo",
+        "title": "Stiamo elaborando la tua richiesta"
       }
     },
     "configuration": {
