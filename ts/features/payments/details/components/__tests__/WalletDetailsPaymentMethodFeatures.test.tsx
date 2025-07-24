@@ -32,6 +32,7 @@ const renderComponent = (paymentMethod: WalletInfo, isIdPayEnabled = false) => {
         idPay: {
           ...store.getState().features.idPay,
           wallet: {
+            onboardingSucceeded: false,
             initiativesAwaitingStatusUpdate: {},
             initiatives: pot.none,
             initiativesWithInstrument: pot.some({
