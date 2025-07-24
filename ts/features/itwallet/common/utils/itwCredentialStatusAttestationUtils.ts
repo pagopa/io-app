@@ -1,24 +1,32 @@
 import {
   createCryptoContextFor,
-  Credential
+  Credential as LegacyCredential
 } from "@pagopa/io-react-native-wallet";
+import { Credential } from "@pagopa/io-react-native-wallet-v2";
 import { isAfter } from "date-fns";
 import * as t from "io-ts";
 import { LegacyIssuerConfiguration, StoredCredential } from "./itwTypesUtils";
+import { WIA_KEYTAG } from "./itwCryptoContextUtils";
 
-export const getCredentialStatusAttestation = async (
+type IssuerConf = Awaited<
+  ReturnType<Credential.Issuance.EvaluateIssuerTrust>
+>["issuerConf"];
+
+// TODO: [SIW-2530] remove after full migration to API 1.0
+// Maybe rename to status assertion?
+const getLegacyCredentialStatusAttestation = async (
   credential: StoredCredential
 ) => {
   const credentialCryptoContext = createCryptoContextFor(credential.keyTag);
 
-  const rawStatusAttestation = await Credential.Status.statusAttestation(
+  const rawStatusAttestation = await LegacyCredential.Status.statusAttestation(
     credential.issuerConf as LegacyIssuerConfiguration,
     credential.credential,
     credentialCryptoContext
   );
 
   const { parsedStatusAttestation } =
-    await Credential.Status.verifyAndParseStatusAttestation(
+    await LegacyCredential.Status.verifyAndParseStatusAttestation(
       credential.issuerConf as LegacyIssuerConfiguration,
       rawStatusAttestation,
       { credentialCryptoContext }
@@ -27,6 +35,38 @@ export const getCredentialStatusAttestation = async (
   return {
     statusAttestation: rawStatusAttestation.statusAttestation,
     parsedStatusAttestation
+  };
+};
+
+export const getCredentialStatusAttestation = async (
+  credential: StoredCredential,
+  newApiEnabled = false
+) => {
+  if (!newApiEnabled) {
+    return getLegacyCredentialStatusAttestation(credential);
+  }
+
+  const credentialCryptoContext = createCryptoContextFor(credential.keyTag);
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
+
+  const rawStatusAssertion = await Credential.Status.statusAssertion(
+    credential.issuerConf as IssuerConf,
+    credential.credential,
+    credential.format,
+    { credentialCryptoContext, wiaCryptoContext }
+  );
+
+  const { parsedStatusAssertion } =
+    await Credential.Status.verifyAndParseStatusAssertion(
+      credential.issuerConf as IssuerConf,
+      rawStatusAssertion,
+      credential.credential,
+      credential.format
+    );
+
+  return {
+    statusAttestation: rawStatusAssertion.statusAssertion,
+    parsedStatusAttestation: parsedStatusAssertion
   };
 };
 

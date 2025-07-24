@@ -34,7 +34,9 @@ export type ObtainCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.obtainCredential>
 >;
 
-export type ObtainStatusAttestationActorInput = Pick<Context, "credentials">;
+export type ObtainStatusAttestationActorInput = Pick<Context, "credentials"> & {
+  isNewIssuanceFlowEnabled?: boolean;
+};
 
 /**
  * Creates the actors for the eid issuance machine
@@ -139,7 +141,10 @@ export const createCredentialIssuanceActorsImplementation = (
     return await Promise.all(
       input.credentials.map(async credential => {
         const { statusAttestation, parsedStatusAttestation } =
-          await getCredentialStatusAttestation(credential);
+          await getCredentialStatusAttestation(
+            credential,
+            input.isNewIssuanceFlowEnabled
+          );
 
         return {
           ...credential,
