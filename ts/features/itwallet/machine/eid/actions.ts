@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs, assertEvent, assign } from "xstate";
-import * as O from "fp-ts/lib/Option";
+import { ActionArgs, assertEvent } from "xstate";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
@@ -21,10 +20,7 @@ import {
   trackSaveCredentialSuccess,
   updateITWStatusAndIDProperties
 } from "../../analytics";
-import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwSetAuthLevel } from "../../common/store/actions/preferences";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -251,21 +247,5 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     // Save the auth level in the preferences
     store.dispatch(itwSetAuthLevel(context.identification?.level));
-  },
-
-  onInit: assign<Context, EidIssuanceEvents, unknown, EidIssuanceEvents, any>(
-    () => {
-      const state = store.getState();
-      const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(state);
-      const walletInstanceAttestation =
-        itwWalletInstanceAttestationSelector(state);
-      const isWhitelisted = itwIsL3EnabledSelector(state);
-
-      return {
-        integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
-        walletInstanceAttestation,
-        isWhitelisted
-      };
-    }
-  )
+  }
 });

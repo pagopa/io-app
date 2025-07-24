@@ -17,10 +17,11 @@ import {
   AuthenticationContext,
   CieContext,
   Context,
-  InitialContext
+  getInitialContext
 } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { IssuanceFailureType, mapEventToFailure } from "./failure";
+import { EidIssuanceInput } from "./input.ts";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -28,12 +29,11 @@ const notImplemented = () => {
 
 export const itwEidIssuanceMachine = setup({
   types: {
+    input: {} as EidIssuanceInput,
     context: {} as Context,
     events: {} as EidIssuanceEvents
   },
   actions: {
-    onInit: notImplemented,
-
     /**
      * Navigation
      */
@@ -132,6 +132,8 @@ export const itwEidIssuanceMachine = setup({
     isOperationAborted: notImplemented,
     hasIntegrityKeyTag: ({ context }) => context.integrityKeyTag !== undefined,
     hasValidWalletInstanceAttestation: notImplemented,
+    hasCredentials: ({ context }) =>
+      context.credentials ? context.credentials.length > 0 : false,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
     isReissuing: ({ context }) => context.isReissuing,
     isL3FeaturesEnabled: ({ context }) => context.isL3FeaturesEnabled || false,
@@ -139,9 +141,8 @@ export const itwEidIssuanceMachine = setup({
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
-  context: { ...InitialContext },
+  context: ({ input }) => ({ ...getInitialContext(input) }),
   initial: "Idle",
-  entry: "onInit",
   invoke: {
     src: "getCieStatus",
     onDone: {
@@ -830,6 +831,11 @@ export const itwEidIssuanceMachine = setup({
                 ]
               },
               {
+                guard: "hasCredentials",
+                actions: ["storeEidCredential", "trackWalletInstanceCreation"],
+                target: "#itwEidIssuanceMachine.Upgrading"
+              },
+              {
                 actions: ["storeEidCredential", "trackWalletInstanceCreation"],
                 target: "#itwEidIssuanceMachine.Success"
               }
@@ -841,6 +847,7 @@ export const itwEidIssuanceMachine = setup({
         }
       }
     },
+    Upgrading: {},
     Success: {
       entry: "navigateToSuccessScreen",
       on: {

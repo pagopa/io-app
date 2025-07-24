@@ -1,14 +1,15 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { createActorContext } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { PropsWithChildren } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
-import { createCredentialUpgradeActionsImplementation } from "../../upgrade/machine/actions";
-import { createCredentialUpgradeActorsImplementation } from "../../upgrade/machine/actors";
-import { itwCredentialUpgradeMachine } from "../../upgrade/machine/machine";
+import { itwCredentialsSelector } from "../../credentials/store/selectors";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { createEidIssuanceActionsImplementation } from "./../eid/actions";
 import { createEidIssuanceActorsImplementation } from "./../eid/actors";
 import { createEidIssuanceGuardsImplementation } from "./../eid/guards";
@@ -23,12 +24,15 @@ export const ItwEidIssuanceMachineProvider = (props: PropsWithChildren) => {
   const navigation = useIONavigation();
   const toast = useIOToast();
 
-  const env = pipe(useIOSelector(selectItwEnv), getEnv);
+  const integrityKeyTag = O.toUndefined(
+    useIOSelector(itwIntegrityKeyTagSelector)
+  );
+  const walletInstanceAttestation = useIOSelector(
+    itwWalletInstanceAttestationSelector
+  );
+  const credentials = Object.values(useIOSelector(itwCredentialsSelector));
 
-  const credentialUpgradeMachine = itwCredentialUpgradeMachine.provide({
-    actions: createCredentialUpgradeActionsImplementation(store),
-    actors: createCredentialUpgradeActorsImplementation()
-  });
+  const env = pipe(useIOSelector(selectItwEnv), getEnv);
 
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
     guards: createEidIssuanceGuardsImplementation(store, {
@@ -39,7 +43,12 @@ export const ItwEidIssuanceMachineProvider = (props: PropsWithChildren) => {
   });
 
   return (
-    <ItwEidIssuanceMachineContext.Provider logic={eidIssuanceMachine}>
+    <ItwEidIssuanceMachineContext.Provider
+      logic={eidIssuanceMachine}
+      options={{
+        input: { integrityKeyTag, walletInstanceAttestation, credentials }
+      }}
+    >
       {props.children}
     </ItwEidIssuanceMachineContext.Provider>
   );
