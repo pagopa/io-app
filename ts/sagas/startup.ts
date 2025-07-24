@@ -74,7 +74,6 @@ import { handleClearAllAttachments } from "../features/messages/saga/handleClear
 import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
-import { clearOnboarding } from "../features/onboarding/store/actions";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
@@ -91,10 +90,7 @@ import {
   watchProfileUpsertRequestsSaga
 } from "../features/settings/common/sagas/profile";
 import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
-import {
-  clearCache,
-  resetProfileState
-} from "../features/settings/common/store/actions";
+import { resetProfileState } from "../features/settings/common/store/actions";
 import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
 import { profileSelector } from "../features/settings/common/store/selectors";
 import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
@@ -115,7 +111,6 @@ import {
 } from "../store/actions/application";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { differentProfileLoggedIn } from "../store/actions/crossSessions";
-import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { navigateToPrivacyScreen } from "../store/actions/navigation";
 import {
@@ -134,7 +129,7 @@ import {
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
-import { deletePin, getPin } from "../utils/keychain";
+import { getPin } from "../utils/keychain";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -192,11 +187,6 @@ export function* initializeApplicationSaga(
   // remove all local notifications (see function comment)
   yield* call(cancellAllLocalNotifications);
   yield* call(previousInstallationDataDeleteSaga); // consider to move out of the startup saga
-  /**
-   * Consider moving previousInstallationDataDeleteSuccess inside previousInstallationDataDeleteSaga
-   * TODO: https://pagopa.atlassian.net/browse/IOPID-3038
-   */
-  yield* put(previousInstallationDataDeleteSuccess());
 
   // listen for mixpanel enabling events
   yield* takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
@@ -208,8 +198,6 @@ export function* initializeApplicationSaga(
 
   /**
    * Get last logged in Profile from the state
-   * Consider creating separate selectors for email and fiscal code (refer to the related use case below)
-   * TODO: https://pagopa.atlassian.net/browse/IOPID-3039
    */
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
     yield* select(profileSelector);
@@ -499,24 +487,6 @@ export function* initializeApplicationSaga(
 
   // eslint-disable-next-line functional/no-let
   let userProfile = maybeUserProfile.value;
-
-  // If user logged in with different credentials, but this device still has
-  // user data loaded, then delete data keeping current session (user already
-  // logged in)
-  // Refactor: this logic might be duplicated with the one that dispatches the `differentProfileLoggedIn` action.
-  // Consider consolidating the logic in one place to ensure consistency and avoid duplication.
-  // See related Jira task: https://pagopa.atlassian.net/browse/IOPID-3047
-  if (
-    pot.isSome(lastLoggedInProfileState) &&
-    lastLoggedInProfileState.value.fiscal_code !== userProfile.fiscal_code
-  ) {
-    // Delete all data while keeping current session:
-    // Delete the current unlock code from the Keychain
-    yield* call(deletePin);
-    // Delete all onboarding data
-    yield* put(clearOnboarding());
-    yield* put(clearCache());
-  }
 
   // Retrieve the configured unlock code from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield* call(getPin);

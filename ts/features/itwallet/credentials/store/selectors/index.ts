@@ -1,7 +1,5 @@
-import { identity, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as A from "fp-ts/lib/Array";
-import * as P from "fp-ts/Predicate";
 import _ from "lodash";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -16,24 +14,63 @@ import {
 } from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
+  CredentialFormat,
   ItwJwtCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils";
-import { isL3Credential } from "../../../common/utils/itwCredentialUtils";
-import { ItwJwtCredentialStatus } from "../../../common/utils/itwTypesUtils";
 
-export const itwCredentialsSelector = (state: GlobalState) =>
-  state.features.itWallet.credentials;
+type CredentialsByType = {
+  [K: string]: Record<CredentialFormat, StoredCredential>;
+};
+
+/**
+ * The Wallet might contain older credentials in `vc+sd-jwt` format.
+ * We must ensure credentials selectors still work with the older format.
+ */
+const withLegacyFallback = (
+  credential: CredentialsByType[string] | undefined,
+  format: CredentialFormat
+) => {
+  if (format === "dc+sd-jwt") {
+    return credential?.[format] ?? credential?.["vc+sd-jwt"];
+  }
+  return credential?.[format];
+};
+
+/**
+ * Aggregate credentials by type to get the same credential with all its formats
+ *
+ * @param state - The global state.
+ * @returns The credentials object grouped by type
+ */
+export const itwCredentialsByTypeSelector = createSelector(
+  (state: GlobalState) => state.features.itWallet.credentials.credentials,
+  credentials =>
+    Object.values(credentials).reduce(
+      (acc, c) => ({
+        ...acc,
+        [c.credentialType]: { ...acc[c.credentialType], [c.format]: c }
+      }),
+      {} as CredentialsByType
+    )
+);
 
 /**
  * Returns the credentials object from the itw credentials state, excluding the eID credential.
+ * Only SD-JWT credentials are returned.
  *
  * @param state - The global state.
  * @returns The credentials object.
  */
 export const itwCredentialsSelector = createSelector(
-  (state: GlobalState) => state.features.itWallet.credentials.credentials,
-  ({ [CredentialType.PID]: pid, ...otherCredentials }) => otherCredentials
+  itwCredentialsByTypeSelector,
+  ({ [CredentialType.PID]: pid, ...otherCredentials }) =>
+    Object.values(otherCredentials)
+      .map(c => withLegacyFallback(c, "dc+sd-jwt"))
+      .reduce(
+        (acc, c) => (c ? { ...acc, [c.credentialType]: c } : acc),
+        {} as Record<string, StoredCredential>
+      )
 );
 
 /**
@@ -43,19 +80,24 @@ export const itwCredentialsSelector = createSelector(
  * @returns The eID credential Option
  */
 export const itwCredentialsEidSelector = createSelector(
-  (state: GlobalState) => state.features.itWallet.credentials.credentials,
-  ({ [CredentialType.PID]: pid }) => O.fromNullable(pid)
+  itwCredentialsByTypeSelector,
+  ({ [CredentialType.PID]: pid }) =>
+    O.fromNullable(withLegacyFallback(pid, "dc+sd-jwt"))
 );
 
 /**
  * Given a credential key, returns an Option containing the credential of the given type from the credentials object.
  *
  * @param type - The credential type.
+ * @param format - The credential format (default to SD-JWT).
  * @returns The credential Option.
  */
-export const itwCredentialSelector = (key: string) =>
-  createSelector(itwCredentialsSelector, credentials =>
-    O.fromNullable(credentials[key])
+export const itwCredentialSelector = (
+  key: string,
+  format: CredentialFormat = "dc+sd-jwt"
+) =>
+  createSelector(itwCredentialsByTypeSelector, credentials =>
+    O.fromNullable(withLegacyFallback(credentials[key], format))
   );
 
 /**
@@ -188,13 +230,4 @@ export const itwCredentialsEidStatusSelector = createSelector(
       O.map(eid => getCredentialStatus(eid) as ItwJwtCredentialStatus),
       O.toUndefined
     )
-);
-
-/**
- * Selects all credential types with an L2 auth level
- */
-export const itwL2CredentialSelector = createSelector(
-  itwCredentialsSelector,
-  ({ credentials }) =>
-    pipe(credentials, A.filterMap(identity), A.filter(P.not(isL3Credential)))
 );

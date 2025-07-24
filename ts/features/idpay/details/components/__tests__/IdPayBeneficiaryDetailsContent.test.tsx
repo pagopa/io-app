@@ -32,13 +32,13 @@ jest.mock("@react-navigation/native", () => {
 });
 
 const T_INITIATIVE_ID = "ABC123";
-const T_END_DATE = new Date(2023, 0, 1);
-const T_END_DATE_TEXT = "01/01/2023";
-const T_AMOUNT = 70;
+const T_END_DATE = new Date(2023, 0, 1, 10, 0);
+const T_END_DATE_TEXT = "01/01/2023, 10:00";
+const T_AMOUNT = 7000;
 const T_AMOUNT_TEXT = "70,00 €";
-const T_ACCRUED = 20;
+const T_ACCRUED = 2000;
 const T_ACCRUED_TEXT = "20,00 €";
-const T_REFUNDED = 10;
+const T_REFUNDED = 1000;
 const T_REFUNDED_TEXT = "10,00 €";
 const T_IBAN = "IT60X0542811101000000123456";
 const T_INITIATIVE_NAME = "Test name";
@@ -49,7 +49,8 @@ const T_FRUITION_END_DATE_STRING = "02 ago 2023";
 const T_ONBOARDING_STATUS_DATE = new Date(2023, 2, 2);
 const T_ONBOARDING_OK_DATE = new Date(2023, 8, 8, 23, 21);
 const T_ONBOARDING_OK_DATE_STRING = "08 set 2023, 23:21";
-const T_REWARD_VALUE = 30;
+const T_REWARD_VALUE = 3000;
+const T_REWARD_VALUE_PERCENTAGE = 30;
 const T_REWARD_VALUE_PERCENTAGE_STRING = "30%";
 const T_REWARD_VALUE_ABSOLUTE_STRING = "30,00 €";
 
@@ -204,7 +205,10 @@ const renderComponent = (
       fruitionEndDate: T_FRUITION_END_DATE,
       rewardRule: {
         rewardValueType,
-        rewardValue: T_REWARD_VALUE
+        rewardValue:
+          rewardValueType === RewardValueTypeEnum.PERCENTAGE
+            ? T_REWARD_VALUE_PERCENTAGE
+            : T_REWARD_VALUE
       }
     },
     onboardingStatus: {

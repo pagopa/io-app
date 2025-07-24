@@ -3,7 +3,9 @@ import {
   type IntegrityError,
   type IntegrityErrorCodes
 } from "@pagopa/io-react-native-integrity";
-import { CryptoErrorCodes, CryptoError } from "@pagopa/io-react-native-crypto";
+import { CryptoError, CryptoErrorCodes } from "@pagopa/io-react-native-crypto";
+import { Trust } from "@pagopa/io-react-native-wallet-v2";
+import { isFederationError } from "../../common/utils/itwFailureUtils";
 import { type EidIssuanceEvents } from "./events";
 
 const {
@@ -18,7 +20,9 @@ export enum IssuanceFailureType {
   NOT_MATCHING_IDENTITY = "NOT_MATCHING_IDENTITY",
   ISSUER_GENERIC = "ISSUER_GENERIC",
   WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC",
-  WALLET_REVOCATION_ERROR = "WALLET_REVOCATION_ERROR"
+  WALLET_REVOCATION_ERROR = "WALLET_REVOCATION_ERROR",
+  UNTRUSTED_ISS = "UNTRUSTED_ISS",
+  CIE_NOT_REGISTERED = "CIE_NOT_REGISTERED"
 }
 
 /**
@@ -33,6 +37,8 @@ export type ReasonTypeByFailure = {
     | Errors.WalletProviderResponseError;
   [IssuanceFailureType.NOT_MATCHING_IDENTITY]: string;
   [IssuanceFailureType.WALLET_REVOCATION_ERROR]: unknown;
+  [IssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
+  [IssuanceFailureType.CIE_NOT_REGISTERED]: string;
   [IssuanceFailureType.UNEXPECTED]: unknown;
 };
 
@@ -85,6 +91,20 @@ export const mapEventToFailure = (
     return {
       type: IssuanceFailureType.WALLET_PROVIDER_GENERIC,
       reason: error
+    };
+  }
+
+  if (isFederationError(error)) {
+    return {
+      type: IssuanceFailureType.UNTRUSTED_ISS,
+      reason: error
+    };
+  }
+
+  if (error instanceof Error && error.message === "CIE_NOT_REGISTERED") {
+    return {
+      type: IssuanceFailureType.CIE_NOT_REGISTERED,
+      reason: error.message
     };
   }
 

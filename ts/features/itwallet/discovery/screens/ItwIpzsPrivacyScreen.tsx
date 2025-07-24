@@ -9,7 +9,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { trackOpenItwTosAccepted } from "../../analytics";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
 import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
 
@@ -26,7 +26,7 @@ const ItwIpzsPrivacyScreen = () => {
   );
 
   const handleContinuePress = () => {
-    trackOpenItwTosAccepted();
+    trackOpenItwTosAccepted(isL3 ? "L3" : "L2");
     machineRef.send({ type: "accept-ipzs-privacy" });
   };
 
@@ -49,12 +49,15 @@ const ItwIpzsPrivacyScreen = () => {
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
       <IOScrollView
         includeContentMargins={false}
+        contentContainerStyle={{ flexGrow: 1 }}
         actions={{
           type: "SingleButton",
           primary: {
-            label: I18n.t("features.itWallet.ipzsPrivacy.button.label"),
+            label: I18n.t(
+              "features.itWallet.discovery.ipzsPrivacy.button.label"
+            ),
             accessibilityLabel: I18n.t(
-              "features.itWallet.ipzsPrivacy.button.label"
+              "features.itWallet.discovery.ipzsPrivacy.button.label"
             ),
             onPress: handleContinuePress
           }
@@ -68,13 +71,13 @@ const ItwIpzsPrivacyScreen = () => {
           >
             {I18n.t(
               isL3
-                ? "features.itWallet.ipzsPrivacy.titleL3"
-                : "features.itWallet.ipzsPrivacy.title"
+                ? "features.itWallet.discovery.ipzsPrivacy.titleL3"
+                : "features.itWallet.discovery.ipzsPrivacy.title"
             )}
           </H2>
           <VSpacer size={16} />
           <IOMarkdown
-            content={I18n.t("features.itWallet.ipzsPrivacy.warning")}
+            content={I18n.t("features.itWallet.discovery.ipzsPrivacy.warning")}
           />
         </ContentWrapper>
         <ItwPrivacyWebViewComponent

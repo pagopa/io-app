@@ -5,7 +5,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwL3IdentificationModeSelectionScreen } from "../ItwL3IdentificationModeSelectionScreen";
 
@@ -54,7 +54,7 @@ const renderComponent = (isL3FeaturesEnabled = true) => {
     const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
     const snapshot: typeof initialSnapshot = {
       ...initialSnapshot,
-      value: { UserIdentification: "L3Identification" },
+      value: { UserIdentification: { Identification: "L3" } },
       context: {
         ...initialSnapshot.context,
         isL3FeaturesEnabled,

@@ -1,7 +1,13 @@
-import { Body, H4, IOSkeleton, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  H1,
+  IOSkeleton,
+  VSpacer,
+  VStack
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Image, StyleSheet, View } from "react-native";
+import { Image } from "react-native";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 
 type Props = {
@@ -13,51 +19,42 @@ const IdPayOnboardingServiceHeader = (props: Props) => {
 
   return pipe(
     initiative,
-    O.map(initiative => ({
-      organizationName: initiative.organizationName,
-      initiativeName: initiative.initiativeName,
-      logoURL: initiative.logoURL
+    O.map(initiativeDetails => ({
+      organizationName: initiativeDetails.organizationName,
+      initiativeName: initiativeDetails.initiativeName,
+      logoURL: initiativeDetails.logoURL
     })),
     O.fold(
       () => <Skeleton />,
-      ({ organizationName, initiativeName, logoURL }) => (
-        <View style={styles.header}>
-          <View>
-            <H4>{initiativeName}</H4>
-            <Body>{organizationName}</Body>
-          </View>
+      ({ initiativeName, logoURL }) => (
+        <VStack>
           <Image
             accessibilityIgnoresInvertColors
-            style={styles.logo}
+            style={{
+              width: "100%",
+              height: 270,
+              flex: 1
+            }}
             source={{ uri: logoURL }}
           />
-        </View>
+          <ContentWrapper>
+            <VSpacer size={24} />
+            <H1>{initiativeName}</H1>
+          </ContentWrapper>
+        </VStack>
       )
     )
   );
 };
 
 const Skeleton = () => (
-  <View style={styles.header}>
-    <View>
-      <IOSkeleton shape="rectangle" width={110} height={16} radius={4} />
-      <VSpacer size={8} />
-      <IOSkeleton shape="rectangle" width={150} height={21} radius={4} />
-    </View>
-    <IOSkeleton shape="square" size={48} radius={24} />
-  </View>
+  <VStack>
+    <IOSkeleton shape="rectangle" height={270} width="auto" />
+    <ContentWrapper>
+      <VSpacer size={24} />
+      <IOSkeleton shape="rectangle" width="80%" height={16} radius={4} />
+    </ContentWrapper>
+  </VStack>
 );
-
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  logo: {
-    width: 48,
-    height: 48
-  }
-});
 
 export { IdPayOnboardingServiceHeader };

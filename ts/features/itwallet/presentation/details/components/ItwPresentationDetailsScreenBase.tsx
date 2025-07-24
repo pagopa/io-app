@@ -6,7 +6,6 @@ import {
   IOVisualCostants,
   buttonSolidHeight
 } from "@pagopa/io-app-design-system";
-
 import { Fragment, ReactNode, useMemo } from "react";
 import Animated, {
   Easing,
@@ -20,7 +19,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { getHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { hasL3Design } from "../../../common/utils/itwCredentialUtils.ts";
+import { useIOSelector } from "../../../../../store/hooks";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 export type CredentialCtaProps = Omit<ButtonSolidProps, "fullWidth">;
 
@@ -43,7 +43,7 @@ const ItwPresentationDetailsScreenBase = ({
 }: ItwPresentationDetailsScreenBaseProps) => {
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const safeAreaInsets = useSafeAreaInsets();
-  const withL3Design = hasL3Design(credential);
+  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);

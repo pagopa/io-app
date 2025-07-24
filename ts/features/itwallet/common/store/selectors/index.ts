@@ -1,24 +1,21 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
-  itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector,
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
 import {
+  itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsOperationalOrValid,
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
-import { isItwCredential } from "../../utils/itwCredentialUtils";
-import { ItwJwtCredentialStatus } from "../../utils/itwTypesUtils";
 import {
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
   itwIsL3EnabledSelector,
-  itwIsOfflineBannerHiddenSelector
+  itwIsOfflineBannerHiddenSelector,
+  itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
 } from "./preferences";
 import {
   isItwEnabledSelector,
@@ -106,13 +103,6 @@ export const itwShouldRenderOfflineBannerSelector = (state: GlobalState) =>
   itwLifecycleIsValidSelector(state) &&
   !itwIsOfflineBannerHiddenSelector(state);
 
-const isItwCredentialSelector = (state: GlobalState) =>
-  pipe(
-    itwCredentialsEidSelector(state),
-    O.map(eid => isItwCredential(eid.credential)),
-    O.getOrElse(() => false)
-  );
-
 /**
  * Returns if the L3 upgrade banner should be rendered. The banner is rendered if:
  * - The user has online access (not available in the mini-app)
@@ -124,7 +114,7 @@ export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
   !offlineAccessReasonSelector(state) &&
   isItwEnabledSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  !isItwCredentialSelector(state);
+  !itwLifecycleIsITWalletValidSelector(state);
 
 /**
  * Returns whether the new IT-Wallet variant should be rendered.
@@ -133,35 +123,25 @@ export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
  * - The L3 feature flag is enabled
  * - Is ITW Credential
  */
-export const itwShouldRenderNewITWalletSelector = (state: GlobalState) =>
+export const itwShouldRenderNewItWalletSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  isItwCredentialSelector(state);
+  itwLifecycleIsITWalletValidSelector(state);
 
 /**
- * Factory function that creates a selector to determine if any banners
- * should be displayed above the Wallet component.
- *
- * It checks three conditions:
- * 1. If the Wallet Ready banner should be rendered.
- * 2. If the Offline banner should be rendered.
- * 3. If the current ITW credential status is included in
- *    the specified list of `lifecycleStatus` values.
+ * Returns whether the IT-Wallet upgrade banner in MDL details should be rendered.
+ * - The IT Wallet feature flag is enabled
+ * - The wallet is not offline
+ * - The L3 feature flag is enabled
+ * - Isn't ITW Credential
+ * - The user did not close the banner
  */
-export const makeItwHasActiveBannersAboveWalletSelector =
-  (lifecycleStatus: Array<ItwJwtCredentialStatus>) => (state: GlobalState) => {
-    const shouldDisplayStatus = pipe(
-      O.fromNullable(itwCredentialsEidStatusSelector(state)),
-      O.fold(
-        () => false,
-        status => lifecycleStatus.includes(status)
-      )
-    );
-
-    return (
-      itwShouldRenderWalletReadyBannerSelector(state) ||
-      itwShouldRenderOfflineBannerSelector(state) ||
-      shouldDisplayStatus
-    );
-  };
+export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
+  state: GlobalState
+): boolean =>
+  isItwEnabledSelector(state) &&
+  !offlineAccessReasonSelector(state) &&
+  itwIsL3EnabledSelector(state) &&
+  !itwLifecycleIsITWalletValidSelector(state) &&
+  !itwIsWalletUpgradeMDLDetailsBannerHiddenSelector(state);
