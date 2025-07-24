@@ -286,6 +286,10 @@ const mapErrorCodeToFailure = (
       return OnboardingFailureEnum.BUDGET_EXHAUSTED;
     case OnboardingErrorCodeEnum.ONBOARDING_USER_UNSUBSCRIBED:
       return OnboardingFailureEnum.USER_UNSUBSCRIBED;
+    case OnboardingErrorCodeEnum.ONBOARDING_FAMILY_UNIT_ALREADY_JOINED:
+      return OnboardingFailureEnum.FAMILY_UNIT_ALREADY_JOINED;
+    case OnboardingErrorCodeEnum.ONBOARDING_WAITING_LIST:
+      return OnboardingFailureEnum.ONBOARDING_WAITING_LIST;
     default:
       return OnboardingFailureEnum.GENERIC;
   }
