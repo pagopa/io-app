@@ -4130,6 +4130,10 @@
         "deny": "Non attivare",
         "success": "Sie aktivierten Push -Benachrichtigungen",
         "advice": "Consigliato"
+      },
+      "loading": {
+        "subtitle": "Attendi qualche secondo",
+        "title": "Stiamo elaborando la tua richiesta"
       }
     }
   }
