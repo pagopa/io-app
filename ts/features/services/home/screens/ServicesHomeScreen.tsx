@@ -12,7 +12,10 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
 import { ListRenderItemInfo, View } from "react-native";
-import Animated, { useAnimatedRef } from "react-native-reanimated";
+import Animated, {
+  LinearTransition,
+  useAnimatedRef
+} from "react-native-reanimated";
 import { Institution } from "../../../../../definitions/services/Institution";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
@@ -31,6 +34,7 @@ import { FeaturedServiceList } from "../components/FeaturedServiceList";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { useServicesHomeBottomSheet } from "../hooks/useServicesHomeBottomSheet";
 import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
+import { EmailNotificationBanner } from "../components/EmailNotificationBanner";
 
 export const ServicesHomeScreen = () => {
   const dispatch = useIODispatch();
@@ -96,9 +100,12 @@ export const ServicesHomeScreen = () => {
             }
           }}
         />
-        <FeaturedServiceList />
-        <FeaturedInstitutionList />
-        <ListItemHeader label={I18n.t("services.home.institutions.title")} />
+        <EmailNotificationBanner />
+        <Animated.View layout={LinearTransition.duration(300)}>
+          <FeaturedServiceList />
+          <FeaturedInstitutionList />
+          <ListItemHeader label={I18n.t("services.home.institutions.title")} />
+        </Animated.View>
       </>
     ),
     [navigateToSearch]
