@@ -5760,7 +5760,8 @@
           },
           "FAMILY_UNIT_ALREADY_JOINED": {
             "title": "Un'altra persona del tuo nucleo familiare ha inviato la richiesta",
-            "subtitle": "È possibile inviare una sola richiesta per ogni nucleo familiare."
+            "subtitle": "È possibile inviare una sola richiesta per ogni nucleo familiare.",
+            "secondaryAction": "Cosa puoi fare?"
           },
           "ONBOARDING_WAITING_LIST": {
             "title": "Sei in lista d’attesa",
