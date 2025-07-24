@@ -5996,7 +5996,7 @@
         "header": "Confermi l’operazione?",
         "discountedAmount": "Discounted amount",
         "amount": "Total amount",
-        "businessName": "Where you're using it",
+        "businessName": "Requested by",
         "dateTime": "Data e Ora",
         "initiativeName": "Iniziativa",
         "availableAmount": "Credito disponibile",
