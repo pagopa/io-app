@@ -65,7 +65,7 @@ export function* handleGenerateBarcode(
               ? idPayGenerateBarcode.success(response.value)
               : idPayGenerateBarcode.failure({
                   initiativeId: action.payload.initiativeId,
-                  error: response.value
+                  error: response.value || genericError
                 })
           )
       )

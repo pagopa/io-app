@@ -49,7 +49,7 @@ export function* handleGetIDPayWallet(
               avatarSource: {
                 uri: initiative.logoURL
               },
-              expireDate: initiative.endDate
+              expireDate: initiative.voucherEndDate
             }))
           )
         );

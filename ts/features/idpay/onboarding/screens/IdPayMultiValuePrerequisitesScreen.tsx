@@ -102,7 +102,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
         type="radioListItem"
         items={selfDeclaration.value.map((answer, index) => ({
           id: index,
-          value: answer
+          value: answer.description
         }))}
         selectedItem={selectedValueIndex}
         onPress={value => setSelectedValueIndex(value)}

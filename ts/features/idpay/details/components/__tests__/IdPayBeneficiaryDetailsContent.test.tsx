@@ -1,6 +1,7 @@
 import { within } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 import {
+  InitiativeDTO,
   InitiativeRewardTypeEnum,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
@@ -9,7 +10,6 @@ import {
   IdPayBeneficiaryDetailsContent,
   BeneficiaryDetailsProps
 } from "../IdPayBeneficiaryDetailsContent";
-import { StatusEnum as OnboardingStatusEnum } from "../../../../../../definitions/idpay/OnboardingStatusDTO";
 import { RewardValueTypeEnum } from "../../../../../../definitions/idpay/RewardValueDTO";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -46,8 +46,6 @@ const T_FRUITION_START_DATE = new Date(2023, 4, 7);
 const T_FRUITION_START_DATE_STRING = "07 mag 2023";
 const T_FRUITION_END_DATE = new Date(2023, 7, 2);
 const T_FRUITION_END_DATE_STRING = "02 ago 2023";
-const T_ONBOARDING_STATUS_DATE = new Date(2023, 2, 2);
-const T_ONBOARDING_OK_DATE = new Date(2023, 8, 8, 23, 21);
 const T_ONBOARDING_OK_DATE_STRING = "08 set 2023, 23:21";
 const T_REWARD_VALUE = 3000;
 const T_REWARD_VALUE_PERCENTAGE = 30;
@@ -192,14 +190,14 @@ const renderComponent = (
       initiativeId: T_INITIATIVE_ID,
       status: InitiativeStatusEnum.REFUNDABLE,
       nInstr: 2,
-      endDate: T_END_DATE,
+      voucherEndDate: T_END_DATE,
       accruedCents: T_ACCRUED,
       amountCents: T_AMOUNT,
       refundedCents: T_REFUNDED,
       iban: T_IBAN,
       initiativeName: T_INITIATIVE_NAME,
       initiativeRewardType
-    },
+    } as InitiativeDTO,
     beneficiaryDetails: {
       fruitionStartDate: T_FRUITION_START_DATE,
       fruitionEndDate: T_FRUITION_END_DATE,
@@ -210,11 +208,6 @@ const renderComponent = (
             ? T_REWARD_VALUE_PERCENTAGE
             : T_REWARD_VALUE
       }
-    },
-    onboardingStatus: {
-      status: OnboardingStatusEnum.ONBOARDING_OK,
-      statusDate: T_ONBOARDING_STATUS_DATE,
-      onboardingOkDate: T_ONBOARDING_OK_DATE
     }
   };
 

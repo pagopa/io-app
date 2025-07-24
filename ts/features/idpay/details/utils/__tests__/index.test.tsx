@@ -8,22 +8,22 @@ describe("IDPay screen details utils tests", () => {
 
     const initiativeActive = {
       status: "REFUNDABLE",
-      endDate: new Date("2023-10-31T00:00:00Z")
+      voucherEndDate: new Date("2023-10-31T00:00:00Z")
     } as InitiativeDTO;
 
     const initiativeExpiring = {
       status: "REFUNDABLE",
-      endDate: new Date("2023-10-05T00:00:00Z")
+      voucherEndDate: new Date("2023-10-05T00:00:00Z")
     } as InitiativeDTO;
 
     const initiativeExpired = {
       status: "REFUNDABLE",
-      endDate: new Date("2023-09-30T00:00:00Z")
+      voucherEndDate: new Date("2023-09-30T00:00:00Z")
     } as InitiativeDTO;
 
     const initiativeRemoved = {
       status: "UNSUBSCRIBED",
-      endDate: new Date("2023-10-31T00:00:00Z")
+      voucherEndDate: new Date("2023-10-31T00:00:00Z")
     } as InitiativeDTO;
 
     expect(getInitiativeStatus({ initiative: initiativeActive, now })).toBe(
@@ -50,7 +50,7 @@ describe("IDPay screen details utils tests", () => {
         nInstr: 1,
         lastCounterUpdate: new Date(),
         status: "REFUNDABLE",
-        endDate: new Date("2023-10-31T00:00:00Z")
+        voucherEndDate: new Date("2023-10-31T00:00:00Z")
       } as InitiativeDTO;
 
       const { getByTestId } = render(
@@ -65,7 +65,7 @@ describe("IDPay screen details utils tests", () => {
         initiativeId: "2",
         initiativeName: "Test Initiative",
         organizationName: "Test Organization",
-        endDate: new Date("2023-10-05T00:00:00Z"),
+        voucherEndDate: new Date("2023-10-05T00:00:00Z"),
         nInstr: 1,
         lastCounterUpdate: new Date(),
         status: "REFUNDABLE"
@@ -83,7 +83,7 @@ describe("IDPay screen details utils tests", () => {
         initiativeId: "3",
         initiativeName: "Test Initiative",
         organizationName: "Test Organization",
-        endDate: new Date("2023-09-30T00:00:00Z"),
+        voucherEndDate: new Date("2023-09-30T00:00:00Z"),
         nInstr: 1,
         lastCounterUpdate: new Date(),
         status: "REFUNDABLE"
@@ -101,7 +101,7 @@ describe("IDPay screen details utils tests", () => {
         initiativeId: "4",
         initiativeName: "Test Initiative",
         organizationName: "Test Organization",
-        endDate: new Date("2023-10-31T00:00:00Z"),
+        voucherEndDate: new Date("2023-10-31T00:00:00Z"),
         nInstr: 1,
         lastCounterUpdate: new Date(),
         status: "UNSUBSCRIBED"

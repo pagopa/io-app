@@ -5782,7 +5782,8 @@
         "code": {
           "ISEE": "ISEE",
           "BIRTHDATE": "Data di nascita",
-          "RESIDENCE": "Residenza"
+          "RESIDENCE": "Residenza",
+          "FAMILY_UNIT": "Nucleo Familiare"
         },
         "operator": {
           "EQ": "{{value}}",

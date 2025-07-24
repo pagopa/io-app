@@ -13,13 +13,13 @@ import { handleGetInitiativeDetails } from "../handleGetInitiativeDetails";
 describe("idpayInitiativeGet", () => {
   const initiativeId = "abcdef";
 
-  const initiative: InitiativeDTO = {
+  const initiative = {
     initiativeId,
     initiativeName: "initiativeName",
-    endDate: new Date(2023, 1, 1),
+    voucherEndDate: new Date(2023, 1, 1),
     nInstr: 1,
     status: InitiativeStatusEnum.REFUNDABLE
-  };
+  } as InitiativeDTO;
 
   describe("when the response is successful", () => {
     it(`should put ${getType(

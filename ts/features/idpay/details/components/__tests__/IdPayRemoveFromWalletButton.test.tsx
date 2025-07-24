@@ -19,26 +19,26 @@ jest.mock("../../../../../navigation/params/AppParamsList", () => ({
   })
 }));
 
-const hideButtonProps: InitiativeDTO = {
+const hideButtonProps = {
   initiativeId: "initiativeId",
   initiativeName: "Test Initiative",
   organizationName: "Test Organization",
-  endDate: new Date(),
+  voucherEndDate: new Date(),
   nInstr: 1,
   lastCounterUpdate: new Date(),
   status: StatusEnum.UNSUBSCRIBED
-};
+} as InitiativeDTO;
 
-const mockedInitiative: InitiativeDTO = {
+const mockedInitiative = {
   initiativeId: "initiativeId",
   initiativeName: "Test Initiative",
   organizationName: "Test Organization",
   // end date tomorrow for testing purposes
-  endDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
+  voucherEndDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
   nInstr: 1,
   lastCounterUpdate: new Date(),
   status: StatusEnum.REFUNDABLE
-};
+} as InitiativeDTO;
 
 describe("IdPayRemoveFromWalletButton", () => {
   beforeAll(() => {
