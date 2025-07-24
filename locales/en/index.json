@@ -4286,7 +4286,7 @@
         "inactive": "Non attivo",
         "header": "Mostra identità"
       },
-      "walletID": {
+      "walletId": {
         "title": "IT-Wallet ID",
         "show": "Mostra"
       },
