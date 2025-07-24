@@ -15,7 +15,7 @@ import {
 } from "../../../analytics";
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { itwCredentialTypeRemove } from "../../../credentials/store/actions";
+import { itwCredentialsRemoveByType } from "../../../credentials/store/actions";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import { getCredentialDocumentNumber } from "../../../trustmark/utils";
 import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
@@ -42,7 +42,7 @@ const ItwPresentationDetailsFooter = ({
     useItwStartCredentialSupportRequest(credential);
 
   const handleRemoveCredential = () => {
-    dispatch(itwCredentialTypeRemove(credential.credentialType));
+    dispatch(itwCredentialsRemoveByType(credential.credentialType));
     toast.success(
       I18n.t("features.itWallet.presentation.credentialDetails.toast.removed")
     );

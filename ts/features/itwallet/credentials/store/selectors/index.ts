@@ -242,6 +242,6 @@ export const itwCredentialsListByTypeSelector = (key: string) =>
     pipe(
       O.fromNullable(credentials[key]),
       O.map(Object.values),
-      O.getOrElse<Array<StoredCredential>>(() => [])
+      O.getOrElse<ReadonlyArray<StoredCredential>>(() => [])
     )
   );

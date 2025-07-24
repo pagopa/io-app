@@ -9,7 +9,7 @@ import { checkCurrentSession } from "../../../authentication/common/store/action
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import {
-  itwCredentialTypeRemove,
+  itwCredentialsRemoveByType,
   itwCredentialsStore
 } from "../../credentials/store/actions";
 import {
@@ -227,7 +227,7 @@ export const createEidIssuanceActionsImplementation = (
     // When upgrading to IT-Wallet it is possible to end up with the old and the new PID
     // at the same time, because they have different IDs and are not overwritten. To avoid this issue,
     // the eID is always removed before storing the new one. If no previous eID is present, the action is a no-op.
-    store.dispatch(itwCredentialTypeRemove(context.eid.credentialType));
+    store.dispatch(itwCredentialsRemoveByType(context.eid.credentialType));
     store.dispatch(itwCredentialsStore([context.eid]));
   },
 
