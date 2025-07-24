@@ -6,7 +6,10 @@ import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { CREDENTIALS_MAP, trackItwCredentialNeedsVerification } from "../../../analytics";
+import {
+  CREDENTIALS_MAP,
+  trackItwCredentialNeedsVerification
+} from "../../../analytics";
 
 type Props = {
   credential: StoredCredential;

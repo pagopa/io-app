@@ -428,7 +428,7 @@ export const trackItwCredentialNeedsVerification = (
       credential_status: "verification_expired"
     })
   );
-}
+};
 
 // #endregion SCREEN VIEW EVENTS
 

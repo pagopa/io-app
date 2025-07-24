@@ -16,7 +16,12 @@ import { format } from "../../../../../utils/dates.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
-import { CREDENTIALS_MAP, CREDENTIAL_STATUS_MAP, trackItwCredentialBottomSheet, trackItwCredentialTapBanner } from "../../../analytics";
+import {
+  CREDENTIALS_MAP,
+  CREDENTIAL_STATUS_MAP,
+  trackItwCredentialBottomSheet,
+  trackItwCredentialTapBanner
+} from "../../../analytics";
 
 type Props = {
   credential: StoredCredential;
@@ -38,6 +43,14 @@ type CredentialStatusAlertProps = {
   onTrack: TrackCredentialAlert;
 };
 
+const handleAlertPress =
+  (onTrack: TrackCredentialAlert, bottomSheet: { present: () => void }) =>
+  () => {
+    onTrack("banner_tap");
+    bottomSheet.present();
+    onTrack("bottom_sheet_open");
+  };
+
 /**
  * This component renders an alert related to the credential status (expiring or invalid).
  * It contains messages that are statically defined in the app's locale or
@@ -49,7 +62,9 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   );
 
   const trackCredentialAlertEvent = (action: CredentialAlertEvents) => {
-    if (!status) return;
+    if (!status) {
+      return;
+    }
 
     const data = {
       credential: CREDENTIALS_MAP[credential.credentialType],
@@ -66,15 +81,30 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   };
 
   if (status === "jwtExpiring") {
-    return <VerificationExpiringAlert credential={credential} onTrack={trackCredentialAlertEvent}/>;
+    return (
+      <VerificationExpiringAlert
+        credential={credential}
+        onTrack={trackCredentialAlertEvent}
+      />
+    );
   }
 
   if (status === "expiring") {
-    return <DocumentExpiringAlert credential={credential} onTrack={trackCredentialAlertEvent}/>;
+    return (
+      <DocumentExpiringAlert
+        credential={credential}
+        onTrack={trackCredentialAlertEvent}
+      />
+    );
   }
 
   if (message) {
-    return <IssuerDynamicErrorAlert message={message} onTrack={trackCredentialAlertEvent}/>;
+    return (
+      <IssuerDynamicErrorAlert
+        message={message}
+        onTrack={trackCredentialAlertEvent}
+      />
+    );
   }
 
   // Fallback when the issuer does not provide a message for an expired credential
@@ -139,12 +169,6 @@ const DocumentExpiringAlert = ({
     component: <IOMarkdown content={I18n.t(`${bottomSheetNs}.content`)} />
   });
 
-  const handleAlertPress = () => {
-    onTrack("banner_tap");
-    bottomSheet.present();
-    onTrack("bottom_sheet_open");
-  };
-
   return (
     <>
       <Alert
@@ -155,7 +179,7 @@ const DocumentExpiringAlert = ({
           { days: expireDays }
         )}
         action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
-        onPress={handleAlertPress}
+        onPress={handleAlertPress(onTrack, bottomSheet)}
       />
       {bottomSheet.bottomSheet}
     </>
@@ -178,19 +202,13 @@ const IssuerDynamicErrorAlert = ({
     component: <IOMarkdown content={localizedMessage.description} />
   });
 
-  const handleAlertPress = () => {
-    onTrack("banner_tap");
-    bottomSheet.present();
-    onTrack("bottom_sheet_open");
-  };
-
   return (
     <>
       <Alert
         variant="error"
         content={localizedMessage.title}
         action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
-        onPress={handleAlertPress}
+        onPress={handleAlertPress(onTrack, bottomSheet)}
       />
       {bottomSheet.bottomSheet}
     </>
