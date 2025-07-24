@@ -40,6 +40,10 @@ export type UpdatePushNotificationSetting = {
   readonly isPushNotificationEnabled: boolean;
 };
 
+export type CheckDetails = {
+  readonly type: "check-details";
+};
+
 export type IdPayOnboardingEvents =
   | StartOnboarding
   | SelectMultiConsent
@@ -48,4 +52,5 @@ export type IdPayOnboardingEvents =
   | Next
   | Back
   | Close
-  | UpdatePushNotificationSetting;
+  | UpdatePushNotificationSetting
+  | CheckDetails;
