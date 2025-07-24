@@ -3963,10 +3963,8 @@
       "qrCodeScan": {
         "success": {
           "openSendScreen": {
-            "title": "Per accedere ai documenti vai sul sito web di SEND",
-            "body": "Per visualizzare i documenti online devi andare sul sito web di SEND. Presto potrai farlo direttamente da IO!",
-            "firstCta": "Vai su SEND",
-            "secondCta": "Chiudi"
+            "title": "Per consultare i documenti vai sul sito di SEND",
+            "firstCta": "Vai su SEND"
           }
         }
       }
