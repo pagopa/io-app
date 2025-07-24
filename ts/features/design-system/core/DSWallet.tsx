@@ -1,4 +1,9 @@
-import { Banner, VSpacer, VStack } from "@pagopa/io-app-design-system";
+import {
+  Banner,
+  ListItemHeader,
+  VSpacer,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
 import { WalletCardsCategoryContainer } from "../../wallet/components/WalletCardsCategoryContainer";
 import { WalletCard, WalletCardCategory } from "../../wallet/types";
@@ -104,11 +109,13 @@ export const DSWallet = () => {
         <DesignSystemSection title="With Documenti su IO">
           <WalletCardsCategoryContainer
             cards={cardsByCategory.itw}
-            header={{
-              label: "Documenti",
-              iconName: "legalValue",
-              iconColor: "blueIO-500"
-            }}
+            header={
+              <ListItemHeader
+                label="Documenti"
+                iconName="legalValue"
+                iconColor="blueIO-500"
+              />
+            }
           />
           <WalletCardsCategoryContainer
             cards={[
@@ -116,9 +123,7 @@ export const DSWallet = () => {
               ...cardsByCategory.cgn,
               ...cardsByCategory.bonus
             ]}
-            header={{
-              label: "Altro"
-            }}
+            header={<ListItemHeader label="Altro" />}
             topElement={
               <>
                 <Banner
