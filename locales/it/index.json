@@ -4286,7 +4286,7 @@
         "inactive": "Non attivo",
         "header": "Mostra identità"
       },
-      "walletID": {
+      "walletId": {
         "title": "IT-Wallet ID",
         "show": "Mostra"
       },
@@ -5815,10 +5815,18 @@
       "enableNotification": {
         "title": "Non perderti l’esito delle tue richieste",
         "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
-        "action": "Attiva notifiche push",
-        "deny": "Non attivare",
+        "action": "Attiva le notifiche",
+        "deny": "Non ora",
         "success": "Hai attivato le notifiche push",
         "advice": "Consigliato"
+      },
+      "preferences": {
+        "enableEmailBanner": {
+          "title": "Non perderti aggiornamenti importanti",
+          "content": "Attiva l’inoltro via email per avere tutte le comunicazioni anche fuori dall'app.",
+          "cta": "Aggiornami via email",
+          "successOutcome": "Hai attivato le notifiche via email"
+        }
       },
       "loading": {
         "subtitle": "Attendi qualche secondo",

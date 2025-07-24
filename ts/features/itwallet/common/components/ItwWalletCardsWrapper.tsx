@@ -2,12 +2,12 @@ import { Platform, StyleSheet, View } from "react-native";
 import { PropsWithChildren } from "react";
 import { IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwShouldRenderNewITWalletSelector } from "../store/selectors";
+import { itwShouldRenderNewItWalletSelector } from "../store/selectors";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { WALLET_L3_BG_COLOR } from "../utils/constants";
 
 export const ItwWalletCardsWrapper = ({ children }: PropsWithChildren) => {
-  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWalletSelector);
+  const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
 
   if (isNewItwRenderable) {
     return (
