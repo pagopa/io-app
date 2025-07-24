@@ -1,3 +1,4 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useMemo } from "react";
@@ -6,6 +7,7 @@ import {
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
+import { openWebUrl } from "../../../../utils/url";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectOnboardingFailure } from "../machine/selectors";
 import { OnboardingFailureEnum } from "../types/OnboardingFailure";
@@ -16,10 +18,22 @@ const IdPayFailureScreen = () => {
 
   const failureOption = useSelector(selectOnboardingFailure);
 
+  const CAC_URL =
+    "https://assistenza.ioapp.it/hc/it/articles/35337442750225-Non-riesco-ad-aggiungere-un-metodo-di-pagamento";
+
   const defaultCloseAction = useMemo(
     () => ({
       label: I18n.t("global.buttons.close"),
       accessibilityLabel: I18n.t("global.buttons.close"),
+      onPress: () => machine.send({ type: "close" })
+    }),
+    [machine]
+  );
+
+  const defaultBackAction = useMemo(
+    () => ({
+      label: I18n.t("global.buttons.back"),
+      accessibilityLabel: I18n.t("global.buttons.back"),
       onPress: () => machine.send({ type: "close" })
     }),
     [machine]
@@ -166,6 +180,38 @@ const IdPayFailureScreen = () => {
           ),
           action: defaultCloseAction
         };
+
+      case OnboardingFailureEnum.FAMILY_UNIT_ALREADY_JOINED:
+        return {
+          pictogram: "accessDenied",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.subtitle"
+          ),
+          action: defaultBackAction,
+          secondaryAction: {
+            icon: "instruction" as const,
+            label: I18n.t(
+              "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.secondaryAction"
+            ),
+            onPress: () =>
+              openWebUrl(CAC_URL, () => IOToast.error(I18n.t("genericError")))
+          }
+        };
+      case OnboardingFailureEnum.ONBOARDING_WAITING_LIST:
+        return {
+          pictogram: "eventClose",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.ONBOARDING_WAITING_LIST.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.ONBOARDING_WAITING_LIST.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+
       default:
         return genericErrorProps;
     }
