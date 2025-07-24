@@ -29,7 +29,9 @@ export function* updateCredentialStatusAttestationSaga(
   try {
     const { parsedStatusAttestation, statusAttestation } = yield* call(
       getCredentialStatusAttestation,
-      credential
+      credential,
+      // TODO: [SIW-2530] Use the new API for the new credentials only, remove after migration to 1.0
+      credential.format !== "vc+sd-jwt"
     );
     return {
       ...credential,
