@@ -124,10 +124,12 @@ export const ItwPresentationCredentialDetail = ({
   usePreventScreenCapture();
 
   useFocusEffect(() => {
-    trackCredentialDetail({
-      credential: CREDENTIALS_MAP[credential.credentialType],
-      credential_status: CREDENTIAL_STATUS_MAP[status]
-    });
+    if (status !== "jwtExpired") {
+      trackCredentialDetail({
+        credential: CREDENTIALS_MAP[credential.credentialType],
+        credential_status: CREDENTIAL_STATUS_MAP[status]
+      });
+    }
   });
 
   /**

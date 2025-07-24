@@ -5,6 +5,8 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { CREDENTIALS_MAP, trackItwCredentialNeedsVerification } from "../../../analytics";
 
 type Props = {
   credential: StoredCredential;
@@ -19,6 +21,12 @@ export const ItwPresentationCredentialVerificationExpired = ({
   useHeaderSecondLevel({
     title: "",
     headerShown: false
+  });
+
+  useOnFirstRender(() => {
+    trackItwCredentialNeedsVerification(
+      CREDENTIALS_MAP[credential.credentialType]
+    );
   });
 
   const beginCredentialIssuance = () => {
