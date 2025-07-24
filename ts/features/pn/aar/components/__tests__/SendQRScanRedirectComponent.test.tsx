@@ -17,6 +17,7 @@ const aarUrl = "https://example.com";
 
 const mockPopToTop = jest.fn();
 const mockReplace = jest.fn();
+
 jest.mock("@react-navigation/native", () => {
   const navigationModule = jest.requireActual("@react-navigation/native");
   return {
@@ -102,6 +103,7 @@ describe("SendQRScanRedirectComponent", () => {
       });
     })
   );
+
   it("calls popToTop when the header action is pressed", () => {
     const { getByTestId } = renderComponent();
     const header = getByTestId("header-close");
@@ -111,6 +113,7 @@ describe("SendQRScanRedirectComponent", () => {
     expect(mockPopToTop.mock.calls[0].length).toBe(0);
   });
 });
+
 function renderComponent(
   sendServiceActive: boolean = true,
   notificationPermissionsEnabled: boolean = true
