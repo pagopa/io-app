@@ -19,6 +19,7 @@ import {
   CREDENTIALS_MAP,
   trackItwStatusCredentialAttestationFailure
 } from "../../analytics";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
@@ -76,9 +77,16 @@ export function* updateCredentialStatusAttestationSaga(
  */
 export function* checkCredentialsStatusAttestation() {
   const isWalletValid = yield* select(itwLifecycleIsValidSelector);
+  const isWhitelisted = yield* select(itwIsL3EnabledSelector);
 
-  // Credentials can be requested only when the wallet is valid, i.e. the eID was issued
-  if (!isWalletValid) {
+  if (
+    // Credentials can be requested only when the wallet is valid, i.e. the eID was issued
+    !isWalletValid ||
+    // TODO: [SIW-2700]
+    // For now, this step is skipped for whitelisted users
+    // until the status assertion flow is aligned with version 1.0
+    isWhitelisted
+  ) {
     return;
   }
 
