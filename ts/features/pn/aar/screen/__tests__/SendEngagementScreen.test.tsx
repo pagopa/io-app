@@ -11,7 +11,13 @@ import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import * as analytics from "../../analytics";
 
+const mockBannerKO = jest.fn();
 jest.mock("../../components/SendEngagementComponent");
+jest.mock("../../../analytics/activationReminderBanner", () => ({
+  sendBannerMixpanelEvents: {
+    bannerKO: (input: string) => mockBannerKO(input)
+  }
+}));
 
 const mockToastSuccess = jest.fn();
 const mockToastError = jest.fn();
@@ -165,6 +171,8 @@ describe("SendEngagementScreen", () => {
       expect(mockSetOptions.mock.calls.length).toBe(1);
       expect(mockSetOptions.mock.calls[0].length).toBe(1);
       expect(mockSetOptions.mock.calls[0][0]).toEqual({ headerShown: false });
+
+      expect(mockBannerKO.mock.calls.length).toBe(1);
     })
   );
 });

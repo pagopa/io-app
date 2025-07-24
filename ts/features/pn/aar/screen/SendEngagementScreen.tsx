@@ -12,6 +12,7 @@ import {
   trackSendActivationModalDialogActivationDismissed,
   trackSendActivationModalDialogActivationStart
 } from "../analytics";
+import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 
 export const SendEngagementScreen = () => {
   const [screenStatus, setScreenStatus] = useState<
@@ -66,10 +67,14 @@ export const SendEngagementScreen = () => {
   }, [navigation, screenStatus]);
 
   useEffect(() => {
-    // Make sure that nothing sets screenStatus to Waiting,
-    // otherwise there will be a double event tracking
     if (screenStatus === "Waiting") {
+      // Make sure that nothing sets screenStatus to Waiting,
+      // otherwise there will be a double event tracking
       trackSendActivationModalDialog();
+    } else if (screenStatus === "Failed") {
+      // Here multiple tracking is fine, since we want
+      // to track it every time that the user retries it
+      sendBannerMixpanelEvents.bannerKO("aar");
     }
   }, [screenStatus]);
 
