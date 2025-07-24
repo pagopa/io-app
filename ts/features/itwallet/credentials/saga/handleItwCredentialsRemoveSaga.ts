@@ -28,8 +28,8 @@ export function* handleItwCredentialsRemoveSaga(
 
     if (sameTypeCredentials.length > 0) {
       yield* put(itwCredentialsRemove(sameTypeCredentials));
-      yield* all(sameTypeCredentials.map(c => call(deleteKey, c.keyTag)));
       yield* put(walletRemoveCards([`ITW_${credentialType}`]));
+      yield* all(sameTypeCredentials.map(c => call(deleteKey, c.keyTag)));
     }
   } catch (e) {
     Sentry.captureException(e);
