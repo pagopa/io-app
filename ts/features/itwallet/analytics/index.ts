@@ -408,15 +408,14 @@ export function trackItwUserWithoutL3Bottomsheet() {
     buildEventProperties("UX", "screen_view")
   );
 }
-
-export function trackItwCredentialBottomSheet(
+export const trackItwCredentialBottomSheet = (
   properties: TrackCredentialDetail
-) {
+) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_BOTTOMSHEET,
     buildEventProperties("UX", "screen_view", properties)
   );
-}
+};
 
 export const trackItwCredentialNeedsVerification = (
   credential: MixPanelCredential
