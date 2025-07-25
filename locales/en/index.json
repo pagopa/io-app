@@ -3956,10 +3956,8 @@
       "qrCodeScan": {
         "success": {
           "openSendScreen": {
-            "title": "Per accedere ai documenti vai sul sito web di SEND",
-            "body": "Per visualizzare i documenti online devi andare sul sito web di SEND. Presto potrai farlo direttamente da IO!",
-            "firstCta": "Vai su SEND",
-            "secondCta": "Chiudi"
+            "title": "Per consultare i documenti vai sul sito di SEND",
+            "firstCta": "Vai su SEND"
           }
         }
       }
@@ -4286,7 +4284,7 @@
         "inactive": "Non attivo",
         "header": "Mostra identità"
       },
-      "walletID": {
+      "walletId": {
         "title": "IT-Wallet ID",
         "show": "Mostra"
       },
@@ -5813,12 +5811,24 @@
         "confirmAction": "Ok, active"
       },
       "enableNotification": {
-        "title": "Non perderti l’esito delle tue richieste",
-        "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
-        "action": "Attiva notifiche push",
-        "deny": "Non attivare",
+        "title": "Don't risk losing the outcome of your request",
+        "subtitle": "Activate push notifications to know immediately when you receive a new message in the app.",
+        "action": "Activate notifications",
+        "deny": "Not now",
         "success": "You activated Push notifications",
         "advice": "Consigliato"
+      },
+      "preferences": {
+        "enableEmailBanner": {
+          "title": "Don't miss important updates",
+          "content": "Enable email forwarding to receive all communications even outside the app.",
+          "cta": "Notify me via email",
+          "successOutcome": "You've enabled email notifications"
+        }
+      },
+      "loading": {
+        "subtitle": "Attendi qualche secondo",
+        "title": "Stiamo elaborando la tua richiesta"
       }
     },
     "configuration": {
