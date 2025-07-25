@@ -1,10 +1,8 @@
 import { assign, fromPromise, not, setup } from "xstate";
-import {
-  LegacyIssuerConfiguration,
-  StoredCredential
-} from "../../common/utils/itwTypesUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
+  GetWalletAttestationActorInput,
   GetWalletAttestationActorOutput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
@@ -45,8 +43,10 @@ export const itwCredentialIssuanceMachine = setup({
     trackCredentialIssuingDataShareAccepted: notImplemented
   },
   actors: {
-    getWalletAttestation:
-      fromPromise<GetWalletAttestationActorOutput>(notImplemented),
+    getWalletAttestation: fromPromise<
+      GetWalletAttestationActorOutput,
+      GetWalletAttestationActorInput
+    >(notImplemented),
     requestCredential: fromPromise<
       RequestCredentialActorOutput,
       RequestCredentialActorInput
@@ -56,7 +56,7 @@ export const itwCredentialIssuanceMachine = setup({
       ObtainCredentialActorInput
     >(notImplemented),
     obtainStatusAttestation: fromPromise<
-      StoredCredential,
+      Array<StoredCredential>,
       ObtainStatusAttestationActorInput
     >(notImplemented)
   },
@@ -130,6 +130,9 @@ export const itwCredentialIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "getWalletAttestation",
+        input: ({ context }) => ({
+          isNewIssuanceFlowEnabled: context.isWhiteListed
+        }),
         onDone: {
           target: "RequestingCredential",
           actions: [
@@ -158,16 +161,21 @@ export const itwCredentialIssuanceMachine = setup({
         src: "requestCredential",
         input: ({ context }) => ({
           credentialType: context.credentialType,
-          walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+          walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+          isNewIssuanceFlowEnabled: context.isWhiteListed
         }),
         onDone: {
           target: "DisplayingTrustIssuer",
           actions: assign(({ event }) => ({
             clientId: event.output.clientId,
             codeVerifier: event.output.codeVerifier,
-            credentialDefinition: event.output.credentialDefinition,
             requestedCredential: event.output.requestedCredential,
-            issuerConf: event.output.issuerConf
+            issuerConf: event.output.issuerConf,
+            // TODO: [SIW-2530] In the new APIs is not needed
+            credentialDefinition:
+              "credentialDefinition" in event.output
+                ? event.output.credentialDefinition
+                : undefined
           }))
         },
         onError: {
@@ -209,14 +217,27 @@ export const itwCredentialIssuanceMachine = setup({
               codeVerifier: context.codeVerifier,
               credentialDefinition: context.credentialDefinition,
               requestedCredential: context.requestedCredential,
-              issuerConf: context.issuerConf as LegacyIssuerConfiguration
+              issuerConf: context.issuerConf,
+              isNewIssuanceFlowEnabled: context.isWhiteListed
             }),
-            onDone: {
-              target: "ObtainingStatusAttestation",
-              actions: assign(({ event }) => ({
-                credential: event.output.credential
-              }))
-            },
+            onDone: [
+              {
+                // TODO: [SIW-2700]
+                // For now, the `ObtainingStatusAttestation` is skipped for L3 issuance
+                // until the status assertion flow is aligned with version 1.0
+                guard: ({ context }) => !!context.isWhiteListed,
+                target: "Completed",
+                actions: assign(({ event }) => ({
+                  credentials: event.output.credentials
+                }))
+              },
+              {
+                target: "ObtainingStatusAttestation",
+                actions: assign(({ event }) => ({
+                  credentials: event.output.credentials
+                }))
+              }
+            ],
             onError: {
               target: "#itwCredentialIssuanceMachine.Failure",
               actions: "setFailure"
@@ -226,11 +247,11 @@ export const itwCredentialIssuanceMachine = setup({
         ObtainingStatusAttestation: {
           invoke: {
             src: "obtainStatusAttestation",
-            input: ({ context }) => ({ credential: context.credential }),
+            input: ({ context }) => ({ credentials: context.credentials }),
             onDone: {
               target: "Completed",
               actions: assign(({ event }) => ({
-                credential: event.output
+                credentials: event.output
               }))
             },
             onError: {
