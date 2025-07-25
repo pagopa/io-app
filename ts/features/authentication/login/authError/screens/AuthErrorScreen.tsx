@@ -14,7 +14,9 @@ import {
   setStandardLoginInLoadingState
 } from "../../idp/store/actions";
 import { UnlockAccessProps } from "../../unlockAccess/components/UnlockAccessComponent";
-import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
+import AuthErrorComponent, {
+  AUTH_ERRORS
+} from "../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 import ROUTES from "../../../../../navigation/routes";
@@ -91,7 +93,10 @@ const AuthErrorScreen = () => {
     // TODO: review this logic in order to save the spid login value in active session login state
     dispatch(resetSpidLoginState());
 
-    if (isActiveSessionLogin) {
+    if (
+      isActiveSessionLogin &&
+      errorCodeOrMessage !== AUTH_ERRORS.NOT_SAME_CF // add correct manage for new error
+    ) {
       navigation.navigate(ROUTES.MAIN, {
         screen: MESSAGES_ROUTES.MESSAGES_HOME
       });
@@ -100,7 +105,7 @@ const AuthErrorScreen = () => {
     navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.LANDING
     });
-  }, [isActiveSessionLogin, dispatch, navigation]);
+  }, [dispatch, isActiveSessionLogin, errorCodeOrMessage, navigation]);
 
   return (
     <AuthErrorComponent

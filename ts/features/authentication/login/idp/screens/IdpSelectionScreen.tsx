@@ -128,9 +128,15 @@ const IdpSelectionScreen = (): ReactElement => {
         screen: AUTHENTICATION_ROUTES.AUTH_SESSION
       });
     } else {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.IDP_LOGIN
-      });
+      if (isActiveSessionLogin) {
+        navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+          screen: AUTHENTICATION_ROUTES.IDP_ACTIVE_SESSION_LOGIN
+        });
+      } else {
+        navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+          screen: AUTHENTICATION_ROUTES.IDP_LOGIN
+        });
+      }
     }
   };
 

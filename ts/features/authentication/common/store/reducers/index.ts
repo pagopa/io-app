@@ -11,7 +11,8 @@ import {
   sessionExpired,
   sessionInformationLoadSuccess,
   sessionInvalid,
-  logoutRequest
+  logoutRequest,
+  loginFailure
 } from "../actions";
 import { Action } from "../../../../../store/actions/types";
 import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
@@ -102,6 +103,7 @@ const authenticationReducer = (
 
   if (
     (isActionOf(sessionExpired, action) ||
+      isActionOf(loginFailure, action) ||
       isActionOf(sessionInvalid, action) ||
       isActionOf(logoutSuccess, action) ||
       isActionOf(logoutFailure, action)) &&

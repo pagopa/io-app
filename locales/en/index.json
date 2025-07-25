@@ -1000,6 +1000,10 @@
         "title": "It was not possible to access",
         "subtitle": "It is currently not possible to log in with your SPID identity provider. Please try again in a few minutes."
       },
+      "not_same_cf": {
+        "title": "Sei proprio tu?",
+        "subtitle": "Hai fatto l’accesso con un’altra identità. Per usare l’app, accedi con le tue credenziali."
+      },
       "generic": {
         "title": "Sorry, access was not available.",
         "subtitle": "A problem occurred while logging in. Please try again in a few minutes."

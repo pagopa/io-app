@@ -22,7 +22,8 @@ export enum AUTH_ERRORS {
   CIEID_IOS_OPERATION_CANCELED_MESSAGE = "Operazione_annullata_dall'utente",
   CIEID_IOS_INVALID_OPERATION_MESSAGE = "Operazione_non_valida",
   CIEID_OPERATION_CANCEL = "CIEID_OPERATION_CANCEL",
-  GENERIC_ERROR = "GENERIC_ERROR"
+  GENERIC_ERROR = "GENERIC_ERROR",
+  NOT_SAME_CF = "NOT_SAME_CF"
 }
 
 export type AuthErrorComponentProps = {
@@ -134,6 +135,12 @@ const AuthErrorComponent = ({
           "authentication.auth_errors.missing_saml_response.subtitle"
         ),
         ...footerWithCloseAndRetryButtons
+      },
+      [AUTH_ERRORS.NOT_SAME_CF]: {
+        pictogram: "accessDenied",
+        title: I18n.t("authentication.auth_errors.not_same_cf.title"),
+        subtitle: I18n.t("authentication.auth_errors.not_same_cf.subtitle"),
+        ...footerWithCloseButton
       },
       [AUTH_ERRORS.GENERIC_ERROR]: {
         pictogram: "umbrella",

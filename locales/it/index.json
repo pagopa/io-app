@@ -1000,6 +1000,10 @@
         "title": "Non è stato possibile accedere",
         "subtitle": "Al momento non è possibile accedere con il tuo fornitore d’identità SPID. Riprova tra qualche minuto."
       },
+      "not_same_cf": {
+        "title": "Sei proprio tu?",
+        "subtitle": "Hai fatto l’accesso con un’altra identità. Per usare l’app, accedi con le tue credenziali."
+      },
       "generic": {
         "title": "Non è stato possibile accedere",
         "subtitle": "Si è verificato un problema durante l’accesso. Riprova tra qualche minuto."
