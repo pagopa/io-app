@@ -3797,6 +3797,37 @@
       "title": "Questo servizio non è più attivo su IO"
     },
     "pn": {
+      "aar": {
+        "serviceActivation": {
+          "failure": "Non riusciamo ad attivare il servizio SEND",
+          "feature1": {
+            "part1": "Attiva SEND su IO e ricevi in app le ",
+            "part2": "comunicazioni a valore legale",
+            "part3": " che ti inviano gli enti"
+          },
+          "feature2": {
+            "part1": "Se leggi la comunicazione online in tempo, ",
+            "part2": "eviti la raccomandata e risparmi"
+          },
+          "feature3": {
+            "part1": "Puoi pagare direttamente in app: è ",
+            "part2": "facile e veloce"
+          },
+          "footer": {
+            "part1": "Premendo ",
+            "part2": "Attiva SEND su IO",
+            "part3": " dichiari di aver letto e compreso l’",
+            "part4": "Informativa Privacy",
+            "part5": " e i ",
+            "part6": "Termini e Condizioni d’uso",
+            "part7": "."
+          },
+          "headerAction": "Chiudi",
+          "primaryAction": "Attiva SEND su IO",
+          "serviceActivated": "Hai attivato SEND su IO",
+          "title": "Ricevi su IO le tue prossime notifiche SEND"
+        }
+      },
       "reminderBanner": {
         "title": "Risparmia sui costi di notifica!",
         "body": "Scopri e attiva SEND su IO per ricevere le comunicazioni a valore legale direttamente in app.",
@@ -3925,10 +3956,8 @@
       "qrCodeScan": {
         "success": {
           "openSendScreen": {
-            "title": "Per accedere ai documenti vai sul sito web di SEND",
-            "body": "Per visualizzare i documenti online devi andare sul sito web di SEND. Presto potrai farlo direttamente da IO!",
-            "firstCta": "Vai su SEND",
-            "secondCta": "Chiudi"
+            "title": "Per consultare i documenti vai sul sito di SEND",
+            "firstCta": "Vai su SEND"
           }
         }
       }
@@ -4255,7 +4284,7 @@
         "inactive": "Non attivo",
         "header": "Mostra identità"
       },
-      "walletID": {
+      "walletId": {
         "title": "IT-Wallet ID",
         "show": "Mostra"
       },
@@ -4510,7 +4539,7 @@
           "prepare": {
             "pin": {
               "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell’identità.",
+              "content": "Dovrai digitarlo per completare la verifica dell’identità.",
               "buttonLink": "Cos’è il PIN della CIE?",
               "cta": "Inserisci il PIN della CIE"
             },
@@ -4728,6 +4757,12 @@
           "title": "La Motorizzazione Civile ha preso in carico la tua richiesta",
           "body": "Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.",
           "primaryAction": "Ho capito"
+        },
+        "issuerNotTrustedCommonError": {
+          "title": "Un problema non permette di continuare",
+          "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere IT-Wallet. Riprova.\nSe il problema persiste, contatta l’assistenza.",
+          "primaryAction": "Ho capito",
+          "secondaryAction": "Mostra dettagli"
         },
         "credentialAlreadyAdded": {
           "title": "Hai già questo documento",
@@ -5539,7 +5574,7 @@
         }
       },
       "discountDetails": {
-        "authorizeButton": "Autorizza un pagamento",
+        "authorizeButton": "Usa il bonus",
         "addExpenseButton": "Aggiungi spesa",
         "bottomSheetOptions": {
           "scanQr": "Inquadra un codice QR",
@@ -5725,10 +5760,8 @@
       },
       "headerTitle": "Adesione all'iniziativa",
       "beforeContinue": {
-        "text1": "Proseguendo accetti i ",
-        "tosLink": "Termini e condizioni d'uso",
-        "text2": " del servizio e confermi di avere letto l' ",
-        "privacyLink": "Informativa privacy"
+        "text": "By clicking Continue, you declare that you have read, understood, and accepted the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions]({{tosUrl}}) of use.",
+        "requestBonus": "Request bonus"
       },
       "navigation": {
         "header": "Adesione all'iniziativa"
@@ -5778,12 +5811,24 @@
         "confirmAction": "Ok, active"
       },
       "enableNotification": {
-        "title": "Non perderti l’esito delle tue richieste",
-        "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
-        "action": "Attiva notifiche push",
-        "deny": "Non attivare",
+        "title": "Don't risk losing the outcome of your request",
+        "subtitle": "Activate push notifications to know immediately when you receive a new message in the app.",
+        "action": "Activate notifications",
+        "deny": "Not now",
         "success": "You activated Push notifications",
         "advice": "Consigliato"
+      },
+      "preferences": {
+        "enableEmailBanner": {
+          "title": "Don't miss important updates",
+          "content": "Enable email forwarding to receive all communications even outside the app.",
+          "cta": "Notify me via email",
+          "successOutcome": "You've enabled email notifications"
+        }
+      },
+      "loading": {
+        "subtitle": "Attendi qualche secondo",
+        "title": "Stiamo elaborando la tua richiesta"
       }
     },
     "configuration": {

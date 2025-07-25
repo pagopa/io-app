@@ -1,7 +1,6 @@
-import { ListItemHeader, Optional, VStack } from "@pagopa/io-app-design-system";
+import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
-import { StyleSheet, View } from "react-native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -19,14 +18,11 @@ import { ItwFeedbackBanner } from "../../common/components/ItwFeedbackBanner";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
-import {
-  itwShouldRenderNewITWalletSelector,
-  makeItwHasActiveBannersAboveWalletSelector
-} from "../../common/store/selectors";
+import { itwShouldRenderNewItWalletSelector } from "../../common/store/selectors";
 import { ItwOfflineWalletBanner } from "../../common/components/ItwOfflineWalletBanner.tsx";
-import { ItwWalletID } from "../../common/components/ItwWalletID.tsx";
-import { ITW_ROUTES } from "../../navigation/routes.ts";
+import { ItwWalletId } from "../../common/components/ItwWalletId.tsx";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils.ts";
+import { ITW_ROUTES } from "../../navigation/routes.ts";
 
 const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
   "jwtExpiring",
@@ -34,10 +30,7 @@ const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
 ];
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
-  const isNewItwRenderable = useIOSelector(itwShouldRenderNewITWalletSelector);
-  const hasActiveBannersAboveWallet = useIOSelector(
-    makeItwHasActiveBannersAboveWalletSelector(LIFECYCLE_STATUS)
-  );
+  const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
   const navigation = useIONavigation();
   const cards = useIOSelector(state =>
     selectWalletCardsByCategory(state, "itw")
@@ -68,56 +61,56 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       [eidInfoBottomSheet.dismiss]
     )
   );
-  const sectionHeader = useMemo((): Optional<ListItemHeader> => {
-    if (isNewItwRenderable) {
-      return;
-    }
-    return {
-      testID: "walletCardsCategoryItwHeaderTestID",
-      iconName: "legalValue",
-      iconColor: isEidExpired ? "grey-300" : "blueIO-500",
-      label: I18n.t("features.wallet.cards.categories.itw"),
-      endElement: {
-        type: "buttonLink",
-        componentProps: {
-          accessibilityLabel: I18n.t(
-            "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
-          ),
-          label: I18n.t(
-            "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
-          ),
-          onPress: eidInfoBottomSheet.present,
-          testID: "walletCardsCategoryItwActiveBadgeTestID"
-        }
-      }
-    };
-  }, [isEidExpired, eidInfoBottomSheet.present, isNewItwRenderable]);
 
-  // This component is used to handle the vertical gap between
-  // the `ItwWalletID` header and the underlying components.
-  // When the new Wallet UI is renderable and there are no
-  // banners between the header and the cards, the vertical space
-  // has to be removed.
-  const Container = useMemo(
-    () => (!hasActiveBannersAboveWallet && isNewItwRenderable ? View : VStack),
-    [hasActiveBannersAboveWallet, isNewItwRenderable]
-  );
+  const handleNavigateToItwId = useCallback(() => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.PID_DETAIL
+    });
+  }, [navigation]);
+
+  const sectionHeader = useMemo((): React.ReactElement => {
+    if (isNewItwRenderable) {
+      return (
+        <ItwWalletId
+          pidStatus={eidStatus}
+          isStacked={cards.length !== 0}
+          onShowPress={handleNavigateToItwId}
+        />
+      );
+    }
+    return (
+      <ListItemHeader
+        testID={"walletCardsCategoryItwHeaderTestID"}
+        iconName={"legalValue"}
+        iconColor={isEidExpired ? "grey-300" : "blueIO-500"}
+        label={I18n.t("features.wallet.cards.categories.itw")}
+        endElement={{
+          type: "buttonLink",
+          componentProps: {
+            accessibilityLabel: I18n.t(
+              "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+            ),
+            label: I18n.t(
+              "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+            ),
+            onPress: eidInfoBottomSheet.present,
+            testID: "walletCardsCategoryItwActiveBadgeTestID"
+          }
+        }}
+      />
+    );
+  }, [
+    isEidExpired,
+    eidInfoBottomSheet.present,
+    isNewItwRenderable,
+    cards,
+    eidStatus,
+    handleNavigateToItwId
+  ]);
 
   return (
-    <Container>
-      {isNewItwRenderable && (
-        <View style={styles.itwHeader}>
-          <ItwWalletID
-            onShow={() =>
-              navigation.navigate(ITW_ROUTES.MAIN, {
-                screen: ITW_ROUTES.PRESENTATION.PID_DETAIL
-              })
-            }
-            pidStatus={eidStatus}
-          />
-        </View>
-      )}
-      <VStack>
+    <>
+      <VStack space={16}>
         <ItwOfflineWalletBanner />
         <WalletCardsCategoryContainer
           key={`cards_category_itw`}
@@ -137,13 +130,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         />
       </VStack>
       {eidInfoBottomSheet.bottomSheet}
-    </Container>
+    </>
   );
-});
-
-const styles = StyleSheet.create({
-  itwHeader: {
-    marginTop: 16,
-    marginHorizontal: -8
-  }
 });

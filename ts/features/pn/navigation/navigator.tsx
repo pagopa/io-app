@@ -1,9 +1,10 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { SendQrScanFlow } from "../qrCodeScan/screens/QrScanFlow";
-import { PNActivationBannerFlowScreen } from "../reminderBanner/screens/PnReminderBannerFlow";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
+import { PNActivationBannerFlowScreen } from "../reminderBanner/screens/PnReminderBannerFlow";
+import { SendEngagementScreen } from "../aar/screen/SendEngagementScreen";
+import { SendQRScanFlowScreen } from "../aar/screen/SendQRScanFlowScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -32,10 +33,17 @@ export const PnStackNavigator = () => (
     />
     <Stack.Screen
       name={PN_ROUTES.QR_SCAN_FLOW}
-      component={SendQrScanFlow}
-      options={{
-        headerShown: false
-      }}
+      component={SendQRScanFlowScreen}
     />
+    <Stack.Group
+      screenOptions={{
+        presentation: "modal"
+      }}
+    >
+      <Stack.Screen
+        name={PN_ROUTES.ENGAGEMENT_SCREEN}
+        component={SendEngagementScreen}
+      />
+    </Stack.Group>
   </Stack.Navigator>
 );
