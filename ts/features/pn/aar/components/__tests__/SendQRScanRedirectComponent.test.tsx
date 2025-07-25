@@ -1,28 +1,35 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-import * as IONAV from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as URLUTILS from "../../../../../utils/url";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
-import { SendQrScanRedirectScreen } from "../SendQrScanRedirectScreen";
+import { SendQRScanRedirectComponent } from "../SendQRScanRedirectComponent";
 import PN_ROUTES from "../../../navigation/routes";
-
-type navType = ReturnType<(typeof IONAV)["useIONavigation"]>;
 
 const aarUrl = "https://example.com";
 
-describe("SendQrScanRedirectScreen", () => {
+const mockPopToTop = jest.fn();
+jest.mock("@react-navigation/native", () => {
+  const navigationModule = jest.requireActual("@react-navigation/native");
+  return {
+    ...navigationModule,
+    useNavigation: () => ({
+      ...navigationModule.useNavigation(),
+      popToTop: mockPopToTop
+    })
+  };
+});
+
+jest.mock("react-native-haptic-feedback", () => ({
+  trigger: jest.fn()
+}));
+
+describe("SendQRScanRedirectComponent", () => {
   const mockOpenWebUrl = jest.fn();
-  const mockNavigate = jest.fn() as navType["navigate"];
   beforeAll(() => {
     jest.spyOn(URLUTILS, "openWebUrl").mockImplementation(mockOpenWebUrl);
-    jest
-      .spyOn(IONAV, "useIONavigation")
-      .mockImplementation(() => ({ navigate: mockNavigate } as navType));
   });
 
   afterEach(() => {
@@ -36,27 +43,25 @@ describe("SendQrScanRedirectScreen", () => {
 
   it("calls openWebUrl with aarUrl when primary action is pressed", () => {
     const { getByTestId } = renderComponent();
-    const button = getByTestId("primary-action"); // the function should not have been called before the button press
-    expect(mockOpenWebUrl).toHaveBeenCalledTimes(0);
+    const button = getByTestId("primary-action");
+    expect(mockOpenWebUrl).toHaveBeenCalledTimes(0); // the function should not have been called before the button press
     fireEvent(button, "press");
     expect(mockOpenWebUrl).toHaveBeenCalledWith(aarUrl);
     expect(mockOpenWebUrl).toHaveBeenCalledTimes(1);
   });
-
-  it("calls navigation.navigate when secondary action is pressed", () => {
+  it("calls popToTop when the header action is pressed", () => {
     const { getByTestId } = renderComponent();
-    const button = getByTestId("secondary-action");
-    fireEvent(button, "press");
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MAIN, {
-      screen: MESSAGES_ROUTES.MESSAGES_HOME
-    });
+    const header = getByTestId("header-close");
+    fireEvent(header, "press");
+    expect(mockOpenWebUrl).toHaveBeenCalledTimes(0);
+    expect(mockPopToTop.mock.calls.length).toBe(1);
+    expect(mockPopToTop.mock.calls[0].length).toBe(0);
   });
 });
 function renderComponent() {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendQrScanRedirectScreen aarUrl={aarUrl} />,
+    () => <SendQRScanRedirectComponent aarUrl={aarUrl} />,
     PN_ROUTES.QR_SCAN_FLOW,
     {},
     createStore(appReducer, globalState as any)
