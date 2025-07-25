@@ -7,6 +7,8 @@ import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { pnActivationUpsert } from "../../store/actions";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import PN_ROUTES from "../../navigation/routes";
 import {
   trackSendActivationModalDialog,
   trackSendActivationModalDialogActivationDismissed,
@@ -30,7 +32,12 @@ export const SendEngagementScreen = () => {
     if (notificationPermissionsEnabled) {
       navigation.popToTop();
     } else {
-      // TODO navigate to push notifications screen
+      navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        screen: PN_ROUTES.MAIN,
+        params: {
+          screen: PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT
+        }
+      });
     }
   }, [navigation, notificationPermissionsEnabled, toast]);
   const onSENDActivationFailed = useCallback(() => {
