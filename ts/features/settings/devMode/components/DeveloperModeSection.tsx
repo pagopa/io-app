@@ -53,7 +53,7 @@ import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { isActiveSessionLoginLocallyEnabledSelector } from "../../../authentication/loginPreferences/store/selectors/index.ts";
 import { setActiveSessionLoginLocalFlag } from "../../../authentication/loginPreferences/store/actions/index.ts";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes.ts";
-import { setActiveSessionLogin } from "../../../authentication/activeSessionLogin/store/actions/index.ts";
+import { setStartActiveSessionLogin } from "../../../authentication/activeSessionLogin/store/actions/index.ts";
 import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
@@ -406,9 +406,9 @@ const PlaygroundsSection = () => {
     {
       value: "Active session login playground",
       onPress: () => {
-        dispatch(setActiveSessionLogin());
+        dispatch(setStartActiveSessionLogin());
         navigation.navigate(SETTINGS_ROUTES.AUTHENTICATION, {
-          screen: AUTHENTICATION_ROUTES.LANDING
+          screen: AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
         });
       }
     }

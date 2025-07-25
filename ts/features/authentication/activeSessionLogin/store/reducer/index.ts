@@ -1,25 +1,29 @@
 import { getType } from "typesafe-actions";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  createMigrate,
-  MigrationManifest,
-  PersistConfig,
-  PersistedState,
-  persistReducer
-} from "redux-persist";
 import { Action } from "../../../../../store/actions/types";
 import {
   activeSessionLoginFailure,
-  setActiveSessionLogin,
-  setFinishedActiveSessionLogin
+  activeSessionLoginSuccess,
+  consolidateActiveSessionLoginData,
+  setFastLoginOptSessionLogin,
+  setFinishedActiveSessionLoginFlow,
+  setIdpSelectedActiveSessionLogin,
+  setStartActiveSessionLogin
 } from "../actions";
-import { loginFailure, loginSuccess } from "../../../common/store/actions";
-import { isDevEnv } from "../../../../../utils/environment";
+import { SpidIdp } from "../../../../../utils/idps";
+import { SessionToken } from "../../../../../types/SessionToken";
+import { StandardLoginRequestInfo } from "../../../login/idp/store/types";
 
+// TODO: (fix): Set the type so that when the user is logged in, I know that loginInfo is completely filled in.
 export type ActiveSessionLoginState = {
-  isActiveSessionLogin?: boolean;
-  isActiveSessionLoginFailed?: boolean;
-  isUserLoggedIn?: boolean;
+  isActiveSessionLogin: boolean;
+  isActiveSessionLoginFailed: boolean;
+  isUserLoggedIn: boolean;
+  loginInfo?: {
+    idp?: SpidIdp;
+    token?: SessionToken;
+    fastLoginOptIn?: boolean;
+    spidLoginInfo?: StandardLoginRequestInfo;
+  };
 };
 
 const initialState: ActiveSessionLoginState = {
@@ -28,65 +32,56 @@ const initialState: ActiveSessionLoginState = {
   isUserLoggedIn: false
 };
 
-const ActiveSessionLoginReducer = (
+export const ActiveSessionLoginReducer = (
   state: ActiveSessionLoginState = initialState,
   action: Action
 ): ActiveSessionLoginState => {
   switch (action.type) {
-    case getType(loginSuccess):
+    case getType(activeSessionLoginSuccess):
       return {
         ...state,
-        isActiveSessionLogin: true,
         isActiveSessionLoginFailed: false,
-        isUserLoggedIn: true
-      };
-
-    case getType(loginFailure):
-      return {
-        ...state,
-        isActiveSessionLogin: true,
-        isActiveSessionLoginFailed: true,
-        isUserLoggedIn: false
+        isUserLoggedIn: true,
+        loginInfo: {
+          ...state.loginInfo,
+          token: action.payload
+        }
       };
 
     case getType(activeSessionLoginFailure):
       return {
         ...state,
-        isActiveSessionLoginFailed: true
+        isUserLoggedIn: false
       };
 
-    case getType(setActiveSessionLogin):
+    case getType(setStartActiveSessionLogin):
       return {
         ...state,
         isActiveSessionLogin: true
       };
 
-    case getType(setFinishedActiveSessionLogin):
+    case getType(setIdpSelectedActiveSessionLogin):
+      return {
+        ...state,
+        loginInfo: {
+          ...state.loginInfo,
+          idp: action.payload
+        }
+      };
+    case getType(setFastLoginOptSessionLogin):
+      return {
+        ...state,
+        loginInfo: {
+          ...state.loginInfo,
+          fastLoginOptIn: action.payload
+        }
+      };
+
+    case getType(consolidateActiveSessionLoginData):
+    case getType(setFinishedActiveSessionLoginFlow):
       return initialState;
 
     default:
       return state;
   }
 };
-
-const CURRENT_REDUX_OPT_IN_STORE_VERSION = 0;
-
-const migrations: MigrationManifest = {
-  "0": (state: PersistedState) => ({
-    ...state,
-    isActiveSessionLogin: false
-  })
-};
-
-const persistConfig: PersistConfig = {
-  key: "activeSessionLogin",
-  storage: AsyncStorage,
-  version: CURRENT_REDUX_OPT_IN_STORE_VERSION,
-  migrate: createMigrate(migrations, { debug: isDevEnv }),
-  whitelist: [""] // add persisted partial state
-};
-
-export const ActiveSessionLoginPersistor = persistReducer<
-  ActiveSessionLoginState,
-  Action
->(persistConfig, ActiveSessionLoginReducer);

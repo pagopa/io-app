@@ -20,6 +20,10 @@ import {
   loginFailure,
   loginSuccess
 } from "../../../authentication/common/store/actions";
+import {
+  activeSessionLoginFailure,
+  activeSessionLoginSuccess
+} from "../../../authentication/activeSessionLogin/store/actions";
 import { isDevEnv } from "./../../../../utils/environment";
 
 type EphemeralKey = {
@@ -52,6 +56,7 @@ export default function lollipopReducer(
 ): LollipopState {
   switch (action.type) {
     case getType(loginSuccess):
+    case getType(activeSessionLoginSuccess):
       // When the user logs in successfully, the ephemeral key
       // he logged in with is saved as the main key and a
       // new ephemeral key is set, ready to be used for a new login
@@ -86,6 +91,7 @@ export default function lollipopReducer(
       };
     case getType(lollipopRemoveEphemeralPublicKey):
     case getType(loginFailure):
+    case getType(activeSessionLoginFailure):
       // Clear the ephemeral public key from state.
       // For loginFailure: ensures a clean state if the user attempts to log in again.
       // For lollipopRemoveEphemeralPublicKey: used to explicitly discard the public key.

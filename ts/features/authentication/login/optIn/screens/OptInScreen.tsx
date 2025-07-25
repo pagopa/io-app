@@ -18,7 +18,11 @@ import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/B
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import I18n from "../../../../../i18n";
 import { setFastLoginOptIn } from "../../../fastLogin/store/actions/optInActions";
-import { useIODispatch, useIOStore } from "../../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   trackLoginSessionOptIn,
@@ -34,6 +38,8 @@ import { AuthenticationParamsList } from "../../../common/navigation/params/Auth
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import { setFastLoginOptSessionLogin } from "../../../activeSessionLogin/store/actions";
 
 export enum Identifier {
   SPID = "SPID",
@@ -71,6 +77,7 @@ const OptInScreen = () => {
 
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const dispatch = useIODispatch();
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
   const {
     securitySuggestionBottomSheet,
     presentSecuritySuggestionBottomSheet
@@ -107,7 +114,11 @@ const OptInScreen = () => {
       void trackLoginSessionOptIn30(store.getState());
     }
     navigation.navigate(AUTHENTICATION_ROUTES.MAIN, getNavigationParams());
-    dispatch(setFastLoginOptIn({ enabled: isLV }));
+    if (isActiveSessionLogin) {
+      dispatch(setFastLoginOptSessionLogin(isLV));
+    } else {
+      dispatch(setFastLoginOptIn({ enabled: isLV }));
+    }
   };
 
   return (

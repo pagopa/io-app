@@ -120,6 +120,8 @@ export const getLollipopLoginHeaders = (
   ),
   "x-pagopa-lollipop-pub-key-hash-algo": hashAlgorithm,
   "x-pagopa-app-version": isLocalEnv ? getAppVersion() : undefined,
+  // The x-pagopa-active-session-login header is used to manage the ephemeral lollipop key on the dev server.
+  // "x-pagopa-active-session-login": isLocalEnv ? true : undefined,
   "x-pagopa-login-type": isFastLogin ? "LV" : undefined,
   "x-pagopa-idp-id": idpId
 });

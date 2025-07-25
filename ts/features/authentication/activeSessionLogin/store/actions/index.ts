@@ -1,18 +1,44 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+import { SpidIdp } from "../../../../../utils/idps";
+import { SessionToken } from "../../../../../types/SessionToken";
 
-export const setActiveSessionLogin = createStandardAction(
-  "SET_ACTIVE_SESSION_LOGIN"
+export const setStartActiveSessionLogin = createStandardAction(
+  "SET_START_ACTIVE_SESSION_LOGIN"
 )();
 
-export const setFinishedActiveSessionLogin = createStandardAction(
-  "SET_FINISHED_ACTIVE_SESSION_LOGIN"
-)();
+export const setIdpSelectedActiveSessionLogin = createStandardAction(
+  "SET_IDP_SELECTED_ACTIVE_SESSION_LOGIN"
+)<SpidIdp>();
 
 export const activeSessionLoginFailure = createStandardAction(
   "ACTIVE_SESSION_LOGIN_FAILURE"
 )();
 
+export const activeSessionLoginSuccess = createStandardAction(
+  "ACTIVE_SESSION_LOGIN_SUCCESS"
+)<SessionToken>();
+
+export const setFastLoginOptSessionLogin = createStandardAction(
+  "SET_FAST_LOGIN_OPT_IN_ACTIVE_SESSION_LOGIN"
+)<boolean>();
+
+export const consolidateActiveSessionLoginData = createStandardAction(
+  "CONSOLIDATE_ACTIVE_SESSION_LOGIN_DATA"
+)<{
+  token: SessionToken;
+  idp: SpidIdp;
+  fastLoginOptIn: boolean;
+}>();
+
+export const setFinishedActiveSessionLoginFlow = createStandardAction(
+  "SET_FINISHED_ACTIVE_SESSION_LOGIN_FLOW"
+)();
+
 export type LoginInfoActions =
-  | ActionType<typeof setActiveSessionLogin>
+  | ActionType<typeof setStartActiveSessionLogin>
+  | ActionType<typeof setIdpSelectedActiveSessionLogin>
   | ActionType<typeof activeSessionLoginFailure>
-  | ActionType<typeof setFinishedActiveSessionLogin>;
+  | ActionType<typeof activeSessionLoginSuccess>
+  | ActionType<typeof consolidateActiveSessionLoginData>
+  | ActionType<typeof setFastLoginOptSessionLogin>
+  | ActionType<typeof setFinishedActiveSessionLoginFlow>;

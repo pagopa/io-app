@@ -7,7 +7,7 @@ import { useCallback } from "react";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { CieIdLoginProps } from "../../cie/components/CieIdLoginWebView";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
-import { useIODispatch } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import {
   incrementNativeLoginNativeAttempts,
   resetSpidLoginState,
@@ -16,6 +16,9 @@ import {
 import { UnlockAccessProps } from "../../unlockAccess/components/UnlockAccessComponent";
 import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import ROUTES from "../../../../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 
 type CommonAuthErrorScreenProps = {
   errorCodeOrMessage?: string;
@@ -46,6 +49,8 @@ const authScreenByAuthMethod = {
 
 const AuthErrorScreen = () => {
   const dispatch = useIODispatch();
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+
   const route =
     useRoute<
       Route<
@@ -83,11 +88,19 @@ const AuthErrorScreen = () => {
   }, [authMethod, navigation, route.params, getNavigationParams, dispatch]);
 
   const onCancel = useCallback(() => {
+    // TODO: review this logic in order to save the spid login value in active session login state
     dispatch(resetSpidLoginState());
+
+    if (isActiveSessionLogin) {
+      navigation.navigate(ROUTES.MAIN, {
+        screen: MESSAGES_ROUTES.MESSAGES_HOME
+      });
+      return;
+    }
     navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.LANDING
     });
-  }, [navigation, dispatch]);
+  }, [isActiveSessionLogin, dispatch, navigation]);
 
   return (
     <AuthErrorComponent

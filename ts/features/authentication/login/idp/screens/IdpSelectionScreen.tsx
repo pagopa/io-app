@@ -33,6 +33,8 @@ import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { openWebUrl } from "../../../../../utils/url";
 import { helpCenterHowToLoginWithSpidUrl } from "../../../../../config";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import { setIdpSelectedActiveSessionLogin } from "../../../activeSessionLogin/store/actions";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.idp_selection.contextualHelpTitle",
@@ -61,6 +63,8 @@ const IdpSelectionScreen = (): ReactElement => {
       >
     >();
   const idps = useIOSelector(idpsRemoteValueSelector);
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const nativeLoginFeature = useIOSelector(nativeLoginSelector);
   const isNativeLoginFeatureFlagEnabled = useIOSelector(
@@ -80,8 +84,11 @@ const IdpSelectionScreen = (): ReactElement => {
   );
 
   const setSelectedIdp = useCallback(
-    (idp: SpidIdp) => dispatch(idpSelected(idp)),
-    [dispatch]
+    (idp: SpidIdp) =>
+      isActiveSessionLogin
+        ? dispatch(setIdpSelectedActiveSessionLogin(idp))
+        : dispatch(idpSelected(idp)),
+    [dispatch, isActiveSessionLogin]
   );
 
   // When the screen is landed, metadata are retrieved.

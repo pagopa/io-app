@@ -77,7 +77,7 @@ import {
   LoginPreferencesState
 } from "../../../authentication/loginPreferences/store/reducers";
 import {
-  ActiveSessionLoginPersistor,
+  ActiveSessionLoginReducer,
   ActiveSessionLoginState
 } from "../../../authentication/activeSessionLogin/store/reducer";
 
@@ -89,7 +89,7 @@ type LoginFeaturesState = {
   loginInfo: LoginInfoState;
   spidLogin: SpidLoginState;
   loginPreferences: LoginPreferencesState & PersistPartial;
-  activeSessionLogin: ActiveSessionLoginState & PersistPartial;
+  activeSessionLogin: ActiveSessionLoginState;
 };
 
 export type FeaturesState = {
@@ -130,7 +130,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     loginInfo: loginInfoReducer,
     spidLogin: spidLoginReducer,
     loginPreferences: loginPreferencesPersistor,
-    activeSessionLogin: ActiveSessionLoginPersistor
+    activeSessionLogin: ActiveSessionLoginReducer
   }),
   wallet: walletReducer,
   fims: fimsReducer,

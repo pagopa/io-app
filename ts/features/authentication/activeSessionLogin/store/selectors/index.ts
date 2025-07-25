@@ -31,3 +31,15 @@ export const activeSessionLoginFailedSelector = (state: GlobalState) =>
 
 export const activeSessionUserLoggedSelector = (state: GlobalState) =>
   state.features.loginFeatures.activeSessionLogin.isUserLoggedIn;
+
+export const idpSelectedActiveSessionLoginSelector = (state: GlobalState) =>
+  state.features.loginFeatures.activeSessionLogin?.loginInfo?.idp;
+
+export const newTokenActiveSessionLoginSelector = (state: GlobalState) =>
+  state.features.loginFeatures.activeSessionLogin?.loginInfo?.token;
+
+export const fastLoginOptInActiveSessionLoginSelector = (state: GlobalState) =>
+  state.features.loginFeatures.activeSessionLogin?.loginInfo?.fastLoginOptIn;
+
+export const activeSessionLoginInfoSelector = (state: GlobalState) =>
+  state.features.loginFeatures.activeSessionLogin?.loginInfo;
