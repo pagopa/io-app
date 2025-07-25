@@ -762,6 +762,15 @@ export const trackItwCredentialTapBanner = (
   );
 };
 
+export const trackItwCredentialBottomSheetAction = (
+  properties: TrackCredentialDetail
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_BOTTOMSHEET_ACTION,
+    buildEventProperties("UX", "action", properties)
+  );
+};
+
 // #endregion ACTIONS
 
 // #region ERRORS

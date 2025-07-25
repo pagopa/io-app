@@ -1,5 +1,6 @@
-import { memo } from "react";
-import { Alert } from "@pagopa/io-app-design-system";
+import { memo, useCallback } from "react";
+import { View } from "react-native";
+import { Alert, IOButton, IOToast, VStack } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../../i18n.ts";
@@ -16,10 +17,12 @@ import { format } from "../../../../../utils/dates.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
+import { openWebUrl } from "../../../../../utils/url";
 import {
   CREDENTIALS_MAP,
   CREDENTIAL_STATUS_MAP,
   trackItwCredentialBottomSheet,
+  trackItwCredentialBottomSheetAction,
   trackItwCredentialTapBanner
 } from "../../../analytics";
 
@@ -34,7 +37,9 @@ const excludedCredentialTypes = [
 
 type ExcludedCredentialTypes = (typeof excludedCredentialTypes)[number];
 
-type CredentialAlertEvents = "banner_tap" | "bottom_sheet_open";
+const LICENSE_RENEWAL_URL = "https://www.mit.gov.it/rinnovo-patente";
+
+type CredentialAlertEvents = "tap_banner" | "open_bottom_sheet" | "press_cta";
 
 export type TrackCredentialAlert = (action: CredentialAlertEvents) => void;
 
@@ -43,13 +48,15 @@ type CredentialStatusAlertProps = {
   onTrack: TrackCredentialAlert;
 };
 
-const handleAlertPress =
-  (onTrack: TrackCredentialAlert, bottomSheet: { present: () => void }) =>
-  () => {
-    onTrack("banner_tap");
+const useAlertPressHandler = (
+  onTrack: TrackCredentialAlert,
+  bottomSheet: { present: () => void }
+) =>
+  useCallback(() => {
+    onTrack("tap_banner");
     bottomSheet.present();
-    onTrack("bottom_sheet_open");
-  };
+    onTrack("open_bottom_sheet");
+  }, [onTrack, bottomSheet]);
 
 /**
  * This component renders an alert related to the credential status (expiring or invalid).
@@ -61,22 +68,26 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     itwCredentialStatusSelector(state, credential.credentialType)
   );
 
-  const trackCredentialAlertEvent = (action: CredentialAlertEvents) => {
+  const trackCredentialAlertEvent = (action: CredentialAlertEvents): void => {
     if (!status) {
       return;
     }
 
-    const data = {
+    const trackingData = {
       credential: CREDENTIALS_MAP[credential.credentialType],
       credential_status: CREDENTIAL_STATUS_MAP[status]
     };
 
-    if (action === "banner_tap") {
-      trackItwCredentialTapBanner(data);
-    }
-
-    if (action === "bottom_sheet_open") {
-      trackItwCredentialBottomSheet(data);
+    switch (action) {
+      case "tap_banner":
+        trackItwCredentialTapBanner(trackingData);
+        break;
+      case "open_bottom_sheet":
+        trackItwCredentialBottomSheet(trackingData);
+        break;
+      case "press_cta":
+        trackItwCredentialBottomSheetAction(trackingData);
+        break;
     }
   };
 
@@ -130,7 +141,7 @@ const VerificationExpiringAlert = ({
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
   const beginCredentialIssuance = () => {
-    onTrack("banner_tap");
+    onTrack("tap_banner");
     machineRef.send({
       type: "select-credential",
       credentialType: credential.credentialType
@@ -156,6 +167,7 @@ const DocumentExpiringAlert = ({
   onTrack
 }: CredentialStatusAlertProps) => {
   const expireDays = getCredentialExpireDays(credential.parsedCredential);
+  const showCta = credential.credentialType === CredentialType.DRIVING_LICENSE;
 
   const bottomSheetNs = `features.itWallet.presentation.bottomSheets.${
     credential.credentialType as Exclude<
@@ -164,10 +176,35 @@ const DocumentExpiringAlert = ({
     >
   }.expiring` as const;
 
+  const handleCtaPress = useCallback(() => {
+    onTrack("press_cta");
+    openWebUrl(LICENSE_RENEWAL_URL, () =>
+      IOToast.error(I18n.t("genericError"))
+    );
+  }, [onTrack]);
+
   const bottomSheet = useIOBottomSheetModal({
     title: I18n.t(`${bottomSheetNs}.title`),
-    component: <IOMarkdown content={I18n.t(`${bottomSheetNs}.content`)} />
+    component: (
+      <VStack space={24}>
+        <IOMarkdown content={I18n.t(`${bottomSheetNs}.content`)} />
+        {showCta && (
+          <View style={{ marginBottom: 16 }}>
+            <IOButton
+              variant="outline"
+              fullWidth
+              label={I18n.t(
+                "features.itWallet.presentation.bottomSheets.MDL.expiring.cta"
+              )}
+              onPress={handleCtaPress}
+            />
+          </View>
+        )}
+      </VStack>
+    )
   });
+
+  const handleAlertPress = useAlertPressHandler(onTrack, bottomSheet);
 
   return (
     <>
@@ -179,7 +216,7 @@ const DocumentExpiringAlert = ({
           { days: expireDays }
         )}
         action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
-        onPress={handleAlertPress(onTrack, bottomSheet)}
+        onPress={handleAlertPress}
       />
       {bottomSheet.bottomSheet}
     </>
@@ -202,13 +239,15 @@ const IssuerDynamicErrorAlert = ({
     component: <IOMarkdown content={localizedMessage.description} />
   });
 
+  const handleAlertPress = useAlertPressHandler(onTrack, bottomSheet);
+
   return (
     <>
       <Alert
         variant="error"
         content={localizedMessage.title}
         action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
-        onPress={handleAlertPress(onTrack, bottomSheet)}
+        onPress={handleAlertPress}
       />
       {bottomSheet.bottomSheet}
     </>
