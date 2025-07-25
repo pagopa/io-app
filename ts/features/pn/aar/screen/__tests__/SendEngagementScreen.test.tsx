@@ -9,6 +9,7 @@ import * as navigation from "../../../../../navigation/params/AppParamsList";
 import { pnActivationUpsert } from "../../../store/actions";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 
 jest.mock("../../components/SendEngagementComponent");
 
@@ -43,6 +44,7 @@ describe("SendEngagementScreen", () => {
   });
   it("should popToTop if the close button is pressed upon first rendering", () => {
     const mockPopToTop = jest.fn();
+    const mockReplace = jest.fn();
     jest
       .spyOn(navigation, "useIONavigation")
       .mockImplementation(() => ({ popToTop: mockPopToTop } as any));
@@ -54,16 +56,21 @@ describe("SendEngagementScreen", () => {
 
     expect(mockPopToTop.mock.calls.length).toBe(1);
     expect(mockPopToTop.mock.calls[0].length).toBe(0);
+    expect(mockReplace).toHaveBeenCalledTimes(0);
   });
   [false, true].forEach(systemNotificationsEnabled =>
     it(`should dispatch a 'pnActivationUpsert.request' when pressing the primary action, with proper flow for success and failure actions (systemNotificationsEnabled: ${systemNotificationsEnabled})`, () => {
       const mockPopToTop = jest.fn();
+      const mockReplace = jest.fn();
       const mockSetOptions = jest.fn();
-      jest
-        .spyOn(navigation, "useIONavigation")
-        .mockImplementation(
-          () => ({ popToTop: mockPopToTop, setOptions: mockSetOptions } as any)
-        );
+      jest.spyOn(navigation, "useIONavigation").mockImplementation(
+        () =>
+          ({
+            popToTop: mockPopToTop,
+            setOptions: mockSetOptions,
+            replace: mockReplace
+          } as any)
+      );
 
       const screen = renderScreen(systemNotificationsEnabled);
 
@@ -95,8 +102,19 @@ describe("SendEngagementScreen", () => {
       if (systemNotificationsEnabled) {
         expect(mockPopToTop.mock.calls.length).toEqual(1);
         expect(mockPopToTop.mock.calls[0].length).toEqual(0);
+        expect(mockReplace).toHaveBeenCalledTimes(0);
       } else {
         expect(mockPopToTop.mock.calls.length).toEqual(0);
+        expect(mockReplace).toHaveBeenCalledTimes(1);
+        expect(mockReplace).toHaveBeenCalledWith(
+          MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
+          {
+            screen: PN_ROUTES.MAIN,
+            params: {
+              screen: PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT
+            }
+          }
+        );
       }
 
       act(() => {
