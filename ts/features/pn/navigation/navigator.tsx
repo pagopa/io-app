@@ -6,14 +6,11 @@ import {
 import I18n from "../../../i18n";
 import { SendQrScanPushEngagementScreen } from "../aar/screen/SendAARPushEngagementScreen";
 import { SendEngagementScreen } from "../aar/screen/SendEngagementScreen";
-import { SendQrScanFlow } from "../qrCodeScan/screens/QrScanFlow";
+import { SendQRScanFlowScreen } from "../aar/screen/SendQRScanFlowScreen";
 import { PNActivationBannerFlowScreen } from "../reminderBanner/screens/PnReminderBannerFlow";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
-import { PNActivationBannerFlowScreen } from "../reminderBanner/screens/PnReminderBannerFlow";
-import { SendEngagementScreen } from "../aar/screen/SendEngagementScreen";
-import { SendQRScanFlowScreen } from "../aar/screen/SendQRScanFlowScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
