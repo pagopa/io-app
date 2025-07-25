@@ -3,7 +3,9 @@ import {
   H6,
   Icon,
   IOColors,
-  BodySmall
+  BodySmall,
+  useIOTheme,
+  HStack
 } from "@pagopa/io-app-design-system";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
@@ -21,30 +23,46 @@ type ItwRequiredClaimsListProps = {
   items: ReadonlyArray<DisclosureClaim>;
 };
 
-const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => (
-  <View style={styles.container}>
-    {pipe(
-      items,
-      RA.mapWithIndex((index, { claim, source }) => (
-        <View key={`${index}-${claim.label}-${source}`}>
-          {/* Add a separator view between sections */}
-          {index !== 0 && <Divider />}
-          <View style={styles.dataItem}>
-            <View>
-              <ClaimText claim={claim} />
-              <BodySmall weight="Regular" color="grey-700">
-                {I18n.t("features.itWallet.generic.dataSource.single", {
-                  credentialSource: source
-                })}
-              </BodySmall>
-            </View>
-            <Icon name="checkTickBig" size={24} color="grey-300" />
+const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => {
+  const theme = useIOTheme();
+
+  const backgroundColor = IOColors[theme["appBackground-secondary"]];
+
+  return (
+    <View style={[styles.container, { backgroundColor }]}>
+      {pipe(
+        items,
+        RA.mapWithIndex((index, { claim, source }) => (
+          <View key={`${index}-${claim.label}-${source}`}>
+            {/* Add a separator view between sections */}
+            {index !== 0 && <Divider />}
+            <HStack
+              style={{
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingVertical: 12
+              }}
+            >
+              <View>
+                <ClaimText claim={claim} />
+                <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
+                  {I18n.t("features.itWallet.generic.dataSource.single", {
+                    credentialSource: source
+                  })}
+                </BodySmall>
+              </View>
+              <Icon
+                name="checkTickBig"
+                size={24}
+                color={theme["icon-decorative"]}
+              />
+            </HStack>
           </View>
-        </View>
-      ))
-    )}
-  </View>
-);
+        ))
+      )}
+    </View>
+  );
+};
 
 /**
  * Component which renders the claim value or multiple values in case of an array.
@@ -66,15 +84,9 @@ const ClaimText = ({ claim }: { claim: ClaimDisplayFormat }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: IOColors["grey-50"],
     borderRadius: 8,
+    borderCurve: "continuous",
     paddingHorizontal: 24
-  },
-  dataItem: {
-    paddingVertical: 12,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
   }
 });
 
