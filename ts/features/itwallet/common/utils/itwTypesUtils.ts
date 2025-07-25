@@ -122,6 +122,7 @@ export type StoredCredential = {
    * The SD-JWT issuance and expiration dates in ISO format.
    * These might be different from the underlying document's dates.
    */
+  // TODO: [SIW-2740] This type needs to be rafactored once mdoc format will be available
   jwt: {
     expiration: string;
     issuedAt?: string;
