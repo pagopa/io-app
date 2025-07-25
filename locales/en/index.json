@@ -4728,8 +4728,13 @@
           }
         },
         "emptyWallet": {
-          "itwReadyBanner": {
-            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO."
+          "readyBanner": {
+            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO.",
+            "action": "Aggiungi documento"
+          },
+          "readyBannerL2": {
+            "title": "È tutto pronto!",
+            "content": "Ora puoi aggiungere il primo documento al Portafoglio di IO."
           }
         },
         "credentialResult": {

@@ -5,7 +5,6 @@ import type {
   CredentialAuthDetail
 } from "../../common/utils/itwTypesUtils";
 import { IssuanceFailure } from "./failure";
-import { EidIssuanceInput } from "./input";
 
 export type IdentificationContext =
   | { mode: "cieId"; level: "L2" | "L3" }
@@ -45,7 +44,7 @@ export type EidIssuanceMode = "issuing" | "reissuing" | "upgrading";
 export type Context = {
   /**
    * The mode of eID issuance. This determines the flow and actions available in the
-   * eID issuance process.
+   * eID issuance process. Defaults to "issuing" if not specified.
    */
   mode: EidIssuanceMode | undefined;
   /**
@@ -94,11 +93,11 @@ export type Context = {
   isL2Fallback: boolean;
 };
 
-export const getInitialContext = (input: EidIssuanceInput): Context => ({
+export const InitialContext: Context = {
   mode: undefined,
-  integrityKeyTag: input.integrityKeyTag,
-  walletInstanceAttestation: input.walletInstanceAttestation,
-  credentials: input.credentials,
+  integrityKeyTag: undefined,
+  walletInstanceAttestation: undefined,
+  credentials: undefined,
   cieContext: undefined,
   identification: undefined,
   authenticationContext: undefined,
@@ -106,4 +105,4 @@ export const getInitialContext = (input: EidIssuanceInput): Context => ({
   failure: undefined,
   isL3: undefined,
   isL2Fallback: false
-});
+};

@@ -1,6 +1,6 @@
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
-import { assign, createActor, fromPromise, StateFrom } from "xstate";
+import { createActor, fromPromise, StateFrom } from "xstate";
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
@@ -18,7 +18,7 @@ import {
   AuthenticationContext,
   CieContext,
   Context,
-  getInitialContext
+  InitialContext
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
 import { CiePreparationType } from "../../../identification/cie/components/ItwCiePreparationBaseScreenContent";
@@ -29,6 +29,7 @@ const T_INTEGRITY_KEY = "abc";
 const T_WIA: string = "abcdefg";
 
 describe("itwEidIssuanceMachine", () => {
+  const onInit = jest.fn();
   const navigateToTosScreen = jest.fn();
   const navigateToIpzsPrivacyScreen = jest.fn();
   const navigateToIdpSelectionScreen = jest.fn();
@@ -55,7 +56,6 @@ describe("itwEidIssuanceMachine", () => {
   const storeEidCredential = jest.fn();
   const closeIssuance = jest.fn();
   const handleSessionExpired = jest.fn();
-  const onInit = jest.fn();
 
   const verifyTrustFederation = jest.fn();
   const createWalletInstance = jest.fn();
@@ -79,6 +79,7 @@ describe("itwEidIssuanceMachine", () => {
 
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
+      onInit,
       navigateToTosScreen,
       navigateToIpzsPrivacyScreen,
       navigateToIdpSelectionScreen,
@@ -108,10 +109,7 @@ describe("itwEidIssuanceMachine", () => {
       resetWalletInstance,
       trackWalletInstanceCreation,
       trackWalletInstanceRevocation,
-      storeAuthLevel,
-      setIsReissuing: assign({
-        isReissuing: true
-      })
+      storeAuthLevel
     },
     actors: {
       verifyTrustFederation: fromPromise<void, VerifyTrustFederationParams>(
@@ -156,7 +154,7 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().context).toStrictEqual(getInitialContext({}));
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
     /**
@@ -194,7 +192,7 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().context).toStrictEqual(getInitialContext({}));
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
     /**
@@ -330,7 +328,7 @@ describe("itwEidIssuanceMachine", () => {
     });
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
-      ...getInitialContext({}),
+      ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       identification: {
@@ -382,7 +380,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToSuccessScreen).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
-      ...getInitialContext({}),
+      ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       identification: {
@@ -446,7 +444,7 @@ describe("itwEidIssuanceMachine", () => {
     );
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
-      ...getInitialContext({}),
+      ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       identification: {
@@ -534,7 +532,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
-      ...getInitialContext({}),
+      ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       identification: undefined,
@@ -562,7 +560,7 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
-      ...getInitialContext({}),
+      ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       identification: {
@@ -659,7 +657,7 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
-      ...getInitialContext({}),
+      ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       identification: undefined,
@@ -684,7 +682,7 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
-      ...getInitialContext({}),
+      ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       identification: undefined,
@@ -861,7 +859,7 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().context).toStrictEqual(getInitialContext({}));
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
     /**
@@ -871,7 +869,7 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "start" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
-    expect(actor.getSnapshot().context).toStrictEqual(getInitialContext({}));
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
@@ -918,7 +916,7 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().context).toStrictEqual(getInitialContext({}));
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
     /**
@@ -973,7 +971,7 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().context).toStrictEqual(getInitialContext({}));
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
     /**
@@ -1025,7 +1023,7 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().context).toStrictEqual(getInitialContext({}));
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
     /**
@@ -1136,7 +1134,7 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().context).toStrictEqual(getInitialContext({}));
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
     /**
@@ -1218,7 +1216,7 @@ describe("itwEidIssuanceMachine", () => {
   it("Should obtain an eID (SPID), reissuing mode", async () => {
     // The wallet instance and attestation already exist
     const initialContext = {
-      ...getInitialContext({}),
+      ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA }
     };
@@ -1238,7 +1236,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    actor.send({ type: "start-reissuing" });
+    actor.send({ type: "start", mode: "reissuing" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
@@ -1248,7 +1246,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,
-      isReissuing: true
+      mode: "reissuing"
     });
 
     expect(navigateToL2IdentificationScreen).toHaveBeenCalledTimes(1);
@@ -1291,7 +1289,7 @@ describe("itwEidIssuanceMachine", () => {
       ...initialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      isReissuing: true,
+      mode: "reissuing",
       identification: {
         mode: "spid",
         level: "L2",
@@ -1344,7 +1342,7 @@ describe("itwEidIssuanceMachine", () => {
       ...initialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      isReissuing: true,
+      mode: "reissuing",
       identification: {
         mode: "spid",
         level: "L2",
@@ -1366,7 +1364,7 @@ describe("itwEidIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { UserIdentification: { Identification: "L2" } },
       context: {
-        isReissuing: true
+        mode: "reissuing"
       }
     } as MachineSnapshot);
 
@@ -1391,7 +1389,7 @@ describe("itwEidIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { UserIdentification: { Identification: "L3" } },
       context: {
-        isReissuing: false
+        mode: "reissuing"
       }
     } as MachineSnapshot);
 
@@ -1410,10 +1408,8 @@ describe("itwEidIssuanceMachine", () => {
     const actor = createActor(mockedMachine, { input: {} });
     actor.start();
 
-    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
-
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().context).toStrictEqual(getInitialContext({}));
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
     /**
@@ -1544,7 +1540,7 @@ describe("itwEidIssuanceMachine", () => {
       {
         value: { UserIdentification: { Identification: "L3" } },
         context: {
-          ...getInitialContext({}),
+          ...InitialContext,
           integrityKeyTag: T_INTEGRITY_KEY,
           walletInstanceAttestation: { jwt: T_WIA }
         }
@@ -1592,7 +1588,7 @@ describe("itwEidIssuanceMachine", () => {
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
-        isL3FeaturesEnabled: true,
+        isL3: true,
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true
@@ -1645,7 +1641,7 @@ describe("itwEidIssuanceMachine", () => {
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
-        isL3FeaturesEnabled: true,
+        isL3: true,
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true
@@ -1698,7 +1694,7 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().context).toStrictEqual(getInitialContext({}));
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
     /**
@@ -1708,7 +1704,7 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "start", isL3: true });
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      isL3FeaturesEnabled: true
+      isL3: true
     });
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());

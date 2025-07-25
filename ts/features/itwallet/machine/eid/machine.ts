@@ -1,12 +1,12 @@
 import _ from "lodash";
 import { and, assertEvent, assign, fromPromise, not, setup } from "xstate";
+import { assert } from "../../../../utils/assert.ts";
+import { trackItWalletIntroScreen } from "../../analytics";
 import {
   StoredCredential,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
-import { assert } from "../../../../utils/assert.ts";
-import { trackItWalletIntroScreen } from "../../analytics";
 import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
@@ -17,11 +17,10 @@ import {
   AuthenticationContext,
   CieContext,
   Context,
-  getInitialContext
+  InitialContext
 } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { IssuanceFailureType, mapEventToFailure } from "./failure";
-import { EidIssuanceInput } from "./input.ts";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -29,11 +28,12 @@ const notImplemented = () => {
 
 export const itwEidIssuanceMachine = setup({
   types: {
-    input: {} as EidIssuanceInput,
     context: {} as Context,
     events: {} as EidIssuanceEvents
   },
   actions: {
+    onInit: notImplemented,
+
     /**
      * Navigation
      */
@@ -133,13 +133,15 @@ export const itwEidIssuanceMachine = setup({
       context.credentials ? context.credentials.length > 0 : false,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
     isReissuing: ({ context }) => context.mode === "reissuing",
+    isUpgrading: ({ context }) => context.mode === "upgrading",
     isL3FeaturesEnabled: ({ context }) => context.isL3 || false,
     isL2Fallback: ({ context }) => context.isL2Fallback || false
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
-  context: ({ input }) => ({ ...getInitialContext(input) }),
+  context: { ...InitialContext },
   initial: "Idle",
+  entry: "onInit",
   invoke: {
     src: "getCieStatus",
     onDone: {
@@ -842,7 +844,7 @@ export const itwEidIssuanceMachine = setup({
           actions: ["navigateToWallet"]
         },
         {
-          guard: and(["hasCredentials", "isL3FeaturesEnabled"]),
+          guard: and(["hasCredentials", "isUpgrading"]),
           target: "#itwEidIssuanceMachine.CredentialsUpgrade"
         },
         {

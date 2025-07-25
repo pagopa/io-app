@@ -1,15 +1,11 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { createActorContext } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { PropsWithChildren } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
-import { itwCredentialsSelector } from "../../credentials/store/selectors";
-import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { createEidIssuanceActionsImplementation } from "./../eid/actions";
 import { createEidIssuanceActorsImplementation } from "./../eid/actors";
 import { createEidIssuanceGuardsImplementation } from "./../eid/guards";
@@ -24,14 +20,6 @@ export const ItwEidIssuanceMachineProvider = (props: PropsWithChildren) => {
   const navigation = useIONavigation();
   const toast = useIOToast();
 
-  const integrityKeyTag = O.toUndefined(
-    useIOSelector(itwIntegrityKeyTagSelector)
-  );
-  const walletInstanceAttestation = useIOSelector(
-    itwWalletInstanceAttestationSelector
-  );
-  const credentials = Object.values(useIOSelector(itwCredentialsSelector));
-
   const env = pipe(useIOSelector(selectItwEnv), getEnv);
 
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
@@ -43,12 +31,7 @@ export const ItwEidIssuanceMachineProvider = (props: PropsWithChildren) => {
   });
 
   return (
-    <ItwEidIssuanceMachineContext.Provider
-      logic={eidIssuanceMachine}
-      options={{
-        input: { integrityKeyTag, walletInstanceAttestation, credentials }
-      }}
-    >
+    <ItwEidIssuanceMachineContext.Provider logic={eidIssuanceMachine}>
       {props.children}
     </ItwEidIssuanceMachineContext.Provider>
   );

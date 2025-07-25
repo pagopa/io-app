@@ -7,7 +7,7 @@ export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
 export type Start = {
   type: "start";
-  mode: EidIssuanceMode;
+  mode?: EidIssuanceMode;
   isL3?: boolean;
 };
 
