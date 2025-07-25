@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.10.0-rc.6](https://github.com/pagopa/io-app/compare/3.10.0-rc.5...3.10.0-rc.6) (2025-07-24)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2786](https://pagopa.atlassian.net/browse/SIW-2786)] Fixes visual glitches in the L3 wallet screen ([#7210](https://github.com/pagopa/io-app/issues/7210)) ([05011a7](https://github.com/pagopa/io-app/commit/05011a7d6fa50dd8fe923caf143b023cfe004b0e))
+
 ## [3.10.0-rc.5](https://github.com/pagopa/io-app/compare/3.10.0-rc.4...3.10.0-rc.5) (2025-07-23)
 
 
