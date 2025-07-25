@@ -44,6 +44,7 @@ describe("SendEngagementScreen", () => {
   });
   it("should popToTop if the close button is pressed upon first rendering", () => {
     const mockPopToTop = jest.fn();
+    const mockReplace = jest.fn();
     jest
       .spyOn(navigation, "useIONavigation")
       .mockImplementation(() => ({ popToTop: mockPopToTop } as any));
@@ -55,6 +56,7 @@ describe("SendEngagementScreen", () => {
 
     expect(mockPopToTop.mock.calls.length).toBe(1);
     expect(mockPopToTop.mock.calls[0].length).toBe(0);
+    expect(mockReplace).toHaveBeenCalledTimes(0);
   });
   [false, true].forEach(systemNotificationsEnabled =>
     it(`should dispatch a 'pnActivationUpsert.request' when pressing the primary action, with proper flow for success and failure actions (systemNotificationsEnabled: ${systemNotificationsEnabled})`, () => {
@@ -100,6 +102,7 @@ describe("SendEngagementScreen", () => {
       if (systemNotificationsEnabled) {
         expect(mockPopToTop.mock.calls.length).toEqual(1);
         expect(mockPopToTop.mock.calls[0].length).toEqual(0);
+        expect(mockReplace).toHaveBeenCalledTimes(0);
       } else {
         expect(mockPopToTop.mock.calls.length).toEqual(0);
         expect(mockReplace).toHaveBeenCalledTimes(1);
