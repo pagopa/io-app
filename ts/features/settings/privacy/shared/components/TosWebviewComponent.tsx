@@ -1,6 +1,8 @@
 import {
   FooterActions,
-  useFooterActionsMeasurements
+  IOColors,
+  useFooterActionsMeasurements,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -8,6 +10,8 @@ import { FunctionComponent, memo, useCallback, useState } from "react";
 import { View, ViewProps } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
+import { NOTIFY_LINK_CLICK_SCRIPT } from "../../../../../components/ui/Markdown/script";
+import { WebViewMessage } from "../../../../../components/ui/Markdown/types";
 import I18n from "../../../../../i18n";
 import { FlowType } from "../../../../../utils/analytics";
 import { openWebUrl } from "../../../../../utils/url";
@@ -16,8 +20,6 @@ import {
   closeInjectedScript
 } from "../../../../../utils/webview";
 import TosWebviewErrorComponent from "../../components/TosWebviewErrorComponent";
-import { NOTIFY_LINK_CLICK_SCRIPT } from "../../../../../components/ui/Markdown/script";
-import { WebViewMessage } from "../../../../../components/ui/Markdown/types";
 import { trackToSWebViewError, trackToSWebViewErrorRetry } from "../analytics";
 
 type Props = {
@@ -43,6 +45,8 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
 
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
     useFooterActionsMeasurements();
+
+  const theme = useIOTheme();
 
   const handleError = useCallback(() => {
     handleLoadEnd();
@@ -86,7 +90,10 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
           textZoom={100}
-          style={{ flex: 1 }}
+          style={{
+            flex: 1,
+            backgroundColor: IOColors[theme["appBackground-primary"]]
+          }}
           onLoadEnd={handleLoadEnd}
           onError={handleError}
           onHttpError={handleError}
