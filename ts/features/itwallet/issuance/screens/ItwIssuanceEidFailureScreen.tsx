@@ -70,6 +70,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   useDebugInfo({
     failure: serializeFailureReason(failure)
   });
+
   const supportModal = useItwFailureSupportModal({
     failure,
     supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
@@ -85,6 +86,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
     label: I18n.t("features.itWallet.support.button"),
     onPress: supportModal.present
   };
+
+  const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
 
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
@@ -243,6 +246,21 @@ const ContentView = ({ failure }: ContentViewProps) => {
               onPress: () => {
                 supportModal.present();
               }
+            }
+          };
+        case IssuanceFailureType.CREDENTIALS_UPGRADE_FAILED:
+          return {
+            title: I18n.t(
+              `features.itWallet.issuance.credentialsUpgradeFailed.title`
+            ),
+            subtitle: I18n.t(
+              `features.itWallet.issuance.credentialsUpgradeFailed.subtitle`
+            ),
+            action: {
+              label: I18n.t(
+                "features.itWallet.issuance.eidResult.success.primaryAction"
+              ),
+              onPress: handleBackToWallet
             }
           };
       }

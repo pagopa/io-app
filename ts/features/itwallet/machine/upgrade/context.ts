@@ -1,4 +1,5 @@
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { Input } from "./input";
 
 export type Context = {
   /**
@@ -11,7 +12,7 @@ export type Context = {
   failedCredentials: ReadonlyArray<StoredCredential>;
 };
 
-export const InitialContext: Context = {
-  credentialsToUpgrade: [],
+export const getInitialContext = (input: Input): Context => ({
+  credentialsToUpgrade: input.credentials,
   failedCredentials: []
-};
+});

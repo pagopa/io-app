@@ -101,11 +101,8 @@ export const itwEidIssuanceMachine = setup({
         }
       };
     }),
-    setIsReissuing: assign({
-      isReissuing: true
-    }),
     trackIntroScreen: ({ context }) => {
-      trackItWalletIntroScreen(context.isL3FeaturesEnabled ? "L3" : "L2");
+      trackItWalletIntroScreen(context.isL3 ? "L3" : "L2");
     }
   },
   actors: {
@@ -135,8 +132,8 @@ export const itwEidIssuanceMachine = setup({
     hasCredentials: ({ context }) =>
       context.credentials ? context.credentials.length > 0 : false,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
-    isReissuing: ({ context }) => context.isReissuing,
-    isL3FeaturesEnabled: ({ context }) => context.isL3FeaturesEnabled || false,
+    isReissuing: ({ context }) => context.mode === "reissuing",
+    isL3FeaturesEnabled: ({ context }) => context.isL3 || false,
     isL2Fallback: ({ context }) => context.isL2Fallback || false
   }
 }).createMachine({
@@ -165,28 +162,33 @@ export const itwEidIssuanceMachine = setup({
       on: {
         start: {
           actions: assign(({ event }) => ({
-            isL3FeaturesEnabled: event.isL3
+            mode: event.mode,
+            isL3: event.isL3
           })),
-          target: "TosAcceptance"
+          target: "EvaluatingIssuanceMode"
         },
         close: {
           actions: "closeIssuance"
         },
         "revoke-wallet-instance": {
           target: "WalletInstanceRevocation"
-        },
-        "start-reissuing": [
-          {
-            guard: not("hasValidWalletInstanceAttestation"),
-            actions: "setIsReissuing",
-            target: "WalletInstanceAttestationObtainment"
-          },
-          {
-            actions: "setIsReissuing",
-            target: "UserIdentification.Identification.L2"
-          }
-        ]
+        }
       }
+    },
+    EvaluatingIssuanceMode: {
+      always: [
+        {
+          guard: and(["isReissuing", "hasValidWalletInstanceAttestation"]),
+          target: "UserIdentification.Identification.L2"
+        },
+        {
+          guard: "isReissuing",
+          target: "WalletInstanceAttestationObtainment"
+        },
+        {
+          target: "TosAcceptance"
+        }
+      ]
     },
     TosAcceptance: {
       description:
@@ -207,7 +209,7 @@ export const itwEidIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         input: ({ context }) => ({
-          isL3IssuanceEnabled: context.isL3FeaturesEnabled
+          isL3IssuanceEnabled: context.isL3
         }),
         src: "verifyTrustFederation",
         onDone: [
@@ -302,7 +304,7 @@ export const itwEidIssuanceMachine = setup({
         src: "getWalletAttestation",
         input: ({ context }) => ({
           integrityKeyTag: context.integrityKeyTag,
-          isL3IssuanceEnabled: context.isL3FeaturesEnabled
+          isL3IssuanceEnabled: context.isL3
         }),
         onDone: [
           {
@@ -474,7 +476,7 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  isL3IssuanceEnabled: context.isL3FeaturesEnabled,
+                  isL3IssuanceEnabled: context.isL3,
                   identification: context.identification
                 }),
                 onDone: {
@@ -552,7 +554,7 @@ export const itwEidIssuanceMachine = setup({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
                   identification: context.identification,
-                  isL3IssuanceEnabled: context.isL3FeaturesEnabled
+                  isL3IssuanceEnabled: context.isL3
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -695,7 +697,7 @@ export const itwEidIssuanceMachine = setup({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
                   identification: context.identification,
-                  isL3IssuanceEnabled: context.isL3FeaturesEnabled
+                  isL3IssuanceEnabled: context.isL3
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -785,7 +787,7 @@ export const itwEidIssuanceMachine = setup({
               identification: context.identification,
               authenticationContext: context.authenticationContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-              isL3IssuanceEnabled: context.isL3FeaturesEnabled
+              isL3IssuanceEnabled: context.isL3
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
@@ -821,33 +823,40 @@ export const itwEidIssuanceMachine = setup({
         },
         DisplayingPreview: {
           on: {
-            "add-to-wallet": [
-              {
-                guard: "isReissuing",
-                actions: [
-                  "storeEidCredential",
-                  "trackWalletInstanceCreation",
-                  "navigateToWallet"
-                ]
-              },
-              {
-                guard: "hasCredentials",
-                actions: ["storeEidCredential", "trackWalletInstanceCreation"],
-                target: "#itwEidIssuanceMachine.Upgrading"
-              },
-              {
-                actions: ["storeEidCredential", "trackWalletInstanceCreation"],
-                target: "#itwEidIssuanceMachine.Success"
-              }
-            ],
+            "add-to-wallet": {
+              actions: ["storeEidCredential", "trackWalletInstanceCreation"],
+              target: "Completed"
+            },
             close: {
               actions: ["closeIssuance"]
             }
           }
+        },
+        Completed: {
+          type: "final"
         }
-      }
+      },
+      onDone: [
+        {
+          guard: "isReissuing",
+          actions: ["navigateToWallet"]
+        },
+        {
+          guard: and(["hasCredentials", "isL3FeaturesEnabled"]),
+          target: "#itwEidIssuanceMachine.CredentialsUpgrade"
+        },
+        {
+          target: "#itwEidIssuanceMachine.Success"
+        }
+      ]
     },
-    Upgrading: {},
+    CredentialsUpgrade: {
+      tags: [ItwTags.Loading],
+      entry: "navigateToSuccessScreen",
+      description:
+        "This state handles the upgrade of credentials in the wallet",
+      on: {}
+    },
     Success: {
       entry: "navigateToSuccessScreen",
       on: {
@@ -877,6 +886,9 @@ export const itwEidIssuanceMachine = setup({
         "revoke-wallet-instance": {
           actions: "navigateToWalletRevocationScreen",
           target: "WalletInstanceRevocation"
+        },
+        "go-to-wallet": {
+          actions: "navigateToWallet"
         }
       }
     }

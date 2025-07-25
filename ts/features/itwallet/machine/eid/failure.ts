@@ -22,7 +22,8 @@ export enum IssuanceFailureType {
   WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC",
   WALLET_REVOCATION_ERROR = "WALLET_REVOCATION_ERROR",
   UNTRUSTED_ISS = "UNTRUSTED_ISS",
-  CIE_NOT_REGISTERED = "CIE_NOT_REGISTERED"
+  CIE_NOT_REGISTERED = "CIE_NOT_REGISTERED",
+  CREDENTIALS_UPGRADE_FAILED = "CREDENTIALS_UPGRADE_FAILED"
 }
 
 /**
@@ -40,6 +41,7 @@ export type ReasonTypeByFailure = {
   [IssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
   [IssuanceFailureType.CIE_NOT_REGISTERED]: string;
   [IssuanceFailureType.UNEXPECTED]: unknown;
+  [IssuanceFailureType.CREDENTIALS_UPGRADE_FAILED]: unknown;
 };
 
 type TypedIssuanceFailures = {

@@ -33,7 +33,21 @@ export type CieContext = {
   isCIEAuthenticationSupported: boolean;
 };
 
+/**
+ * The EidIssuanceMode represents the different modes of eID issuance.
+ * - "issuing": The user is issuing a new PID credential.
+ * - "reissuing": The user is reissuing an existing PID credential.
+ * - "upgrading": The user is upgrading from Documenti su IO to IT Wallet.
+ * This is used to determine the flow and actions available in the eID issuance process.
+ */
+export type EidIssuanceMode = "issuing" | "reissuing" | "upgrading";
+
 export type Context = {
+  /**
+   * The mode of eID issuance. This determines the flow and actions available in the
+   * eID issuance process.
+   */
+  mode: EidIssuanceMode | undefined;
   /**
    * The integrity key tag used to verify the integrity of the wallet instance attestation.
    * If this is provided the machine will skip the wallet instance attestation creation
@@ -70,16 +84,10 @@ export type Context = {
    */
   failure: IssuanceFailure | undefined;
   /**
-   * Flag to check if the user is reissuing an existing PID credential.
-   * If true, the flow will be slightly different, allowing to upgrade the existing credential
-   * instead of issuing a new one.
-   */
-  isReissuing: boolean;
-  /**
-   *  Flag to check if IT Wallet L3 features are enabled and thus we should allow to request
+   * Flag to check if IT Wallet L3 features are enabled and thus we should allow to request
    * a PID credential and upgrade the existing credentials to L3
    */
-  isL3FeaturesEnabled: boolean | undefined;
+  isL3: boolean | undefined;
   /**
    * Flag to check if the user chose to fallback to L2 issuance
    */
@@ -87,6 +95,7 @@ export type Context = {
 };
 
 export const getInitialContext = (input: EidIssuanceInput): Context => ({
+  mode: undefined,
   integrityKeyTag: input.integrityKeyTag,
   walletInstanceAttestation: input.walletInstanceAttestation,
   credentials: input.credentials,
@@ -95,7 +104,6 @@ export const getInitialContext = (input: EidIssuanceInput): Context => ({
   authenticationContext: undefined,
   eid: undefined,
   failure: undefined,
-  isReissuing: false,
-  isL3FeaturesEnabled: undefined,
+  isL3: undefined,
   isL2Fallback: false
 });
