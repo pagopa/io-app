@@ -48,6 +48,7 @@ export const createEidIssuanceActionsImplementation = (
       };
     }
   ),
+
   navigateToTosScreen: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
