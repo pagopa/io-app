@@ -184,10 +184,6 @@ export const itwEidIssuanceMachine = setup({
           target: "UserIdentification.Identification.L2"
         },
         {
-          guard: "isReissuing",
-          target: "WalletInstanceAttestationObtainment"
-        },
-        {
           target: "TosAcceptance"
         }
       ]
