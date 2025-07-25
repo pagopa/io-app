@@ -8,6 +8,18 @@ import PN_ROUTES from "../../../navigation/routes";
 import * as LOGIC_HOOK from "../../hooks/useAARpushEngagementScreenLogic";
 import { SendQrScanPushEngagementScreen } from "../SendAARPushEngagementScreen";
 
+const mockPopToTop = jest.fn();
+jest.mock("@react-navigation/native", () => {
+  const navigationModule = jest.requireActual("@react-navigation/native");
+  return {
+    ...navigationModule,
+    useNavigation: () => ({
+      ...navigationModule.useNavigation(),
+      popToTop: mockPopToTop
+    })
+  };
+});
+
 describe("SendQrScanPushEngagementScreen", () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -29,6 +41,20 @@ describe("SendQrScanPushEngagementScreen", () => {
     const component = renderScreen();
 
     expect(component.toJSON()).toMatchSnapshot();
+  });
+
+  it("should render a header with an X button which should behave as expected", () => {
+    jest
+      .spyOn(LOGIC_HOOK, "useAARPushEngagementScreenLogic")
+      .mockImplementation(() => ({
+        onButtonPress: () => null,
+        shouldRenderBlankPage: false
+      }));
+    expect(mockPopToTop).toHaveBeenCalledTimes(0);
+    const { getByTestId } = renderScreen();
+    const button = getByTestId("header-close");
+    fireEvent.press(button);
+    expect(mockPopToTop).toHaveBeenCalledTimes(1);
   });
 
   it("should call the button press callback on button press", () => {

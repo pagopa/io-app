@@ -1,12 +1,41 @@
-import { Badge, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Badge,
+  HeaderSecondLevel,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { useCallback, useEffect } from "react";
 import { View } from "react-native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useAARPushEngagementScreenLogic } from "../hooks/useAARpushEngagementScreenLogic";
 
 export const SendQrScanPushEngagementScreen = () => {
+  const navigation = useIONavigation();
   const { shouldRenderBlankPage, onButtonPress } =
     useAARPushEngagementScreenLogic();
+
+  const handleCloseScreen = useCallback(() => {
+    navigation.popToTop();
+  }, [navigation]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          title=""
+          ignoreSafeAreaMargin={false}
+          type="singleAction"
+          firstAction={{
+            icon: "closeMedium",
+            onPress: handleCloseScreen,
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            testID: "header-close"
+          }}
+        />
+      )
+    });
+  }, [handleCloseScreen, navigation]);
 
   if (shouldRenderBlankPage) {
     return <></>;

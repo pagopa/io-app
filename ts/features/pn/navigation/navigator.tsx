@@ -1,9 +1,4 @@
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
-import {
-  StackHeaderProps,
-  createStackNavigator
-} from "@react-navigation/stack";
-import I18n from "../../../i18n";
+import { createStackNavigator } from "@react-navigation/stack";
 import { SendQrScanPushEngagementScreen } from "../aar/screen/SendAARPushEngagementScreen";
 import { SendEngagementScreen } from "../aar/screen/SendEngagementScreen";
 import { SendQRScanFlowScreen } from "../aar/screen/SendQRScanFlowScreen";
@@ -48,25 +43,6 @@ export const PnStackNavigator = () => (
     <Stack.Screen
       name={PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT}
       component={SendQrScanPushEngagementScreen}
-      options={{
-        headerShown: true,
-        animationEnabled: true,
-
-        header: (props: StackHeaderProps) => (
-          <HeaderSecondLevel
-            title=""
-            ignoreSafeAreaMargin={false}
-            type="singleAction"
-            firstAction={{
-              icon: "closeMedium",
-              accessibilityLabel: I18n.t(
-                "features.pn.aar.serviceActivation.headerAction"
-              ),
-              onPress: props.navigation.popToTop
-            }}
-          />
-        )
-      }}
     />
   </Stack.Navigator>
 );
