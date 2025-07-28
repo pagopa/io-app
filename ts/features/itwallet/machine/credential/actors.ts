@@ -10,6 +10,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { Env } from "../../common/utils/environment";
+import { enrichErrorWithMetadata } from "../../common/utils/itwFailureUtils";
 import { type Context } from "./context";
 
 export type GetWalletAttestationActorInput = {
@@ -144,6 +145,8 @@ export const createCredentialIssuanceActorsImplementation = (
           await getCredentialStatusAttestation(
             credential,
             input.isNewIssuanceFlowEnabled
+          ).catch(
+            enrichErrorWithMetadata({ credentialId: credential.credentialId })
           );
 
         return {
