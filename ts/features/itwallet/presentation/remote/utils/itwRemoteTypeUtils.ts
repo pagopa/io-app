@@ -1,4 +1,4 @@
-import { Credential } from "@pagopa/io-react-native-wallet";
+import { Credential } from "@pagopa/io-react-native-wallet-v2";
 import { ClaimDisplayFormat } from "../../../common/utils/itwClaimsUtils";
 
 /**
