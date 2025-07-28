@@ -42,9 +42,10 @@ const reducer = (
     }
 
     case getType(itwCredentialsRemove): {
-      // Remove all credentials with the same type
+      const idsToRemove = new Set(action.payload.map(c => c.credentialId));
+
       const otherCredentials = Object.values(state.credentials)
-        .filter(c => c.credentialType !== action.payload.credentialType)
+        .filter(c => !idsToRemove.has(c.credentialId))
         .reduce(
           (acc, c) => ({ ...acc, [c.credentialId]: c }),
           {} as CredentialsRecord
