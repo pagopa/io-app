@@ -40,7 +40,7 @@ const getLegacyCredentialStatusAttestation = async (
 
 export const getCredentialStatusAttestation = async (
   credential: StoredCredential,
-  newApiEnabled = false
+  newApiEnabled = false // TODO: [SIW-2530] remove after full migration to API 1.0
 ) => {
   if (!newApiEnabled) {
     return getLegacyCredentialStatusAttestation(credential);
