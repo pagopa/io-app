@@ -18,6 +18,7 @@ const aarUrl = "https://example.com";
 
 const mockPopToTop = jest.fn();
 const mockReplace = jest.fn();
+
 jest.mock("@react-navigation/native", () => {
   const navigationModule = jest.requireActual("@react-navigation/native");
   return {
@@ -124,7 +125,17 @@ describe("SendQRScanRedirectComponent", () => {
           });
           expect(mockPopToTop.mock.calls.length).toBe(0);
         } else if (shouldNavigateToNotificationPermissionsScreen) {
-          // TODO check for navigation to notification permissions screen
+          expect(mockReplace.mock.calls.length).toBe(1);
+          expect(mockReplace.mock.calls[0].length).toBe(2);
+          expect(mockReplace.mock.calls[0][0]).toBe(
+            MESSAGES_ROUTES.MESSAGES_NAVIGATOR
+          );
+          expect(mockReplace.mock.calls[0][1]).toEqual({
+            screen: PN_ROUTES.MAIN,
+            params: {
+              screen: PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT
+            }
+          });
           expect(mockPopToTop.mock.calls.length).toBe(0);
         } else {
           expect(mockReplace.mock.calls.length).toBe(0);
@@ -156,6 +167,7 @@ describe("SendQRScanRedirectComponent", () => {
     ).toBe(0);
   });
 });
+
 function renderComponent(
   sendServiceActive: boolean = true,
   notificationPermissionsEnabled: boolean = true

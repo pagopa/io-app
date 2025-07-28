@@ -27,7 +27,6 @@ export const SendQRScanRedirectComponent = ({
   const handleOpenSendScreen = useCallback(() => {
     // Analytics
     trackSendQRCodeScanRedirectConfirmed();
-
     // Open external browser (this is an async process)
     openWebUrl(aarUrl);
 
@@ -52,7 +51,12 @@ export const SendQRScanRedirectComponent = ({
     const areNotificationPermissionsEnabled =
       areNotificationPermissionsEnabledSelector(state);
     if (!areNotificationPermissionsEnabled) {
-      // TODO navigate to push notifications screen
+      navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        screen: PN_ROUTES.MAIN,
+        params: {
+          screen: PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT
+        }
+      });
       return;
     }
 
