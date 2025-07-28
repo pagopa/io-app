@@ -3,9 +3,9 @@ import { StyleSheet, View } from "react-native";
 import { useLinkTo } from "@react-navigation/native";
 import {
   IOButton,
-  IOStyles,
   VSpacer,
-  buttonSolidHeight
+  buttonSolidHeight,
+  FooterActions
 } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { PaymentData, UIMessageId } from "../../types";
@@ -23,13 +23,24 @@ import { useFIMSFromServiceId } from "../../../fims/common/hooks";
 import { MessageDetailsPaymentButton } from "./MessageDetailsPaymentButton";
 import { computeAndTrackCTAPressAnalytics } from "./detailsUtils";
 
+type DSFooterActionsType =
+  | {
+      type: "SingleButton";
+      primary: { label: string; onPress: () => void; disabled?: boolean };
+    }
+  | {
+      type: "TwoButtons";
+      primary: { label: string; onPress: () => void; disabled?: boolean };
+      secondary: { label: string; onPress: () => void };
+    }
+  | {
+      type: "ThreeButtons";
+      primary: { label: string; onPress: () => void; disabled?: boolean };
+      secondary: { label: string; onPress: () => void };
+      tertiary: { label: string; onPress: () => void };
+    };
+
 const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    overflow: "hidden",
-    bottom: 0,
-    width: "100%"
-  },
   buttonLinkInFooter: {
     height: buttonSolidHeight,
     justifyContent: "center",
@@ -263,6 +274,97 @@ const renderCTA = (
   />
 );
 
+const mapFooterDataToActions = (
+  footerData: FooterData,
+  onCTAPress: (
+    isFirstCTA: boolean,
+    cta: CTA,
+    isPNOptInMessage: boolean
+  ) => void,
+  firstCTAIsPNOptInMessage: boolean,
+  secondCTAIsPNOptInMessage: boolean,
+  canNavigateToPayment: boolean,
+  isLoadingPayment: boolean,
+  serviceId: ServiceId,
+  paymentData: PaymentData | undefined
+): DSFooterActionsType | undefined => {
+  switch (footerData.tag) {
+    case "PaymentWithDoubleCTA":
+      return {
+        type: "ThreeButtons",
+        primary: {
+          label: "Paga", // TODO: localize or get payment label
+          onPress: () => {
+            // TODO: Payment button logic (simulate press on payment button)
+          },
+          disabled: isLoadingPayment || !canNavigateToPayment
+        },
+        secondary: {
+          label: footerData.cta1.text,
+          onPress: () =>
+            onCTAPress(true, footerData.cta1, firstCTAIsPNOptInMessage)
+        },
+        tertiary: {
+          label: footerData.cta2.text,
+          onPress: () =>
+            onCTAPress(false, footerData.cta2, secondCTAIsPNOptInMessage)
+        }
+      };
+    case "PaymentWithCTA":
+      return {
+        type: "TwoButtons",
+        primary: {
+          label: "Paga", // TODO: localize or get payment label
+          onPress: () => {
+            // TODO: Payment button logic
+          },
+          disabled: isLoadingPayment || !canNavigateToPayment
+        },
+        secondary: {
+          label: footerData.cta1.text,
+          onPress: () =>
+            onCTAPress(true, footerData.cta1, firstCTAIsPNOptInMessage)
+        }
+      };
+    case "DoubleCTA":
+      return {
+        type: "TwoButtons",
+        primary: {
+          label: footerData.cta1.text,
+          onPress: () =>
+            onCTAPress(true, footerData.cta1, firstCTAIsPNOptInMessage)
+        },
+        secondary: {
+          label: footerData.cta2.text,
+          onPress: () =>
+            onCTAPress(false, footerData.cta2, secondCTAIsPNOptInMessage)
+        }
+      };
+    case "Payment":
+      return {
+        type: "SingleButton",
+        primary: {
+          label: "Paga", // TODO: localize or get payment label
+          onPress: () => {
+            // TODO: Payment button logic
+          },
+          disabled: isLoadingPayment || !canNavigateToPayment
+        }
+      };
+    case "CTA":
+      return {
+        type: "SingleButton",
+        primary: {
+          label: footerData.cta1.text,
+          onPress: () =>
+            onCTAPress(true, footerData.cta1, firstCTAIsPNOptInMessage)
+        }
+      };
+    case "None":
+      return undefined;
+  }
+};
+
 export const MessageDetailsStickyFooter = ({
   ctas,
   firstCTAIsPNOptInMessage,
@@ -303,59 +405,18 @@ export const MessageDetailsStickyFooter = ({
     return null;
   }
 
-  const paddingBottom =
-    safeAreaInsets.bottom +
-    (footerData.tag === "CTA" || footerData.tag === "Payment"
-      ? IOStyles.footer.paddingBottom
-      : 0);
-
   const isPaymentLoading = paymentButtonStatus === "loading";
 
-  return (
-    <View style={[IOStyles.footer, styles.container, { paddingBottom }]}>
-      {foldFooterData(
-        footerData,
-        paymentWithDoubleCTA =>
-          renderPaymentWithDoubleCTA(
-            serviceId,
-            paymentWithDoubleCTA.paymentData,
-            canNavigateToPayment,
-            isPaymentLoading,
-            paymentWithDoubleCTA.cta1,
-            firstCTAIsPNOptInMessage,
-            paymentWithDoubleCTA.cta2,
-            secondCTAIsPNOptInMessage,
-            onCTAPressedCallback
-          ),
-        paymentWithCTA =>
-          renderPaymentWithCTA(
-            serviceId,
-            paymentWithCTA.paymentData,
-            canNavigateToPayment,
-            isPaymentLoading,
-            paymentWithCTA.cta1,
-            firstCTAIsPNOptInMessage,
-            onCTAPressedCallback
-          ),
-        doubleCTA =>
-          renderDoubleCTA(
-            doubleCTA.cta1,
-            firstCTAIsPNOptInMessage,
-            doubleCTA.cta2,
-            secondCTAIsPNOptInMessage,
-            onCTAPressedCallback
-          ),
-        payment =>
-          renderPayment(
-            serviceId,
-            payment.paymentData,
-            canNavigateToPayment,
-            isPaymentLoading
-          ),
-        cta =>
-          renderCTA(cta.cta1, firstCTAIsPNOptInMessage, onCTAPressedCallback),
-        () => null
-      )}
-    </View>
+  const actions = mapFooterDataToActions(
+    footerData,
+    onCTAPressedCallback,
+    firstCTAIsPNOptInMessage,
+    secondCTAIsPNOptInMessage,
+    canNavigateToPayment,
+    isPaymentLoading,
+    serviceId,
+    paymentData
   );
+
+  return actions && <FooterActions actions={actions} />;
 };
