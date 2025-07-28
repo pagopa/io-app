@@ -237,47 +237,56 @@ describe("pushNotifications analytics", () => {
       reason
     });
   });
-  it("'trackSystemNotificationPermissionScreenShown' should have expected event name and properties", () => {
-    const mockMixpanelTrack = getMockMixpanelTrack();
-    void trackSystemNotificationPermissionScreenShown();
-    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-    expect(mockMixpanelTrack.mock.calls[0][0]).toBe("PUSH_NOTIF_APP_MODAL");
-    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
-      event_category: "UX",
-      event_type: "screen_view"
-    });
-  });
-  it("'trackSystemNotificationPermissionScreenOutcome' should have expected event name and properties for 'activate' input", () => {
-    const mockMixpanelTrack = getMockMixpanelTrack();
-    const outcome = "activate";
-    void trackSystemNotificationPermissionScreenOutcome(outcome);
-    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-    expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
-      "PUSH_NOTIF_APP_MODAL_INTERACTION"
-    );
-    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
-      event_category: "UX",
-      event_type: "action",
-      outcome
-    });
-  });
-  it("'trackSystemNotificationPermissionScreenOutcome' should have expected event name and properties for 'dismiss' input", () => {
-    const mockMixpanelTrack = getMockMixpanelTrack();
-    const outcome = "dismiss";
-    void trackSystemNotificationPermissionScreenOutcome(outcome);
-    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-    expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
-      "PUSH_NOTIF_APP_MODAL_INTERACTION"
-    );
-    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
-      event_category: "UX",
-      event_type: "action",
-      outcome
-    });
-  });
+  (["send_notification_opening", "authentication"] as const).forEach(flow =>
+    it(`'trackSystemNotificationPermissionScreenShown' should have expected event name and properties (flow: ${flow})`, () => {
+      const mockMixpanelTrack = getMockMixpanelTrack();
+      void trackSystemNotificationPermissionScreenShown(flow);
+      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(mockMixpanelTrack.mock.calls[0][0]).toBe("PUSH_NOTIF_APP_MODAL");
+      expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "screen_view",
+        flow
+      });
+    })
+  );
+  (["send_notification_opening", "authentication"] as const).forEach(flow =>
+    it(`'trackSystemNotificationPermissionScreenOutcome' should have expected event name and properties for 'activate' input (flow ${flow})`, () => {
+      const mockMixpanelTrack = getMockMixpanelTrack();
+      const outcome = "activate";
+      void trackSystemNotificationPermissionScreenOutcome(outcome, flow);
+      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
+        "PUSH_NOTIF_APP_MODAL_INTERACTION"
+      );
+      expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "action",
+        outcome,
+        flow
+      });
+    })
+  );
+  (["send_notification_opening", "authentication"] as const).forEach(flow =>
+    it(`'trackSystemNotificationPermissionScreenOutcome' should have expected event name and properties for 'dismiss' input (flow ${flow})`, () => {
+      const mockMixpanelTrack = getMockMixpanelTrack();
+      const outcome = "dismiss";
+      void trackSystemNotificationPermissionScreenOutcome(outcome, flow);
+      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
+        "PUSH_NOTIF_APP_MODAL_INTERACTION"
+      );
+      expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "action",
+        outcome,
+        flow
+      });
+    })
+  );
   it("'trackNotificationStatus' should have expected event name and properties for 'false' input", () => {
     const mockMixpanelTrack = getMockMixpanelTrack();
     const notificationPermissionsEnabled = false;
