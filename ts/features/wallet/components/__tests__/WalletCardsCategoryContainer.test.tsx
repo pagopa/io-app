@@ -1,4 +1,5 @@
 import configureMockStore from "redux-mock-store";
+import { ListItemHeader } from "@pagopa/io-app-design-system";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -28,9 +29,7 @@ describe("WalletCardsCategoryContainer", () => {
       cards: [
         { key: T_KEY, type: "payment", category: "payment", walletId: "" }
       ],
-      header: {
-        label: T_CATEGORY_LABEL
-      }
+      header: <ListItemHeader label={T_CATEGORY_LABEL} />
     });
     expect(queryByText(T_CATEGORY_LABEL)).not.toBeNull();
     expect(

@@ -155,7 +155,9 @@ export const useStatusAlertProps = (
       O.fold(
         () => ({}),
         url => ({
-          action: I18n.t("global.sectionStatus.moreInfo"),
+          action:
+            firstAlert.label_cta?.[localeFallback] ||
+            I18n.t("global.sectionStatus.moreInfo"),
           onPress: () => openWebUrl(url[localeFallback])
         })
       )
