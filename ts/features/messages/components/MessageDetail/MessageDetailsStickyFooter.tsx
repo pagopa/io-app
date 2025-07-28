@@ -5,12 +5,16 @@ import {
   IOButton,
   VSpacer,
   buttonSolidHeight,
-  FooterActions
+  FooterActions,
+  useIOToast
 } from "@pagopa/io-app-design-system";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { PaymentData, UIMessageId } from "../../types";
 import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
-import { useIOSelector, useIOStore } from "../../../../store/hooks";
+import {
+  useIOSelector,
+  useIOStore,
+  useIODispatch
+} from "../../../../store/hooks";
 import {
   canNavigateToPaymentFromMessageSelector,
   paymentsButtonStateSelector
@@ -20,8 +24,15 @@ import { handleCtaAction } from "../../utils/ctas";
 import { CTA, CTAS } from "../../../../types/LocalizedCTAs";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useFIMSFromServiceId } from "../../../fims/common/hooks";
-import { MessageDetailsPaymentButton } from "./MessageDetailsPaymentButton";
-import { computeAndTrackCTAPressAnalytics } from "./detailsUtils";
+import I18n from "../../../../i18n";
+import {
+  getRptIdStringFromPaymentData,
+  initializeAndNavigateToWalletForPayment
+} from "../../utils";
+import {
+  computeAndTrackCTAPressAnalytics,
+  computeAndTrackPaymentStart
+} from "./detailsUtils";
 
 type DSFooterActionsType =
   | {
@@ -176,13 +187,6 @@ const renderPaymentWithDoubleCTA = (
   onCTAPress: (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => void
 ) => (
   <>
-    <MessageDetailsPaymentButton
-      serviceId={serviceId}
-      paymentData={paymentData}
-      canNavigateToPayment={canNavigateToPayment}
-      isLoading={isLoadingPayment}
-    />
-    <VSpacer size={8} />
     <IOButton
       variant="outline"
       label={cta1.text}
@@ -208,11 +212,10 @@ const renderPaymentWithCTA = (
   onCTAPress: (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => void
 ) => (
   <>
-    <MessageDetailsPaymentButton
-      serviceId={serviceId}
-      paymentData={paymentData}
-      canNavigateToPayment={canNavigateToPayment}
-      isLoading={isLoadingPayment}
+    <IOButton
+      variant="outline"
+      label={cta1.text}
+      onPress={() => onCTAPress(true, cta1, cta1IsPNOptInMessage)}
     />
     <VSpacer size={8} />
     <View style={styles.buttonLinkInFooter}>
@@ -254,11 +257,20 @@ const renderPayment = (
   canNavigateToPayment: boolean,
   isLoadingPayment: boolean
 ) => (
-  <MessageDetailsPaymentButton
-    serviceId={serviceId}
-    paymentData={paymentData}
-    canNavigateToPayment={canNavigateToPayment}
-    isLoading={isLoadingPayment}
+  <IOButton
+    variant="outline"
+    label={I18n.t("features.messages.payments.pay")}
+    onPress={() =>
+      initializeAndNavigateToWalletForPayment(
+        getRptIdStringFromPaymentData(paymentData),
+        true,
+        canNavigateToPayment,
+        useIODispatch(),
+        undefined, // analyticsCallback not used here
+        () => useIOToast().error(I18n.t("genericError"))
+      )
+    }
+    disabled={!canNavigateToPayment}
   />
 );
 const renderCTA = (
@@ -286,18 +298,17 @@ const mapFooterDataToActions = (
   canNavigateToPayment: boolean,
   isLoadingPayment: boolean,
   serviceId: ServiceId,
-  paymentData: PaymentData | undefined
+  paymentData: PaymentData | undefined,
+  handlePaymentPress: () => void
 ): DSFooterActionsType | undefined => {
   switch (footerData.tag) {
     case "PaymentWithDoubleCTA":
       return {
         type: "ThreeButtons",
         primary: {
-          label: "Paga", // TODO: localize or get payment label
-          onPress: () => {
-            // TODO: Payment button logic (simulate press on payment button)
-          },
-          disabled: isLoadingPayment || !canNavigateToPayment
+          label: I18n.t("features.messages.payments.pay"),
+          onPress: handlePaymentPress,
+          disabled: !canNavigateToPayment
         },
         secondary: {
           label: footerData.cta1.text,
@@ -314,11 +325,9 @@ const mapFooterDataToActions = (
       return {
         type: "TwoButtons",
         primary: {
-          label: "Paga", // TODO: localize or get payment label
-          onPress: () => {
-            // TODO: Payment button logic
-          },
-          disabled: isLoadingPayment || !canNavigateToPayment
+          label: I18n.t("features.messages.payments.pay"),
+          onPress: handlePaymentPress,
+          disabled: !canNavigateToPayment
         },
         secondary: {
           label: footerData.cta1.text,
@@ -344,11 +353,9 @@ const mapFooterDataToActions = (
       return {
         type: "SingleButton",
         primary: {
-          label: "Paga", // TODO: localize or get payment label
-          onPress: () => {
-            // TODO: Payment button logic
-          },
-          disabled: isLoadingPayment || !canNavigateToPayment
+          label: I18n.t("features.messages.payments.pay"),
+          onPress: handlePaymentPress,
+          disabled: !canNavigateToPayment
         }
       };
     case "CTA":
@@ -372,8 +379,10 @@ export const MessageDetailsStickyFooter = ({
   secondCTAIsPNOptInMessage,
   serviceId
 }: MessageDetailsPaymentButtonProps) => {
-  const safeAreaInsets = useSafeAreaInsets();
   const store = useIOStore();
+  const dispatch = useIODispatch();
+  const toast = useIOToast();
+
   const paymentData = useIOSelector(state =>
     messagePaymentDataSelector(state, messageId)
   );
@@ -400,6 +409,21 @@ export const MessageDetailsStickyFooter = ({
     [linkTo, serviceId, startFIMSAuthenticationFlow, store]
   );
 
+  // Payment button logic as a callback
+  const handlePaymentPress = useCallback(() => {
+    if (!paymentData) {
+      return;
+    }
+    initializeAndNavigateToWalletForPayment(
+      getRptIdStringFromPaymentData(paymentData),
+      true,
+      canNavigateToPayment,
+      dispatch,
+      () => computeAndTrackPaymentStart(serviceId, store.getState()),
+      () => toast.error(I18n.t("genericError"))
+    );
+  }, [paymentData, canNavigateToPayment, dispatch, serviceId, store, toast]);
+
   const footerData = computeFooterData(paymentData, paymentButtonStatus, ctas);
   if (isNone(footerData)) {
     return null;
@@ -415,7 +439,8 @@ export const MessageDetailsStickyFooter = ({
     canNavigateToPayment,
     isPaymentLoading,
     serviceId,
-    paymentData
+    paymentData,
+    handlePaymentPress
   );
 
   return actions && <FooterActions actions={actions} />;
