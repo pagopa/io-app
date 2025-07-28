@@ -1,6 +1,10 @@
 import { fromPromise } from "xstate";
 import * as O from "fp-ts/lib/Option";
-import { Trust, Credential } from "@pagopa/io-react-native-wallet-v2";
+import {
+  createCryptoContextFor,
+  Credential,
+  Trust
+} from "@pagopa/io-react-native-wallet-v2";
 import {
   DcqlQuery,
   EnrichedPresentationDetails,
@@ -21,12 +25,18 @@ import {
 import { assert } from "../../../../../utils/assert";
 import { itwIntegrityKeyTagSelector } from "../../../issuance/store/selectors";
 import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
-import { itwRemotePresentationCredentialsSelector } from "../store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
 import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
+import {
+  itwCredentialsEidSelector,
+  itwCredentialsSelector
+} from "../../../credentials/store/selectors";
 import { InvalidCredentialsStatusError } from "./failure";
 
 const NEW_API_ENABLED = true; // TODO: [SIW-2530] Remove after transitioning to API 1.0
+
+type CredentialsSdJwt =
+  Parameters<Credential.Presentation.EvaluateDcqlQuery>[0];
 
 export type EvaluateRelyingPartyTrustInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
@@ -148,15 +158,23 @@ export const createRemoteActorsImplementation = (
     assert(requestObject.dcql_query, "Missing required DCQL query");
 
     const globalState = store.getState();
-    const credentialsByVct =
-      itwRemotePresentationCredentialsSelector(globalState);
-    const walletAttestationSdJwt =
+    const eid = itwCredentialsEidSelector(globalState);
+    const credentials = itwCredentialsSelector(globalState);
+    const wiaSdJwt =
       itwWalletInstanceAttestationSelector(globalState)?.["dc+sd-jwt"];
 
-    const credentialsSdJwt = [
-      walletAttestationSdJwt && [WIA_KEYTAG, walletAttestationSdJwt],
-      ...Object.values(credentialsByVct).map(c => [c.keyTag, c.credential])
-    ].filter(Boolean) as Array<[string, string]>;
+    assert(O.isSome(eid), "Missing PID");
+    assert(wiaSdJwt, "Missing Wallet Attestation in SD-JWT format");
+
+    // Prepare credentials to evaluate the Relying Party request
+    const credentialsSdJwt: CredentialsSdJwt = [
+      [createCryptoContextFor(eid.value.keyTag), eid.value.credential],
+      ...Object.values(credentials).map<CredentialsSdJwt[number]>(c => [
+        createCryptoContextFor(c.keyTag),
+        c.credential
+      ]),
+      [createCryptoContextFor(WIA_KEYTAG), wiaSdJwt]
+    ];
 
     // Evaluate the DCQL query against the credentials contained in the Wallet
     const result = Credential.Presentation.evaluateDcqlQuery(
@@ -164,10 +182,14 @@ export const createRemoteActorsImplementation = (
       requestObject.dcql_query as DcqlQuery
     );
 
-    // Check whether any of the requested credential is invalid
-    const invalidCredentials = getInvalidCredentials(
-      result.map(c => credentialsByVct[c.vct]).filter(Boolean)
+    const credentialsByType = Object.fromEntries(
+      Object.values(credentials)
+        .concat(eid.value)
+        .map(c => [c.credentialType, c])
     );
+
+    // Check whether any of the requested credential is invalid
+    const invalidCredentials = getInvalidCredentials(result, credentialsByType);
 
     if (invalidCredentials.length > 0) {
       throw new InvalidCredentialsStatusError(invalidCredentials);
@@ -176,7 +198,7 @@ export const createRemoteActorsImplementation = (
     // Add localization to the requested claims
     const presentationDetails = enrichPresentationDetails(
       result,
-      credentialsByVct
+      credentialsByType
     );
 
     return { requestObject, presentationDetails };
