@@ -1,6 +1,7 @@
 import { Alert, Platform } from "react-native";
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../../i18n";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { ItwProximityMachineContext } from "../machine/provider";
@@ -9,6 +10,12 @@ import { openBluetoothPreferences } from "../utils";
 import { selectIsBluetoothRequiredState } from "../machine/selectors";
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import {
+  trackItwProximityBluetoothActivation,
+  trackItwProximityBluetoothActivationClose,
+  trackItwProximityBluetoothActivationGoToSettings,
+  trackItwProximityBluetoothNotActivated
+} from "../analytics";
 
 export const ItwActivateBluetoothScreen = () => {
   const navigation = useIONavigation();
@@ -19,11 +26,21 @@ export const ItwActivateBluetoothScreen = () => {
 
   useHeaderSecondLevel({
     title: "",
-    goBack: navigation.goBack
+    goBack: () => {
+      trackItwProximityBluetoothActivationClose();
+      navigation.goBack();
+    }
   });
+
+  useFocusEffect(
+    useCallback(() => {
+      trackItwProximityBluetoothActivation();
+    }, [])
+  );
 
   useEffect(() => {
     if (isBluetoothRequiredState) {
+      trackItwProximityBluetoothNotActivated();
       Alert.alert(
         I18n.t(
           "features.itWallet.presentation.proximity.bluetoothRequired.alert.title"
@@ -85,7 +102,10 @@ export const ItwActivateBluetoothScreen = () => {
       label: I18n.t(
         "features.itWallet.presentation.proximity.activateBluetooth.actions.primary"
       ),
-      onPress: openBluetoothPreferences
+      onPress: () => {
+        trackItwProximityBluetoothActivationGoToSettings();
+        openBluetoothPreferences();
+      }
     },
     secondary: {
       label: I18n.t(
