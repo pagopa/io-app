@@ -1,11 +1,10 @@
-import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
 import Animated, {
   LinearTransition,
   useAnimatedRef
 } from "react-native-reanimated";
-import { useFocusEffect } from "@react-navigation/native";
 import {
   IOScrollView,
   IOScrollViewActions
@@ -191,11 +190,7 @@ const PaymentsHomeScreenContent = () => {
 
   return (
     <>
-      <ContentWrapper>
-        <PaymentsHomeUserMethodsList
-          enforcedLoadingState={isLoadingFirstTime}
-        />
-      </ContentWrapper>
+      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoadingFirstTime} />
       <PaymentsHomeTransactionsList enforcedLoadingState={isLoadingFirstTime} />
     </>
   );
