@@ -11,7 +11,8 @@ import {
   itwIsWalletEmptySelector,
   selectFiscalCodeFromEid,
   selectNameSurnameFromEid,
-  itwCredentialsByTypeSelector
+  itwCredentialsByTypeSelector,
+  itwCredentialsListByTypeSelector
 } from "../index";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
@@ -336,5 +337,27 @@ describe("test legacy credentials", () => {
       [CredentialType.DRIVING_LICENSE]: legacyMdl,
       [CredentialType.EUROPEAN_DISABILITY_CARD]: legacyDc
     });
+  });
+});
+
+describe("itwCredentialsListByTypeSelector", () => {
+  it("should return the list of all credentials of the same type", () => {
+    const state = getStateWithCredentials({
+      [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
+      [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
+      [mockedMdocDrivingLicense.credentialId]: mockedMdocDrivingLicense
+    });
+    expect(
+      itwCredentialsListByTypeSelector(CredentialType.DRIVING_LICENSE)(state)
+    ).toEqual([mockedDrivingLicense, mockedMdocDrivingLicense]);
+  });
+
+  it("should return an empty list when no credentials are found", () => {
+    const state = getStateWithCredentials({
+      [mockedDisabilityCard.credentialId]: mockedDisabilityCard
+    });
+    expect(
+      itwCredentialsListByTypeSelector(CredentialType.DRIVING_LICENSE)(state)
+    ).toEqual([]);
   });
 });
