@@ -14,7 +14,8 @@ import {
   idPayInitiativesFromInstrumentGet,
   idPayWalletGet,
   idpayInitiativesInstrumentDelete,
-  idpayInitiativesInstrumentEnroll
+  idpayInitiativesInstrumentEnroll,
+  setIdPayOnboardingSucceeded
 } from "../actions";
 
 export type IdPayWalletState = {
@@ -27,12 +28,14 @@ export type IdPayWalletState = {
   // structure: {initiativeId: is waiting for response to pair/unpair api call}
   // this will be populated on selection and reset when not loading and
   // we have a response from BE
+  onboardingSucceeded: boolean;
 };
 
 const INITIAL_STATE: IdPayWalletState = {
   initiatives: pot.none,
   initiativesWithInstrument: pot.none,
-  initiativesAwaitingStatusUpdate: {}
+  initiativesAwaitingStatusUpdate: {},
+  onboardingSucceeded: false
 };
 
 const reducer = (
@@ -124,6 +127,11 @@ const reducer = (
           [action.payload.initiativeId]: false
         }
       };
+    case getType(setIdPayOnboardingSucceeded):
+      return {
+        ...state,
+        onboardingSucceeded: action.payload
+      };
   }
   return state;
 };
@@ -204,5 +212,10 @@ export const idPayInitiativeFromInstrumentPotSelector = (
       }
     }
   );
+
+export const isIdPayOnboardingSucceededSelector = createSelector(
+  selectIdPayWallet,
+  wallet => wallet.onboardingSucceeded
+);
 
 export default reducer;

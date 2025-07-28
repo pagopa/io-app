@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.10.0-rc.6](https://github.com/pagopa/io-app/compare/3.10.0-rc.5...3.10.0-rc.6) (2025-07-24)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2786](https://pagopa.atlassian.net/browse/SIW-2786)] Fixes visual glitches in the L3 wallet screen ([#7210](https://github.com/pagopa/io-app/issues/7210)) ([05011a7](https://github.com/pagopa/io-app/commit/05011a7d6fa50dd8fe923caf143b023cfe004b0e))
+
+## [3.10.0-rc.5](https://github.com/pagopa/io-app/compare/3.10.0-rc.4...3.10.0-rc.5) (2025-07-23)
+
+
+### Features
+
+* [[IOBP-1817](https://pagopa.atlassian.net/browse/IOBP-1817),[IOBP-1869](https://pagopa.atlassian.net/browse/IOBP-1869)] Add email notification banner after IdPay onboarding success ([#7168](https://github.com/pagopa/io-app/issues/7168)) ([aecdf83](https://github.com/pagopa/io-app/commit/aecdf8319e9b7fe090e9f83ca8826669012bf3e6))
+* [[IOBP-1890](https://pagopa.atlassian.net/browse/IOBP-1890)] IDPay onboarding loading screen ([#7211](https://github.com/pagopa/io-app/issues/7211)) ([ea62db0](https://github.com/pagopa/io-app/commit/ea62db02f4e5b53425efbfd1af4bb249a1b28cc0))
+* **IT Wallet:** [[SIW-2283](https://pagopa.atlassian.net/browse/SIW-2283)] Add trust federation checks when requesting PID ([#7185](https://github.com/pagopa/io-app/issues/7185)) ([31859a7](https://github.com/pagopa/io-app/commit/31859a762a2f93a7fe9cff661bc2fe54044482d9))
+
+
+### Bug Fixes
+
+* [[IOBP-1887](https://pagopa.atlassian.net/browse/IOBP-1887)] Add missing IDPay service data fetching to enable messages ([#7206](https://github.com/pagopa/io-app/issues/7206)) ([209b815](https://github.com/pagopa/io-app/commit/209b815ef6743c833a9e0acf9936e65143f262c0))
+* [[IOBP-1889](https://pagopa.atlassian.net/browse/IOBP-1889)] IDPay back navigation logic ([#7207](https://github.com/pagopa/io-app/issues/7207)) ([200accb](https://github.com/pagopa/io-app/commit/200accbf953498362cf93c223698a6278b5b6df5))
+* [[IOBP-1897](https://pagopa.atlassian.net/browse/IOBP-1897)] Cheaper PSP selected check improved ([#7215](https://github.com/pagopa/io-app/issues/7215)) ([8c30ff8](https://github.com/pagopa/io-app/commit/8c30ff802e8c6f07e95c412b4fefd6710a6554c1))
+* **IT Wallet:** [[SIW-2757](https://pagopa.atlassian.net/browse/SIW-2757)] Add default space value to `VStack` components if not set ([#7205](https://github.com/pagopa/io-app/issues/7205)) ([02299fa](https://github.com/pagopa/io-app/commit/02299fab0280b77692e2aabd64027a3045ac93f1))
+* **IT Wallet:** [[SIW-2767](https://pagopa.atlassian.net/browse/SIW-2767)] Copy regression in "Documenti su IO" ready banner ([#7204](https://github.com/pagopa/io-app/issues/7204)) ([a5dc4a8](https://github.com/pagopa/io-app/commit/a5dc4a8c4aee9d2ebb47dacf6673ea401f87a92b))
+
 ## [3.10.0-rc.4](https://github.com/pagopa/io-app/compare/3.10.0-rc.3...3.10.0-rc.4) (2025-07-21)
 
 

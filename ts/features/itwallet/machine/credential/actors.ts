@@ -12,6 +12,10 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { Env } from "../../common/utils/environment";
 import { type Context } from "./context";
 
+export type GetWalletAttestationActorInput = {
+  isNewIssuanceFlowEnabled?: boolean;
+};
+
 export type GetWalletAttestationActorOutput = Awaited<
   ReturnType<typeof itwAttestationUtils.getAttestation>
 >;
@@ -30,7 +34,7 @@ export type ObtainCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.obtainCredential>
 >;
 
-export type ObtainStatusAttestationActorInput = Pick<Context, "credential">;
+export type ObtainStatusAttestationActorInput = Pick<Context, "credentials">;
 
 /**
  * Creates the actors for the eid issuance machine
@@ -42,27 +46,34 @@ export const createCredentialIssuanceActorsImplementation = (
   env: Env,
   store: ReturnType<typeof useIOStore>
 ) => {
-  const getWalletAttestation = fromPromise<GetWalletAttestationActorOutput>(
-    async () => {
-      const sessionToken = sessionTokenSelector(store.getState());
-      const integrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
+  const getWalletAttestation = fromPromise<
+    GetWalletAttestationActorOutput,
+    GetWalletAttestationActorInput
+  >(async ({ input }) => {
+    const { isNewIssuanceFlowEnabled } = input;
+    const sessionToken = sessionTokenSelector(store.getState());
+    const integrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
 
-      assert(sessionToken, "sessionToken is undefined");
-      assert(O.isSome(integrityKeyTag), "integriyKeyTag is not present");
+    assert(sessionToken, "sessionToken is undefined");
+    assert(O.isSome(integrityKeyTag), "integriyKeyTag is not present");
 
-      return await itwAttestationUtils.getAttestation(
-        env,
-        integrityKeyTag.value,
-        sessionToken
-      );
-    }
-  );
+    return await itwAttestationUtils.getAttestation(
+      env,
+      integrityKeyTag.value,
+      sessionToken,
+      isNewIssuanceFlowEnabled
+    );
+  });
 
   const requestCredential = fromPromise<
     RequestCredentialActorOutput,
     RequestCredentialActorInput
   >(async ({ input }) => {
-    const { credentialType, walletInstanceAttestation } = input;
+    const {
+      credentialType,
+      walletInstanceAttestation,
+      isNewIssuanceFlowEnabled
+    } = input;
 
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
@@ -70,7 +81,8 @@ export const createCredentialIssuanceActorsImplementation = (
     return await credentialIssuanceUtils.requestCredential({
       env,
       credentialType,
-      walletInstanceAttestation
+      walletInstanceAttestation,
+      isNewIssuanceFlowEnabled: !!isNewIssuanceFlowEnabled
     });
   });
 
@@ -85,7 +97,8 @@ export const createCredentialIssuanceActorsImplementation = (
       walletInstanceAttestation,
       clientId,
       codeVerifier,
-      credentialDefinition
+      credentialDefinition,
+      isNewIssuanceFlowEnabled
     } = input;
 
     const eid = itwCredentialsEidSelector(store.getState());
@@ -96,7 +109,11 @@ export const createCredentialIssuanceActorsImplementation = (
     assert(issuerConf, "issuerConf is undefined");
     assert(clientId, "clientId is undefined");
     assert(codeVerifier, "codeVerifier is undefined");
-    assert(credentialDefinition, "codeVerifier is undefined");
+    // TODO: [SIW-2530] After fully migrating to the new API, the assertion below can be removed.
+    assert(
+      isNewIssuanceFlowEnabled || credentialDefinition,
+      "credentialDefinition must be present in the old credential issuance flow"
+    );
     assert(O.isSome(eid), "eID is undefined");
 
     return await credentialIssuanceUtils.obtainCredential({
@@ -108,27 +125,32 @@ export const createCredentialIssuanceActorsImplementation = (
       clientId,
       codeVerifier,
       credentialDefinition,
-      pid: eid.value
+      pid: eid.value,
+      isNewIssuanceFlowEnabled: !!isNewIssuanceFlowEnabled
     });
   });
 
   const obtainStatusAttestation = fromPromise<
-    StoredCredential,
+    Array<StoredCredential>,
     ObtainStatusAttestationActorInput
   >(async ({ input }) => {
-    assert(input.credential, "credential is undefined");
+    assert(input.credentials, "credentials are undefined");
 
-    const { statusAttestation, parsedStatusAttestation } =
-      await getCredentialStatusAttestation(input.credential);
+    return await Promise.all(
+      input.credentials.map(async credential => {
+        const { statusAttestation, parsedStatusAttestation } =
+          await getCredentialStatusAttestation(credential);
 
-    return {
-      ...input.credential,
-      storedStatusAttestation: {
-        credentialStatus: "valid",
-        statusAttestation,
-        parsedStatusAttestation: parsedStatusAttestation.payload
-      }
-    };
+        return {
+          ...credential,
+          storedStatusAttestation: {
+            credentialStatus: "valid",
+            statusAttestation,
+            parsedStatusAttestation: parsedStatusAttestation.payload
+          }
+        };
+      })
+    );
   });
 
   return {
