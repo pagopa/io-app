@@ -7,6 +7,7 @@ import {
   StoredCredential,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
+import { CiePreparationType } from "../../../identification/cie/components/ItwCiePreparationBaseScreenContent";
 import { ItwTags } from "../../tags";
 import {
   GetWalletAttestationActorParams,
@@ -21,7 +22,6 @@ import {
   InitialContext
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
-import { CiePreparationType } from "../../../identification/cie/components/ItwCiePreparationBaseScreenContent";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -148,7 +148,7 @@ describe("itwEidIssuanceMachine", () => {
 
   it("Should fail if trust federation verification fails", async () => {
     isL3FeaturesEnabled.mockImplementation(() => true);
-    const actor = createActor(mockedMachine, { input: {} });
+    const actor = createActor(mockedMachine);
     actor.start();
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
@@ -186,7 +186,7 @@ describe("itwEidIssuanceMachine", () => {
 
   it("Should obtain an eID (SPID) from L3 Identification", async () => {
     isL3FeaturesEnabled.mockImplementation(() => true);
-    const actor = createActor(mockedMachine, { input: {} });
+    const actor = createActor(mockedMachine);
     actor.start();
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
@@ -411,8 +411,7 @@ describe("itwEidIssuanceMachine", () => {
     requestEid.mockImplementation(() => Promise.resolve({}));
 
     const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine,
-      { input: {} }
+      itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
@@ -424,8 +423,7 @@ describe("itwEidIssuanceMachine", () => {
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
-      snapshot,
-      input: {}
+      snapshot
     });
     actor.start();
 
@@ -486,8 +484,7 @@ describe("itwEidIssuanceMachine", () => {
     /** Initial part is the same as the previous test, we can start from the identification */
 
     const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine,
-      { input: {} }
+      itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
@@ -503,8 +500,7 @@ describe("itwEidIssuanceMachine", () => {
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
-      snapshot,
-      input: {}
+      snapshot
     });
     actor.start();
 
@@ -616,8 +612,7 @@ describe("itwEidIssuanceMachine", () => {
     /** Initial part is the same as the previous test, we can start from the identification */
 
     const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine,
-      { input: {} }
+      itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
@@ -637,8 +632,7 @@ describe("itwEidIssuanceMachine", () => {
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
-      snapshot,
-      input: {}
+      snapshot
     });
     actor.start();
 
@@ -698,8 +692,7 @@ describe("itwEidIssuanceMachine", () => {
   it("Should skip Wallet Instance creation", async () => {
     hasIntegrityKeyTag.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine,
-      { input: {} }
+      itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
@@ -709,8 +702,7 @@ describe("itwEidIssuanceMachine", () => {
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
-      snapshot,
-      input: {}
+      snapshot
     });
     actor.start();
 
@@ -763,8 +755,7 @@ describe("itwEidIssuanceMachine", () => {
     hasIntegrityKeyTag.mockImplementation(() => true);
 
     const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine,
-      { input: {} }
+      itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
@@ -775,8 +766,7 @@ describe("itwEidIssuanceMachine", () => {
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
-      snapshot,
-      input: {}
+      snapshot
     });
     actor.start();
 
@@ -827,8 +817,7 @@ describe("itwEidIssuanceMachine", () => {
 
   it("Should allow the user to add a new credential once eID issuance is complete", () => {
     const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine,
-      { input: {} }
+      itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
@@ -836,8 +825,7 @@ describe("itwEidIssuanceMachine", () => {
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
-      snapshot,
-      input: {}
+      snapshot
     });
     actor.start();
 
@@ -853,7 +841,7 @@ describe("itwEidIssuanceMachine", () => {
   it("Should return to TOS acceptance if session expires when creating a Wallet Instance", async () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
 
-    const actor = createActor(mockedMachine, { input: {} });
+    const actor = createActor(mockedMachine);
     actor.start();
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
@@ -910,7 +898,7 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should return to TOS acceptance if session expires when obtaining a Wallet Instance Attestation ", async () => {
-    const actor = createActor(mockedMachine, { input: {} });
+    const actor = createActor(mockedMachine);
     actor.start();
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
@@ -965,7 +953,7 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should fail when creating Wallet Instance", async () => {
-    const actor = createActor(mockedMachine, { input: {} });
+    const actor = createActor(mockedMachine);
     actor.start();
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
@@ -1017,7 +1005,7 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should fail when obtaining Wallet Instance Attestation", async () => {
-    const actor = createActor(mockedMachine, { input: {} });
+    const actor = createActor(mockedMachine);
     actor.start();
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
@@ -1078,8 +1066,7 @@ describe("itwEidIssuanceMachine", () => {
     requestEid.mockImplementation(() => Promise.reject({}));
 
     const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine,
-      { input: {} }
+      itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
@@ -1087,8 +1074,7 @@ describe("itwEidIssuanceMachine", () => {
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
-      snapshot,
-      input: {}
+      snapshot
     });
     actor.start();
 
@@ -1128,7 +1114,7 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should handle 401 when creating wallet instance", async () => {
-    const actor = createActor(mockedMachine, { input: {} });
+    const actor = createActor(mockedMachine);
     actor.start();
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
@@ -1181,8 +1167,7 @@ describe("itwEidIssuanceMachine", () => {
 
   it("Should handle 401 when revoking wallet instance", async () => {
     const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine,
-      { input: {} }
+      itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
@@ -1190,8 +1175,7 @@ describe("itwEidIssuanceMachine", () => {
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
-      snapshot,
-      input: {}
+      snapshot
     });
     actor.start();
 
@@ -1221,9 +1205,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: { jwt: T_WIA }
     };
 
-    const actor = createActor(mockedMachine, {
-      input: {}
-    });
+    const actor = createActor(mockedMachine, {});
     actor.start();
 
     // eslint-disable-next-line functional/immutable-data
@@ -1357,8 +1339,7 @@ describe("itwEidIssuanceMachine", () => {
 
   it("Should go back to Idle state if isReissuing is true", async () => {
     const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine,
-      { input: {} }
+      itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
@@ -1369,8 +1350,7 @@ describe("itwEidIssuanceMachine", () => {
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
-      snapshot,
-      input: {}
+      snapshot
     });
     actor.start();
 
@@ -1382,8 +1362,7 @@ describe("itwEidIssuanceMachine", () => {
   it("Should go back to IpzsPrivacyAcceptance state if isReissuing is false", async () => {
     isL3FeaturesEnabled.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine,
-      { input: {} }
+      itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
@@ -1394,8 +1373,7 @@ describe("itwEidIssuanceMachine", () => {
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
-      snapshot,
-      input: {}
+      snapshot
     });
     actor.start();
 
@@ -1405,7 +1383,7 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("should cleanup integrity key tag and fail when obtaining Wallet Instance Attestation fails", async () => {
-    const actor = createActor(mockedMachine, { input: {} });
+    const actor = createActor(mockedMachine);
     actor.start();
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
@@ -1461,8 +1439,7 @@ describe("itwEidIssuanceMachine", () => {
 
   it("Should go to Wallet Instance Creation and then IpzsPrivacyAcceptance if there is no integrity key tag but a valid WIA exists", async () => {
     const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine,
-      { input: {} }
+      itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
@@ -1474,8 +1451,7 @@ describe("itwEidIssuanceMachine", () => {
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
-      snapshot,
-      input: {}
+      snapshot
     });
 
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
@@ -1530,8 +1506,7 @@ describe("itwEidIssuanceMachine", () => {
   it("Should navigate to CieWarning screen when 'go-to-cie-warning' event is received", async () => {
     isL3FeaturesEnabled.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine,
-      { input: {} }
+      itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshotInModeSelection: MachineSnapshot = _.merge(
@@ -1548,8 +1523,7 @@ describe("itwEidIssuanceMachine", () => {
     );
 
     const actor = createActor(mockedMachine, {
-      snapshot: snapshotInModeSelection,
-      input: {}
+      snapshot: snapshotInModeSelection
     });
 
     actor.start();
@@ -1580,8 +1554,7 @@ describe("itwEidIssuanceMachine", () => {
   it("Should navigate to InsertingCardPin through the preparation screens if L3 is enabled", async () => {
     isL3FeaturesEnabled.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine,
-      { input: {} }
+      itwEidIssuanceMachine
     ).getSnapshot();
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { UserIdentification: { Identification: "L3" } },
@@ -1596,7 +1569,7 @@ describe("itwEidIssuanceMachine", () => {
       }
     } as MachineSnapshot);
 
-    const actor = createActor(mockedMachine, { snapshot, input: {} });
+    const actor = createActor(mockedMachine, { snapshot });
     actor.start();
 
     actor.send({ type: "select-identification-mode", mode: "ciePin" });
@@ -1633,8 +1606,7 @@ describe("itwEidIssuanceMachine", () => {
   it("Should return to PreparationPin when navigating back from CieWarning", async () => {
     isL3FeaturesEnabled.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine,
-      { input: {} }
+      itwEidIssuanceMachine
     ).getSnapshot();
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { UserIdentification: { Identification: "L3" } },
@@ -1649,7 +1621,7 @@ describe("itwEidIssuanceMachine", () => {
       }
     } as MachineSnapshot);
 
-    const actor = createActor(mockedMachine, { snapshot, input: {} });
+    const actor = createActor(mockedMachine, { snapshot });
     actor.start();
 
     actor.send({ type: "select-identification-mode", mode: "ciePin" });
@@ -1688,7 +1660,7 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should initialize the machine context with L3 active", async () => {
-    const actor = createActor(mockedMachine, { input: {} });
+    const actor = createActor(mockedMachine);
     actor.start();
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
@@ -1709,5 +1681,53 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should handle credentials upgrade", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "DisplayingPreview" },
+      context: {
+        mode: "upgrading",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        isL3: true,
+        credentials: [
+          ItwStoredCredentialsMocks.mdl
+        ] as ReadonlyArray<StoredCredential>
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "add-to-wallet" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("CredentialsUpgrade");
+  });
+
+  it("Should skip credentials upgrade if no credentials are present", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "DisplayingPreview" },
+      context: {
+        mode: "upgrading",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        isL3: true,
+        credentials: [] as ReadonlyArray<StoredCredential>
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "add-to-wallet" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Success");
   });
 });
