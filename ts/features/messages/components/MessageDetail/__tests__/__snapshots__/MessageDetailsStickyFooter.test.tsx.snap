@@ -1111,7 +1111,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                           }
                         >
                           <View
-                            accessibilityLabel="Paga"
+                            accessibilityLabel="Pay"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -1225,7 +1225,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     ]
                                   }
                                 >
-                                  Paga
+                                  Pay
                                 </Text>
                               </View>
                             </View>
@@ -2312,7 +2312,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                           }
                         >
                           <View
-                            accessibilityLabel="Paga"
+                            accessibilityLabel="Pay"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -2426,7 +2426,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                     ]
                                   }
                                 >
-                                  Paga
+                                  Pay
                                 </Text>
                               </View>
                             </View>
@@ -3240,11 +3240,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                           }
                         >
                           <View
-                            accessibilityLabel="Paga"
+                            accessibilityLabel="Pay"
                             accessibilityRole="button"
                             accessibilityState={
                               {
-                                "busy": false,
+                                "busy": true,
                                 "checked": undefined,
                                 "disabled": true,
                                 "expanded": undefined,
@@ -3309,53 +3309,195 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                               }
                             >
                               <View
-                                style={
-                                  [
+                                skipExiting={true}
+                              >
+                                <View
+                                  exiting={[Function]}
+                                  style={
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                    },
-                                    {
-                                      "columnGap": 8,
-                                    },
-                                    false,
-                                  ]
-                                }
-                              >
-                                <Text
-                                  accessibilityElementsHidden={true}
-                                  accessible={false}
-                                  allowFontScaling={true}
-                                  ellipsizeMode="tail"
-                                  importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={1}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": undefined,
-                                      },
-                                      [
-                                        {
-                                          "textAlign": "auto",
-                                        },
-                                        {
-                                          "color": "#555C70",
-                                        },
-                                        false,
-                                      ],
-                                    ]
+                                    }
                                   }
                                 >
-                                  Paga
-                                </Text>
+                                  <View
+                                    accessibilityRole="progressbar"
+                                    accessible={true}
+                                    style={
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      }
+                                    }
+                                    testID="LoadingSpinnerTestID"
+                                  >
+                                    <View
+                                      collapsable={false}
+                                      style={
+                                        {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        }
+                                      }
+                                      testID="LoadingSpinnerAnimatedTestID"
+                                    >
+                                      <RNSVGSvgView
+                                        align="xMidYMid"
+                                        bbHeight={24}
+                                        bbWidth={24}
+                                        fill="none"
+                                        focusable={false}
+                                        height={24}
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 24,
+                                              "width": 24,
+                                            },
+                                          ]
+                                        }
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={24}
+                                      >
+                                        <RNSVGGroup
+                                          fill={null}
+                                          propList={
+                                            [
+                                              "fill",
+                                            ]
+                                          }
+                                        >
+                                          <RNSVGDefs>
+                                            <RNSVGLinearGradient
+                                              gradient={
+                                                [
+                                                  0,
+                                                  5594224,
+                                                  1,
+                                                  -11182992,
+                                                ]
+                                              }
+                                              gradientTransform={null}
+                                              gradientUnits={0}
+                                              name="spinner-secondHalf"
+                                              x1="0%"
+                                              x2="100%"
+                                              y1="0%"
+                                              y2="0%"
+                                            />
+                                            <RNSVGLinearGradient
+                                              gradient={
+                                                [
+                                                  0,
+                                                  -11182992,
+                                                  1,
+                                                  -11182992,
+                                                ]
+                                              }
+                                              gradientTransform={null}
+                                              gradientUnits={0}
+                                              name="spinner-firstHalf"
+                                              x1="0%"
+                                              x2="100%"
+                                              y1="0%"
+                                              y2="0%"
+                                            />
+                                          </RNSVGDefs>
+                                          <RNSVGGroup
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
+                                              }
+                                            }
+                                            propList={
+                                              [
+                                                "strokeWidth",
+                                              ]
+                                            }
+                                            strokeWidth={3}
+                                          >
+                                            <RNSVGPath
+                                              d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
+                                              fill={
+                                                {
+                                                  "payload": 4278190080,
+                                                  "type": 0,
+                                                }
+                                              }
+                                              propList={
+                                                [
+                                                  "stroke",
+                                                ]
+                                              }
+                                              stroke={
+                                                {
+                                                  "brushRef": "spinner-secondHalf",
+                                                  "type": 1,
+                                                }
+                                              }
+                                            />
+                                            <RNSVGPath
+                                              d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                              fill={
+                                                {
+                                                  "payload": 4278190080,
+                                                  "type": 0,
+                                                }
+                                              }
+                                              propList={
+                                                [
+                                                  "stroke",
+                                                ]
+                                              }
+                                              stroke={
+                                                {
+                                                  "brushRef": "spinner-firstHalf",
+                                                  "type": 1,
+                                                }
+                                              }
+                                            />
+                                            <RNSVGPath
+                                              d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                              fill={
+                                                {
+                                                  "payload": 4278190080,
+                                                  "type": 0,
+                                                }
+                                              }
+                                              propList={
+                                                [
+                                                  "stroke",
+                                                  "strokeLinecap",
+                                                ]
+                                              }
+                                              stroke={
+                                                {
+                                                  "payload": 4283784304,
+                                                  "type": 0,
+                                                }
+                                              }
+                                              strokeLinecap={1}
+                                            />
+                                          </RNSVGGroup>
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
+                                  </View>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -4342,7 +4484,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                           }
                         >
                           <View
-                            accessibilityLabel="Paga"
+                            accessibilityLabel="Pay"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -4456,7 +4598,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     ]
                                   }
                                 >
-                                  Paga
+                                  Pay
                                 </Text>
                               </View>
                             </View>
