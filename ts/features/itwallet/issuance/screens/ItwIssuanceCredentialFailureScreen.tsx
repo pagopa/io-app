@@ -212,22 +212,34 @@ const getCredentialInvalidStatusDetails = (
   failure: CredentialIssuanceFailure,
   { credentialType, issuerConf }: GetCredentialInvalidStatusDetailsParams
 ) => {
-  const errorCodeOption = pipe(
+  const { errorCodeOption, credentialConfigurationId } = pipe(
     failure,
     O.fromPredicate(isInvalidStatusFailure),
-    O.chainEitherK(x => StatusAttestationError.decode(x.reason?.reason)),
-    O.map(x => x.error)
+    O.map(({ reason }) => ({
+      errorCodeOption: pipe(
+        O.fromEither(StatusAttestationError.decode(reason?.reason)),
+        O.map(({ error }) => error)
+      ),
+      credentialConfigurationId: pipe(
+        O.fromNullable(reason?.credentialId),
+        O.alt(() => credentialType) // TODO: SIW-2530 Remove this line after fully migrating to the new APIs
+      )
+    })),
+    O.getOrElse(() => ({
+      errorCodeOption: O.none as O.Option<string>,
+      credentialConfigurationId: O.none as O.Option<string>
+    }))
   );
 
   const localizedMessage = pipe(
     sequenceS(O.Monad)({
       errorCode: errorCodeOption,
-      credentialType,
+      credentialConfigurationId,
       issuerConf
     }),
     O.map(params =>
       Errors.extractErrorMessageFromIssuerConf(params.errorCode, {
-        credentialType: params.credentialType,
+        credentialType: params.credentialConfigurationId,
         issuerConf: params.issuerConf as LegacyIssuerConfiguration
       })
     ),
