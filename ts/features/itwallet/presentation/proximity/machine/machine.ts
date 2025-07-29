@@ -7,7 +7,8 @@ import {
   ProximityCommunicationLogicActorInput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
-  StartProximityFlowInput
+  StartProximityFlowInput,
+  CheckPermissionsInput
 } from "./actors";
 import { mapEventToFailure } from "./failure";
 
@@ -24,16 +25,20 @@ export const itwProximityMachine = setup({
     onInit: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     setQRCodeGenerationError: assign({ isQRCodeGenerationError: true }),
+    setHasGivenConsent: assign({ hasGivenConsent: true }),
     navigateToGrantPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
     navigateToSendDocumentsResponseScreen: notImplemented,
     navigateToWallet: notImplemented,
-    closeProximity: notImplemented
+    closeProximity: notImplemented,
+    trackQrCodeGenerationOutcome: notImplemented
   },
   actors: {
-    checkPermissions: fromPromise<boolean, void>(notImplemented),
+    checkPermissions: fromPromise<boolean, CheckPermissionsInput>(
+      notImplemented
+    ),
     checkBluetoothIsActive: fromPromise<boolean, void>(notImplemented),
     startProximityFlow: fromPromise<void, StartProximityFlowInput>(
       notImplemented
@@ -75,6 +80,7 @@ export const itwProximityMachine = setup({
           description: "Check if the device permissions have been granted",
           invoke: {
             src: "checkPermissions",
+            input: { isSilent: false },
             onDone: [
               {
                 guard: ({ event }) => !!event.output,
@@ -108,6 +114,7 @@ export const itwProximityMachine = setup({
           description: "Check if the device permissions have been granted",
           invoke: {
             src: "checkPermissions",
+            input: { isSilent: true },
             onDone: [
               {
                 guard: ({ event }) => !!event.output,
@@ -215,7 +222,10 @@ export const itwProximityMachine = setup({
               target: "GeneratingQRCodeString"
             },
             onError: {
-              actions: "setQRCodeGenerationError",
+              actions: [
+                "setQRCodeGenerationError",
+                "trackQrCodeGenerationOutcome"
+              ],
               target: "QRCodeGenerationError"
             }
           }
@@ -226,14 +236,20 @@ export const itwProximityMachine = setup({
           invoke: {
             src: "generateQrCodeString",
             onDone: {
-              actions: assign(({ event }) => ({
-                qrCodeString: event.output,
-                isQRCodeGenerationError: false
-              })),
+              actions: [
+                assign(({ event }) => ({
+                  qrCodeString: event.output,
+                  isQRCodeGenerationError: false
+                })),
+                "trackQrCodeGenerationOutcome"
+              ],
               target: "#itwProximityMachine.DeviceCommunication"
             },
             onError: {
-              actions: "setQRCodeGenerationError",
+              actions: [
+                "setQRCodeGenerationError",
+                "trackQrCodeGenerationOutcome"
+              ],
               target: "QRCodeGenerationError"
             }
           }
@@ -260,7 +276,10 @@ export const itwProximityMachine = setup({
               target: "GeneratingQRCodeString"
             },
             onError: {
-              actions: "setQRCodeGenerationError",
+              actions: [
+                "setQRCodeGenerationError",
+                "trackQrCodeGenerationOutcome"
+              ],
               target: "QRCodeGenerationError"
             }
           }
@@ -333,6 +352,7 @@ export const itwProximityMachine = setup({
           description: "Displays the requested claims",
           on: {
             "holder-consent": {
+              actions: "setHasGivenConsent",
               target:
                 "#itwProximityMachine.DeviceCommunication.SendingDocuments"
             },

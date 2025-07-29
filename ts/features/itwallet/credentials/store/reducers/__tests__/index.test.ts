@@ -106,41 +106,37 @@ describe("ITW credentials reducer", () => {
     });
   });
 
-  it("should remove a single credential", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active"),
-      itwCredentialsStore([mockedEid]),
-      itwCredentialsStore([mockedCredential]),
-      itwCredentialsRemove(mockedCredential)
-    ];
-    const targetSate = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
+  it.each([[[mockedCredential]], [[mockedCredential, mockedCredential2]]])(
+    "should remove %p credential(s)",
+    credentialsToRemove => {
+      const sequenceOfActions: ReadonlyArray<Action> = [
+        applicationChangeState("active"),
+        itwCredentialsStore([mockedEid]),
+        itwCredentialsStore([mockedCredential, mockedCredential2]),
+        itwCredentialsRemove(credentialsToRemove)
+      ];
+      const targetSate = reproduceSequence(
+        {} as GlobalState,
+        appReducer,
+        sequenceOfActions
+      );
 
-    expect(targetSate.features.itWallet.credentials.credentials).toEqual({
-      [mockedEid.credentialId]: mockedEid
-    });
-  });
+      const remainingCredentials = {
+        [mockedEid.credentialId]: mockedEid,
+        [mockedCredential.credentialId]: mockedCredential,
+        [mockedCredential2.credentialId]: mockedCredential2
+      };
 
-  it("should remove multiple credentials of the same type", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active"),
-      itwCredentialsStore([mockedEid]),
-      itwCredentialsStore([mockedCredential, mockedCredential2]),
-      itwCredentialsRemove(mockedCredential)
-    ];
-    const targetSate = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
+      for (const { credentialId } of credentialsToRemove) {
+        // eslint-disable-next-line functional/immutable-data
+        delete remainingCredentials[credentialId];
+      }
 
-    expect(targetSate.features.itWallet.credentials.credentials).toEqual({
-      [mockedEid.credentialId]: mockedEid
-    });
-  });
+      expect(targetSate.features.itWallet.credentials.credentials).toEqual(
+        remainingCredentials
+      );
+    }
+  );
 
   it("should reset the state", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [

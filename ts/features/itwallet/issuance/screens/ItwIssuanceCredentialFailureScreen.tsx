@@ -248,15 +248,17 @@ const getCredentialInvalidStatusDetails = (
     O.fromPredicate(isInvalidStatusFailure),
     O.map(({ reason }) => ({
       errorCodeOption: pipe(
-        O.of(reason?.reason),
-        O.chainEitherK(StatusAttestationError.decode),
+        O.fromEither(StatusAttestationError.decode(reason?.reason)),
         O.map(({ error }) => error)
       ),
-      credentialConfigurationId: O.fromNullable(reason?.credentialId)
+      credentialConfigurationId: pipe(
+        O.fromNullable(reason?.credentialId),
+        O.alt(() => credentialType) // TODO: SIW-2530 Remove this line after fully migrating to the new APIs
+      )
     })),
     O.getOrElse(() => ({
       errorCodeOption: O.none as O.Option<string>,
-      credentialConfigurationId: credentialType
+      credentialConfigurationId: O.none as O.Option<string>
     }))
   );
 

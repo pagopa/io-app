@@ -24,6 +24,10 @@ import {
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { assert } from "../../../../../utils/assert";
 import { getError } from "../../../../../utils/errors";
+import {
+  trackItwProximityBluetoothBlock,
+  trackItwProximityBluetoothBlockAction
+} from "../analytics";
 import { ProximityEvents } from "./events";
 
 const PERMISSIONS_TO_CHECK: Array<Permission> =
@@ -38,6 +42,10 @@ const PERMISSIONS_TO_CHECK: Array<Permission> =
     : [PERMISSIONS.IOS.BLUETOOTH]; // iOS permissions required are Bluetooth and location.
 
 const SEND_RESPONSE_TIMEOUT_MS = 20000;
+
+export type CheckPermissionsInput = {
+  isSilent?: boolean;
+};
 
 export type StartProximityFlowInput = {
   isRestarting?: boolean;
@@ -61,26 +69,40 @@ export type SendDocumentsActorOutput = Awaited<
 >;
 
 export const createProximityActorsImplementation = () => {
-  const checkPermissions = fromPromise<boolean, void>(async () => {
-    // Check current permission status
-    const statuses = await checkMultiple(PERMISSIONS_TO_CHECK);
+  const checkPermissions = fromPromise<boolean, CheckPermissionsInput>(
+    async ({ input }) => {
+      const isSilent = input?.isSilent || false;
 
-    // Filter out already granted permissions
-    const permissionsToRequest = PERMISSIONS_TO_CHECK.filter(
-      permission => statuses[permission] !== RESULTS.GRANTED
-    );
+      // Check current permission status
+      const statuses = await checkMultiple(PERMISSIONS_TO_CHECK);
 
-    if (permissionsToRequest.length > 0) {
-      // Request only the missing permissions
-      const requestResults = await requestMultiple(permissionsToRequest);
-
-      // Verify if all requested permissions are granted
-      return permissionsToRequest.every(
-        permission => requestResults[permission] === RESULTS.GRANTED
+      // Filter out already granted permissions
+      const permissionsToRequest = PERMISSIONS_TO_CHECK.filter(
+        permission => statuses[permission] !== RESULTS.GRANTED
       );
+
+      if (permissionsToRequest.length > 0) {
+        if (!isSilent) {
+          trackItwProximityBluetoothBlock();
+        }
+        // Request only the missing permissions
+        const requestResults = await requestMultiple(permissionsToRequest);
+
+        const allPermissionsGranted = permissionsToRequest.every(
+          permission => requestResults[permission] === RESULTS.GRANTED
+        );
+
+        if (!isSilent) {
+          const userAction = allPermissionsGranted ? "allow" : "not_allow";
+          trackItwProximityBluetoothBlockAction(userAction);
+        }
+
+        // Verify if all requested permissions are granted
+        return allPermissionsGranted;
+      }
+      return true;
     }
-    return true;
-  });
+  );
 
   const checkBluetoothIsActive = fromPromise<boolean, void>(async () => {
     const bluetoothState = await BluetoothStateManager.getState();

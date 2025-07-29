@@ -149,9 +149,10 @@ export const createCredentialIssuanceActorsImplementation = (
     assert(issuerConf, "issuerConf is undefined");
     assert(clientId, "clientId is undefined");
     assert(codeVerifier, "codeVerifier is undefined");
+    // TODO: [SIW-2530] After fully migrating to the new API, the assertion below can be removed.
     assert(
       isNewIssuanceFlowEnabled || credentialDefinition,
-      "credentialDefinition is undefined"
+      "credentialDefinition must be present in the old credential issuance flow"
     );
     assert(O.isSome(eid), "eID is undefined");
 
