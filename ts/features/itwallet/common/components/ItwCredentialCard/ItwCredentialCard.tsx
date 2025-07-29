@@ -23,7 +23,7 @@ export type ItwCredentialCard = {
   credentialType: string;
   status?: ItwCredentialStatus;
   /**
-   * Indicated the auth level of the credential, which is used to determine
+   * Indicates the auth level of the credential, which is used to determine
    * if the credential is a valid IT Wallet credential.
    * TODO remove once the upgrade flow is removed
    */
