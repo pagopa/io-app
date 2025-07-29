@@ -7,6 +7,10 @@ import {
 } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 
+export type NotificationModalFlow =
+  | "authentication"
+  | "send_notification_opening";
+
 export const trackNotificationInstallationTokenNotChanged = () =>
   void mixpanelTrack(
     "NOTIFICATIONS_INSTALLATION_TOKEN_NOT_CHANGED",
@@ -76,17 +80,21 @@ export const trackPushNotificationTokenUploadFailure = (reason: string) =>
     buildEventProperties("KO", "error", { reason })
   );
 
-export const trackSystemNotificationPermissionScreenShown = () => {
+export const trackSystemNotificationPermissionScreenShown = (
+  flow: NotificationModalFlow
+) => {
   const eventName = "PUSH_NOTIF_APP_MODAL";
-  const props = buildEventProperties("UX", "screen_view");
+  const props = buildEventProperties("UX", "screen_view", { flow });
   void mixpanelTrack(eventName, props);
 };
 
 export const trackSystemNotificationPermissionScreenOutcome = (
-  outcome: "activate" | "dismiss"
+  outcome: "activate" | "dismiss",
+  flow: NotificationModalFlow
 ) => {
   const eventName = "PUSH_NOTIF_APP_MODAL_INTERACTION";
   const props = buildEventProperties("UX", "action", {
+    flow,
     outcome
   });
   void mixpanelTrack(eventName, props);
