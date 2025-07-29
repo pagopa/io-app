@@ -1205,7 +1205,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: { jwt: T_WIA }
     };
 
-    const actor = createActor(mockedMachine, {});
+    const actor = createActor(mockedMachine);
     actor.start();
 
     // eslint-disable-next-line functional/immutable-data
@@ -1337,7 +1337,7 @@ describe("itwEidIssuanceMachine", () => {
     });
   });
 
-  it("Should go back to Idle state if isReissuing is true", async () => {
+  it("Should go back to Idle state if mode is 'reissuing'", async () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
@@ -1359,17 +1359,14 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
   });
 
-  it("Should go back to IpzsPrivacyAcceptance state if isReissuing is false", async () => {
+  it("Should go back to IpzsPrivacyAcceptance state if mode is 'issuing'", async () => {
     isL3FeaturesEnabled.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: { Identification: "L3" } },
-      context: {
-        mode: "reissuing"
-      }
+      value: { UserIdentification: { Identification: "L3" } }
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
