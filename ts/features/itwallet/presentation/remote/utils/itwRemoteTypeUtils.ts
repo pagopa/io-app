@@ -32,9 +32,7 @@ export type PresentationDetails = Awaited<
  * Type representing the presentation details with localized claims
  */
 export type EnrichedPresentationDetails = Array<
-  PresentationDetails[number] & {
-    claimsToDisplay: Array<ClaimDisplayFormat>;
-  }
+  PresentationDetails[number] & { claimsToDisplay: Array<ClaimDisplayFormat> }
 >;
 
 /**
