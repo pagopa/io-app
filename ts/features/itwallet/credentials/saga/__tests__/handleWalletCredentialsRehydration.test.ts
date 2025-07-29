@@ -109,14 +109,16 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             type: "itw",
             category: "itw",
             credentialType: CredentialType.DRIVING_LICENSE,
-            status: "valid"
+            status: "valid",
+            level: "L2"
           },
           {
             key: `ITW_${CredentialType.EUROPEAN_DISABILITY_CARD}`,
             type: "itw",
             category: "itw",
             credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
-            status: "valid"
+            status: "valid",
+            level: "L2"
           }
         ])
       )

@@ -6,8 +6,13 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { ItwCredentialStatus } from "../../../utils/itwTypesUtils";
 import { ItwCredentialCard } from "../ItwCredentialCard";
+import * as selectors from "../../../store/selectors";
 
 describe("ItwCredentialCard", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   it.each(["EuropeanHealthInsuranceCard", "EuropeanDisabilityCard", "MDL"])(
     "should match snapshot when credential type is %p",
     type => {
@@ -58,4 +63,24 @@ describe("ItwCredentialCard", () => {
       expect(component).toMatchSnapshot();
     }
   );
+
+  it("should match snapshot when credential is pending upgrade", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    const mockStore = configureMockStore<GlobalState>();
+    const store: ReturnType<typeof mockStore> = mockStore({
+      ...globalState
+    } as GlobalState);
+
+    jest
+      .spyOn(selectors, "itwShouldRenderNewItWalletSelector")
+      .mockReturnValue(true);
+
+    const component = render(
+      <Provider store={store}>
+        <ItwCredentialCard credentialType={"MDL"} level={"L2"} />
+      </Provider>
+    );
+    expect(component).toMatchSnapshot();
+  });
 });
