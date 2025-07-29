@@ -3,6 +3,7 @@ import { UpgradeCredentialOutput, UpgradeCredentialParams } from "./actors";
 import { Context, getInitialContext } from "./context";
 import { Input } from "./input";
 import { Output } from "./output";
+import { CredentialUpgradeEvents } from "./events";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -10,6 +11,7 @@ const notImplemented = () => {
 
 export const itwCredentialUpgradeMachine = setup({
   types: {
+    events: {} as CredentialUpgradeEvents,
     context: {} as Context,
     input: {} as Input,
     output: {} as Output
