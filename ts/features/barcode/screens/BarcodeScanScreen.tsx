@@ -47,6 +47,8 @@ import {
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
+import { MESSAGES_ROUTES } from "../../messages/navigation/routes.ts";
+import PN_ROUTES from "../../pn/navigation/routes.ts";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -165,22 +167,14 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "SEND":
-        // TODO navigate to AAR screen/flow. It is not
-        // implemented yet so we keep treating it as an error
-        //
-        // navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-        //   screen: PN_ROUTES.MAIN,
-        //   params: {
-        //     screen: PN_ROUTES.QR_SCAN_FLOW,
-        //     params: {
-        //       aarUrl: barcode.qrCodeContent
-        //     }
-        //   }
-        // });
-        handleBarcodeError({
-          content: "",
-          format: "QR_CODE",
-          reason: "UNKNOWN_CONTENT"
+        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.QR_SCAN_FLOW,
+            params: {
+              aarUrl: barcode.qrCodeContent
+            }
+          }
         });
         break;
     }
