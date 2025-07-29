@@ -2,8 +2,10 @@ import { HStack, IOText, Tag } from "@pagopa/io-app-design-system";
 import Color from "color";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
+import { itwShouldRenderNewItWalletSelector } from "../../store/selectors";
 import {
   getCredentialNameFromType,
   tagPropsByStatus,
@@ -12,15 +14,20 @@ import {
 } from "../../utils/itwCredentialUtils";
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
-import { itwShouldRenderNewItWalletSelector } from "../../store/selectors";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
-import { CardColorScheme } from "./types";
 import { ItwCardValidityCheckMark } from "./ItwCardValidityCheckMark";
+import { CardColorScheme } from "./types";
 
 export type ItwCredentialCard = {
   credentialType: string;
   status?: ItwCredentialStatus;
+  /**
+   * Indicated the auth level of the credential, which is used to determine
+   * if the credential is a valid IT Wallet credential.
+   * TODO remove once the upgrade flow is removed
+   */
+  level?: "L2" | "L3";
 };
 
 type StyleProps = {
@@ -31,16 +38,37 @@ type StyleProps = {
 
 export const ItwCredentialCard = ({
   status = "valid",
-  credentialType
+  credentialType,
+  level
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
+  const needsItwUpgrade = isNewItwRenderable && level !== "L3";
 
   const borderColorMap = useBorderColorByStatus();
-  const statusTagProps = tagPropsByStatus[status];
+
+  const statusTagProps = useMemo<Tag | undefined>(() => {
+    if (needsItwUpgrade) {
+      return {
+        variant: "info",
+        text: I18n.t("features.itWallet.card.status.upgradePending")
+      };
+    }
+
+    return tagPropsByStatus[status];
+  }, [status, needsItwUpgrade]);
+
   const { titleColor, titleOpacity, colorScheme } = useMemo<StyleProps>(() => {
     const isValid = validCredentialStatuses.includes(status);
     const theme = getThemeColorByCredentialType(credentialType);
+
+    if (needsItwUpgrade) {
+      return {
+        titleColor: theme.textColor,
+        titleOpacity: 0.5,
+        colorScheme: "faded"
+      };
+    }
 
     if (status === "unknown") {
       return {
@@ -63,7 +91,7 @@ export const ItwCredentialCard = ({
       titleOpacity: 0.5,
       colorScheme: "faded"
     };
-  }, [credentialType, status]);
+  }, [credentialType, status, needsItwUpgrade]);
 
   return (
     <View style={styles.cardContainer}>
