@@ -12,7 +12,8 @@ import {
   itwSetReviewPending,
   itwSetWalletInstanceRemotelyActive,
   itwUnflagCredentialAsRequested,
-  itwSetWalletUpgradeMDLDetailsBannerHidden
+  itwSetWalletUpgradeMDLDetailsBannerHidden,
+  itwSetHasObtainedEid
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
@@ -41,6 +42,8 @@ export type ItwPreferencesState = {
   offlineBannerHidden?: boolean;
   // Indicates whether the IT-wallet upgrade banner in MDL details should be hidden
   walletUpgradeMDLDetailsBannerHidden?: boolean;
+  // Indicates whether the user has ever obtained an eID
+  hasObtainedEid?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -152,6 +155,13 @@ const reducer = (
       return {
         ...state,
         walletUpgradeMDLDetailsBannerHidden: action.payload
+      };
+    }
+
+    case getType(itwSetHasObtainedEid): {
+      return {
+        ...state,
+        hasObtainedEid: action.payload
       };
     }
 

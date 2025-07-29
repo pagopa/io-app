@@ -34,16 +34,18 @@ export type KoState = {
 
 /**
  * This is the list of credentials that are tracked in MixPanel
- * ITW_ID_V2: PersonIdentificationData
+ * ITW_ID_V2: PersonIdentificationData ( obtained with Documenti su IO)
  * ITW_PG_V2: MDL
  * ITW_CED_V2: EuropeanDisabilityCard
  * ITW_TS_V2: EuropeanHealthInsuranceCard
+ * ITW_PID: PID ( obtained with IT Wallet)
  */
 const mixPanelCredentials = [
   "ITW_ID_V2",
   "ITW_PG_V2",
   "ITW_CED_V2",
-  "ITW_TS_V2"
+  "ITW_TS_V2",
+  "ITW_PID"
 ] as const;
 
 type MixPanelCredential = (typeof mixPanelCredentials)[number];
@@ -60,16 +62,18 @@ type ItwFailureCause = "CredentialIssuer" | "WalletProvider";
 
 /**
  * This map is used to map the credential type to the MixPanel credential
- * ITW_ID_V2: PersonIdentificationData
+ * ITW_ID_V2: PersonIdentificationData ( obtained with Documenti su IO)
  * ITW_PG_V2: MDL
  * ITW_CED_V2: EuropeanDisabilityCard
- * ITW_TS_V2: EuropeanHealthInsuranceCard
+ * ITW_TS_V2: EuropeanHealthInsuranceCard,
+ * ITW_PID: PID ( obtained with IT Wallet)
  */
 export const CREDENTIALS_MAP: Record<string, MixPanelCredential> = {
   PersonIdentificationData: "ITW_ID_V2",
   MDL: "ITW_PG_V2",
   EuropeanDisabilityCard: "ITW_CED_V2",
-  EuropeanHealthInsuranceCard: "ITW_TS_V2"
+  EuropeanHealthInsuranceCard: "ITW_TS_V2",
+  PID: "ITW_PID"
 };
 
 type BackToWallet = {
@@ -137,6 +141,7 @@ type TrackItWalletCieCardReadingFailure = {
 
 export type ItwStatus = "not_active" | "L2" | "L3";
 export type ItwId = "not_available" | "valid" | "not_valid";
+export type ItwPID = "not_available" | "valid" | "not_valid" | "expiring";
 export type ItwPg = "not_available" | "valid" | "not_valid" | "expiring";
 export type ItwTs = "not_available" | "valid" | "not_valid" | "expiring";
 export type ItwCed = "not_available" | "valid" | "not_valid" | "expiring";
@@ -450,8 +455,7 @@ export const trackAddFirstCredential = () => {
   );
 };
 
-export const trackSaveCredentialToWallet = (currentCredential: string) => {
-  const credential = CREDENTIALS_MAP[currentCredential];
+export const trackSaveCredentialToWallet = (credential: MixPanelCredential) => {
   if (credential) {
     void mixpanelTrack(
       ITW_ACTIONS_EVENTS.ITW_UX_CONVERSION,
@@ -600,10 +604,10 @@ export function trackWalletCredentialShowTrustmark(
   );
 }
 
-export function trackWalletStartDeactivation() {
+export function trackWalletStartDeactivation(credential: MixPanelCredential) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_START_DEACTIVATION,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { credential })
   );
 }
 
@@ -1006,10 +1010,13 @@ export const trackSaveCredentialSuccess = (credential: MixPanelCredential) => {
   );
 };
 
-export const trackItwDeactivated = (state: GlobalState) => {
+export const trackItwDeactivated = (
+  state: GlobalState,
+  credential: MixPanelCredential
+) => {
   void mixpanelTrack(
     ITW_CONFIRM_EVENTS.ITW_DEACTIVATED,
-    buildEventProperties("UX", "confirm")
+    buildEventProperties("UX", "confirm", { credential })
   );
   updatePropertiesWalletRevoked(state);
 };

@@ -24,19 +24,21 @@ import { checkNotificationPermissions } from "../features/pushNotifications/util
 import {
   ItwCed,
   ItwId,
+  ItwPID,
   ItwPg,
   ItwStatus,
   ItwTs
 } from "../features/itwallet/analytics";
-import {
-  itwCredentialsSelector,
-  itwCredentialsEidSelector
-} from "../features/itwallet/credentials/store/selectors";
+import { itwCredentialsSelector } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
-import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
+import {
+  itwAuthLevelSelector,
+  itwHasOwnedEidSelector
+} from "../features/itwallet/common/store/selectors/preferences.ts";
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
 import { isConnectedSelector } from "../features/connectivity/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../features/itwallet/lifecycle/store/selectors";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -63,6 +65,7 @@ type SuperProperties = {
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   ITW_STATUS_V2: ItwStatus;
   ITW_ID_V2: ItwId;
+  ITW_PID: ItwPID;
   ITW_PG_V2: ItwPg;
   ITW_TS_V2: ItwTs;
   ITW_CED_V2: ItwCed;
@@ -91,6 +94,7 @@ export const updateMixpanelSuperProperties = async (
     const SERVICE_CONFIGURATION = serviceConfigHandler(state);
     const ITW_STATUS_V2 = walletStatusHandler(state);
     const ITW_ID_V2 = idStatusHandler(state);
+    const ITW_PID = pidStatusHandler(state);
     const ITW_PG_V2 = pgStatusHandler(state);
     const ITW_TS_V2 = tsStatusHandler(state);
     const ITW_CED_V2 = cedStatusHandler(state);
@@ -114,6 +118,7 @@ export const updateMixpanelSuperProperties = async (
       SERVICE_CONFIGURATION,
       ITW_STATUS_V2,
       ITW_ID_V2,
+      ITW_PID,
       ITW_PG_V2,
       ITW_TS_V2,
       ITW_CED_V2,
@@ -148,8 +153,13 @@ const walletStatusHandler = (state: GlobalState): ItwStatus => {
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {
-  const eid = itwCredentialsEidSelector(state);
-  return O.isSome(eid) ? "valid" : "not_available";
+  const hasOwnedEid = itwHasOwnedEidSelector(state);
+  return hasOwnedEid ? "valid" : "not_available";
+};
+
+const pidStatusHandler = (state: GlobalState): ItwId => {
+  const pid = itwLifecycleIsITWalletValidSelector(state);
+  return pid ? "valid" : "not_available";
 };
 
 const pgStatusHandler = (state: GlobalState): ItwPg => {

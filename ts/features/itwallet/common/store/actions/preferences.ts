@@ -45,6 +45,10 @@ export const itwSetWalletUpgradeMDLDetailsBannerHidden = createStandardAction(
   "ITW_SET_WALLET_UPGRADE_MDL_DETAILS_BANNER_HIDDEN"
 )<boolean>();
 
+export const itwSetHasObtainedEid = createStandardAction(
+  "ITW_SET_HAS_OBTAINED_EID"
+)<boolean>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
   | ActionType<typeof itwCloseDiscoveryBanner>
@@ -56,4 +60,5 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetWalletInstanceRemotelyActive>
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwSetOfflineBannerHidden>
-  | ActionType<typeof itwSetWalletUpgradeMDLDetailsBannerHidden>;
+  | ActionType<typeof itwSetWalletUpgradeMDLDetailsBannerHidden>
+  | ActionType<typeof itwSetHasObtainedEid>;

@@ -65,7 +65,7 @@ const ItwEidInfoBottomSheetContent = ({
     });
 
     const navigateToWalletRevocationScreen = () => {
-      trackWalletStartDeactivation();
+      trackWalletStartDeactivation("ITW_ID_V2");
       navigation.navigate(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
       });
