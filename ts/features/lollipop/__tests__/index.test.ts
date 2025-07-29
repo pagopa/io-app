@@ -160,8 +160,6 @@ describe("getLollipopLoginHeaders", () => {
       "x-pagopa-lollipop-pub-key-hash-algo": hashAlgorithm,
       "x-pagopa-app-version": expect.any(String),
       "x-pagopa-login-type": "LV",
-      // add this header for dev-server task
-      // "x-pagopa-active-session-login": true,
       "x-pagopa-idp-id": idpId
     });
   });

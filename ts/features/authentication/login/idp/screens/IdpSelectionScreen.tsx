@@ -33,8 +33,6 @@ import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { openWebUrl } from "../../../../../utils/url";
 import { helpCenterHowToLoginWithSpidUrl } from "../../../../../config";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
-import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
-import { setIdpSelectedActiveSessionLogin } from "../../../activeSessionLogin/store/actions";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.idp_selection.contextualHelpTitle",
@@ -63,8 +61,6 @@ const IdpSelectionScreen = (): ReactElement => {
       >
     >();
   const idps = useIOSelector(idpsRemoteValueSelector);
-  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
-
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const nativeLoginFeature = useIOSelector(nativeLoginSelector);
   const isNativeLoginFeatureFlagEnabled = useIOSelector(
@@ -84,11 +80,8 @@ const IdpSelectionScreen = (): ReactElement => {
   );
 
   const setSelectedIdp = useCallback(
-    (idp: SpidIdp) =>
-      isActiveSessionLogin
-        ? dispatch(setIdpSelectedActiveSessionLogin(idp))
-        : dispatch(idpSelected(idp)),
-    [dispatch, isActiveSessionLogin]
+    (idp: SpidIdp) => dispatch(idpSelected(idp)),
+    [dispatch]
   );
 
   // When the screen is landed, metadata are retrieved.
@@ -128,15 +121,9 @@ const IdpSelectionScreen = (): ReactElement => {
         screen: AUTHENTICATION_ROUTES.AUTH_SESSION
       });
     } else {
-      if (isActiveSessionLogin) {
-        navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-          screen: AUTHENTICATION_ROUTES.IDP_ACTIVE_SESSION_LOGIN
-        });
-      } else {
-        navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-          screen: AUTHENTICATION_ROUTES.IDP_LOGIN
-        });
-      }
+      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.IDP_LOGIN
+      });
     }
   };
 

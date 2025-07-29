@@ -32,8 +32,7 @@ import CieIdLoginScreen from "../../login/cie/screens/CieIdLoginScreen";
 import CieIdNotInstalledScreen from "../../login/cie/screens/CieIdNotInstalledScreen";
 import CieIdAuthUrlError from "../../login/cie/screens/CieIdAuthUrlError";
 import CloseButton from "../../../../navigation/components/CloseButton";
-import { ActiveSessionLandingScreen } from "../../login/landing/screens/ActiveSessionLandingScreen";
-import idpActiveSessionLoginScreen from "../../activeSessionLogin/screens/idpActiveSessionLoginScreen";
+import { ActiveSessionLandingScreen } from "../../activeSessionLogin/screens/ActiveSessionLandingScreen";
 import CieIdActiveSessionLoginScreen from "../../activeSessionLogin/screens/CieIdLoginWebViewActiveSessionLogin";
 import { AUTHENTICATION_ROUTES } from "./routes";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
@@ -102,11 +101,6 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={AUTHENTICATION_ROUTES.IDP_LOGIN}
       component={IdpLoginScreen}
-    />
-
-    <Stack.Screen
-      name={AUTHENTICATION_ROUTES.IDP_ACTIVE_SESSION_LOGIN}
-      component={idpActiveSessionLoginScreen}
     />
 
     <Stack.Screen

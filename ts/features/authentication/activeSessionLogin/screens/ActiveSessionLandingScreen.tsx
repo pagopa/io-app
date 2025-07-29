@@ -14,12 +14,12 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useLayoutEffect, useRef } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import SectionStatusComponent from "../../../../../components/SectionStatus";
-import I18n from "../../../../../i18n";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useIOSelector, useIOStore } from "../../../../../store/hooks";
-import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import SectionStatusComponent from "../../../../components/SectionStatus";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector, useIOStore } from "../../../../store/hooks";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
   loginCieWizardSelected,
   trackCieBottomSheetScreenView,
@@ -27,13 +27,13 @@ import {
   trackCieLoginSelected
   // trackCiePinLoginSelected,
   // trackSpidLoginSelected
-} from "../../../common/analytics";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+} from "../../common/analytics";
+import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 
-import { isCieLoginUatEnabledSelector } from "../../cie/store/selectors";
-import { SpidLevel } from "../../cie/utils";
-import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
-import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
+import { isCieLoginUatEnabledSelector } from "../../login/cie/store/selectors";
+import { SpidLevel } from "../../login/cie/utils";
+import useNavigateToLoginMethod from "../../login/hooks/useNavigateToLoginMethod";
+import { LandingSessionExpiredComponent } from "../../login/landing/components/LandingSessionExpiredComponent";
 
 const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
