@@ -34,7 +34,6 @@ export type PresentationDetails = Awaited<
 export type EnrichedPresentationDetails = Array<
   PresentationDetails[number] & {
     claimsToDisplay: Array<ClaimDisplayFormat>;
-    credentialType: string;
   }
 >;
 

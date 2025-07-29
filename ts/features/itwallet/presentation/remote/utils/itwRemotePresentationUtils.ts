@@ -80,8 +80,7 @@ export const enrichPresentationDetails = (
     if (!credential) {
       return {
         ...details,
-        claimsToDisplay: [], // Hide from user
-        credentialType: details.vct
+        claimsToDisplay: [] // Hide from user
       };
     }
 
@@ -91,7 +90,6 @@ export const enrichPresentationDetails = (
 
     return {
       ...details,
-      credentialType: credential.credentialType,
       // Only include claims that are part of the parsed credential
       // This ensures that technical claims like `iat` are not displayed to the user
       claimsToDisplay: details.requiredDisclosures
