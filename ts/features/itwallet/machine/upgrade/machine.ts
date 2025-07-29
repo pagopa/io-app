@@ -1,7 +1,7 @@
 import { assign, fromPromise, setup } from "xstate";
+import { UpgradeCredentialOutput, UpgradeCredentialParams } from "./actors";
 import { Context, getInitialContext } from "./context";
 import { Input } from "./input";
-import { UpgradeCredentialParams } from "./actors";
 import { Output } from "./output";
 
 const notImplemented = () => {
@@ -18,9 +18,10 @@ export const itwCredentialUpgradeMachine = setup({
     storeCredential: notImplemented
   },
   actors: {
-    upgradeCredential: fromPromise<void, UpgradeCredentialParams>(
-      notImplemented
-    )
+    upgradeCredential: fromPromise<
+      UpgradeCredentialOutput,
+      UpgradeCredentialParams
+    >(notImplemented)
   }
 }).createMachine({
   id: "itwCredentialUpgradeMachine",
