@@ -113,15 +113,21 @@ export const getLollipopLoginHeaders = (
   publicKey: PublicKey,
   hashAlgorithm: string,
   isFastLogin: boolean,
-  idpId?: string
+  idpId?: string,
+  fiscalCode?: string
 ) => ({
   "x-pagopa-lollipop-pub-key": Buffer.from(JSON.stringify(publicKey)).toString(
     "base64"
   ),
   "x-pagopa-lollipop-pub-key-hash-algo": hashAlgorithm,
   "x-pagopa-app-version": isLocalEnv ? getAppVersion() : undefined,
-  // The x-pagopa-active-session-login header is used to manage the ephemeral lollipop key on the dev server.
-  // "x-pagopa-active-session-login": isLocalEnv ? true : undefined,
+  // The `x-pagopa-fiscal-code` header is used to indicate that
+  // the user is performing an active session login.
+  // Its value contains the fiscal code of the already authenticated user,
+  // allowing the backend to perform the necessary validations.
+  // TODO: edit name x-pagopa-fiscal-code when it will be definitive
+  // https://pagopa.atlassian.net/browse/IOPID-3332
+  "x-pagopa-fiscal-code": isLocalEnv ? fiscalCode : undefined,
   "x-pagopa-login-type": isFastLogin ? "LV" : undefined,
   "x-pagopa-idp-id": idpId
 });

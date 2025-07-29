@@ -61,13 +61,6 @@ export type ChosenIdentifier =
       params: CieIdLoginProps;
     };
 
-const authScreensMap = {
-  CIE: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN,
-  SPID: AUTHENTICATION_ROUTES.IDP_SELECTION,
-  CIE_ID: AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
-  TEST: AUTHENTICATION_ROUTES.IDP_TEST
-};
-
 const OptInScreen = () => {
   useHeaderSecondLevel({
     title: "",
@@ -86,6 +79,15 @@ const OptInScreen = () => {
     useRoute<Route<"AUTHENTICATION_OPT_IN", ChosenIdentifier>>();
   const navigation = useIONavigation();
   const store = useIOStore();
+
+  const authScreensMap = {
+    CIE: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN,
+    SPID: AUTHENTICATION_ROUTES.IDP_SELECTION,
+    CIE_ID: isActiveSessionLogin
+      ? AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN
+      : AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
+    TEST: AUTHENTICATION_ROUTES.IDP_TEST
+  };
 
   const { isDeviceScreenSmall } = useDetectSmallScreen();
 

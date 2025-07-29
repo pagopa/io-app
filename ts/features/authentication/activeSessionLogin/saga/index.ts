@@ -1,9 +1,12 @@
-import { put, race, select, take } from "typed-redux-saga/macro";
+import { put, race, select, take, takeLatest } from "typed-redux-saga/macro";
+import { getType } from "typesafe-actions";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
-  consolidateActiveSessionLoginData
+  consolidateActiveSessionLoginData,
+  setRetryActiveSessionLogin,
+  setStartActiveSessionLogin
 } from "../store/actions";
 import {
   fastLoginOptInActiveSessionLoginSelector,
@@ -11,6 +14,13 @@ import {
   newTokenActiveSessionLoginSelector
 } from "../store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
+
+export function* watchActiveSessionLoginSaga() {
+  yield* takeLatest(
+    [getType(setStartActiveSessionLogin), getType(setRetryActiveSessionLogin)],
+    handleActiveSessionLoginSaga
+  );
+}
 
 export function* handleActiveSessionLoginSaga(): Generator<
   ReduxSagaEffect,
@@ -23,12 +33,13 @@ export function* handleActiveSessionLoginSaga(): Generator<
   });
 
   if (failure) {
-    // console.log("handleActiveSessionLoginSaga failure");
+    // the failure action are managed into the error screens
+    // I decided to keep this code so that we have it ready in case we
+    // decide to centralize management in the event of an error here.
     return;
   }
 
   if (success) {
-    // console.log("handleActiveSessionLoginSaga success");
     const newTokenActiveSessionLogin = yield* select(
       newTokenActiveSessionLoginSelector
     );

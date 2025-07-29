@@ -130,8 +130,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
-import { handleActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
-import { setStartActiveSessionLogin } from "../features/authentication/activeSessionLogin/store/actions";
+import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
 import ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { previousInstallationDataDeleteSaga } from "./installation";
@@ -628,14 +627,11 @@ export function* initializeApplicationSaga(
   yield* call(checkItWalletIdentitySaga);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
-
-  yield* takeLatest(
-    getType(setStartActiveSessionLogin),
-    handleActiveSessionLoginSaga
-  );
-  //
   // User is autenticated, session token is valid
-  //
+
+  // active session login watcher
+  yield* call(watchActiveSessionLoginSaga);
+
   // Start wathing new wallet sagas
   yield* fork(watchWalletSaga);
 

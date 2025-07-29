@@ -42,4 +42,5 @@ export type AuthenticationParamsList = {
   // CieID sign in Error
   [AUTHENTICATION_ROUTES.CIE_ID_ERROR]: undefined;
   [AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL]: UrlNotCompliant;
+  [AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN]: CieIdLoginProps;
 };

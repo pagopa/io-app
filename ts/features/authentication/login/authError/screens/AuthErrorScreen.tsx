@@ -3,7 +3,7 @@ import {
   Route,
   useRoute
 } from "@react-navigation/native";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { CieIdLoginProps } from "../../cie/components/CieIdLoginWebView";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
@@ -21,6 +21,8 @@ import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 import ROUTES from "../../../../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import { SETTINGS_ROUTES } from "../../../../settings/common/navigation/routes";
+import { setRetryActiveSessionLogin } from "../../../activeSessionLogin/store/actions";
 
 type CommonAuthErrorScreenProps = {
   errorCodeOrMessage?: string;
@@ -43,15 +45,20 @@ type CieProps = {
 export type AuthErrorScreenProps = CommonAuthErrorScreenProps &
   (SpidProps | CieProps | CieIdProps);
 
-const authScreenByAuthMethod = {
-  CIE: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN,
-  SPID: AUTHENTICATION_ROUTES.IDP_SELECTION,
-  CIE_ID: AUTHENTICATION_ROUTES.CIE_ID_LOGIN
-};
-
 const AuthErrorScreen = () => {
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+
+  const authScreenByAuthMethod = useMemo(
+    () => ({
+      CIE: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN,
+      SPID: AUTHENTICATION_ROUTES.IDP_SELECTION,
+      CIE_ID: isActiveSessionLogin
+        ? AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN
+        : AUTHENTICATION_ROUTES.CIE_ID_LOGIN
+    }),
+    [isActiveSessionLogin]
+  );
 
   const route =
     useRoute<
@@ -76,7 +83,7 @@ const AuthErrorScreen = () => {
       return {
         screen: authScreenByAuthMethod[authMethod]
       };
-    }, [authMethod, route.params]);
+    }, [authMethod, authScreenByAuthMethod, route.params]);
 
   const onRetry = useCallback(() => {
     if (authMethod === "SPID") {
@@ -86,8 +93,21 @@ const AuthErrorScreen = () => {
           : setStandardLoginInLoadingState()
       );
     }
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, getNavigationParams());
-  }, [authMethod, navigation, route.params, getNavigationParams, dispatch]);
+
+    if (isActiveSessionLogin) {
+      dispatch(setRetryActiveSessionLogin());
+      navigation.replace(SETTINGS_ROUTES.AUTHENTICATION, getNavigationParams());
+    } else {
+      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, getNavigationParams());
+    }
+  }, [
+    authMethod,
+    isActiveSessionLogin,
+    dispatch,
+    route.params,
+    navigation,
+    getNavigationParams
+  ]);
 
   const onCancel = useCallback(() => {
     // TODO: review this logic in order to save the spid login value in active session login state

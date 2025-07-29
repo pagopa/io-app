@@ -23,6 +23,8 @@ export enum AUTH_ERRORS {
   CIEID_IOS_INVALID_OPERATION_MESSAGE = "Operazione_non_valida",
   CIEID_OPERATION_CANCEL = "CIEID_OPERATION_CANCEL",
   GENERIC_ERROR = "GENERIC_ERROR",
+  // TODO: edit code NOT_SAME_CF when it will be definitive
+  // https://pagopa.atlassian.net/browse/IOPID-3332
   NOT_SAME_CF = "NOT_SAME_CF"
 }
 

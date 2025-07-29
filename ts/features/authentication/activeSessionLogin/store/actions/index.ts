@@ -6,6 +6,10 @@ export const setStartActiveSessionLogin = createStandardAction(
   "SET_START_ACTIVE_SESSION_LOGIN"
 )();
 
+export const setRetryActiveSessionLogin = createStandardAction(
+  "SET_RETRY_ACTIVE_SESSION_LOGIN"
+)();
+
 export const setIdpSelectedActiveSessionLogin = createStandardAction(
   "SET_IDP_SELECTED_ACTIVE_SESSION_LOGIN"
 )<SpidIdp>();
@@ -36,6 +40,7 @@ export const setFinishedActiveSessionLoginFlow = createStandardAction(
 
 export type LoginInfoActions =
   | ActionType<typeof setStartActiveSessionLogin>
+  | ActionType<typeof setRetryActiveSessionLogin>
   | ActionType<typeof setIdpSelectedActiveSessionLogin>
   | ActionType<typeof activeSessionLoginFailure>
   | ActionType<typeof activeSessionLoginSuccess>

@@ -24,9 +24,9 @@ import {
   loginCieWizardSelected,
   trackCieBottomSheetScreenView,
   trackCieIDLoginSelected,
-  trackCieLoginSelected,
-  trackCiePinLoginSelected,
-  trackSpidLoginSelected
+  trackCieLoginSelected
+  // trackCiePinLoginSelected,
+  // trackSpidLoginSelected
 } from "../../../common/analytics";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
@@ -45,16 +45,16 @@ export const ActiveSessionLandingScreen = () => {
 
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const {
-    navigateToIdpSelection,
-    navigateToCiePinInsertion,
+    // navigateToIdpSelection,
+    // navigateToCiePinInsertion,
     navigateToCieIdLoginScreen,
     isCieSupported
   } = useNavigateToLoginMethod();
 
-  const handleNavigateToCiePinScreen = useCallback(() => {
-    void trackCiePinLoginSelected(store.getState());
-    navigateToCiePinInsertion();
-  }, [store, navigateToCiePinInsertion]);
+  // const handleNavigateToCiePinScreen = useCallback(() => {
+  //   void trackCiePinLoginSelected(store.getState());
+  //   navigateToCiePinInsertion();
+  // }, [store, navigateToCiePinInsertion]);
 
   const handleNavigateToCieIdLoginScreen = useCallback(() => {
     void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
@@ -69,7 +69,10 @@ export const ActiveSessionLandingScreen = () => {
     title: I18n.t("authentication.landing.cie_bottom_sheet.title"),
     component: (
       <View>
-        <ModuleNavigation
+        {/* This code is commented because the CIE+PIN active
+        sessionlogin flow will be implemented in this task:
+        https://pagopa.atlassian.net/browse/IOPID-2928 */}
+        {/* <ModuleNavigation
           title={I18n.t(
             "authentication.landing.cie_bottom_sheet.module_cie_pin.title"
           )}
@@ -79,7 +82,7 @@ export const ActiveSessionLandingScreen = () => {
           icon="fiscalCodeIndividual"
           testID="bottom-sheet-login-with-cie-pin"
           onPress={handleNavigateToCiePinScreen}
-        />
+        /> */}
         <VSpacer size={8} />
         <ModuleNavigation
           title={I18n.t(
@@ -182,7 +185,10 @@ export const ActiveSessionLandingScreen = () => {
           testID="landing-button-login-cie"
         />
         <VSpacer size={SPACE_BETWEEN_BUTTONS} />
-        <IOButton
+        {/* This code is commented because the CIE+PIN active
+        sessionlogin flow will be implemented in this task:
+        https://pagopa.atlassian.net/browse/IOPID-2929 */}
+        {/* <IOButton
           fullWidth
           variant="solid"
           color="primary"
@@ -196,7 +202,7 @@ export const ActiveSessionLandingScreen = () => {
             navigateToIdpSelection();
           }}
           testID="landing-button-login-spid"
-        />
+        /> */}
         <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
         {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
         {bottomSheet}
