@@ -41,20 +41,21 @@ export type WebViewLoginNavigationProps = {
   isUat: boolean;
 };
 
-const iOSUserAgent =
+export const iOSUserAgent =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
-const defaultUserAgent = Platform.select({
+
+export const defaultUserAgent = Platform.select({
   ios: iOSUserAgent,
   default: undefined
 });
 
-const originSchemasWhiteList = [
+export const originSchemasWhiteList = [
   "https://*",
   "iologin://*",
   ...(isDevEnv ? ["http://*"] : [])
 ];
 
-const WHITELISTED_DOMAINS = [
+export const WHITELISTED_DOMAINS = [
   "https://idserver.servizicie.interno.gov.it",
   "https://oidc.idserver.servizicie.interno.gov.it",
   "https://mtls.oidc.idserver.servizicie.interno.gov.it",
@@ -68,7 +69,7 @@ export type CieIdLoginProps = {
   isUat: boolean;
 };
 
-const LoadingOverlay = ({ onCancel }: { onCancel: () => void }) => (
+export const LoadingOverlay = ({ onCancel }: { onCancel: () => void }) => (
   <View style={styles.loader}>
     <LoadingSpinnerOverlay isLoading onCancel={onCancel} />
   </View>

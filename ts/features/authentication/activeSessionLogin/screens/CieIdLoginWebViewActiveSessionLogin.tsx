@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { URL } from "react-native-url-polyfill";
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
-import { Linking, Platform, StyleSheet, View } from "react-native";
+import { Linking, Platform, StyleSheet } from "react-native";
 import WebView, { type WebViewNavigation } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
 import _isEqual from "lodash/isEqual";
@@ -12,11 +12,9 @@ import {
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useLollipopLoginSource } from "../../../lollipop/hooks/useLollipopLoginSource";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { SessionToken } from "../../../../types/SessionToken";
 import { IdpSuccessfulAuthentication } from "../../common/components/IdpSuccessfulAuthentication";
-import { isDevEnv } from "../../../../utils/environment";
 import { onLoginUriChanged } from "../../common/utils/login";
 import {
   HeaderSecondLevelHookProps,
@@ -25,11 +23,7 @@ import {
 
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 import { remoteApiLoginUrlPrefixSelector } from "../../loginPreferences/store/selectors";
-import {
-  SpidLevel,
-  getCieIDLoginUri,
-  isAuthenticationUrl
-} from "../../login/cie/utils";
+import { getCieIDLoginUri, isAuthenticationUrl } from "../../login/cie/utils";
 import {
   IO_LOGIN_CIE_URL_SCHEME,
   CIE_ID_ERROR,
@@ -46,44 +40,13 @@ import { AUTH_ERRORS } from "../../common/components/AuthErrorComponent";
 import ROUTES from "../../../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { AuthenticationParamsList } from "../../common/navigation/params/AuthenticationParamsList";
-
-export type WebViewLoginNavigationProps = {
-  spidLevel: SpidLevel;
-  isUat: boolean;
-};
-
-const iOSUserAgent =
-  "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
-const defaultUserAgent = Platform.select({
-  ios: iOSUserAgent,
-  default: undefined
-});
-
-const originSchemasWhiteList = [
-  "https://*",
-  "iologin://*",
-  ...(isDevEnv ? ["http://*"] : [])
-];
-
-const WHITELISTED_DOMAINS = [
-  "https://idserver.servizicie.interno.gov.it",
-  "https://oidc.idserver.servizicie.interno.gov.it",
-  "https://mtls.oidc.idserver.servizicie.interno.gov.it",
-  "https://mtls.idserver.servizicie.interno.gov.it",
-  "https://ios.idserver.servizicie.interno.gov.it",
-  "https://ios.oidc.idserver.servizicie.interno.gov.it"
-];
-
-export type CieIdLoginProps = {
-  spidLevel: SpidLevel;
-  isUat: boolean;
-};
-
-const LoadingOverlay = ({ onCancel }: { onCancel: () => void }) => (
-  <View style={styles.loader}>
-    <LoadingSpinnerOverlay isLoading onCancel={onCancel} />
-  </View>
-);
+import { originSchemasWhiteList } from "../../common/utils/originSchemasWhiteList";
+import {
+  CieIdLoginProps,
+  WHITELISTED_DOMAINS,
+  defaultUserAgent,
+  LoadingOverlay
+} from "../../login/cie/components/CieIdLoginWebView";
 
 const CieIdLoginWebViewActiveSessionLogin = ({
   spidLevel,
@@ -340,8 +303,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     marginHorizontal: 16
-  },
-  loader: { position: "absolute", width: "100%", height: "100%" }
+  }
 });
 
 const CieIdActiveSessionLoginScreen = () => {
