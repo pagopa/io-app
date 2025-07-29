@@ -11,6 +11,7 @@ import { itwProximityMachine } from "../machine/machine";
 import {
   CloseActorOutput,
   GetQrCodeStringActorOutput,
+  CheckPermissionsInput,
   ProximityCommunicationLogicActorInput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
@@ -50,6 +51,7 @@ describe("itwProximityMachine", () => {
   const onInit = jest.fn();
   const setFailure = jest.fn();
   const setQRCodeGenerationError = jest.fn();
+  const setHasGivenConsent = jest.fn();
   const navigateToGrantPermissionsScreen = jest.fn();
   const navigateToBluetoothActivationScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
@@ -57,6 +59,7 @@ describe("itwProximityMachine", () => {
   const navigateToSendDocumentsResponseScreen = jest.fn();
   const navigateToWallet = jest.fn();
   const closeProximity = jest.fn();
+  const trackQrCodeGenerationOutcome = jest.fn();
 
   const checkPermissions = jest.fn();
   const checkBluetoothIsActive = jest.fn();
@@ -75,6 +78,7 @@ describe("itwProximityMachine", () => {
       setQRCodeGenerationError: assign({
         isQRCodeGenerationError: true
       }),
+      setHasGivenConsent,
       navigateToGrantPermissionsScreen,
       navigateToBluetoothActivationScreen,
       navigateToFailureScreen,
@@ -82,10 +86,13 @@ describe("itwProximityMachine", () => {
       navigateToSendDocumentsResponseScreen,
       navigateToWallet,
       closeProximity,
+      trackQrCodeGenerationOutcome,
       onInit: assign(onInit)
     },
     actors: {
-      checkPermissions: fromPromise<boolean>(checkPermissions),
+      checkPermissions: fromPromise<boolean, CheckPermissionsInput>(
+        checkPermissions
+      ),
       checkBluetoothIsActive: fromPromise<boolean>(checkBluetoothIsActive),
       startProximityFlow: fromPromise<void, StartProximityFlowInput>(
         startProximityFlow

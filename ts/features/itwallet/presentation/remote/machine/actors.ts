@@ -1,7 +1,11 @@
-import { Credential } from "@pagopa/io-react-native-wallet";
 import { fromPromise } from "xstate";
 import * as O from "fp-ts/lib/Option";
-import { Trust } from "@pagopa/io-react-native-wallet-v2";
+import {
+  createCryptoContextFor,
+  Credential,
+  Trust
+} from "@pagopa/io-react-native-wallet-v2";
+import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
   DcqlQuery,
   EnrichedPresentationDetails,
@@ -148,10 +152,14 @@ export const createRemoteActorsImplementation = (
 
     // Prepare credentials to evaluate the Relying Party request
     // TODO: add the Wallet Attestation in SD-JWT format
-    const credentialsSdJwt: Array<[string, string]> = [
-      [eid.value.keyTag, eid.value.credential],
+    const credentialsSdJwt: Array<[CryptoContext, string]> = [
+      [createCryptoContextFor(eid.value.keyTag), eid.value.credential],
       ...Object.values(credentials).map(
-        c => [c.keyTag, c.credential] as [string, string]
+        c =>
+          [createCryptoContextFor(c.keyTag), c.credential] as [
+            CryptoContext,
+            string
+          ]
       )
     ];
 
@@ -168,9 +176,7 @@ export const createRemoteActorsImplementation = (
     );
 
     // Check whether any of the requested credential is invalid
-    const invalidCredentials = getInvalidCredentials(
-      result.map(c => credentialsByType[c.vct])
-    );
+    const invalidCredentials = getInvalidCredentials(result, credentialsByType);
 
     if (invalidCredentials.length > 0) {
       throw new InvalidCredentialsStatusError(invalidCredentials);

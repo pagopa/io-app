@@ -1,9 +1,14 @@
-import { Errors } from "@pagopa/io-react-native-wallet";
+import { Errors as LegacyErrors } from "@pagopa/io-react-native-wallet";
+import { Errors } from "@pagopa/io-react-native-wallet-v2";
+import { IssuerResponseErrorCode } from "@pagopa/io-react-native-wallet-v2/src/utils/error-codes";
+import { EnrichedIssuerResponseError } from "../../common/utils/itwCredentialIssuanceUtils.v2";
 import { CredentialIssuanceEvents } from "./events";
 
 const {
-  isIssuerResponseError,
   isWalletProviderResponseError,
+  // The error codes are the same in both legacy and new, so for simplicity,
+  // we’ll use those provided by the new Errors directly.
+  // TODO: [SIW-2530] After fully migrating to the new API, the above comment can be removed
   IssuerResponseErrorCodes: Codes
 } = Errors;
 
@@ -20,7 +25,7 @@ export enum CredentialIssuanceFailureType {
  */
 export type ReasonTypeByFailure = {
   [CredentialIssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
-  [CredentialIssuanceFailureType.INVALID_STATUS]: Errors.IssuerResponseError;
+  [CredentialIssuanceFailureType.INVALID_STATUS]: EnrichedIssuerResponseError;
   [CredentialIssuanceFailureType.ASYNC_ISSUANCE]: Errors.IssuerResponseError;
   [CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC]: Errors.WalletProviderResponseError;
   [CredentialIssuanceFailureType.UNEXPECTED]: unknown;
@@ -38,6 +43,15 @@ type TypedCredentialIssuanceFailures = {
  */
 export type CredentialIssuanceFailure =
   TypedCredentialIssuanceFailures[keyof TypedCredentialIssuanceFailures];
+
+// TODO: [SIW-2530] After fully migrating to the new API, remove this layer in favor of `Errors.isIssuerResponseError`
+const isIssuerResponseError = (
+  error: unknown,
+  code?: IssuerResponseErrorCode
+): error is EnrichedIssuerResponseError =>
+  [LegacyErrors.isIssuerResponseError, Errors.isIssuerResponseError].some(cb =>
+    cb(error, code)
+  );
 
 /**
  * Maps an event dispatched by the credential issuance machine to a failure object.
@@ -79,7 +93,10 @@ export const mapEventToFailure = (
     };
   }
 
-  if (isWalletProviderResponseError(error)) {
+  if (
+    LegacyErrors.isWalletProviderResponseError(error) ||
+    isWalletProviderResponseError(error)
+  ) {
     return {
       type: CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC,
       reason: error

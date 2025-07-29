@@ -38,7 +38,7 @@ const ScreenHeader = memo(() => (
   <View style={styles.header}>
     <BackgroundGradient />
     <ContentWrapper>
-      <VStack>
+      <VStack space={16}>
         <H2>{I18n.t("features.itWallet.credentialName.pid")}</H2>
         <Body color="black">
           {I18n.t(

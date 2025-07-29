@@ -14,6 +14,7 @@ import {
 } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import I18n from "../../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
+import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
 
 export const ItwProximityFailureScreen = () => {
   const failureOption =
@@ -103,6 +104,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
           };
       }
     };
+
+  useItwProximityEventsTracking({ failure });
 
   const resultScreenProps = getOperationResultScreenContentProps();
 

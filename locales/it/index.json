@@ -3797,6 +3797,44 @@
       "title": "Questo servizio non è più attivo su IO"
     },
     "pn": {
+      "aar": {
+        "serviceActivation": {
+          "failure": "Non riusciamo ad attivare il servizio SEND",
+          "feature1": {
+            "part1": "Attiva SEND su IO e ricevi in app le ",
+            "part2": "comunicazioni a valore legale",
+            "part3": " che ti inviano gli enti"
+          },
+          "feature2": {
+            "part1": "Se leggi la comunicazione online in tempo, ",
+            "part2": "eviti la raccomandata e risparmi"
+          },
+          "feature3": {
+            "part1": "Puoi pagare direttamente in app: è ",
+            "part2": "facile e veloce"
+          },
+          "footer": {
+            "part1": "Premendo ",
+            "part2": "Attiva SEND su IO",
+            "part3": " dichiari di aver letto e compreso l’",
+            "part4": "Informativa Privacy",
+            "part5": " e i ",
+            "part6": "Termini e Condizioni d’uso",
+            "part7": "."
+          },
+          "headerAction": "Chiudi",
+          "primaryAction": "Attiva SEND su IO",
+          "serviceActivated": "Hai attivato SEND su IO",
+          "title": "Ricevi su IO le tue prossime notifiche SEND"
+        },
+        "pushEngagement": {
+          "badge": "Consigliato",
+          "title": "Non perderti i messaggi importanti",
+          "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
+          "cta": "Attiva notifiche push",
+          "toast": "Hai attivato le notifiche push"
+        }
+      },
       "reminderBanner": {
         "title": "Risparmia sui costi di notifica!",
         "body": "Scopri e attiva SEND su IO per ricevere le comunicazioni a valore legale direttamente in app.",
@@ -3925,10 +3963,8 @@
       "qrCodeScan": {
         "success": {
           "openSendScreen": {
-            "title": "Per accedere ai documenti vai sul sito web di SEND",
-            "body": "Per visualizzare i documenti online devi andare sul sito web di SEND. Presto potrai farlo direttamente da IO!",
-            "firstCta": "Vai su SEND",
-            "secondCta": "Chiudi"
+            "title": "Per consultare i documenti vai sul sito di SEND",
+            "firstCta": "Vai su SEND"
           }
         }
       }
@@ -4104,7 +4140,7 @@
       "onboarding": {
         "title": "Cosa vuoi aggiungere al Portafoglio?",
         "sections": {
-          "itw": "Documenti",
+          "itw": "Documenti su IO",
           "other": "Altro"
         },
         "badge": {
@@ -4255,7 +4291,7 @@
         "inactive": "Non attivo",
         "header": "Mostra identità"
       },
-      "walletID": {
+      "walletId": {
         "title": "IT-Wallet ID",
         "show": "Mostra"
       },
@@ -4451,27 +4487,27 @@
         "mode": {
           "l2": {
             "title": "Verifica la tua identità",
-            "description": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
+            "description": "È un passaggio di sicurezza necessario per aggiungere i tuoi documenti digitali su IO.",
             "header": "Scegli come identificarti",
             "method": {
               "spid": {
-                "title": "SPID",
-                "subtitle": "Usa credenziali e app (o SMS)"
+                "title": "Usa SPID",
+                "subtitle": "Necessarie credenziali e app (o SMS)"
               },
               "ciePin": {
-                "title": "CIE + PIN",
-                "subtitle": "Usa Carta d’Identità Elettronica e PIN"
+                "title": "Usa CIE + PIN",
+                "subtitle": "Usa la Carta di Identità Elettronica e il suo PIN a 8 cifre"
               },
               "cieId": {
-                "title": "CieID",
-                "subtitle": "Usa credenziali e app CieID"
+                "title": "Usa l'app CieID",
+                "subtitle": "Necessarie credenziali e app CieID"
               }
             }
           },
           "l3": {
             "screen": {
               "title": "Verifica la tua identità con CIE",
-              "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet.",
+              "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet e associare i documenti alla tua identità.",
               "primaryAction": "Inizia",
               "secondaryAction": "Non ho la CIE",
               "requirements": {
@@ -4509,13 +4545,13 @@
         "cie": {
           "prepare": {
             "pin": {
-              "title": "Prepara il PIN della tua carta di identità elettronica (CIE)",
-              "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell’identità.",
+              "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)",
+              "content": "Dovrai digitarlo per completare la verifica dell’identità.",
               "buttonLink": "Cos’è il PIN della CIE?",
               "cta": "Inserisci il PIN della CIE"
             },
             "card": {
-              "title": "Prepara la tua carta di identità elettronica (CIE)",
+              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
               "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
               "cta": "Inizia lettura CIE",
               "buttonLink": "Cos’è la CIE?"
@@ -4589,8 +4625,8 @@
           },
           "bottomSheet": {
             "card": {
-              "title": "Carta di identità elettronica (CIE)",
-              "content": "La CIE è la Carta d'Identità in formato elettronico introdotto in Italia per sostituire la tradizionale carta d'identità cartacea.\n\nTi è utile averla per:\n * Accedere ai servizi online della Pubblica Amministrazione (es. INPS, Agenzia delle Entrate)\n * Identificarti ufficialmente in Italia e all’estero\n * Viaggiare nei Paesi dell’UE e in altri che la accettano al posto del passaporto.",
+              "title": "Carta di Identità Elettronica (CIE)",
+              "content": "La CIE è la Carta di Identità in formato elettronico introdotto in Italia per sostituire la tradizionale Carta di Identità cartacea.\n\nTi è utile averla per:\n * Accedere ai servizi online della Pubblica Amministrazione (es. INPS, Agenzia delle Entrate)\n * Identificarti ufficialmente in Italia e all’estero\n * Viaggiare nei Paesi dell’UE e in altri che la accettano al posto del passaporto.",
               "primaryAction": "Ho capito",
               "secondaryAction": "Non ho la CIE"
             },
@@ -4682,7 +4718,7 @@
           }
         },
         "eidResult": {
-          "success": {
+          "successL2": {
             "title": "È tutto pronto!",
             "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
             "toast": "Fatto!",
@@ -4690,6 +4726,13 @@
               "continue": "Aggiungi primo documento",
               "continueAlt": "Aggiungi documento",
               "close": "Continua più tardi"
+            }
+          },
+          "success": {
+            "title": "Il tuo IT-Wallet è pronto!",
+            "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale di Stato.",
+            "actions": {
+              "continue": "Esplora IT-Wallet"
             }
           }
         },
@@ -4721,6 +4764,12 @@
           "title": "La Motorizzazione Civile ha preso in carico la tua richiesta",
           "body": "Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.",
           "primaryAction": "Ho capito"
+        },
+        "issuerNotTrustedCommonError": {
+          "title": "Un problema non permette di continuare",
+          "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere IT-Wallet. Riprova.\nSe il problema persiste, contatta l’assistenza.",
+          "primaryAction": "Ho capito",
+          "secondaryAction": "Mostra dettagli"
         },
         "credentialAlreadyAdded": {
           "title": "Hai già questo documento",
@@ -5546,7 +5595,7 @@
           "scanQr": "Inquadra un codice QR",
           "generateBarcode": "Crea un codice sconto"
         },
-        "authorizeButton": "Autorizza un pagamento",
+        "authorizeButton": "Usa il bonus",
         "addExpenseButton": "Aggiungi spesa",
         "IDPayCode": {
           "banner": {
@@ -5728,10 +5777,8 @@
       },
       "headerTitle": "Adesione all'iniziativa",
       "beforeContinue": {
-        "text1": "Proseguendo accetti i ",
-        "tosLink": "Termini e condizioni d'uso",
-        "text2": " del servizio e confermi di avere letto l' ",
-        "privacyLink": "Informativa privacy"
+        "text": "Premendo Continua dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni]({{tosUrl}}) d'uso.",
+        "requestBonus": "Richiedi il bonus"
       },
       "navigation": {
         "header": "Adesione all'iniziativa"
@@ -5783,10 +5830,22 @@
       "enableNotification": {
         "title": "Non perderti l’esito delle tue richieste",
         "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
-        "action": "Attiva notifiche push",
-        "deny": "Non attivare",
+        "action": "Attiva le notifiche",
+        "deny": "Non ora",
         "success": "Hai attivato le notifiche push",
         "advice": "Consigliato"
+      },
+      "preferences": {
+        "enableEmailBanner": {
+          "title": "Non perderti aggiornamenti importanti",
+          "content": "Attiva l’inoltro via email per avere tutte le comunicazioni anche fuori dall'app.",
+          "cta": "Aggiornami via email",
+          "successOutcome": "Hai attivato le notifiche via email"
+        }
+      },
+      "loading": {
+        "subtitle": "Attendi qualche secondo",
+        "title": "Stiamo elaborando la tua richiesta"
       }
     },
     "configuration": {

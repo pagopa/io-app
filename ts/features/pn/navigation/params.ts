@@ -1,4 +1,4 @@
-import { SendQRScanFlowProps } from "../qrCodeScan/screens/QrScanFlow";
+import { SendQRScanFlowScreenProps } from "../aar/screen/SendQRScanFlowScreen";
 import { MessageAttachmentScreenRouteParams } from "../screens/MessageAttachmentScreen";
 import { MessageDetailsScreenRouteParams } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreenRouteParams } from "../screens/PaidPaymentScreen";
@@ -11,5 +11,7 @@ export type PnParamsList = {
   // ENGAGEMENT BANNER
   [PN_ROUTES.ACTIVATION_BANNER_FLOW]: undefined;
   // QR SCAN
-  [PN_ROUTES.QR_SCAN_FLOW]: SendQRScanFlowProps;
+  [PN_ROUTES.QR_SCAN_FLOW]: SendQRScanFlowScreenProps;
+  [PN_ROUTES.ENGAGEMENT_SCREEN]: undefined;
+  [PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT]: undefined;
 };

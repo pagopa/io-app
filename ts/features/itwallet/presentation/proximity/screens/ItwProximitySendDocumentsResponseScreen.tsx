@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { ItwProximityLoadingStepScreen } from "../components/ItwProximityLoadingStepScreen.tsx";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation";
@@ -5,6 +6,7 @@ import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwar
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import I18n from "../../../../../i18n";
 import { selectIsSuccess } from "../machine/selectors.ts";
+import { trackItwProximityPresentationCompleted } from "../analytics";
 
 export const ItwProximitySendDocumentsResponseScreen = () => {
   const machineRef = ItwProximityMachineContext.useActorRef();
@@ -14,6 +16,12 @@ export const ItwProximitySendDocumentsResponseScreen = () => {
   useAvoidHardwareBackButton();
 
   const closeMachine = () => machineRef.send({ type: "close" });
+
+  useEffect(() => {
+    if (isSuccess) {
+      trackItwProximityPresentationCompleted();
+    }
+  }, [isSuccess]);
 
   // We need to ensure that the current state is not `Success` to prevent a visual glitch
   // that occurs when any failure causes the machine to transition to the `Failure` state
