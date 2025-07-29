@@ -7,6 +7,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import PN_ROUTES from "../../../navigation/routes";
 import * as LOGIC_HOOK from "../../hooks/useAARpushEngagementScreenLogic";
 import { SendQrScanPushEngagementScreen } from "../SendAARPushEngagementScreen";
+import * as analytics from "../../../../pushNotifications/analytics";
 
 const mockPopToTop = jest.fn();
 jest.mock("@react-navigation/native", () => {
@@ -21,13 +22,23 @@ jest.mock("@react-navigation/native", () => {
 });
 
 describe("SendQrScanPushEngagementScreen", () => {
+  const spiedOnMockedAnalyticsOutcomeEvent = jest
+    .spyOn(analytics, "trackSystemNotificationPermissionScreenOutcome")
+    .mockImplementation();
   afterEach(() => {
     jest.clearAllMocks();
   });
-
-  it("should match snapshot", () => {
+  it("should match snapshot and track analytics event", () => {
+    const spiedOnMockedAnalyticsEvent = jest
+      .spyOn(analytics, "trackSystemNotificationPermissionScreenShown")
+      .mockImplementation();
     const screen = renderScreen();
     expect(screen.toJSON()).toMatchSnapshot();
+    expect(spiedOnMockedAnalyticsEvent.mock.calls.length).toBe(1);
+    expect(spiedOnMockedAnalyticsEvent.mock.calls[0].length).toBe(1);
+    expect(spiedOnMockedAnalyticsEvent.mock.calls[0][0]).toBe(
+      "send_notification_opening"
+    );
   });
 
   it("should render a blank page when told to do so by the logic hook", () => {
@@ -43,7 +54,7 @@ describe("SendQrScanPushEngagementScreen", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
 
-  it("should render a header with an X button which should behave as expected", () => {
+  it("should render a header with an X button which should behave as expected and track analytics event", () => {
     jest
       .spyOn(LOGIC_HOOK, "useAARPushEngagementScreenLogic")
       .mockImplementation(() => ({
@@ -55,6 +66,12 @@ describe("SendQrScanPushEngagementScreen", () => {
     const button = getByTestId("header-close");
     fireEvent.press(button);
     expect(mockPopToTop).toHaveBeenCalledTimes(1);
+    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls.length).toBe(1);
+    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0].length).toBe(2);
+    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][0]).toBe("dismiss");
+    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][1]).toBe(
+      "send_notification_opening"
+    );
   });
 
   it("should call the button press callback on button press", () => {
@@ -75,6 +92,7 @@ describe("SendQrScanPushEngagementScreen", () => {
     fireEvent(button, "press");
 
     expect(mockButtonPress).toHaveBeenCalledTimes(1);
+    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls.length).toBe(0);
   });
 });
 

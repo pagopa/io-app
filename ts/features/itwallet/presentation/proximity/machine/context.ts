@@ -29,6 +29,11 @@ export type Context = {
    * The details of the proximity presentation containing the localized claims grouped by credential type
    */
   proximityDetails?: ProximityDetails;
+  /**
+   * A boolean value indicating whether the user has given consent
+   * to share their credentials with the Relying Party
+   */
+  hasGivenConsent?: boolean;
 };
 
 export const InitialContext: Context = {
