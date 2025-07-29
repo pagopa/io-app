@@ -8,6 +8,7 @@ import {
   checkNotificationPermissions,
   openSystemNotificationSettingsScreen
 } from "../../../pushNotifications/utils";
+import { trackSystemNotificationPermissionScreenOutcome } from "../../../pushNotifications/analytics";
 
 export const useAARPushEngagementScreenLogic = () => {
   const navigation = useIONavigation();
@@ -24,6 +25,10 @@ export const useAARPushEngagementScreenLogic = () => {
   }, [isButtonPressed, navigation]);
 
   const onButtonPress = () => {
+    trackSystemNotificationPermissionScreenOutcome(
+      "activate",
+      "send_notification_opening"
+    );
     navigation.setOptions({ headerShown: false });
     openSystemNotificationSettingsScreen();
     setIsButtonPressed(true);

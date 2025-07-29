@@ -9,6 +9,10 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useAARPushEngagementScreenLogic } from "../hooks/useAARpushEngagementScreenLogic";
+import {
+  trackSystemNotificationPermissionScreenOutcome,
+  trackSystemNotificationPermissionScreenShown
+} from "../../../pushNotifications/analytics";
 
 export const SendQrScanPushEngagementScreen = () => {
   const navigation = useIONavigation();
@@ -16,6 +20,10 @@ export const SendQrScanPushEngagementScreen = () => {
     useAARPushEngagementScreenLogic();
 
   const handleCloseScreen = useCallback(() => {
+    trackSystemNotificationPermissionScreenOutcome(
+      "dismiss",
+      "send_notification_opening"
+    );
     navigation.popToTop();
   }, [navigation]);
 
@@ -35,6 +43,7 @@ export const SendQrScanPushEngagementScreen = () => {
         />
       )
     });
+    trackSystemNotificationPermissionScreenShown("send_notification_opening");
   }, [handleCloseScreen, navigation]);
 
   if (shouldRenderBlankPage) {
