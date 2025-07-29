@@ -3576,11 +3576,6 @@
           }
         },
         "eidResult": {
-          "upgradeSuccess": {
-            "title": "Il tuo IT-Wallet è pronto!",
-            "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale di Stato.",
-            "primaryAction": "Esplora IT-Wallet"
-          },
           "success": {
             "title": "È tutto pronto!",
             "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",

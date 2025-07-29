@@ -4710,16 +4710,24 @@
             "secondary": "Annulla"
           }
         },
-        "eidResult": {
-          "upgrading": {
+        "upgrade": {
+          "loading": {
             "title": "Stiamo aggiornando i tuoi documenti",
             "subtitle": "Attendi qualche secondo"
           },
-          "upgradeSuccess": {
+          "success": {
             "title": "Il tuo IT-Wallet è pronto!",
             "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale di Stato.",
             "primaryAction": "Esplora IT-Wallet"
           },
+          "failure": {
+            "title": "Non è stato possibile aggiornare {{credentialName}}",
+            "titleMany": "Non è stato possibile aggiornare i documenti",
+            "subtitle": "Il tuo IT-Wallet è pronto ma un errore tecnico sui sistemi dell’ente che emette la versione digitale dei documenti ne ha impedito l’aggiornamento. Prova ad aggiungere di nuovo i documenti.",
+            "primaryAction": "Esplora IT-Wallet"
+          }
+        },
+        "eidResult": {
           "success": {
             "title": "È tutto pronto!",
             "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
@@ -4791,11 +4799,6 @@
         "cieNotRegistered": {
           "title": "Registra la CIE in app CieID per continuare",
           "subtitle": "Per ottenere IT-Wallet, completa prima la registrazione della tua CIE in app CieID e poi riprova."
-        },
-        "credentialsUpgradeFailed": {
-          "title": "Non è stato possibile aggiornare i documenti",
-          "subtitle": "Il tuo IT-Wallet è pronto ma un errore tecnico sui sistemi dell’ente che emette la versione digitale dei documenti ne ha impedito l’aggiornamento. Prova ad aggiungere di nuovo i documenti.",
-          "primaryAction": "Esplora IT-Wallet"
         }
       },
       "notMatchingIdentityScreen": {

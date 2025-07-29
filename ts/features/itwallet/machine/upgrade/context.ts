@@ -3,16 +3,26 @@ import { Input } from "./input";
 
 export type Context = {
   /**
+   * The wallet instance attestation obtained during the PID upgrade
+   */
+  walletInstanceAttestation: string;
+  /**
+   * The upgrade PID credential
+   */
+  pid: StoredCredential;
+  /**
    * Credentials that must be upgraded to L3
    */
-  credentialsToUpgrade: ReadonlyArray<StoredCredential>;
+  credentials: ReadonlyArray<StoredCredential>;
   /**
-   * Credentials that failed the upgrade
+   * Credentials that failed the upgrade process
    */
   failedCredentials: ReadonlyArray<StoredCredential>;
 };
 
 export const getInitialContext = (input: Input): Context => ({
-  credentialsToUpgrade: input.credentials,
+  walletInstanceAttestation: input.walletInstanceAttestation,
+  pid: input.pid,
+  credentials: input.credentials,
   failedCredentials: []
 });

@@ -7,6 +7,7 @@ import {
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
+import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
 import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
@@ -121,7 +122,8 @@ export const itwEidIssuanceMachine = setup({
     ),
     startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
       notImplemented
-    )
+    ),
+    credentialUpgradeMachine: itwCredentialUpgradeMachine
   },
   guards: {
     issuedEidMatchesAuthenticatedUser: notImplemented,
@@ -853,7 +855,35 @@ export const itwEidIssuanceMachine = setup({
       entry: "navigateToSuccessScreen",
       description:
         "This state handles the upgrade of credentials in the wallet",
-      on: {}
+      invoke: {
+        src: "credentialUpgradeMachine",
+        input: ({ context }) => {
+          assert(context.eid, "PID must be defined for credential upgrade");
+          assert(
+            context.walletInstanceAttestation,
+            "Wallet instance attestation must be defined"
+          );
+
+          return {
+            pid: context.eid,
+            walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+            credentials: context.credentials || []
+          };
+        },
+        onDone: {
+          description: "Credentials upgrade completed successfully",
+          actions: assign(({ event }) => ({
+            failedCredentials: event.output.failedCredentials
+          })),
+          target: "#itwEidIssuanceMachine.Success"
+        },
+        onError: {
+          description:
+            "An unexpected error occurred during the credentials upgrade",
+          actions: "setFailure",
+          target: "#itwEidIssuanceMachine.Failure"
+        }
+      }
     },
     Success: {
       entry: "navigateToSuccessScreen",

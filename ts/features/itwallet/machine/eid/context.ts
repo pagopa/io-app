@@ -57,10 +57,6 @@ export type Context = {
    */
   walletInstanceAttestation: WalletInstanceAttestations | undefined;
   /**
-   * The credentials that need to be upgraded to L3.
-   */
-  credentials: ReadonlyArray<StoredCredential> | undefined;
-  /**
    * CIE capabilities and NFC status.
    */
   cieContext: CieContext | undefined;
@@ -91,18 +87,27 @@ export type Context = {
    * Flag to check if the user chose to fallback to L2 issuance
    */
   isL2Fallback: boolean;
+  /**
+   * The credentials that need to be upgraded to L3.
+   */
+  credentials: ReadonlyArray<StoredCredential> | undefined;
+  /**
+   * Credentials that failed the upgrade process.
+   */
+  failedCredentials: ReadonlyArray<StoredCredential> | undefined;
 };
 
 export const InitialContext: Context = {
   mode: undefined,
   integrityKeyTag: undefined,
   walletInstanceAttestation: undefined,
-  credentials: undefined,
   cieContext: undefined,
   identification: undefined,
   authenticationContext: undefined,
   eid: undefined,
   failure: undefined,
   isL3: undefined,
-  isL2Fallback: false
+  isL2Fallback: false,
+  credentials: undefined,
+  failedCredentials: undefined
 };

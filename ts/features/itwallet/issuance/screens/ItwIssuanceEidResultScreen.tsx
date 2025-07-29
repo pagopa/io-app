@@ -8,14 +8,15 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import { trackAddFirstCredential, trackBackToWallet } from "../../analytics";
 import {
   selectIsLoading,
-  selectIssuanceMode
+  selectIssuanceMode,
+  selectUpgradeFailedCredentials
 } from "../../machine/eid/selectors";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 
 export const ItwIssuanceEidResultScreen = () => {
   const route = useRoute();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const issuanceMode =
     ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
 
@@ -29,66 +30,96 @@ export const ItwIssuanceEidResultScreen = () => {
 
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
 
+  if (issuanceMode === "upgrading") {
+    return <ItwIssuanceEidUpgradeResultContent />;
+  }
+
+  return (
+    <OperationResultScreenContent
+      pictogram="success"
+      title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
+      subtitle={I18n.t("features.itWallet.issuance.eidResult.success.subtitle")}
+      action={{
+        label: I18n.t(
+          "features.itWallet.issuance.eidResult.success.primaryAction"
+        ),
+        onPress: handleAddCredential
+      }}
+      secondaryAction={{
+        label: I18n.t(
+          "features.itWallet.issuance.eidResult.success.secondaryAction"
+        ),
+        onPress: () => {
+          handleBackToWallet();
+          trackBackToWallet({
+            exit_page: route.name,
+            credential: "ITW_ID_V2"
+          });
+        }
+      }}
+    />
+  );
+};
+
+const ItwIssuanceEidUpgradeResultContent = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+  const failedCredentials = ItwEidIssuanceMachineContext.useSelector(
+    selectUpgradeFailedCredentials
+  );
+
+  const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
+
   if (isLoading) {
     return (
       <LoadingScreenContent
         contentTitle={I18n.t(
-          "features.itWallet.issuance.eidResult.upgrading.title"
+          "features.itWallet.issuance.upgrade.loading.title"
         )}
       >
         <Body>
-          {I18n.t("features.itWallet.issuance.eidResult.upgrading.subtitle")}
+          {I18n.t("features.itWallet.issuance.upgrade.loading.subtitle")}
         </Body>
       </LoadingScreenContent>
     );
   }
 
-  switch (issuanceMode) {
-    case "upgrading":
-      return (
-        <OperationResultScreenContent
-          pictogram="success"
-          title={I18n.t(
-            "features.itWallet.issuance.eidResult.upgradeSuccess.title"
-          )}
-          subtitle={I18n.t(
-            "features.itWallet.issuance.eidResult.upgradeSuccess.subtitle"
-          )}
-          action={{
-            label: I18n.t(
-              "features.itWallet.issuance.eidResult.upgradeSuccess.primaryAction"
-            ),
-            onPress: handleBackToWallet
-          }}
-        />
-      );
-    default:
-      return (
-        <OperationResultScreenContent
-          pictogram="success"
-          title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
-          subtitle={I18n.t(
-            "features.itWallet.issuance.eidResult.success.subtitle"
-          )}
-          action={{
-            label: I18n.t(
-              "features.itWallet.issuance.eidResult.success.primaryAction"
-            ),
-            onPress: handleAddCredential
-          }}
-          secondaryAction={{
-            label: I18n.t(
-              "features.itWallet.issuance.eidResult.success.secondaryAction"
-            ),
-            onPress: () => {
-              handleBackToWallet();
-              trackBackToWallet({
-                exit_page: route.name,
-                credential: "ITW_ID_V2"
-              });
-            }
-          }}
-        />
-      );
+  if (failedCredentials.length > 0) {
+    const title =
+      failedCredentials.length === 1
+        ? I18n.t("features.itWallet.issuance.upgrade.failure.title", {
+            credentialName: getCredentialNameFromType(
+              failedCredentials[0].credentialType
+            )
+          })
+        : I18n.t("features.itWallet.issuance.upgrade.failure.titleMany");
+
+    return (
+      <OperationResultScreenContent
+        pictogram="success"
+        title={title}
+        subtitle={I18n.t("features.itWallet.issuance.upgrade.failure.subtitle")}
+        action={{
+          label: I18n.t(
+            "features.itWallet.issuance.upgrade.failure.primaryAction"
+          ),
+          onPress: handleBackToWallet
+        }}
+      />
+    );
   }
+
+  return (
+    <OperationResultScreenContent
+      pictogram="success"
+      title={I18n.t("features.itWallet.issuance.upgrade.success.title")}
+      subtitle={I18n.t("features.itWallet.issuance.upgrade.success.subtitle")}
+      action={{
+        label: I18n.t(
+          "features.itWallet.issuance.upgrade.success.primaryAction"
+        ),
+        onPress: handleBackToWallet
+      }}
+    />
+  );
 };
