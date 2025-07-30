@@ -15,13 +15,14 @@ import {
 } from "../../common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
 import { ItwFeedbackBanner } from "../../common/components/ItwFeedbackBanner";
-import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
-import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
-import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
-import { itwShouldRenderNewItWalletSelector } from "../../common/store/selectors";
 import { ItwOfflineWalletBanner } from "../../common/components/ItwOfflineWalletBanner.tsx";
 import { ItwWalletId } from "../../common/components/ItwWalletId.tsx";
+import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
+import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
+import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
+import { itwShouldRenderNewItWalletSelector } from "../../common/store/selectors";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils.ts";
+import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 
 const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
@@ -69,6 +70,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   }, [navigation]);
 
   const sectionHeader = useMemo((): React.ReactElement => {
+    const iconColor = useItwStatusIconColor(isEidExpired);
+
     if (isNewItwRenderable) {
       return (
         <ItwWalletId
@@ -82,7 +85,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       <ListItemHeader
         testID={"walletCardsCategoryItwHeaderTestID"}
         iconName={"legalValue"}
-        iconColor={isEidExpired ? "grey-300" : "blueIO-500"}
+        iconColor={iconColor}
         label={I18n.t("features.wallet.cards.categories.itw")}
         endElement={{
           type: "buttonLink",
@@ -101,10 +104,10 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     );
   }, [
     isEidExpired,
-    eidInfoBottomSheet.present,
     isNewItwRenderable,
-    cards,
+    eidInfoBottomSheet.present,
     eidStatus,
+    cards.length,
     handleNavigateToItwId
   ]);
 
