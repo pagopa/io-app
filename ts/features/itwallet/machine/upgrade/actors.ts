@@ -38,7 +38,8 @@ export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
       clientId,
       codeVerifier,
       pid,
-      isNewIssuanceFlowEnabled: true
+      isNewIssuanceFlowEnabled: true,
+      isUpgrading: true
     });
 
     return {

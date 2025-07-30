@@ -50,25 +50,24 @@ export const itwCredentialUpgradeMachine = setup({
           credential: context.credentials[0]
         }),
         onDone: {
-          actions: [
-            "storeCredential",
-            assign({
-              credentials: ({ context }) => context.credentials.slice(1)
-            })
-          ],
+          actions: ["storeCredential"],
           target: "Checking"
         },
         onError: {
-          actions: assign({
-            failedCredentials: ({ context }) => [
-              ...context.failedCredentials,
-              context.credentials[0]
-            ],
-            credentials: ({ context }) => context.credentials.slice(1)
-          }),
+          actions: [
+            assign({
+              failedCredentials: ({ context }) => [
+                ...context.failedCredentials,
+                context.credentials[0]
+              ]
+            })
+          ],
           target: "Checking"
         }
-      }
+      },
+      exit: assign({
+        credentials: ({ context }) => context.credentials.slice(1)
+      })
     },
     Completed: {
       type: "final"
