@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/Option";
 import { MixpanelProperties } from "mixpanel-react-native";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
@@ -149,6 +150,9 @@ const generateMockedGlobalState = (
     },
     features: {
       itWallet: {
+        issuance: {
+          integrityKeyTag: O.none
+        },
         credentials: {
           credentials: {}
         },

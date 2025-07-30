@@ -284,6 +284,9 @@ const generateMockedGlobalState = (
     },
     features: {
       itWallet: {
+        issuance: {
+          integrityKeyTag: O.none
+        },
         credentials: {
           credentials: {}
         },
