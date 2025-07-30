@@ -77,7 +77,7 @@ const ItwIssuanceEidUpgradeResultContent = () => {
           "features.itWallet.issuance.upgrade.loading.title"
         )}
       >
-        <Body>
+        <Body style={{ textAlign: "center" }}>
           {I18n.t("features.itWallet.issuance.upgrade.loading.subtitle")}
         </Body>
       </LoadingScreenContent>
