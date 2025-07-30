@@ -112,6 +112,7 @@ describe("superProperties", () => {
             CGN_STATUS: "not_active",
             ITW_CED_V2: "not_available",
             ITW_ID_V2: "not_available",
+            ITW_PID: "not_available",
             ITW_PG_V2: "not_available",
             ITW_STATUS_V2: "L2",
             ITW_TS_V2: "not_available",
