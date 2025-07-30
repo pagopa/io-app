@@ -75,9 +75,10 @@ const ContentView = ({ eid }: ContentViewProps) => {
 
   const isL3 = isItwCredential(eid.credential);
 
-  const mixPanelCredential = useMemo(() => {
-    return isL3 ? "ITW_PID" : "ITW_ID_V2";
-  }, [isL3]);
+  const mixPanelCredential = useMemo(
+    () => (isL3 ? "ITW_PID" : "ITW_ID_V2"),
+    [isL3]
+  );
 
   const theme = useIOTheme();
 
