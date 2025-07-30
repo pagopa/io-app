@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { URL } from "react-native-url-polyfill";
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
 import { Linking, Platform, StyleSheet } from "react-native";
@@ -16,10 +16,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { SessionToken } from "../../../../types/SessionToken";
 import { IdpSuccessfulAuthentication } from "../../common/components/IdpSuccessfulAuthentication";
 import { onLoginUriChanged } from "../../common/utils/login";
-import {
-  HeaderSecondLevelHookProps,
-  useHeaderSecondLevel
-} from "../../../../hooks/useHeaderSecondLevel";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 import { remoteApiLoginUrlPrefixSelector } from "../../loginPreferences/store/selectors";
@@ -33,12 +30,9 @@ import {
 import { activeSessionUserLoggedSelector } from "../store/selectors";
 import {
   activeSessionLoginFailure,
-  activeSessionLoginSuccess,
-  setFinishedActiveSessionLoginFlow
+  activeSessionLoginSuccess
 } from "../store/actions";
 import { AUTH_ERRORS } from "../../common/components/AuthErrorComponent";
-import ROUTES from "../../../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { AuthenticationParamsList } from "../../common/navigation/params/AuthenticationParamsList";
 import { originSchemasWhiteList } from "../../common/utils/originSchemasWhiteList";
 import {
@@ -47,6 +41,8 @@ import {
   defaultUserAgent,
   LoadingOverlay
 } from "../../login/cie/components/CieIdLoginWebView";
+import { IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
+import { trackLoginSpidError } from "../../common/analytics/spidAnalytics";
 
 const CieIdLoginWebViewActiveSessionLogin = ({
   spidLevel,
@@ -77,13 +73,6 @@ const CieIdLoginWebViewActiveSessionLogin = ({
     },
     [navigation]
   );
-
-  const navigateToMessagesHomeScreen = useCallback(() => {
-    dispatch(setFinishedActiveSessionLoginFlow());
-    navigation.navigate(ROUTES.MAIN, {
-      screen: MESSAGES_ROUTES.MESSAGES_HOME
-    });
-  }, [dispatch, navigation]);
 
   const checkIfUrlIsWhitelisted = useCallback(
     (url: string) => {
@@ -116,13 +105,13 @@ const CieIdLoginWebViewActiveSessionLogin = ({
       if (code !== AUTH_ERRORS.NOT_SAME_CF) {
         dispatch(activeSessionLoginFailure());
       }
-      // // Tracking is temporarily disabled until the final list of events is confirmed.
       // Classic login events are kept in case the same ones are reused, with only a
       // profile/super property added for active session login.
-      // trackLoginSpidError(code || message, {
-      //   idp: IdpCIE_ID.id,
-      //   ...(message ? { "error message": message } : {})
-      // });
+      trackLoginSpidError(code || message, {
+        idp: IdpCIE_ID.id,
+        ...(message ? { "error message": message } : {})
+      });
+      // TODO: evaluate loginFailure event with CXM
       // dispatch(
       //   loginFailure({
       //     error: new Error(
@@ -244,28 +233,19 @@ const CieIdLoginWebViewActiveSessionLogin = ({
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
         if (url.includes(apiLoginUrlPrefix) || statusCode !== 403) {
-          // TODO: manage this error
           navigateToCieIdAuthenticationError();
         }
       } else {
-        // TODO: manage this error
         navigateToCieIdAuthenticationError();
       }
     },
     [apiLoginUrlPrefix, navigateToCieIdAuthenticationError]
   );
 
-  const headerProps: HeaderSecondLevelHookProps = useMemo(() => {
-    if (webviewSource && !isLoadingWebView) {
-      return { title: "", goBack: navigateToMessagesHomeScreen }; // TODO: check if is only necessary the navigation.goBack()
-    }
-    return {
-      title: "",
-      canGoBack: false
-    };
-  }, [isLoadingWebView, navigateToMessagesHomeScreen, webviewSource]);
-
-  useHeaderSecondLevel(headerProps);
+  useHeaderSecondLevel({
+    title: "",
+    canGoBack: webviewSource && !isLoadingWebView
+  });
 
   if (activeSessionUserLogged) {
     return <IdpSuccessfulAuthentication />;

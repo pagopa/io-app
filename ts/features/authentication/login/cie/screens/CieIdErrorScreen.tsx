@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import useNavigateToLoginMethod, {
   IdpCIE
@@ -13,9 +14,13 @@ import {
   trackCieIdErrorSpidFallbackScreen,
   trackCieIdErrorSpidSelected
 } from "../analytics";
-import { useIODispatch } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { idpSelected } from "../../../common/store/actions";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import ROUTES from "../../../../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import { setFinishedActiveSessionLoginFlow } from "../../../activeSessionLogin/store/actions";
 
 const CIE_PIN_DESC: TranslationKeys =
   "authentication.cie_id.error_screen.cie_pin_supported.description";
@@ -29,6 +34,7 @@ const SPID_ACTION_LABEL: TranslationKeys =
 const CieIdErrorScreen = () => {
   const { isCieSupported } = useNavigateToLoginMethod();
   const dispatch = useIODispatch();
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
   const { replace, navigate } = useIONavigation();
 
   useAvoidHardwareBackButton();
@@ -49,9 +55,16 @@ const CieIdErrorScreen = () => {
     "authentication.cie_id.error_screen.secondary_action_label"
   );
   const navigateToLandingScreen = () => {
-    replace(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
+    if (isActiveSessionLogin) {
+      dispatch(setFinishedActiveSessionLoginFlow());
+      replace(ROUTES.MAIN, {
+        screen: MESSAGES_ROUTES.MESSAGES_HOME
+      });
+    } else {
+      replace(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.LANDING
+      });
+    }
   };
 
   return (
@@ -64,21 +77,27 @@ const CieIdErrorScreen = () => {
         label: primaryActionLabel,
         accessibilityLabel: primaryActionLabel,
         onPress: () => {
-          if (isCieSupported) {
-            void trackCieIdErrorCiePinSelected();
-            // Since this screen will only be accessible after the user has already
-            // made their choice on the Opt-In screen, we can navigate directly to it
-            dispatch(idpSelected(IdpCIE));
-            navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
-            });
+          if (isActiveSessionLogin) {
+            IOToast.info(
+              "Questa funzionalità è attualmente in fase di sviluppo e non ancora disponibile."
+            );
           } else {
-            void trackCieIdErrorSpidSelected();
-            // Since this screen will only be accessible after the user has already
-            // made their choice on the Opt-In screen, we can navigate directly to it
-            navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen: AUTHENTICATION_ROUTES.IDP_SELECTION
-            });
+            if (isCieSupported) {
+              void trackCieIdErrorCiePinSelected();
+              // Since this screen will only be accessible after the user has already
+              // made their choice on the Opt-In screen, we can navigate directly to it
+              dispatch(idpSelected(IdpCIE));
+              navigate(AUTHENTICATION_ROUTES.MAIN, {
+                screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
+              });
+            } else {
+              void trackCieIdErrorSpidSelected();
+              // Since this screen will only be accessible after the user has already
+              // made their choice on the Opt-In screen, we can navigate directly to it
+              navigate(AUTHENTICATION_ROUTES.MAIN, {
+                screen: AUTHENTICATION_ROUTES.IDP_SELECTION
+              });
+            }
           }
         }
       }}

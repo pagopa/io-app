@@ -6,6 +6,11 @@ import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { trackCieIdNoWhitelistUrl } from "../analytics";
 import i18n from "../../../../../i18n";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import { setFinishedActiveSessionLoginFlow } from "../../../activeSessionLogin/store/actions";
+import ROUTES from "../../../../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 
 export type UrlNotCompliant = { url: string };
 const CieIdAuthUrlError = () => {
@@ -15,16 +20,25 @@ const CieIdAuthUrlError = () => {
     >();
   const { url } = route.params;
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
   useOnFirstRender(() => {
     trackCieIdNoWhitelistUrl(url);
   });
 
   const handleClose = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
-  }, [navigation]);
+    if (isActiveSessionLogin) {
+      dispatch(setFinishedActiveSessionLoginFlow());
+      navigation.replace(ROUTES.MAIN, {
+        screen: MESSAGES_ROUTES.MESSAGES_HOME
+      });
+    } else {
+      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.LANDING
+      });
+    }
+  }, [dispatch, isActiveSessionLogin, navigation]);
 
   return (
     <OperationResultScreenContent
