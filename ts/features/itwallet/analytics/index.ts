@@ -141,7 +141,7 @@ type TrackItWalletCieCardReadingFailure = {
 
 export type ItwStatus = "not_active" | "L2" | "L3";
 export type ItwId = "not_available" | "valid" | "not_valid";
-export type ItwPID = "not_available" | "valid" | "not_valid" | "expiring";
+export type ItwPID = "not_available" | "valid" | "not_valid";
 export type ItwPg = "not_available" | "valid" | "not_valid" | "expiring";
 export type ItwTs = "not_available" | "valid" | "not_valid" | "expiring";
 export type ItwCed = "not_available" | "valid" | "not_valid" | "expiring";
