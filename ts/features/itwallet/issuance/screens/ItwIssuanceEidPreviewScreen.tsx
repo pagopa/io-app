@@ -21,7 +21,6 @@ import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
-  CREDENTIALS_MAP,
   trackCredentialPreview,
   trackItwExit,
   trackItwRequestSuccess,
