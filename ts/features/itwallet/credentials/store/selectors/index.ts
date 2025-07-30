@@ -31,8 +31,8 @@ const withLegacyFallback = (
   credential: CredentialsByType[string] | undefined,
   format: CredentialFormat
 ) => {
-  if (format === "dc+sd-jwt") {
-    return credential?.[format] ?? credential?.["vc+sd-jwt"];
+  if (format === CredentialFormat.SD_JWT) {
+    return credential?.[format] ?? credential?.[CredentialFormat.LEGACY_SD_JWT];
   }
   return credential?.[format];
 };
@@ -56,21 +56,33 @@ export const itwCredentialsByTypeSelector = createSelector(
 );
 
 /**
- * Returns the credentials object from the itw credentials state, excluding the eID credential.
+ * Returns the credentials object from the itw credentials state, including the PID credential.
+ * Only SD-JWT credentials are returned.
+ *
+ * @param state - The global state.
+ * @returns The credentials object.
+ */
+export const itwCredentialsAllSelector = createSelector(
+  itwCredentialsByTypeSelector,
+  credentials =>
+    Object.values(credentials)
+      .map(c => withLegacyFallback(c, CredentialFormat.SD_JWT))
+      .reduce<Record<string, StoredCredential>>(
+        (acc, c) => (c ? { ...acc, [c.credentialType]: c } : acc),
+        {}
+      )
+);
+
+/**
+ * Returns the credentials object from the itw credentials state, excluding the PID credential.
  * Only SD-JWT credentials are returned.
  *
  * @param state - The global state.
  * @returns The credentials object.
  */
 export const itwCredentialsSelector = createSelector(
-  itwCredentialsByTypeSelector,
-  ({ [CredentialType.PID]: pid, ...otherCredentials }) =>
-    Object.values(otherCredentials)
-      .map(c => withLegacyFallback(c, "dc+sd-jwt"))
-      .reduce(
-        (acc, c) => (c ? { ...acc, [c.credentialType]: c } : acc),
-        {} as Record<string, StoredCredential>
-      )
+  itwCredentialsAllSelector,
+  ({ [CredentialType.PID]: _pid, ...otherCredentials }) => otherCredentials
 );
 
 /**
@@ -82,7 +94,7 @@ export const itwCredentialsSelector = createSelector(
 export const itwCredentialsEidSelector = createSelector(
   itwCredentialsByTypeSelector,
   ({ [CredentialType.PID]: pid }) =>
-    O.fromNullable(withLegacyFallback(pid, "dc+sd-jwt"))
+    O.fromNullable(withLegacyFallback(pid, CredentialFormat.SD_JWT))
 );
 
 /**
@@ -94,7 +106,7 @@ export const itwCredentialsEidSelector = createSelector(
  */
 export const itwCredentialSelector = (
   key: string,
-  format: CredentialFormat = "dc+sd-jwt"
+  format = CredentialFormat.SD_JWT
 ) =>
   createSelector(itwCredentialsByTypeSelector, credentials =>
     O.fromNullable(withLegacyFallback(credentials[key], format))
