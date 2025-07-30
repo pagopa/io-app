@@ -10,7 +10,10 @@ import {
   ItwCredentialStatus,
   WalletInstanceRevocationReason
 } from "../common/utils/itwTypesUtils";
-import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
+import {
+  itwAuthLevelSelector,
+  itwHasObtainedEidSelector
+} from "../common/store/selectors/preferences.ts";
 import { OfflineAccessReasonEnum } from "../../ingress/store/reducer";
 import { Action } from "../../../store/actions/types.ts";
 import {
@@ -1095,11 +1098,14 @@ export const trackItwOfflineBanner = ({
 
 // #region PROFILE AND SUPER PROPERTIES UPDATE
 
-export const updateITWStatusAndIDProperties = (state: GlobalState) => {
+export const updateITWStatusAndPIDProperties = (state: GlobalState) => {
   const authLevel = itwAuthLevelSelector(state);
   if (!authLevel) {
     return;
   }
+
+  const hasObtainedEid = itwHasObtainedEidSelector(state);
+  const isL3 = authLevel === "L3";
 
   void updateMixpanelProfileProperties(state, {
     property: "ITW_STATUS_V2",
@@ -1111,11 +1117,19 @@ export const updateITWStatusAndIDProperties = (state: GlobalState) => {
   });
   void updateMixpanelProfileProperties(state, {
     property: "ITW_ID_V2",
-    value: "valid"
+    value: hasObtainedEid ? "valid" : "not_available"
   });
   void updateMixpanelSuperProperties(state, {
     property: "ITW_ID_V2",
-    value: "valid"
+    value: hasObtainedEid ? "valid" : "not_available"
+  });
+  void updateMixpanelProfileProperties(state, {
+    property: "ITW_PID",
+    value: isL3 ? "valid" : "not_available"
+  });
+  void updateMixpanelSuperProperties(state, {
+    property: "ITW_PID",
+    value: isL3 ? "valid" : "not_available"
   });
 };
 

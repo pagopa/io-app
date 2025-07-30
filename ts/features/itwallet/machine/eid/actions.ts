@@ -22,7 +22,7 @@ import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/ac
 import {
   trackItwDeactivated,
   trackSaveCredentialSuccess,
-  updateITWStatusAndIDProperties
+  updateITWStatusAndPIDProperties
 } from "../../analytics";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
@@ -260,7 +260,7 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     const isL3 = context.identification?.level === "L3";
     trackSaveCredentialSuccess(isL3 ? "ITW_PID" : "ITW_ID_V2");
-    updateITWStatusAndIDProperties(store.getState());
+    updateITWStatusAndPIDProperties(store.getState());
   },
   trackWalletInstanceRevocation: ({
     context
