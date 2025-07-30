@@ -1,3 +1,4 @@
+import type { DoneActorEvent } from "xstate";
 import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";
 
 export type Start = {
@@ -47,4 +48,5 @@ export type RemoteEvents =
   | ToggleCredential
   | Back
   | Close
-  | Reset;
+  | Reset
+  | DoneActorEvent;
