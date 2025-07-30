@@ -27,7 +27,7 @@ import { itwCredentialsSelector } from "../features/itwallet/credentials/store/s
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import {
   itwAuthLevelSelector,
-  itwHasOwnedEidSelector
+  itwHasObtainedEidSelector
 } from "../features/itwallet/common/store/selectors/preferences.ts";
 import { fontPreferenceSelector } from "../store/reducers/persistedPreferences.ts";
 import {
@@ -165,8 +165,8 @@ const walletStatusHandler = (state: GlobalState): ItwStatus => {
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {
-  const hasOwnedEid = itwHasOwnedEidSelector(state);
-  return hasOwnedEid ? "valid" : "not_available";
+  const hasObtainedEid = itwHasObtainedEidSelector(state);
+  return hasObtainedEid ? "valid" : "not_available";
 };
 
 const pidStatusHandler = (state: GlobalState): ItwId => {

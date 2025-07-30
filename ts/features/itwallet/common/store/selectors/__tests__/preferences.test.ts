@@ -5,6 +5,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import {
   itwAuthLevelSelector,
+  itwHasObtainedEidSelector,
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
   itwRequestedCredentialsSelector
@@ -115,5 +116,42 @@ describe("itwAuthLevelSelector", () => {
     };
 
     expect(itwAuthLevelSelector(updatedState)).toBeUndefined();
+  });
+
+  it("should return true when hasObtainedEid is true", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    const updatedState = {
+      ...state,
+      features: {
+        ...state.features,
+        itWallet: {
+          ...state.features?.itWallet,
+          preferences: {
+            ...state.features?.itWallet?.preferences,
+            hasObtainedEid: true
+          }
+        }
+      }
+    };
+
+    expect(itwHasObtainedEidSelector(updatedState)).toBe(true);
+  });
+
+  it("should return false when hasObtainedEid is undefined", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    const updatedState = {
+      ...state,
+      features: {
+        ...state.features,
+        itWallet: {
+          ...state.features?.itWallet,
+          preferences: {
+            ...state.features?.itWallet?.preferences
+          }
+        }
+      }
+    };
+
+    expect(itwHasObtainedEidSelector(updatedState)).toBe(false);
   });
 });

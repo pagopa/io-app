@@ -1,6 +1,5 @@
 import * as Sentry from "@sentry/react-native";
 import { Appearance, ColorSchemeName } from "react-native";
-import * as O from "fp-ts/Option";
 import {
   isMixpanelInstanceInitialized,
   registerSuperProperties
@@ -33,7 +32,7 @@ import { itwCredentialsSelector } from "../features/itwallet/credentials/store/s
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import {
   itwAuthLevelSelector,
-  itwHasOwnedEidSelector
+  itwHasObtainedEidSelector
 } from "../features/itwallet/common/store/selectors/preferences.ts";
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
@@ -153,8 +152,8 @@ const walletStatusHandler = (state: GlobalState): ItwStatus => {
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {
-  const hasOwnedEid = itwHasOwnedEidSelector(state);
-  return hasOwnedEid ? "valid" : "not_available";
+  const hasObtainedEid = itwHasObtainedEidSelector(state);
+  return hasObtainedEid ? "valid" : "not_available";
 };
 
 const pidStatusHandler = (state: GlobalState): ItwId => {
