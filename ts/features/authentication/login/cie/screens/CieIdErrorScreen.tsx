@@ -18,8 +18,6 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { idpSelected } from "../../../common/store/actions";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
-import ROUTES from "../../../../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import { setFinishedActiveSessionLoginFlow } from "../../../activeSessionLogin/store/actions";
 
 const CIE_PIN_DESC: TranslationKeys =
@@ -35,7 +33,7 @@ const CieIdErrorScreen = () => {
   const { isCieSupported } = useNavigateToLoginMethod();
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
-  const { replace, navigate } = useIONavigation();
+  const { replace, navigate, popToTop } = useIONavigation();
 
   useAvoidHardwareBackButton();
 
@@ -57,9 +55,8 @@ const CieIdErrorScreen = () => {
   const navigateToLandingScreen = () => {
     if (isActiveSessionLogin) {
       dispatch(setFinishedActiveSessionLoginFlow());
-      replace(ROUTES.MAIN, {
-        screen: MESSAGES_ROUTES.MESSAGES_HOME
-      });
+      // allows the user to return to the screen from which the flow began
+      popToTop();
     } else {
       replace(AUTHENTICATION_ROUTES.MAIN, {
         screen: AUTHENTICATION_ROUTES.LANDING

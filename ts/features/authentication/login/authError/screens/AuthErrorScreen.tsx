@@ -19,10 +19,11 @@ import AuthErrorComponent, {
 } from "../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
-import ROUTES from "../../../../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import { SETTINGS_ROUTES } from "../../../../settings/common/navigation/routes";
-import { setRetryActiveSessionLogin } from "../../../activeSessionLogin/store/actions";
+import {
+  setFinishedActiveSessionLoginFlow,
+  setRetryActiveSessionLogin
+} from "../../../activeSessionLogin/store/actions";
 
 type CommonAuthErrorScreenProps = {
   errorCodeOrMessage?: string;
@@ -115,11 +116,11 @@ const AuthErrorScreen = () => {
 
     if (
       isActiveSessionLogin &&
-      errorCodeOrMessage !== AUTH_ERRORS.NOT_SAME_CF // add correct manage for new error
+      errorCodeOrMessage !== AUTH_ERRORS.NOT_SAME_CF
     ) {
-      navigation.navigate(ROUTES.MAIN, {
-        screen: MESSAGES_ROUTES.MESSAGES_HOME
-      });
+      dispatch(setFinishedActiveSessionLoginFlow());
+      // allows the user to return to the screen from which the flow began
+      navigation.popToTop();
       return;
     }
     navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {

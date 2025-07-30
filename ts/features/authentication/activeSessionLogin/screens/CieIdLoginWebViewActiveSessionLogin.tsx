@@ -30,7 +30,8 @@ import {
 import { activeSessionUserLoggedSelector } from "../store/selectors";
 import {
   activeSessionLoginFailure,
-  activeSessionLoginSuccess
+  activeSessionLoginSuccess,
+  setFinishedActiveSessionLoginFlow
 } from "../store/actions";
 import { AUTH_ERRORS } from "../../common/components/AuthErrorComponent";
 import { AuthenticationParamsList } from "../../common/navigation/params/AuthenticationParamsList";
@@ -244,7 +245,11 @@ const CieIdLoginWebViewActiveSessionLogin = ({
 
   useHeaderSecondLevel({
     title: "",
-    canGoBack: webviewSource && !isLoadingWebView
+    canGoBack: webviewSource && !isLoadingWebView,
+    goBack: () => {
+      dispatch(setFinishedActiveSessionLoginFlow());
+      navigation.popToTop();
+    }
   });
 
   if (activeSessionUserLogged) {
