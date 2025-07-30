@@ -1,4 +1,4 @@
-import { ActionArgs, assertEvent } from "xstate";
+import { ActionArgs, DoneActorEvent } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
 import {
   itwCredentialsRemoveByType,
@@ -6,6 +6,7 @@ import {
 } from "../../credentials/store/actions";
 import { Context } from "./context";
 import { CredentialUpgradeEvents } from "./events";
+import { UpgradeCredentialOutput } from "./actors";
 
 export const createCredentialUpgradeActionsImplementation = (
   store: ReturnType<typeof useIOStore>
@@ -13,11 +14,8 @@ export const createCredentialUpgradeActionsImplementation = (
   storeCredential: ({
     event
   }: ActionArgs<Context, CredentialUpgradeEvents, CredentialUpgradeEvents>) => {
-    assertEvent(
-      event,
-      "xstate.done.actor.0.itwCredentialUpgradeMachine.UpgradeCredential"
-    );
-    const { credentialType, credentials } = event.output;
+    const doneEvent = event as DoneActorEvent<UpgradeCredentialOutput>;
+    const { credentialType, credentials } = doneEvent.output;
     // Removes old credential using the credential type
     store.dispatch(itwCredentialsRemoveByType(credentialType));
     // Stores the new credentials
