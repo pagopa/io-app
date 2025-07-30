@@ -24,7 +24,15 @@
       "Friday",
       "Saturday"
     ],
-    "abbr_day_names": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "abbr_day_names": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ],
     "month_names": [
       " ",
       "January",
@@ -55,7 +63,10 @@
       "Nov",
       "Dec"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes": {
         "zero": "0 minutes",
@@ -4070,7 +4081,7 @@
         "cancel": "Cancel",
         "confirm": "Ok",
         "alertText": "Do you want to change or update your e-mail address?",
-        "alertLink": "Go here",
+        "alertLink": "Edit email",
         "name": "Name",
         "familyName": "Surname",
         "birthDate": "Date of birth"
