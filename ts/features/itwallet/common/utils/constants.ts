@@ -30,6 +30,7 @@ export const itwGradientColors = [
  */
 export const IT_WALLET_ID_BG_LIGHT = "#DBE0FF";
 export const IT_WALLET_ID_BG = "#A8B4FF";
+export const IT_WALLET_ID_GRADIENT = ["#D5D5FF", "#CEE2FA"];
 /**
  * IT-Wallet ID logo
  */

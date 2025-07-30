@@ -1,7 +1,7 @@
-import { Credential, Errors } from "@pagopa/io-react-native-wallet";
-import { Trust } from "@pagopa/io-react-native-wallet-v2";
+import { Credential, Errors, Trust } from "@pagopa/io-react-native-wallet-v2";
 import { isDefined } from "../../../../../utils/guards.ts";
 import { isFederationError } from "../../../common/utils/itwFailureUtils.ts";
+import { getCredentialTypeByVct } from "../utils/itwRemotePresentationUtils.ts";
 import { RemoteEvents } from "./events.ts";
 
 const { CredentialsNotFoundError } = Credential.Presentation.Errors;
@@ -96,6 +96,8 @@ export const mapEventToFailure = (event: RemoteEvents): RemoteFailure => {
       reason: {
         missingCredentials: error.details
           .flatMap(c => c.vctValues)
+          .filter(isDefined)
+          .map(getCredentialTypeByVct)
           .filter(isDefined)
       }
     };
