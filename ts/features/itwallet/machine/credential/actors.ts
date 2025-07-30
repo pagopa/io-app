@@ -142,10 +142,7 @@ export const createCredentialIssuanceActorsImplementation = (
     return await Promise.all(
       input.credentials.map(async credential => {
         const { statusAttestation, parsedStatusAttestation } =
-          await getCredentialStatusAttestation(
-            credential,
-            input.isNewIssuanceFlowEnabled
-          ).catch(
+          await getCredentialStatusAttestation(credential, env).catch(
             enrichErrorWithMetadata({ credentialId: credential.credentialId })
           );
 

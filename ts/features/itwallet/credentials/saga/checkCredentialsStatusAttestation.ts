@@ -20,18 +20,20 @@ import {
   CREDENTIALS_MAP,
   trackItwStatusCredentialAttestationFailure
 } from "../../analytics";
+import { selectItwEnv } from "../../common/store/selectors/environment";
+import { getEnv } from "../../common/utils/environment";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
 export function* updateCredentialStatusAttestationSaga(
   credential: StoredCredential
 ): Generator<ReduxSagaEffect, StoredCredential> {
+  const env = yield* select(selectItwEnv);
   try {
     const { parsedStatusAttestation, statusAttestation } = yield* call(
       getCredentialStatusAttestation,
       credential,
-      // TODO: [SIW-2530] Use the new API for the new credentials only, remove after migration to 1.0
-      credential.format !== "vc+sd-jwt"
+      getEnv(env)
     );
     return {
       ...credential,
