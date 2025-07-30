@@ -121,7 +121,7 @@ export const isItwCredential = (sdJwt: string): boolean =>
 export const getCredentialLevel = (
   credential: StoredCredential
 ): "L2" | "L3" => {
-  if (credential.format === "dc+sd-jwt") {
+  if (credential.format === "vc+sd-jwt") {
     // Credentials with the legacy format always have an L2 level
     return "L2";
   }
