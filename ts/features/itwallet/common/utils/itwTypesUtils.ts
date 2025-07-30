@@ -78,7 +78,7 @@ export type ParsedCredential = Awaited<
  * Alias for the ParsedStatusAttestation type
  */
 export type ParsedStatusAttestation = Awaited<
-  ReturnType<typeof Credential.Status.verifyAndParseStatusAttestation>
+  ReturnType<typeof _legacy_Credential.Status.verifyAndParseStatusAttestation>
 >["parsedStatusAttestation"]["payload"];
 
 /**
