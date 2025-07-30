@@ -24,15 +24,7 @@
       "Friday",
       "Saturday"
     ],
-    "abbr_day_names": [
-      "Sun",
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri",
-      "Sat"
-    ],
+    "abbr_day_names": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     "month_names": [
       " ",
       "January",
@@ -63,10 +55,7 @@
       "Nov",
       "Dec"
     ],
-    "meridian": [
-      "am",
-      "pm"
-    ],
+    "meridian": ["am", "pm"],
     "time": {
       "minutes": {
         "zero": "0 minutes",
@@ -4066,9 +4055,9 @@
           "selected": "Field selected",
           "unselected": "Field not selected"
         },
-        "required": "REQUIRED SIGNATURES",
-        "optional": "OPTIONAL SIGNATURES",
-        "unfair": "UNFAIR TERMS SIGNATURES"
+        "required": "Required signatures",
+        "optional": "Optional signatures",
+        "unfair": "Unfair terms signatures"
       },
       "title": "Firma con IO",
       "documentsBar": {
