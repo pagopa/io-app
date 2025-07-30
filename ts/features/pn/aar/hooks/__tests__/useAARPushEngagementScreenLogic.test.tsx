@@ -10,6 +10,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import * as NOTIF_UTILS from "../../../../pushNotifications/utils";
 import PN_ROUTES from "../../../navigation/routes";
 import * as MAIN_FILE from "../useAARpushEngagementScreenLogic";
+import * as analytics from "../../../../pushNotifications/analytics";
 
 // eslint-disable-next-line functional/no-let
 let testingHookOutput = {
@@ -43,7 +44,10 @@ describe("UseEngamentScreenFocusLogic", () => {
     jest.resetAllMocks();
   });
 
-  it(" should set header and call openSystemNotificationSettingsScreen on button press, and also return {shouldRenderBlankPage:true}", async () => {
+  it(" should set header and call openSystemNotificationSettingsScreen on button press, return {shouldRenderBlankPage:true} and track proper analytics event", async () => {
+    const spiedOnMockedAnalyticsOutcomeEvent = jest
+      .spyOn(analytics, "trackSystemNotificationPermissionScreenOutcome")
+      .mockImplementation();
     renderHook();
     expect(testOpenNotifications).toHaveBeenCalledTimes(0);
     expect(testSetOptions).toHaveBeenCalledTimes(0);
@@ -55,6 +59,14 @@ describe("UseEngamentScreenFocusLogic", () => {
     expect(testSetOptions).toHaveBeenCalledTimes(1);
     expect(testSetOptions).toHaveBeenCalledWith({ headerShown: false });
     expect(testingHookOutput.shouldRenderBlankPage).toBe(true);
+    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls.length).toBe(1);
+    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0].length).toBe(2);
+    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][0]).toBe(
+      "activate"
+    );
+    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][1]).toBe(
+      "send_notification_opening"
+    );
   });
 
   it('should subscribe to a "change" appstate event, and unsubscribe on unmount', () => {

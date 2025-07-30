@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { SendEngagementComponent } from "../components/SendEngagementComponent";
@@ -9,6 +9,12 @@ import { pnActivationUpsert } from "../../store/actions";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import PN_ROUTES from "../../navigation/routes";
+import {
+  trackSendActivationModalDialog,
+  trackSendActivationModalDialogActivationDismissed,
+  trackSendActivationModalDialogActivationStart
+} from "../analytics";
+import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 
 export const SendEngagementScreen = () => {
   const [screenStatus, setScreenStatus] = useState<
@@ -43,6 +49,7 @@ export const SendEngagementScreen = () => {
 
   const onActivateService = useCallback(
     (isRetry: boolean = false) => {
+      trackSendActivationModalDialogActivationStart();
       if (isRetry) {
         navigation.setOptions({
           headerShown: true
@@ -61,9 +68,23 @@ export const SendEngagementScreen = () => {
   );
   const onClose = useCallback(() => {
     if (screenStatus !== "Activating") {
+      trackSendActivationModalDialogActivationDismissed();
       navigation.popToTop();
     }
   }, [navigation, screenStatus]);
+
+  useEffect(() => {
+    if (screenStatus === "Waiting") {
+      // Make sure that nothing sets screenStatus to Waiting,
+      // otherwise there will be a double event tracking
+      trackSendActivationModalDialog();
+    } else if (screenStatus === "Failed") {
+      // Here multiple tracking is fine, since we want
+      // to track it every time that the user retries it
+      sendBannerMixpanelEvents.bannerKO("aar");
+    }
+  }, [screenStatus]);
+
   if (screenStatus === "Failed") {
     return (
       <OperationResultScreenContent

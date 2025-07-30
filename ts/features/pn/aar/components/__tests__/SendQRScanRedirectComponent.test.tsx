@@ -11,6 +11,7 @@ import { SendQRScanRedirectComponent } from "../SendQRScanRedirectComponent";
 import PN_ROUTES from "../../../navigation/routes";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import * as analytics from "../../analytics";
 
 const sendNotificationServiceId = "01G40DWQGKY5GRWSNM4303VNRP" as ServiceId;
 const aarUrl = "https://example.com";
@@ -30,12 +31,19 @@ jest.mock("@react-navigation/native", () => {
   };
 });
 
-jest.mock("react-native-haptic-feedback", () => ({
-  trigger: jest.fn()
-}));
-
 describe("SendQRScanRedirectComponent", () => {
   const mockOpenWebUrl = jest.fn();
+
+  const spiedOnMockedTrackSendQRCodeScanRedirect = jest
+    .spyOn(analytics, "trackSendQRCodeScanRedirect")
+    .mockImplementation();
+  const spiedOnMockedTrackSendQRCodeScanRedirectConfirmed = jest
+    .spyOn(analytics, "trackSendQRCodeScanRedirectConfirmed")
+    .mockImplementation();
+  const spiedOnMockedTrackSendQRCodeScanRedirectDismissed = jest
+    .spyOn(analytics, "trackSendQRCodeScanRedirectDismissed")
+    .mockImplementation();
+
   beforeAll(() => {
     jest.spyOn(URLUTILS, "openWebUrl").mockImplementation(mockOpenWebUrl);
   });
@@ -44,9 +52,20 @@ describe("SendQRScanRedirectComponent", () => {
     jest.clearAllMocks();
   });
 
-  it("should match snapshot", () => {
+  it("should match snapshot and track the screen view", () => {
     const { toJSON } = renderComponent();
+
     expect(toJSON()).toMatchSnapshot();
+    expect(spiedOnMockedTrackSendQRCodeScanRedirect.mock.calls.length).toBe(1);
+    expect(spiedOnMockedTrackSendQRCodeScanRedirect.mock.calls[0].length).toBe(
+      0
+    );
+    expect(
+      spiedOnMockedTrackSendQRCodeScanRedirectConfirmed.mock.calls.length
+    ).toBe(0);
+    expect(
+      spiedOnMockedTrackSendQRCodeScanRedirectDismissed.mock.calls.length
+    ).toBe(0);
   });
 
   [false, true].forEach(sendServiceActive =>
@@ -55,7 +74,7 @@ describe("SendQRScanRedirectComponent", () => {
       const shouldNavigateToNotificationPermissionsScreen =
         sendServiceActive && !notificationPermissionsEnabled;
 
-      it(`should call 'openWebUrl' when primary action is pressed and ${
+      it(`should call 'openWebUrl' when primary action is pressed, track proper analytics events and ${
         shouldNavigateToEngagementScreen
           ? "navigate to service engagment screen"
           : shouldNavigateToNotificationPermissionsScreen
@@ -75,6 +94,19 @@ describe("SendQRScanRedirectComponent", () => {
         expect(mockOpenWebUrl).toHaveBeenCalledTimes(0); // the function should not have been called before the button press
 
         fireEvent(button, "press");
+
+        expect(spiedOnMockedTrackSendQRCodeScanRedirect.mock.calls.length).toBe(
+          1
+        );
+        expect(
+          spiedOnMockedTrackSendQRCodeScanRedirect.mock.calls[0].length
+        ).toBe(0);
+        expect(
+          spiedOnMockedTrackSendQRCodeScanRedirectConfirmed.mock.calls.length
+        ).toBe(1);
+        expect(
+          spiedOnMockedTrackSendQRCodeScanRedirectConfirmed.mock.calls[0].length
+        ).toBe(0);
 
         expect(mockOpenWebUrl).toHaveBeenCalledWith(aarUrl);
         expect(mockOpenWebUrl).toHaveBeenCalledTimes(1);
@@ -113,14 +145,26 @@ describe("SendQRScanRedirectComponent", () => {
       });
     })
   );
-
-  it("calls popToTop when the header action is pressed", () => {
+  it("should call popToTop and track proper analytics when the header action is pressed", () => {
     const { getByTestId } = renderComponent();
     const header = getByTestId("header-close");
     fireEvent(header, "press");
     expect(mockOpenWebUrl).toHaveBeenCalledTimes(0);
     expect(mockPopToTop.mock.calls.length).toBe(1);
     expect(mockPopToTop.mock.calls[0].length).toBe(0);
+    expect(spiedOnMockedTrackSendQRCodeScanRedirect.mock.calls.length).toBe(1);
+    expect(spiedOnMockedTrackSendQRCodeScanRedirect.mock.calls[0].length).toBe(
+      0
+    );
+    expect(
+      spiedOnMockedTrackSendQRCodeScanRedirectConfirmed.mock.calls.length
+    ).toBe(0);
+    expect(
+      spiedOnMockedTrackSendQRCodeScanRedirectDismissed.mock.calls.length
+    ).toBe(1);
+    expect(
+      spiedOnMockedTrackSendQRCodeScanRedirectDismissed.mock.calls[0].length
+    ).toBe(0);
   });
 });
 
