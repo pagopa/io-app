@@ -9,10 +9,6 @@ import { ItwCredentialCard } from "../ItwCredentialCard";
 import * as selectors from "../../../store/selectors";
 
 describe("ItwCredentialCard", () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
-
   it.each(["EuropeanHealthInsuranceCard", "EuropeanDisabilityCard", "MDL"])(
     "should match snapshot when credential type is %p",
     type => {
@@ -57,7 +53,7 @@ describe("ItwCredentialCard", () => {
 
       const component = render(
         <Provider store={store}>
-          <ItwCredentialCard credentialType={"MDL"} status={status} />
+          <ItwCredentialCard credentialType={"MDL"} credentialStatus={status} />
         </Provider>
       );
       expect(component).toMatchSnapshot();

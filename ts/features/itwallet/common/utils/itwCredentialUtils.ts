@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { SdJwt } from "@pagopa/io-react-native-wallet-v2";
 import I18n from "../../../../i18n";
 import { CredentialType } from "./itwMocksUtils";
-import { ItwCredentialStatus } from "./itwTypesUtils";
+import { ItwCredentialStatus, StoredCredential } from "./itwTypesUtils";
 
 export const itwGetCredentialNameByCredentialType = (
   isItwCredential: boolean
@@ -111,3 +111,22 @@ export const isItwCredential = (sdJwt: string): boolean =>
     O.chainNullableK(({ assurance_level }) => assurance_level === "high"),
     O.getOrElse(() => false)
   );
+
+/**
+ * Returns the credential level based on the credential format
+ * and the `assurance_level` claim.
+ * @param credential - The {@see StoredCredential} credential to check.
+ * @returns the level of the credential, which can be "L2" or "L3".
+ */
+export const getCredentialLevel = (
+  credential: StoredCredential
+): "L2" | "L3" => {
+  if (credential.format === "dc+sd-jwt") {
+    // Credentials with the legacy format always have an L2 level
+    return "L2";
+  }
+
+  // Level of credentials obtained with the new API is based on the
+  // `assurance_level` claim
+  return isItwCredential(credential.credential) ? "L3" : "L2";
+};

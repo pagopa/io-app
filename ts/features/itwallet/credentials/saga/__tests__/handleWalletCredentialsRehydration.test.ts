@@ -77,7 +77,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             type: "itw",
             category: "itw",
             credentialType: CredentialType.PID,
-            status: "valid"
+            credentialStatus: "valid"
           }
         ])
       )
@@ -109,7 +109,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             type: "itw",
             category: "itw",
             credentialType: CredentialType.DRIVING_LICENSE,
-            status: "valid",
+            credentialStatus: "valid",
             level: "L2"
           },
           {
@@ -117,7 +117,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             type: "itw",
             category: "itw",
             credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
-            status: "valid",
+            credentialStatus: "valid",
             level: "L2"
           }
         ])
@@ -148,7 +148,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             type: "itw",
             category: "itw",
             credentialType: CredentialType.DRIVING_LICENSE,
-            status: "valid"
+            credentialStatus: "valid"
           }
         ])
       )
