@@ -78,7 +78,7 @@ describe("ItwCredentialCard", () => {
 
     const component = render(
       <Provider store={store}>
-        <ItwCredentialCard credentialType={"MDL"} level={"L2"} />
+        <ItwCredentialCard credentialType={"MDL"} credentialLevel={"L2"} />
       </Provider>
     );
     expect(component).toMatchSnapshot();

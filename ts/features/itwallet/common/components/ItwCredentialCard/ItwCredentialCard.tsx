@@ -20,14 +20,21 @@ import { ItwCardValidityCheckMark } from "./ItwCardValidityCheckMark";
 import { CardColorScheme } from "./types";
 
 export type ItwCredentialCard = {
+  /**
+   * Type of the credential, which is used to determine the
+   * visual representation and styling of the card.
+   */
   credentialType: string;
-  status?: ItwCredentialStatus;
   /**
    * Indicates the auth level of the credential, which is used to determine
    * if the credential is a valid IT Wallet credential.
-   * TODO remove once the upgrade flow is removed
    */
-  level?: "L2" | "L3";
+  credentialLevel?: "L2" | "L3";
+  /**
+   * Current status of the credential, used to determine the
+   * visual representation and the status tag to display.
+   */
+  status?: ItwCredentialStatus;
 };
 
 type StyleProps = {
@@ -37,13 +44,13 @@ type StyleProps = {
 };
 
 export const ItwCredentialCard = ({
-  status = "valid",
   credentialType,
-  level
+  credentialLevel = "L2",
+  status = "valid"
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
-  const needsItwUpgrade = isNewItwRenderable && level !== "L3";
+  const needsItwUpgrade = isNewItwRenderable && credentialLevel !== "L3";
 
   const borderColorMap = useBorderColorByStatus();
 
