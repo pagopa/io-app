@@ -1,11 +1,11 @@
-import { Errors } from "@pagopa/io-react-native-wallet";
+import { Errors as LegacyErrors } from "@pagopa/io-react-native-wallet";
+import { Trust, Errors } from "@pagopa/io-react-native-wallet-v2";
+import { type IntegrityError } from "@pagopa/io-react-native-integrity";
+import { CryptoError } from "@pagopa/io-react-native-crypto";
 import {
-  type IntegrityError,
-  type IntegrityErrorCodes
-} from "@pagopa/io-react-native-integrity";
-import { CryptoError, CryptoErrorCodes } from "@pagopa/io-react-native-crypto";
-import { Trust } from "@pagopa/io-react-native-wallet-v2";
-import { isFederationError } from "../../common/utils/itwFailureUtils";
+  isFederationError,
+  isLocalIntegrityError
+} from "../../common/utils/itwFailureUtils";
 import { type EidIssuanceEvents } from "./events";
 
 const {
@@ -72,7 +72,11 @@ export const mapEventToFailure = (
 
   if (
     isLocalIntegrityError(error) ||
-    isWalletProviderResponseError(error, Codes.WalletInstanceIntegrityFailed)
+    isWalletProviderResponseError(error, Codes.WalletInstanceIntegrityFailed) ||
+    LegacyErrors.isWalletProviderResponseError(
+      error,
+      Codes.WalletInstanceIntegrityFailed
+    ) // TODO: [SIW-2530]: remove after full migration to API 1.0
   ) {
     return {
       type: IssuanceFailureType.UNSUPPORTED_DEVICE,
@@ -80,14 +84,20 @@ export const mapEventToFailure = (
     };
   }
 
-  if (isIssuerResponseError(error)) {
+  if (
+    isIssuerResponseError(error) ||
+    LegacyErrors.isIssuerResponseError(error) // TODO: [SIW-2530]: remove after full migration to API 1.0
+  ) {
     return {
       type: IssuanceFailureType.ISSUER_GENERIC,
       reason: error
     };
   }
 
-  if (isWalletProviderResponseError(error)) {
+  if (
+    isWalletProviderResponseError(error) ||
+    LegacyErrors.isWalletProviderResponseError(error) // TODO: [SIW-2530]: remove after full migration to API 1.0
+  ) {
     return {
       type: IssuanceFailureType.WALLET_PROVIDER_GENERIC,
       reason: error
@@ -113,23 +123,3 @@ export const mapEventToFailure = (
     reason: error
   };
 };
-
-/**
- * Integrity errors thrown by the device.
- * These errors might occur locally before calling the Wallet Provider.
- */
-const localIntegrityErrors: Array<IntegrityErrorCodes | CryptoErrorCodes> = [
-  "REQUEST_ATTESTATION_FAILED",
-  "UNSUPPORTED_DEVICE",
-  "UNSUPPORTED_IOS_VERSION",
-  "UNSUPPORTED_SERVICE",
-  "WRONG_KEY_CONFIGURATION",
-  "API_LEVEL_NOT_SUPPORTED",
-  "PREPARE_FAILED",
-  "KEY_IS_NOT_HARDWARE_BACKED",
-  "GENERATION_KEY_FAILED"
-];
-
-const isLocalIntegrityError = (e: unknown): e is IntegrityError =>
-  e instanceof Error &&
-  localIntegrityErrors.includes(e.message as IntegrityErrorCodes);
