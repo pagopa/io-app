@@ -56,6 +56,7 @@ import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailur
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
   credentialType?: string;
   asyncContinuation?: boolean;
+  isUpgrade?: boolean;
 };
 
 type ScreenProps =
@@ -68,7 +69,7 @@ type ScreenProps =
   | ItwIssuanceCredentialTrustIssuerNavigationParams;
 
 const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
-  const { credentialType, asyncContinuation } =
+  const { credentialType, asyncContinuation, isUpgrade } =
     ("route" in props ? props.route.params : props) ?? {};
 
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -96,10 +97,11 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
           type: "select-credential",
           skipNavigation: true,
           credentialType,
-          asyncContinuation
+          asyncContinuation,
+          isUpgrade
         });
       }
-    }, [credentialType, asyncContinuation, machineRef])
+    }, [credentialType, asyncContinuation, machineRef, isUpgrade])
   );
 
   if (isLoading) {

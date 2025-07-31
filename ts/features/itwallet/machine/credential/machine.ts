@@ -79,36 +79,34 @@ export const itwCredentialIssuanceMachine = setup({
         "Waits for a credential selection in order to proceed with the issuance",
       tags: [ItwTags.Loading],
       on: {
-        "select-credential": [
-          {
-            guard: "isEidExpired",
-            actions: "navigateToEidVerificationExpiredScreen",
-            target: "Idle"
-          },
-          {
-            guard: "isSkipNavigation",
-            target: "CheckingWalletInstanceAttestation",
-            actions: [
-              assign(({ event }) => ({
-                credentialType: event.credentialType,
-                isAsyncContinuation: event.asyncContinuation
-              })),
-              "trackStartAddCredential"
-            ]
-          },
-          {
-            target: "CheckingWalletInstanceAttestation",
-            actions: [
-              assign(({ event }) => ({
-                credentialType: event.credentialType,
-                isAsyncContinuation: event.asyncContinuation
-              })),
-              "navigateToTrustIssuerScreen",
-              "trackStartAddCredential"
-            ]
-          }
-        ]
+        "select-credential": {
+          target: "EvaluateFlow",
+          actions: assign(({ event }) => ({
+            credentialType: event.credentialType,
+            isAsyncContinuation: event.asyncContinuation,
+            isUpgrade: event.isUpgrade || false
+          }))
+        }
       }
+    },
+    EvaluateFlow: {
+      description: "Evaluates the next state and actions based on the context",
+      always: [
+        {
+          guard: "isEidExpired",
+          actions: "navigateToEidVerificationExpiredScreen",
+          target: "Idle"
+        },
+        {
+          guard: "isSkipNavigation",
+          target: "CheckingWalletInstanceAttestation",
+          actions: ["trackStartAddCredential"]
+        },
+        {
+          target: "CheckingWalletInstanceAttestation",
+          actions: ["trackStartAddCredential", "navigateToTrustIssuerScreen"]
+        }
+      ]
     },
     CheckingWalletInstanceAttestation: {
       description:
@@ -218,7 +216,8 @@ export const itwCredentialIssuanceMachine = setup({
               credentialDefinition: context.credentialDefinition,
               requestedCredential: context.requestedCredential,
               issuerConf: context.issuerConf,
-              isNewIssuanceFlowEnabled: context.isWhiteListed
+              isNewIssuanceFlowEnabled: context.isWhiteListed,
+              operationType: context.isUpgrade ? "reissuing" : undefined
             }),
             onDone: [
               {

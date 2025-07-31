@@ -5,6 +5,7 @@ export type SelectCredential = {
   credentialType: string;
   skipNavigation?: boolean;
   asyncContinuation?: boolean;
+  isUpgrade?: boolean;
 };
 
 export type ConfirmTrustData = {

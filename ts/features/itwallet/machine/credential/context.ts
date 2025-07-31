@@ -21,6 +21,7 @@ export type Context = {
   credentials: Array<StoredCredential> | undefined;
   failure: CredentialIssuanceFailure | undefined;
   isAsyncContinuation: boolean;
+  isUpgrade: boolean;
   isWhiteListed?: boolean;
 };
 
@@ -35,5 +36,6 @@ export const InitialContext: Context = {
   requestedCredential: undefined,
   credentials: undefined,
   failure: undefined,
-  isAsyncContinuation: false
+  isAsyncContinuation: false,
+  isUpgrade: false
 };
