@@ -55,7 +55,8 @@ describe("checkWalletInstanceStateSaga", () => {
           credentials: { credentials: {} },
           environment: {
             env: "prod"
-          }
+          },
+          preferences: {}
         }
       }
     };
@@ -84,7 +85,8 @@ describe("checkWalletInstanceStateSaga", () => {
           credentials: { credentials: {} },
           environment: {
             env: "prod"
-          }
+          },
+          preferences: {}
         }
       }
     };
@@ -114,7 +116,8 @@ describe("checkWalletInstanceStateSaga", () => {
           },
           environment: {
             env: "prod"
-          }
+          },
+          preferences: {}
         }
       }
     };
@@ -144,7 +147,8 @@ describe("checkWalletInstanceStateSaga", () => {
           },
           environment: {
             env: "prod"
-          }
+          },
+          preferences: {}
         }
       }
     };
