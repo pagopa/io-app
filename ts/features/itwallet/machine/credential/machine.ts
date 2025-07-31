@@ -8,7 +8,8 @@ import {
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput
+  RequestCredentialActorOutput,
+  VerifyTrustFederationActorInput
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
@@ -43,6 +44,9 @@ export const itwCredentialIssuanceMachine = setup({
     trackCredentialIssuingDataShareAccepted: notImplemented
   },
   actors: {
+    verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
+      notImplemented
+    ),
     getWalletAttestation: fromPromise<
       GetWalletAttestationActorOutput,
       GetWalletAttestationActorInput
@@ -81,6 +85,26 @@ export const itwCredentialIssuanceMachine = setup({
       on: {
         "select-credential": [
           {
+            actions: assign(({ event }) => ({
+              credentialType: event.credentialType,
+              isAsyncContinuation: event.asyncContinuation
+            })),
+            target: "TrustFederationVerification"
+          }
+        ]
+      }
+    },
+    TrustFederationVerification: {
+      description:
+        "Verification of the trust federation. This state verifies the trust chain of the wallet provider with the EAA provider.",
+      tags: [ItwTags.Loading],
+      invoke: {
+        input: ({ context }) => ({
+          isNewIssuanceFlowEnabled: context.isWhiteListed
+        }),
+        src: "verifyTrustFederation",
+        onDone: [
+          {
             guard: "isEidExpired",
             actions: "navigateToEidVerificationExpiredScreen",
             target: "Idle"
@@ -88,24 +112,17 @@ export const itwCredentialIssuanceMachine = setup({
           {
             guard: "isSkipNavigation",
             target: "CheckingWalletInstanceAttestation",
-            actions: [
-              assign(({ event }) => ({
-                credentialType: event.credentialType,
-                isAsyncContinuation: event.asyncContinuation
-              })),
-              "trackStartAddCredential"
-            ]
+            actions: ["trackStartAddCredential"]
           },
           {
             target: "CheckingWalletInstanceAttestation",
-            actions: [
-              assign(({ event }) => ({
-                credentialType: event.credentialType,
-                isAsyncContinuation: event.asyncContinuation
-              })),
-              "navigateToTrustIssuerScreen",
-              "trackStartAddCredential"
-            ]
+            actions: ["navigateToTrustIssuerScreen", "trackStartAddCredential"]
+          }
+        ],
+        onError: [
+          {
+            actions: "setFailure",
+            target: "#itwCredentialIssuanceMachine.Failure"
           }
         ]
       }
