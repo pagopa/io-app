@@ -8,7 +8,6 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { validCredentialStatuses } from "../../../common/utils/itwCredentialUtils";
 import { isDefined } from "../../../../../utils/guards";
-import { assert } from "../../../../../utils/assert";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   EnrichedPresentationDetails,
@@ -76,8 +75,14 @@ export const enrichPresentationDetails = (
     const credentialType = getCredentialTypeByVct(details.vct);
     const credential = credentialType && credentialsByType[credentialType];
 
-    // This should never happen if we pass the DCQL query evaluation
-    assert(credential, `${details.vct} credential was not found in the wallet`);
+    // When the credential is not found, it is not available as a `StoredCredential`, so we hide it from the user.
+    // The raw credential is still used for the presentation. Currently this only happens for the Wallet Attestation.
+    if (!credential) {
+      return {
+        ...details,
+        claimsToDisplay: [] // Hide from user
+      };
+    }
 
     const parsedClaims = parseClaims(credential.parsedCredential, {
       exclude: [WellKnownClaim.unique_id]

@@ -4,7 +4,10 @@ import {
   enrichPresentationDetails,
   groupCredentialsByPurpose
 } from "../itwRemotePresentationUtils";
-import { type EnrichedPresentationDetails } from "../itwRemoteTypeUtils";
+import {
+  PresentationDetails,
+  type EnrichedPresentationDetails
+} from "../itwRemoteTypeUtils";
 
 type Expected = ReturnType<typeof groupCredentialsByPurpose>;
 
@@ -223,25 +226,28 @@ describe("enrichPresentationDetails", () => {
     ]);
   });
 
-  it("should throw when a credential is not found", () => {
-    expect(() =>
-      enrichPresentationDetails(
-        [
-          {
-            id: "one",
-            credential: "",
-            cryptoContext: createCryptoContextFor("one-keytag"),
-            vct: "missing_PID",
-            requiredDisclosures: [
-              ["salt1", "name", "Mario"],
-              ["salt2", "surname", "Rossi"],
-              ["salt3", "iat", 123456]
-            ],
-            purposes: [{ required: true }]
-          }
-        ],
-        { PersonIdentificationData: storedCredentialMock }
-      )
-    ).toThrow("missing_PID credential was not found in the wallet");
+  it("should work even when a credential is not found", () => {
+    const missingCredentialDetails: PresentationDetails[number] = {
+      id: "one",
+      credential: "",
+      cryptoContext: createCryptoContextFor("one-keytag"),
+      vct: "missing_PID",
+      requiredDisclosures: [
+        ["salt1", "name", "Mario"],
+        ["salt2", "surname", "Rossi"],
+        ["salt3", "iat", 123456]
+      ],
+      purposes: [{ required: true }]
+    };
+    expect(
+      enrichPresentationDetails([missingCredentialDetails], {
+        PersonIdentificationData: storedCredentialMock
+      })
+    ).toEqual([
+      {
+        ...missingCredentialDetails,
+        claimsToDisplay: []
+      }
+    ]);
   });
 });
