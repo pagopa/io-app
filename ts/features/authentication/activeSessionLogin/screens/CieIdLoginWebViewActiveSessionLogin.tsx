@@ -42,8 +42,6 @@ import {
   defaultUserAgent,
   LoadingOverlay
 } from "../../login/cie/components/CieIdLoginWebView";
-import { IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
-import { trackLoginSpidError } from "../../common/analytics/spidAnalytics";
 
 const CieIdLoginWebViewActiveSessionLogin = ({
   spidLevel,
@@ -106,12 +104,17 @@ const CieIdLoginWebViewActiveSessionLogin = ({
       if (code !== AUTH_ERRORS.NOT_SAME_CF) {
         dispatch(activeSessionLoginFailure());
       }
+
+      // The related MP events have been commented on, pending their
+      // correct integration into the flow.
+      // Task: https://pagopa.atlassian.net/browse/IOPID-3343
+
       // Classic login events are kept in case the same ones are reused, with only a
       // profile/super property added for active session login.
-      trackLoginSpidError(code || message, {
-        idp: IdpCIE_ID.id,
-        ...(message ? { "error message": message } : {})
-      });
+      // trackLoginSpidError(code || message, {
+      //   idp: IdpCIE_ID.id,
+      //   ...(message ? { "error message": message } : {})
+      // });
       // TODO: evaluate loginFailure event with CXM
       // dispatch(
       //   loginFailure({

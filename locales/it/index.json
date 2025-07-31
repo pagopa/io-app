@@ -1028,7 +1028,8 @@
         "description": "Per accedere, devi avere l'app installata sul tuo dispositivo.",
         "primary_action_label": "Scarica CieID",
         "link_error": "Non siamo riusciti a indirizzarti allo store. Aprilo manualmente e cerca CieID"
-      }
+      },
+      "feature_not_already_implemented": "Questa funzionalità è attualmente in fase di sviluppo e non ancora disponibile."
     },
     "cie": {
       "genericTitle": "Entra con CIE",

@@ -1028,7 +1028,8 @@
         "description": "To login, you must have the app installed on your device.",
         "primary_action_label": "Get the app",
         "link_error": "We could not direct you to the store. Open it manually and search for CieID"
-      }
+      },
+      "feature_not_already_implemented": "Questa funzionalità è attualmente in fase di sviluppo e non ancora disponibile."
     },
     "cie": {
       "genericTitle": "Login with CIE",

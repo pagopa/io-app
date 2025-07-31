@@ -76,7 +76,7 @@ const CieIdErrorScreen = () => {
         onPress: () => {
           if (isActiveSessionLogin) {
             IOToast.info(
-              "Questa funzionalità è attualmente in fase di sviluppo e non ancora disponibile."
+              I18n.t("authentication.cie_id.feature_not_already_implemented")
             );
           } else {
             if (isCieSupported) {
