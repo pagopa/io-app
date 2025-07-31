@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.11.0-rc.2](https://github.com/pagopa/io-app/compare/3.11.0-rc.1...3.11.0-rc.2) (2025-07-30)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2559](https://pagopa.atlassian.net/browse/SIW-2559)] Include Wallet Attestation in remote presentation ([#7233](https://github.com/pagopa/io-app/issues/7233)) ([5166db5](https://github.com/pagopa/io-app/commit/5166db55df3772fd03dfde3931ef25031bededee))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2788](https://pagopa.atlassian.net/browse/SIW-2788)] error handling in the new PID issuance flow ([#7214](https://github.com/pagopa/io-app/issues/7214)) ([8151db5](https://github.com/pagopa/io-app/commit/8151db57c7490861d85d4ad96c6570ec4ba11253))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2816](https://pagopa.atlassian.net/browse/SIW-2816)] Update `io-react-native-crypto` and `io-react-native-wallet-v2` ([#7238](https://github.com/pagopa/io-app/issues/7238)) ([0f77cbe](https://github.com/pagopa/io-app/commit/0f77cbef8f01e0c274c044fa70dad8f459165c80))
+
 ## [3.11.0-rc.1](https://github.com/pagopa/io-app/compare/3.11.0-rc.0...3.11.0-rc.1) (2025-07-29)
 
 ## [3.11.0-rc.0](https://github.com/pagopa/io-app/compare/3.10.0-rc.6...3.11.0-rc.0) (2025-07-29)
