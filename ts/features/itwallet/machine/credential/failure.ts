@@ -1,7 +1,8 @@
 import { Errors as LegacyErrors } from "@pagopa/io-react-native-wallet";
-import { Errors } from "@pagopa/io-react-native-wallet-v2";
+import { Errors, Trust } from "@pagopa/io-react-native-wallet-v2";
 import { IssuerResponseErrorCode } from "@pagopa/io-react-native-wallet-v2/src/utils/error-codes";
 import { EnrichedIssuerResponseError } from "../../common/utils/itwCredentialIssuanceUtils.v2";
+import { isFederationError } from "../../common/utils/itwFailureUtils.ts";
 import { CredentialIssuanceEvents } from "./events";
 
 const {
@@ -17,6 +18,7 @@ export enum CredentialIssuanceFailureType {
   ASYNC_ISSUANCE = "ASYNC_ISSUANCE",
   INVALID_STATUS = "INVALID_STATUS",
   ISSUER_GENERIC = "ISSUER_GENERIC",
+  UNTRUSTED_ISS = "UNTRUSTED_ISS",
   WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC"
 }
 
@@ -28,6 +30,7 @@ export type ReasonTypeByFailure = {
   [CredentialIssuanceFailureType.INVALID_STATUS]: EnrichedIssuerResponseError;
   [CredentialIssuanceFailureType.ASYNC_ISSUANCE]: Errors.IssuerResponseError;
   [CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC]: Errors.WalletProviderResponseError;
+  [CredentialIssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
   [CredentialIssuanceFailureType.UNEXPECTED]: unknown;
 };
 
@@ -89,6 +92,13 @@ export const mapEventToFailure = (
   if (isIssuerResponseError(error)) {
     return {
       type: CredentialIssuanceFailureType.ISSUER_GENERIC,
+      reason: error
+    };
+  }
+
+  if (isFederationError(error)) {
+    return {
+      type: CredentialIssuanceFailureType.UNTRUSTED_ISS,
       reason: error
     };
   }
