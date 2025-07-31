@@ -1,18 +1,20 @@
 import { SagaIterator } from "redux-saga";
-import { call, fork } from "typed-redux-saga/macro";
+import { call, fork, put } from "typed-redux-saga/macro";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
 import { checkCredentialsStatusAttestation } from "../../credentials/saga/checkCredentialsStatusAttestation";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
+import { checkHasNfcFeatureSaga } from "../../identification/saga";
 import { watchItwLifecycleSaga } from "../../lifecycle/saga";
+import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
 import { warmUpIntegrityServiceSaga } from "../../lifecycle/saga/checkIntegrityServiceReadySaga";
 import {
   checkWalletInstanceInconsistencySaga,
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
-import { checkHasNfcFeatureSaga } from "../../identification/saga";
-import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
+import { itwOfflineAccessCounterReset } from "../store/actions/securePreferences.ts";
 import { watchItwEnvironment } from "./environment";
+import { watchItwOfflineAccess } from "./offlineAccess.ts";
 
 export function* watchItwSaga(): SagaIterator {
   yield* fork(warmUpIntegrityServiceSaga);
@@ -34,6 +36,9 @@ export function* watchItwSaga(): SagaIterator {
   yield* call(checkWalletInstanceStateSaga);
   yield* call(checkCurrentWalletInstanceStateSaga);
   yield* call(checkCredentialsStatusAttestation);
+
+  // When all the chacks are done, reset the offline access counter
+  yield* put(itwOfflineAccessCounterReset());
 }
 
 /**
@@ -46,4 +51,6 @@ export function* watchItwOfflineSaga(): SagaIterator {
   yield* fork(checkHasNfcFeatureSaga);
   // Handle environment changes
   yield* fork(watchItwEnvironment);
+  // Handle offline access counter
+  yield* fork(watchItwOfflineAccess);
 }
