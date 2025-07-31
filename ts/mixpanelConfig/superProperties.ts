@@ -1,5 +1,7 @@
 import * as Sentry from "@sentry/react-native";
 import { Appearance, ColorSchemeName } from "react-native";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import {
   isMixpanelInstanceInitialized,
   registerSuperProperties
@@ -22,24 +24,17 @@ import { LoginSessionDuration } from "../features/authentication/fastLogin/analy
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
   getCredentialMixpanelStatus,
+  getPIDMixpanelStatus,
   ItwCredentialMixpanelStatus,
-  ItwPID,
-  ItwStatus,
-  mapEidStatusToMixpanel
+  ItwPIDStatus,
+  ItwStatus
 } from "../features/itwallet/analytics";
-import {
-  itwCredentialsEidStatusSelector,
-  itwCredentialsSelector
-} from "../features/itwallet/credentials/store/selectors";
+import { itwCredentialsSelector } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
-import {
-  itwAuthLevelSelector,
-  itwHasObtainedEidSelector
-} from "../features/itwallet/common/store/selectors/preferences.ts";
+import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
 import { isConnectedSelector } from "../features/connectivity/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../features/itwallet/lifecycle/store/selectors";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -65,8 +60,8 @@ type SuperProperties = {
   NOTIFICATION_PERMISSION: NotificationPermissionType;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   ITW_STATUS_V2: ItwStatus;
-  ITW_ID_V2: ItwPID;
-  ITW_PID: ItwPID;
+  ITW_ID_V2: ItwPIDStatus;
+  ITW_PID: ItwPIDStatus;
   ITW_PG_V2: ItwCredentialMixpanelStatus;
   ITW_TS_V2: ItwCredentialMixpanelStatus;
   ITW_CED_V2: ItwCredentialMixpanelStatus;
@@ -94,8 +89,8 @@ export const updateMixpanelSuperProperties = async (
     const notificationsEnabled = await checkNotificationPermissions();
     const SERVICE_CONFIGURATION = serviceConfigHandler(state);
     const ITW_STATUS_V2 = walletStatusHandler(state);
-    const ITW_ID_V2 = idStatusHandler(state);
-    const ITW_PID = pidStatusHandler(state);
+    const ITW_ID_V2 = getPIDMixpanelStatus(state, false);
+    const ITW_PID = getPIDMixpanelStatus(state, true);
     const ITW_PG_V2 = credentialStatusHandler("MDL", state);
     const ITW_TS_V2 = credentialStatusHandler(
       "EuropeanHealthInsuranceCard",
@@ -154,23 +149,6 @@ const forceUpdate = <T extends keyof SuperProperties>(
 const walletStatusHandler = (state: GlobalState): ItwStatus => {
   const authLevel = itwAuthLevelSelector(state);
   return authLevel ? authLevel : "not_active";
-};
-
-/* const idStatusHandler = (state: GlobalState): ItwId => {
-  const eidStatus = itwCredentialsEidStatusSelector(state);
-  return eidStatus !== undefined
-    ? mapEidStatusToMixpanel(eidStatus)
-    : "not_available";
-}; */
-
-const idStatusHandler = (state: GlobalState): ItwPID => {
-  const hasObtainedEid = itwHasObtainedEidSelector(state);
-  return hasObtainedEid ? "valid" : "not_available";
-};
-
-const pidStatusHandler = (state: GlobalState): ItwPID => {
-  const pid = itwLifecycleIsITWalletValidSelector(state);
-  return pid ? "valid" : "not_available";
 };
 
 const credentialStatusHandler = (

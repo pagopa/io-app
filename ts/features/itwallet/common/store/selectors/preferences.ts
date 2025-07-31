@@ -98,8 +98,7 @@ export const itwIsWalletUpgradeMDLDetailsBannerHiddenSelector = (
   false;
 
 /**
- * Returns true if the user has ever obtained an eID ( Documenti su IO),
- * regardless of whether it's currently present in the wallet.
+ * Returns the last known status of the eID, if previously obtained.
  */
-export const itwHasObtainedEidSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.hasObtainedEid ?? false;
+export const itwLastEidStatusSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.lastEidStatus;

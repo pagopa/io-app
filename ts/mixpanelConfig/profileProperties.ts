@@ -17,27 +17,20 @@ import { tosVersionSelector } from "../features/settings/common/store/selectors/
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
   getCredentialMixpanelStatus,
+  getPIDMixpanelStatus,
   ItwCredentialMixpanelStatus,
-  ItwPID,
-  ItwStatus,
-  mapEidStatusToMixpanel
+  ItwPIDStatus,
+  ItwStatus
 } from "../features/itwallet/analytics";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
-import {
-  itwAuthLevelSelector,
-  itwHasObtainedEidSelector
-} from "../features/itwallet/common/store/selectors/preferences.ts";
+import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
 import { fontPreferenceSelector } from "../store/reducers/persistedPreferences.ts";
 import {
   booleanOrUndefinedToPNServiceStatus,
   PNServiceStatus
 } from "../features/pn/analytics/index.ts";
 import { isPnServiceEnabled } from "../features/pn/reminderBanner/reducer/bannerDismiss.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../features/itwallet/lifecycle/store/selectors";
-import {
-  itwCredentialsEidStatusSelector,
-  itwCredentialsSelector
-} from "../features/itwallet/credentials/store/selectors";
+import { itwCredentialsSelector } from "../features/itwallet/credentials/store/selectors";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -56,8 +49,8 @@ type ProfileProperties = {
   CGN_STATUS: TrackCgnStatus;
   FONT_PREFERENCE: string;
   ITW_STATUS_V2: ItwStatus;
-  ITW_ID_V2: ItwPID;
-  ITW_PID: ItwPID;
+  ITW_ID_V2: ItwPIDStatus;
+  ITW_PID: ItwPIDStatus;
   ITW_PG_V2: ItwCredentialMixpanelStatus;
   ITW_TS_V2: ItwCredentialMixpanelStatus;
   ITW_CED_V2: ItwCredentialMixpanelStatus;
@@ -88,9 +81,8 @@ export const updateMixpanelProfileProperties = async (
     const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
     const CGN_STATUS = cgnStatusHandler(state);
     const FONT_PREFERENCE = fontPreferenceSelector(state);
-
-    const ITW_ID_V2 = idStatusHandler(state);
-    const ITW_PID = pidStatusHandler(state);
+    const ITW_ID_V2 = getPIDMixpanelStatus(state, false);
+    const ITW_PID = getPIDMixpanelStatus(state, true);
     const ITW_PG_V2 = credentialStatusHandler("MDL", state);
     const ITW_TS_V2 = credentialStatusHandler(
       "EuropeanHealthInsuranceCard",
@@ -168,23 +160,6 @@ const tosVersionHandler = (state: GlobalState): number | string => {
 const walletStatusHandler = (state: GlobalState): ItwStatus => {
   const authLevel = itwAuthLevelSelector(state);
   return authLevel ?? "not_active";
-};
-
-/* const idStatusHandler = (state: GlobalState): ItwId => {
-  const eidStatus = itwCredentialsEidStatusSelector(state);
-  return eidStatus !== undefined
-    ? mapEidStatusToMixpanel(eidStatus)
-    : "not_available";
-}; */
-
-const idStatusHandler = (state: GlobalState): ItwPID => {
-  const hasObtainedEid = itwHasObtainedEidSelector(state);
-  return hasObtainedEid ? "valid" : "not_available";
-};
-
-const pidStatusHandler = (state: GlobalState): ItwPID => {
-  const pid = itwLifecycleIsITWalletValidSelector(state);
-  return pid ? "valid" : "not_available";
 };
 
 const credentialStatusHandler = (

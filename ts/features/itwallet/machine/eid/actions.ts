@@ -28,9 +28,11 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import {
   itwSetAuthLevel,
-  itwSetHasObtainedEid
+  itwSetLastEidStatus
 } from "../../common/store/actions/preferences";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
+import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -233,12 +235,19 @@ export const createEidIssuanceActionsImplementation = (
     store.dispatch(itwCredentialsRemoveByType(context.eid.credentialType));
     store.dispatch(itwCredentialsStore([context.eid]));
 
-    // Set hasObtainedEid to true only when the user obtains an eID with Documenti su IO (L2).
-    // This flag helps distinguish whether the user ever had an eID,
-    // even if it's later replaced or removed by a PID with IT-Wallet (L3).
+    /**
+     * Although the eID is always valid immediately after issuance,
+     * we store its status explicitly to ensure consistency in Mixpanel tracking,
+     * especially in cases where the app is not restarted and the saga responsible for setting `lastEidStatus` is not triggered.
+     * This applies only to L2 eIDs (issued through "Documenti su IO").
+     */
     const isL2 = context.identification?.level === "L2";
     if (isL2) {
-      store.dispatch(itwSetHasObtainedEid(true));
+      store.dispatch(
+        itwSetLastEidStatus(
+          getCredentialStatus(context.eid) as ItwJwtCredentialStatus
+        )
+      );
     }
   },
 

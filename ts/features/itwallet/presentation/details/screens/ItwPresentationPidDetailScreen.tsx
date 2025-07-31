@@ -11,7 +11,10 @@ import {
 } from "../../../credentials/store/selectors";
 import { ItwPresentationPidScaffoldScreen } from "../components/ItwPresentationPidScaffoldScreen";
 import { ItwPresentationPidDetailFooter } from "../components/ItwPresentationPidDetailFooter";
-import { ID_STATUS_MAP, trackCredentialDetail } from "../../../analytics";
+import {
+  mapPIDStatusToMixpanel,
+  trackCredentialDetail
+} from "../../../analytics";
 
 export const ItwPresentationPidDetailScreen = () => {
   const pidOption = useIOSelector(itwCredentialsEidSelector);
@@ -22,7 +25,7 @@ export const ItwPresentationPidDetailScreen = () => {
       if (maybeEidStatus) {
         trackCredentialDetail({
           credential: "ITW_PID",
-          credential_status: ID_STATUS_MAP[maybeEidStatus]
+          credential_status: mapPIDStatusToMixpanel(maybeEidStatus)
         });
       }
     }, [maybeEidStatus])
