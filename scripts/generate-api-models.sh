@@ -56,7 +56,7 @@ wait
 
 declare -a apisNoClient=(
   "./definitions/backend https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_public.yaml"
-  "./definitions/session_manager https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/refs/tags/io-session-manager@$IO_SESSION_MANAGER_VERSION/apps/io-session-manager/api/external.yaml"
+  "./definitions/session_manager https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@$IO_SESSION_MANAGER_VERSION/apps/io-session-manager/api/external.yaml"
   "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/consumed/api-piattaforma-notifiche.yaml"
 )
 
