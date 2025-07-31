@@ -32,8 +32,6 @@ import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
 import { itwCredentialsAllSelector } from "../../../credentials/store/selectors";
 import { InvalidCredentialsStatusError } from "./failure";
 
-const NEW_API_ENABLED = true; // TODO: [SIW-2530] Remove after transitioning to API 1.0
-
 type CredentialsSdJwt =
   Parameters<Credential.Presentation.EvaluateDcqlQuery>[0];
 
@@ -242,7 +240,7 @@ export const createRemoteActorsImplementation = (
     assert(sessionToken, "sessionToken is undefined");
     assert(integrityKeyTag, "integrityKeyTag is undefined");
 
-    return getAttestation(env, integrityKeyTag, sessionToken, NEW_API_ENABLED);
+    return getAttestation(env, integrityKeyTag, sessionToken);
   });
 
   return {
