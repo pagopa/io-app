@@ -31,30 +31,19 @@ import type {
   IdentificationContext
 } from "./context";
 
-export type CreateWalletInstanceActorParams = {
-  isL3IssuanceEnabled?: boolean;
-};
-
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
   walletInstanceAttestation: string | undefined;
   authenticationContext: AuthenticationContext | undefined;
-  isL3IssuanceEnabled?: boolean;
 };
 
 export type StartAuthFlowActorParams = {
   walletInstanceAttestation: string | undefined;
   identification: IdentificationContext | undefined;
-  isL3IssuanceEnabled?: boolean;
 };
 
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
-  isL3IssuanceEnabled?: boolean;
-};
-
-export type VerifyTrustFederationParams = {
-  isL3IssuanceEnabled?: boolean;
 };
 
 /**
@@ -67,75 +56,60 @@ export const createEidIssuanceActorsImplementation = (
   env: Env,
   store: ReturnType<typeof useIOStore>
 ) => ({
-  verifyTrustFederation: fromPromise<void, VerifyTrustFederationParams>(
-    async ({ input }) => {
-      // If the L3 issuance is not enabled, we don't need to verify the trust federation
-      if (!input.isL3IssuanceEnabled) {
-        return;
+  verifyTrustFederation: fromPromise(async () => {
+    // Evaluate the issuer trust
+    const trustAnchorEntityConfig =
+      await Trust.Build.getTrustAnchorEntityConfiguration(
+        env.WALLET_TA_BASE_URL
+      );
+    const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
+
+    // Create the trust chain for the PID provider
+    const builtChainJwts = await Trust.Build.buildTrustChain(
+      env.WALLET_PID_PROVIDER_BASE_URL,
+      trustAnchorKey
+    );
+
+    // Perform full validation on the built chain
+    await Trust.Verify.verifyTrustChain(
+      trustAnchorEntityConfig,
+      builtChainJwts,
+      {
+        connectTimeout: 10000,
+        readTimeout: 10000,
+        requireCrl: true
       }
+    );
+  }),
 
-      // Evaluate the issuer trust
-      const trustAnchorEntityConfig =
-        await Trust.Build.getTrustAnchorEntityConfiguration(
-          env.WALLET_TA_BASE_URL
-        );
-      const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
+  createWalletInstance: fromPromise<string>(async () => {
+    const sessionToken = sessionTokenSelector(store.getState());
+    assert(sessionToken, "sessionToken is undefined");
 
-      // Create the trust chain for the PID provider
-      // TODO: [SIW-2530] Move "1-0" to WALLET_PID_PROVIDER_BASE_URL after migrating to the new API
-      const builtChainJwts = await Trust.Build.buildTrustChain(
-        new URL("1-0", env.WALLET_PID_PROVIDER_BASE_URL).toString(),
-        trustAnchorKey
-      );
+    // Reset the wallet store to prevent having dirty state before registering a new wallet instance
+    store.dispatch(itwLifecycleStoresReset());
 
-      // Perform full validation on the built chain
-      await Trust.Verify.verifyTrustChain(
-        trustAnchorEntityConfig,
-        builtChainJwts,
-        {
-          connectTimeout: 10000,
-          readTimeout: 10000,
-          requireCrl: true
-        }
-      );
-    }
-  ),
+    // Await the integrity preparation before requesting the integrity key tag
+    const integrityServiceStatus = await pollForStoreValue({
+      getState: store.getState,
+      selector: itwIntegrityServiceStatusSelector,
+      condition: value => value !== undefined
+    }).catch(() => {
+      throw new Error("Integrity service status check timed out");
+    });
 
-  createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
-    async ({ input }) => {
-      const sessionToken = sessionTokenSelector(store.getState());
-      assert(sessionToken, "sessionToken is undefined");
+    // If the integrity service preparation is not ready (still undefined) or in an error state after 10 seconds the user will be prompted with an error,
+    // he will need to retry.
+    assert(
+      integrityServiceStatus === "ready",
+      `Integrity service status is ${integrityServiceStatus}`
+    );
 
-      // Reset the wallet store to prevent having dirty state before registering a new wallet instance
-      store.dispatch(itwLifecycleStoresReset());
+    const hardwareKeyTag = await getIntegrityHardwareKeyTag();
+    await registerWalletInstance(env, hardwareKeyTag, sessionToken);
 
-      // Await the integrity preparation before requesting the integrity key tag
-      const integrityServiceStatus = await pollForStoreValue({
-        getState: store.getState,
-        selector: itwIntegrityServiceStatusSelector,
-        condition: value => value !== undefined
-      }).catch(() => {
-        throw new Error("Integrity service status check timed out");
-      });
-
-      // If the integrity service preparation is not ready (still undefined) or in an error state after 10 seconds the user will be prompted with an error,
-      // he will need to retry.
-      assert(
-        integrityServiceStatus === "ready",
-        `Integrity service status is ${integrityServiceStatus}`
-      );
-
-      const hardwareKeyTag = await getIntegrityHardwareKeyTag();
-      await registerWalletInstance(
-        env,
-        hardwareKeyTag,
-        sessionToken,
-        input.isL3IssuanceEnabled
-      );
-
-      return hardwareKeyTag;
-    }
-  ),
+    return hardwareKeyTag;
+  }),
 
   getWalletAttestation: fromPromise<
     WalletInstanceAttestations,
@@ -145,12 +119,7 @@ export const createEidIssuanceActorsImplementation = (
     assert(sessionToken, "sessionToken is undefined");
     assert(input.integrityKeyTag, "integrityKeyTag is undefined");
 
-    return getAttestation(
-      env,
-      input.integrityKeyTag,
-      sessionToken,
-      input.isL3IssuanceEnabled
-    );
+    return getAttestation(env, input.integrityKeyTag, sessionToken);
   }),
 
   getCieStatus: fromPromise<CieContext>(async () => {
@@ -175,8 +144,7 @@ export const createEidIssuanceActorsImplementation = (
       const authenticationContext = await issuanceUtils.startAuthFlow({
         env,
         walletAttestation: input.walletInstanceAttestation,
-        identification: input.identification,
-        isL3IssuanceEnabled: !!input.isL3IssuanceEnabled
+        identification: input.identification
       });
 
       return {
@@ -202,16 +170,14 @@ export const createEidIssuanceActorsImplementation = (
 
       const authParams = await issuanceUtils.completeAuthFlow({
         ...input.authenticationContext,
-        walletAttestation: input.walletInstanceAttestation,
-        isL3IssuanceEnabled: !!input.isL3IssuanceEnabled
+        walletAttestation: input.walletInstanceAttestation
       });
 
       trackItwRequest(input.identification.mode, input.identification.level);
 
       return issuanceUtils.getPid({
         ...authParams,
-        ...input.authenticationContext,
-        isL3IssuanceEnabled: !!input.isL3IssuanceEnabled
+        ...input.authenticationContext
       });
     }
   ),
