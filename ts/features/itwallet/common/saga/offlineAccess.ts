@@ -7,6 +7,8 @@ import {
   itwOfflineAccessCounterReset,
   itwOfflineAccessCounterUp
 } from "../store/actions/securePreferences";
+import { setOfflineAccessReason } from "../../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
 
 /**
  * Handles the offline access counter reset by listening for the wallet
@@ -21,15 +23,30 @@ export function* handleItwOfflineAccessCounterReset(): SagaIterator {
 }
 
 /**
- * Handles the increment of the offline access counter when the
- * offline wallet mini app is used.
- *
- * Th offline access counter is increased when the user completes with success
- * the biometrix/pin identification AND the offline mini app is used
+ * Handles the increment of the offline access counter when the app start in
+ * offline mode and user completes the identification successfully.
  */
-export function* handleItwOfflineAccessCounterUp(): SagaIterator {
+export function* handleItwOfflineAccessCounterUpOnIdentificationSuccess(): SagaIterator {
   const offlineAccessReason = yield* select(offlineAccessReasonSelector);
-  if (offlineAccessReason !== undefined) {
+  if (offlineAccessReason === OfflineAccessReasonEnum.DEVICE_OFFLINE) {
+    yield* put(itwOfflineAccessCounterUp());
+  }
+}
+
+/**
+ * Handles the increment of the offline access counter when:
+ * - the user completes the identification successfully, but the session refresh fails.
+ * - the user opens the app without a valid session and the app is in offline mode.
+ *
+ * This is required because in these cases the identification is made (or not made at all)
+ * before the access  reason is set.
+ */
+export function* handleItwOfflineAccessCounterUpOnReasonSet(
+  action: ReturnType<typeof setOfflineAccessReason>
+): SagaIterator {
+  if (action.payload !== OfflineAccessReasonEnum.DEVICE_OFFLINE) {
+    // SESSION_REFRESH reason is dispatched after the user identification
+    // SESSION_EXPIRED reason is dispatched without an user identification
     yield* put(itwOfflineAccessCounterUp());
   }
 }
@@ -42,5 +59,12 @@ export function* watchItwOfflineAccess(): SagaIterator {
     itwUpdateWalletInstanceStatus.success,
     handleItwOfflineAccessCounterReset
   );
-  yield* takeLatest(identificationSuccess, handleItwOfflineAccessCounterUp);
+  yield* takeLatest(
+    identificationSuccess,
+    handleItwOfflineAccessCounterUpOnIdentificationSuccess
+  );
+  yield* takeLatest(
+    setOfflineAccessReason,
+    handleItwOfflineAccessCounterUpOnReasonSet
+  );
 }
