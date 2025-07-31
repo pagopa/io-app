@@ -78,7 +78,7 @@ export type ParsedCredential = Awaited<
  * Alias for the ParsedStatusAttestation type
  */
 export type ParsedStatusAttestation = Awaited<
-  ReturnType<typeof Credential.Status.verifyAndParseStatusAttestation>
+  ReturnType<typeof _legacy_Credential.Status.verifyAndParseStatusAttestation>
 >["parsedStatusAttestation"]["payload"];
 
 /**
@@ -142,10 +142,14 @@ export type ItwCredentialStatus =
 
 export type ItwAuthLevel = "L2" | "L3";
 
-export type CredentialFormat = "dc+sd-jwt" | "mso_mdoc" | "vc+sd-jwt"; // TODO: [SIW-2530] remove legacy format
+export const enum CredentialFormat {
+  MDOC = "mso_mdoc",
+  SD_JWT = "dc+sd-jwt",
+  LEGACY_SD_JWT = "vc+sd-jwt"
+}
 
 export type WalletInstanceAttestations = {
   jwt: string;
-  "dc+sd-jwt"?: string;
-  mso_mdoc?: string;
+  [CredentialFormat.SD_JWT]?: string;
+  [CredentialFormat.MDOC]?: string;
 };

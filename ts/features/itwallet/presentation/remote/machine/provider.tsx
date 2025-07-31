@@ -23,7 +23,7 @@ export const ItwRemoteMachineProvider = (props: Props) => {
 
   const remoteMachine = itwRemoteMachine.provide({
     guards: createRemoteGuardsImplementation(store),
-    actions: createRemoteActionsImplementation(navigation),
+    actions: createRemoteActionsImplementation(navigation, store),
     actors: createRemoteActorsImplementation(env, store)
   });
 
