@@ -26,15 +26,15 @@ export type ItwCredentialCard = {
    */
   credentialType: string;
   /**
-   * Indicates the auth level of the credential, which is used to determine
-   * if the credential is a valid IT Wallet credential.
-   */
-  credentialLevel?: "L2" | "L3";
-  /**
    * Current status of the credential, used to determine the
    * visual representation and the status tag to display.
    */
   credentialStatus?: ItwCredentialStatus;
+  /**
+   * Used to determine if the card should be displayed with a
+   * badge for the upgrade pending status.
+   */
+  isLegacyFormat?: boolean;
 };
 
 type StyleProps = {
@@ -45,12 +45,12 @@ type StyleProps = {
 
 export const ItwCredentialCard = ({
   credentialType,
-  credentialLevel = "L2",
-  credentialStatus = "valid"
+  credentialStatus = "valid",
+  isLegacyFormat = false
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
-  const needsItwUpgrade = isNewItwRenderable && credentialLevel !== "L3";
+  const needsItwUpgrade = isNewItwRenderable && isLegacyFormat;
 
   const borderColorMap = useBorderColorByStatus();
 
