@@ -3,7 +3,8 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers/index.ts";
 import {
   itwIsOfflineAccessLimitReached,
-  itwOfflineAccessCounterSelector
+  itwOfflineAccessCounterSelector,
+  itwShouldDisplayOfflineAccessLimitWarning
 } from "../securePreferences.ts";
 
 describe("itwOfflineAccessCounterSelector", () => {
@@ -40,6 +41,32 @@ describe("itwIsOfflineAccessLimitReached", () => {
         }
       );
       expect(itwIsOfflineAccessLimitReached(stateWithCounter)).toBe(expected);
+    }
+  );
+});
+
+describe("itwShouldDisplayOfflineAccessLimitWarning", () => {
+  test.each([
+    [false, 0],
+    [true, 3],
+    [false, 5]
+  ])(
+    "should return %p when offline access counter is %p",
+    (expected, counter) => {
+      const globalState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+      const stateWithCounter = _.set(
+        globalState,
+        "features.itWallet.securePreferences",
+        {
+          offlineAccessCounter: counter
+        }
+      );
+      expect(itwShouldDisplayOfflineAccessLimitWarning(stateWithCounter)).toBe(
+        expected
+      );
     }
   );
 });

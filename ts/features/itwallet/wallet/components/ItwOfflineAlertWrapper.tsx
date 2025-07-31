@@ -7,7 +7,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { ComponentProps, useCallback, useMemo } from "react";
+import { ComponentProps, PropsWithChildren, useCallback, useMemo } from "react";
 import { StatusBar } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { AlertEdgeToEdge } from "@pagopa/io-app-design-system/lib/typescript/components/alert/AlertEdgeToEdge";
@@ -30,6 +30,108 @@ import {
   trackItwOfflineReloadFailure,
   trackItwOfflineRicaricaAppIO
 } from "../../analytics";
+
+/**
+ * A wrapper component that displays an alert to notify users when the
+ * application is in offline mode.
+ *
+ * This component renders a persistent alert at the top of the screen
+ * with information about the offline state. When tapped, it opens a modal
+ * with more details and options to restart the application when connectivity
+ * is restored.
+ *
+ * The alert content and behavior varies based on the specific offline reason
+ * (device offline, expired session, etc.).
+ *
+ * @param props - Component properties
+ * @param props.children - The child components to render below the alert
+ * @returns A wrapped view with the offline alert and the original content
+ */
+export const ItwOfflineAlertWrapper = ({ children }: PropsWithChildren) =>
+  pipe(
+    useIOSelector(offlineAccessReasonSelector),
+    O.fromNullable,
+    O.fold(
+      () => children,
+      reason => (
+        <AlertWrapper offlineAccessReason={reason}>{children}</AlertWrapper>
+      )
+    )
+  );
+
+type OfflineAlertWrapperProps = {
+  offlineAccessReason: OfflineAccessReasonEnum;
+};
+
+/**
+ * Wrapper component that displays an alert with details about the offline state
+ * and provides options to restart the application.
+ *
+ * @param props - Component properties
+ * @param props.offlineAccessReason - The specific reason for the offline state
+ * @param props.children - The child components to render below the alert
+ * @returns A wrapped view with the offline alert and the original content
+ */
+const AlertWrapper = ({
+  offlineAccessReason,
+  children
+}: React.PropsWithChildren<OfflineAlertWrapperProps>) => {
+  const { name } = useRoute();
+
+  const isConnected = useIOSelector(isConnectedSelector);
+  const handleAppRestart = useAppRestartAction("banner");
+
+  useOnFirstRender(() => {
+    trackItwOfflineBanner({
+      screen: name,
+      error_message_type: offlineAccessReason,
+      use_case: "starting_app"
+    });
+  });
+
+  const detailModal = useOfflineAlertDetailModal(offlineAccessReason);
+
+  const openBottomSheet = useCallback(() => {
+    detailModal.present();
+    trackItwOfflineBottomSheet();
+  }, [detailModal]);
+
+  const alertProps: ComponentProps<typeof AlertEdgeToEdge> = useMemo(() => {
+    if (
+      offlineAccessReason === OfflineAccessReasonEnum.DEVICE_OFFLINE &&
+      isConnected
+    ) {
+      return {
+        content: I18n.t(`features.itWallet.offline.back_online.alert.content`),
+        action: I18n.t(`features.itWallet.offline.back_online.alert.action`),
+        variant: "success",
+        onPress: handleAppRestart
+      };
+    }
+
+    return {
+      content: I18n.t(
+        `features.itWallet.offline.${offlineAccessReason}.alert.content`
+      ),
+      action: I18n.t(
+        `features.itWallet.offline.${offlineAccessReason}.alert.action`
+      ),
+      variant: "info",
+      onPress: openBottomSheet
+    };
+  }, [offlineAccessReason, isConnected, openBottomSheet, handleAppRestart]);
+
+  return (
+    <AlertEdgeToEdgeWrapper alertProps={alertProps}>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor={IOColors["info-100"]}
+      />
+      {children}
+      {detailModal.bottomSheet}
+    </AlertEdgeToEdgeWrapper>
+  );
+};
 
 /**
  * Hook that creates and manages a bottom sheet modal to display detailed information
@@ -95,88 +197,6 @@ const useOfflineAlertDetailModal = (
   });
 };
 
-type OfflineAlertWrapperProps = {
-  offlineAccessReason: OfflineAccessReasonEnum;
-};
-
-/**
- * A wrapper component that displays an alert to notify users when the
- * application is in offline mode.
- *
- * This component renders a persistent alert at the top of the screen
- * with information about the offline state. When tapped, it opens a modal
- * with more details and options to restart the application when connectivity
- * is restored.
- *
- * The alert content and behavior varies based on the specific offline reason
- * (device offline, expired session, etc.).
- *
- * @param props - Component properties
- * @param props.offlineAccessReason - The specific reason for the offline state
- * @param props.children - The child components to render below the alert
- * @returns A wrapped view with the offline alert and the original content
- */
-const OfflineAlertWrapper = ({
-  offlineAccessReason,
-  children
-}: React.PropsWithChildren<OfflineAlertWrapperProps>) => {
-  const { name } = useRoute();
-
-  const isConnected = useIOSelector(isConnectedSelector);
-  const handleAppRestart = useAppRestartAction("banner");
-
-  useOnFirstRender(() => {
-    trackItwOfflineBanner({
-      screen: name,
-      error_message_type: offlineAccessReason,
-      use_case: "starting_app"
-    });
-  });
-
-  const detailModal = useOfflineAlertDetailModal(offlineAccessReason);
-
-  const openBottomSheet = useCallback(() => {
-    detailModal.present();
-    trackItwOfflineBottomSheet();
-  }, [detailModal]);
-
-  const alertProps: ComponentProps<typeof AlertEdgeToEdge> = useMemo(() => {
-    if (
-      offlineAccessReason === OfflineAccessReasonEnum.DEVICE_OFFLINE &&
-      isConnected
-    ) {
-      return {
-        content: I18n.t(`features.itWallet.offline.back_online.alert.content`),
-        action: I18n.t(`features.itWallet.offline.back_online.alert.action`),
-        variant: "success",
-        onPress: handleAppRestart
-      };
-    }
-
-    return {
-      content: I18n.t(
-        `features.itWallet.offline.${offlineAccessReason}.alert.content`
-      ),
-      action: I18n.t(
-        `features.itWallet.offline.${offlineAccessReason}.alert.action`
-      ),
-      variant: "info",
-      onPress: openBottomSheet
-    };
-  }, [offlineAccessReason, isConnected, openBottomSheet, handleAppRestart]);
-
-  return (
-    <AlertEdgeToEdgeWrapper alertProps={alertProps}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={IOColors["info-100"]}
-      />
-      {children}
-      {detailModal.bottomSheet}
-    </AlertEdgeToEdgeWrapper>
-  );
-};
-
 /**
  * Hook that creates and manages a function to restart the application.
  *
@@ -205,41 +225,3 @@ const useAppRestartAction = (source: ItwOfflineRicaricaAppIOSource) => {
     }
   }, [dispatch, isConnected, toast, source]);
 };
-
-/**
- * Higher-Order Component that conditionally wraps screens with an offline alert notification.
- *
- * This HOC checks the application's offline state using the `offlineAccessReasonSelector`.
- * When the app is online (no offline reason detected), it renders the original screen unchanged.
- * When offline, it wraps the screen with the `OfflineAlertWrapper` component, which displays:
- * - A persistent alert banner at the top of the screen
- * - A modal with detailed information and app restart options when tapped
- *
- * Uses functional programming patterns (fp-ts) for handling the Optional offline reason value.
- *
- * @example
- * ```tsx
- * // Create an enhanced component with offline alert functionality
- * const ProfileScreenWithOfflineAlert = withOfflineAlert(ProfileScreen);
- *
- * // Use in navigation or component tree
- * <ProfileScreenWithOfflineAlert someProp={value} />
- * ```
- *
- * @param Screen - The React component to enhance with offline alert functionality
- * @returns A new component that conditionally renders the offline alert based on application state
- */
-export const withOfflineAlert =
-  (Screen: React.ComponentType<any>) => (props: any) =>
-    pipe(
-      useIOSelector(offlineAccessReasonSelector),
-      O.fromNullable,
-      O.fold(
-        () => <Screen {...props} />,
-        reason => (
-          <OfflineAlertWrapper offlineAccessReason={reason}>
-            <Screen {...props} />
-          </OfflineAlertWrapper>
-        )
-      )
-    );

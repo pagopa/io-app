@@ -3,6 +3,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwSecurePreferencesState } from "../reducers/securePreferences";
 
 export const ITW_MAX_OFFLINE_ACCESS_COUNTER = 5;
+export const ITW_WARNING_OFFLINE_ACCESS_COUNTER = 3;
 
 const selectSecurePreferencesSlice = (
   state: GlobalState
@@ -23,4 +24,14 @@ export const itwOfflineAccessCounterSelector = createSelector(
 export const itwIsOfflineAccessLimitReached = createSelector(
   itwOfflineAccessCounterSelector,
   offlineAccessCounter => offlineAccessCounter >= ITW_MAX_OFFLINE_ACCESS_COUNTER
+);
+
+/**
+ * Returns `true` if the user should be warned about the offline access limit
+ * before reaching it.
+ */
+export const itwShouldDisplayOfflineAccessLimitWarning = createSelector(
+  itwOfflineAccessCounterSelector,
+  offlineAccessCounter =>
+    offlineAccessCounter === ITW_WARNING_OFFLINE_ACCESS_COUNTER
 );
