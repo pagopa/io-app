@@ -63,7 +63,6 @@ export function* handleActiveSessionLoginSaga(): Generator<
         })
       );
     }
-    // TODO: fix isActiveLoginSuccess
     yield* put(
       startApplicationInitialization({
         handleSessionExpiration: false,
