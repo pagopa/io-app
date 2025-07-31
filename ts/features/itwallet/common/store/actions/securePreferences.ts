@@ -1,7 +1,7 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 export const itwOfflineAccessCounterUp = createStandardAction(
-  "ITW_OFFLINE_ACCESS_COUNTER_DOWN"
+  "ITW_OFFLINE_ACCESS_COUNTER_UP"
 )();
 export const itwOfflineAccessCounterReset = createStandardAction(
   "ITW_OFFLINE_ACCESS_COUNTER_RESET"
