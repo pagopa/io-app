@@ -1,22 +1,28 @@
-import { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
+import { generate } from "@pagopa/io-react-native-crypto";
 import {
-  IssuerConfiguration,
-  RequestObject,
-  StoredCredential
-} from "./itwTypesUtils";
+  createCryptoContextFor,
+  Credential,
+  Errors
+} from "@pagopa/io-react-native-wallet-v2";
+import { v4 as uuidv4 } from "uuid";
+import {
+  DPOP_KEYTAG,
+  regenerateCryptoKey,
+  WIA_KEYTAG
+} from "./itwCryptoContextUtils";
+import { RequestObject, StoredCredential } from "./itwTypesUtils";
 import { Env } from "./environment";
-import * as CredentialIssuanceUtilsV1 from "./itwCredentialIssuanceUtils.v1";
-import * as CredentialIssuanceUtilsV2 from "./itwCredentialIssuanceUtils.v2";
-
-// TODO: [SIW-2530] After fully migrating to the new API, move the content of itwCredentialIssuanceUtilsV2
-// to itwCredentialIssuanceUtils
+import { CredentialType } from "./itwMocksUtils";
 
 export type RequestCredentialParams = {
   env: Env;
   credentialType: string;
   walletInstanceAttestation: string;
-  isNewIssuanceFlowEnabled: boolean;
 };
+
+type IssuerConf = Awaited<
+  ReturnType<Credential.Issuance.EvaluateIssuerTrust>
+>["issuerConf"];
 
 /**
  * Requests a credential from the issuer.
@@ -25,24 +31,64 @@ export type RequestCredentialParams = {
  * @param walletInstanceAttestation - The wallet instance attestation
  * @returns The credential request object
  */
-export const requestCredential = async (params: RequestCredentialParams) =>
-  params.isNewIssuanceFlowEnabled
-    ? CredentialIssuanceUtilsV2.requestCredential(params)
-    : CredentialIssuanceUtilsV1.requestCredential(params);
+export const requestCredential = async ({
+  env,
+  credentialType,
+  walletInstanceAttestation
+}: RequestCredentialParams) => {
+  // Get WIA crypto context
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
+
+  // Evaluate issuer trust
+  const { issuerConf } = await Credential.Issuance.evaluateIssuerTrust(
+    env.WALLET_EAA_PROVIDER_BASE_URL
+  );
+
+  const credentialIds = getCredentialConfigurationIds(
+    issuerConf,
+    credentialType
+  );
+
+  // Start user authorization
+  const { issuerRequestUri, clientId, codeVerifier } =
+    await Credential.Issuance.startUserAuthorization(
+      issuerConf,
+      credentialIds,
+      {
+        walletInstanceAttestation,
+        redirectUri: `${env.ISSUANCE_REDIRECT_URI}`,
+        wiaCryptoContext
+      }
+    );
+
+  const requestObject =
+    await Credential.Issuance.getRequestedCredentialToBePresented(
+      issuerRequestUri,
+      clientId,
+      issuerConf
+    );
+
+  return {
+    clientId,
+    codeVerifier,
+    requestedCredential: requestObject,
+    issuerConf
+  };
+};
 
 export type ObtainCredentialParams = {
   env: Env;
   credentialType: string;
   walletInstanceAttestation: string;
+  // TODO: [SIW-2530] After fully migrating to the new API, rename this param to "requestObject"
   requestedCredential: RequestObject;
   pid: StoredCredential;
   clientId: string;
   codeVerifier: string;
-  credentialDefinition?: AuthorizationDetail;
-  issuerConf: IssuerConfiguration;
-  isNewIssuanceFlowEnabled: boolean;
+  issuerConf: IssuerConf;
 };
 
+// TODO: [SIW-2530] Update JSDoc accordingly
 /**
  * Obtains a credential from the issuer.
  * @param env - The environment to use for the wallet provider base URL
@@ -56,11 +102,160 @@ export type ObtainCredentialParams = {
  * @param issuerConf - The issuer configuration
  * @returns The obtained credential
  */
-export const obtainCredential = async (params: ObtainCredentialParams) =>
-  params.isNewIssuanceFlowEnabled
-    ? CredentialIssuanceUtilsV2.obtainCredential(
-        params as CredentialIssuanceUtilsV2.ObtainCredentialParams
-      )
-    : CredentialIssuanceUtilsV1.obtainCredential(
-        params as CredentialIssuanceUtilsV1.ObtainCredentialParams
-      );
+export const obtainCredential = async ({
+  env,
+  credentialType,
+  // TODO: [SIW-2530] After fully migrating to the new API, rename this param to "requestObject"
+  requestedCredential: requestObject,
+  pid,
+  walletInstanceAttestation,
+  clientId,
+  codeVerifier,
+  issuerConf
+}: ObtainCredentialParams) => {
+  // Get WIA crypto context
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
+
+  // Create PID and DPoP crypto context;
+  await regenerateCryptoKey(DPOP_KEYTAG);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
+
+  // Complete the user authorization via form_post.jwt mode
+  const { code } =
+    await Credential.Issuance.completeUserAuthorizationWithFormPostJwtMode(
+      requestObject,
+      pid.credential,
+      {
+        wiaCryptoContext,
+        pidCryptoContext: createCryptoContextFor(pid.keyTag)
+      }
+    );
+
+  const { accessToken } = await Credential.Issuance.authorizeAccess(
+    issuerConf,
+    code,
+    clientId,
+    `${env.ISSUANCE_REDIRECT_URI}`,
+    codeVerifier,
+    {
+      walletInstanceAttestation,
+      dPopCryptoContext,
+      wiaCryptoContext
+    }
+  );
+
+  const credentials = await Promise.all(
+    accessToken.authorization_details.map(
+      async ({ credential_configuration_id, credential_identifiers }) => {
+        const credentialKeyTag = uuidv4().toString();
+        await generate(credentialKeyTag);
+        const credentialCryptoContext =
+          createCryptoContextFor(credentialKeyTag);
+
+        // Obtain the credential
+        const { credential, format } =
+          await Credential.Issuance.obtainCredential(
+            issuerConf,
+            accessToken,
+            clientId,
+            {
+              credential_configuration_id,
+              credential_identifier: credential_identifiers[0]
+            },
+            {
+              dPopCryptoContext,
+              credentialCryptoContext
+            }
+          ).catch(enrichIssuerResponseError(credential_configuration_id));
+
+        // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
+        const { parsedCredential, issuedAt, expiration } =
+          await Credential.Issuance.verifyAndParseCredential(
+            issuerConf,
+            credential,
+            credential_configuration_id,
+            { credentialCryptoContext, ignoreMissingAttributes: false }
+          );
+
+        return {
+          credential,
+          parsedCredential,
+          credentialType,
+          credentialId: credential_configuration_id,
+          format,
+          issuerConf,
+          keyTag: credentialKeyTag,
+          jwt: {
+            expiration: expiration.toISOString(),
+            issuedAt: issuedAt?.toISOString()
+          }
+        };
+      }
+    )
+  );
+
+  return {
+    credentials
+  };
+};
+
+const getCredentialConfigurationIds = (
+  issuerConfig: Awaited<
+    ReturnType<Credential.Issuance.EvaluateIssuerTrust>
+  >["issuerConf"],
+  credentialType: string
+) => {
+  const { credential_configurations_supported } =
+    issuerConfig.openid_credential_issuer;
+  const configurationSupportedByScope = Object.entries(
+    credential_configurations_supported
+  ).reduce<Record<string, Array<string>>>((acc, [key, value]) => {
+    // TODO: [SIW-2530] remove this check after fully migrating to the new API
+    const scope =
+      value.scope === "mDL" ? CredentialType.DRIVING_LICENSE : value.scope;
+
+    return {
+      ...acc,
+      // TODO: [SIW-2740] This check can be removed once `mso_mdoc` format supports verification and parsing.
+      [scope]:
+        value.format === "dc+sd-jwt" ? [...(acc[scope] || []), key] : acc[scope]
+    };
+  }, {});
+
+  return configurationSupportedByScope[credentialType] || [];
+};
+
+// Extend `IssuerResponseError` with `credentialId`
+// to dynamically retrieve the error from `issuerConfig`.
+// This workaround ensures we can access the failing credential ID
+// during multi-credential issuing.
+const enrichIssuerResponseError = (credentialId: string) => (e: unknown) => {
+  if (
+    Errors.isIssuerResponseError(
+      e,
+      Errors.IssuerResponseErrorCodes.CredentialInvalidStatus
+    )
+  ) {
+    throw new EnrichedIssuerResponseError({
+      credentialId,
+      ...e
+    });
+  }
+
+  throw e;
+};
+
+type EnrichedIssuerResponseErrorProps = ConstructorParameters<
+  typeof Errors.IssuerResponseError
+>[number] & { credentialId: string };
+export class EnrichedIssuerResponseError extends Errors.IssuerResponseError {
+  credentialId?: string;
+
+  constructor({
+    credentialId,
+    ...parentProps
+  }: EnrichedIssuerResponseErrorProps) {
+    super(parentProps);
+    this.credentialId = credentialId;
+  }
+}
