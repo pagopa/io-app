@@ -20,7 +20,9 @@ const config = {
     customSerializer: createSentryMetroSerializer()
   },
   transformer: {
-    babelTransformerPath: require.resolve("react-native-svg-transformer")
+    babelTransformerPath: require.resolve(
+      "react-native-svg-transformer/react-native"
+    )
   },
   resolver: {
     sourceExts: [...sourceExts, "svg"],

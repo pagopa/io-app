@@ -12,11 +12,7 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "strictFunctionTypes": true,
-    "useUnknownInCatchVariables": true,
+    "useUnknownInCatchVariables": true
   },
-  "exclude": [
-    "android",
-    "ios",
-    "node_modules"
-  ]
+  "exclude": ["android", "ios", "node_modules"]
 }
