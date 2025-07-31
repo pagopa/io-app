@@ -1560,7 +1560,7 @@ PODS:
     - Yoga
   - react-native-render-html (6.3.1):
     - React-Core
-  - react-native-safe-area-context (5.5.1):
+  - react-native-safe-area-context (5.5.2):
     - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
@@ -2696,7 +2696,7 @@ SPEC CHECKSUMS:
   react-native-pdf: 6a51a22ccefb23eb93298771e4bf090913e86d70
   react-native-pdf-thumbnail: 2d69e506eb4ea4940f284a228b975f5ab74ab61b
   react-native-render-html: 05a7d4490ffc85c88094601207f3e48a90533476
-  react-native-safe-area-context: 827032edf27079702cbd006f11dc79451a2d744b
+  react-native-safe-area-context: 0f7bf11598f9a61b7ceac8dc3f59ef98697e99e1
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
   react-native-skia: 33146f57c307b433e89080d628b43132774c5c7f
   react-native-slider: 5299110eb902bc5169b1dd94192aa28e1bf15ad8
