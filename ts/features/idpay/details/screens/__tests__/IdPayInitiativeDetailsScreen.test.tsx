@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
+import { ComponentType } from "react";
 import { IDPayDetailsRoutes } from "../../navigation";
 import { IdPayInitiativeDetailsScreen } from "../IdPayInitiativeDetailsScreen";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -13,6 +14,12 @@ import {
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { NetworkError } from "../../../../../utils/errors";
 import I18n from "../../../../../i18n";
+
+jest.mock("../../../../../components/helpers/withAppRequiredUpdate", () => ({
+  withAppRequiredUpdate: (
+    Component: ComponentType<typeof IdPayInitiativeDetailsScreen>
+  ) => Component
+}));
 
 const mockedInitiative: InitiativeDTO = {
   endDate: new Date(2023, 1, 1),
@@ -85,7 +92,8 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
     const { component } = renderComponent(
       pot.some({
         ...mockedInitiative,
-        initiativeRewardType: InitiativeRewardTypeEnum.DISCOUNT
+        initiativeRewardType: InitiativeRewardTypeEnum.DISCOUNT,
+        endDate: new Date(2113, 1, 1)
       })
     );
     expect(component).toBeTruthy();
@@ -110,7 +118,7 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
     ).not.toBeTruthy();
 
     expect(component.queryByTestId("IDPayTimelineSkeletonTestID")).toBeNull();
-    expect(component.queryByTestId("IDPayDetailsSettingsTestID")).toBeTruthy();
+    expect(component.queryByTestId("IDPayDetailsSettingsTestID")).toBeNull();
 
     expect(
       component.queryByText(

@@ -33,43 +33,49 @@ import {
   isUserDataProcessingDeleteErrorSelector,
   isUserDataProcessingDeleteLoadingSelector
 } from "../../common/store/selectors/userDataProcessing";
-import { withKeyboard } from "../../../../utils/keyboard";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { resetDeleteUserDataProcessing } from "../../common/store/actions/userDataProcessing";
+import { withKeyboard } from "../../../../utils/keyboard";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 
 type FooterButtonProps = {
   isLoading: boolean;
   onPress: () => void;
+  buttonRef?: React.RefObject<View>;
 };
 
-const FooterButton = memo(({ isLoading, onPress }: FooterButtonProps) => {
-  const { bottom } = useSafeAreaInsets();
+const FooterButton = memo(
+  ({ isLoading, onPress, buttonRef }: FooterButtonProps) => {
+    const { bottom } = useSafeAreaInsets();
 
-  return withKeyboard(
-    <View
-      style={{
-        marginBottom: bottom === 0 ? IOVisualCostants.appMarginDefault : bottom
-      }}
-    >
-      <ContentWrapper>
-        <VSpacer size={16} />
-        <IOButton
-          testID="remove-account-button"
-          fullWidth
-          variant="solid"
-          color="danger"
-          loading={isLoading}
-          label={I18n.t("profile.main.privacy.removeAccount.details.cta")}
-          onPress={onPress}
-        />
-      </ContentWrapper>
-    </View>,
-    true
-  );
-});
+    return withKeyboard(
+      <View
+        style={{
+          marginBottom:
+            bottom === 0 ? IOVisualCostants.appMarginDefault : bottom
+        }}
+        ref={buttonRef}
+      >
+        <ContentWrapper>
+          <VSpacer size={16} />
+          <IOButton
+            testID="remove-account-button"
+            fullWidth
+            variant="solid"
+            color="danger"
+            loading={isLoading}
+            label={I18n.t("profile.main.privacy.removeAccount.details.cta")}
+            onPress={onPress}
+          />
+        </ContentWrapper>
+      </View>,
+      true
+    );
+  }
+);
 /**
  * A screen that ask user the motivation of the account removal
  * Here user can ask to delete his account
@@ -78,7 +84,8 @@ const RemoveAccountDetails = () => {
   const dispatch = useIODispatch();
   const { navigate } = useIONavigation();
   const toast = useIOToast();
-  const timeoutRef = useRef<number>();
+  const timeoutRef = useRef<number>(undefined);
+  const buttonRef = useRef<View>(null);
 
   const hasActiveBonus = useIOSelector(isCgnEnrolledSelector);
   const isLoading = useIOSelector(isUserDataProcessingDeleteLoadingSelector);
@@ -118,8 +125,8 @@ const RemoveAccountDetails = () => {
 
   const handleSendMotivation = useCallback(
     (
-      selectedMotivation: RemoveAccountMotivationEnum,
-      otherMotivation?: string
+      selectedMotivationProp: RemoveAccountMotivationEnum,
+      otherMotivationProp?: string
     ) => {
       dispatch(
         identificationRequest(
@@ -136,9 +143,10 @@ const RemoveAccountDetails = () => {
             onSuccess: () =>
               dispatch(
                 removeAccountMotivation({
-                  reason: selectedMotivation,
-                  ...(selectedMotivation === RemoveAccountMotivationEnum.OTHERS
-                    ? { userText: otherMotivation }
+                  reason: selectedMotivationProp,
+                  ...(selectedMotivationProp ===
+                  RemoveAccountMotivationEnum.OTHERS
+                    ? { userText: otherMotivationProp }
                     : {})
                 })
               )
@@ -226,6 +234,7 @@ const RemoveAccountDetails = () => {
               returnKeyType: "done",
               keyboardType: "default"
             }}
+            onBlur={() => setAccessibilityFocus(buttonRef)}
           />
         </>
       );
@@ -263,6 +272,7 @@ const RemoveAccountDetails = () => {
           label: I18n.t("profile.main.privacy.removeAccount.details.title")
         }}
         description={I18n.t("profile.main.privacy.removeAccount.details.body")}
+        ignoreAccessibilityCheck
       >
         <SafeAreaView style={{ flex: 1 }}>
           <VSpacer />

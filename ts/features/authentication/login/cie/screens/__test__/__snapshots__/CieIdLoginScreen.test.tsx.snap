@@ -20,206 +20,164 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
 >
   <View
     style={
-      [
-        {
-          "flex": 1,
-          "overflow": "hidden",
-        },
-        undefined,
-      ]
+      {
+        "height": "100%",
+        "position": "absolute",
+        "width": "100%",
+      }
     }
   >
-    <RNCWebView
-      allowsPictureInPictureMediaPlayback={true}
-      cacheEnabled={true}
-      fraudulentWebsiteWarningEnabled={true}
-      hasOnFileDownload={false}
-      hasOnOpenWindowEvent={false}
-      injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
-      injectedJavaScriptForMainFrameOnly={true}
-      javaScriptEnabled={true}
-      messagingEnabled={false}
-      messagingModuleName=""
-      newSource={
-        {
-          "uri": "undefined/login?entityID=xx_servizicie&authLevel=undefined",
-        }
-      }
-      onContentProcessDidTerminate={[Function]}
-      onHttpError={[Function]}
-      onLoadingError={[Function]}
-      onLoadingFinish={[Function]}
-      onLoadingProgress={[Function]}
-      onLoadingStart={[Function]}
-      onMessage={[Function]}
-      onShouldStartLoadWithRequest={[Function]}
-      source={
-        {
-          "uri": "undefined/login?entityID=xx_servizicie&authLevel=undefined",
-        }
-      }
-      style={
-        [
-          {
-            "flex": 1,
-            "overflow": "hidden",
-          },
-          {
-            "backgroundColor": "#ffffff",
-          },
-          undefined,
-        ]
-      }
-      testID="cie-id-webview"
-      textInteractionEnabled={true}
-      useSharedProcessPool={true}
-      userAgent="Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1"
-    />
     <View
       style={
         {
-          "height": "100%",
-          "position": "absolute",
-          "width": "100%",
+          "flex": 1,
         }
       }
+      testID="overlayComponent"
     >
       <View
         style={
-          {
-            "flex": 1,
-          }
+          [
+            {
+              "backgroundColor": "#FFFFFF",
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": 1,
+            },
+            {
+              "backgroundColor": "rgba(255,255,255,0.7)",
+              "opacity": 1,
+            },
+          ]
         }
-        testID="overlayComponent"
       >
         <View
           style={
-            [
-              {
-                "backgroundColor": "#FFFFFF",
-                "bottom": 0,
-                "justifyContent": "center",
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 1,
-              },
-              {
-                "backgroundColor": "rgba(255,255,255,0.7)",
-                "opacity": 1,
-              },
-            ]
+            {
+              "alignItems": "center",
+              "flex": 1,
+              "height": 100,
+              "justifyContent": "center",
+            }
           }
         >
           <View
+            accessibilityHint="Wait for the content load"
+            accessibilityLabel="Loading"
+            accessibilityRole="progressbar"
+            accessible={true}
             style={
               {
-                "alignItems": "center",
-                "flex": 1,
-                "height": 100,
-                "justifyContent": "center",
+                "height": 48,
+                "width": 48,
               }
             }
+            testID="refreshIndicator"
           >
             <View
-              accessibilityHint="Wait for the content load"
-              accessibilityLabel="Loading"
-              accessibilityRole="progressbar"
-              accessible={true}
+              collapsable={false}
               style={
                 {
-                  "height": 48,
-                  "width": 48,
+                  "transform": [
+                    {
+                      "rotateZ": "0deg",
+                    },
+                  ],
                 }
               }
-              testID="refreshIndicator"
+              testID="LoadingSpinnerAnimatedTestID"
             >
-              <View
-                collapsable={false}
+              <RNSVGSvgView
+                align="xMidYMid"
+                bbHeight={48}
+                bbWidth={48}
+                fill="none"
+                focusable={false}
+                height={48}
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
                 style={
-                  {
-                    "transform": [
-                      {
-                        "rotateZ": "0deg",
-                      },
-                    ],
-                  }
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    {
+                      "flex": 0,
+                      "height": 48,
+                      "width": 48,
+                    },
+                  ]
                 }
-                testID="LoadingSpinnerAnimatedTestID"
+                vbHeight={48}
+                vbWidth={48}
+                width={48}
               >
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={48}
-                  bbWidth={48}
-                  fill="none"
-                  focusable={false}
-                  height={48}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
+                <RNSVGGroup
+                  fill={null}
+                  propList={
                     [
-                      {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      {
-                        "flex": 0,
-                        "height": 48,
-                        "width": 48,
-                      },
+                      "fill",
                     ]
                   }
-                  vbHeight={48}
-                  vbWidth={48}
-                  width={48}
                 >
+                  <RNSVGDefs>
+                    <RNSVGLinearGradient
+                      gradient={
+                        [
+                          0,
+                          736995,
+                          1,
+                          -16040221,
+                        ]
+                      }
+                      gradientTransform={null}
+                      gradientUnits={0}
+                      name="spinner-secondHalf"
+                      x1="0%"
+                      x2="100%"
+                      y1="0%"
+                      y2="0%"
+                    />
+                    <RNSVGLinearGradient
+                      gradient={
+                        [
+                          0,
+                          -16040221,
+                          1,
+                          -16040221,
+                        ]
+                      }
+                      gradientTransform={null}
+                      gradientUnits={0}
+                      name="spinner-firstHalf"
+                      x1="0%"
+                      x2="100%"
+                      y1="0%"
+                      y2="0%"
+                    />
+                  </RNSVGDefs>
                   <RNSVGGroup
-                    fill={null}
+                    fill={
+                      {
+                        "payload": 4278190080,
+                        "type": 0,
+                      }
+                    }
                     propList={
                       [
-                        "fill",
+                        "strokeWidth",
                       ]
                     }
+                    strokeWidth={5}
                   >
-                    <RNSVGDefs>
-                      <RNSVGLinearGradient
-                        gradient={
-                          [
-                            0,
-                            736995,
-                            1,
-                            -16040221,
-                          ]
-                        }
-                        gradientTransform={null}
-                        gradientUnits={0}
-                        name="spinner-secondHalf"
-                        x1="0%"
-                        x2="100%"
-                        y1="0%"
-                        y2="0%"
-                      />
-                      <RNSVGLinearGradient
-                        gradient={
-                          [
-                            0,
-                            -16040221,
-                            1,
-                            -16040221,
-                          ]
-                        }
-                        gradientTransform={null}
-                        gradientUnits={0}
-                        name="spinner-firstHalf"
-                        x1="0%"
-                        x2="100%"
-                        y1="0%"
-                        y2="0%"
-                      />
-                    </RNSVGDefs>
-                    <RNSVGGroup
+                    <RNSVGPath
+                      d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
                       fill={
                         {
                           "payload": 4278190080,
@@ -228,258 +186,241 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
                       }
                       propList={
                         [
-                          "strokeWidth",
+                          "stroke",
                         ]
                       }
-                      strokeWidth={5}
-                    >
-                      <RNSVGPath
-                        d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
-                        fill={
-                          {
-                            "payload": 4278190080,
-                            "type": 0,
-                          }
+                      stroke={
+                        {
+                          "brushRef": "spinner-secondHalf",
+                          "type": 1,
                         }
-                        propList={
-                          [
-                            "stroke",
-                          ]
+                      }
+                    />
+                    <RNSVGPath
+                      d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
+                      fill={
+                        {
+                          "payload": 4278190080,
+                          "type": 0,
                         }
-                        stroke={
-                          {
-                            "brushRef": "spinner-secondHalf",
-                            "type": 1,
-                          }
+                      }
+                      propList={
+                        [
+                          "stroke",
+                        ]
+                      }
+                      stroke={
+                        {
+                          "brushRef": "spinner-firstHalf",
+                          "type": 1,
                         }
-                      />
-                      <RNSVGPath
-                        d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
-                        fill={
-                          {
-                            "payload": 4278190080,
-                            "type": 0,
-                          }
+                      }
+                    />
+                    <RNSVGPath
+                      d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
+                      fill={
+                        {
+                          "payload": 4278190080,
+                          "type": 0,
                         }
-                        propList={
-                          [
-                            "stroke",
-                          ]
+                      }
+                      propList={
+                        [
+                          "stroke",
+                          "strokeLinecap",
+                        ]
+                      }
+                      stroke={
+                        {
+                          "payload": 4278927075,
+                          "type": 0,
                         }
-                        stroke={
-                          {
-                            "brushRef": "spinner-firstHalf",
-                            "type": 1,
-                          }
-                        }
-                      />
-                      <RNSVGPath
-                        d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
-                        fill={
-                          {
-                            "payload": 4278190080,
-                            "type": 0,
-                          }
-                        }
-                        propList={
-                          [
-                            "stroke",
-                            "strokeLinecap",
-                          ]
-                        }
-                        stroke={
-                          {
-                            "payload": 4278927075,
-                            "type": 0,
-                          }
-                        }
-                        strokeLinecap={1}
-                      />
-                    </RNSVGGroup>
+                      }
+                      strokeLinecap={1}
+                    />
                   </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+                </RNSVGGroup>
+              </RNSVGSvgView>
             </View>
-            <View
+          </View>
+          <View
+            style={
+              {
+                "padding": 24,
+              }
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              dynamicTypeRamp="title2"
+              maxFontSizeMultiplier={1.5}
               style={
-                {
-                  "padding": 24,
-                }
+                [
+                  {},
+                  {
+                    "color": "#2B2E38",
+                    "fontFamily": "Titillio",
+                    "fontSize": 22,
+                    "fontStyle": "normal",
+                    "fontWeight": "600",
+                    "lineHeight": 33,
+                  },
+                  {
+                    "textAlign": "center",
+                  },
+                ]
               }
             >
-              <Text
-                accessible={true}
-                allowFontScaling={true}
-                dynamicTypeRamp="title2"
-                maxFontSizeMultiplier={1.5}
-                style={
-                  [
-                    {},
-                    {
-                      "color": "#2B2E38",
-                      "fontFamily": "Titillio",
-                      "fontSize": 22,
-                      "fontStyle": "normal",
-                      "fontWeight": "600",
-                      "lineHeight": 33,
-                    },
-                    {
-                      "textAlign": "center",
-                    },
-                  ]
-                }
-              >
-                Wait a few seconds..
-              </Text>
-            </View>
+              Wait a few seconds..
+            </Text>
+          </View>
+          <View
+            style={
+              {
+                "alignSelf": "center",
+              }
+            }
+          >
             <View
-              style={
+              accessibilityLabel="Cancel"
+              accessibilityRole="button"
+              accessibilityState={
                 {
-                  "alignSelf": "center",
+                  "busy": false,
+                  "checked": undefined,
+                  "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
                 }
               }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignSelf": "auto",
+                  "flexShrink": 1,
+                }
+              }
+              testID="loadingSpinnerOverlayCancelButton"
             >
               <View
-                accessibilityLabel="Cancel"
-                accessibilityRole="button"
-                accessibilityState={
-                  {
-                    "busy": false,
-                    "checked": undefined,
-                    "disabled": false,
-                    "expanded": undefined,
-                    "selected": undefined,
-                  }
-                }
-                accessibilityValue={
-                  {
-                    "max": undefined,
-                    "min": undefined,
-                    "now": undefined,
-                    "text": undefined,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                onBlur={[Function]}
-                onClick={[Function]}
-                onFocus={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
                 style={
-                  {
-                    "alignSelf": "auto",
-                    "flexShrink": 1,
-                  }
+                  [
+                    {
+                      "alignItems": "center",
+                      "borderCurve": "continuous",
+                      "elevation": 0,
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                      "overflow": "hidden",
+                      "textAlignVertical": "center",
+                    },
+                    false,
+                    {
+                      "backgroundColor": undefined,
+                      "borderColor": undefined,
+                    },
+                    {
+                      "paddingHorizontal": 24,
+                    },
+                    {
+                      "backgroundColor": "rgba(9,50,182,0)",
+                      "borderColor": "#0B3EE3",
+                      "borderRadius": 8,
+                      "borderWidth": 2,
+                      "height": 48,
+                    },
+                    {},
+                  ]
                 }
-                testID="loadingSpinnerOverlayCancelButton"
               >
                 <View
                   style={
                     [
                       {
                         "alignItems": "center",
-                        "borderCurve": "continuous",
-                        "elevation": 0,
                         "flexDirection": "row",
                         "justifyContent": "center",
-                        "overflow": "hidden",
-                        "textAlignVertical": "center",
+                      },
+                      {
+                        "columnGap": 8,
                       },
                       false,
-                      {
-                        "backgroundColor": undefined,
-                        "borderColor": undefined,
-                      },
-                      {
-                        "paddingHorizontal": 24,
-                      },
-                      {
-                        "backgroundColor": "rgba(9,50,182,0)",
-                        "borderColor": "#0B3EE3",
-                        "borderRadius": 8,
-                        "borderWidth": 2,
-                        "height": 48,
-                      },
-                      {},
                     ]
                   }
                 >
-                  <View
-                    entering={[Function]}
+                  <Text
+                    accessibilityElementsHidden={true}
+                    accessible={false}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    importantForAccessibility="no-hide-descendants"
+                    maxFontSizeMultiplier={1.5}
+                    numberOfLines={1}
                     style={
                       [
+                        {},
                         {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "justifyContent": "center",
+                          "color": "#0E0F13",
+                          "fontFamily": "Titillio",
+                          "fontSize": 16,
+                          "fontStyle": "normal",
+                          "fontWeight": "600",
+                          "lineHeight": undefined,
                         },
-                        {
-                          "columnGap": 8,
-                        },
-                        false,
+                        [
+                          {
+                            "textAlign": "auto",
+                          },
+                          {
+                            "color": "#0B3EE3",
+                          },
+                          {
+                            "color": undefined,
+                          },
+                        ],
                       ]
                     }
                   >
-                    <Text
-                      accessibilityElementsHidden={true}
-                      accessible={false}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
-                      importantForAccessibility="no-hide-descendants"
-                      maxFontSizeMultiplier={1.5}
-                      numberOfLines={1}
-                      style={
-                        [
-                          {},
-                          {
-                            "color": "#0E0F13",
-                            "fontFamily": "Titillio",
-                            "fontSize": 16,
-                            "fontStyle": "normal",
-                            "fontWeight": "600",
-                            "lineHeight": undefined,
-                          },
-                          [
-                            {
-                              "textAlign": "auto",
-                            },
-                            {
-                              "color": "#0B3EE3",
-                            },
-                            {
-                              "color": undefined,
-                            },
-                          ],
-                        ]
-                      }
-                    >
-                      Cancel
-                    </Text>
-                  </View>
+                    Cancel
+                  </Text>
                 </View>
               </View>
             </View>
           </View>
         </View>
-        <View
-          style={
-            [
-              {
-                "flex": 1,
-              },
-              {
-                "zIndex": 0,
-              },
-            ]
-          }
-        />
       </View>
+      <View
+        style={
+          [
+            {
+              "flex": 1,
+            },
+            {
+              "zIndex": 0,
+            },
+          ]
+        }
+      />
     </View>
   </View>
 </RNCSafeAreaView>

@@ -1,6 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import { useIOToast } from "@pagopa/io-app-design-system";
+import { Linking } from "react-native";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -15,14 +16,14 @@ import {
   selectFailureOption,
   selectIdentification
 } from "../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import {
-  ZendeskSubcategoryValue,
-  useItwFailureSupportModal
+  useItwFailureSupportModal,
+  ZendeskSubcategoryValue
 } from "../../common/hooks/useItwFailureSupportModal";
-import { KoState, trackWalletCreationFailed } from "../../analytics";
+import { KoState, trackItwKoStateAction } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
 import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
@@ -77,7 +78,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   const closeIssuance = (errorConfig: KoState) => {
     machineRef.send({ type: "close" });
-    trackWalletCreationFailed(errorConfig);
+    trackItwKoStateAction(errorConfig);
   };
 
   const supportModalAction = {
@@ -201,6 +202,47 @@ const ContentView = ({ failure }: ContentViewProps) => {
             secondaryAction: {
               label: I18n.t("global.buttons.close"),
               onPress: () => machineRef.send({ type: "close" })
+            }
+          };
+        case IssuanceFailureType.CIE_NOT_REGISTERED:
+          return {
+            title: I18n.t("features.itWallet.issuance.cieNotRegistered.title"),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.cieNotRegistered.subtitle"
+            ),
+            pictogram: "attention",
+            action: {
+              label: I18n.t("global.buttons.findOutMore"),
+              // TODO: replace with the actual URL when available
+              onPress: () => Linking.openURL("https://ioapp.it/")
+            },
+            secondaryAction: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
+        case IssuanceFailureType.UNTRUSTED_ISS:
+          return {
+            title: I18n.t(
+              `features.itWallet.issuance.issuerNotTrustedCommonError.title`
+            ),
+            subtitle: I18n.t(
+              `features.itWallet.issuance.issuerNotTrustedCommonError.subtitle`
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                `features.itWallet.issuance.issuerNotTrustedCommonError.primaryAction`
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                `features.itWallet.issuance.issuerNotTrustedCommonError.secondaryAction`
+              ),
+              onPress: () => {
+                supportModal.present();
+              }
             }
           };
       }

@@ -1,15 +1,19 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import * as USEIO from "../../../../../navigation/params/AppParamsList";
-import PN_ROUTES from "../../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
-import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { PNActivationReminderBanner } from "../PNActivationReminderBanner";
-import * as MIXPANEL from "../../../analytics/activationReminderBanner";
 import * as STORE_HOOKS from "../../../../../store/hooks";
+import { appReducer } from "../../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import * as MIXPANEL from "../../../analytics/activationReminderBanner";
+import PN_ROUTES from "../../../navigation/routes";
 import { dismissPnActivationReminderBanner } from "../../../store/actions";
+import { PNActivationReminderBanner } from "../PNActivationReminderBanner";
+import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/__tests__/testUtils.test";
+
+jest.mock("rn-qr-generator", () => ({}));
+jest.mock("react-native-screenshot-prevent", () => ({}));
 
 describe("pnActivationBanner", () => {
   it("should match snapshot", () => {
@@ -69,6 +73,52 @@ describe("pnActivationBanner", () => {
     );
   });
 });
+
+describe("dispatch mixpanel event on first render", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+  it("should dispatch a BANNER_SHOWN event on first render, if focused", () => {
+    const mixpanelSpy = jest.spyOn(
+      MIXPANEL.sendBannerMixpanelEvents,
+      "bannerShown"
+    );
+    renderComponentWithStoreAndNavigationContextForFocus(
+      componentToRender,
+      true
+    );
+
+    expect(mixpanelSpy).toHaveBeenCalledTimes(1);
+  });
+  it("should not dispatch a BANNER_SHOWN event on first render if it is not focused", () => {
+    const mixpanelSpy = jest.spyOn(
+      MIXPANEL.sendBannerMixpanelEvents,
+      "bannerShown"
+    );
+    renderComponentWithStoreAndNavigationContextForFocus(
+      componentToRender,
+      false
+    );
+
+    expect(mixpanelSpy).toHaveBeenCalledTimes(0);
+  });
+  it("should not dispatch a second event when rerendered", () => {
+    const mixpanelSpy = jest.spyOn(
+      MIXPANEL.sendBannerMixpanelEvents,
+      "bannerShown"
+    );
+    const component = renderComponentWithStoreAndNavigationContextForFocus(
+      componentToRender,
+      true
+    );
+    component.rerender(componentToRender);
+    component.rerender(componentToRender);
+    component.rerender(componentToRender);
+
+    expect(mixpanelSpy).toHaveBeenCalledTimes(1);
+  });
+});
 const renderComponent = (closeHandler: () => void = () => null) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
@@ -79,3 +129,7 @@ const renderComponent = (closeHandler: () => void = () => null) => {
     store
   );
 };
+
+const componentToRender = (
+  <PNActivationReminderBanner handleOnClose={() => null} />
+);

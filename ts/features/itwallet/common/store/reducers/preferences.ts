@@ -11,7 +11,8 @@ import {
   itwSetFiscalCodeWhitelisted,
   itwSetReviewPending,
   itwSetWalletInstanceRemotelyActive,
-  itwUnflagCredentialAsRequested
+  itwUnflagCredentialAsRequested,
+  itwSetWalletUpgradeMDLDetailsBannerHidden
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
@@ -38,6 +39,8 @@ export type ItwPreferencesState = {
   isFiscalCodeWhitelisted?: boolean;
   // Indicates whether the offline banner should be hidden
   offlineBannerHidden?: boolean;
+  // Indicates whether the IT-wallet upgrade banner in MDL details should be hidden
+  walletUpgradeMDLDetailsBannerHidden?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -117,13 +120,18 @@ const reducer = (
     case getType(itwLifecycleStoresReset):
       // When the wallet is being reset, we need to persist only the preferences:
       // - claimValuesHidden
-      // - isWalletInstanceRemotelyActive ->
-      //  (the correct value will be set in the saga related to the wallet deactivation, but we should avoid to have this value undefined)
-      const { claimValuesHidden, isWalletInstanceRemotelyActive } = state;
+      // - isWalletInstanceRemotelyActive: the correct value will be set in the saga related to the wallet deactivation
+      // - isFiscalCodeWhitelisted: avoids to have the value undefined after a wallet reset
+      const {
+        claimValuesHidden,
+        isWalletInstanceRemotelyActive,
+        isFiscalCodeWhitelisted
+      } = state;
       return {
         ...itwPreferencesInitialState,
         claimValuesHidden,
-        isWalletInstanceRemotelyActive
+        isWalletInstanceRemotelyActive,
+        isFiscalCodeWhitelisted
       };
 
     case getType(itwSetFiscalCodeWhitelisted): {
@@ -132,10 +140,18 @@ const reducer = (
         isFiscalCodeWhitelisted: action.payload
       };
     }
+
     case getType(itwSetOfflineBannerHidden): {
       return {
         ...state,
         offlineBannerHidden: action.payload
+      };
+    }
+
+    case getType(itwSetWalletUpgradeMDLDetailsBannerHidden): {
+      return {
+        ...state,
+        walletUpgradeMDLDetailsBannerHidden: action.payload
       };
     }
 

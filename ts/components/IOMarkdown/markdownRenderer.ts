@@ -81,6 +81,75 @@ function integrateParent<T extends AnyTxtNode>(
     : { ...node, parent: parentLight };
 }
 
+/**
+ * Converts Markdown reference-style links to inline links
+ * since IOMarkdown does not support the former.
+ *
+ * Reference-style links consist of two parts:
+ * 1. The link reference: [text][label] or [text][] (shortcut form)
+ * 2. The link definition: [label]: URL "optional title"
+ *
+ * This function finds all link definitions, then replaces all reference-style
+ * links with their corresponding inline format: [text](URL)
+ *
+ * @param {string} markdownText - The markdown text containing reference-style links
+ * @returns {string} The markdown text with reference-style links converted to inline links
+ *
+ * @example
+ * const input = `
+ * Check out [Google][1] and [GitHub][gh].
+ *
+ * [1]: https://google.com "Search Engine"
+ * [gh]: https://github.com
+ * `;
+ *
+ * const output = convertReferenceLinksToInline(input);
+ * // Result:
+ * // Check out [Google](https://google.com) and [GitHub](https://github.com).
+ */
+export const convertReferenceLinksToInline = (markdownText: string): string => {
+  // First, extract all link definitions [label]: URL "optional title"
+  // Specs https://www.markdownguide.org/basic-syntax/#reference-style-links
+  const linkDefinitions = new Map();
+  const linkDefRegex =
+    /^\s*\[([^\]]+)\]:\s*(<[^>]+>|[^\s]+)(?:\s+["'(]([^"')]+)["')])?/gm;
+
+  while (true) {
+    const match = linkDefRegex.exec(markdownText);
+    if (match === null) {
+      break;
+    }
+    // Labels are case-insensitive
+    const label = match[1].toLowerCase();
+    // Remove angle brackets if present
+    const url = match[2].replace(/^<|>$/g, "");
+    // Title is not supported but we capture it in case it will be in the future
+    const title = match[3] || "";
+    linkDefinitions.set(label, { url, title });
+  }
+
+  // Remove all link definitions from the text
+  const noLinkDefResult = markdownText.replace(linkDefRegex, "");
+
+  // Replace reference-style links [text][label] with inline links [text](url)
+  const refLinkRegex = /\[([^\]]+)\]\s*\[([^\]]*)\]/g;
+
+  return noLinkDefResult.replace(refLinkRegex, (fullMatch, linkText, label) => {
+    // If label is empty, use the link text as the label
+    const actualLabel = (label || linkText).toLowerCase();
+
+    const linkDef = linkDefinitions.get(actualLabel);
+    if (linkDef) {
+      // At the moment, we do not support title
+      const { url } = linkDef;
+      return `[${linkText}](${url})`;
+    }
+
+    // If no matching definition found, return original
+    return fullMatch;
+  });
+};
+
 export const sanitizeMarkdownForImages = (
   inputMarkdownContent: string
 ): string => {
@@ -101,40 +170,63 @@ export const sanitizeMarkdownForImages = (
   );
 };
 
+const anyWhitespaceCharacterButNewLineSet = new Set([
+  " ",
+  "\t",
+  "\r",
+  "\f",
+  "\v"
+]);
+
 export const insertNewLinesIfNeededOnMatch = (
   markdownContent: string,
   imageMatch: RegExpExecArray
 ): string => {
   const matchStartIndex = imageMatch.index;
   const matchEndIndex = matchStartIndex + imageMatch[0].length;
-  const sanitizedMarkdownContent = insertNewLineAtIndexIfNeeded(
-    markdownContent,
-    matchEndIndex
-  );
-  return insertNewLineAtIndexIfNeeded(
-    sanitizedMarkdownContent,
-    matchStartIndex - 1,
-    true
-  );
-};
 
-const insertNewLineAtIndexIfNeeded = (
-  markdownContent: string,
-  baseIndex: number,
-  insertAfterIndex: boolean = false
-) => {
-  if (baseIndex >= 0 && baseIndex < markdownContent.length) {
-    const character = markdownContent[baseIndex];
-    if (character !== "\n") {
-      const index = insertAfterIndex ? baseIndex + 1 : baseIndex;
-      return [
-        markdownContent.slice(0, index),
-        "\n\n",
-        markdownContent.slice(index)
-      ].join("");
+  // eslint-disable-next-line functional/no-let
+  let endNewLineOccurrences = 0;
+  // eslint-disable-next-line functional/no-let
+  let j = matchEndIndex;
+  while (j < markdownContent.length) {
+    const character = markdownContent[j];
+    if (character === "\n") {
+      endNewLineOccurrences++;
+    } else if (!anyWhitespaceCharacterButNewLineSet.has(character)) {
+      break;
     }
+    j++;
   }
-  return markdownContent;
+  const newLinesToAddToEnd = "\n".repeat(
+    Math.max(0, 2 - endNewLineOccurrences)
+  );
+  const intermediateMarkdownContent =
+    markdownContent.slice(0, matchEndIndex) +
+    newLinesToAddToEnd +
+    markdownContent.slice(matchEndIndex);
+
+  // eslint-disable-next-line functional/no-let
+  let startNewLineOccurrences = 0;
+  // eslint-disable-next-line functional/no-let
+  let i = Math.max(0, matchStartIndex - 1);
+  while (i >= 0) {
+    const character = intermediateMarkdownContent[i];
+    if (character === "\n") {
+      startNewLineOccurrences++;
+    } else if (!anyWhitespaceCharacterButNewLineSet.has(character)) {
+      break;
+    }
+    i--;
+  }
+  const newLinesToAddToStart = "\n".repeat(
+    Math.max(0, 2 - startNewLineOccurrences)
+  );
+  return (
+    intermediateMarkdownContent.slice(0, matchStartIndex) +
+    newLinesToAddToStart +
+    intermediateMarkdownContent.slice(matchStartIndex)
+  );
 };
 
 export const isTxtParentNode = (node: TxtNode): node is TxtParentNode =>

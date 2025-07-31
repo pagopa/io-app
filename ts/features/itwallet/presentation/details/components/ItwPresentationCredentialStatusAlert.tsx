@@ -13,13 +13,20 @@ import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.ts
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { format } from "../../../../../utils/dates.ts";
-import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider.tsx";
+import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import IOMarkdown from "../../../../../components/IOMarkdown";
-import { type CredentialType } from "../../../common/utils/itwMocksUtils.ts";
+import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 
 type Props = {
   credential: StoredCredential;
 };
+
+const excludedCredentialTypes = [
+  CredentialType.PID,
+  CredentialType.DEGREE_CERTIFICATES
+] as const;
+
+type ExcludedCredentialTypes = (typeof excludedCredentialTypes)[number];
 
 /**
  * This component renders an alert related to the credential status (expiring or invalid).
@@ -87,7 +94,10 @@ const DocumentExpiringAlert = ({ credential }: Props) => {
   const expireDays = getCredentialExpireDays(credential.parsedCredential);
 
   const bottomSheetNs = `features.itWallet.presentation.bottomSheets.${
-    credential.credentialType as Exclude<CredentialType, CredentialType.PID>
+    credential.credentialType as Exclude<
+      CredentialType,
+      ExcludedCredentialTypes
+    >
   }.expiring` as const;
 
   const bottomSheet = useIOBottomSheetModal({

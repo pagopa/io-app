@@ -1,6 +1,6 @@
 import { ErrorActorEvent } from "xstate";
 import { SpidIdp } from "../../../../utils/idps";
-import { CieWarningType } from "../../identification/screens/ItwIdentificationCieWarningScreen.tsx";
+import { CiePreparationType } from "../../identification/cie/components/ItwCiePreparationBaseScreenContent";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
@@ -36,7 +36,7 @@ export type SelectIdentificationMode = {
 
 export type GoToCieWarning = {
   type: "go-to-cie-warning";
-  warning: CieWarningType;
+  warning: CiePreparationType;
 };
 
 export type SelectSpidIdp = {
@@ -97,6 +97,10 @@ export type Reset = {
   type: "reset";
 };
 
+export type GoToL2IdentificationMode = {
+  type: "go-to-l2-identification";
+};
+
 export type EidIssuanceEvents =
   | Start
   | AcceptTos
@@ -119,4 +123,5 @@ export type EidIssuanceEvents =
   | StartReissuing
   | GoToCieWarning
   | Next
+  | GoToL2IdentificationMode
   | Reset;

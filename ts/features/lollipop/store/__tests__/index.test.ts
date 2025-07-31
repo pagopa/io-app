@@ -83,7 +83,7 @@ describe("Test migration KeyTag", () => {
       );
     });
 
-    it("should return a keyTag equal to O.none when keyTagOption is not Some", () => {
+    it("should return keyTag as O.none when keyTag value is Some(None)", () => {
       const persistedState = {
         keyTag: O.some(O.none),
         publicKey: O.none

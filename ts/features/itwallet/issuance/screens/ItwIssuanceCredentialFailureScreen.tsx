@@ -14,7 +14,7 @@ import {
   getFullLocale
 } from "../../../../utils/locale";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { trackWalletCreationFailed } from "../../analytics";
+import { trackItwKoStateAction } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import {
   ZendeskSubcategoryValue,
@@ -24,7 +24,10 @@ import { itwDeferredIssuanceScreenContentSelector } from "../../common/store/sel
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
-import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
+import {
+  IssuerConfiguration,
+  LegacyIssuerConfiguration
+} from "../../common/utils/itwTypesUtils";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType
@@ -34,7 +37,7 @@ import {
   selectFailureOption,
   selectIssuerConfigurationOption
 } from "../../machine/credential/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
 
 // Errors that allow a user to send a support request to Zendesk
@@ -89,7 +92,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   const closeIssuance = () => {
     machineRef.send({ type: "close" });
-    trackWalletCreationFailed({
+    trackItwKoStateAction({
       reason: failure.reason,
       cta_category: "custom_2",
       cta_id: "close_issuance"
@@ -209,21 +212,36 @@ const getCredentialInvalidStatusDetails = (
   failure: CredentialIssuanceFailure,
   { credentialType, issuerConf }: GetCredentialInvalidStatusDetailsParams
 ) => {
-  const errorCodeOption = pipe(
+  const { errorCodeOption, credentialConfigurationId } = pipe(
     failure,
     O.fromPredicate(isInvalidStatusFailure),
-    O.chainEitherK(x => StatusAttestationError.decode(x.reason?.reason)),
-    O.map(x => x.error)
+    O.map(({ reason }) => ({
+      errorCodeOption: pipe(
+        O.fromEither(StatusAttestationError.decode(reason?.reason)),
+        O.map(({ error }) => error)
+      ),
+      credentialConfigurationId: pipe(
+        O.fromNullable(reason?.credentialId),
+        O.alt(() => credentialType) // TODO: SIW-2530 Remove this line after fully migrating to the new APIs
+      )
+    })),
+    O.getOrElse(() => ({
+      errorCodeOption: O.none as O.Option<string>,
+      credentialConfigurationId: O.none as O.Option<string>
+    }))
   );
 
   const localizedMessage = pipe(
     sequenceS(O.Monad)({
       errorCode: errorCodeOption,
-      credentialType,
+      credentialConfigurationId,
       issuerConf
     }),
-    O.map(({ errorCode, ...rest }) =>
-      Errors.extractErrorMessageFromIssuerConf(errorCode, rest)
+    O.map(params =>
+      Errors.extractErrorMessageFromIssuerConf(params.errorCode, {
+        credentialType: params.credentialConfigurationId,
+        issuerConf: params.issuerConf as LegacyIssuerConfiguration
+      })
     ),
     O.map(message => message?.[getClaimsFullLocale()]),
     O.toUndefined

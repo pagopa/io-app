@@ -102,9 +102,13 @@ export const selectIsWalletLoading = (state: GlobalState) =>
 
 /**
  * Selects the placeholders from the wallet
+ *
+ * Note: We use a nullish coalescing default (?? {}) to prevent runtime errors if the state is malformed
+ * or not initialized properly (e.g., during tests, migrations, or hot reloads). This ensures Object.entries
+ * always receives an object, avoiding 'Cannot convert undefined value to object' errors.
  */
 export const selectWalletPlaceholderCards = createSelector(
-  (state: GlobalState) => state.features.wallet.placeholders.items,
+  (state: GlobalState) => state.features.wallet.placeholders?.items ?? {},
   placeholders =>
     Object.entries(placeholders).map(
       ([key, category]) =>

@@ -1,4 +1,5 @@
 import * as O from "fp-ts/lib/Option";
+import * as Sentry from "@sentry/react-native";
 import { getPeople, isMixpanelInstanceInitialized } from "../mixpanel.ts";
 import { GlobalState } from "../store/reducers/types";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
@@ -15,25 +16,24 @@ import { idpSelector } from "../features/authentication/common/store/selectors";
 import { tosVersionSelector } from "../features/settings/common/store/selectors/index.ts";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
-  ItwCed,
+  getCredentialMixpanelStatus,
+  ItwCredentialMixpanelStatus,
   ItwId,
-  ItwPg,
   ItwStatus,
-  ItwTs
+  mapEidStatusToMixpanel
 } from "../features/itwallet/analytics";
-import {
-  itwCredentialsByTypeSelector,
-  itwCredentialsSelector
-} from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
 import { fontPreferenceSelector } from "../store/reducers/persistedPreferences.ts";
-import { sendExceptionToSentry } from "../utils/sentryUtils.ts";
 import {
   booleanOrUndefinedToPNServiceStatus,
   PNServiceStatus
 } from "../features/pn/analytics/index.ts";
 import { isPnServiceEnabled } from "../features/pn/reminderBanner/reducer/bannerDismiss.ts";
+import {
+  itwCredentialsEidStatusSelector,
+  itwCredentialsSelector
+} from "../features/itwallet/credentials/store/selectors";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -51,11 +51,11 @@ type ProfileProperties = {
   BIOMETRIC_TECHNOLOGY: BiometricsType;
   CGN_STATUS: TrackCgnStatus;
   FONT_PREFERENCE: string;
-  ITW_CED_V2: ItwCed;
-  ITW_ID_V2: ItwId;
-  ITW_PG_V2: ItwPg;
   ITW_STATUS_V2: ItwStatus;
-  ITW_TS_V2: ItwTs;
+  ITW_ID_V2: ItwId;
+  ITW_PG_V2: ItwCredentialMixpanelStatus;
+  ITW_TS_V2: ItwCredentialMixpanelStatus;
+  ITW_CED_V2: ItwCredentialMixpanelStatus;
   LOGIN_METHOD: string;
   LOGIN_SESSION: LoginSessionDuration;
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
@@ -83,11 +83,15 @@ export const updateMixpanelProfileProperties = async (
     const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
     const CGN_STATUS = cgnStatusHandler(state);
     const FONT_PREFERENCE = fontPreferenceSelector(state);
-    const ITW_CED_V2 = cedStatusHandler(state);
+
     const ITW_ID_V2 = idStatusHandler(state);
-    const ITW_PG_V2 = pgStatusHandler(state);
+    const ITW_PG_V2 = credentialStatusHandler("MDL", state);
+    const ITW_TS_V2 = credentialStatusHandler(
+      "EuropeanHealthInsuranceCard",
+      state
+    );
+    const ITW_CED_V2 = credentialStatusHandler("EuropeanDisabilityCard", state);
     const ITW_STATUS_V2 = walletStatusHandler(state);
-    const ITW_TS_V2 = tsStatusHandler(state);
     const LOGIN_METHOD = loginMethodHandler(state);
     const LOGIN_SESSION = loginSessionConfigHandler(state);
     const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
@@ -132,7 +136,7 @@ export const updateMixpanelProfileProperties = async (
 
     getPeople()?.set(profilePropertiesObject);
   } catch (e) {
-    sendExceptionToSentry(e, "updateMixpanelProfileProperties");
+    Sentry.captureException(e);
   }
 };
 
@@ -160,20 +164,16 @@ const walletStatusHandler = (state: GlobalState): ItwStatus => {
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {
-  const credentialsState = itwCredentialsSelector(state);
-  return O.isSome(credentialsState.eid) ? "valid" : "not_available";
-};
-const pgStatusHandler = (state: GlobalState): ItwPg => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
-  return credentialsByType.MDL ? "valid" : "not_available";
-};
-const tsStatusHandler = (state: GlobalState): ItwTs => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
-  return credentialsByType.EuropeanHealthInsuranceCard
-    ? "valid"
+  const eidStatus = itwCredentialsEidStatusSelector(state);
+  return eidStatus !== undefined
+    ? mapEidStatusToMixpanel(eidStatus)
     : "not_available";
 };
-const cedStatusHandler = (state: GlobalState): ItwCed => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
-  return credentialsByType.EuropeanDisabilityCard ? "valid" : "not_available";
+
+const credentialStatusHandler = (
+  type: string,
+  state: GlobalState
+): ItwCredentialMixpanelStatus => {
+  const credentialsByType = itwCredentialsSelector(state);
+  return getCredentialMixpanelStatus(credentialsByType[type]);
 };

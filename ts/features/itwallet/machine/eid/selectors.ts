@@ -44,6 +44,3 @@ export const selectAuthUrlOption = (snapshot: MachineSnapshot) =>
 
 export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwTags.Loading);
-
-export const selectIsCieIdEidRequest = (snapshot: MachineSnapshot) =>
-  snapshot.context.identification?.mode === "cieId";

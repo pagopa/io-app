@@ -27,7 +27,7 @@ import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/r
 
 type Props = {
   sectionKey: SectionStatusKey;
-  onSectionRef?: (ref: RefObject<View>) => void;
+  onSectionRef?: (ref: RefObject<View | null>) => void;
   trackingAction?: () => void;
   sticky?: boolean;
 };

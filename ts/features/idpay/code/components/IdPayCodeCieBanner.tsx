@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 import { VSpacer, Banner } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 
+import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idpayInitiativeInstrumentsGet } from "../../configuration/store/actions";
@@ -11,17 +12,22 @@ import { IdPayCodeRoutes } from "../navigation/routes";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { isLoadingDiscountInitiativeInstrumentsSelector } from "../../configuration/store";
 import { idPayCodeCieBannerClose } from "../store/actions";
+import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 export type IdPayCodeCIEBannerParams = {
   initiativeId: string;
 };
 
 const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
-  const bannerViewRef = useRef(null);
+  const bannerViewRef = useRef<View>(null);
   const navigation =
     useNavigation<IOStackNavigationProp<IdPayCodeParamsList>>();
   const dispatch = useIODispatch();
-  const showBanner = useIOSelector(showIdPayCodeBannerSelector);
+  const isIdPayCodeCieEnabled = useIOSelector(
+    isIdPayCiePaymentCodeEnabledSelector
+  );
+  const showBanner =
+    useIOSelector(showIdPayCodeBannerSelector) && isIdPayCodeCieEnabled;
   const isLoadingInitiativeInstruments = useIOSelector(
     isLoadingDiscountInitiativeInstrumentsSelector
   );
@@ -69,7 +75,7 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
           labelClose={I18n.t(
             "idpay.initiative.discountDetails.IDPayCode.banner.close"
           )}
-          viewRef={bannerViewRef}
+          ref={bannerViewRef}
         />
         <VSpacer size={24} />
       </>

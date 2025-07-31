@@ -1,4 +1,5 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { Body, IOVisualCostants, VStack } from "@pagopa/io-app-design-system";
 import { Dimensions, View } from "react-native";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
@@ -11,6 +12,7 @@ import {
 } from "../machine/selectors";
 import I18n from "../../../../../i18n";
 import { ItwRetryableQRCode } from "../../../common/components/ItwRetryableQRCode";
+import { trackItwProximityQrCodeLoadingRetry } from "../analytics";
 
 const QR_WIDTH =
   Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
@@ -28,6 +30,7 @@ export const useItwPresentQRCode = () => {
   );
 
   const handleRetry = useCallback(() => {
+    trackItwProximityQrCodeLoadingRetry();
     machineRef.send({ type: "retry" });
   }, [machineRef]);
 
@@ -62,15 +65,19 @@ export const useItwPresentQRCode = () => {
       </VStack>
     ),
     onDismiss: () => {
-      machineRef.send({ type: "close" });
+      machineRef.send({ type: "dismiss" });
     }
   });
 
-  useEffect(() => {
-    if (shouldPresentQRCodeBottomSheet) {
-      present();
-    }
-  }, [shouldPresentQRCodeBottomSheet, present]);
+  useFocusEffect(
+    useCallback(() => {
+      if (shouldPresentQRCodeBottomSheet) {
+        present();
+      }
+
+      return dismiss;
+    }, [dismiss, present, shouldPresentQRCodeBottomSheet])
+  );
 
   return {
     bottomSheet,

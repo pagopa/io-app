@@ -1,10 +1,11 @@
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
+import { isTestEnv } from "../../../utils/environment";
 import { IOBarcode, IOBarcodeOrigin } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 
 export type BarcodeAnalyticsFlow = "home" | "avviso" | "idpay"; // Should be extended for every feature
-export type BarcodeAnalyticsCode = "avviso" | "data_matrix" | "idpay"; // Should be extended for every feature
+export type BarcodeAnalyticsCode = "avviso" | "data_matrix" | "idpay" | "SEND"; // Should be extended for every feature
 export type BarcodeAnalyticsDataEntry = "qr code" | "file";
 
 const getEventCodeFromBarcode = (
@@ -16,6 +17,10 @@ const getEventCodeFromBarcode = (
 
   if (barcode.type === "PAGOPA") {
     return barcode.format === "DATA_MATRIX" ? "data_matrix" : "avviso";
+  }
+
+  if (barcode.type === "SEND") {
+    return "SEND";
   }
 
   return undefined;
@@ -110,10 +115,10 @@ export const trackBarcodeScanFailure = (
   flow: BarcodeAnalyticsFlow,
   failure: BarcodeFailure
 ) => {
-  const trackFn = (flow: BarcodeAnalyticsFlow, reason: string) => {
+  const trackFn = (internalFlow: BarcodeAnalyticsFlow, reason: string) => {
     void mixpanelTrack(
       "QRCODE_SCAN_FAILURE",
-      buildEventProperties("KO", undefined, { flow, reason })
+      buildEventProperties("KO", undefined, { flow: internalFlow, reason })
     );
   };
 
@@ -200,3 +205,5 @@ export const trackBarcodeSignatureManualEntry = () => {
   );
 };
 */
+
+export const testable = isTestEnv ? { getEventCodeFromBarcode } : undefined;

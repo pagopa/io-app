@@ -5,16 +5,17 @@ import {
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
 import {
+  itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsOperationalOrValid,
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import {
-  itwAuthLevelSelector,
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
   itwIsL3EnabledSelector,
-  itwIsOfflineBannerHiddenSelector
+  itwIsOfflineBannerHiddenSelector,
+  itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
 } from "./preferences";
 import {
   isItwEnabledSelector,
@@ -87,8 +88,7 @@ export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
  * - if the wallet contains at least one credential
  */
 export const itwOfflineAccessAvailableSelector = (state: GlobalState) =>
-  itwLifecycleIsOperationalOrValid(state) &&
-  state.features.itWallet.credentials.credentials.length > 0;
+  itwLifecycleIsOperationalOrValid(state) && !itwIsWalletEmptySelector(state);
 
 /**
  * Returns if the offline banner should be visible. The banner is visible if:
@@ -108,10 +108,40 @@ export const itwShouldRenderOfflineBannerSelector = (state: GlobalState) =>
  * - The user has online access (not available in the mini-app)
  * - The IT Wallet feature flag is enabled
  * - The L3 feature flag is enabled
- * - The wallet is not already with L3 auth
+ * - Isn't ITW Credential
  */
 export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
   !offlineAccessReasonSelector(state) &&
   isItwEnabledSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  itwAuthLevelSelector(state) !== "L3";
+  !itwLifecycleIsITWalletValidSelector(state);
+
+/**
+ * Returns whether the new IT-Wallet variant should be rendered.
+ * - The IT Wallet feature flag is enabled
+ * - The wallet is not offline
+ * - The L3 feature flag is enabled
+ * - Is ITW Credential
+ */
+export const itwShouldRenderNewItWalletSelector = (state: GlobalState) =>
+  isItwEnabledSelector(state) &&
+  !offlineAccessReasonSelector(state) &&
+  itwIsL3EnabledSelector(state) &&
+  itwLifecycleIsITWalletValidSelector(state);
+
+/**
+ * Returns whether the IT-Wallet upgrade banner in MDL details should be rendered.
+ * - The IT Wallet feature flag is enabled
+ * - The wallet is not offline
+ * - The L3 feature flag is enabled
+ * - Isn't ITW Credential
+ * - The user did not close the banner
+ */
+export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
+  state: GlobalState
+): boolean =>
+  isItwEnabledSelector(state) &&
+  !offlineAccessReasonSelector(state) &&
+  itwIsL3EnabledSelector(state) &&
+  !itwLifecycleIsITWalletValidSelector(state) &&
+  !itwIsWalletUpgradeMDLDetailsBannerHiddenSelector(state);

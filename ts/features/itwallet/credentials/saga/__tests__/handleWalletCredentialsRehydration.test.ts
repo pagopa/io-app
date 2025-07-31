@@ -13,11 +13,42 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
   const mockedEid: StoredCredential = {
     credential: "",
     credentialType: CredentialType.PID,
+    credentialId: "dc_sd_jwt_PersonIdentificationData",
     parsedCredential: {
       expiry_date: expirationClaim
     },
-    format: "vc+sd-jwt",
+    format: "dc+sd-jwt",
     keyTag: "1",
+    issuerConf: {} as StoredCredential["issuerConf"],
+    jwt: {
+      issuedAt: "2024-09-30T07:32:49.000Z",
+      expiration: jwtExpiration
+    }
+  };
+  const mockedMdl: StoredCredential = {
+    credential: "",
+    credentialType: CredentialType.DRIVING_LICENSE,
+    credentialId: "dc_sd_jwt_mDL",
+    parsedCredential: {
+      expiry_date: expirationClaim
+    },
+    format: "dc+sd-jwt",
+    keyTag: "2",
+    issuerConf: {} as StoredCredential["issuerConf"],
+    jwt: {
+      issuedAt: "2024-09-30T07:32:49.000Z",
+      expiration: jwtExpiration
+    }
+  };
+  const mockedDc: StoredCredential = {
+    credential: "",
+    credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
+    credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+    parsedCredential: {
+      expiry_date: expirationClaim
+    },
+    format: "dc+sd-jwt",
+    keyTag: "3",
     issuerConf: {} as StoredCredential["issuerConf"],
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
@@ -31,8 +62,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
         itWallet: {
           issuance: { integrityKeyTag: O.some("key-tag") },
           credentials: {
-            eid: O.some(mockedEid),
-            credentials: []
+            credentials: {}
           }
         }
       }
@@ -60,26 +90,11 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
         itWallet: {
           issuance: { integrityKeyTag: O.some("key-tag") },
           credentials: {
-            eid: O.some(mockedEid),
-            credentials: [
-              O.none,
-              O.some({
-                keyTag: "2",
-                credentialType: CredentialType.DRIVING_LICENSE,
-                jwt: { expiration: jwtExpiration },
-                parsedCredential: {
-                  expiry_date: expirationClaim
-                }
-              }),
-              O.some({
-                keyTag: "3",
-                credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
-                jwt: { expiration: jwtExpiration },
-                parsedCredential: {
-                  expiry_date: expirationClaim
-                }
-              })
-            ]
+            credentials: {
+              [mockedEid.credentialId]: mockedEid,
+              [mockedMdl.credentialId]: mockedMdl,
+              [mockedDc.credentialId]: mockedDc
+            }
           }
         }
       }
@@ -114,17 +129,9 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
         itWallet: {
           issuance: { integrityKeyTag: O.none },
           credentials: {
-            eid: O.none,
-            credentials: [
-              O.some({
-                keyTag: "2",
-                credentialType: CredentialType.DRIVING_LICENSE,
-                jwt: { expiration: jwtExpiration },
-                parsedCredential: {
-                  expiry_date: expirationClaim
-                }
-              })
-            ]
+            credentials: {
+              [mockedMdl.credentialId]: mockedMdl
+            }
           }
         }
       }

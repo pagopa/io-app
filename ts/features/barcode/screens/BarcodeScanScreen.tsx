@@ -18,7 +18,10 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import {
+  barcodesScannerConfigSelector,
+  isPnRemoteEnabledSelector
+} from "../../../store/reducers/backendStatus/remoteConfig";
 import { isIdPayLocallyEnabledSelector } from "../../../store/reducers/persistedPreferences.ts";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -44,12 +47,15 @@ import {
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
+import { MESSAGES_ROUTES } from "../../messages/navigation/routes.ts";
+import PN_ROUTES from "../../pn/navigation/routes.ts";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
+  const isSendEnabled = useIOSelector(isPnRemoteEnabledSelector);
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
@@ -67,7 +73,7 @@ const BarcodeScanScreen = () => {
   );
 
   const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
-    type === "IDPAY" ? isIdPayEnabled : true
+    type === "IDPAY" ? isIdPayEnabled : type === "SEND" ? isSendEnabled : true
   );
 
   /**
@@ -158,6 +164,17 @@ const BarcodeScanScreen = () => {
         navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
           screen: ITW_REMOTE_ROUTES.REQUEST_VALIDATION,
           params: barcode.itwRemoteRequestPayload
+        });
+        break;
+      case "SEND":
+        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.QR_SCAN_FLOW,
+            params: {
+              aarUrl: barcode.qrCodeContent
+            }
+          }
         });
         break;
     }

@@ -1,5 +1,5 @@
+import * as Sentry from "@sentry/react-native";
 import { Appearance, ColorSchemeName } from "react-native";
-import * as O from "fp-ts/Option";
 import {
   isMixpanelInstanceInitialized,
   registerSuperProperties
@@ -21,14 +21,14 @@ import { GlobalState } from "../store/reducers/types";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
-  ItwCed,
+  getCredentialMixpanelStatus,
+  ItwCredentialMixpanelStatus,
   ItwId,
-  ItwPg,
   ItwStatus,
-  ItwTs
+  mapEidStatusToMixpanel
 } from "../features/itwallet/analytics";
 import {
-  itwCredentialsByTypeSelector,
+  itwCredentialsEidStatusSelector,
   itwCredentialsSelector
 } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
@@ -36,7 +36,6 @@ import { itwAuthLevelSelector } from "../features/itwallet/common/store/selector
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
 import { isConnectedSelector } from "../features/connectivity/store/selectors";
-import { sendExceptionToSentry } from "../utils/sentryUtils.ts";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -63,9 +62,9 @@ type SuperProperties = {
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   ITW_STATUS_V2: ItwStatus;
   ITW_ID_V2: ItwId;
-  ITW_PG_V2: ItwPg;
-  ITW_TS_V2: ItwTs;
-  ITW_CED_V2: ItwCed;
+  ITW_PG_V2: ItwCredentialMixpanelStatus;
+  ITW_TS_V2: ItwCredentialMixpanelStatus;
+  ITW_CED_V2: ItwCredentialMixpanelStatus;
   SAVED_PAYMENT_METHOD?: number;
   CGN_STATUS: TrackCgnStatus;
   WELFARE_STATUS: ReadonlyArray<string>;
@@ -91,9 +90,12 @@ export const updateMixpanelSuperProperties = async (
     const SERVICE_CONFIGURATION = serviceConfigHandler(state);
     const ITW_STATUS_V2 = walletStatusHandler(state);
     const ITW_ID_V2 = idStatusHandler(state);
-    const ITW_PG_V2 = pgStatusHandler(state);
-    const ITW_TS_V2 = tsStatusHandler(state);
-    const ITW_CED_V2 = cedStatusHandler(state);
+    const ITW_PG_V2 = credentialStatusHandler("MDL", state);
+    const ITW_TS_V2 = credentialStatusHandler(
+      "EuropeanHealthInsuranceCard",
+      state
+    );
+    const ITW_CED_V2 = credentialStatusHandler("EuropeanDisabilityCard", state);
     const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
     const CGN_STATUS = cgnStatusHandler(state);
     const WELFARE_STATUS = welfareStatusHandler(state);
@@ -130,7 +132,7 @@ export const updateMixpanelSuperProperties = async (
 
     registerSuperProperties(superPropertiesObject);
   } catch (e) {
-    sendExceptionToSentry(e, "updateMixpanelSuperProperties");
+    Sentry.captureException(e);
   }
 };
 
@@ -148,23 +150,20 @@ const walletStatusHandler = (state: GlobalState): ItwStatus => {
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {
-  const credentialsState = itwCredentialsSelector(state);
-  return O.isSome(credentialsState.eid) ? "valid" : "not_available";
-};
-const pgStatusHandler = (state: GlobalState): ItwPg => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
-  return credentialsByType.MDL ? "valid" : "not_available";
-};
-const tsStatusHandler = (state: GlobalState): ItwTs => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
-  return credentialsByType.EuropeanHealthInsuranceCard
-    ? "valid"
+  const eidStatus = itwCredentialsEidStatusSelector(state);
+  return eidStatus !== undefined
+    ? mapEidStatusToMixpanel(eidStatus)
     : "not_available";
 };
-const cedStatusHandler = (state: GlobalState): ItwCed => {
-  const credentialsByType = itwCredentialsByTypeSelector(state);
-  return credentialsByType.EuropeanDisabilityCard ? "valid" : "not_available";
+
+const credentialStatusHandler = (
+  type: string,
+  state: GlobalState
+): ItwCredentialMixpanelStatus => {
+  const credentialsByType = itwCredentialsSelector(state);
+  return getCredentialMixpanelStatus(credentialsByType[type]);
 };
+
 const offlineStatusHandler = (state: GlobalState): ConnectivityStatus => {
   const isConnected = isConnectedSelector(state);
   return isConnected ? "online" : "offline";

@@ -12,7 +12,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import ItwCieIdLoginScreen from "../cieId/ItwCieIdLoginScreen";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 
 jest.mock("@pagopa/io-react-native-cieid", () => ({
   isCieIdAvailable: jest.fn(),

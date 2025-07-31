@@ -18,13 +18,14 @@ import {
   TrackingInfo,
   trackMixPanelTrackingInfo,
   trackMixpanelDeclined,
+  trackMixpanelNotNowSelected,
   trackMixpanelSetEnabled
 } from "../../common/analytics/mixpanel/mixpanelAnalytics";
 import { useConfirmOptOutBottomSheet } from "../shared/hooks/useConfirmOptOutBottomSheet";
 import { ShareDataComponent } from "../shared/components/ShareDataComponent";
 
 const ShareDataScreen = () => {
-  const timeoutRef = useRef<number>();
+  const timeoutRef = useRef<number>(undefined);
   const store = useIOStore();
   const dispatch = useIODispatch();
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector) ?? true;
@@ -77,13 +78,19 @@ const ShareDataScreen = () => {
     trackMixPanelTrackingInfo(flow, info);
   }, []);
 
+  const onDontShareDataPress = useCallback(() => {
+    const flow = getFlowType(false, false);
+    trackMixpanelNotNowSelected(flow);
+    present();
+  }, [present]);
+
   const buttonProps = useMemo<IOScrollViewActions>(
     () => ({
       type: "SingleButton",
       primary: isMixpanelEnabled
         ? {
             accessibilityLabel: dontShareDataLabel,
-            onPress: present,
+            onPress: onDontShareDataPress,
             label: dontShareDataLabel
           }
         : {
@@ -111,7 +118,7 @@ const ShareDataScreen = () => {
       dispatch,
       dontShareDataLabel,
       isMixpanelEnabled,
-      present,
+      onDontShareDataPress,
       shareDataLabel,
       showUpdatedPreferencesToastMessage,
       store

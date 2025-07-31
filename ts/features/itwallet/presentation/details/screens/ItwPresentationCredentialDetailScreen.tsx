@@ -6,7 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import I18n from "../../../../../i18n.ts";
 import {
@@ -16,6 +16,7 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import {
   CREDENTIALS_MAP,
+  CREDENTIAL_STATUS_MAP,
   trackCredentialDetail,
   trackWalletCredentialShowFAC_SIMILE,
   trackWalletCredentialShowTrustmark
@@ -23,7 +24,7 @@ import {
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import {
-  itwCredentialByTypeSelector,
+  itwCredentialSelector,
   itwCredentialStatusSelector
 } from "../../../credentials/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
@@ -47,10 +48,11 @@ import { itwSetReviewPending } from "../../../common/store/actions/preferences.t
 import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
-import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
 import { selectIsLoading } from "../../proximity/machine/selectors.ts";
 import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
+import { trackItwProximityShowQrCode } from "../../proximity/analytics";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -66,11 +68,9 @@ type Props = IOStackNavigationRouteProps<
  */
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
-  const { bottomSheet, dismiss } = useItwPresentQRCode();
+  const { bottomSheet } = useItwPresentQRCode();
   const { credentialType } = route.params;
-  const credentialOption = useIOSelector(
-    itwCredentialByTypeSelector(credentialType)
-  );
+  const credentialOption = useIOSelector(itwCredentialSelector(credentialType));
   const isPendingReview = useIOSelector(itwIsPendingReviewSelector);
 
   useFocusEffect(
@@ -86,16 +86,6 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
         dispatch(itwSetReviewPending(true));
       }
     }, [credentialType, isPendingReview, dispatch])
-  );
-
-  useFocusEffect(
-    // eslint-disable-next-line arrow-body-style
-    useCallback(() => {
-      /**
-       * Dismiss the bottom sheet when this screen is no longer in focus.
-       */
-      return dismiss;
-    }, [dismiss])
   );
 
   if (O.isNone(credentialOption)) {
@@ -126,7 +116,7 @@ export const ItwPresentationCredentialDetail = ({
     ItwProximityMachineContext.useSelector(selectIsLoading);
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const isL3Credential = isItwCredential(credential.credential);
+  const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -137,8 +127,7 @@ export const ItwPresentationCredentialDetail = ({
   useFocusEffect(() => {
     trackCredentialDetail({
       credential: CREDENTIALS_MAP[credential.credentialType],
-      credential_status:
-        credential.storedStatusAttestation?.credentialStatus || "not_valid"
+      credential_status: CREDENTIAL_STATUS_MAP[status]
     });
   });
 
@@ -183,7 +172,10 @@ export const ItwPresentationCredentialDetail = ({
         icon: "qrCode",
         iconPosition: "end",
         loading: isCheckingPermissions,
-        onPress: () => itwProximityMachineRef.send({ type: "start" })
+        onPress: () => {
+          trackItwProximityShowQrCode();
+          itwProximityMachineRef.send({ type: "start" });
+        }
       };
     }
 

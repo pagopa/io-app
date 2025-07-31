@@ -22,6 +22,39 @@ const mockRNQRGenerator = {
 import "react-native-get-random-values";
 require("@shopify/flash-list/jestSetup");
 jest.mock("rn-qr-generator", () => mockRNQRGenerator);
+jest.mock("react-native-screenshot-prevent", () => ({}));
+jest.mock("react-native-haptic-feedback", () => ({
+  ...jest.requireActual("react-native-haptic-feedback"),
+  trigger: jest.fn()
+}));
+
+// eslint-disable-next-line functional/immutable-data
+global.CanvasKit = {
+  MakeCanvas: jest.fn(),
+  MakeImage: jest.fn(),
+  MakePicture: jest.fn(),
+  MakePath: jest.fn(),
+  MakePaint: jest.fn(),
+  MakeMatrix: jest.fn(),
+  MakeColor: jest.fn(),
+  MakeFont: jest.fn(),
+  MakeTypeface: jest.fn(),
+  MakeTextBlob: jest.fn(),
+  MakeVertices: jest.fn(),
+  MakeShader: jest.fn(),
+  MakeImageFilter: jest.fn(),
+  MakeColorFilter: jest.fn(),
+  MakeBlendMode: jest.fn(),
+  MakeRuntimeEffect: jest.fn(),
+  MakeSkottieAnimation: jest.fn(() => ({
+    fps: jest.fn(() => 30),
+    duration: jest.fn(() => 1)
+  })),
+  MakeManagedAnimation: jest.fn(() => ({
+    fps: jest.fn(() => 30),
+    duration: jest.fn(() => 1)
+  }))
+};
 
 jest.mock("react-native-i18n");
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
@@ -41,6 +74,7 @@ jest.mock("react-native-reanimated", () => {
 
   return {
     ...Reanimated,
+    LayoutAnimationConfig: require("react-native").View,
     useScrollViewOffset: jest.fn,
     useReducedMotion: jest.fn
   };
@@ -250,10 +284,14 @@ jest.mock("uuid", () => ({
   }
 }));
 
-jest.mock("react-native-bluetooth-state-manager", () =>({
+jest.mock("react-native-bluetooth-state-manager", () => ({
   getState: jest.fn().mockResolvedValue(true)
 }));
 
-jest.mock("@pagopa/io-react-native-proximity", ()=>({
+jest.mock("@pagopa/io-react-native-proximity", () => ({
   Proximity: jest.fn()
+}));
+
+jest.mock("@pagopa/io-react-native-cie", () => ({
+  CieManager: jest.fn()
 }));

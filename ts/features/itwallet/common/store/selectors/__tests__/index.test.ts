@@ -1,29 +1,18 @@
-import { pipe } from "fp-ts/lib/function";
 import {
   isItwDiscoveryBannerRenderableSelector,
   itwOfflineAccessAvailableSelector,
   itwShouldRenderFeedbackBannerSelector,
+  itwShouldRenderL3UpgradeBannerSelector,
   itwShouldRenderOfflineBannerSelector,
-  itwShouldRenderL3UpgradeBannerSelector
+  itwShouldRenderWalletUpgradeMDLDetailsBannerSelector
 } from "..";
-import { applicationChangeState } from "../../../../../../store/actions/application";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { itwStoreIntegrityKeyTag } from "../../../../issuance/store/actions";
-import { itwCredentialsStore } from "../../../../credentials/store/actions";
-import { CredentialType } from "../../../utils/itwMocksUtils";
-import { StoredCredential } from "../../../utils/itwTypesUtils";
-import { appReducer } from "../../../../../../store/reducers";
-import { Action } from "../../../../../../store/actions/types";
-import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
+import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
+import * as ingressSelectors from "../../../../../ingress/store/selectors";
 import * as credentialsSelectors from "../../../../credentials/store/selectors";
+import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import * as preferencesSelectors from "../preferences";
 import * as remoteConfigSelectors from "../remoteConfig";
-import * as ingressSelectors from "../../../../../ingress/store/selectors";
-import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
-
-const curriedAppReducer =
-  (action: Action) => (state: GlobalState | undefined) =>
-    appReducer(state, action);
 
 describe("isItwDiscoveryBannerRenderableSelector", () => {
   beforeEach(() => {
@@ -112,39 +101,33 @@ describe("itwOfflineAccessAvailableSelector", () => {
     jest.clearAllMocks();
   });
 
-  it("Returns true when the wallet is available for offline access", () => {
-    const globalState = pipe(
-      undefined,
-      curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(
-        itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3")
-      ),
-      curriedAppReducer(
-        itwCredentialsStore([
-          { credentialType: CredentialType.PID },
-          { credentialType: CredentialType.DRIVING_LICENSE }
-        ] as Array<StoredCredential>)
-      )
-    );
+  it.each`
+    isLifecycleIsOperationalOrValid | isWalletEmpty | isAvailable
+    ${false}                        | ${false}      | ${false}
+    ${false}                        | ${true}       | ${false}
+    ${true}                         | ${false}      | ${true}
+    ${true}                         | ${true}       | ${false}
+  `(
+    "should return $isAvailable when isLifecycleIsOperationalOrValid is $isLifecycleIsOperationalOrValid, isWalletEmpty is $isWalletEmpty",
+    ({ isLifecycleIsOperationalOrValid, isWalletEmpty, isAvailable }) => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsOperationalOrValid")
+        .mockImplementation(() => isLifecycleIsOperationalOrValid);
+      jest
+        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
+        .mockImplementation(() => isWalletEmpty);
 
-    expect(itwOfflineAccessAvailableSelector(globalState)).toEqual(true);
-  });
+      expect(
+        itwOfflineAccessAvailableSelector({} as unknown as GlobalState)
+      ).toEqual(isAvailable);
+    }
+  );
+});
 
-  it("Returns false when the wallet does not have credentials", () => {
-    const globalState = pipe(
-      undefined,
-      curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(
-        itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3")
-      ),
-      curriedAppReducer(
-        itwCredentialsStore([
-          { credentialType: CredentialType.PID }
-        ] as Array<StoredCredential>)
-      )
-    );
-
-    expect(itwOfflineAccessAvailableSelector(globalState)).toEqual(false);
+describe("itwShouldRenderOfflineBannerSelector", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
   it.each`
@@ -186,15 +169,15 @@ describe("itwShouldRenderL3UpgradeBannerSelector", () => {
   });
 
   it.each`
-    itwEnabled | offlineAccessReason                       | isL3Enabled | authLevel    | expected
-    ${true}    | ${undefined}                              | ${true}     | ${undefined} | ${true}
-    ${true}    | ${undefined}                              | ${true}     | ${"L2"}      | ${true}
-    ${true}    | ${undefined}                              | ${false}    | ${"L2"}      | ${false}
-    ${true}    | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${"L2"}      | ${false}
-    ${false}   | ${undefined}                              | ${true}     | ${"L2"}      | ${true}
+    itwEnabled | offlineAccessReason                       | isL3Enabled | isEidL3  | expected
+    ${true}    | ${undefined}                              | ${true}     | ${false} | ${true}
+    ${true}    | ${undefined}                              | ${true}     | ${false} | ${true}
+    ${true}    | ${undefined}                              | ${false}    | ${false} | ${false}
+    ${true}    | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${false} | ${false}
+    ${false}   | ${undefined}                              | ${true}     | ${false} | ${true}
   `(
-    "should return $expected when offlineAccessReason is $offlineAccessReason, isL3Enabled is $isL3Enabled, authLevel is $authLevel",
-    ({ offlineAccessReason, isL3Enabled, authLevel, expected }) => {
+    "should return $expected when offlineAccessReason is $offlineAccessReason, isL3Enabled is $isL3Enabled, isEidL3 is $isEidL3",
+    ({ offlineAccessReason, isL3Enabled, isEidL3, expected }) => {
       jest
         .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
         .mockReturnValue(true);
@@ -205,11 +188,63 @@ describe("itwShouldRenderL3UpgradeBannerSelector", () => {
         .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
         .mockReturnValue(isL3Enabled);
       jest
-        .spyOn(preferencesSelectors, "itwAuthLevelSelector")
-        .mockReturnValue(authLevel);
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(isEidL3);
 
       expect(
         itwShouldRenderL3UpgradeBannerSelector({} as unknown as GlobalState)
+      ).toBe(expected);
+    }
+  );
+});
+
+describe("itwShouldRenderWalletUpgradeMDLDetailsBannerSelector", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  it.each`
+    isWalletValid | offlineAccessReason                       | isL3Enabled | isEidL3  | isBannerHidden | expected
+    ${true}       | ${undefined}                              | ${true}     | ${false} | ${false}       | ${true}
+    ${true}       | ${undefined}                              | ${true}     | ${false} | ${true}        | ${false}
+    ${true}       | ${undefined}                              | ${true}     | ${true}  | ${false}       | ${false}
+    ${true}       | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${false} | ${false}       | ${false}
+    ${false}      | ${undefined}                              | ${true}     | ${false} | ${false}       | ${false}
+    ${true}       | ${undefined}                              | ${false}    | ${false} | ${false}       | ${false}
+  `(
+    "should return $expected when isWalletValid=$isWalletValid, offlineAccessReason=$offlineAccessReason, isL3Enabled=$isL3Enabled, isEidL3=$isEidL3, isBannerHidden=$isBannerHidden",
+    ({
+      isWalletValid,
+      offlineAccessReason,
+      isL3Enabled,
+      isEidL3,
+      isBannerHidden,
+      expected
+    }) => {
+      jest
+        .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
+        .mockReturnValue(isWalletValid);
+      jest
+        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+        .mockReturnValue(offlineAccessReason);
+      jest
+        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .mockReturnValue(isL3Enabled);
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(isEidL3);
+      jest
+        .spyOn(
+          preferencesSelectors,
+          "itwIsWalletUpgradeMDLDetailsBannerHiddenSelector"
+        )
+        .mockReturnValue(isBannerHidden);
+
+      expect(
+        itwShouldRenderWalletUpgradeMDLDetailsBannerSelector(
+          {} as unknown as GlobalState
+        )
       ).toBe(expected);
     }
   );

@@ -1,6 +1,5 @@
 import { select, call, all, put } from "typed-redux-saga/macro";
 import { pipe } from "fp-ts/lib/function";
-import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import { itwCredentialsSelector } from "../store/selectors";
@@ -20,6 +19,7 @@ import {
   CREDENTIALS_MAP,
   trackItwStatusCredentialAttestationFailure
 } from "../../analytics";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
@@ -76,20 +76,23 @@ export function* updateCredentialStatusAttestationSaga(
  * This saga is responsible to check the status attestation for each credential in the wallet.
  */
 export function* checkCredentialsStatusAttestation() {
-  const state: GlobalState = yield* select();
-
   const isWalletValid = yield* select(itwLifecycleIsValidSelector);
+  const isWhitelisted = yield* select(itwIsL3EnabledSelector);
 
-  // Credentials can be requested only when the wallet is valid, i.e. the eID was issued
-  if (!isWalletValid) {
+  if (
+    // Credentials can be requested only when the wallet is valid, i.e. the eID was issued
+    !isWalletValid ||
+    // TODO: [SIW-2700]
+    // For now, this step is skipped for whitelisted users
+    // until the status assertion flow is aligned with version 1.0
+    isWhitelisted
+  ) {
     return;
   }
 
-  const { credentials } = yield* select(itwCredentialsSelector);
-
-  const credentialsToCheck = pipe(
-    credentials,
-    RA.filterMap(O.filter(shouldRequestStatusAttestation))
+  const credentials = yield* select(itwCredentialsSelector);
+  const credentialsToCheck = Object.values(credentials).filter(
+    shouldRequestStatusAttestation
   );
 
   if (credentialsToCheck.length === 0) {
@@ -104,6 +107,7 @@ export function* checkCredentialsStatusAttestation() {
 
   yield* put(itwCredentialsStore(updatedCredentials));
 
+  const state: GlobalState = yield* select();
   void updateMixpanelProfileProperties(state);
   void updateMixpanelSuperProperties(state);
 }

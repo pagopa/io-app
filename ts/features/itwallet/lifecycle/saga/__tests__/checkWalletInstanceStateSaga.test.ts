@@ -21,13 +21,18 @@ jest.mock("@pagopa/io-react-native-crypto", () => ({
 }));
 
 describe("checkWalletInstanceStateSaga", () => {
+  const mockPid = {
+    credentialType: "PersonIdentificationData",
+    credentialId: "dc_sd_jwt_PersonIdentificationData",
+    format: "dc+sd-jwt"
+  } as StoredCredential;
   // TODO: improve the mocked store's typing, do not use DeepPartial
   it("Does not check the wallet state when the wallet is INSTALLED", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
           issuance: { integrityKeyTag: O.none },
-          credentials: { eid: O.none, credentials: [] }
+          credentials: { credentials: {} }
         }
       }
     };
@@ -47,10 +52,11 @@ describe("checkWalletInstanceStateSaga", () => {
             integrityServiceStatus: "ready",
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           },
-          credentials: { eid: O.none, credentials: [] },
+          credentials: { credentials: {} },
           environment: {
             env: "prod"
-          }
+          },
+          preferences: {}
         }
       }
     };
@@ -76,10 +82,11 @@ describe("checkWalletInstanceStateSaga", () => {
           issuance: {
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           },
-          credentials: { eid: O.none, credentials: [] },
+          credentials: { credentials: {} },
           environment: {
             env: "prod"
-          }
+          },
+          preferences: {}
         }
       }
     };
@@ -104,10 +111,13 @@ describe("checkWalletInstanceStateSaga", () => {
           issuance: {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
           },
-          credentials: { eid: O.some({} as StoredCredential), credentials: [] },
+          credentials: {
+            credentials: { [mockPid.credentialId]: mockPid }
+          },
           environment: {
             env: "prod"
-          }
+          },
+          preferences: {}
         }
       }
     };
@@ -132,10 +142,13 @@ describe("checkWalletInstanceStateSaga", () => {
           issuance: {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
           },
-          credentials: { eid: O.some({} as StoredCredential), credentials: [] },
+          credentials: {
+            credentials: { [mockPid.credentialId]: mockPid }
+          },
           environment: {
             env: "prod"
-          }
+          },
+          preferences: {}
         }
       }
     };
@@ -158,7 +171,9 @@ describe("checkWalletInstanceStateSaga", () => {
       features: {
         itWallet: {
           issuance: { integrityKeyTag: O.none },
-          credentials: { eid: O.some({} as StoredCredential), credentials: [] }
+          credentials: {
+            credentials: { [mockPid.credentialId]: mockPid }
+          }
         }
       }
     };

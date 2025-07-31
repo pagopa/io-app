@@ -31,7 +31,7 @@ const IdPayFailureScreen = () => {
       accessibilityLabel: I18n.t(
         "idpay.onboarding.failure.button.goToInitiative"
       ),
-      onPress: () => machine.send({ type: "next" })
+      onPress: () => machine.send({ type: "check-details" })
     }),
     [machine]
   );
@@ -102,7 +102,7 @@ const IdPayFailureScreen = () => {
         };
       case OnboardingFailureEnum.INITIATIVE_ENDED:
         return {
-          pictogram: "ended",
+          pictogram: "time",
           title: I18n.t(
             "idpay.onboarding.failure.message.INITIATIVE_ENDED.title"
           ),

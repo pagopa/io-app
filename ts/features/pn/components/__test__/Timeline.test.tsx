@@ -91,25 +91,32 @@ const defaultProps: TimelineProps = {
       time: "23:00",
       status: "cancelled"
     }
-  ]
+  ],
+  footerHeight: 116
 };
 
 describe("Timeline component", () => {
   it("should match the snapshot, empty data", () => {
-    const component = renderComponent([]);
+    const component = renderComponent([], 116);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match the snapshot, default data", () => {
-    const component = renderComponent(defaultProps.data);
+    const component = renderComponent(
+      defaultProps.data,
+      defaultProps.footerHeight
+    );
     expect(component.toJSON()).toMatchSnapshot();
   });
 });
 
-const renderComponent = (data: ReadonlyArray<TimelineItemProps>) => {
+const renderComponent = (
+  data: ReadonlyArray<TimelineItemProps>,
+  footerHeight: number
+) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
   return renderScreenWithNavigationStoreContext(
-    () => <Timeline data={data} />,
+    () => <Timeline data={data} footerHeight={footerHeight} />,
     PN_ROUTES.MESSAGE_DETAILS,
     {},
     store

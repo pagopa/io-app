@@ -328,7 +328,6 @@
   "profile": {
     "fiscalCode": {
       "accessibility": {
-        "fiscalCodeHint": "Bild des Strichcodes deiner Steuernummer",
         "unavailable": "Nicht verfügbar"
       },
       "title": "Deine persönlichen Dokumente",
@@ -691,15 +690,6 @@
           "label": "Vorstellung von IO",
           "hint": "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
         }
-      },
-      "cie_unsupported": {
-        "title": "Du kannst dich nicht mit CIE anmelden",
-        "body": "Das von dir verwendete Gerät unterstützt den Zugang mit einer elektronischen Identitätskarte (CIE) nicht.",
-        "button": "Verstanden",
-        "nfc_problem": "Zum Lesen der CIE ist ein Gerät mit NFC-Chip erforderlich.",
-        "os_problem": "Ein Betriebssystem mit Android 6.0 oder iOS 13 oder höher ist erforderlich.",
-        "nfc_alert": "Dein Gerät verfügt nicht über NFC.",
-        "os_alert": "Das Betriebssystem des Geräts ist nicht auf dem neuesten Stand."
       },
       "cie_bottom_sheet": {
         "title": "Wie willst du dich anmelden?",
@@ -3414,13 +3404,6 @@
         "dc": "Europäische Behindertenkarte",
         "ts": "Gesundheitskarte - Europäische Krankenversicherungskarte"
       },
-      "ipzsPrivacy": {
-        "title": "Deine Dokumente in IO sind sicher",
-        "warning": "Indem du auf **Weiter** tippst, erklärst du, dass du den **Datenschutzhinweis** gelesen und verstanden hast.",
-        "button": {
-          "label": "Weiter"
-        }
-      },
       "wallet": {
         "active": "Aktiv",
         "inactive": "Nicht aktiv"
@@ -3503,25 +3486,34 @@
           "title": "Dokumente in IO ist bereits aktiv",
           "content": "Füge weiterhin digitale Versionen deiner Dokumente zu deinem Konto hinzu.",
           "action": "Gehe zum Konto"
+        },
+        "ipzsPrivacy": {
+          "title": "Deine Dokumente in IO sind sicher",
+          "warning": "Indem du auf **Weiter** tippst, erklärst du, dass du den **Datenschutzhinweis** gelesen und verstanden hast.",
+          "button": {
+            "label": "Weiter"
+          }
         }
       },
       "identification": {
         "mode": {
-          "title": "Überprüfe deine Identität",
-          "description": "Dies ist ein notwendiger Schritt, um die Sicherheit deiner Daten zu gewährleisten.",
-          "header": "Wähle, wie du dich identifizieren willst",
-          "method": {
-            "spid": {
-              "title": "SPID",
-              "subtitle": "Zugangsdaten und App (oder SMS) verwenden"
-            },
-            "ciePin": {
-              "title": "CIE + PIN",
-              "subtitle": "Elektronische Identitätskarte und PIN verwenden"
-            },
-            "cieId": {
-              "title": "CieID",
-              "subtitle": "CieID-Zugangsdaten und -App verwenden"
+          "l2": {
+            "title": "Überprüfe deine Identität",
+            "description": "Dies ist ein notwendiger Schritt, um die Sicherheit deiner Daten zu gewährleisten.",
+            "header": "Wähle, wie du dich identifizieren willst",
+            "method": {
+              "spid": {
+                "title": "SPID",
+                "subtitle": "Zugangsdaten und App (oder SMS) verwenden"
+              },
+              "ciePin": {
+                "title": "CIE + PIN",
+                "subtitle": "Elektronische Identitätskarte und PIN verwenden"
+              },
+              "cieId": {
+                "title": "CieID",
+                "subtitle": "CieID-Zugangsdaten und -App verwenden"
+              }
             }
           }
         },
@@ -3538,19 +3530,8 @@
           "primaryAction": "Einstellungen öffnen",
           "secondaryAction": "Weiter"
         },
-        "notMatchingIdentityScreen": {
-          "title": "Du meldest dich mit einem neuen Gerät an",
-          "message": "Wenn du dich von einem anderen Gerät als dem üblichen (z. B. dem einer anderen Person) in IO anmeldest, werden aus Sicherheitsgründen diese Funktionalitäten zurückgesetzt:\n\n- Dokumente in IO",
-          "banner": {
-            "title": "Wir empfehlen, dass du nur von deinem Gerät aus auf die App zugreifst."
-          },
-          "alert": {
-            "title": "Möchtest du dich wirklich abmelden?",
-            "message": "Du musst dich erneut mit SPID oder CIE anmelden, um die App nutzen zu können."
-          }
-        },
-        "loading": {
-          "cieId": {
+        "cieId": {
+          "loading": {
             "title": "Verbindung mit der CieID-App läuft...",
             "subtitle": "Bestätige den Zugang in der CieID-App, um die Verbindung fortzusetzen oder abzubrechen",
             "cancel": "Verbindung abbrechen"
@@ -3595,7 +3576,7 @@
           }
         },
         "eidResult": {
-          "success": {
+          "successL2": {
             "title": "Alles ist bereit!",
             "subtitle": "Du kannst nun das erste Dokument in das IO-Konto aufnehmen.",
             "toast": "Erledigt!",
@@ -3603,6 +3584,13 @@
               "continue": "Erstes Dokument hinzufügen",
               "continueAlt": "Dokument hinzufügen",
               "close": "Später fortfahren"
+            }
+          },
+          "success": {
+            "title": "Il tuo IT-Wallet è pronto!",
+            "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale di Stato.",
+            "actions": {
+              "continue": "Esplora IT-Wallet"
             }
           }
         },
@@ -3647,6 +3635,17 @@
           "subtitle": "Um Dokumente in IO zu verwenden, füge sie zunächst dem Konto hinzu. Das geht schnell und einfach."
         }
       },
+      "notMatchingIdentityScreen": {
+        "title": "Du meldest dich mit einem neuen Gerät an",
+        "message": "Wenn du dich von einem anderen Gerät als dem üblichen (z. B. dem einer anderen Person) in IO anmeldest, werden aus Sicherheitsgründen diese Funktionalitäten zurückgesetzt:\n\n- Dokumente in IO",
+        "banner": {
+          "title": "Wir empfehlen, dass du nur von deinem Gerät aus auf die App zugreifst."
+        },
+        "alert": {
+          "title": "Möchtest du dich wirklich abmelden?",
+          "message": "Du musst dich erneut mit SPID oder CIE anmelden, um die App nutzen zu können."
+        }
+      },
       "unsupportedDevice": {
         "text": "Ab dem 02.07.2024 ist dein Gerät möglicherweise nicht mehr mit IO kompatibel.",
         "moreInfo": "Mehr erfahren",
@@ -3688,9 +3687,11 @@
             "contentBottom": "###### Wie funktioniert das?\n\nDeine **Identität wird bei der Aktivierung über SPID oder CIE verifiziert**.",
             "triggerLabel": "Was ist das?",
             "alert": {
-              "valid": "Die letzte Überprüfung ist vom {{date}}.",
-              "expiring": "Überprüfe deine Identität bis {{date}}.",
-              "expired": "Für die weitere Nutzung von Dokumente in IO ist ein kurzer Überprüfungsschritt erforderlich."
+              "documents": {
+                "valid": "Die letzte Überprüfung ist vom {{date}}.",
+                "expiring": "Überprüfe deine Identität bis {{date}}.",
+                "expired": "Für die weitere Nutzung von Dokumente in IO ist ein kurzer Überprüfungsschritt erforderlich."
+              }
             }
           },
           "MDL": {
@@ -4107,6 +4108,32 @@
             "name": "Assoziiert einen Namen mit der Iban"
           }
         }
+      }
+    },
+    "unsubscription": {
+      "removeAlert": {
+        "title": "Möchten Sie {{initiativeName}} aus der Brieftasche löschen?",
+        "content": "Der Bonus wird entfernt."
+      }
+    },
+    "onboarding": {
+      "enableMessages": {
+        "cancelAction": "Stornieren",
+        "subtitle": "Aktivieren Sie die Möglichkeit, Sie in der App zu kontaktieren, um Aktualisierungen auf dem {{initiativeName}} zu erhalten. Dieser Schritt ist erforderlich, um mit der Anfrage fortzufahren.",
+        "title": "Nachrichten aktivieren",
+        "confirmAction": "OK, aktiv"
+      },
+      "enableNotification": {
+        "title": "Non perderti l’esito delle tue richieste",
+        "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
+        "action": "Attiva notifiche push",
+        "deny": "Non attivare",
+        "success": "Sie aktivierten Push -Benachrichtigungen",
+        "advice": "Consigliato"
+      },
+      "loading": {
+        "subtitle": "Attendi qualche secondo",
+        "title": "Stiamo elaborando la tua richiesta"
       }
     }
   }

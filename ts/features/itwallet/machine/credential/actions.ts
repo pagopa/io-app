@@ -5,7 +5,7 @@ import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { checkCurrentSession } from "../../../authentication/common/store/actions/index.ts";
+import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import {
@@ -24,8 +24,11 @@ import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import { itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences.ts";
-import { CredentialType } from "../../common/utils/itwMocksUtils.ts";
+import {
+  itwIsL3EnabledSelector,
+  itwRequestedCredentialsSelector
+} from "../../common/store/selectors/preferences";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -40,11 +43,14 @@ export const createCredentialIssuanceActionsImplementation = (
     unknown,
     CredentialIssuanceEvents,
     any
-  >(() => ({
-    walletInstanceAttestation: itwWalletInstanceAttestationSelector(
-      store.getState()
-    )
-  })),
+  >(() => {
+    const state = store.getState();
+
+    return {
+      walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
+      isWhiteListed: itwIsL3EnabledSelector(state)
+    };
+  }),
 
   navigateToTrustIssuerScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -112,8 +118,8 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents,
     CredentialIssuanceEvents
   >) => {
-    assert(context.credential, "credential is undefined");
-    store.dispatch(itwCredentialsStore([context.credential]));
+    assert(context.credentials, "credential is undefined");
+    store.dispatch(itwCredentialsStore(context.credentials));
   },
 
   flagCredentialAsRequested: ({

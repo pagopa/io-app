@@ -1,11 +1,11 @@
+import * as Sentry from "@sentry/react-native";
 import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
 import { ReduxSagaEffect } from "../../../../types/utils";
+import { selectItwEnv } from "../../common/store/selectors/environment.ts";
+import { getEnv } from "../../common/utils/environment.ts";
 import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUtils";
 import { itwSetIntegrityServiceStatus } from "../../issuance/store/actions";
 import { itwIntegrityServiceStatusSelector } from "../../issuance/store/selectors";
-import { sendExceptionToSentry } from "../../../../utils/sentryUtils.ts";
-import { selectItwEnv } from "../../common/store/selectors/environment.ts";
-import { getEnv } from "../../common/utils/environment.ts";
 
 /**
  * Checks if the integrity service is ready by checking its current status and waiting for updates if needed.
@@ -66,6 +66,6 @@ export function* warmUpIntegrityServiceSaga(): Generator<
     yield* put(itwSetIntegrityServiceStatus(isReady ? "ready" : "unavailable"));
   } catch (e) {
     yield* put(itwSetIntegrityServiceStatus("error"));
-    sendExceptionToSentry(e, "warmUpIntegrityServiceSaga");
+    Sentry.captureException(e);
   }
 }

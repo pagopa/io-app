@@ -367,2107 +367,2116 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                       }
                     >
                       <View
-                        accessible={true}
+                        collapsable={false}
                         style={
                           {
-                            "alignItems": "center",
-                            "flex": 1,
-                            "flexDirection": "row",
-                            "flexShrink": 1,
-                            "paddingHorizontal": 24,
+                            "marginBottom": 52,
                           }
                         }
                       >
                         <View
+                          accessible={true}
                           style={
                             {
                               "alignItems": "center",
-                              "paddingVertical": 12,
-                              "width": 30,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            1
-                          </Text>
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
-                          >
-                            01
-                          </Text>
-                        </View>
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingHorizontal": 16,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                {
-                                  "opacity": 0,
-                                },
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "borderColor": "#FFFFFF",
-                                  "borderRadius": 7,
-                                  "height": 14,
-                                  "marginVertical": 4,
-                                  "width": 14,
-                                },
-                                {
-                                  "backgroundColor": "#6CC66A",
-                                  "borderWidth": 0,
-                                },
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                        </View>
-                        <View
-                          style={
-                            {
+                              "flex": 1,
+                              "flexDirection": "row",
                               "flexShrink": 1,
-                              "paddingVertical": 12,
+                              "paddingHorizontal": 24,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            Depositata
-                          </Text>
                           <View
                             style={
                               {
-                                "height": 4,
+                                "alignItems": "center",
+                                "paddingVertical": 12,
+                                "width": 30,
                               }
                             }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
                           >
-                            01:00
-                          </Text>
-                        </View>
-                      </View>
-                      <View
-                        accessible={true}
-                        style={
-                          {
-                            "alignItems": "center",
-                            "flex": 1,
-                            "flexDirection": "row",
-                            "flexShrink": 1,
-                            "paddingHorizontal": 24,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingVertical": 12,
-                              "width": 30,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            3
-                          </Text>
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
-                          >
-                            02
-                          </Text>
-                        </View>
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingHorizontal": 16,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "borderColor": "#FFFFFF",
-                                  "borderRadius": 7,
-                                  "height": 14,
-                                  "marginVertical": 4,
-                                  "width": 14,
-                                },
-                                {
-                                  "backgroundColor": "#FFCB46",
-                                  "borderWidth": 1.5,
-                                },
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                        </View>
-                        <View
-                          style={
-                            {
-                              "flexShrink": 1,
-                              "paddingVertical": 12,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            Annullata
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              1
+                            </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              01
+                            </Text>
+                          </View>
                           <View
                             style={
                               {
-                                "height": 4,
+                                "alignItems": "center",
+                                "paddingHorizontal": 16,
                               }
                             }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
                           >
-                            03:00
-                          </Text>
-                        </View>
-                      </View>
-                      <View
-                        accessible={true}
-                        style={
-                          {
-                            "alignItems": "center",
-                            "flex": 1,
-                            "flexDirection": "row",
-                            "flexShrink": 1,
-                            "paddingHorizontal": 24,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingVertical": 12,
-                              "width": 30,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            6
-                          </Text>
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
-                          >
-                            03
-                          </Text>
-                        </View>
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingHorizontal": 16,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "borderColor": "#FFFFFF",
-                                  "borderRadius": 7,
-                                  "height": 14,
-                                  "marginVertical": 4,
-                                  "width": 14,
-                                },
-                                {
-                                  "backgroundColor": "#BBC2D6",
-                                  "borderWidth": 1.5,
-                                },
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                        </View>
-                        <View
-                          style={
-                            {
-                              "flexShrink": 1,
-                              "paddingVertical": 12,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            Consegnata
-                          </Text>
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  {
+                                    "opacity": 0,
+                                  },
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 7,
+                                    "height": 14,
+                                    "marginVertical": 4,
+                                    "width": 14,
+                                  },
+                                  {
+                                    "backgroundColor": "#6CC66A",
+                                    "borderWidth": 0,
+                                  },
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                          </View>
                           <View
                             style={
                               {
-                                "height": 4,
+                                "flexShrink": 1,
+                                "paddingVertical": 12,
                               }
                             }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
                           >
-                            05:00
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Depositata
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 4,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              01:00
+                            </Text>
+                          </View>
                         </View>
-                      </View>
-                      <View
-                        accessible={true}
-                        style={
-                          {
-                            "alignItems": "center",
-                            "flex": 1,
-                            "flexDirection": "row",
-                            "flexShrink": 1,
-                            "paddingHorizontal": 24,
-                          }
-                        }
-                      >
                         <View
+                          accessible={true}
                           style={
                             {
                               "alignItems": "center",
-                              "paddingVertical": 12,
-                              "width": 30,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            9
-                          </Text>
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
-                          >
-                            04
-                          </Text>
-                        </View>
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingHorizontal": 16,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "borderColor": "#FFFFFF",
-                                  "borderRadius": 7,
-                                  "height": 14,
-                                  "marginVertical": 4,
-                                  "width": 14,
-                                },
-                                {
-                                  "backgroundColor": "#BBC2D6",
-                                  "borderWidth": 1.5,
-                                },
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                        </View>
-                        <View
-                          style={
-                            {
+                              "flex": 1,
+                              "flexDirection": "row",
                               "flexShrink": 1,
-                              "paddingVertical": 12,
+                              "paddingHorizontal": 24,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            Invio in corso
-                          </Text>
                           <View
                             style={
                               {
-                                "height": 4,
+                                "alignItems": "center",
+                                "paddingVertical": 12,
+                                "width": 30,
                               }
                             }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
                           >
-                            07:00
-                          </Text>
-                        </View>
-                      </View>
-                      <View
-                        accessible={true}
-                        style={
-                          {
-                            "alignItems": "center",
-                            "flex": 1,
-                            "flexDirection": "row",
-                            "flexShrink": 1,
-                            "paddingHorizontal": 24,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingVertical": 12,
-                              "width": 30,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            11
-                          </Text>
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
-                          >
-                            05
-                          </Text>
-                        </View>
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingHorizontal": 16,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "borderColor": "#FFFFFF",
-                                  "borderRadius": 7,
-                                  "height": 14,
-                                  "marginVertical": 4,
-                                  "width": 14,
-                                },
-                                {
-                                  "backgroundColor": "#6BCFFB",
-                                  "borderWidth": 1.5,
-                                },
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                        </View>
-                        <View
-                          style={
-                            {
-                              "flexShrink": 1,
-                              "paddingVertical": 12,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            Perfezionata per decorrenza termini
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              3
+                            </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              02
+                            </Text>
+                          </View>
                           <View
                             style={
                               {
-                                "height": 4,
+                                "alignItems": "center",
+                                "paddingHorizontal": 16,
                               }
                             }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
                           >
-                            09:00
-                          </Text>
-                        </View>
-                      </View>
-                      <View
-                        accessible={true}
-                        style={
-                          {
-                            "alignItems": "center",
-                            "flex": 1,
-                            "flexDirection": "row",
-                            "flexShrink": 1,
-                            "paddingHorizontal": 24,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingVertical": 12,
-                              "width": 30,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            14
-                          </Text>
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
-                          >
-                            06
-                          </Text>
-                        </View>
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingHorizontal": 16,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "borderColor": "#FFFFFF",
-                                  "borderRadius": 7,
-                                  "height": 14,
-                                  "marginVertical": 4,
-                                  "width": 14,
-                                },
-                                {
-                                  "backgroundColor": "#FF4040",
-                                  "borderWidth": 1.5,
-                                },
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                        </View>
-                        <View
-                          style={
-                            {
-                              "flexShrink": 1,
-                              "paddingVertical": 12,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            Destinatario irreperibile
-                          </Text>
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 7,
+                                    "height": 14,
+                                    "marginVertical": 4,
+                                    "width": 14,
+                                  },
+                                  {
+                                    "backgroundColor": "#FFCB46",
+                                    "borderWidth": 1.5,
+                                  },
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                          </View>
                           <View
                             style={
                               {
-                                "height": 4,
+                                "flexShrink": 1,
+                                "paddingVertical": 12,
                               }
                             }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
                           >
-                            11:00
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Annullata
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 4,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              03:00
+                            </Text>
+                          </View>
                         </View>
-                      </View>
-                      <View
-                        accessible={true}
-                        style={
-                          {
-                            "alignItems": "center",
-                            "flex": 1,
-                            "flexDirection": "row",
-                            "flexShrink": 1,
-                            "paddingHorizontal": 24,
-                          }
-                        }
-                      >
                         <View
+                          accessible={true}
                           style={
                             {
                               "alignItems": "center",
-                              "paddingVertical": 12,
-                              "width": 30,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            15
-                          </Text>
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
-                          >
-                            07
-                          </Text>
-                        </View>
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingHorizontal": 16,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "borderColor": "#FFFFFF",
-                                  "borderRadius": 7,
-                                  "height": 14,
-                                  "marginVertical": 4,
-                                  "width": 14,
-                                },
-                                {
-                                  "backgroundColor": "#6CC66A",
-                                  "borderWidth": 1.5,
-                                },
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                        </View>
-                        <View
-                          style={
-                            {
+                              "flex": 1,
+                              "flexDirection": "row",
                               "flexShrink": 1,
-                              "paddingVertical": 12,
+                              "paddingHorizontal": 24,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            Avvenuto accesso
-                          </Text>
                           <View
                             style={
                               {
-                                "height": 4,
+                                "alignItems": "center",
+                                "paddingVertical": 12,
+                                "width": 30,
                               }
                             }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
                           >
-                            13:00
-                          </Text>
-                        </View>
-                      </View>
-                      <View
-                        accessible={true}
-                        style={
-                          {
-                            "alignItems": "center",
-                            "flex": 1,
-                            "flexDirection": "row",
-                            "flexShrink": 1,
-                            "paddingHorizontal": 24,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingVertical": 12,
-                              "width": 30,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            18
-                          </Text>
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
-                          >
-                            08
-                          </Text>
-                        </View>
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingHorizontal": 16,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "borderColor": "#FFFFFF",
-                                  "borderRadius": 7,
-                                  "height": 14,
-                                  "marginVertical": 4,
-                                  "width": 14,
-                                },
-                                {
-                                  "backgroundColor": "#BBC2D6",
-                                  "borderWidth": 1.5,
-                                },
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                        </View>
-                        <View
-                          style={
-                            {
-                              "flexShrink": 1,
-                              "paddingVertical": 12,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            Pagata
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              6
+                            </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              03
+                            </Text>
+                          </View>
                           <View
                             style={
                               {
-                                "height": 4,
+                                "alignItems": "center",
+                                "paddingHorizontal": 16,
                               }
                             }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
                           >
-                            15:00
-                          </Text>
-                        </View>
-                      </View>
-                      <View
-                        accessible={true}
-                        style={
-                          {
-                            "alignItems": "center",
-                            "flex": 1,
-                            "flexDirection": "row",
-                            "flexShrink": 1,
-                            "paddingHorizontal": 24,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingVertical": 12,
-                              "width": 30,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            21
-                          </Text>
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
-                          >
-                            09
-                          </Text>
-                        </View>
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingHorizontal": 16,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "borderColor": "#FFFFFF",
-                                  "borderRadius": 7,
-                                  "height": 14,
-                                  "marginVertical": 4,
-                                  "width": 14,
-                                },
-                                {
-                                  "backgroundColor": "#BBC2D6",
-                                  "borderWidth": 1.5,
-                                },
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                        </View>
-                        <View
-                          style={
-                            {
-                              "flexShrink": 1,
-                              "paddingVertical": 12,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            REFUSED
-                          </Text>
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 7,
+                                    "height": 14,
+                                    "marginVertical": 4,
+                                    "width": 14,
+                                  },
+                                  {
+                                    "backgroundColor": "#BBC2D6",
+                                    "borderWidth": 1.5,
+                                  },
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                          </View>
                           <View
                             style={
                               {
-                                "height": 4,
+                                "flexShrink": 1,
+                                "paddingVertical": 12,
                               }
                             }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
                           >
-                            17:00
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Consegnata
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 4,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              05:00
+                            </Text>
+                          </View>
                         </View>
-                      </View>
-                      <View
-                        accessible={true}
-                        style={
-                          {
-                            "alignItems": "center",
-                            "flex": 1,
-                            "flexDirection": "row",
-                            "flexShrink": 1,
-                            "paddingHorizontal": 24,
-                          }
-                        }
-                      >
                         <View
+                          accessible={true}
                           style={
                             {
                               "alignItems": "center",
-                              "paddingVertical": 12,
-                              "width": 30,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            24
-                          </Text>
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
-                          >
-                            10
-                          </Text>
-                        </View>
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingHorizontal": 16,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "borderColor": "#FFFFFF",
-                                  "borderRadius": 7,
-                                  "height": 14,
-                                  "marginVertical": 4,
-                                  "width": 14,
-                                },
-                                {
-                                  "backgroundColor": "#BBC2D6",
-                                  "borderWidth": 1.5,
-                                },
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                        </View>
-                        <View
-                          style={
-                            {
+                              "flex": 1,
+                              "flexDirection": "row",
                               "flexShrink": 1,
-                              "paddingVertical": 12,
+                              "paddingHorizontal": 24,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            IN VALIDATION
-                          </Text>
                           <View
                             style={
                               {
-                                "height": 4,
+                                "alignItems": "center",
+                                "paddingVertical": 12,
+                                "width": 30,
                               }
                             }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
                           >
-                            19:00
-                          </Text>
-                        </View>
-                      </View>
-                      <View
-                        accessible={true}
-                        style={
-                          {
-                            "alignItems": "center",
-                            "flex": 1,
-                            "flexDirection": "row",
-                            "flexShrink": 1,
-                            "paddingHorizontal": 24,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingVertical": 12,
-                              "width": 30,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            27
-                          </Text>
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
-                          >
-                            11
-                          </Text>
-                        </View>
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingHorizontal": 16,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "borderColor": "#FFFFFF",
-                                  "borderRadius": 7,
-                                  "height": 14,
-                                  "marginVertical": 4,
-                                  "width": 14,
-                                },
-                                {
-                                  "backgroundColor": "#BBC2D6",
-                                  "borderWidth": 1.5,
-                                },
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                        </View>
-                        <View
-                          style={
-                            {
-                              "flexShrink": 1,
-                              "paddingVertical": 12,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            Depositata
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              9
+                            </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              04
+                            </Text>
+                          </View>
                           <View
                             style={
                               {
-                                "height": 4,
+                                "alignItems": "center",
+                                "paddingHorizontal": 16,
                               }
                             }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
                           >
-                            21:00
-                          </Text>
-                        </View>
-                      </View>
-                      <View
-                        accessible={true}
-                        style={
-                          {
-                            "alignItems": "center",
-                            "flex": 1,
-                            "flexDirection": "row",
-                            "flexShrink": 1,
-                            "paddingHorizontal": 24,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingVertical": 12,
-                              "width": 30,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            30
-                          </Text>
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
-                            }
-                          >
-                            12
-                          </Text>
-                        </View>
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "paddingHorizontal": 16,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                undefined,
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "borderColor": "#FFFFFF",
-                                  "borderRadius": 7,
-                                  "height": 14,
-                                  "marginVertical": 4,
-                                  "width": 14,
-                                },
-                                {
-                                  "backgroundColor": "#FFCB46",
-                                  "borderWidth": 0,
-                                },
-                              ]
-                            }
-                          />
-                          <View
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "flexGrow": 1,
-                                  "width": 2,
-                                },
-                                {
-                                  "opacity": 0,
-                                },
-                              ]
-                            }
-                          />
-                        </View>
-                        <View
-                          style={
-                            {
-                              "flexShrink": 1,
-                              "paddingVertical": 12,
-                            }
-                          }
-                        >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            Annullata
-                          </Text>
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 7,
+                                    "height": 14,
+                                    "marginVertical": 4,
+                                    "width": 14,
+                                  },
+                                  {
+                                    "backgroundColor": "#BBC2D6",
+                                    "borderWidth": 1.5,
+                                  },
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                          </View>
                           <View
                             style={
                               {
-                                "height": 4,
+                                "flexShrink": 1,
+                                "paddingVertical": 12,
                               }
                             }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.5}
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Invio in corso
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 4,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              07:00
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          accessible={true}
+                          style={
+                            {
+                              "alignItems": "center",
+                              "flex": 1,
+                              "flexDirection": "row",
+                              "flexShrink": 1,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View
                             style={
-                              [
-                                {
-                                  "letterSpacing": 0.5,
-                                  "textTransform": "uppercase",
-                                },
-                                {
-                                  "color": "#99A3C1",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 12,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": undefined,
-                                },
-                              ]
+                              {
+                                "alignItems": "center",
+                                "paddingVertical": 12,
+                                "width": 30,
+                              }
                             }
                           >
-                            23:00
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              11
+                            </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              05
+                            </Text>
+                          </View>
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingHorizontal": 16,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 7,
+                                    "height": 14,
+                                    "marginVertical": 4,
+                                    "width": 14,
+                                  },
+                                  {
+                                    "backgroundColor": "#6BCFFB",
+                                    "borderWidth": 1.5,
+                                  },
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                          </View>
+                          <View
+                            style={
+                              {
+                                "flexShrink": 1,
+                                "paddingVertical": 12,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Perfezionata per decorrenza termini
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 4,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              09:00
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          accessible={true}
+                          style={
+                            {
+                              "alignItems": "center",
+                              "flex": 1,
+                              "flexDirection": "row",
+                              "flexShrink": 1,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingVertical": 12,
+                                "width": 30,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              14
+                            </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              06
+                            </Text>
+                          </View>
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingHorizontal": 16,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 7,
+                                    "height": 14,
+                                    "marginVertical": 4,
+                                    "width": 14,
+                                  },
+                                  {
+                                    "backgroundColor": "#FF4040",
+                                    "borderWidth": 1.5,
+                                  },
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                          </View>
+                          <View
+                            style={
+                              {
+                                "flexShrink": 1,
+                                "paddingVertical": 12,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Destinatario irreperibile
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 4,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              11:00
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          accessible={true}
+                          style={
+                            {
+                              "alignItems": "center",
+                              "flex": 1,
+                              "flexDirection": "row",
+                              "flexShrink": 1,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingVertical": 12,
+                                "width": 30,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              15
+                            </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              07
+                            </Text>
+                          </View>
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingHorizontal": 16,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 7,
+                                    "height": 14,
+                                    "marginVertical": 4,
+                                    "width": 14,
+                                  },
+                                  {
+                                    "backgroundColor": "#6CC66A",
+                                    "borderWidth": 1.5,
+                                  },
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                          </View>
+                          <View
+                            style={
+                              {
+                                "flexShrink": 1,
+                                "paddingVertical": 12,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Avvenuto accesso
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 4,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              13:00
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          accessible={true}
+                          style={
+                            {
+                              "alignItems": "center",
+                              "flex": 1,
+                              "flexDirection": "row",
+                              "flexShrink": 1,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingVertical": 12,
+                                "width": 30,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              18
+                            </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              08
+                            </Text>
+                          </View>
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingHorizontal": 16,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 7,
+                                    "height": 14,
+                                    "marginVertical": 4,
+                                    "width": 14,
+                                  },
+                                  {
+                                    "backgroundColor": "#BBC2D6",
+                                    "borderWidth": 1.5,
+                                  },
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                          </View>
+                          <View
+                            style={
+                              {
+                                "flexShrink": 1,
+                                "paddingVertical": 12,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Pagata
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 4,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              15:00
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          accessible={true}
+                          style={
+                            {
+                              "alignItems": "center",
+                              "flex": 1,
+                              "flexDirection": "row",
+                              "flexShrink": 1,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingVertical": 12,
+                                "width": 30,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              21
+                            </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              09
+                            </Text>
+                          </View>
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingHorizontal": 16,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 7,
+                                    "height": 14,
+                                    "marginVertical": 4,
+                                    "width": 14,
+                                  },
+                                  {
+                                    "backgroundColor": "#BBC2D6",
+                                    "borderWidth": 1.5,
+                                  },
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                          </View>
+                          <View
+                            style={
+                              {
+                                "flexShrink": 1,
+                                "paddingVertical": 12,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              REFUSED
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 4,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              17:00
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          accessible={true}
+                          style={
+                            {
+                              "alignItems": "center",
+                              "flex": 1,
+                              "flexDirection": "row",
+                              "flexShrink": 1,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingVertical": 12,
+                                "width": 30,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              24
+                            </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              10
+                            </Text>
+                          </View>
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingHorizontal": 16,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 7,
+                                    "height": 14,
+                                    "marginVertical": 4,
+                                    "width": 14,
+                                  },
+                                  {
+                                    "backgroundColor": "#BBC2D6",
+                                    "borderWidth": 1.5,
+                                  },
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                          </View>
+                          <View
+                            style={
+                              {
+                                "flexShrink": 1,
+                                "paddingVertical": 12,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              IN VALIDATION
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 4,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              19:00
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          accessible={true}
+                          style={
+                            {
+                              "alignItems": "center",
+                              "flex": 1,
+                              "flexDirection": "row",
+                              "flexShrink": 1,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingVertical": 12,
+                                "width": 30,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              27
+                            </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              11
+                            </Text>
+                          </View>
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingHorizontal": 16,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 7,
+                                    "height": 14,
+                                    "marginVertical": 4,
+                                    "width": 14,
+                                  },
+                                  {
+                                    "backgroundColor": "#BBC2D6",
+                                    "borderWidth": 1.5,
+                                  },
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                          </View>
+                          <View
+                            style={
+                              {
+                                "flexShrink": 1,
+                                "paddingVertical": 12,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Depositata
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 4,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              21:00
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          accessible={true}
+                          style={
+                            {
+                              "alignItems": "center",
+                              "flex": 1,
+                              "flexDirection": "row",
+                              "flexShrink": 1,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingVertical": 12,
+                                "width": 30,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              30
+                            </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              12
+                            </Text>
+                          </View>
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "paddingHorizontal": 16,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  undefined,
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 7,
+                                    "height": 14,
+                                    "marginVertical": 4,
+                                    "width": 14,
+                                  },
+                                  {
+                                    "backgroundColor": "#FFCB46",
+                                    "borderWidth": 0,
+                                  },
+                                ]
+                              }
+                            />
+                            <View
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#D2D6E3",
+                                    "flexGrow": 1,
+                                    "width": 2,
+                                  },
+                                  {
+                                    "opacity": 0,
+                                  },
+                                ]
+                              }
+                            />
+                          </View>
+                          <View
+                            style={
+                              {
+                                "flexShrink": 1,
+                                "paddingVertical": 12,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Annullata
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 4,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="caption1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "letterSpacing": 0.5,
+                                    "textTransform": "uppercase",
+                                  },
+                                  {
+                                    "color": "#99A3C1",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 12,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              23:00
+                            </Text>
+                          </View>
                         </View>
                       </View>
                     </View>
@@ -2848,7 +2857,16 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
                           "flex": 1,
                         }
                       }
-                    />
+                    >
+                      <View
+                        collapsable={false}
+                        style={
+                          {
+                            "marginBottom": 52,
+                          }
+                        }
+                      />
+                    </View>
                   </View>
                 </View>
               </View>

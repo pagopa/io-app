@@ -1,4 +1,6 @@
 import { getType } from "typesafe-actions";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { mixpanelTrack } from "../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
@@ -8,6 +10,8 @@ import { IdentificationContext } from "../machine/eid/context";
 import { IssuanceFailure } from "../machine/eid/failure";
 import {
   ItwCredentialStatus,
+  ItwJwtCredentialStatus,
+  StoredCredential,
   WalletInstanceRevocationReason
 } from "../common/utils/itwTypesUtils";
 import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
@@ -17,6 +21,7 @@ import {
   resetOfflineAccessReason,
   setOfflineAccessReason
 } from "../../ingress/store/actions";
+import { getCredentialStatus } from "../common/utils/itwCredentialStatusUtils";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -118,42 +123,59 @@ type ItwIdMethod = IdentificationContext["mode"];
 // PROPERTIES TYPES
 type TrackITWalletBannerClosureProperties = {
   banner_id: string;
-  // banner_campaign: string (EVOLUTIVA)
   banner_page: string;
   banner_landing: string;
+  banner_campaign?: string;
 };
 
 type TrackITWalletIDMethodSelected = {
   ITW_ID_method: "spid" | "ciePin" | "cieId";
+  itw_flow: ItwFlow;
 };
 
 type TrackITWalletSpidIDPSelected = { idp: string };
 
-type TrackItWalletCieCardReadingFailure = { reason: string };
+type TrackItWalletCieCardReadingFailure = {
+  reason: string | undefined;
+  itw_flow: ItwFlow;
+};
+
+export type ItwCredentialMixpanelStatus =
+  | "not_available"
+  | "valid"
+  | "not_valid"
+  | "expiring"
+  | "expired"
+  | "expiring_verification"
+  | "verification_expired"
+  | "unknown";
 
 export type ItwStatus = "not_active" | "L2" | "L3";
-export type ItwId = "not_available" | "valid" | "not_valid";
-export type ItwPg = "not_available" | "valid" | "not_valid" | "expiring";
-export type ItwTs = "not_available" | "valid" | "not_valid" | "expiring";
-export type ItwCed = "not_available" | "valid" | "not_valid" | "expiring";
+export type ItwId = Extract<
+  ItwCredentialMixpanelStatus,
+  "not_available" | "valid" | "expiring" | "expired"
+>;
 
 /**
- * This map is used to map the eid credential status to the MixPanel eid credential status
+ * This map is used to map the credentials status to the MixPanel credential status (not for eID)
  * valid: valid
- * pending: not_valid
- * expired: not_valid
+ * invalid: not_valid
+ * expired: expired
  * expiring: expiring
+ * jwtExpired: verification_expired
+ * jwtExpiring: expiring_verification
+ * unknown: unknown
  */
-export const ID_STATUS_MAP: Record<
+export const CREDENTIAL_STATUS_MAP: Record<
   ItwCredentialStatus,
-  "valid" | "not_valid" | "expiring" | "unknown"
+  ItwCredentialMixpanelStatus
 > = {
   valid: "valid",
   invalid: "not_valid",
-  expired: "not_valid",
+  expired: "expired",
   expiring: "expiring",
-  jwtExpired: "not_valid",
-  jwtExpiring: "expiring",
+  jwtExpired: "verification_expired",
+  jwtExpiring: "expiring_verification",
   unknown: "unknown"
 };
 
@@ -178,6 +200,35 @@ type ItwOfflineBanner = {
 };
 
 export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
+
+/**
+ * Actions that trigger the requirement for L3 upgrade.
+ * This type represents the user action that was performed immediately before
+ * the L3 mandatory upgrade screen was displayed.
+ * Add new values when implementing additional flows that require L3 upgrade.
+ */
+export enum ItwL3UpgradeTrigger {
+  REMOTE_QR_CODE = "remote_qr_code"
+}
+
+export type ItwFlow = "L2" | "L3" | "not_available";
+
+export type ItwScreenFlowContext = {
+  screen_name: string;
+  itw_flow: ItwFlow;
+};
+
+export type ItwDismissalAction = {
+  screen_name: string;
+  itw_flow: ItwFlow;
+  user_action: string;
+};
+
+type ItwUserWithoutL3requirements = {
+  screen_name: string;
+  reason: "user_without_cie" | "user_without_pin";
+  position: "screen" | "bottom_sheet";
+};
 
 // #region SCREEN VIEW EVENTS
 export const trackWalletDataShare = (properties: ItwWalletDataShare) => {
@@ -226,17 +277,17 @@ export function trackITWalletBannerVisualized(
   );
 }
 
-export function trackItWalletIntroScreen() {
+export function trackItWalletIntroScreen(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_INTRO,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 
-export function trackItWalletIDMethod() {
+export function trackItWalletIDMethod(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_ID_METHOD,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 
@@ -247,31 +298,31 @@ export function trackItWalletSpidIDPSelection() {
   );
 }
 
-export function trackItWalletCiePinEnter() {
+export function trackItWalletCiePinEnter(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_ENTER,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 
-export function trackItWalletCieNfcActivation() {
+export function trackItWalletCieNfcActivation(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CIE_NFC_ACTIVATION,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 
-export function trackItWalletCieCardReading() {
+export function trackItWalletCieCardReading(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CIE_CARD_READING,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 
-export function trackItWalletCieCardReadingSuccess() {
+export function trackItWalletCieCardReadingSuccess(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CARD_READING_SUCCESS,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 
@@ -302,6 +353,62 @@ export function trackItwOfflineBottomSheet() {
     buildEventProperties("UX", "screen_view")
   );
 }
+
+export function trackItwDismissalContext(
+  screenFlowContext: ItwScreenFlowContext
+) {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OPERATION_BLOCK,
+    buildEventProperties("UX", "screen_view", screenFlowContext)
+  );
+}
+
+export function trackItwUpgradeBanner(banner_page: string) {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_BANNER,
+    buildEventProperties("UX", "screen_view", { banner_page })
+  );
+}
+
+export function trackItwPinInfoBottomSheet(
+  screenFlowContext: ItwScreenFlowContext
+) {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_PIN_INFO_BOTTOMSHEET,
+    buildEventProperties("UX", "screen_view", screenFlowContext)
+  );
+}
+
+export function trackItwCieInfoBottomSheet(
+  screenFlowContext: ItwScreenFlowContext
+) {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_CIE_INFO_BOTTOMSHEET,
+    buildEventProperties("UX", "screen_view", screenFlowContext)
+  );
+}
+
+export function trackItwCiePinTutorialCie(itw_flow: ItwFlow) {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_TUTORIAL_CIE,
+    buildEventProperties("UX", "screen_view", { itw_flow })
+  );
+}
+
+export function trackItwCiePinTutorialPin(itw_flow: ItwFlow) {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_TUTORIAL_PIN,
+    buildEventProperties("UX", "screen_view", { itw_flow })
+  );
+}
+
+export function trackItwUserWithoutL3Bottomsheet() {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_USER_WITHOUT_L3_BOTTOMSHEET,
+    buildEventProperties("UX", "screen_view")
+  );
+}
+
 // #endregion SCREEN VIEW EVENTS
 
 // #region ACTIONS
@@ -329,10 +436,10 @@ export const trackOpenItwTos = () => {
   );
 };
 
-export const trackOpenItwTosAccepted = () => {
+export const trackOpenItwTosAccepted = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_TOS_ACCEPTED,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow })
   );
 };
 
@@ -347,7 +454,7 @@ export const trackStartAddNewCredential = (wallet_item: NewCredential) => {
   );
 };
 
-export const trackWalletCreationFailed = (params: KoState) => {
+export const trackItwKoStateAction = (params: KoState) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_KO_STATE_ACTION_SELECTED,
     buildEventProperties("UX", "action", { ...params })
@@ -371,10 +478,10 @@ export const trackSaveCredentialToWallet = (currentCredential: string) => {
   }
 };
 
-export function trackItWalletActivationStart() {
+export function trackItWalletActivationStart(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_ID_START,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow })
   );
 }
 
@@ -396,38 +503,38 @@ export function trackItWalletSpidIDPSelected(
   );
 }
 
-export function trackItWalletCiePinInfo() {
+export function trackItWalletCiePinInfo(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CIE_PIN_INFO,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow })
   );
 }
 
-export function trackItWalletCiePinForgotten() {
+export function trackItWalletCiePinForgotten(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CIE_PIN_FORGOTTEN,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow })
   );
 }
 
-export function trackItWalletCiePukForgotten() {
+export function trackItWalletCiePukForgotten(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CIE_PUK_FORGOTTEN,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow })
   );
 }
 
-export function trackItWalletCieNfcGoToSettings() {
+export function trackItWalletCieNfcGoToSettings(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CIE_NFC_GO_TO_SETTINGS,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow })
   );
 }
 
-export function trackItWalletCieRetryPin() {
+export function trackItWalletCieRetryPin(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CIE_RETRY_PIN,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { itw_flow })
   );
 }
 
@@ -526,6 +633,13 @@ export function trackWalletNewIdReset(state: GlobalState) {
   );
 }
 
+export function trackItwIntroBack(itw_flow: ItwFlow) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_INTRO_BACK,
+    buildEventProperties("UX", "action", { itw_flow })
+  );
+}
+
 // TODO: Track credential renewal flow when implemented
 export function trackWalletCredentialRenewStart(
   credential: MixPanelCredential
@@ -574,42 +688,93 @@ export const trackCopyListItem = (properties: ItwCopyListItem) => {
   );
 };
 
+export const trackItwDismissalAction = (
+  dismissalAction: ItwDismissalAction
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_OPERATION_BLOCK_ACTION,
+    buildEventProperties("UX", "action", dismissalAction)
+  );
+};
+
+export const trackItwTapUpgradeBanner = (banner_page: string) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_TAP_BANNER,
+    buildEventProperties("UX", "action", { banner_page })
+  );
+};
+
+export const trackItwDiscoveryPlus = () => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_DISCOVERY_PLUS,
+    buildEventProperties("UX", "action", { itw_flow: "L3" })
+  );
+};
+
+export const trackItwContinueWithCieID = () => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CONTINUE_WITH_CIEID,
+    buildEventProperties("UX", "action", { itw_flow: "L3" })
+  );
+};
+
+export const trackItwContinueWithCieIDClose = () => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CONTINUE_WITH_CIEID_CLOSE,
+    buildEventProperties("UX", "action", { itw_flow: "L3" })
+  );
+};
+
+export const trackItwGoToCieIDApp = () => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_GO_TO_CIEID_APP,
+    buildEventProperties("UX", "action", { itw_flow: "L3" })
+  );
+};
+
 // #endregion ACTIONS
 
 // #region ERRORS
 
-export function trackItWalletErrorCardReading() {
+export function trackItWalletErrorCardReading(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_CARD_READING_ERROR,
-    buildEventProperties("UX", "error")
+    buildEventProperties("UX", "error", { itw_flow })
   );
 }
 
-export function trackItWalletErrorPin() {
+export function trackItWalletErrorPin(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_PIN_ERROR,
-    buildEventProperties("UX", "error")
+    buildEventProperties("UX", "error", { itw_flow })
   );
 }
 
-export function trackItWalletSecondErrorPin() {
+export function trackItWalletSecondErrorPin(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_PIN_SECOND_ERROR,
-    buildEventProperties("UX", "error")
+    buildEventProperties("UX", "error", { itw_flow })
   );
 }
 
-export function trackItWalletLastErrorPin() {
+export function trackItWalletLastErrorPin(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_PIN_LAST_ERROR,
+    buildEventProperties("UX", "error", { itw_flow })
+  );
+}
+
+export function trackItWalletCardReadingClose() {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CIE_CARD_READING_CLOSE,
     buildEventProperties("UX", "error")
   );
 }
 
-export function trackItWalletCieCardVerifyFailure() {
+export function trackItWalletCieCardVerifyFailure(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_CARD_VERIFY_FAILURE,
-    buildEventProperties("UX", "error")
+    buildEventProperties("UX", "error", { itw_flow })
   );
 }
 
@@ -786,6 +951,36 @@ export const trackItwWalletBadState = () => {
   );
 };
 
+export const trackItwUpgradeL3Mandatory = (action: ItwL3UpgradeTrigger) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_UPGRADE_L3_MANDATORY,
+    buildEventProperties("KO", "screen_view", { action })
+  );
+};
+
+export const trackItwCieIdCieNotRegistered = (itwFlow: ItwFlow) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_CIEID_CIE_NOT_REGISTERED,
+    buildEventProperties("KO", "screen_view", { itwFlow })
+  );
+};
+
+export const trackItwNfcNotSupported = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_NFC_NOT_SUPPORTED,
+    buildEventProperties("KO", "screen_view")
+  );
+};
+
+export const trackItwUserWithoutL3Requirements = (
+  itwUserWithoutL3requirements: ItwUserWithoutL3requirements
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_USER_WITHOUT_L3_REQUIREMENTS,
+    buildEventProperties("KO", "screen_view", itwUserWithoutL3requirements)
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
@@ -864,11 +1059,14 @@ export const trackBackToWallet = ({ exit_page, credential }: BackToWallet) => {
 
 // #region TECH
 
-export const trackItwRequest = (method?: ItwIdMethod) => {
+export const trackItwRequest = (method?: ItwIdMethod, itw_flow?: ItwFlow) => {
   if (method) {
     void mixpanelTrack(
       ITW_TECH_EVENTS.ITW_ID_REQUEST,
-      buildEventProperties("TECH", undefined, { ITW_ID_method: method })
+      buildEventProperties("TECH", undefined, {
+        ITW_ID_method: method,
+        itw_flow
+      })
     );
   }
 };
@@ -882,7 +1080,8 @@ export const trackItwRequestSuccess = (
       ITW_TECH_EVENTS.ITW_ID_REQUEST_SUCCESS,
       buildEventProperties("TECH", undefined, {
         ITW_ID_method: method,
-        ITW_ID_V2: status
+        ITW_ID_V2: status,
+        itw_flow: status
       })
     );
   }
@@ -954,6 +1153,39 @@ export const updatePropertiesWalletRevoked = (state: GlobalState) => {
     property: "ITW_STATUS_V2",
     value: "not_active"
   });
+};
+
+/**
+ * Maps a given StoredCredential or undefined to the corresponding Mixpanel tracking status.
+ * Returns "not_available" if the credential is missing or its status cannot be determined.
+ */
+export const getCredentialMixpanelStatus = (
+  credential: StoredCredential | undefined
+): ItwCredentialMixpanelStatus =>
+  pipe(
+    O.fromNullable(credential),
+    O.fold(
+      () => "not_available" as const,
+      cred => CREDENTIAL_STATUS_MAP[getCredentialStatus(cred)]
+    )
+  );
+
+/**
+ * Maps an eID status to its corresponding Mixpanel tracking status.
+ */
+export const mapEidStatusToMixpanel = (
+  status: ItwJwtCredentialStatus
+): ItwId => {
+  switch (status) {
+    case "valid":
+      return "valid";
+    case "jwtExpired":
+      return "expired";
+    case "jwtExpiring":
+      return "expiring";
+    default:
+      return "not_available";
+  }
 };
 
 // #endregion PROFILE AND SUPER PROPERTIES UPDATE

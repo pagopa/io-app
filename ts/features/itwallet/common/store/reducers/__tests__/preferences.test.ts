@@ -94,11 +94,31 @@ describe("IT Wallet preferences reducer", () => {
     MockDate.reset();
   });
 
-  it("should handle itwLifecycleStoresReset action", () => {
-    const action = itwLifecycleStoresReset();
-    const newState = reducer(INITIAL_STATE, action);
+  it("should handle itwLifecycleStoresReset action and ensure some values are not reset", () => {
+    const initialState: ItwPreferencesState = {
+      hideFeedbackBannerUntilDate: "2024-11-14T20:43:21.361Z",
+      hideDiscoveryBannerUntilDate: "2024-11-14T20:43:21.361Z",
+      requestedCredentials: { MDL: "2024-11-14T20:43:21.361Z" },
+      isPendingReview: true,
+      authLevel: "L2",
+      claimValuesHidden: true,
+      isWalletInstanceRemotelyActive: true,
+      isFiscalCodeWhitelisted: true,
+      offlineBannerHidden: true,
+      walletUpgradeMDLDetailsBannerHidden: true
+    };
 
-    expect(newState).toEqual(itwPreferencesInitialState);
+    const expectedState: ItwPreferencesState = {
+      ...itwPreferencesInitialState,
+      claimValuesHidden: true,
+      isWalletInstanceRemotelyActive: true,
+      isFiscalCodeWhitelisted: true
+    };
+
+    const action = itwLifecycleStoresReset();
+    const newState = reducer(initialState, action);
+
+    expect(newState).toEqual(expectedState);
   });
 
   it("should handle itwSetAuthLevel action", () => {
@@ -132,7 +152,8 @@ describe("IT Wallet preferences reducer", () => {
         authLevel: "L2",
         claimValuesHidden: true,
         isWalletInstanceRemotelyActive: true,
-        offlineBannerHidden: true
+        offlineBannerHidden: true,
+        walletUpgradeMDLDetailsBannerHidden: true
       },
       action
     );

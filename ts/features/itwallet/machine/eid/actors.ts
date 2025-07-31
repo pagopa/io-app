@@ -1,6 +1,7 @@
 import cieManager from "@pagopa/react-native-cie";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
+import { Trust } from "@pagopa/io-react-native-wallet-v2";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
@@ -30,10 +31,15 @@ import type {
   IdentificationContext
 } from "./context";
 
+export type CreateWalletInstanceActorParams = {
+  isL3IssuanceEnabled?: boolean;
+};
+
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
   walletInstanceAttestation: string | undefined;
   authenticationContext: AuthenticationContext | undefined;
+  isL3IssuanceEnabled?: boolean;
 };
 
 export type StartAuthFlowActorParams = {
@@ -47,6 +53,10 @@ export type GetWalletAttestationActorParams = {
   isL3IssuanceEnabled?: boolean;
 };
 
+export type VerifyTrustFederationParams = {
+  isL3IssuanceEnabled?: boolean;
+};
+
 /**
  * Creates the actors for the eid issuance machine
  * @param env - The environment to use for the IT Wallet API calls
@@ -57,34 +67,75 @@ export const createEidIssuanceActorsImplementation = (
   env: Env,
   store: ReturnType<typeof useIOStore>
 ) => ({
-  createWalletInstance: fromPromise<string>(async () => {
-    const sessionToken = sessionTokenSelector(store.getState());
-    assert(sessionToken, "sessionToken is undefined");
+  verifyTrustFederation: fromPromise<void, VerifyTrustFederationParams>(
+    async ({ input }) => {
+      // If the L3 issuance is not enabled, we don't need to verify the trust federation
+      if (!input.isL3IssuanceEnabled) {
+        return;
+      }
 
-    // Reset the wallet store to prevent having dirty state before registering a new wallet instance
-    store.dispatch(itwLifecycleStoresReset());
+      // Evaluate the issuer trust
+      const trustAnchorEntityConfig =
+        await Trust.Build.getTrustAnchorEntityConfiguration(
+          env.WALLET_TA_BASE_URL
+        );
+      const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
 
-    // Await the integrity preparation before requesting the integrity key tag
-    const integrityServiceStatus = await pollForStoreValue({
-      getState: store.getState,
-      selector: itwIntegrityServiceStatusSelector,
-      condition: value => value !== undefined
-    }).catch(() => {
-      throw new Error("Integrity service status check timed out");
-    });
+      // Create the trust chain for the PID provider
+      // TODO: [SIW-2530] Move "1-0" to WALLET_PID_PROVIDER_BASE_URL after migrating to the new API
+      const builtChainJwts = await Trust.Build.buildTrustChain(
+        new URL("1-0", env.WALLET_PID_PROVIDER_BASE_URL).toString(),
+        trustAnchorKey
+      );
 
-    // If the integrity service preparation is not ready (still undefined) or in an error state after 10 seconds the user will be prompted with an error,
-    // he will need to retry.
-    assert(
-      integrityServiceStatus === "ready",
-      `Integrity service status is ${integrityServiceStatus}`
-    );
+      // Perform full validation on the built chain
+      await Trust.Verify.verifyTrustChain(
+        trustAnchorEntityConfig,
+        builtChainJwts,
+        {
+          connectTimeout: 10000,
+          readTimeout: 10000,
+          requireCrl: true
+        }
+      );
+    }
+  ),
 
-    const hardwareKeyTag = await getIntegrityHardwareKeyTag();
-    await registerWalletInstance(env, hardwareKeyTag, sessionToken);
+  createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
+    async ({ input }) => {
+      const sessionToken = sessionTokenSelector(store.getState());
+      assert(sessionToken, "sessionToken is undefined");
 
-    return hardwareKeyTag;
-  }),
+      // Reset the wallet store to prevent having dirty state before registering a new wallet instance
+      store.dispatch(itwLifecycleStoresReset());
+
+      // Await the integrity preparation before requesting the integrity key tag
+      const integrityServiceStatus = await pollForStoreValue({
+        getState: store.getState,
+        selector: itwIntegrityServiceStatusSelector,
+        condition: value => value !== undefined
+      }).catch(() => {
+        throw new Error("Integrity service status check timed out");
+      });
+
+      // If the integrity service preparation is not ready (still undefined) or in an error state after 10 seconds the user will be prompted with an error,
+      // he will need to retry.
+      assert(
+        integrityServiceStatus === "ready",
+        `Integrity service status is ${integrityServiceStatus}`
+      );
+
+      const hardwareKeyTag = await getIntegrityHardwareKeyTag();
+      await registerWalletInstance(
+        env,
+        hardwareKeyTag,
+        sessionToken,
+        input.isL3IssuanceEnabled
+      );
+
+      return hardwareKeyTag;
+    }
+  ),
 
   getWalletAttestation: fromPromise<
     WalletInstanceAttestations,
@@ -125,7 +176,7 @@ export const createEidIssuanceActorsImplementation = (
         env,
         walletAttestation: input.walletInstanceAttestation,
         identification: input.identification,
-        isL3IssuanceEnabled: input.isL3IssuanceEnabled || false
+        isL3IssuanceEnabled: !!input.isL3IssuanceEnabled
       });
 
       return {
@@ -151,14 +202,16 @@ export const createEidIssuanceActorsImplementation = (
 
       const authParams = await issuanceUtils.completeAuthFlow({
         ...input.authenticationContext,
-        walletAttestation: input.walletInstanceAttestation
+        walletAttestation: input.walletInstanceAttestation,
+        isL3IssuanceEnabled: !!input.isL3IssuanceEnabled
       });
 
-      trackItwRequest(input.identification.mode);
+      trackItwRequest(input.identification.mode, input.identification.level);
 
       return issuanceUtils.getPid({
         ...authParams,
-        ...input.authenticationContext
+        ...input.authenticationContext,
+        isL3IssuanceEnabled: !!input.isL3IssuanceEnabled
       });
     }
   ),

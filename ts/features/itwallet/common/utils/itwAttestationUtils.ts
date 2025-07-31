@@ -1,18 +1,8 @@
-import {
-  createCryptoContextFor,
-  IntegrityContext,
-  WalletInstance
-} from "@pagopa/io-react-native-wallet";
 import { SessionToken } from "../../../../types/SessionToken";
-import { createItWalletFetch } from "../../api/client";
-import { sendExceptionToSentry } from "../../../../utils/sentryUtils.ts";
-import { regenerateCryptoKey, WIA_KEYTAG } from "./itwCryptoContextUtils";
-import {
-  generateIntegrityHardwareKeyTag,
-  getIntegrityContext
-} from "./itwIntegrityUtils";
+import { generateIntegrityHardwareKeyTag } from "./itwIntegrityUtils";
 import { WalletInstanceAttestations } from "./itwTypesUtils.ts";
-import { ioRNWProxy } from "./itwIoReactNativeWalletProxy.ts";
+import * as AttestationUtilsV1 from "./itwAttestationUtils.v1";
+import * as AttestationUtilsV2 from "./itwAttestationUtils.v2";
 import { Env } from "./environment.ts";
 
 /**
@@ -29,24 +19,22 @@ export const getIntegrityHardwareKeyTag = async (): Promise<string> =>
  * @param sessionToken - the session token to use for the API calls
  */
 export const registerWalletInstance = async (
-  { WALLET_PROVIDER_BASE_URL }: Env,
+  env: Env,
   hardwareKeyTag: string,
-  sessionToken: SessionToken
-) => {
-  const integrityContext = getIntegrityContext(hardwareKeyTag);
-  // Check if the wallet instance has been revoked
-  // This must be used only for API calls mediated through our backend which are related to the wallet instance only
-  const appFetch = createItWalletFetch(
-    sessionToken,
-    WALLET_PROVIDER_BASE_URL,
-    WALLET_PROVIDER_BASE_URL
-  );
-  await WalletInstance.createWalletInstance({
-    integrityContext,
-    walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
-    appFetch
-  });
-};
+  sessionToken: SessionToken,
+  newApiEnabled: boolean = false
+) =>
+  newApiEnabled
+    ? AttestationUtilsV2.registerWalletInstance(
+        env,
+        hardwareKeyTag,
+        sessionToken
+      )
+    : AttestationUtilsV1.registerWalletInstance(
+        env,
+        hardwareKeyTag,
+        sessionToken
+      );
 
 /**
  * Getter for the wallet attestation binded to the wallet instance created with the given hardwareKeyTag.
@@ -57,43 +45,14 @@ export const registerWalletInstance = async (
  * @return the wallet attestation in multiple formats
  */
 export const getAttestation = async (
-  { WALLET_PROVIDER_BASE_URL }: Env,
+  env: Env,
   hardwareKeyTag: string,
   sessionToken: SessionToken,
   newApiEnabled: boolean = false
-): Promise<WalletInstanceAttestations> => {
-  const integrityContext = getIntegrityContext(hardwareKeyTag);
-
-  await regenerateCryptoKey(WIA_KEYTAG);
-  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
-  const appFetch = createItWalletFetch(
-    sessionToken,
-    WALLET_PROVIDER_BASE_URL,
-    WALLET_PROVIDER_BASE_URL
-  );
-
-  const attestation = await ioRNWProxy
-    .WalletInstanceAttestation(newApiEnabled)
-    .getAttestation({
-      wiaCryptoContext,
-      integrityContext,
-      walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
-      appFetch
-    });
-
-  // Handle legacy attestation format
-  if (typeof attestation === "string") {
-    return { jwt: attestation };
-  }
-
-  return attestation.reduce(
-    (acc, { format, wallet_attestation }) => ({
-      ...acc,
-      [format]: wallet_attestation
-    }),
-    {} as WalletInstanceAttestations
-  );
-};
+): Promise<WalletInstanceAttestations> =>
+  newApiEnabled
+    ? AttestationUtilsV2.getAttestation(env, hardwareKeyTag, sessionToken)
+    : AttestationUtilsV1.getAttestation(env, hardwareKeyTag, sessionToken);
 
 /**
  * Checks if the Wallet Instance Attestation needs to be requested by
@@ -105,21 +64,10 @@ export const getAttestation = async (
 export const isWalletInstanceAttestationValid = (
   attestation: string,
   newApiEnabled: boolean = false
-): boolean => {
-  // To keep things simple we store the old and new attestation under the same key,
-  // so we might end up with a valid old attestation for the new flow.
-  // We let decoding fail and catch the error to force the correct attestation to be fetched again.
-  try {
-    const { payload } = ioRNWProxy
-      .WalletInstanceAttestation(newApiEnabled)
-      .decode(attestation);
-    const expiryDate = new Date(payload.exp * 1000);
-    const now = new Date();
-    return now < expiryDate;
-  } catch {
-    return false;
-  }
-};
+): boolean =>
+  newApiEnabled
+    ? AttestationUtilsV2.isWalletInstanceAttestationValid(attestation)
+    : AttestationUtilsV1.isWalletInstanceAttestationValid(attestation);
 
 /**
  * Get the wallet instance status from the Wallet Provider.
@@ -129,20 +77,22 @@ export const isWalletInstanceAttestationValid = (
  * @param sessionToken The session token to use for the API calls
  */
 export const getWalletInstanceStatus = (
-  { WALLET_PROVIDER_BASE_URL }: Env,
+  env: Env,
   hardwareKeyTag: string,
-  sessionToken: SessionToken
+  sessionToken: SessionToken,
+  newApiEnabled: boolean = false
 ) =>
-  WalletInstance.getWalletInstanceStatus({
-    id: hardwareKeyTag,
-    walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
-    appFetch: createItWalletFetch(
-      sessionToken,
-      WALLET_PROVIDER_BASE_URL,
-      WALLET_PROVIDER_BASE_URL
-    )
-  });
-
+  newApiEnabled
+    ? AttestationUtilsV2.getWalletInstanceStatus(
+        env,
+        hardwareKeyTag,
+        sessionToken
+      )
+    : AttestationUtilsV1.getWalletInstanceStatus(
+        env,
+        hardwareKeyTag,
+        sessionToken
+      );
 /**
  * Get the current wallet instance status from the Wallet Provider.
  * This operation will check the wallet instance status based on the current fiscal code of the user.
@@ -150,20 +100,10 @@ export const getWalletInstanceStatus = (
  * @param sessionToken The session token to use for the API calls
  */
 export const getCurrentWalletInstanceStatus = (
-  { WALLET_PROVIDER_BASE_URL }: Env,
-  sessionToken: SessionToken
-) => {
-  try {
-    return WalletInstance.getCurrentWalletInstanceStatus({
-      walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
-      appFetch: createItWalletFetch(
-        sessionToken,
-        WALLET_PROVIDER_BASE_URL,
-        WALLET_PROVIDER_BASE_URL
-      )
-    });
-  } catch (e) {
-    sendExceptionToSentry(e, "getCurrentWalletInstanceStatus");
-    throw e;
-  }
-};
+  env: Env,
+  sessionToken: SessionToken,
+  newApiEnabled: boolean = false
+) =>
+  newApiEnabled
+    ? AttestationUtilsV2.getCurrentWalletInstanceStatus(env, sessionToken)
+    : AttestationUtilsV1.getCurrentWalletInstanceStatus(env, sessionToken);

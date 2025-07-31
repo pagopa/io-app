@@ -2,7 +2,6 @@ import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import CookieManager from "@react-native-cookies/cookies";
 import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import {
@@ -26,7 +25,7 @@ import {
 import { withLoadingSpinner } from "../../../../../components/helpers/withLoadingSpinner";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { selectedIdentityProviderSelector } from "../../../../../features/authentication/common/store/selectors";
-import { lollipopKeyTagSelector } from "../../../../../features/lollipop/store/reducers/lollipop";
+import { ephemeralKeyTagSelector } from "../../../../../features/lollipop/store/reducers/lollipop";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../../../../features/lollipop/utils/login";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import I18n from "../../../../../i18n";
@@ -38,6 +37,7 @@ import { getIdpLoginUri } from "../../../common/utils/login";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
+import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 
 // to make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
 // on Android it is not required
@@ -145,12 +145,15 @@ const CieWebView = (props: Props) => {
 
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const CIE_IDP_ID = useCieUat ? CieEntityIds.DEV : CieEntityIds.PROD;
-  const loginUri = getIdpLoginUri(CIE_IDP_ID, 3);
+  const remoteApiLoginUrlPrefix = useIOSelector(
+    remoteApiLoginUrlPrefixSelector
+  );
+  const loginUri = getIdpLoginUri(CIE_IDP_ID, 3, remoteApiLoginUrlPrefix);
 
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const dispatch = useIODispatch();
 
-  const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
+  const ephemeralKeyTag = useIOSelector(ephemeralKeyTagSelector);
   const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
   const idp = useIOSelector(selectedIdentityProviderSelector);
 
@@ -238,7 +241,7 @@ const CieWebView = (props: Props) => {
     );
   }
 
-  if (O.isSome(maybeKeyTag) && requestInfo.requestState === "LOADING") {
+  if (requestInfo.requestState === "LOADING") {
     void pipe(
       TE.tryCatch(
         () =>
@@ -251,7 +254,7 @@ const CieWebView = (props: Props) => {
         _ => () =>
           regenerateKeyGetRedirectsAndVerifySaml(
             loginUri,
-            maybeKeyTag.value,
+            ephemeralKeyTag,
             mixpanelEnabled,
             isFastLogin,
             dispatch,

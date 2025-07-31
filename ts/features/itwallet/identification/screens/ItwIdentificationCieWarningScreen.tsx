@@ -1,18 +1,19 @@
 import { Linking } from "react-native";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { trackItwKoStateAction } from "../../analytics";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import {
-  OperationResultScreenContent,
-  OperationResultScreenContentProps
-} from "../../../../components/screens/OperationResultScreenContent.tsx";
-import I18n from "../../../../i18n.ts";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
-
+import { CiePreparationType } from "../cie/components/ItwCiePreparationBaseScreenContent";
 export type CieWarningType = "noPin" | "noCie";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {
-  warning: CieWarningType;
+  type: CiePreparationType;
 };
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -20,80 +21,77 @@ type ScreenProps = IOStackNavigationRouteProps<
   "ITW_IDENTIFICATION_CIE_WARNING"
 >;
 
-export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
-  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const { warning } = params.route.params;
+const cieFaqUrls: Record<CiePreparationType, string> = {
+  pin: "https://assistenza.ioapp.it/hc/it/articles/30724125085713-Ho-dimenticato-il-PIN-della-CIE",
+  // TODO: update the URL when the new one is available
+  card: "https://assistenza.ioapp.it/hc/it/articles/30724116346129-Cos-%C3%A8-la-CIE-e-come-richiederla"
+};
 
-  const closeIdentification = () => {
-    machineRef.send({ type: "close" });
+export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
+  const { type } = params.route.params;
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isWalletAlreadyActive = useIOSelector(itwLifecycleIsValidSelector);
+  const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+  const reason = type === "card" ? "user_without_cie" : "user_without_pin";
+
+  const sectionKey =
+    isWalletAlreadyActive || !isL3FeaturesEnabled ? "upgrade" : "issuance";
+
+  const handlePrimaryActionPress = () => {
+    trackItwKoStateAction({
+      reason,
+      cta_category: "custom_1",
+      cta_id: I18n.t(
+        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`
+      )
+    });
+    if (isWalletAlreadyActive) {
+      void Linking.openURL(cieFaqUrls[type]);
+    } else {
+      machineRef.send({ type: "go-to-l2-identification" });
+    }
   };
 
-  const getOperationResultScreenContentProps =
-    (): OperationResultScreenContentProps => {
-      const closeAction = {
-        label: I18n.t(
-          "features.itWallet.identification.cieWarning.closeAction"
-        ),
-        onPress: closeIdentification
-      };
-      switch (warning) {
-        case "noPin": {
-          const primaryAction = {
-            label: I18n.t(
-              "features.itWallet.identification.cieWarning.primaryAction"
-            ),
-            onPress: () =>
-              Linking.openURL(
-                "https://assistenza.ioapp.it/hc/it/articles/30724125085713-Ho-dimenticato-il-PIN-della-CIE"
-              )
-          };
-          return {
-            title: I18n.t(
-              "features.itWallet.identification.cieWarning.noPin.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.identification.cieWarning.noPin.subtitle"
-            ),
-            pictogram: "attention",
-            action: primaryAction,
-            secondaryAction: closeAction
-          };
-        }
-        case "noCie": {
-          // TODO: update the URL when the new one is available
-          const primaryAction = {
-            label: I18n.t(
-              "features.itWallet.identification.cieWarning.primaryAction"
-            ),
-            onPress: () =>
-              Linking.openURL(
-                "https://assistenza.ioapp.it/hc/it/articles/30724116346129-Cos-%C3%A8-la-CIE-e-come-richiederla"
-              )
-          };
-          return {
-            title: I18n.t(
-              "features.itWallet.identification.cieWarning.noCie.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.identification.cieWarning.noCie.subtitle"
-            ),
-            pictogram: "attention",
-            action: primaryAction,
-            secondaryAction: closeAction
-          };
-        }
-      }
-    };
+  const handleSecondaryActionPress = () => {
+    trackItwKoStateAction({
+      reason,
+      cta_category: "custom_2",
+      cta_id: I18n.t(
+        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.secondaryAction`
+      )
+    });
+    machineRef.send({
+      type: isWalletAlreadyActive || !isL3FeaturesEnabled ? "close" : "back"
+    });
+  };
 
   useHeaderSecondLevel({
     title: ""
   });
 
-  const resultScreenProps = getOperationResultScreenContentProps();
-
   return (
     <OperationResultScreenContent
-      {...resultScreenProps}
+      title={I18n.t(
+        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.title`
+      )}
+      subtitle={I18n.t(
+        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.subtitle`
+      )}
+      pictogram={"attention"}
+      action={{
+        label: I18n.t(
+          `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`
+        ),
+        onPress: handlePrimaryActionPress
+      }}
+      secondaryAction={{
+        label: I18n.t(
+          `features.itWallet.identification.cie.warning.${type}.${sectionKey}.secondaryAction`
+        ),
+        onPress: handleSecondaryActionPress
+      }}
       isHeaderVisible={true}
     />
   );

@@ -9,6 +9,8 @@ import { NotificationStatusHistory } from "../../../../../definitions/pn/Notific
 import { GlobalState } from "../../../../store/reducers/types";
 import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
 
+jest.mock("../Timeline");
+
 describe("TimelineListItem", () => {
   it("Should match snapshot, no history, no link", () => {
     const component = renderComponent([], false);

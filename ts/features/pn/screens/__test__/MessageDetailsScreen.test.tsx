@@ -22,6 +22,8 @@ import { UIMessageId } from "../../../messages/types";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 
+jest.mock("../../components/MessageDetails");
+
 describe("MessageDetailsScreen", () => {
   it("should match the snapshot when there is an error", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
