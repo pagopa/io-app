@@ -16,7 +16,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   CREDENTIALS_MAP,
-  ID_STATUS_MAP,
+  mapEidStatusToMixpanel,
   trackCredentialDetail,
   trackWalletStartDeactivation
 } from "../../analytics";
@@ -80,7 +80,7 @@ const ItwEidInfoBottomSheetContent = ({
       if (eidStatus) {
         trackCredentialDetail({
           credential: CREDENTIALS_MAP[credential.credentialType],
-          credential_status: ID_STATUS_MAP[eidStatus]
+          credential_status: mapEidStatusToMixpanel(eidStatus)
         });
       }
     }, [credential.credentialType]);
