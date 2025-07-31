@@ -4,7 +4,7 @@ import {
 } from "@pagopa/io-react-native-wallet-v2";
 import { isAfter } from "date-fns";
 import * as t from "io-ts";
-import { StoredCredential } from "./itwTypesUtils";
+import { CredentialFormat, StoredCredential } from "./itwTypesUtils";
 import { WIA_KEYTAG } from "./itwCryptoContextUtils";
 import { Env } from "./environment";
 
@@ -12,7 +12,7 @@ type IssuerConf = Awaited<
   ReturnType<Credential.Issuance.EvaluateIssuerTrust>
 >["issuerConf"];
 
-const issuerConfSharedFetch = createIssuerConfSharedFetch();
+const fetchIssuerConfShared = createIssuerConfSharedFetch();
 
 export const getCredentialStatusAttestation = async (
   credential: StoredCredential,
@@ -21,8 +21,8 @@ export const getCredentialStatusAttestation = async (
   // Legacy credentials carry the legacy Issuer configuration, which is incompatible with the new API.
   // In this scenario the new configuration is fetched and used instead of `credential.issuerConf`.
   const issuerConf =
-    credential.format === "vc+sd-jwt"
-      ? await issuerConfSharedFetch(env)
+    credential.format === CredentialFormat.LEGACY_SD_JWT
+      ? await fetchIssuerConfShared(env)
       : (credential.issuerConf as IssuerConf);
 
   const credentialCryptoContext = createCryptoContextFor(credential.keyTag);
