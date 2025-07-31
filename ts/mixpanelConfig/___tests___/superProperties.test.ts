@@ -158,7 +158,7 @@ const generateMockedGlobalState = (
         },
         preferences: {
           authLevel: "L2",
-          hasObtainedEid: false
+          lastEidStatus: undefined
         }
       },
       ingress: {

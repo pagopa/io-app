@@ -1,7 +1,5 @@
 import * as Sentry from "@sentry/react-native";
 import { Appearance, ColorSchemeName } from "react-native";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import {
   isMixpanelInstanceInitialized,
   registerSuperProperties
