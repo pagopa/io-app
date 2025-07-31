@@ -7,8 +7,6 @@ import {
 } from "../actions/securePreferences";
 import itwCreateSecureStorage from "../storages/itwSecureStorage";
 
-export const ITW_MAX_OFFLINE_ACCESS_COUNTER = 5;
-
 export type ItwSecurePreferencesState = {
   /**
    * Number of offline accesses that user can perform before being required to
@@ -29,10 +27,7 @@ const reducer = (
     case getType(itwOfflineAccessCounterUp): {
       return {
         ...state,
-        offlineAccessCounter: Math.min(
-          ITW_MAX_OFFLINE_ACCESS_COUNTER,
-          state.offlineAccessCounter + 1
-        )
+        offlineAccessCounter: state.offlineAccessCounter + 1
       };
     }
 

@@ -1,9 +1,8 @@
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  ItwSecurePreferencesState,
-  ITW_MAX_OFFLINE_ACCESS_COUNTER
-} from "../reducers/securePreferences";
+import { ItwSecurePreferencesState } from "../reducers/securePreferences";
+
+export const ITW_MAX_OFFLINE_ACCESS_COUNTER = 5;
 
 const selectSecurePreferencesSlice = (
   state: GlobalState
@@ -19,8 +18,7 @@ export const itwOfflineAccessCounterSelector = createSelector(
 );
 
 /**
- * Returns the number of offline accesses that the user can perform
- * before being required to return online.
+ * Returns `true` if the user has reached the maximum number of offline accesses
  */
 export const itwIsOfflineAccessLimitReached = createSelector(
   itwOfflineAccessCounterSelector,

@@ -1,10 +1,7 @@
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import {
-  ITW_MAX_OFFLINE_ACCESS_COUNTER,
-  ItwSecurePreferencesState
-} from "../securePreferences";
+import { ItwSecurePreferencesState } from "../securePreferences";
 import {
   itwOfflineAccessCounterReset,
   itwOfflineAccessCounterUp
@@ -45,7 +42,7 @@ describe("IT Wallet secure preferences reducer", () => {
     ]);
     expect(
       targetSate.features.itWallet.securePreferences.offlineAccessCounter
-    ).toEqual(ITW_MAX_OFFLINE_ACCESS_COUNTER);
+    ).toEqual(6);
   });
   it("should reset the offline access counter", () => {
     const targetSate = reproduceSequence({} as GlobalState, appReducer, [
