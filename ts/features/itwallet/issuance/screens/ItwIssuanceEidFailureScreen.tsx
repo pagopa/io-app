@@ -227,7 +227,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
               `features.itWallet.issuance.issuerNotTrustedCommonError.title`
             ),
             subtitle: I18n.t(
-              `features.itWallet.issuance.issuerNotTrustedCommonError.subtitle`
+              "features.itWallet.issuance.issuerNotTrustedCommonError.subtitle",
+              {
+                credential: "IT-Wallet"
+              }
             ),
             pictogram: "umbrella",
             action: {
