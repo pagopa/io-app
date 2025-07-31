@@ -2,14 +2,12 @@ import { assign, fromPromise, not, setup } from "xstate";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
-  GetWalletAttestationActorInput,
   GetWalletAttestationActorOutput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput,
-  VerifyTrustFederationActorInput
+  RequestCredentialActorOutput
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
@@ -44,13 +42,9 @@ export const itwCredentialIssuanceMachine = setup({
     trackCredentialIssuingDataShareAccepted: notImplemented
   },
   actors: {
-    verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
-      notImplemented
-    ),
-    getWalletAttestation: fromPromise<
-      GetWalletAttestationActorOutput,
-      GetWalletAttestationActorInput
-    >(notImplemented),
+    verifyTrustFederation: fromPromise(notImplemented),
+    getWalletAttestation:
+      fromPromise<GetWalletAttestationActorOutput>(notImplemented),
     requestCredential: fromPromise<
       RequestCredentialActorOutput,
       RequestCredentialActorInput
@@ -187,12 +181,7 @@ export const itwCredentialIssuanceMachine = setup({
             clientId: event.output.clientId,
             codeVerifier: event.output.codeVerifier,
             requestedCredential: event.output.requestedCredential,
-            issuerConf: event.output.issuerConf,
-            // TODO: [SIW-2530] In the new APIs is not needed
-            credentialDefinition:
-              "credentialDefinition" in event.output
-                ? event.output.credentialDefinition
-                : undefined
+            issuerConf: event.output.issuerConf
           }))
         },
         onError: {
@@ -234,8 +223,7 @@ export const itwCredentialIssuanceMachine = setup({
               codeVerifier: context.codeVerifier,
               credentialDefinition: context.credentialDefinition,
               requestedCredential: context.requestedCredential,
-              issuerConf: context.issuerConf,
-              isNewIssuanceFlowEnabled: context.isWhiteListed
+              issuerConf: context.issuerConf
             }),
             onDone: {
               target: "ObtainingStatusAttestation",
