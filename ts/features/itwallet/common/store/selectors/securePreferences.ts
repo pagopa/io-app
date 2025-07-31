@@ -2,8 +2,8 @@ import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwSecurePreferencesState } from "../reducers/securePreferences";
 
+// 5 means that the fifth time the user accesses the app offline, they will be required to return online.
 export const ITW_MAX_OFFLINE_ACCESS_COUNTER = 5;
-export const ITW_WARNING_OFFLINE_ACCESS_COUNTER = 3;
 
 const selectSecurePreferencesSlice = (
   state: GlobalState
@@ -33,5 +33,5 @@ export const itwIsOfflineAccessLimitReached = createSelector(
 export const itwShouldDisplayOfflineAccessLimitWarning = createSelector(
   itwOfflineAccessCounterSelector,
   offlineAccessCounter =>
-    offlineAccessCounter === ITW_WARNING_OFFLINE_ACCESS_COUNTER
+    offlineAccessCounter === ITW_MAX_OFFLINE_ACCESS_COUNTER - 1
 );

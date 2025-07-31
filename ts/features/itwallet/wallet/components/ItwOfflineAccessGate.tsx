@@ -5,6 +5,8 @@ import {
   itwIsOfflineAccessLimitReached,
   itwShouldDisplayOfflineAccessLimitWarning
 } from "../../common/store/selectors/securePreferences";
+import { useAppRestartAction } from "../hooks/useAppRestartAction";
+import I18n from "../../../../i18n";
 
 export const ItwOfflineAccessGate = ({ children }: PropsWithChildren) => {
   const [warningViewed, setWarningViewed] = useState(false);
@@ -13,16 +15,25 @@ export const ItwOfflineAccessGate = ({ children }: PropsWithChildren) => {
     itwShouldDisplayOfflineAccessLimitWarning
   );
 
+  const handleAppRestart = useAppRestartAction("banner");
+
   if (shouldDisplayLimitWarning && !warningViewed) {
     return (
       <OperationResultScreenContent
         testID="itwOfflineAccessGateWarningTestID"
         pictogram="attention"
-        title="Il tuo dispositivo è offline da un po’ di tempo"
-        subtitle="Collegati a internet e ricarica l’app per continuare ad usare Documenti su IO e gli altri servizi al prossimo accesso in app"
+        title={I18n.t("features.itWallet.offline.gate.limitWarning.title")}
+        subtitle={I18n.t(
+          "features.itWallet.offline.gate.limitWarning.subtitle"
+        )}
         action={{
           testID: "itwOfflineAccessGateWarningActionTestID",
-          label: "Ho capito",
+          label: I18n.t(
+            "features.itWallet.offline.gate.limitWarning.primaryAction"
+          ),
+          accessibilityLabel: I18n.t(
+            "features.itWallet.offline.gate.limitWarning.primaryAction"
+          ),
           onPress: () => setWarningViewed(true)
         }}
       />
@@ -34,8 +45,19 @@ export const ItwOfflineAccessGate = ({ children }: PropsWithChildren) => {
       <OperationResultScreenContent
         testID="itwOfflineAccessGateLimitReachedTestID"
         pictogram="accessDenied"
-        title="Il tuo dispositivo è offline da troppo tempo"
-        subtitle="Collegati a internet e ricarica l’app per continuare ad usare Documenti su IO e gli altri servizi in app."
+        title={I18n.t("features.itWallet.offline.gate.limitReached.title")}
+        subtitle={I18n.t(
+          "features.itWallet.offline.gate.limitReached.subtitle"
+        )}
+        action={{
+          label: I18n.t(
+            "features.itWallet.offline.gate.limitReached.primaryAction"
+          ),
+          accessibilityLabel: I18n.t(
+            "features.itWallet.offline.gate.limitReached.primaryAction"
+          ),
+          onPress: handleAppRestart
+        }}
       />
     );
   }

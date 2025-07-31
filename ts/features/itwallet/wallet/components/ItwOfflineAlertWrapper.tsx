@@ -2,34 +2,31 @@ import {
   AlertEdgeToEdgeWrapper,
   IOButton,
   IOColors,
-  useIOToast,
   VStack
 } from "@pagopa/io-app-design-system";
+import { AlertEdgeToEdge } from "@pagopa/io-app-design-system/lib/typescript/components/alert/AlertEdgeToEdge";
+import { useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { ComponentProps, PropsWithChildren, useCallback, useMemo } from "react";
 import { StatusBar } from "react-native";
-import { useRoute } from "@react-navigation/native";
-import { AlertEdgeToEdge } from "@pagopa/io-app-design-system/lib/typescript/components/alert/AlertEdgeToEdge";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
-import { startApplicationInitialization } from "../../../../store/actions/application";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import { resetOfflineAccessReason } from "../../../ingress/store/actions";
 import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import {
-  ItwOfflineRicaricaAppIOSource,
   trackItwOfflineBanner,
   trackItwOfflineBottomSheet,
-  trackItwOfflineReloadFailure,
   trackItwOfflineRicaricaAppIO
 } from "../../analytics";
+import { useAppRestartAction } from "../hooks/useAppRestartAction.ts";
 
 /**
  * A wrapper component that displays an alert to notify users when the
@@ -195,33 +192,4 @@ const useOfflineAlertDetailModal = (
       </VStack>
     )
   });
-};
-
-/**
- * Hook that creates and manages a function to restart the application.
- *
- * @param source - The source of the app restart action, for analytics purposes
- * @returns A function to restart the application
- */
-const useAppRestartAction = (source: ItwOfflineRicaricaAppIOSource) => {
-  const toast = useIOToast();
-  const dispatch = useIODispatch();
-  const isConnected = useIOSelector(isConnectedSelector);
-
-  return useCallback(() => {
-    if (isConnected) {
-      trackItwOfflineRicaricaAppIO(source);
-      // Reset the offline access reason.
-      // Since this state is `undefined` when the user is online,
-      // the startup saga will proceed without blocking.
-      dispatch(resetOfflineAccessReason());
-      // Dispatch this action to mount the correct navigator.
-      dispatch(startupLoadSuccess(StartupStatusEnum.INITIAL));
-      // restart startup saga
-      dispatch(startApplicationInitialization());
-    } else {
-      toast.error(I18n.t("features.itWallet.offline.failure"));
-      trackItwOfflineReloadFailure();
-    }
-  }, [dispatch, isConnected, toast, source]);
 };
