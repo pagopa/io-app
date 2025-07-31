@@ -1,4 +1,3 @@
-import { Errors as LegacyErrors } from "@pagopa/io-react-native-wallet";
 import { Trust, Errors } from "@pagopa/io-react-native-wallet-v2";
 import { type IntegrityError } from "@pagopa/io-react-native-integrity";
 import { CryptoError } from "@pagopa/io-react-native-crypto";
@@ -72,11 +71,7 @@ export const mapEventToFailure = (
 
   if (
     isLocalIntegrityError(error) ||
-    isWalletProviderResponseError(error, Codes.WalletInstanceIntegrityFailed) ||
-    LegacyErrors.isWalletProviderResponseError(
-      error,
-      Codes.WalletInstanceIntegrityFailed
-    ) // TODO: [SIW-2530]: remove after full migration to API 1.0
+    isWalletProviderResponseError(error, Codes.WalletInstanceIntegrityFailed)
   ) {
     return {
       type: IssuanceFailureType.UNSUPPORTED_DEVICE,
@@ -84,20 +79,14 @@ export const mapEventToFailure = (
     };
   }
 
-  if (
-    isIssuerResponseError(error) ||
-    LegacyErrors.isIssuerResponseError(error) // TODO: [SIW-2530]: remove after full migration to API 1.0
-  ) {
+  if (isIssuerResponseError(error)) {
     return {
       type: IssuanceFailureType.ISSUER_GENERIC,
       reason: error
     };
   }
 
-  if (
-    isWalletProviderResponseError(error) ||
-    LegacyErrors.isWalletProviderResponseError(error) // TODO: [SIW-2530]: remove after full migration to API 1.0
-  ) {
+  if (isWalletProviderResponseError(error)) {
     return {
       type: IssuanceFailureType.WALLET_PROVIDER_GENERIC,
       reason: error
