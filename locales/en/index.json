@@ -1002,7 +1002,8 @@
       },
       "not_same_cf": {
         "title": "Sei proprio tu?",
-        "subtitle": "Hai fatto l’accesso con un’altra identità. Per usare l’app, accedi con le tue credenziali."
+        "subtitle": "Hai fatto l’accesso con un’altra identità. Per usare l’app, accedi con le tue credenziali.",
+        "button": "Accedi di nuovo"
       },
       "generic": {
         "title": "Sorry, access was not available.",

@@ -7,6 +7,7 @@ import I18n from "../../../../i18n";
 import UnlockAccessComponent, {
   UnlockAccessProps
 } from "../../login/unlockAccess/components/UnlockAccessComponent";
+import { DifferentCFErrorScreen } from "../../activeSessionLogin/screens/DifferentCFErrorScreen";
 
 export enum AUTH_ERRORS {
   ERROR_19 = "19",
@@ -138,12 +139,6 @@ const AuthErrorComponent = ({
         ),
         ...footerWithCloseAndRetryButtons
       },
-      [AUTH_ERRORS.NOT_SAME_CF]: {
-        pictogram: "accessDenied",
-        title: I18n.t("authentication.auth_errors.not_same_cf.title"),
-        subtitle: I18n.t("authentication.auth_errors.not_same_cf.subtitle"),
-        ...footerWithCloseButton
-      },
       [AUTH_ERRORS.GENERIC_ERROR]: {
         pictogram: "umbrella",
         title: I18n.t("authentication.auth_errors.generic.title"),
@@ -157,11 +152,14 @@ const AuthErrorComponent = ({
   const errorDetails =
     errorsObject[errorCodeOrMessage] || errorsObject[AUTH_ERRORS.GENERIC_ERROR];
 
-  return errorCodeOrMessage === AUTH_ERRORS.ERROR_1002 ? (
-    <UnlockAccessComponent authLevel={authLevel} />
-  ) : (
-    <OperationResultScreenContent {...errorDetails} />
-  );
+  switch (errorCodeOrMessage) {
+    case AUTH_ERRORS.ERROR_1002:
+      return <UnlockAccessComponent authLevel={authLevel} />;
+    case AUTH_ERRORS.NOT_SAME_CF:
+      return <DifferentCFErrorScreen />;
+    default:
+      return <OperationResultScreenContent {...errorDetails} />;
+  }
 };
 
 export default AuthErrorComponent;

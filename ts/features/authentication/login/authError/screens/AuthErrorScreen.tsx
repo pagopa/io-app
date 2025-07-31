@@ -14,9 +14,7 @@ import {
   setStandardLoginInLoadingState
 } from "../../idp/store/actions";
 import { UnlockAccessProps } from "../../unlockAccess/components/UnlockAccessComponent";
-import AuthErrorComponent, {
-  AUTH_ERRORS
-} from "../../../common/components/AuthErrorComponent";
+import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 import { SETTINGS_ROUTES } from "../../../../settings/common/navigation/routes";
@@ -111,22 +109,17 @@ const AuthErrorScreen = () => {
   ]);
 
   const onCancel = useCallback(() => {
-    // TODO: review this logic in order to save the spid login value in active session login state
-    dispatch(resetSpidLoginState());
-
-    if (
-      isActiveSessionLogin &&
-      errorCodeOrMessage !== AUTH_ERRORS.NOT_SAME_CF
-    ) {
+    if (isActiveSessionLogin) {
       dispatch(setFinishedActiveSessionLoginFlow());
-      // allows the user to return to the screen from which the flow began
       navigation.popToTop();
       return;
     }
+
+    dispatch(resetSpidLoginState());
     navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.LANDING
     });
-  }, [dispatch, isActiveSessionLogin, errorCodeOrMessage, navigation]);
+  }, [dispatch, isActiveSessionLogin, navigation]);
 
   return (
     <AuthErrorComponent
