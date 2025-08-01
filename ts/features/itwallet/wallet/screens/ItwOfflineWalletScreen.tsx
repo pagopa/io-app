@@ -7,16 +7,12 @@ import { withOfflineAlert } from "../../common/helpers/withOfflineAlert";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackItwOfflineWallet } from "../../analytics";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
-import { useIODispatch } from "../../../../store/hooks.ts";
-import { itwOfflineAccessCounterUp } from "../../common/store/actions/securePreferences.ts";
 
 const ItwOfflineWalletScreen = () => {
-  const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
   useOnFirstRender(() => {
     trackItwOfflineWallet();
-    dispatch(itwOfflineAccessCounterUp());
   });
 
   useEffect(() => {
