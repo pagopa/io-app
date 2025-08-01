@@ -47,6 +47,6 @@ export function* watchItwOfflineSaga(): SagaIterator {
   yield* fork(checkHasNfcFeatureSaga);
   // Handle environment changes
   yield* fork(watchItwEnvironment);
-  // Handle offline access counter
+  // Handle offline access counter increment and reset
   yield* fork(watchItwOfflineAccess);
 }
