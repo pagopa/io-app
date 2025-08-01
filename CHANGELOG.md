@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.11.0-rc.3](https://github.com/pagopa/io-app/compare/3.11.0-rc.2...3.11.0-rc.3) (2025-07-31)
+
+
+### Features
+
+* [[IOCOM-2514](https://pagopa.atlassian.net/browse/IOCOM-2514)] FIMS singleSignOn automatic tests actions ([#7243](https://github.com/pagopa/io-app/issues/7243)) ([d8a21ed](https://github.com/pagopa/io-app/commit/d8a21ed69d1acd6ed6a5c07590f068454e99e0c9))
+* **IT Wallet:** [[SIW-2283](https://pagopa.atlassian.net/browse/SIW-2283)] Implement trust verification during credential issuing ([#7213](https://github.com/pagopa/io-app/issues/7213)) ([4ed0a14](https://github.com/pagopa/io-app/commit/4ed0a14328fd81f949b8db10ecb9cb4b6486c78c))
+
+
+### Bug Fixes
+
+* [[IOPLT-1285](https://pagopa.atlassian.net/browse/IOPLT-1285)] Add dark mode support to `ItwRequestedClaimsList` ([#7226](https://github.com/pagopa/io-app/issues/7226)) ([0a5082e](https://github.com/pagopa/io-app/commit/0a5082e389356b92742f1b6e749b0b15f7d5ebbd))
+* **IT Wallet:** [[SIW-2463](https://pagopa.atlassian.net/browse/SIW-2463)] Mixpanel credential status events ([#7069](https://github.com/pagopa/io-app/issues/7069)) ([f079bfe](https://github.com/pagopa/io-app/commit/f079bfed8d5b7b49e8c91701a24d8c542d09f017))
+* **IT Wallet:** [[SIW-2813](https://pagopa.atlassian.net/browse/SIW-2813)] Split attestation utils between v1 and v2 ([#7235](https://github.com/pagopa/io-app/issues/7235)) ([1157970](https://github.com/pagopa/io-app/commit/1157970c34983ee8c93aff267c78cadcef84c2ad))
+
 ## [3.11.0-rc.2](https://github.com/pagopa/io-app/compare/3.11.0-rc.1...3.11.0-rc.2) (2025-07-30)
 
 
