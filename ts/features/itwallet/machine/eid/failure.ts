@@ -1,4 +1,4 @@
-import { Trust, Errors } from "@pagopa/io-react-native-wallet-v2";
+import { Trust, Errors } from "@pagopa/io-react-native-wallet";
 import { type IntegrityError } from "@pagopa/io-react-native-integrity";
 import { CryptoError } from "@pagopa/io-react-native-crypto";
 import {

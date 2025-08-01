@@ -1,13 +1,9 @@
+import { type Credential as LegacyCredential } from "@pagopa/io-react-native-wallet-legacy";
 import {
-  AuthorizationDetail as LegacyAuthorizationDetail,
-  Credential as LegacyCredential
-} from "@pagopa/io-react-native-wallet";
-import {
-  AuthorizationDetail,
   Credential,
   Trust,
   WalletInstance
-} from "@pagopa/io-react-native-wallet-v2";
+} from "@pagopa/io-react-native-wallet";
 
 /**
  * Alias type for the return type of the start issuance flow operation.
@@ -33,7 +29,6 @@ export type RpEntityConfiguration =
 
 /**
  * Alias for the IssuerConfiguration type v0.7.1
- * TODO: [SIW-2530]: remove the legacy type
  */
 export type LegacyIssuerConfiguration = Awaited<
   ReturnType<LegacyCredential.Issuance.EvaluateIssuerTrust>
@@ -42,27 +37,15 @@ export type LegacyIssuerConfiguration = Awaited<
 /**
  * Alias for the IssuerConfiguration type
  */
-export type IssuerConfiguration =
-  | Awaited<ReturnType<Credential.Issuance.EvaluateIssuerTrust>>["issuerConf"]
-  | LegacyIssuerConfiguration;
-
-/**
- * Alias for the AuthorizationDetail type
- * TODO: [SIW-2530]: remove the legacy type
- */
-export type CredentialAuthDetail =
-  | AuthorizationDetail
-  | LegacyAuthorizationDetail;
+export type IssuerConfiguration = Awaited<
+  ReturnType<Credential.Issuance.EvaluateIssuerTrust>
+>["issuerConf"];
 
 /**
  * Alias for the AccessToken type
- * TODO: [SIW-2530]: remove the legacy type
  */
 export type CredentialAccessToken = Awaited<
-  ReturnType<
-    | Credential.Issuance.AuthorizeAccess
-    | LegacyCredential.Issuance.AuthorizeAccess
-  >
+  ReturnType<Credential.Issuance.AuthorizeAccess>
 >["accessToken"];
 
 /**
@@ -75,11 +58,9 @@ export type ParsedCredential = Awaited<
 /**
  * Alias for the ParsedStatusAttestation type
  */
-export type ParsedStatusAttestation =
-  | Awaited<
-      ReturnType<Credential.Status.VerifyAndParseStatusAssertion>
-    >["parsedStatusAssertion"]["payload"]
-  | LegacyParsedStatusAttestation;
+export type ParsedStatusAttestation = Awaited<
+  ReturnType<Credential.Status.VerifyAndParseStatusAssertion>
+>["parsedStatusAssertion"]["payload"];
 
 /**
  * Alias for the ParsedStatusAttestation type v0.7.1
@@ -106,7 +87,7 @@ export type StoredStatusAttestation =
   | {
       credentialStatus: "valid";
       statusAttestation: string;
-      parsedStatusAttestation: ParsedStatusAttestation;
+      parsedStatusAttestation: ParsedStatusAttestation | LegacyParsedStatusAttestation;
     }
   | {
       credentialStatus: "invalid" | "unknown";
@@ -124,7 +105,7 @@ export type StoredCredential = {
   parsedCredential: ParsedCredential;
   credentialType: string;
   credentialId: string;
-  issuerConf: IssuerConfiguration;
+  issuerConf: IssuerConfiguration | LegacyIssuerConfiguration; // The Wallet might still contain older credentials
   storedStatusAttestation?: StoredStatusAttestation;
   /**
    * The SD-JWT issuance and expiration dates in ISO format.

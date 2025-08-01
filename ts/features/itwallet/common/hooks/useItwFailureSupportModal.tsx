@@ -2,7 +2,7 @@ import { Fragment, JSX } from "react";
 import { Linking, View } from "react-native";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-import { Errors } from "@pagopa/io-react-native-wallet-v2";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import {
   Body,
   Divider,

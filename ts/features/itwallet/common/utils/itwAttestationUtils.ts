@@ -2,7 +2,7 @@ import {
   WalletInstance,
   WalletInstanceAttestation,
   createCryptoContextFor
-} from "@pagopa/io-react-native-wallet-v2";
+} from "@pagopa/io-react-native-wallet";
 import * as Sentry from "@sentry/react-native";
 import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
