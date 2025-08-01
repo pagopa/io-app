@@ -147,16 +147,16 @@ const IssuerDynamicErrorAlert = ({
       <VStack space={24}>
         <IOMarkdown content={localizedMessage.description} />
         {showCta && (
-                  <View style={{ marginBottom: 16 }}>
-                  <IOButton
-                    variant="solid"
-                    fullWidth
-                    label={I18n.t(
-                      "features.itWallet.presentation.alerts.mdl.invalid.cta"
-                    )}
-                    onPress={confirmAndRemoveCredential}
-                  />
-                </View>
+          <View style={{ marginBottom: 16 }}>
+            <IOButton
+              variant="solid"
+              fullWidth
+              label={I18n.t(
+                "features.itWallet.presentation.alerts.mdl.invalid.cta"
+              )}
+              onPress={confirmAndRemoveCredential}
+            />
+          </View>
         )}
       </VStack>
     )
