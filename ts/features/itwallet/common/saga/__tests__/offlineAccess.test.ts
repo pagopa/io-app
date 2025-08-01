@@ -10,6 +10,7 @@ import { watchItwOfflineAccess } from "../offlineAccess";
 import { progressSelector as identificationStatusSelector } from "../../../../identification/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../../walletInstance/store/actions";
 import { identificationSuccess } from "../../../../identification/store/actions";
+import { setOfflineAccessReason } from "../../../../ingress/store/actions";
 
 describe("watchItwOfflineAccess", () => {
   it("should handle offline access counter reset on wallet instance status update", async () => {
@@ -25,6 +26,7 @@ describe("watchItwOfflineAccess", () => {
       ])
       .dispatch(itwUpdateWalletInstanceStatus.success({} as any))
       .put(itwOfflineAccessCounterReset())
+      .not.put(itwOfflineAccessCounterUp())
       .run();
   });
 
@@ -110,6 +112,40 @@ describe("watchItwOfflineAccess", () => {
       .dispatch(identificationSuccess({} as any))
       .not.put(itwOfflineAccessCounterReset())
       .put(itwOfflineAccessCounterUp())
+      .run();
+  });
+
+  it("should increase counter on offline access reason set action", async () => {
+    await expectSaga(watchItwOfflineAccess)
+      .provide([
+        [
+          select(identificationStatusSelector),
+          {
+            kind: "unidentified"
+          }
+        ],
+        [select(offlineAccessReasonSelector), undefined]
+      ])
+      .dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.SESSION_REFRESH))
+      .not.put(itwOfflineAccessCounterReset())
+      .put(itwOfflineAccessCounterUp())
+      .run();
+  });
+
+  it("should not increase counter on offline access reason set action if DEVICE_OFFLINE", async () => {
+    await expectSaga(watchItwOfflineAccess)
+      .provide([
+        [
+          select(identificationStatusSelector),
+          {
+            kind: "unidentified"
+          }
+        ],
+        [select(offlineAccessReasonSelector), undefined]
+      ])
+      .dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE))
+      .not.put(itwOfflineAccessCounterReset())
+      .not.put(itwOfflineAccessCounterUp())
       .run();
   });
 });
