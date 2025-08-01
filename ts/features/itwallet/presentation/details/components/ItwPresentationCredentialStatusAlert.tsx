@@ -1,5 +1,6 @@
 import { memo } from "react";
-import { Alert } from "@pagopa/io-app-design-system";
+import { Alert, IOButton, VStack } from "@pagopa/io-app-design-system";
+import { View } from "react-native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../../i18n.ts";
@@ -16,6 +17,7 @@ import { format } from "../../../../../utils/dates.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
+import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
 
 type Props = {
   credential: StoredCredential;
@@ -47,7 +49,9 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   }
 
   if (message) {
-    return <IssuerDynamicErrorAlert message={message} />;
+    return (
+      <IssuerDynamicErrorAlert message={message} credential={credential} />
+    );
   }
 
   // Fallback when the issuer does not provide a message for an expired credential
@@ -124,14 +128,38 @@ const DocumentExpiringAlert = ({ credential }: Props) => {
 
 type IssuerDynamicErrorAlertProps = {
   message: Record<string, { title: string; description: string }>;
+  credential: StoredCredential;
 };
 
-const IssuerDynamicErrorAlert = ({ message }: IssuerDynamicErrorAlertProps) => {
+const IssuerDynamicErrorAlert = ({
+  message,
+  credential
+}: IssuerDynamicErrorAlertProps) => {
   const localizedMessage = getLocalizedMessageOrFallback(message);
+  const showCta = credential.credentialType === CredentialType.DRIVING_LICENSE;
+
+  const { confirmAndRemoveCredential } =
+    useItwRemoveCredentialWithConfirm(credential);
 
   const bottomSheet = useIOBottomSheetModal({
     title: localizedMessage.title,
-    component: <IOMarkdown content={localizedMessage.description} />
+    component: (
+      <VStack space={24}>
+        <IOMarkdown content={localizedMessage.description} />
+        {showCta && (
+                  <View style={{ marginBottom: 16 }}>
+                  <IOButton
+                    variant="solid"
+                    fullWidth
+                    label={I18n.t(
+                      "features.itWallet.presentation.alerts.mdl.invalid.cta"
+                    )}
+                    onPress={confirmAndRemoveCredential}
+                  />
+                </View>
+        )}
+      </VStack>
+    )
   });
 
   return (
