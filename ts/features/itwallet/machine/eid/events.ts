@@ -1,11 +1,13 @@
 import { ErrorActorEvent } from "xstate";
 import { SpidIdp } from "../../../../utils/idps";
 import { CiePreparationType } from "../../identification/cie/components/ItwCiePreparationBaseScreenContent";
+import { EidIssuanceMode } from "./context";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
 export type Start = {
   type: "start";
+  mode?: EidIssuanceMode;
   isL3?: boolean;
 };
 
@@ -85,10 +87,6 @@ export type ExternalErrorEvent = {
   error?: Error;
 };
 
-export type StartReissuing = {
-  type: "start-reissuing";
-};
-
 export type Next = {
   type: "next";
 };
@@ -120,7 +118,6 @@ export type EidIssuanceEvents =
   | RevokeWalletInstance
   | ErrorActorEvent
   | ExternalErrorEvent
-  | StartReissuing
   | GoToCieWarning
   | Next
   | GoToL2IdentificationMode

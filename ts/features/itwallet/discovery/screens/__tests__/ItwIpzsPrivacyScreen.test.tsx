@@ -21,7 +21,7 @@ describe("ItwIpzsPrivacyScreen", () => {
   });
 });
 
-const renderComponent = (isL3FeaturesEnabled: boolean) => {
+const renderComponent = (isL3: boolean) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const logic = itwEidIssuanceMachine.provide({
@@ -37,7 +37,7 @@ const renderComponent = (isL3FeaturesEnabled: boolean) => {
     value: "IpzsPrivacyAcceptance",
     context: {
       ...initialSnapshot.context,
-      isL3FeaturesEnabled
+      isL3
     }
   };
 
