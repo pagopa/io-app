@@ -5,7 +5,7 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useIOStore } from "../../../../../store/hooks";
 import ROUTES from "../../../../../navigation/routes";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { itwCredentialsSelector } from "../../../credentials/store/selectors";
+import { itwProximityCredentialsByTypeSelector } from "../store/selectors";
 import {
   trackItwProximityQrCode,
   trackItwProximityQrCodeLoadingFailure
@@ -21,7 +21,9 @@ export const createProximityActionsImplementation = (
 ) => ({
   onInit: assign<Context, ProximityEvents, unknown, ProximityEvents, any>(
     () => {
-      const credentialsByType = itwCredentialsSelector(store.getState());
+      const credentialsByType = itwProximityCredentialsByTypeSelector(
+        store.getState()
+      );
       return {
         credentialsByType
       };

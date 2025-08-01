@@ -1,6 +1,8 @@
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { ProximityCredentials } from "../utils/itwProximityTypeUtils";
 
-export const MOCK_CREDENTIALS: Record<string, StoredCredential> = {
+export const MOCK_CREDENTIALS: ProximityCredentials = {
+  "org.iso.18013.5.1.IT.WalletAttestation": "",
   "org.iso.18013.5.1.mDL": {
     credentialId: "mso_mdoc_mDL",
     credential:

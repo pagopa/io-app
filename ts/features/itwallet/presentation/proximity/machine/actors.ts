@@ -11,7 +11,6 @@ import {
 import BluetoothStateManager from "react-native-bluetooth-state-manager";
 import {
   Proximity,
-  type VerifierRequest,
   parseError,
   parseVerifierRequest
 } from "@pagopa/io-react-native-proximity";
@@ -21,13 +20,13 @@ import {
   getProximityDetails,
   promiseWithTimeout
 } from "../utils/itwProximityPresentationUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { assert } from "../../../../../utils/assert";
 import { getError } from "../../../../../utils/errors";
 import {
   trackItwProximityBluetoothBlock,
   trackItwProximityBluetoothBlockAction
 } from "../analytics";
+import { Context } from "./context";
 import { ProximityEvents } from "./events";
 
 const PERMISSIONS_TO_CHECK: Array<Permission> =
@@ -51,18 +50,25 @@ export type StartProximityFlowInput = {
   isRestarting?: boolean;
 } | void;
 
+export type GetQrCodeStringActorOutput = Awaited<
+  ReturnType<typeof Proximity.getQrCodeString>
+>;
+
 export type SendErrorResponseActorOutput = Awaited<
   ReturnType<typeof Proximity.sendErrorResponse>
 >;
 
-export type ProximityCommunicationLogicActorInput = {
-  credentialsByType: Record<string, StoredCredential>;
-};
+export type CloseActorOutput = Awaited<ReturnType<typeof Proximity.close>>;
 
-export type SendDocumentsActorInput = {
-  credentialsByType: Record<string, StoredCredential>;
-  verifiedRequest?: VerifierRequest;
-};
+export type ProximityCommunicationLogicActorInput = Pick<
+  Context,
+  "credentialsByType"
+>;
+
+export type SendDocumentsActorInput = Pick<
+  Context,
+  "credentialsByType" | "verifierRequest"
+>;
 
 export type SendDocumentsActorOutput = Awaited<
   ReturnType<typeof Proximity.sendResponse>
@@ -104,7 +110,7 @@ export const createProximityActorsImplementation = () => {
     }
   );
 
-  const checkBluetoothIsActive = fromPromise<boolean, void>(async () => {
+  const checkBluetoothIsActive = fromPromise<boolean>(async () => {
     const bluetoothState = await BluetoothStateManager.getState();
 
     return bluetoothState === "PoweredOn";
@@ -120,7 +126,7 @@ export const createProximityActorsImplementation = () => {
     }
   );
 
-  const generateQrCodeString = fromPromise<string, void>(
+  const generateQrCodeString = fromPromise<GetQrCodeStringActorOutput>(
     Proximity.getQrCodeString
   );
 
@@ -137,10 +143,7 @@ export const createProximityActorsImplementation = () => {
     };
 
     const handleDeviceDisconnected = () => {
-      sendBack({
-        type: "device-error",
-        error: new Error("Device disconnected")
-      });
+      sendBack({ type: "device-disconnected" });
     };
 
     const handleError = (eventPayload: Proximity.EventsPayload["onError"]) => {
@@ -200,12 +203,12 @@ export const createProximityActorsImplementation = () => {
     SendDocumentsActorOutput,
     SendDocumentsActorInput
   >(async ({ input }) => {
-    const { credentialsByType, verifiedRequest } = input;
-    assert(verifiedRequest, "Missing required verifiedRequest");
+    const { credentialsByType, verifierRequest } = input;
+    assert(verifierRequest, "Missing required verifierRequest");
 
-    const documents = getDocuments(verifiedRequest.request, credentialsByType);
+    const documents = getDocuments(verifierRequest.request, credentialsByType);
     // We accept all the fields requested by the verifier app
-    const acceptedFields = generateAcceptedFields(verifiedRequest.request);
+    const acceptedFields = generateAcceptedFields(verifierRequest.request);
 
     const generatedResponse = await Proximity.generateResponse(
       documents,
@@ -223,7 +226,7 @@ export const createProximityActorsImplementation = () => {
     () => Proximity.sendErrorResponse(Proximity.ErrorCode.SESSION_TERMINATED)
   );
 
-  const closeProximityFlow = fromPromise<boolean, void>(Proximity.close);
+  const closeProximityFlow = fromPromise<CloseActorOutput>(Proximity.close);
 
   return {
     checkPermissions,
