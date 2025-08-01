@@ -82,11 +82,12 @@ export type DisclosureClaim = {
 };
 
 /**
- * Parses the claims from the credential.
- * For each Record entry it maps the key and the attribute value to a label and a value.
+ * Parses the claims from the credential, including nested claims.
+ * For each Record entry, it maps the key and the attribute value to a label and a value.
+ * If a claim's value is an array of objects, it recursively parses each object.
  * The label is taken from the attribute name which is either a string or a record of locale and string.
- * If the type of the attribute name is string then when take it's value because locales have not been set.
- * If the type of the attribute name is record then we take the value of the locale that matches the current locale.
+ * If the type of the attribute name is string then we take its value because locales have not been set.
+ * If the type of the attribute name is a record then we take the value of the locale that matches the current locale.
  * If there's no locale that matches the current locale then we take the attribute key as the name.
  * The value is taken from the attribute value.
  * @param parsedCredential - the parsed credential.
@@ -106,6 +107,22 @@ export const parseClaims = (
           ? attribute.name
           : attribute.name?.[getClaimsFullLocale()] || key;
 
+      // Check if the value is an array of objects that can be parsed as nested credentials
+      if (
+        Array.isArray(attribute.value) &&
+        attribute.value.length > 0 &&
+        typeof attribute.value[0] === "object" &&
+        attribute.value[0] !== null
+      ) {
+        // If it is, recursively call parseClaims for each item in the array.
+        // Each item is treated as a `ParsedCredential`.
+        const nestedParsedClaims = attribute.value.map(nestedCredential =>
+          parseClaims(nestedCredential as ParsedCredential)
+        );
+        return { label: attributeName, value: nestedParsedClaims, id: key };
+      }
+
+      // For simple claims or arrays of simple values, return the value directly.
       return { label: attributeName, value: attribute.value, id: key };
     });
 };
@@ -363,6 +380,24 @@ export const PdfClaim = PatternString(PDF_DATA_REGEX);
  */
 export const SimpleListClaim = t.array(t.string);
 
+// Add this to your decoder section in itwClaimsUtils.ts
+
+/**
+ * Decoder for a single nested claim.
+ * This is used to represent a claim that has a nested structure,
+ * such as a claim with multiple values or a complex object.
+ */
+const NestedClaimDisplayFormat = t.type({
+  id: t.string,
+  label: t.string,
+  value: t.unknown
+});
+
+/**
+ * Decoder for a nested claim array, which is an array of arrays of {@link NestedClaimDisplayFormat}.
+ */
+export const ParsedNestedClaim = t.array(t.array(NestedClaimDisplayFormat));
+
 /**
  * Decoder type for the claim field of the credential.
  * It includes all the possible types of claims and fallbacks to string.
@@ -374,6 +409,8 @@ export const ClaimValue = t.union([
   PlaceOfBirthClaim,
   // Parse an object representing a mDL driving privileges
   DrivingPrivilegesClaim,
+  // Parse a nested credential claim
+  ParsedNestedClaim,
   // Otherwise parse a date as string
   SimpleDateClaim,
   // Otherwise parse an image

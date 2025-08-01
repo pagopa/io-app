@@ -39,11 +39,18 @@ const getColorPropsByScheme = (
     EuropeanHealthInsuranceCard: {
       foreground: "#032D5C",
       background: "#ABD8F2"
+    },
+    education_degree: {
+      foreground: "#403C36",
+      background: "#F2F1CE"
+    },
+    education_enrollment: {
+      foreground: "#403C36",
+      background: "#E0F2CE"
     }
   };
 
   const baseColorProps = mapCredentialTypes[credentialType];
-
   if (!baseColorProps) {
     return;
   }

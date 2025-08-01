@@ -4147,7 +4147,8 @@
           "active": "Già presente",
           "unavailable": "Non disponibile",
           "requested": "In corso",
-          "upcoming": "In arrivo"
+          "upcoming": "In arrivo",
+          "new": "Novità"
         },
         "options": {
           "cgn": "Carta Giovani Nazionale",
@@ -4284,7 +4285,8 @@
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
-        "dgc": "Attestati di Laurea, Dottorato e Master"
+        "ed": "Titoli accademici",
+        "ee": "Iscrizioni universitarie"
       },
       "wallet": {
         "active": "Attivo",

@@ -1,0 +1,143 @@
+{
+  "credential" : "test",
+  "parsedCredential": {
+    "tax_id_code":{
+      "value":"LVLDAA85T50G702B",
+      "name":{
+        "it-IT":"Codice Fiscale",
+        "en-US":"Tax id code"
+      }
+    },
+    "personal_administrative_number":{
+      "value":"JF97265AX",
+      "name":{
+        "it-IT":"ID ANPR",
+        "en-US":"Personal Administrative Number"
+      }
+    },
+    "education_degrees":{
+      "value":[
+        {
+          "institute_name":{
+            "value":"Università degli studi di Roma La Sapienza",
+            "name":{
+              "it-IT":"Nome dell'Istituto",
+              "en-US":"Institute name"
+            }
+          },
+          "qualification_name":{
+            "value":" Dottore Magistrale",
+            "name":{
+              "it-IT":"Nome del titolo di studio",
+              "en-US":"Qualification name"
+            }
+          },
+          "qualification_grade_value":{
+            "value":"71/110",
+            "name":{
+              "it-IT":"Voto del titolo di studio",
+              "en-US":"Qualification grade value"
+            }
+          },
+          "academic_qualification_date":{
+            "value":"2024-01-24",
+            "name":{
+              "it-IT":"Data di conseguimento del titolo di studio",
+              "en-US":"Qualification date"
+            }
+          },
+          "programme_type_name":{
+            "value":"Laurea Magistrale (DM 270/04)",
+            "name":{
+              "it-IT":"Tipologia del corso di laurea",
+              "en-US":"Program type name"
+            }
+          },
+          "degree_class_name":{
+            "value":"Lettere",
+            "name":{
+              "it-IT":"Nome della classe di laurea",
+              "en-US":"Degree class name"
+            }
+          },
+          "degree_class":{
+            "value":"5",
+            "name":{
+              "it-IT":"Codice della classe di laurea",
+              "en-US":"Degree class code"
+            }
+          },
+          "degree_course_name":{
+            "value":"Lettere",
+            "name":{
+              "it-IT":"Nome del corso di laurea",
+              "en-US":"Degree course name"
+            }
+          }
+        },
+        {
+          "institute_name":{
+            "value":"Università degli studi di Roma La Sapienza",
+            "name":{
+              "it-IT":"Nome dell'Istituto",
+              "en-US":"Institute name"
+            }
+          },
+          "qualification_name":{
+            "value":"Dottore",
+            "name":{
+              "it-IT":"Nome del titolo di studio",
+              "en-US":"Qualification name"
+            }
+          },
+          "qualification_grade_value":{
+            "value":"95/110",
+            "name":{
+              "it-IT":"Voto del titolo di studio",
+              "en-US":"Qualification grade value"
+            }
+          },
+          "academic_qualification_date":{
+            "value":"2021-01-24",
+            "name":{
+              "it-IT":"Data di conseguimento del titolo di studio",
+              "en-US":"Qualification date"
+            }
+          },
+          "programme_type_name":{
+            "value":"Laurea Triennale (DM 509/99)",
+            "name":{
+              "it-IT":"Tipologia del corso di laurea",
+              "en-US":"Program type name"
+            }
+          },
+          "degree_class_name":{
+            "value":"Scienze e tecnologie fisiche",
+            "name":{
+              "it-IT":"Nome della classe di laurea",
+              "en-US":"Degree class name"
+            }
+          },
+          "degree_class":{
+            "value":"25",
+            "name":{
+              "it-IT":"Codice della classe di laurea",
+              "en-US":"Degree class code"
+            }
+          },
+          "degree_course_name":{
+            "value":"Fisica",
+            "name":{
+              "it-IT":"Nome del corso di laurea",
+              "en-US":"Degree course name"
+            }
+          }
+        }
+      ],
+      "name":{
+        "it-IT":"Elenco dei titoli di studio",
+        "en-US":"List of education degrees"
+      }
+    }
+  }
+}

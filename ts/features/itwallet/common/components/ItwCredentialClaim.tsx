@@ -18,6 +18,7 @@ import {
   getSafeText,
   ImageClaim,
   isExpirationDateClaim,
+  ParsedNestedClaim,
   PdfClaim,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
@@ -30,6 +31,7 @@ import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
 import { CREDENTIALS_MAP, trackCopyListItem } from "../../analytics";
+import { ItwNestedClaimsListItem } from "./ItwNestedClaimsListItem.tsx";
 
 /**
  * Component which renders a place of birth type claim.
@@ -315,6 +317,10 @@ const DrivingPrivilegesClaimItem = ({
  * Component which renders a claim.
  * It renders a different component based on the type of the claim.
  * @param claim - the claim to render
+ * @param hidden - a flag to hide the claim value
+ * @param isPreview - a flag to indicate if the claim is being rendered in preview mode
+ * @param credentialStatus - the status of the credential, used for expiration date claims
+ * @param credentialType - the type of the credential, used for analytics tracking
  */
 export const ItwCredentialClaim = ({
   claim,
@@ -378,6 +384,61 @@ export const ItwCredentialClaim = ({
             O.getOrElseW(() => decoded)
           );
           return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
+        }
+
+        if (ParsedNestedClaim.is(decoded)) {
+          const parsedNestedCredentials = decoded;
+
+          // If there is exactly ONE nested item, display its claims directly
+          if (parsedNestedCredentials.length === 1) {
+            const singleItemClaims = parsedNestedCredentials[0];
+            return (
+              <>
+                {singleItemClaims.map(nestedClaim => (
+                  <ItwCredentialClaim
+                    key={nestedClaim.id}
+                    claim={nestedClaim}
+                    hidden={hidden}
+                    isPreview={isPreview}
+                    credentialStatus={credentialStatus}
+                    credentialType={credentialType}
+                  />
+                ))}
+              </>
+            );
+          }
+
+          // If there are MULTIPLE nested items, render each as a clickable ListItemInfo
+          // that opens a bottom sheet with all claims of the item
+          if (parsedNestedCredentials.length > 1) {
+            return (
+              <>
+                {parsedNestedCredentials.map((singleItemClaims, index) => {
+                  const summaryLabel = singleItemClaims.find(
+                    c => c.id === "programme_type_name"
+                  )?.value as string;
+                  const summaryValue = singleItemClaims.find(
+                    c => c.id === "degree_course_name"
+                  )?.value as string;
+
+                  return (
+                    <ItwNestedClaimsListItem
+                      key={index}
+                      itemTitle={summaryValue}
+                      itemClaims={singleItemClaims}
+                      summaryLabel={summaryLabel}
+                      summaryValue={summaryValue}
+                      hidden={hidden}
+                      isPreview={isPreview}
+                      credentialStatus={credentialStatus}
+                      credentialType={credentialType}
+                    />
+                  );
+                })}
+              </>
+            );
+          }
+          return null;
         }
         if (BoolClaim.is(decoded)) {
           return <BoolClaimItem label={claim.label} claim={decoded} />;

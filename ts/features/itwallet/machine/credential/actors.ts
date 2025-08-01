@@ -59,7 +59,7 @@ export const createCredentialIssuanceActorsImplementation = (
     if (!input.isNewIssuanceFlowEnabled) {
       return;
     }
-
+    console.log("Verifying trust federation...");
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
       await Trust.Build.getTrustAnchorEntityConfiguration(
@@ -104,7 +104,6 @@ export const createCredentialIssuanceActorsImplementation = (
       isNewIssuanceFlowEnabled
     );
   });
-
   const requestCredential = fromPromise<
     RequestCredentialActorOutput,
     RequestCredentialActorInput
@@ -117,7 +116,6 @@ export const createCredentialIssuanceActorsImplementation = (
 
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
-
     return await credentialIssuanceUtils.requestCredential({
       env,
       credentialType,
@@ -140,7 +138,7 @@ export const createCredentialIssuanceActorsImplementation = (
       credentialDefinition,
       isNewIssuanceFlowEnabled
     } = input;
-
+    console.log("Obtain credential input:");
     const eid = itwCredentialsEidSelector(store.getState());
 
     assert(credentialType, "credentialType is undefined");

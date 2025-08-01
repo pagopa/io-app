@@ -143,7 +143,7 @@ describe("WalletCardOnboardingScreen", () => {
 
       const { queryByTestId } = renderComponent();
 
-      const testID = `${CredentialType.DEGREE_CERTIFICATES}ModuleTestID`;
+      const testID = `${CredentialType.EDUCATION_DEGREE}ModuleTestID`;
 
       if (shouldRender) {
         expect(queryByTestId(testID)).toBeTruthy();

@@ -21,10 +21,7 @@ type Props = {
   credential: StoredCredential;
 };
 
-const excludedCredentialTypes = [
-  CredentialType.PID,
-  CredentialType.DEGREE_CERTIFICATES
-] as const;
+const excludedCredentialTypes = [CredentialType.PID] as const;
 
 type ExcludedCredentialTypes = (typeof excludedCredentialTypes)[number];
 

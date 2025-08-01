@@ -55,8 +55,14 @@ const availableCredentials = [
   CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
 ] as const;
 
+// New credentials that can be actively requested and obtained by the user
+const newCredentials = [
+  CredentialType.EDUCATION_DEGREE,
+  CredentialType.EDUCATION_ENROLLMENT
+] as const;
+
 // Credentials that will be available in the future
-const upcomingCredentials = [CredentialType.DEGREE_CERTIFICATES] as const;
+const upcomingCredentials = [] as ReadonlyArray<string>;
 
 const activeBadge: Badge = {
   variant: "success",
@@ -65,6 +71,9 @@ const activeBadge: Badge = {
 
 const isUpcomingCredential = (type: string): boolean =>
   upcomingCredentials.includes(type as any);
+
+const isNewCredential = (type: string): boolean =>
+  newCredentials.includes(type as any);
 
 const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
@@ -118,7 +127,7 @@ const ItwCredentialOnboardingSection = () => {
   // Show upcoming credentials only if L3 is enabled and env is "pre"
   const shouldShowUpcoming = isL3Enabled && env === "pre";
   const displayedCredentials = shouldShowUpcoming
-    ? [...availableCredentials, ...upcomingCredentials]
+    ? [...availableCredentials, ...newCredentials, ...upcomingCredentials]
     : [...availableCredentials];
 
   const beginCredentialIssuance = useOfflineToastGuard(
@@ -154,6 +163,7 @@ const ItwCredentialOnboardingSection = () => {
             isDisabled={remotelyDisabledCredentials.includes(type)}
             isRequested={requestedCredentials.includes(type)}
             isUpcoming={isUpcomingCredential(type)}
+            isNew={isNewCredential(type)}
             isCredentialIssuancePending={isCredentialIssuancePending}
             isSelectedCredential={pipe(
               selectedCredentialOption,
