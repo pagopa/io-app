@@ -30,11 +30,12 @@ type EphemeralKey = {
   ephemeralKeyTag: string;
   ephemeralPublicKey: PublicKey | undefined;
 };
-
-const ephemeralInitialState = {
+// The initial state is inserted as the return value of a function
+// for regenerating a new UUID every time we need a new initial state.
+const ephemeralInitialState = () => ({
   ephemeralKeyTag: uuid(),
   ephemeralPublicKey: undefined
-};
+});
 
 export type LollipopState = Readonly<{
   keyTag: O.Option<string>;
@@ -47,7 +48,7 @@ export const initialLollipopState: LollipopState = {
   keyTag: O.none,
   publicKey: O.none,
   supportedDevice: true,
-  ephemeralKey: ephemeralInitialState
+  ephemeralKey: ephemeralInitialState()
 };
 
 export default function lollipopReducer(
@@ -64,7 +65,7 @@ export default function lollipopReducer(
         ...state,
         keyTag: O.some(state.ephemeralKey.ephemeralKeyTag),
         publicKey: O.fromNullable(state.ephemeralKey.ephemeralPublicKey),
-        ephemeralKey: ephemeralInitialState
+        ephemeralKey: ephemeralInitialState()
       };
     case getType(lollipopKeyTagSave):
       return {
