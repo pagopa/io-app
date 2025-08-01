@@ -11,6 +11,7 @@ import { AUTHENTICATION_ROUTES } from "../routes";
 
 export type AuthenticationParamsList = {
   [AUTHENTICATION_ROUTES.LANDING]: undefined;
+  [AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN]: undefined;
   [AUTHENTICATION_ROUTES.ROOTED_DEVICE]: undefined;
   [AUTHENTICATION_ROUTES.OPT_IN]: ChosenIdentifier;
   [AUTHENTICATION_ROUTES.IDP_SELECTION]: undefined;
@@ -40,4 +41,5 @@ export type AuthenticationParamsList = {
   // CieID sign in Error
   [AUTHENTICATION_ROUTES.CIE_ID_ERROR]: undefined;
   [AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL]: UrlNotCompliant;
+  [AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN]: CieIdLoginProps;
 };

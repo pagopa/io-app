@@ -16,10 +16,19 @@ jest.mock("@react-navigation/native", () => {
     })
   };
 });
+// const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
   useDispatch: jest.fn
 }));
+
+jest.mock("../../../../../../store/hooks", () => {
+  const actualNav = jest.requireActual("../../../../../../store/hooks");
+  return {
+    ...actualNav,
+    useIOSelector: jest.fn()
+  };
+});
 
 describe("CieIdErrorScreen where device supports NFC", () => {
   afterEach(jest.clearAllMocks);
@@ -37,6 +46,8 @@ describe("CieIdErrorScreen where device supports NFC", () => {
     const primaryAction = getByTestId("cie-id-error-primary-action");
 
     fireEvent.press(primaryAction);
+
+    // expect(mockDispatch).toHaveBeenCalled();
 
     expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN

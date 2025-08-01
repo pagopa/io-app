@@ -839,6 +839,10 @@
         "body": "We need to check your identity from time to time for security reasons",
         "linkButtonLabel": "Read more"
       },
+      "active_session_login": {
+        "title": "Accedi subito",
+        "body": "Autenticati ora per usare l’app senza interruzioni. Così sarà sempre pronta quando ti serve."
+      },
       "cie_bottom_sheet": {
         "title": "How do you want to login?",
         "module_cie_pin": {
@@ -996,6 +1000,11 @@
         "title": "It was not possible to access",
         "subtitle": "It is currently not possible to log in with your SPID identity provider. Please try again in a few minutes."
       },
+      "not_same_cf": {
+        "title": "Sei proprio tu?",
+        "subtitle": "Hai fatto l’accesso con un’altra identità. Per usare l’app, accedi con le tue credenziali.",
+        "button": "Accedi di nuovo"
+      },
       "generic": {
         "title": "Sorry, access was not available.",
         "subtitle": "A problem occurred while logging in. Please try again in a few minutes."
@@ -1019,7 +1028,8 @@
         "description": "To login, you must have the app installed on your device.",
         "primary_action_label": "Get the app",
         "link_error": "We could not direct you to the store. Open it manually and search for CieID"
-      }
+      },
+      "feature_not_already_implemented": "Questa funzionalità è attualmente in fase di sviluppo e non ancora disponibile."
     },
     "cie": {
       "genericTitle": "Login with CIE",

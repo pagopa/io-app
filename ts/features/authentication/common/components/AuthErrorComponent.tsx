@@ -7,6 +7,7 @@ import I18n from "../../../../i18n";
 import UnlockAccessComponent, {
   UnlockAccessProps
 } from "../../login/unlockAccess/components/UnlockAccessComponent";
+import { DifferentCFErrorScreen } from "../../activeSessionLogin/screens/DifferentCFErrorScreen";
 
 export enum AUTH_ERRORS {
   ERROR_19 = "19",
@@ -22,7 +23,10 @@ export enum AUTH_ERRORS {
   CIEID_IOS_OPERATION_CANCELED_MESSAGE = "Operazione_annullata_dall'utente",
   CIEID_IOS_INVALID_OPERATION_MESSAGE = "Operazione_non_valida",
   CIEID_OPERATION_CANCEL = "CIEID_OPERATION_CANCEL",
-  GENERIC_ERROR = "GENERIC_ERROR"
+  GENERIC_ERROR = "GENERIC_ERROR",
+  // TODO: edit code NOT_SAME_CF when it will be definitive
+  // https://pagopa.atlassian.net/browse/IOPID-3332
+  NOT_SAME_CF = "NOT_SAME_CF"
 }
 
 export type AuthErrorComponentProps = {
@@ -148,11 +152,14 @@ const AuthErrorComponent = ({
   const errorDetails =
     errorsObject[errorCodeOrMessage] || errorsObject[AUTH_ERRORS.GENERIC_ERROR];
 
-  return errorCodeOrMessage === AUTH_ERRORS.ERROR_1002 ? (
-    <UnlockAccessComponent authLevel={authLevel} />
-  ) : (
-    <OperationResultScreenContent {...errorDetails} />
-  );
+  switch (errorCodeOrMessage) {
+    case AUTH_ERRORS.ERROR_1002:
+      return <UnlockAccessComponent authLevel={authLevel} />;
+    case AUTH_ERRORS.NOT_SAME_CF:
+      return <DifferentCFErrorScreen />;
+    default:
+      return <OperationResultScreenContent {...errorDetails} />;
+  }
 };
 
 export default AuthErrorComponent;

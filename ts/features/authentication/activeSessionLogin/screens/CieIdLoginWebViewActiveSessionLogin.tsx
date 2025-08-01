@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { URL } from "react-native-url-polyfill";
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
-import { Linking, Platform, StyleSheet, View } from "react-native";
+import { Linking, Platform, StyleSheet } from "react-native";
 import WebView, { type WebViewNavigation } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
 import _isEqual from "lodash/isEqual";
@@ -9,81 +9,64 @@ import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { getCieIDLoginUri, isAuthenticationUrl, SpidLevel } from "../utils";
-import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { loginFailure, loginSuccess } from "../../../common/store/actions";
-import { SessionToken } from "../../../../../types/SessionToken";
-import { loggedInAuthSelector } from "../../../common/store/selectors";
-import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
-import { isDevEnv } from "../../../../../utils/environment";
-import { onLoginUriChanged } from "../../../common/utils/login";
-import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
-import { IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useLollipopLoginSource } from "../../../lollipop/hooks/useLollipopLoginSource";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { SessionToken } from "../../../../types/SessionToken";
+import { IdpSuccessfulAuthentication } from "../../common/components/IdpSuccessfulAuthentication";
+import { onLoginUriChanged } from "../../common/utils/login";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+
+import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { remoteApiLoginUrlPrefixSelector } from "../../loginPreferences/store/selectors";
+import { getCieIDLoginUri, isAuthenticationUrl } from "../../login/cie/utils";
 import {
-  HeaderSecondLevelHookProps,
-  useHeaderSecondLevel
-} from "../../../../../hooks/useHeaderSecondLevel";
-import {
+  IO_LOGIN_CIE_URL_SCHEME,
   CIE_ID_ERROR,
   CIE_ID_ERROR_MESSAGE,
-  IO_LOGIN_CIE_SOURCE_APP,
-  IO_LOGIN_CIE_URL_SCHEME
-} from "../utils/cie";
-import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
+  IO_LOGIN_CIE_SOURCE_APP
+} from "../../login/cie/utils/cie";
+import { activeSessionUserLoggedSelector } from "../store/selectors";
+import {
+  activeSessionLoginFailure,
+  activeSessionLoginSuccess,
+  setFinishedActiveSessionLoginFlow
+} from "../store/actions";
+import { AUTH_ERRORS } from "../../common/components/AuthErrorComponent";
+import { AuthenticationParamsList } from "../../common/navigation/params/AuthenticationParamsList";
+import { originSchemasWhiteList } from "../../common/utils/originSchemasWhiteList";
+import {
+  CieIdLoginProps,
+  WHITELISTED_DOMAINS,
+  defaultUserAgent,
+  LoadingOverlay
+} from "../../login/cie/components/CieIdLoginWebView";
+import { sessionCorrupted } from "../../common/store/actions";
 
-export type WebViewLoginNavigationProps = {
-  spidLevel: SpidLevel;
-  isUat: boolean;
-};
-
-export const iOSUserAgent =
-  "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
-
-export const defaultUserAgent = Platform.select({
-  ios: iOSUserAgent,
-  default: undefined
-});
-
-export const originSchemasWhiteList = [
-  "https://*",
-  "iologin://*",
-  ...(isDevEnv ? ["http://*"] : [])
-];
-
-export const WHITELISTED_DOMAINS = [
-  "https://idserver.servizicie.interno.gov.it",
-  "https://oidc.idserver.servizicie.interno.gov.it",
-  "https://mtls.oidc.idserver.servizicie.interno.gov.it",
-  "https://mtls.idserver.servizicie.interno.gov.it",
-  "https://ios.idserver.servizicie.interno.gov.it",
-  "https://ios.oidc.idserver.servizicie.interno.gov.it"
-];
-
-export type CieIdLoginProps = {
-  spidLevel: SpidLevel;
-  isUat: boolean;
-};
-
-export const LoadingOverlay = ({ onCancel }: { onCancel: () => void }) => (
-  <View style={styles.loader}>
-    <LoadingSpinnerOverlay isLoading onCancel={onCancel} />
-  </View>
-);
-
-const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
+const CieIdLoginWebViewActiveSessionLogin = ({
+  spidLevel,
+  isUat
+}: CieIdLoginProps) => {
   const navigation = useIONavigation();
   const webView = useRef<WebView>(null);
   const dispatch = useIODispatch();
   const [authenticatedUrl, setAuthenticatedUrl] = useState<string | null>(null);
-  const loggedInAuth = useIOSelector(loggedInAuthSelector, _isEqual);
+  const activeSessionUserLogged = useIOSelector(
+    activeSessionUserLoggedSelector
+  );
   const apiLoginUrlPrefix = useIOSelector(remoteApiLoginUrlPrefixSelector);
   const loginUri = getCieIDLoginUri(spidLevel, isUat, apiLoginUrlPrefix);
   const [isLoadingWebView, setIsLoadingWebView] = useState(true);
+
+  const navigateToLandingScreen = useCallback(() => {
+    dispatch(setFinishedActiveSessionLoginFlow());
+    dispatch(sessionCorrupted());
+    navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.LANDING
+    });
+  }, [dispatch, navigation]);
+
   const navigateToCieIdAuthenticationError = useCallback(() => {
     navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
@@ -99,12 +82,6 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     },
     [navigation]
   );
-
-  const navigateToLandingScreen = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
-  }, [navigation]);
 
   const checkIfUrlIsWhitelisted = useCallback(
     (url: string) => {
@@ -134,19 +111,29 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
   const handleLoginFailure = useCallback(
     (code?: string, message?: string) => {
-      // TODO: move the error tracking in the `AuthErrorScreen`
-      trackLoginSpidError(code || message, {
-        idp: IdpCIE_ID.id,
-        ...(message ? { "error message": message } : {})
-      });
-      dispatch(
-        loginFailure({
-          error: new Error(
-            `login failure with code ${code || message || "n/a"}`
-          ),
-          idp: "cieid"
-        })
-      );
+      if (code !== AUTH_ERRORS.NOT_SAME_CF) {
+        dispatch(activeSessionLoginFailure());
+      }
+
+      // The related MP events have been commented on, pending their
+      // correct integration into the flow.
+      // Task: https://pagopa.atlassian.net/browse/IOPID-3343
+
+      // Classic login events are kept in case the same ones are reused, with only a
+      // profile/super property added for active session login.
+      // trackLoginSpidError(code || message, {
+      //   idp: IdpCIE_ID.id,
+      //   ...(message ? { "error message": message } : {})
+      // });
+      // TODO: evaluate loginFailure event with CXM
+      // dispatch(
+      //   loginFailure({
+      //     error: new Error(
+      //       `login failure with code ${code || message || "n/a"}`
+      //     ),
+      //     idp: "cieid"
+      //   })
+      // );
       // Since we are replacing the screen it's not necessary to trigger the lollipop key regeneration,
       // because on `navigation.replace` this screen will be unmounted and a further navigation to this screen
       // will mount it again and the `useLollipopLoginSource` hook will be re-executed.
@@ -199,7 +186,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
   const handleLoginSuccess = useCallback(
     (token: SessionToken) => {
-      dispatch(loginSuccess({ token, idp: "cieid" }));
+      dispatch(activeSessionLoginSuccess(token));
     },
     [dispatch]
   );
@@ -260,30 +247,25 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
         if (url.includes(apiLoginUrlPrefix) || statusCode !== 403) {
-          navigateToCieIdAuthenticationError();
+          navigateToLandingScreen();
         }
       } else {
-        navigateToCieIdAuthenticationError();
+        navigateToLandingScreen();
       }
     },
-    [apiLoginUrlPrefix, navigateToCieIdAuthenticationError]
+    [apiLoginUrlPrefix, navigateToLandingScreen]
   );
 
-  const { showAlert } = useOnboardingAbortAlert();
-
-  const headerProps: HeaderSecondLevelHookProps = useMemo(() => {
-    if (webviewSource && !isLoadingWebView) {
-      return { title: "", goBack: () => showAlert(navigateToLandingScreen) };
+  useHeaderSecondLevel({
+    title: "",
+    canGoBack: webviewSource && !isLoadingWebView,
+    goBack: () => {
+      dispatch(setFinishedActiveSessionLoginFlow());
+      navigation.popToTop();
     }
-    return {
-      title: "",
-      canGoBack: false
-    };
-  }, [isLoadingWebView, navigateToLandingScreen, showAlert, webviewSource]);
+  });
 
-  useHeaderSecondLevel(headerProps);
-
-  if (loggedInAuth) {
+  if (activeSessionUserLogged) {
     return <IdpSuccessfulAuthentication />;
   }
 
@@ -319,8 +301,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     marginHorizontal: 16
-  },
-  loader: { position: "absolute", width: "100%", height: "100%" }
+  }
 });
 
-export default CieIdLoginWebView;
+const CieIdActiveSessionLoginScreen = () => {
+  const route =
+    useRoute<
+      RouteProp<
+        AuthenticationParamsList,
+        typeof AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN
+      >
+    >();
+
+  return <CieIdLoginWebViewActiveSessionLogin {...route.params} />;
+};
+
+export default CieIdActiveSessionLoginScreen;
