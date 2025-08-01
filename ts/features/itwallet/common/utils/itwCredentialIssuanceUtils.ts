@@ -3,7 +3,7 @@ import {
   createCryptoContextFor,
   Credential,
   Errors
-} from "@pagopa/io-react-native-wallet-v2";
+} from "@pagopa/io-react-native-wallet";
 import { v4 as uuidv4 } from "uuid";
 import {
   DPOP_KEYTAG,

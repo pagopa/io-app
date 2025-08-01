@@ -1,7 +1,7 @@
 import cieManager from "@pagopa/react-native-cie";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
-import { Trust } from "@pagopa/io-react-native-wallet-v2";
+import { Trust } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";

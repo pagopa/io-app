@@ -4,7 +4,7 @@ import {
   createCryptoContextFor,
   Credential,
   Trust
-} from "@pagopa/io-react-native-wallet-v2";
+} from "@pagopa/io-react-native-wallet";
 import {
   DcqlQuery,
   EnrichedPresentationDetails,

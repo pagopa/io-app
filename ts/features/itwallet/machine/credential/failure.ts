@@ -1,5 +1,4 @@
-import { Errors as LegacyErrors } from "@pagopa/io-react-native-wallet";
-import { Errors, Trust } from "@pagopa/io-react-native-wallet-v2";
+import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 import { EnrichedIssuerResponseError } from "../../common/utils/itwCredentialIssuanceUtils.ts";
 import { isFederationError } from "../../common/utils/itwFailureUtils.ts";
 import { CredentialIssuanceEvents } from "./events";
@@ -91,10 +90,7 @@ export const mapEventToFailure = (
     };
   }
 
-  if (
-    LegacyErrors.isWalletProviderResponseError(error) ||
-    isWalletProviderResponseError(error)
-  ) {
+  if (isWalletProviderResponseError(error)) {
     return {
       type: CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC,
       reason: error

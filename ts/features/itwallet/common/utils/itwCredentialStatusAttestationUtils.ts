@@ -1,11 +1,12 @@
 import {
   createCryptoContextFor,
   Credential
-} from "@pagopa/io-react-native-wallet";
+} from "@pagopa/io-react-native-wallet-legacy";
 import { isAfter } from "date-fns";
 import * as t from "io-ts";
 import { LegacyIssuerConfiguration, StoredCredential } from "./itwTypesUtils";
 
+// TODO: Wait for this PR: https://github.com/pagopa/io-app/pull/7227
 export const getCredentialStatusAttestation = async (
   credential: StoredCredential
 ) => {

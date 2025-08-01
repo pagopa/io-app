@@ -9,6 +9,8 @@ import {
   StoredCredential
 } from "./itwTypesUtils";
 
+// TODO: Wait for this PR: https://github.com/pagopa/io-app/pull/7227
+
 const DEFAULT_EXPIRING_DAYS = 30;
 
 type GetCredentialStatusOptions = {
