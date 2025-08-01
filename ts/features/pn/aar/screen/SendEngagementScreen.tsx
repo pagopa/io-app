@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { SendEngagementComponent } from "../components/SendEngagementComponent";
@@ -7,6 +7,14 @@ import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { pnActivationUpsert } from "../../store/actions";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import PN_ROUTES from "../../navigation/routes";
+import {
+  trackSendActivationModalDialog,
+  trackSendActivationModalDialogActivationDismissed,
+  trackSendActivationModalDialogActivationStart
+} from "../analytics";
+import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 
 export const SendEngagementScreen = () => {
   const [screenStatus, setScreenStatus] = useState<
@@ -24,7 +32,12 @@ export const SendEngagementScreen = () => {
     if (notificationPermissionsEnabled) {
       navigation.popToTop();
     } else {
-      // TODO navigate to push notifications screen
+      navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        screen: PN_ROUTES.MAIN,
+        params: {
+          screen: PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT
+        }
+      });
     }
   }, [navigation, notificationPermissionsEnabled, toast]);
   const onSENDActivationFailed = useCallback(() => {
@@ -36,6 +49,7 @@ export const SendEngagementScreen = () => {
 
   const onActivateService = useCallback(
     (isRetry: boolean = false) => {
+      trackSendActivationModalDialogActivationStart();
       if (isRetry) {
         navigation.setOptions({
           headerShown: true
@@ -54,9 +68,23 @@ export const SendEngagementScreen = () => {
   );
   const onClose = useCallback(() => {
     if (screenStatus !== "Activating") {
+      trackSendActivationModalDialogActivationDismissed();
       navigation.popToTop();
     }
   }, [navigation, screenStatus]);
+
+  useEffect(() => {
+    if (screenStatus === "Waiting") {
+      // Make sure that nothing sets screenStatus to Waiting,
+      // otherwise there will be a double event tracking
+      trackSendActivationModalDialog();
+    } else if (screenStatus === "Failed") {
+      // Here multiple tracking is fine, since we want
+      // to track it every time that the user retries it
+      sendBannerMixpanelEvents.bannerKO("aar");
+    }
+  }, [screenStatus]);
+
   if (screenStatus === "Failed") {
     return (
       <OperationResultScreenContent

@@ -13,4 +13,5 @@ export type PnParamsList = {
   // QR SCAN
   [PN_ROUTES.QR_SCAN_FLOW]: SendQRScanFlowScreenProps;
   [PN_ROUTES.ENGAGEMENT_SCREEN]: undefined;
+  [PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT]: undefined;
 };
