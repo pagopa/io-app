@@ -42,6 +42,7 @@ import {
   defaultUserAgent,
   LoadingOverlay
 } from "../../login/cie/components/CieIdLoginWebView";
+import { sessionCorrupted } from "../../common/store/actions";
 
 const CieIdLoginWebViewActiveSessionLogin = ({
   spidLevel,
@@ -57,6 +58,15 @@ const CieIdLoginWebViewActiveSessionLogin = ({
   const apiLoginUrlPrefix = useIOSelector(remoteApiLoginUrlPrefixSelector);
   const loginUri = getCieIDLoginUri(spidLevel, isUat, apiLoginUrlPrefix);
   const [isLoadingWebView, setIsLoadingWebView] = useState(true);
+
+  const navigateToLandingScreen = useCallback(() => {
+    dispatch(setFinishedActiveSessionLoginFlow());
+    dispatch(sessionCorrupted());
+    navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.LANDING
+    });
+  }, [dispatch, navigation]);
+
   const navigateToCieIdAuthenticationError = useCallback(() => {
     navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
@@ -237,13 +247,13 @@ const CieIdLoginWebViewActiveSessionLogin = ({
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
         if (url.includes(apiLoginUrlPrefix) || statusCode !== 403) {
-          navigateToCieIdAuthenticationError();
+          navigateToLandingScreen();
         }
       } else {
-        navigateToCieIdAuthenticationError();
+        navigateToLandingScreen();
       }
     },
-    [apiLoginUrlPrefix, navigateToCieIdAuthenticationError]
+    [apiLoginUrlPrefix, navigateToLandingScreen]
   );
 
   useHeaderSecondLevel({

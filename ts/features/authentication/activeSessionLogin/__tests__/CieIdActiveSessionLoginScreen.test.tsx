@@ -168,7 +168,7 @@ describe("CieIdActiveSessionLoginScreen", () => {
     });
 
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
+      screen: AUTHENTICATION_ROUTES.LANDING
     });
   });
 

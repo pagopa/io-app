@@ -12,7 +12,8 @@ import {
   sessionInformationLoadSuccess,
   sessionInvalid,
   logoutRequest,
-  loginFailure
+  loginFailure,
+  sessionCorrupted
 } from "../actions";
 import { Action } from "../../../../../store/actions/types";
 import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
@@ -103,6 +104,7 @@ const authenticationReducer = (
 
   if (
     (isActionOf(sessionExpired, action) ||
+      isActionOf(sessionCorrupted, action) ||
       isActionOf(loginFailure, action) ||
       isActionOf(sessionInvalid, action) ||
       isActionOf(logoutSuccess, action) ||
@@ -114,6 +116,8 @@ const authenticationReducer = (
       idp: state.idp,
       reason: isActionOf(sessionExpired, action)
         ? "SESSION_EXPIRED"
+        : isActionOf(sessionCorrupted, action)
+        ? "SESSION_CORRUPTED"
         : "NOT_LOGGED_IN"
     };
   }
