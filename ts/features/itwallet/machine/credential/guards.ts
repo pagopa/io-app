@@ -20,7 +20,7 @@ export const createCredentialIssuanceGuardsImplementation = (
   hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
     pipe(
       O.fromNullable(context.walletInstanceAttestation?.jwt),
-      O.map(isWalletInstanceAttestationValid),
+      O.map(wi => isWalletInstanceAttestationValid(wi, context.isWhiteListed)),
       O.getOrElse(() => false)
     ),
 

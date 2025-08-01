@@ -3826,6 +3826,13 @@
           "primaryAction": "Attiva SEND su IO",
           "serviceActivated": "Hai attivato SEND su IO",
           "title": "Ricevi su IO le tue prossime notifiche SEND"
+        },
+        "pushEngagement": {
+          "badge": "Consigliato",
+          "title": "Non perderti i messaggi importanti",
+          "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
+          "cta": "Attiva notifiche push",
+          "toast": "Hai attivato le notifiche push"
         }
       },
       "reminderBanner": {
@@ -4760,7 +4767,7 @@
         },
         "issuerNotTrustedCommonError": {
           "title": "Un problema non permette di continuare",
-          "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere IT-Wallet. Riprova.\nSe il problema persiste, contatta l’assistenza.",
+          "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere {{credential}}. Riprova.\nSe il problema persiste, contatta l’assistenza.",
           "primaryAction": "Ho capito",
           "secondaryAction": "Mostra dettagli"
         },
