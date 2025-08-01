@@ -15,7 +15,7 @@ import {
 } from "../../../theme/navigations";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
-import { DSAccordion } from "../core/DSAccordion";
+import { DSCollapsible } from "../core/DSCollapsible";
 import { DSAdvice } from "../core/DSAdvice";
 import { DSAlert } from "../core/DSAlert";
 import { DSAnimatedPictograms } from "../core/DSAnimatedPictograms";
@@ -276,10 +276,10 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ACCORDION.route}
-          component={DSAccordion}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.COLLAPSIBLE.route}
+          component={DSCollapsible}
           options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.ACCORDION.title
+            headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.COLLAPSIBLE.title
           }}
         />
 
