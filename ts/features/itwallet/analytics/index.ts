@@ -408,6 +408,26 @@ export function trackItwUserWithoutL3Bottomsheet() {
     buildEventProperties("UX", "screen_view")
   );
 }
+export const trackItwCredentialBottomSheet = (
+  properties: TrackCredentialDetail
+) => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_BOTTOMSHEET,
+    buildEventProperties("UX", "screen_view", properties)
+  );
+};
+
+export const trackItwCredentialNeedsVerification = (
+  credential: MixPanelCredential
+) => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_NEEDS_VERIFICATION,
+    buildEventProperties("UX", "screen_view", {
+      credential,
+      credential_status: "verification_expired"
+    })
+  );
+};
 
 // #endregion SCREEN VIEW EVENTS
 
@@ -729,6 +749,24 @@ export const trackItwGoToCieIDApp = () => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_GO_TO_CIEID_APP,
     buildEventProperties("UX", "action", { itw_flow: "L3" })
+  );
+};
+
+export const trackItwCredentialTapBanner = (
+  properties: TrackCredentialDetail
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_TAP_BANNER,
+    buildEventProperties("UX", "action", properties)
+  );
+};
+
+export const trackItwCredentialBottomSheetAction = (
+  properties: TrackCredentialDetail
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_BOTTOMSHEET_ACTION,
+    buildEventProperties("UX", "action", properties)
   );
 };
 
