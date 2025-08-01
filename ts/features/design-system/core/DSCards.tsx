@@ -351,37 +351,37 @@ const ItwCards = () => (
         <DSComponentViewerBox name="Invalid">
           <ItwCredentialCard
             credentialType={CredentialType.DRIVING_LICENSE}
-            status="invalid"
+            credentialStatus="invalid"
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expired">
           <ItwCredentialCard
             credentialType={CredentialType.DRIVING_LICENSE}
-            status="expired"
+            credentialStatus="expired"
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expiring">
           <ItwCredentialCard
             credentialType={CredentialType.DRIVING_LICENSE}
-            status="expiring"
+            credentialStatus="expiring"
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expired Digital Credential">
           <ItwCredentialCard
             credentialType={CredentialType.DRIVING_LICENSE}
-            status="jwtExpired"
+            credentialStatus="jwtExpired"
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expiring Digital Credential">
           <ItwCredentialCard
             credentialType={CredentialType.DRIVING_LICENSE}
-            status="jwtExpiring"
+            credentialStatus="jwtExpiring"
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Unknown Status">
           <ItwCredentialCard
             credentialType={CredentialType.DRIVING_LICENSE}
-            status="unknown"
+            credentialStatus="unknown"
           />
         </DSComponentViewerBox>
       </VStack>
@@ -407,19 +407,19 @@ const ItwCards = () => (
         <DSComponentViewerBox name="Expired">
           <ItwCredentialCard
             credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
-            status="expired"
+            credentialStatus="expired"
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expiring">
           <ItwCredentialCard
             credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
-            status="expiring"
+            credentialStatus="expiring"
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Unknown Status">
           <ItwCredentialCard
             credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
-            status="unknown"
+            credentialStatus="unknown"
           />
         </DSComponentViewerBox>
       </VStack>
@@ -445,19 +445,19 @@ const ItwCards = () => (
         <DSComponentViewerBox name="Expired">
           <ItwCredentialCard
             credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
-            status="expired"
+            credentialStatus="expired"
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expiring">
           <ItwCredentialCard
             credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
-            status="expiring"
+            credentialStatus="expiring"
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Unknown Status">
           <ItwCredentialCard
             credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
-            status="unknown"
+            credentialStatus="unknown"
           />
         </DSComponentViewerBox>
       </VStack>
