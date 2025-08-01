@@ -29,6 +29,7 @@ import {
   Dimensions,
   Modal,
   Platform,
+  StatusBar,
   StyleSheet,
   View
 } from "react-native";
@@ -159,48 +160,58 @@ export const useIOBottomSheetModal = ({
   }, []);
 
   const bottomSheet = (
-    <BottomSheetModal
-      style={styles.bottomSheet}
-      backgroundStyle={{ backgroundColor }}
-      footerComponent={(props: BottomSheetFooterProps) =>
-        footer ? (
-          <BottomSheetFooter
-            {...props}
-            // bottomInset={insets.bottom}
-            style={{
-              paddingBottom: insets.bottom,
-              backgroundColor: IOColors[theme["appBackground-primary"]]
-            }}
-          >
-            {footer}
-          </BottomSheetFooter>
-        ) : null
-      }
-      enableDynamicSizing={!snapPoint}
-      maxDynamicContentSize={screenHeight - insets.top}
-      snapPoints={snapPoint}
-      ref={bottomSheetModalRef}
-      handleComponent={_ => header}
-      backdropComponent={BackdropElement}
-      enableDismissOnClose={true}
-      accessible={false}
-      importantForAccessibility={"yes"}
-      onDismiss={handleDismiss}
-    >
-      {screenReaderEnabled && Platform.OS === "android" ? (
-        <Modal>
-          <View style={{ flex: 1 }} accessible={true}>
-            {header}
-            {bottomSheetContent}
-          </View>
-          {footer && (
-            <View style={{ paddingBottom: insets.bottom }}>{footer}</View>
-          )}
-        </Modal>
-      ) : (
-        bottomSheetContent
+    <>
+      {/*
+        This is necessary to avoid the status bar overlaying the backdrop
+        of the bottom sheet on Android devices. For reference, see:
+        https://github.com/gorhom/react-native-bottom-sheet/issues/813
+      */}
+      {Platform.OS === "android" && (
+        <StatusBar backgroundColor={"transparent"} translucent />
       )}
-    </BottomSheetModal>
+      <BottomSheetModal
+        style={styles.bottomSheet}
+        backgroundStyle={{ backgroundColor }}
+        footerComponent={(props: BottomSheetFooterProps) =>
+          footer ? (
+            <BottomSheetFooter
+              {...props}
+              // bottomInset={insets.bottom}
+              style={{
+                paddingBottom: insets.bottom,
+                backgroundColor: IOColors[theme["appBackground-primary"]]
+              }}
+            >
+              {footer}
+            </BottomSheetFooter>
+          ) : null
+        }
+        enableDynamicSizing={!snapPoint}
+        maxDynamicContentSize={screenHeight - insets.top}
+        snapPoints={snapPoint}
+        ref={bottomSheetModalRef}
+        handleComponent={_ => header}
+        backdropComponent={BackdropElement}
+        enableDismissOnClose={true}
+        accessible={false}
+        importantForAccessibility={"yes"}
+        onDismiss={handleDismiss}
+      >
+        {screenReaderEnabled && Platform.OS === "android" ? (
+          <Modal>
+            <View style={{ flex: 1 }} accessible={true}>
+              {header}
+              {bottomSheetContent}
+            </View>
+            {footer && (
+              <View style={{ paddingBottom: insets.bottom }}>{footer}</View>
+            )}
+          </Modal>
+        ) : (
+          bottomSheetContent
+        )}
+      </BottomSheetModal>
+    </>
   );
   return { present, dismiss: dismissAll, bottomSheet };
 };
