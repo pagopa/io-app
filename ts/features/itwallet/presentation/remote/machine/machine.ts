@@ -1,4 +1,4 @@
-import { and, assign, fromPromise, not, setup } from "xstate";
+import { assign, fromPromise, not, setup } from "xstate";
 import { type WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils";
 import { Context, InitialContext } from "./context";
 import { mapEventToFailure, RemoteFailureType } from "./failure";
@@ -58,8 +58,7 @@ export const itwRemoteMachine = setup({
       fromPromise<WalletInstanceAttestations>(notImplemented)
   },
   guards: {
-    isWalletActive: notImplemented,
-    isL3Enabled: notImplemented,
+    isItWalletL3Active: notImplemented,
     isEidExpired: notImplemented,
     isSessionExpired: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented
@@ -93,7 +92,7 @@ export const itwRemoteMachine = setup({
         "Perform preliminary checks on the wallet and necessary conditions before proceeding",
       always: [
         {
-          guard: not(and(["isWalletActive", "isL3Enabled"])),
+          guard: not("isItWalletL3Active"),
           actions: assign({
             failure: {
               type: RemoteFailureType.WALLET_INACTIVE,
