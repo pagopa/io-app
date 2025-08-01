@@ -12,6 +12,7 @@ import {
 import { checkHasNfcFeatureSaga } from "../../identification/saga";
 import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
+import { handleItwLastEidStatusSaga } from "../../credentials/saga/handleItwLastEidStatusSaga";
 import { watchItwEnvironment } from "./environment";
 
 export function* watchItwSaga(): SagaIterator {
@@ -34,6 +35,9 @@ export function* watchItwSaga(): SagaIterator {
   yield* call(checkWalletInstanceStateSaga);
   yield* call(checkCurrentWalletInstanceStateSaga);
   yield* call(checkCredentialsStatusAttestation);
+
+  // Save the updated status of the eID, if available
+  yield* call(handleItwLastEidStatusSaga);
 }
 
 /**

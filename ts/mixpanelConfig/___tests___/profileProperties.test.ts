@@ -28,6 +28,7 @@ const generateBaseProfileProperties = () => ({
   FONT_PREFERENCE: "comfortable",
   ITW_CED_V2: "not_available",
   ITW_ID_V2: "not_available",
+  ITW_PID: "not_available",
   ITW_PG_V2: "not_available",
   ITW_STATUS_V2: "L2",
   ITW_TS_V2: "not_available",
@@ -283,11 +284,15 @@ const generateMockedGlobalState = (
     },
     features: {
       itWallet: {
+        issuance: {
+          integrityKeyTag: O.none
+        },
         credentials: {
           credentials: {}
         },
         preferences: {
-          authLevel: "L2"
+          authLevel: "L2",
+          lastEidStatus: undefined
         }
       },
       loginFeatures: {

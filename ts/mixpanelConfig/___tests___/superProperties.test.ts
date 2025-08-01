@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/Option";
 import { MixpanelProperties } from "mixpanel-react-native";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
@@ -112,6 +113,7 @@ describe("superProperties", () => {
             CGN_STATUS: "not_active",
             ITW_CED_V2: "not_available",
             ITW_ID_V2: "not_available",
+            ITW_PID: "not_available",
             ITW_PG_V2: "not_available",
             ITW_STATUS_V2: "L2",
             ITW_TS_V2: "not_available",
@@ -148,11 +150,15 @@ const generateMockedGlobalState = (
     },
     features: {
       itWallet: {
+        issuance: {
+          integrityKeyTag: O.none
+        },
         credentials: {
           credentials: {}
         },
         preferences: {
-          authLevel: "L2"
+          authLevel: "L2",
+          lastEidStatus: undefined
         }
       },
       ingress: {
