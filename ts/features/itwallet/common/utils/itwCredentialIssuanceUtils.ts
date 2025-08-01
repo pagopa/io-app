@@ -10,9 +10,12 @@ import {
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
-import { RequestObject, StoredCredential } from "./itwTypesUtils";
+import {
+  CredentialFormat,
+  RequestObject,
+  StoredCredential
+} from "./itwTypesUtils";
 import { Env } from "./environment";
-import { CredentialType } from "./itwMocksUtils";
 
 export type RequestCredentialParams = {
   env: Env;
@@ -207,22 +210,21 @@ const getCredentialConfigurationIds = (
 ) => {
   const { credential_configurations_supported } =
     issuerConfig.openid_credential_issuer;
-  const configurationSupportedByScope = Object.entries(
+  const supportedConfigurationsByScope = Object.entries(
     credential_configurations_supported
-  ).reduce<Record<string, Array<string>>>((acc, [key, value]) => {
-    // TODO: [SIW-2530] remove this check after fully migrating to the new API
-    const scope =
-      value.scope === "mDL" ? CredentialType.DRIVING_LICENSE : value.scope;
-
-    return {
+  ).reduce<Record<string, Array<string>>>(
+    (acc, [configId, config]) => ({
       ...acc,
       // TODO: [SIW-2740] This check can be removed once `mso_mdoc` format supports verification and parsing.
-      [scope]:
-        value.format === "dc+sd-jwt" ? [...(acc[scope] || []), key] : acc[scope]
-    };
-  }, {});
+      [config.scope]:
+        config.format === CredentialFormat.SD_JWT
+          ? [...(acc[config.scope] || []), configId]
+          : acc[config.scope]
+    }),
+    {}
+  );
 
-  return configurationSupportedByScope[credentialType] || [];
+  return supportedConfigurationsByScope[credentialType] || [];
 };
 
 // Extend `IssuerResponseError` with `credentialId`
