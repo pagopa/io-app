@@ -1,6 +1,6 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
-import I18n from "../../../../../i18n.ts";
 import { Alert } from "react-native";
+import I18n from "../../../../../i18n.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOStore } from "../../../../../store/hooks";
 import {
