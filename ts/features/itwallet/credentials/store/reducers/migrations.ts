@@ -5,7 +5,7 @@ import { MigrationManifest, PersistedState } from "redux-persist";
 
 type MigrationState = PersistedState & Record<string, any>;
 
-export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 3;
+export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 4;
 
 export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 0
@@ -95,6 +95,25 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
         const credentialId =
           credential.credentialId ?? credential.credentialType;
         return [credentialId, { ...credential, credentialId }];
+      })
+    )
+  }),
+
+  // Version 4
+  // Change legacy MDL's credentialType to mDL to be consistent with the new API 1.0
+  // Their credentialId is left unchanged as MDL to be able to access the related
+  // `credential_configurations_supported` in the legacy Entity Configuration
+  "4": (state: MigrationState) => ({
+    ...state,
+    credentials: Object.fromEntries(
+      Object.values<Record<string, any>>(state.credentials).map(credential => {
+        if (credential.credentialType === "MDL") {
+          return [
+            credential.credentialId,
+            { ...credential, credentialType: "mDL" }
+          ];
+        }
+        return [credential.credentialId, credential];
       })
     )
   })
