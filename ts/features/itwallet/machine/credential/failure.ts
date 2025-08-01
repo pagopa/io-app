@@ -1,7 +1,7 @@
 import { Errors as LegacyErrors } from "@pagopa/io-react-native-wallet";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet-v2";
 import { IssuerResponseErrorCode } from "@pagopa/io-react-native-wallet-v2/src/utils/error-codes";
-import { EnrichedIssuerResponseError } from "../../common/utils/itwCredentialIssuanceUtils.v2";
+import { WithCredentialMetadata } from "../../common/utils/ItwFailureTypes";
 import { isFederationError } from "../../common/utils/itwFailureUtils.ts";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -27,7 +27,7 @@ export enum CredentialIssuanceFailureType {
  */
 export type ReasonTypeByFailure = {
   [CredentialIssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
-  [CredentialIssuanceFailureType.INVALID_STATUS]: EnrichedIssuerResponseError;
+  [CredentialIssuanceFailureType.INVALID_STATUS]: WithCredentialMetadata<Errors.IssuerResponseError>;
   [CredentialIssuanceFailureType.ASYNC_ISSUANCE]: Errors.IssuerResponseError;
   [CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC]: Errors.WalletProviderResponseError;
   [CredentialIssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
@@ -51,7 +51,7 @@ export type CredentialIssuanceFailure =
 const isIssuerResponseError = (
   error: unknown,
   code?: IssuerResponseErrorCode
-): error is EnrichedIssuerResponseError =>
+): error is Errors.IssuerResponseError =>
   [LegacyErrors.isIssuerResponseError, Errors.isIssuerResponseError].some(cb =>
     cb(error, code)
   );

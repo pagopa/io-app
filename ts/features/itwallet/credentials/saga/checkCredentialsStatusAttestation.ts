@@ -1,7 +1,8 @@
 import { select, call, all, put } from "typed-redux-saga/macro";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Errors } from "@pagopa/io-react-native-wallet";
+import { Errors as LegacyErrors } from "@pagopa/io-react-native-wallet";
+import { Errors } from "@pagopa/io-react-native-wallet-v2";
 import { itwCredentialsSelector } from "../store/selectors";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
@@ -19,17 +20,20 @@ import {
   CREDENTIALS_MAP,
   trackItwStatusCredentialAttestationFailure
 } from "../../analytics";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { selectItwEnv } from "../../common/store/selectors/environment";
+import { getEnv } from "../../common/utils/environment";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
 export function* updateCredentialStatusAttestationSaga(
   credential: StoredCredential
 ): Generator<ReduxSagaEffect, StoredCredential> {
+  const env = yield* select(selectItwEnv);
   try {
     const { parsedStatusAttestation, statusAttestation } = yield* call(
       getCredentialStatusAttestation,
-      credential
+      credential,
+      getEnv(env)
     );
     return {
       ...credential,
@@ -40,7 +44,10 @@ export function* updateCredentialStatusAttestationSaga(
       }
     };
   } catch (e) {
-    if (isIssuerResponseError(e, Codes.CredentialInvalidStatus)) {
+    if (
+      isIssuerResponseError(e, Codes.CredentialInvalidStatus) ||
+      LegacyErrors.isIssuerResponseError(e, Codes.CredentialInvalidStatus) // TODO: [SIW-2530] remove after full migration to API 1.0
+    ) {
       const errorCode = pipe(
         StatusAttestationError.decode(e.reason),
         O.fromEither,
@@ -77,16 +84,9 @@ export function* updateCredentialStatusAttestationSaga(
  */
 export function* checkCredentialsStatusAttestation() {
   const isWalletValid = yield* select(itwLifecycleIsValidSelector);
-  const isWhitelisted = yield* select(itwIsL3EnabledSelector);
 
-  if (
-    // Credentials can be requested only when the wallet is valid, i.e. the eID was issued
-    !isWalletValid ||
-    // TODO: [SIW-2700]
-    // For now, this step is skipped for whitelisted users
-    // until the status assertion flow is aligned with version 1.0
-    isWhitelisted
-  ) {
+  // Credentials can be requested only when the wallet is valid, i.e. the eID was issued
+  if (!isWalletValid) {
     return;
   }
 
