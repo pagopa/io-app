@@ -22,7 +22,7 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
   const navigation = useIONavigation();
 
   const listItemHeaderLabel = I18n.t(
-    "features.itWallet.presentation.itWalletId.detail.listItemHeader"
+    "features.itWallet.presentation.itWalletId.listItemHeader"
   );
   const claims = useMemo(
     () =>
