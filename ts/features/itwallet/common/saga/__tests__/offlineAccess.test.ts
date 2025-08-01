@@ -1,26 +1,17 @@
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "typed-redux-saga/macro";
+import { startupLoadSuccess } from "../../../../../store/actions/startup";
+import {
+  isStartupLoaded,
+  StartupStatusEnum
+} from "../../../../../store/reducers/startup";
 import { progressSelector as identificationStatusSelector } from "../../../../identification/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../../walletInstance/store/actions";
 import {
   itwOfflineAccessCounterReset,
   itwOfflineAccessCounterUp
 } from "../../store/actions/securePreferences";
-import {
-  watchItwOfflineAccess,
-  watchOfflineWalletBackgroundActivity
-} from "../offlineAccess";
-import { startupLoadSuccess } from "../../../../../store/actions/startup";
-import {
-  isStartupLoaded,
-  StartupStatusEnum
-} from "../../../../../store/reducers/startup";
-import {
-  applicationChangeState,
-  startApplicationInitialization
-} from "../../../../../store/actions/application";
-import { backgroundActivityTimeout } from "../../../../../config";
-import { resetOfflineAccessReason } from "../../../../ingress/store/actions";
+import { watchItwOfflineAccess } from "../offlineAccess";
 
 describe("watchItwOfflineAccess", () => {
   it("should handle offline access counter reset on wallet instance status update", async () => {
