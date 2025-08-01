@@ -254,7 +254,6 @@ export const useStatusAlertProps = (
     };
   }, [
     setAlertVisible,
-    isConnected,
     connectivityAlert,
     currentStatusMessage,
     localeFallback,
