@@ -16,6 +16,7 @@ import { itwCredentialSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "./ItwIssuanceCredentialTrustIssuerScreen";
 
 export type ItwIssuanceCredentialAsyncContinuationNavigationParams = {
@@ -63,12 +64,18 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = ({
           }}
         />
       ),
-      value => <InnerComponent credentialType={value} />
+      () => <InnerComponent />
     )
   );
 };
 
-const InnerComponent = ({ credentialType }: { credentialType: string }) => {
+const InnerComponent = () => {
+  /**
+   * Since only MDL supports the async flow, we can safely hardcode the credential type.
+   * The credential type received as a route param is validated before this component,
+   * so it is possible to directly use the correct type for the issuance flow.
+   */
+  const credentialType = CredentialType.DRIVING_LICENSE;
   const navigation = useIONavigation();
   const credentialOption = useIOSelector(itwCredentialSelector(credentialType));
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
