@@ -48,7 +48,7 @@ describe("itwIsOfflineAccessLimitReached", () => {
 describe("itwShouldDisplayOfflineAccessLimitWarning", () => {
   test.each([
     [false, 0],
-    [true, 3],
+    [true, 4],
     [false, 5]
   ])(
     "should return %p when offline access counter is %p",
