@@ -116,7 +116,7 @@ export const IOScrollViewWithReveal = ({
   hideAnchorAction,
   testID
 }: IOScrollViewWithRevealProps) => {
-  const alertProps = useStatusAlertProps();
+  const alertProps = useStatusAlertProps(undefined, true);
   const theme = useIOTheme();
 
   /* Navigation */
