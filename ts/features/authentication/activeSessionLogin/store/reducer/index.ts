@@ -12,6 +12,7 @@ import {
 import { SpidIdp } from "../../../../../utils/idps";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { StandardLoginRequestInfo } from "../../../login/idp/store/types";
+import { isTestEnv } from "../../../../../utils/environment";
 
 // TODO: (fix): Set the type so that when the user is logged in, I know that loginInfo is completely filled in.
 export type ActiveSessionLoginState = {
@@ -85,3 +86,5 @@ export const ActiveSessionLoginReducer = (
       return state;
   }
 };
+
+export const testable = isTestEnv ? initialState : undefined;
