@@ -7,7 +7,7 @@ const fakeGlobalState = {
   remoteConfig: O.some({
     pn: {
       aarQRCodeRegex:
-        "^\\s*https:\\/\\/(dev\\.|test\\.|hotfix\\.|uat\\.)?cittadini\\.notifichedigitali\\.it(\\/[^?]*)?\\?aar=[^\\s]+"
+        "^\\s*https:\\/\\/(dev\\.|test\\.|hotfix\\.|uat\\.)?(cittadini|login)\\.notifichedigitali\\.it(\\/[^?]*)?\\?aar=[^\\s]+"
     }
   })
 } as GlobalState;
@@ -179,10 +179,23 @@ describe("test decodeIOBarcode function", () => {
         "  https://dev.cittadini.notifichedigitali.it/some/path?aar=abc123  ",
         true
       ],
+      ["https://dev.login.notifichedigitali.it/?aar=whatever", true],
+      ["https://test.login.notifichedigitali.it/?aar=whatever", true],
+      ["https://hotfix.login.notifichedigitali.it/?aar=whatever", true],
+      ["https://uat.login.notifichedigitali.it/?aar=whatever", true],
+      ["https://login.notifichedigitali.it/?aar=whatever", true],
+      [
+        "https://login.notifichedigitali.it/notifications/detail?aar=12345",
+        true
+      ],
+      ["  https://dev.login.notifichedigitali.it/some/path?aar=abc123  ", true],
       ["https://cittadini.notifichedigitali.it/?aar=", false],
       ["https://cittadini.notifichedigitali.it/?aar= ", false],
+      ["https://login.notifichedigitali.it/?aar=", false],
+      ["https://login.notifichedigitali.it/?aar= ", false],
       ["https://other-domain.it/?aar=whatever", false],
-      ["https://stage.cittadini.notifichedigitali.it/?aar=whatever", false]
+      ["https://stage.cittadini.notifichedigitali.it/?aar=whatever", false],
+      ["https://stage.login.notifichedigitali.it/?aar=whatever", false]
     ];
     testUrls.forEach(([data, shouldMatch]) => {
       it(`should ${
