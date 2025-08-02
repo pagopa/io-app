@@ -50,7 +50,6 @@ const IDPayPaymentResultScreen = () => {
     <OperationResultScreenContent
       pictogram="success"
       title={I18n.t("idpay.payment.result.success.title")}
-      subtitle={I18n.t("idpay.payment.result.success.body")}
       action={defaultCloseAction}
       testID="paymentSuccessScreenTestID"
       enableAnimatedPictogram
