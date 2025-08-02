@@ -20,12 +20,12 @@ export const getInitiativeStatus = ({
     return "REMOVED";
   }
 
-  if (now > initiative.endDate) {
+  if (now > initiative.voucherEndDate) {
     return "EXPIRED";
   }
 
   const next7Days = new Date(new Date(now).setDate(now.getDate() + 7));
-  if (next7Days > initiative.endDate) {
+  if (next7Days > initiative.voucherEndDate) {
     return "EXPIRING";
   }
 
@@ -42,7 +42,7 @@ export function IdPayCardStatus({ now, initiative }: InitiativeProps) {
           testID="idpay-card-status-active"
         >
           {I18n.t("bonusCard.validUntil", {
-            endDate: format(initiative.endDate, "DD/MM/YY")
+            endDate: format(initiative.voucherEndDate, "DD/MM/YY")
           })}
         </LabelMini>
       );
@@ -52,7 +52,7 @@ export function IdPayCardStatus({ now, initiative }: InitiativeProps) {
           testID="idpay-card-status-expiring"
           variant="warning"
           text={I18n.t("bonusCard.expiring", {
-            endDate: format(initiative.endDate, "DD/MM/YY")
+            endDate: format(initiative.voucherEndDate, "DD/MM/YY")
           })}
         />
       );
@@ -62,7 +62,7 @@ export function IdPayCardStatus({ now, initiative }: InitiativeProps) {
           testID="idpay-card-status-expired"
           variant="error"
           text={I18n.t("bonusCard.expired", {
-            endDate: format(initiative.endDate, "DD/MM/YY")
+            endDate: format(initiative.voucherEndDate, "DD/MM/YY")
           })}
         />
       );

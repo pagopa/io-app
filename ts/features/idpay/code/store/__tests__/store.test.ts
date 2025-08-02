@@ -1,6 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Store, createStore } from "redux";
-import { StatusEnum } from "../../../../../../definitions/idpay/InitiativeDTO";
+import {
+  InitiativeDTO,
+  StatusEnum
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import {
   InstrumentDTO,
   InstrumentTypeEnum
@@ -122,8 +125,6 @@ describe("IdPay Code reducer", () => {
   });
 
   it("should handle idPayCodeCieBannerClose action", () => {
-    const tInitiativeId = "123abc";
-
     const store = createStoreWith(INITIAL_STATE);
 
     store.dispatch(idPayCodeCieBannerClose({ initiativeId: tInitiativeId }));
@@ -325,10 +326,10 @@ const createStoreWith = (
           ...globalState.features.idPay.initiative,
           details: pot.some({
             initiativeId: tInitiativeId,
-            endDate: new Date(),
+            voucherEndDate: new Date(),
             nInstr: 0,
             status: StatusEnum.REFUNDABLE
-          })
+          } as InitiativeDTO)
         },
         configuration: {
           ...globalState.features.idPay.configuration,

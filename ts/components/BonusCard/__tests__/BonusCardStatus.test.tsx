@@ -20,64 +20,57 @@ jest.mock("react-native-safe-area-context", () => {
 });
 
 describe("Test BonusCardStatus", () => {
+  const T_END_DATE = new Date(2025, 10, 12);
+  const MOCKED_INITIATIVE = {
+    voucherEndDate: T_END_DATE,
+    // unused in this test
+    status: StatusEnum.REFUNDABLE,
+    nInstr: 1,
+    initiativeId: "1"
+  } as InitiativeDTO;
+
   describe("when the status is ACTIVE", () => {
     it("should display the correct content", () => {
-      const T_END_DATE = new Date(2025, 10, 12);
       const T_VALIDITY_TEXT = I18n.t("bonusCard.validUntil", {
         endDate: format(T_END_DATE, "DD/MM/YY")
       });
-      const { queryByText } = renderComponent(new Date(2024, 1, 1), {
-        endDate: T_END_DATE,
-        // unused in this test
-        status: StatusEnum.REFUNDABLE,
-        nInstr: 1,
-        initiativeId: "1"
-      });
+      const { queryByText } = renderComponent(
+        new Date(2024, 1, 1),
+        MOCKED_INITIATIVE
+      );
       expect(queryByText(T_VALIDITY_TEXT)).not.toBeNull();
     });
   });
   describe("when the status is EXPIRING", () => {
     it("should display the correct content", () => {
-      const T_END_DATE = new Date(2025, 10, 12);
       const T_VALIDITY_TEXT = I18n.t("bonusCard.expiring", {
         endDate: format(T_END_DATE, "DD/MM/YY")
       });
-      const { queryByText } = renderComponent(new Date(2025, 10, 10), {
-        endDate: T_END_DATE,
-        // unused in this test
-        status: StatusEnum.REFUNDABLE,
-        nInstr: 1,
-        initiativeId: "1"
-      });
+      const { queryByText } = renderComponent(
+        new Date(2025, 10, 10),
+        MOCKED_INITIATIVE
+      );
       expect(queryByText(T_VALIDITY_TEXT)).not.toBeNull();
     });
   });
   describe("when the status is EXPIRED", () => {
     it("should display the correct content", () => {
-      const T_END_DATE = new Date(2025, 10, 12);
       const T_VALIDITY_TEXT = I18n.t("bonusCard.expired", {
         endDate: format(T_END_DATE, "DD/MM/YY")
       });
-      const { queryByText } = renderComponent(new Date(2025, 10, 13), {
-        endDate: T_END_DATE,
-        // unused in this test
-        status: StatusEnum.REFUNDABLE,
-        nInstr: 1,
-        initiativeId: "1"
-      });
+      const { queryByText } = renderComponent(
+        new Date(2025, 10, 13),
+        MOCKED_INITIATIVE
+      );
       expect(queryByText(T_VALIDITY_TEXT)).not.toBeNull();
     });
   });
   describe("when the status is REMOVED", () => {
     it("should display the correct content", () => {
-      const T_END_DATE = new Date(2025, 10, 12);
       const T_REMOVED_TEXT = I18n.t("bonusCard.removed");
       const { queryByText } = renderComponent(new Date(2025, 10, 1), {
-        status: StatusEnum.UNSUBSCRIBED,
-        endDate: T_END_DATE,
-        // unused in this test
-        nInstr: 1,
-        initiativeId: "1"
+        ...MOCKED_INITIATIVE,
+        status: StatusEnum.UNSUBSCRIBED
       });
       expect(queryByText(T_REMOVED_TEXT)).not.toBeNull();
     });
