@@ -4,11 +4,8 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
 <View
   style={
     {
-      "borderBottomColor": "#E8EBF1",
-      "borderBottomWidth": 1,
-      "marginBottom": 16,
-      "paddingBottom": 8,
-      "paddingTop": 16,
+      "paddingBottom": 16,
+      "paddingTop": 8,
     }
   }
 >
@@ -228,13 +225,12 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       {
         "flexDirection": "row",
         "paddingBottom": 8,
-        "paddingTop": 16,
+        "paddingTop": 4,
       }
     }
   >
     <Text
       accessibilityHint="Go to the page that displays the signature field"
-      accessibilityLabel="See on document"
       accessibilityRole="link"
       allowFontScaling={true}
       dynamicTypeRamp="body"
