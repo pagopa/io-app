@@ -312,8 +312,8 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     switch (rewardType) {
       case InitiativeRewardTypeEnum.DISCOUNT: {
         if (
-          getInitiativeStatus({ initiative, now: new Date() }) === "EXPIRED" ||
-          getInitiativeStatus({ initiative, now: new Date() }) === "REMOVED"
+          getInitiativeStatus({ initiative }) === "EXPIRED" ||
+          getInitiativeStatus({ initiative }) === "REMOVED"
         ) {
           return;
         }
@@ -359,7 +359,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
       logoUris={[{ uri: logoURL }]}
       name={initiativeName || ""}
       organizationName={organizationName || ""}
-      status={<IdPayCardStatus now={new Date()} initiative={initiative} />}
+      status={<IdPayCardStatus initiative={initiative} />}
       counters={getInitiativeCounters(initiative)}
       actions={getInitiativeFooterProps(initiativeRewardType)}
     >
