@@ -10,8 +10,15 @@ import { pnActivationUpsert } from "../../../store/actions";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import * as analytics from "../../analytics";
 
+const mockBannerKO = jest.fn();
 jest.mock("../../components/SendEngagementComponent");
+jest.mock("../../../analytics/activationReminderBanner", () => ({
+  sendBannerMixpanelEvents: {
+    bannerKO: (input: string) => mockBannerKO(input)
+  }
+}));
 
 const mockToastSuccess = jest.fn();
 const mockToastError = jest.fn();
@@ -35,14 +42,37 @@ jest.mock("react-redux", () => ({
 }));
 
 describe("SendEngagementScreen", () => {
+  const spiedOnMockedTrackSendActivationModalDialog = jest
+    .spyOn(analytics, "trackSendActivationModalDialog")
+    .mockImplementation();
+  const spiedOnMockedTrackSendActivationModalDialogActivationDismissed = jest
+    .spyOn(analytics, "trackSendActivationModalDialogActivationDismissed")
+    .mockImplementation();
+  const spiedOnMockedTrackSendActivationModalDialogActivationStart = jest
+    .spyOn(analytics, "trackSendActivationModalDialogActivationStart")
+    .mockImplementation();
   afterEach(() => {
     jest.clearAllMocks();
   });
-  it("should match snapshot", () => {
+  it("should match snapshot and track screen visualization", () => {
     const screen = renderScreen();
     expect(screen.toJSON()).toMatchSnapshot();
+    expect(spiedOnMockedTrackSendActivationModalDialog.mock.calls.length).toBe(
+      1
+    );
+    expect(
+      spiedOnMockedTrackSendActivationModalDialog.mock.calls[0].length
+    ).toBe(0);
+    expect(
+      spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock.calls
+        .length
+    ).toBe(0);
+    expect(
+      spiedOnMockedTrackSendActivationModalDialogActivationStart.mock.calls
+        .length
+    ).toBe(0);
   });
-  it("should popToTop if the close button is pressed upon first rendering", () => {
+  it("should popToTop and track proper analytics if the close button is pressed upon first rendering", () => {
     const mockPopToTop = jest.fn();
     const mockReplace = jest.fn();
     jest
@@ -56,10 +86,28 @@ describe("SendEngagementScreen", () => {
 
     expect(mockPopToTop.mock.calls.length).toBe(1);
     expect(mockPopToTop.mock.calls[0].length).toBe(0);
+    expect(spiedOnMockedTrackSendActivationModalDialog.mock.calls.length).toBe(
+      1
+    );
+    expect(
+      spiedOnMockedTrackSendActivationModalDialog.mock.calls[0].length
+    ).toBe(0);
+    expect(
+      spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock.calls
+        .length
+    ).toBe(1);
+    expect(
+      spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
+        .calls[0].length
+    ).toBe(0);
+    expect(
+      spiedOnMockedTrackSendActivationModalDialogActivationStart.mock.calls
+        .length
+    ).toBe(0);
     expect(mockReplace).toHaveBeenCalledTimes(0);
   });
   [false, true].forEach(systemNotificationsEnabled =>
-    it(`should dispatch a 'pnActivationUpsert.request' when pressing the primary action, with proper flow for success and failure actions (systemNotificationsEnabled: ${systemNotificationsEnabled})`, () => {
+    it(`should dispatch a 'pnActivationUpsert.request' and track proper analytics when pressing the primary action, with proper flow for success and failure actions (systemNotificationsEnabled: ${systemNotificationsEnabled})`, () => {
       const mockPopToTop = jest.fn();
       const mockReplace = jest.fn();
       const mockSetOptions = jest.fn();
@@ -80,6 +128,24 @@ describe("SendEngagementScreen", () => {
       expect(mockSetOptions.mock.calls.length).toBe(0);
       expect(mockDispatch.mock.calls.length).toBe(1);
       expect(mockDispatch.mock.calls[0].length).toBe(1);
+      expect(
+        spiedOnMockedTrackSendActivationModalDialog.mock.calls.length
+      ).toBe(1);
+      expect(
+        spiedOnMockedTrackSendActivationModalDialog.mock.calls[0].length
+      ).toBe(0);
+      expect(
+        spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
+          .calls.length
+      ).toBe(0);
+      expect(
+        spiedOnMockedTrackSendActivationModalDialogActivationStart.mock.calls
+          .length
+      ).toBe(1);
+      expect(
+        spiedOnMockedTrackSendActivationModalDialogActivationStart.mock.calls[0]
+          .length
+      ).toBe(0);
 
       const expectedAction = pnActivationUpsert.request({
         value: true,
@@ -123,6 +189,8 @@ describe("SendEngagementScreen", () => {
       expect(mockSetOptions.mock.calls.length).toBe(1);
       expect(mockSetOptions.mock.calls[0].length).toBe(1);
       expect(mockSetOptions.mock.calls[0][0]).toEqual({ headerShown: false });
+
+      expect(mockBannerKO.mock.calls.length).toBe(1);
     })
   );
 });
