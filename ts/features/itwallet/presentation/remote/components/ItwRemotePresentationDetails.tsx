@@ -9,6 +9,7 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../../i18n";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
 import {
@@ -20,7 +21,11 @@ import {
 import { selectPresentationDetails } from "../machine/selectors";
 import { ItwRemoteMachineContext } from "../machine/provider";
 import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
-import { groupCredentialsByPurpose } from "../utils/itwRemotePresentationUtils";
+import {
+  getCredentialTypeByVct,
+  groupCredentialsByPurpose
+} from "../utils/itwRemotePresentationUtils";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 
 const mapClaims = (
   claims: Array<ClaimDisplayFormat>
@@ -52,6 +57,8 @@ const ItwRemotePresentationDetails = () => {
     selectPresentationDetails
   );
 
+  useDebugInfo({ presentationDetails });
+
   const { required, optional } = useMemo(
     () => groupCredentialsByPurpose(presentationDetails ?? []),
     [presentationDetails]
@@ -68,15 +75,21 @@ const ItwRemotePresentationDetails = () => {
 
   const renderCredentialsBlock = (credentials: EnrichedPresentationDetails) => (
     <VStack space={24}>
-      {credentials.map(c => (
-        <ClaimsSelector
-          key={c.id}
-          title={getCredentialNameFromType(c.vct)}
-          items={mapClaims(c.claimsToDisplay)}
-          defaultExpanded
-          selectionEnabled={false}
-        />
-      ))}
+      {credentials
+        .filter(c => c.claimsToDisplay.length > 0)
+        .map(c => (
+          <ClaimsSelector
+            key={c.id}
+            title={pipe(
+              c.vct,
+              getCredentialTypeByVct,
+              getCredentialNameFromType
+            )}
+            items={mapClaims(c.claimsToDisplay)}
+            defaultExpanded
+            selectionEnabled={false}
+          />
+        ))}
     </VStack>
   );
 

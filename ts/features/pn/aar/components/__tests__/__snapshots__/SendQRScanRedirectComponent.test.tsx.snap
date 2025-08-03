@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SendQrScanRedirectScreen should match snapshot 1`] = `
+exports[`SendQRScanRedirectComponent should match snapshot and track the screen view 1`] = `
 <View
   style={
     {
@@ -30,165 +30,6 @@ exports[`SendQrScanRedirectScreen should match snapshot 1`] = `
         ]
       }
     >
-      <View
-        collapsable={false}
-        pointerEvents="box-none"
-        style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
-        }
-      >
-        <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
-          onLayout={[Function]}
-          pointerEvents="box-none"
-          style={null}
-        >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
-                  },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
-              }
-            />
-          </View>
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
-            }
-          >
-            <View
-              pointerEvents="none"
-              style={
-                {
-                  "height": 0,
-                }
-              }
-            />
-            <View
-              pointerEvents="box-none"
-              style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
-              }
-            >
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  {
-                    "alignItems": "flex-start",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginStart": 0,
-                    "opacity": 1,
-                  }
-                }
-              />
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  {
-                    "justifyContent": "center",
-                    "marginHorizontal": 16,
-                    "maxWidth": 718,
-                    "opacity": 1,
-                  }
-                }
-              >
-                <Text
-                  accessibilityRole="header"
-                  aria-level="1"
-                  collapsable={false}
-                  numberOfLines={1}
-                  onLayout={[Function]}
-                  style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
-                  }
-                >
-                  PN_QR_SCAN_FLOW
-                </Text>
-              </View>
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  {
-                    "alignItems": "flex-end",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginEnd": 0,
-                    "opacity": 1,
-                  }
-                }
-              />
-            </View>
-          </View>
-        </View>
-      </View>
       <RNSScreenContainer
         onLayout={[Function]}
         style={
@@ -315,7 +156,7 @@ exports[`SendQrScanRedirectScreen should match snapshot 1`] = `
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={-1}
+                handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -370,9 +211,9 @@ exports[`SendQrScanRedirectScreen should match snapshot 1`] = `
                         edges={
                           {
                             "bottom": "additive",
-                            "left": "additive",
-                            "right": "additive",
-                            "top": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
                           }
                         }
                         style={
@@ -440,7 +281,7 @@ exports[`SendQrScanRedirectScreen should match snapshot 1`] = `
                                   }
                                 >
                                   <RNSVGPath
-                                    d="M53 79.67V176.89C53 179.31 54.82 181.34 57.22 181.61L130.76 189.83C133.58 190.14 136.04 187.94 136.04 185.11V157.64L132.52 153.43L126.87 148.28L117.74 142.9L114.37 141.84C114.37 141.84 109.26 140.57 108.35 140.4C107.44 140.23 102.55 139.16 102.18 139.17C101.8 139.18 99.32 136.26 99.32 136.26L98.33 133.36L99.09 128.5L100.9 124.79L97.64 122.58L92.49 119.66L91.23 115.62L93.72 112.56C93.72 112.56 96.53 110.82 95.27 110.48C94.01 110.14 93.77 107.42 93.72 107.18C93.67 106.94 94.53 104.52 94.53 104.52L96.37 102.44L101.07 101.12L104.88 101.05L116.73 102.78L136.06 109.39V60.36C136.06 57.94 134.24 55.91 131.84 55.64L81.72 50.03C80.07 49.85 78.43 50.45 77.29 51.66L54.42 76.07C53.51 77.05 53 78.33 53 79.67Z"
+                                    d="M118.754 182.848C116.02 182.261 113.433 180.589 111.479 177.979C108.61 174.127 107.073 168.241 108.327 160.74C109.095 156.142 110.858 152.674 113.569 150.369C112.394 147.59 112.326 144.913 113.411 142.439C114.292 140.416 115.84 138.835 117.444 137.649C106.746 134.892 99.0522 130.046 93.8668 125.595C93.3811 125.165 92.9518 124.713 92.579 124.216C90.8957 121.968 90.4551 119.031 91.4944 116.308C92.7597 112.976 95.889 110.852 99.4815 110.908C106.26 111.01 114.145 113.021 121.793 115.732V30.8456C121.793 25.9653 117.839 22 112.948 22H31.8456C26.954 22 23 25.954 23 30.8456V183.854C23 188.734 26.954 192.699 31.8456 192.699H112.959C117.839 192.699 121.805 188.745 121.805 183.854V183.018C120.777 183.12 119.749 183.063 118.766 182.848H118.754Z"
                                     fill={
                                       {
                                         "payload": 4289392367,
@@ -454,63 +295,7 @@ exports[`SendQrScanRedirectScreen should match snapshot 1`] = `
                                     }
                                   />
                                   <RNSVGPath
-                                    d="M184.761 148.98C170.311 129.45 144.301 98.46 136.051 98.46V94.46C149.021 94.46 184.031 141.26 187.981 146.6L184.771 148.98H184.761Z"
-                                    fill={
-                                      {
-                                        "payload": 4278927075,
-                                        "type": 0,
-                                      }
-                                    }
-                                    propList={
-                                      [
-                                        "fill",
-                                      ]
-                                    }
-                                  />
-                                  <RNSVGPath
-                                    d="M120.621 119.85C102.161 117.43 92.9907 113.81 91.7807 108.48C91.0407 105.21 93.6207 102.54 95.2607 101.47C104.451 95.57 133.511 107.08 136.791 108.41L135.291 112.12C123.631 107.39 103.041 101.23 97.4407 104.83C97.4407 104.83 95.3807 106.27 95.6907 107.6C95.8907 108.45 98.0507 112.85 121.151 115.88L120.631 119.85H120.621Z"
-                                    fill={
-                                      {
-                                        "payload": 4278927075,
-                                        "type": 0,
-                                      }
-                                    }
-                                    propList={
-                                      [
-                                        "fill",
-                                      ]
-                                    }
-                                  />
-                                  <RNSVGPath
-                                    d="M120.47 133.07C93.3003 127.36 89.6403 121.72 89.2503 117.97C88.7303 112.93 95.0003 110.02 95.7203 109.7L97.3403 113.36C95.9203 113.99 93.0503 115.85 93.2403 117.56C93.3903 118.93 95.8403 123.81 121.31 129.16L120.49 133.07H120.47Z"
-                                    fill={
-                                      {
-                                        "payload": 4278927075,
-                                        "type": 0,
-                                      }
-                                    }
-                                    propList={
-                                      [
-                                        "fill",
-                                      ]
-                                    }
-                                  />
-                                  <RNSVGPath
-                                    d="M156.79 190.27C154.36 186.91 151.98 183.4 149.46 179.68C138.08 162.89 126.31 145.52 110.88 143.97C102.61 143.14 97.6501 140.67 96.1201 136.62C94.0601 131.18 99.2501 125.49 99.4701 125.25L102.41 127.97L100.94 126.61L102.41 127.96C101.37 129.1 98.8801 132.62 99.8601 135.21C100.79 137.64 104.84 139.34 111.28 139.98C128.57 141.72 140.87 159.87 152.77 177.43C155.27 181.12 157.63 184.61 160.03 187.92L156.79 190.26V190.27Z"
-                                    fill={
-                                      {
-                                        "payload": 4278927075,
-                                        "type": 0,
-                                      }
-                                    }
-                                    propList={
-                                      [
-                                        "fill",
-                                      ]
-                                    }
-                                  />
-                                  <RNSVGPath
-                                    d="M120.58 78.59C120.58 78.59 120.49 78.59 120.44 78.59L75.7097 74.37C74.8797 74.29 74.2797 73.56 74.3597 72.74C74.4397 71.91 75.1797 71.3 75.9897 71.39L120.72 75.61C121.55 75.69 122.15 76.42 122.07 77.24C122 78.02 121.34 78.6 120.58 78.6V78.59Z"
+                                    d="M31.7686 22.034H112.837C117.864 22.034 121.942 26.1122 121.942 31.1394V34.9579H23.1602V30.6424C23.1602 25.8976 27.0125 22.034 31.7686 22.034Z"
                                     fill={
                                       {
                                         "payload": 4278240714,
@@ -524,10 +309,153 @@ exports[`SendQrScanRedirectScreen should match snapshot 1`] = `
                                     }
                                   />
                                   <RNSVGPath
-                                    d="M119.41 91.05C119.41 91.05 119.32 91.05 119.27 91.05L74.5398 86.83C73.7098 86.75 73.1098 86.02 73.1898 85.2C73.2698 84.37 74.0098 83.77 74.8198 83.85L119.55 88.07C120.38 88.15 120.98 88.88 120.9 89.7C120.83 90.48 120.17 91.06 119.41 91.06V91.05Z"
+                                    d="M31.1558 31.162C32.2602 31.162 33.1554 30.2667 33.1554 29.1624C33.1554 28.058 32.2602 27.1628 31.1558 27.1628C30.0515 27.1628 29.1562 28.058 29.1562 29.1624C29.1562 30.2667 30.0515 31.162 31.1558 31.162Z"
+                                    fill={
+                                      {
+                                        "payload": 4289392367,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M36.9957 31.162C38.1 31.162 38.9953 30.2667 38.9953 29.1624C38.9953 28.058 38.1 27.1628 36.9957 27.1628C35.8913 27.1628 34.9961 28.058 34.9961 29.1624C34.9961 30.2667 35.8913 31.162 36.9957 31.162Z"
+                                    fill={
+                                      {
+                                        "payload": 4289392367,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M42.8258 31.162C43.9301 31.162 44.8254 30.2667 44.8254 29.1624C44.8254 28.058 43.9301 27.1628 42.8258 27.1628C41.7214 27.1628 40.8262 28.058 40.8262 29.1624C40.8262 30.2667 41.7214 31.162 42.8258 31.162Z"
+                                    fill={
+                                      {
+                                        "payload": 4289392367,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    clipRule={0}
+                                    d="M41.8438 80.8467C42.8379 80.9258 43.9112 81.0049 44.9618 81.3212C47.594 82.112 49.1643 84.089 49.1643 86.902C49.1643 90.8108 46.1593 93.669 41.5727 93.669C36.986 93.669 33.8906 90.9802 33.8906 87.015H37.3701C37.3701 89.0033 39.1777 90.3137 41.6292 90.3137C44.0806 90.3137 45.6848 88.9468 45.6848 87.1053C45.6848 85.8175 44.894 85.038 43.8773 84.6539C43.1204 84.3714 42.1488 84.2811 41.1321 84.1907C40.1605 84.1003 39.1438 84.0099 38.2174 83.7501C35.5287 82.9593 34.0714 80.8919 34.0714 78.2597C34.0714 74.4978 37.0764 71.7187 41.4258 71.7187C45.7752 71.7187 48.8367 74.317 48.8367 78.0789H45.3346C45.2442 76.2714 43.6739 75.0739 41.3919 75.0739C39.1099 75.0739 37.5622 76.3844 37.5622 78.0789C37.5622 79.1861 38.2061 80.0333 39.3132 80.44C40.0137 80.6999 40.8835 80.7677 41.8325 80.8354L41.8438 80.8467ZM93.6976 72.0463H100.555C106.746 72.0463 111.208 76.6894 111.208 82.7334C111.208 88.7773 106.746 93.3526 100.555 93.3526H98.9959V96.7644L93.8783 91.6468L98.9959 86.5292V89.9409H100.498C104.701 89.9409 107.706 86.8229 107.706 82.7334C107.706 78.6438 104.701 75.4693 100.498 75.4693H97.1997V82.8689L93.6976 86.4162V72.0463ZM52.8133 93.3526H69.0699V89.9409H56.2815V84.3601H63.4891V80.9484H56.2815V75.458H69.0699V72.0463H52.8133V93.3526ZM76.4582 72.0463L86.3545 87.2296V72.0463H89.8227V93.3526H86.3545L76.4582 78.1693V93.3526H72.9787V72.0463H76.4582Z"
                                     fill={
                                       {
                                         "payload": 4278240714,
+                                        "type": 0,
+                                      }
+                                    }
+                                    fillRule={0}
+                                    propList={
+                                      [
+                                        "fill",
+                                        "fillRule",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M68.5294 104.684H42.7494C41.2957 104.684 40.1172 105.862 40.1172 107.316V112.682C40.1172 114.136 41.2957 115.314 42.7494 115.314H68.5294C69.9832 115.314 71.1617 114.136 71.1617 112.682V107.316C71.1617 105.862 69.9832 104.684 68.5294 104.684Z"
+                                    fill={
+                                      {
+                                        "payload": 4278240714,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M103.832 104.684H78.0521C76.5984 104.684 75.4199 105.862 75.4199 107.316V112.682C75.4199 114.136 76.5984 115.314 78.0521 115.314H103.832C105.286 115.314 106.464 114.136 106.464 112.682V107.316C106.464 105.862 105.286 104.684 103.832 104.684Z"
+                                    fill={
+                                      {
+                                        "payload": 4278240714,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M95.0064 122.816H36.0015C35.6771 122.816 35.4141 123.079 35.4141 123.403C35.4141 123.727 35.6771 123.99 36.0015 123.99H95.0064C95.3308 123.99 95.5938 123.727 95.5938 123.403C95.5938 123.079 95.3308 122.816 95.0064 122.816Z"
+                                    fill={
+                                      {
+                                        "payload": 4278240714,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M98.7238 125.843H42.3511C42.0267 125.843 41.7637 126.106 41.7637 126.431C41.7637 126.755 42.0267 127.018 42.3511 127.018H98.7238C99.0482 127.018 99.3112 126.755 99.3112 126.431C99.3112 126.106 99.0482 125.843 98.7238 125.843Z"
+                                    fill={
+                                      {
+                                        "payload": 4278240714,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M104.475 128.871H37.7085C37.3841 128.871 37.1211 129.134 37.1211 129.458C37.1211 129.783 37.3841 130.046 37.7085 130.046H104.475C104.799 130.046 105.062 129.783 105.062 129.458C105.062 129.134 104.799 128.871 104.475 128.871Z"
+                                    fill={
+                                      {
+                                        "payload": 4278240714,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M111.311 26.7674H51.47C50.7089 26.7674 50.0918 27.3845 50.0918 28.1456V30.1791C50.0918 30.9403 50.7089 31.5574 51.47 31.5574H111.311C112.072 31.5574 112.689 30.9403 112.689 30.1791V28.1456C112.689 27.3845 112.072 26.7674 111.311 26.7674Z"
+                                    fill={
+                                      {
+                                        "payload": 4289392367,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M99.4158 115.416C106.081 115.518 114.079 117.687 121.807 120.545C136.595 126.024 150.377 134.022 151.891 134.915C190.584 166.253 213.257 176.296 214.206 176.703L216.013 172.568C215.833 172.489 202.084 166.377 178.224 149.33L178.462 149.194C177.716 147.929 160.002 118.093 149.021 112.998C145.587 111.405 142.65 111.383 140.289 112.931C137.363 114.851 136.301 118.715 135.928 121.528C131.567 119.517 126.744 117.483 121.818 115.732C114.17 113.021 106.284 111.01 99.5062 110.908C95.925 110.852 92.7844 112.976 91.5191 116.308C90.4798 119.031 90.9204 121.968 92.6036 124.228C92.9764 124.714 93.4057 125.177 93.8915 125.606C99.0769 130.057 106.77 134.903 117.469 137.66C115.864 138.846 114.328 140.428 113.436 142.45C112.34 144.924 112.407 147.601 113.594 150.381C110.882 152.685 109.12 156.142 108.352 160.751C107.098 168.253 108.634 174.138 111.504 177.979C113.458 180.6 116.045 182.272 118.779 182.86C119.762 183.074 120.79 183.131 121.818 183.029C125.117 182.713 128.472 180.759 130.754 176.68C141.102 190.169 161.392 211.554 189.397 217.429L190.324 213.012C151.394 204.844 127.15 163.519 126.913 163.101L123.004 165.361C123.253 165.779 124.846 168.512 127.692 172.534C126.416 175.935 124.281 178.058 121.818 178.476C121.14 178.589 120.451 178.589 119.739 178.431C115.175 177.46 111.21 171.179 112.825 161.486C113.56 157.091 115.356 154.131 118.169 152.719C119.299 152.154 120.553 151.849 121.829 151.714C127.817 151.104 134.618 154.504 134.697 154.549L136.753 150.527C136.369 150.324 129.059 146.653 121.829 147.195C120.395 147.296 118.96 147.556 117.593 148.053C117.13 146.675 117.118 145.421 117.615 144.28C118.384 142.518 120.191 141.151 121.841 140.236C122.914 139.637 123.908 139.242 124.495 139.061C129.737 139.84 135.578 140.123 142.074 139.693L141.769 135.186C134.2 135.694 127.602 135.163 121.841 134C110.238 131.661 102.138 126.702 96.8626 122.172C95.3488 120.861 95.3036 119.11 95.7668 117.901C96.23 116.681 97.4388 115.382 99.4497 115.416H99.4158ZM142.752 116.704C143.712 116.071 145.18 116.195 147.101 117.088C153.009 119.833 162.386 132.61 168.904 142.495C164.408 139.106 159.641 135.401 154.602 131.311L154.342 131.13C153.789 130.803 148.163 127.459 140.255 123.595C140.39 121.46 140.967 117.89 142.763 116.715L142.752 116.704Z"
+                                    fill={
+                                      {
+                                        "payload": 4278927075,
                                         "type": 0,
                                       }
                                     }
@@ -569,37 +497,7 @@ exports[`SendQrScanRedirectScreen should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              Per accedere ai documenti vai sul sito web di SEND
-                            </Text>
-                            <View
-                              style={
-                                {
-                                  "height": 8,
-                                }
-                              }
-                            />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
-                              Per visualizzare i documenti online devi andare sul sito web di SEND. Presto potrai farlo direttamente da IO!
+                              Per consultare i documenti vai sul sito di SEND
                             </Text>
                             <View
                               style={
@@ -741,154 +639,235 @@ exports[`SendQrScanRedirectScreen should match snapshot 1`] = `
                                 </View>
                               </View>
                             </View>
+                          </View>
+                        </RCTScrollView>
+                      </RNCSafeAreaView>
+                    </View>
+                    <View
+                      collapsable={false}
+                      pointerEvents="box-none"
+                    >
+                      <View
+                        accessibilityElementsHidden={false}
+                        importantForAccessibility="auto"
+                        onLayout={[Function]}
+                        pointerEvents="box-none"
+                        style={null}
+                      >
+                        <View
+                          accessibilityRole="header"
+                          style={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                              {
+                                "backgroundColor": "#FFFFFF",
+                              },
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
+                            ]
+                          }
+                        >
+                          <View
+                            style={
+                              [
+                                {
+                                  "marginTop": 0,
+                                },
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
+                          >
                             <View
                               style={
                                 {
-                                  "alignItems": "center",
+                                  "width": 32,
+                                }
+                              }
+                            />
+                            <View
+                              accessibilityElementsHidden={true}
+                              accessibilityLabel=""
+                              accessibilityRole="header"
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              style={
+                                {
+                                  "flexGrow": 1,
+                                  "flexShrink": 1,
+                                  "marginHorizontal": 16,
+                                }
+                              }
+                            >
+                              <Text
+                                accessible={false}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
+                                numberOfLines={1}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#0E0F13",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 14,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": undefined,
+                                    },
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "opacity": 1,
+                                      },
+                                    ],
+                                  ]
+                                }
+                              />
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
                                 }
                               }
                             >
                               <View
-                                style={
+                                accessibilityLabel="Close"
+                                accessibilityRole="button"
+                                accessibilityState={
                                   {
-                                    "height": 24,
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": false,
+                                    "expanded": undefined,
+                                    "selected": undefined,
                                   }
                                 }
-                              />
-                              <View>
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                hitSlop={8}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                                testID="header-close"
+                              >
                                 <View
-                                  accessibilityLabel="Chiudi"
-                                  accessibilityRole="button"
-                                  accessibilityState={
-                                    {
-                                      "busy": false,
-                                      "checked": undefined,
-                                      "disabled": false,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
-                                  }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  hitSlop={
-                                    {
-                                      "bottom": 14,
-                                      "left": 24,
-                                      "right": 24,
-                                      "top": 14,
-                                    }
-                                  }
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                   style={
-                                    {
-                                      "alignSelf": "flex-start",
-                                    }
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                      false,
+                                    ]
                                   }
-                                  testID="secondary-action"
                                 >
-                                  <View
+                                  <RNSVGSvgView
+                                    accessibilityElementsHidden={true}
+                                    accessibilityLabel=""
+                                    accessible={false}
+                                    align="xMidYMid"
+                                    animatedProps={
+                                      {
+                                        "color": undefined,
+                                      }
+                                    }
+                                    bbHeight={36}
+                                    bbWidth={36}
+                                    color="#0E0F13"
+                                    focusable={false}
+                                    height={36}
+                                    importantForAccessibility="no-hide-descendants"
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
                                     style={
                                       [
                                         {
-                                          "alignItems": "center",
-                                          "borderCurve": "continuous",
-                                          "elevation": 0,
-                                          "flexDirection": "row",
-                                          "justifyContent": "center",
-                                          "overflow": "hidden",
-                                          "textAlignVertical": "center",
-                                        },
-                                        false,
-                                        {},
-                                        {
-                                          "paddingHorizontal": 0,
-                                        },
-                                        {
                                           "backgroundColor": "transparent",
-                                          "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
                                           "borderWidth": 0,
-                                          "height": undefined,
                                         },
-                                        {},
+                                        {
+                                          "flex": 0,
+                                          "height": 36,
+                                          "width": 36,
+                                        },
                                       ]
                                     }
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={36}
                                   >
-                                    <View
-                                      style={
-                                        [
-                                          {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                            "justifyContent": "center",
-                                          },
-                                          {
-                                            "columnGap": 8,
-                                          },
-                                          false,
-                                        ]
+                                    <RNSVGGroup
+                                      fill={
+                                        {
+                                          "payload": 4278190080,
+                                          "type": 0,
+                                        }
                                       }
                                     >
-                                      <Text
-                                        accessibilityElementsHidden={true}
-                                        accessible={false}
-                                        allowFontScaling={true}
-                                        ellipsizeMode="tail"
-                                        importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.5}
-                                        numberOfLines={1}
-                                        style={
+                                      <RNSVGPath
+                                        clipRule={0}
+                                        d="M19.7071 5.70711c.3905-.39053.3905-1.02369 0-1.41422-.3905-.39052-1.0237-.39052-1.4142 0L12 10.5858 5.70711 4.29289c-.39053-.39052-1.02369-.39052-1.41422 0-.39052.39053-.39052 1.02369 0 1.41422L10.5858 12l-6.29291 6.2929c-.39052.3905-.39052 1.0237 0 1.4142.39053.3905 1.02369.3905 1.41422 0L12 13.4142l6.2929 6.2929c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L13.4142 12l6.2929-6.29289Z"
+                                        fill={
+                                          {
+                                            "type": 2,
+                                          }
+                                        }
+                                        fillRule={0}
+                                        propList={
                                           [
-                                            {},
-                                            {
-                                              "color": "#0E0F13",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 20,
-                                            },
-                                            [
-                                              {
-                                                "textAlign": "auto",
-                                              },
-                                              {
-                                                "color": "#0B3EE3",
-                                              },
-                                              {
-                                                "color": undefined,
-                                              },
-                                            ],
+                                            "fill",
+                                            "fillRule",
                                           ]
                                         }
-                                      >
-                                        Chiudi
-                                      </Text>
-                                    </View>
-                                  </View>
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
                                 </View>
                               </View>
                             </View>
                           </View>
-                        </RCTScrollView>
-                      </RNCSafeAreaView>
+                        </View>
+                      </View>
                     </View>
                   </View>
                 </View>
@@ -897,6 +876,28 @@ exports[`SendQrScanRedirectScreen should match snapshot 1`] = `
           </View>
         </RNSScreen>
       </RNSScreenContainer>
+      <View
+        collapsable={false}
+        pointerEvents="box-none"
+        style={
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
+        }
+      />
     </View>
   </RNCSafeAreaProvider>
 </View>

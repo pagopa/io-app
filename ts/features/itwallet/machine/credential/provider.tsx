@@ -6,10 +6,10 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
-import { createCredentialIssuanceActionsImplementation } from "./../credential/actions";
-import { createCredentialIssuanceActorsImplementation } from "./../credential/actors";
-import { createCredentialIssuanceGuardsImplementation } from "./../credential/guards";
-import { itwCredentialIssuanceMachine } from "./../credential/machine";
+import { createCredentialIssuanceActionsImplementation } from "./actions.ts";
+import { createCredentialIssuanceActorsImplementation } from "./actors.ts";
+import { createCredentialIssuanceGuardsImplementation } from "./guards.ts";
+import { itwCredentialIssuanceMachine } from "./machine.ts";
 
 export const ItwCredentialIssuanceMachineContext = createActorContext(
   itwCredentialIssuanceMachine
