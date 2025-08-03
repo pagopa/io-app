@@ -18,7 +18,7 @@ const DESIGN_SYSTEM_ROUTES = {
     BADGE: { route: "DESIGN_SYSTEM_BADGE", title: "Badges & Tags" },
     TOASTS: { route: "DESIGN_SYSTEM_TOASTS", title: "Toasts" },
     SELECTION: { route: "DESIGN_SYSTEM_SELECTION", title: "Selection" },
-    ACCORDION: { route: "DESIGN_SYSTEM_ACCORDION", title: "Accordion" },
+    COLLAPSIBLE: { route: "DESIGN_SYSTEM_COLLAPSIBLE", title: "Collapsible" },
     ALERT: { route: "DESIGN_SYSTEM_ALERT", title: "Alert" },
     STEPPER: { route: "DESIGN_SYSTEM_STEPPER", title: "Stepper" },
     OTP_INPUT: { route: "DESIGN_SYSTEM_OTP_INPUT", title: "OTP Input" },

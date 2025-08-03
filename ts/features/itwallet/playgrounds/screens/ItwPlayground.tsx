@@ -9,6 +9,7 @@ import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
+import { ItwClaimsList } from "../components/ItwClaimsList";
 
 /**
  * ITW Playground screen
@@ -36,6 +37,7 @@ const ItwPlayground = () => {
           <ItwEnvironmentSection />
           <ItwSkeumorphicCredentialSection />
           <ItwBannerSection />
+          <ItwClaimsList />
         </VStack>
       </ContentWrapper>
     </ScrollView>

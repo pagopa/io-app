@@ -17,7 +17,10 @@ import {
   SendAuthorizationResponseOutput
 } from "../actors.ts";
 import { Context, InitialContext } from "../context.ts";
-import { RequestObject } from "../../../../common/utils/itwTypesUtils.ts";
+import {
+  RequestObject,
+  WalletInstanceAttestations
+} from "../../../../common/utils/itwTypesUtils.ts";
 import { RemoteFailureType } from "../failure.ts";
 
 const T_CLIENT_ID = "clientId";
@@ -42,15 +45,18 @@ describe("itwRemoteMachine", () => {
   const navigateToAuthResponseScreen = jest.fn();
   const closePresentation = jest.fn();
   const trackRemoteDataShare = jest.fn();
+  const storeWalletInstanceAttestation = jest.fn();
 
   const isWalletActive = jest.fn();
   const isL3Enabled = jest.fn().mockReturnValue(true);
   const isEidExpired = jest.fn();
+  const hasValidWalletInstanceAttestation = jest.fn().mockReturnValue(true);
 
   const evaluateRelyingPartyTrust = jest.fn();
   const getRequestObject = jest.fn();
   const getPresentationDetails = jest.fn();
   const sendAuthorizationResponse = jest.fn();
+  const getWalletAttestation = jest.fn();
 
   const mockedMachine = itwRemoteMachine.provide({
     actions: {
@@ -60,7 +66,8 @@ describe("itwRemoteMachine", () => {
       navigateToIdentificationModeScreen,
       navigateToAuthResponseScreen,
       closePresentation,
-      trackRemoteDataShare
+      trackRemoteDataShare,
+      storeWalletInstanceAttestation
     },
     actors: {
       evaluateRelyingPartyTrust: fromPromise<
@@ -78,12 +85,15 @@ describe("itwRemoteMachine", () => {
       sendAuthorizationResponse: fromPromise<
         SendAuthorizationResponseOutput,
         SendAuthorizationResponseInput
-      >(sendAuthorizationResponse)
+      >(sendAuthorizationResponse),
+      getWalletAttestation:
+        fromPromise<WalletInstanceAttestations>(getWalletAttestation)
     },
     guards: {
       isWalletActive,
       isL3Enabled,
-      isEidExpired
+      isEidExpired,
+      hasValidWalletInstanceAttestation
     }
   });
 
@@ -283,6 +293,12 @@ describe("itwRemoteMachine", () => {
     });
 
     /**
+     * Ensure the Wallet Attestation is not requested again if valid
+     */
+    expect(hasValidWalletInstanceAttestation).toHaveBeenCalledTimes(1);
+    expect(getWalletAttestation).not.toHaveBeenCalled();
+
+    /**
      * Evaluate the Relying Party Trust
      */
     await waitFor(actor, snapshot =>
@@ -468,5 +484,32 @@ describe("itwRemoteMachine", () => {
 
     await waitFor(actor, snapshot => snapshot.matches("Idle"));
     expect(actor.getSnapshot().context).toStrictEqual<Context>(InitialContext);
+  });
+
+  it("should fetch the Wallet Attestation when it is invalid", async () => {
+    const mockWalletAttestation = {
+      jwt: "wallet-attestation-jwt",
+      "dc+sd-jwt": "wallet-attestation-sdjwt"
+    };
+
+    isWalletActive.mockReturnValue(true);
+    isL3Enabled.mockReturnValue(true);
+    isEidExpired.mockReturnValue(false);
+    hasValidWalletInstanceAttestation.mockReturnValueOnce(false);
+    getWalletAttestation.mockResolvedValue(mockWalletAttestation);
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({ type: "start", payload: qrCodePayload });
+
+    await waitFor(actor, snapshot =>
+      snapshot.matches("ObtainingWalletInstanceAttestation")
+    );
+    expect(getWalletAttestation).toHaveBeenCalledTimes(1);
+    expect(storeWalletInstanceAttestation).toHaveBeenCalledTimes(1);
+    expect(
+      storeWalletInstanceAttestation.mock.lastCall.at(0).event.output
+    ).toEqual(mockWalletAttestation);
   });
 });

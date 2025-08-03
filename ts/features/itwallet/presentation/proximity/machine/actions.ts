@@ -1,4 +1,4 @@
-import { assign } from "xstate";
+import { ActionArgs, assign } from "xstate";
 import { StackActions } from "@react-navigation/native";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -6,8 +6,14 @@ import { useIOStore } from "../../../../../store/hooks";
 import ROUTES from "../../../../../navigation/routes";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { itwCredentialsSelector } from "../../../credentials/store/selectors";
+import {
+  trackItwProximityQrCode,
+  trackItwProximityQrCodeLoadingFailure
+} from "../analytics";
+import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
+import { mapEventToFailure } from "./failure";
 
 export const createProximityActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -68,5 +74,18 @@ export const createProximityActionsImplementation = (
 
   closeProximity: () => {
     NavigationService.dispatchNavigationAction(StackActions.popToTop());
+  },
+
+  trackQrCodeGenerationOutcome: ({
+    context,
+    event
+  }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
+    if (context.isQRCodeGenerationError) {
+      const failure = mapEventToFailure(event);
+      const serializedFailure = serializeFailureReason(failure);
+      trackItwProximityQrCodeLoadingFailure(serializedFailure);
+    } else {
+      trackItwProximityQrCode();
+    }
   }
 });
