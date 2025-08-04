@@ -10,23 +10,23 @@ import {
   setFinishedActiveSessionLoginFlow
 } from "../store/actions";
 import {
-  ActiveSessionLoginReducer,
+  activeSessionLoginReducer,
   ActiveSessionLoginState,
   testable
 } from "../store/reducer";
 
 const testableInitialState = testable!;
 
-describe("ActiveSessionLoginReducer", () => {
+describe("activeSessionLoginReducer", () => {
   it("should return initial state by default", () => {
-    const state = ActiveSessionLoginReducer(undefined, {
+    const state = activeSessionLoginReducer(undefined, {
       type: "UNKNOWN_ACTION"
     } as any);
     expect(state).toEqual(testableInitialState);
   });
 
   it("should handle setStartActiveSessionLogin", () => {
-    const state = ActiveSessionLoginReducer(
+    const state = activeSessionLoginReducer(
       testableInitialState,
       setStartActiveSessionLogin()
     );
@@ -38,7 +38,7 @@ describe("ActiveSessionLoginReducer", () => {
       entityId: "idp-1",
       organizationName: "SPID IDP"
     } as unknown as SpidIdp;
-    const state = ActiveSessionLoginReducer(
+    const state = activeSessionLoginReducer(
       testableInitialState,
       setIdpSelectedActiveSessionLogin(mockIdp)
     );
@@ -46,7 +46,7 @@ describe("ActiveSessionLoginReducer", () => {
   });
 
   it("should handle setFastLoginOptSessionLogin", () => {
-    const state = ActiveSessionLoginReducer(
+    const state = activeSessionLoginReducer(
       testableInitialState,
       setFastLoginOptSessionLogin(true)
     );
@@ -55,7 +55,7 @@ describe("ActiveSessionLoginReducer", () => {
 
   it("should handle activeSessionLoginSuccess", () => {
     const mockToken = "mock-session-token" as SessionToken;
-    const state = ActiveSessionLoginReducer(
+    const state = activeSessionLoginReducer(
       testableInitialState,
       activeSessionLoginSuccess(mockToken)
     );
@@ -69,7 +69,7 @@ describe("ActiveSessionLoginReducer", () => {
       ...testableInitialState,
       isUserLoggedIn: true
     };
-    const state = ActiveSessionLoginReducer(
+    const state = activeSessionLoginReducer(
       prevState,
       activeSessionLoginFailure()
     );
@@ -93,7 +93,7 @@ describe("ActiveSessionLoginReducer", () => {
       modifiedState.loginInfo.idp &&
       modifiedState.loginInfo.fastLoginOptIn
     ) {
-      const state = ActiveSessionLoginReducer(
+      const state = activeSessionLoginReducer(
         modifiedState,
         consolidateActiveSessionLoginData({
           token: modifiedState.loginInfo.token,
@@ -115,7 +115,7 @@ describe("ActiveSessionLoginReducer", () => {
         fastLoginOptIn: true
       }
     };
-    const state = ActiveSessionLoginReducer(
+    const state = activeSessionLoginReducer(
       modifiedState,
       setFinishedActiveSessionLoginFlow()
     );

@@ -44,7 +44,7 @@ const toMatchSnapshot = () => {
   expect(component).toMatchSnapshot();
 };
 
-describe(ActiveSessionLandingScreen, () => {
+describe("ActiveSessionLandingScreen", () => {
   afterEach(jest.clearAllMocks);
 
   it("Should be defined", toBeDefined);

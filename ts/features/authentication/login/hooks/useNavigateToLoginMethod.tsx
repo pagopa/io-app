@@ -94,6 +94,13 @@ const useNavigateToLoginMethod = () => {
   const navigateToCieIdLoginScreen = useCallback(
     (spidLevel: SpidLevel = "SpidL2") => {
       if (isActiveSessionLogin) {
+        // TODO: this logic will need to be uncommented
+        // (and moved outside the if statement, as it is common logic)
+        // when the tracking strategy will be added (including the
+        // logic for mismatches between the required security level
+        // and the actual security level).
+        // TASK: https://pagopa.atlassian.net/browse/IOPID-3343
+        // dispatch(cieIDSetSelectedSecurityLevel(spidLevel));
         dispatch(setIdpSelectedActiveSessionLogin(IdpCIE_ID));
       } else {
         dispatch(idpSelected(IdpCIE_ID));

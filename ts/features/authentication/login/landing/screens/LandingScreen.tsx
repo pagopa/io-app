@@ -192,10 +192,6 @@ export const LandingScreen = () => {
 
   const isSessionExpired = useIOSelector(isSessionExpiredSelector);
   const isSessionCorrupted = useIOSelector(isSessionCorruptedSelector);
-  // Since the page is rendered more than once
-  // and if the session is expired
-  // we dispatch the resetAuthenticationState action,
-  // we need to keep track of the session expiration.
 
   const isContinueWithRootOrJailbreak = useIOSelector(
     continueWithRootOrJailbreakSelector
@@ -341,7 +337,7 @@ export const LandingScreen = () => {
       );
     };
 
-    const sessionIssueKey = isSessionExpired
+    const sessionIssueLocalizationKey = isSessionExpired
       ? "session_expired"
       : "session_corrupted";
 
@@ -351,15 +347,25 @@ export const LandingScreen = () => {
           <LandingSessionExpiredComponent
             ref={accessibilityFirstFocuseViewRef}
             pictogramName={"identityCheck"}
-            title={I18n.t(`authentication.landing.${sessionIssueKey}.title`)}
-            content={I18n.t(`authentication.landing.${sessionIssueKey}.body`)}
+            title={I18n.t(
+              `authentication.landing.${sessionIssueLocalizationKey}.title`
+            )}
+            content={I18n.t(
+              `authentication.landing.${sessionIssueLocalizationKey}.body`
+            )}
             buttonLink={{
               label: I18n.t(
-                `authentication.landing.${sessionIssueKey}.linkButtonLabel`
+                `authentication.landing.${sessionIssueLocalizationKey}.linkButtonLabel`
               ),
               color: "primary",
               icon: "instruction",
               onPress: () => {
+                // TODO: this logic will need to be uncommented
+                // (and moved outside the if block, since it will become common logic)
+                // once the tracking strategy for active session login is implemented.
+                // For now, we only track the sessionExpired case because the tracking strategy
+                // is defined for it, while it's still missing for active session login.
+                // Related task: https://pagopa.atlassian.net/browse/IOPID-3343
                 if (isSessionExpired) {
                   trackHelpCenterCtaTapped(
                     sessionExpired.toString(),

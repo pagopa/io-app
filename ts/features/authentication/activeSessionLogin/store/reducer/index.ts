@@ -13,8 +13,8 @@ import { SpidIdp } from "../../../../../utils/idps";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { StandardLoginRequestInfo } from "../../../login/idp/store/types";
 import { isTestEnv } from "../../../../../utils/environment";
+import { sessionCorrupted } from "../../../common/store/actions";
 
-// TODO: (fix): Set the type so that when the user is logged in, I know that loginInfo is completely filled in.
 export type ActiveSessionLoginState = {
   isActiveSessionLogin: boolean;
   isActiveSessionLoginFailed: boolean;
@@ -33,7 +33,7 @@ const initialState: ActiveSessionLoginState = {
   isUserLoggedIn: false
 };
 
-export const ActiveSessionLoginReducer = (
+export const activeSessionLoginReducer = (
   state: ActiveSessionLoginState = initialState,
   action: Action
 ): ActiveSessionLoginState => {
@@ -48,19 +48,16 @@ export const ActiveSessionLoginReducer = (
           token: action.payload
         }
       };
-
     case getType(activeSessionLoginFailure):
       return {
         ...state,
         isUserLoggedIn: false
       };
-
     case getType(setStartActiveSessionLogin):
       return {
         ...state,
         isActiveSessionLogin: true
       };
-
     case getType(setIdpSelectedActiveSessionLogin):
       return {
         ...state,
@@ -77,9 +74,9 @@ export const ActiveSessionLoginReducer = (
           fastLoginOptIn: action.payload
         }
       };
-
     case getType(consolidateActiveSessionLoginData):
     case getType(setFinishedActiveSessionLoginFlow):
+    case getType(sessionCorrupted):
       return initialState;
 
     default:

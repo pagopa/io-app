@@ -33,13 +33,13 @@ import {
 import { useSecuritySuggestionsBottomSheet } from "../../../../../hooks/useSecuritySuggestionBottomSheet";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { CieIdLoginProps } from "../../cie/components/CieIdLoginWebView";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 import { setFastLoginOptSessionLogin } from "../../../activeSessionLogin/store/actions";
+import { CieIdLoginProps } from "../../cie/shared/utils";
 
 export enum Identifier {
   SPID = "SPID",

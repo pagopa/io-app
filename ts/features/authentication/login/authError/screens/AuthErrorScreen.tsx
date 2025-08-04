@@ -5,7 +5,6 @@ import {
 } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { CieIdLoginProps } from "../../cie/components/CieIdLoginWebView";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import {
@@ -22,6 +21,7 @@ import {
   setFinishedActiveSessionLoginFlow,
   setRetryActiveSessionLogin
 } from "../../../activeSessionLogin/store/actions";
+import { CieIdLoginProps } from "../../cie/shared/utils";
 
 type CommonAuthErrorScreenProps = {
   errorCodeOrMessage?: string;

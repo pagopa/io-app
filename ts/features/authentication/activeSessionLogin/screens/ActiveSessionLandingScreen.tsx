@@ -45,12 +45,18 @@ export const ActiveSessionLandingScreen = () => {
 
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const {
+    // This code is commented because the CIE+PIN and SPID
+    // active session login flow will be implemented in this tasks:
+    // CIE + PIN -> https://pagopa.atlassian.net/browse/IOPID-2928
+    // SPID -> https://pagopa.atlassian.net/browse/IOPID-2929
     // navigateToIdpSelection,
     // navigateToCiePinInsertion,
     navigateToCieIdLoginScreen,
     isCieSupported
   } = useNavigateToLoginMethod();
-
+  // This code is commented because the CIE+PIN active
+  // sessionlogin flow will be implemented in this task:
+  // https://pagopa.atlassian.net/browse/IOPID-2928
   // const handleNavigateToCiePinScreen = useCallback(() => {
   //   void trackCiePinLoginSelected(store.getState());
   //   navigateToCiePinInsertion();
@@ -70,7 +76,7 @@ export const ActiveSessionLandingScreen = () => {
     component: (
       <View>
         {/* This code is commented because the CIE+PIN active
-        sessionlogin flow will be implemented in this task:
+        session login flow will be implemented in this task:
         https://pagopa.atlassian.net/browse/IOPID-2928 */}
         {/* <ModuleNavigation
           title={I18n.t(
@@ -185,8 +191,8 @@ export const ActiveSessionLandingScreen = () => {
           testID="landing-button-login-cie"
         />
         <VSpacer size={SPACE_BETWEEN_BUTTONS} />
-        {/* This code is commented because the CIE+PIN active
-        sessionlogin flow will be implemented in this task:
+        {/* This code is commented because the SPID active
+        session login flow will be implemented in this task:
         https://pagopa.atlassian.net/browse/IOPID-2929 */}
         {/* <IOButton
           fullWidth
