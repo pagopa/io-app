@@ -29,7 +29,6 @@ type StartAuthFlowParams = {
   env: Env;
   walletAttestation: string;
   identification: IdentificationContext;
-  isL3IssuanceEnabled: boolean;
 };
 
 /**
@@ -45,19 +44,15 @@ type StartAuthFlowParams = {
 const startAuthFlow = async ({
   env,
   walletAttestation,
-  identification,
-  isL3IssuanceEnabled
+  identification
 }: StartAuthFlowParams) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
     issuerUrl: env.WALLET_PID_PROVIDER_BASE_URL,
     credentialId: "dc_sd_jwt_PersonIdentificationData"
   });
 
-  // L3 issuance is enabled when the user is in L3 mode and the identification mode is level L3
-  const isL3 = isL3IssuanceEnabled && identification.level === "L3";
-
   // When issuing an L3 PID, we should not provide an IDP hint
-  const idpHint = getIdpHint(identification, env, isL3);
+  const idpHint = getIdpHint(identification, env);
 
   const { issuerUrl, credentialId } = startFlow();
 
@@ -283,12 +278,8 @@ const SPID_IDP_HINTS: { [key: string]: string } = {
  * @param env the environment currently in use
  * @param isL3 flag that indicates that we need to issue an L3 PID
  */
-export const getIdpHint = (
-  idCtx: IdentificationContext,
-  env: Env,
-  isL3: boolean
-) => {
-  if (isL3) {
+export const getIdpHint = (idCtx: IdentificationContext, env: Env) => {
+  if (idCtx.level === "L3") {
     // When issuing an L3 PID, we should not provide an IDP hint
     return undefined;
   }
