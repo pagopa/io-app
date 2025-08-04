@@ -83,7 +83,7 @@ export const itwCredentialIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       on: {
         "select-credential": {
-          target: "TrustFederationVerification",
+          target: "EvaluateFlow",
           actions: assign(({ event }) => ({
             credentialType: event.credentialType,
             mode: event.mode,
@@ -91,6 +91,24 @@ export const itwCredentialIssuanceMachine = setup({
           }))
         }
       }
+    },
+    EvaluateFlow: {
+      always: [
+        {
+          guard: "isEidExpired",
+          actions: "navigateToEidVerificationExpiredScreen",
+          target: "Idle"
+        },
+        {
+          guard: ({ context }) => context.mode === "issuance",
+          target: "TrustFederationVerification",
+          actions: ["trackStartAddCredential"]
+        },
+        {
+          target: "TrustFederationVerification",
+          actions: ["trackStartAddCredential", "navigateToTrustIssuerScreen"]
+        }
+      ]
     },
     TrustFederationVerification: {
       description:
@@ -101,28 +119,9 @@ export const itwCredentialIssuanceMachine = setup({
           isNewIssuanceFlowEnabled: context.isWhiteListed
         }),
         src: "verifyTrustFederation",
-        onDone: [
-          {
-            guard: "isEidExpired",
-            actions: "navigateToEidVerificationExpiredScreen",
-            target: "Idle"
-          },
-          {
-            guard: ({ context }) => context.mode === "issuance",
-            target: "CheckingWalletInstanceAttestation",
-            actions: ["trackStartAddCredential"]
-          },
-          {
-            target: "CheckingWalletInstanceAttestation",
-            actions: ["trackStartAddCredential", "navigateToTrustIssuerScreen"]
-          }
-        ],
-        onError: [
-          {
-            actions: "setFailure",
-            target: "#itwCredentialIssuanceMachine.Failure"
-          }
-        ]
+        onDone: {
+          target: "CheckingWalletInstanceAttestation"
+        }
       }
     },
     CheckingWalletInstanceAttestation: {
@@ -185,6 +184,7 @@ export const itwCredentialIssuanceMachine = setup({
             clientId: event.output.clientId,
             codeVerifier: event.output.codeVerifier,
             requestedCredential: event.output.requestedCredential,
+            issuerConf: event.output.issuerConf,
             // TODO: [SIW-2530] In the new APIs is not needed
             credentialDefinition:
               "credentialDefinition" in event.output
@@ -204,7 +204,7 @@ export const itwCredentialIssuanceMachine = setup({
         // If we are in the async continuation flow means we are already showing the trust issuer screen
         // but on a different route. We need to avoid a navigation to show a "double" navigation animation.
         // TODO to be removed in [SIW-2839]
-        guard: ({ context }) => context.isAsyncContinuation,
+        guard: ({ context }) => !context.isAsyncContinuation,
         actions: "navigateToTrustIssuerScreen"
       },
       on: {
