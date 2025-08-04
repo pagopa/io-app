@@ -75,15 +75,21 @@ const ItwRemotePresentationDetails = () => {
 
   const renderCredentialsBlock = (credentials: EnrichedPresentationDetails) => (
     <VStack space={24}>
-      {credentials.map(c => (
-        <ClaimsSelector
-          key={c.id}
-          title={pipe(c.vct, getCredentialTypeByVct, getCredentialNameFromType)}
-          items={mapClaims(c.claimsToDisplay)}
-          defaultExpanded
-          selectionEnabled={false}
-        />
-      ))}
+      {credentials
+        .filter(c => c.claimsToDisplay.length > 0)
+        .map(c => (
+          <ClaimsSelector
+            key={c.id}
+            title={pipe(
+              c.vct,
+              getCredentialTypeByVct,
+              getCredentialNameFromType
+            )}
+            items={mapClaims(c.claimsToDisplay)}
+            defaultExpanded
+            selectionEnabled={false}
+          />
+        ))}
     </VStack>
   );
 

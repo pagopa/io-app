@@ -8,7 +8,8 @@ import {
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput
+  RequestCredentialActorOutput,
+  VerifyTrustFederationActorInput
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
@@ -43,6 +44,9 @@ export const itwCredentialIssuanceMachine = setup({
     trackCredentialIssuingDataShareAccepted: notImplemented
   },
   actors: {
+    verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
+      notImplemented
+    ),
     getWalletAttestation: fromPromise<
       GetWalletAttestationActorOutput,
       GetWalletAttestationActorInput
@@ -79,7 +83,7 @@ export const itwCredentialIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       on: {
         "select-credential": {
-          target: "EvaluateFlow",
+          target: "TrustFederationVerification",
           actions: assign(({ event }) => ({
             credentialType: event.credentialType,
             mode: event.mode,
@@ -88,24 +92,38 @@ export const itwCredentialIssuanceMachine = setup({
         }
       }
     },
-    EvaluateFlow: {
-      description: "Evaluates the next state and actions based on the context",
-      always: [
-        {
-          guard: "isEidExpired",
-          actions: "navigateToEidVerificationExpiredScreen",
-          target: "Idle"
-        },
-        {
-          guard: ({ context }) => context.mode === "issuance",
-          target: "CheckingWalletInstanceAttestation",
-          actions: ["trackStartAddCredential"]
-        },
-        {
-          target: "CheckingWalletInstanceAttestation",
-          actions: ["trackStartAddCredential", "navigateToTrustIssuerScreen"]
-        }
-      ]
+    TrustFederationVerification: {
+      description:
+        "Verification of the trust federation. This state verifies the trust chain of the wallet provider with the EAA provider.",
+      tags: [ItwTags.Loading],
+      invoke: {
+        input: ({ context }) => ({
+          isNewIssuanceFlowEnabled: context.isWhiteListed
+        }),
+        src: "verifyTrustFederation",
+        onDone: [
+          {
+            guard: "isEidExpired",
+            actions: "navigateToEidVerificationExpiredScreen",
+            target: "Idle"
+          },
+          {
+            guard: ({ context }) => context.mode === "issuance",
+            target: "CheckingWalletInstanceAttestation",
+            actions: ["trackStartAddCredential"]
+          },
+          {
+            target: "CheckingWalletInstanceAttestation",
+            actions: ["trackStartAddCredential", "navigateToTrustIssuerScreen"]
+          }
+        ],
+        onError: [
+          {
+            actions: "setFailure",
+            target: "#itwCredentialIssuanceMachine.Failure"
+          }
+        ]
+      }
     },
     CheckingWalletInstanceAttestation: {
       description:

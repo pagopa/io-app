@@ -5,6 +5,7 @@ import {
   ForceScrollDownView,
   H2,
   ListItemHeader,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
@@ -141,6 +142,8 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
 
+  const theme = useIOTheme();
+
   const handleContinuePress = () => {
     machineRef.send({ type: "confirm-trust-data" });
   };
@@ -221,7 +224,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
             "features.itWallet.issuance.credentialAuth.requiredClaims"
           )}
           iconName="security"
-          iconColor="grey-700"
+          iconColor={theme["icon-default"]}
         />
         <ItwRequestedClaimsList items={requiredClaims} />
         <VSpacer size={24} />

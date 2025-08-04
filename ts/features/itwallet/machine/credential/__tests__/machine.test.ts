@@ -26,7 +26,8 @@ import {
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput
+  RequestCredentialActorOutput,
+  VerifyTrustFederationActorInput
 } from "../actors";
 import { Context, InitialContext } from "../context";
 import { CredentialIssuanceFailureType } from "../failure";
@@ -119,6 +120,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const trackCredentialIssuingDataShare = jest.fn();
   const trackCredentialIssuingDataShareAccepted = jest.fn();
 
+  const verifyTrustFederation = jest.fn();
   const getWalletAttestation = jest.fn();
   const requestCredential = jest.fn();
   const obtainCredential = jest.fn();
@@ -150,6 +152,9 @@ describe("itwCredentialIssuanceMachine", () => {
       trackCredentialIssuingDataShareAccepted
     },
     actors: {
+      verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
+        verifyTrustFederation
+      ),
       getWalletAttestation: fromPromise<
         GetWalletAttestationActorOutput,
         GetWalletAttestationActorInput
@@ -184,7 +189,7 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   it("Should obtain a credential with a valid status attestation", async () => {
@@ -446,8 +451,13 @@ describe("itwCredentialIssuanceMachine", () => {
      * Initialize wallet and start credential issuance
      */
 
-    getWalletAttestation.mockImplementation(() =>
-      Promise.reject("SOME FAILURE")
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+
+    getWalletAttestation.mockImplementation(
+      () =>
+        new Promise((__, reject) =>
+          setTimeout(() => reject("SOME FAILURE"), 10)
+        )
     );
 
     actor.send({
@@ -456,9 +466,21 @@ describe("itwCredentialIssuanceMachine", () => {
       mode: "issuance"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "ObtainingWalletInstanceAttestation"
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual(
+        "TrustFederationVerification"
+      )
     );
+
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual(
+        "ObtainingWalletInstanceAttestation"
+      )
+    );
+
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       credentialType: "MDL"
     });
@@ -467,7 +489,9 @@ describe("itwCredentialIssuanceMachine", () => {
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(0));
 
-    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("Failure")
+    );
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       failure: {
         type: CredentialIssuanceFailureType.UNEXPECTED,
@@ -501,7 +525,14 @@ describe("itwCredentialIssuanceMachine", () => {
      * Initialize wallet and start credential issuance
      */
 
-    requestCredential.mockImplementation(() => Promise.reject("SOME FAILURE"));
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+
+    requestCredential.mockImplementation(
+      () =>
+        new Promise((__, reject) =>
+          setTimeout(() => reject("SOME FAILURE"), 10)
+        )
+    );
 
     actor.send({
       type: "select-credential",
@@ -509,7 +540,16 @@ describe("itwCredentialIssuanceMachine", () => {
       mode: "issuance"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("RequestingCredential");
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("RequestingCredential")
+    );
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       credentialType: "MDL"
     });
@@ -518,7 +558,9 @@ describe("itwCredentialIssuanceMachine", () => {
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(0));
     await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
 
-    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("Failure")
+    );
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       failure: {
         type: CredentialIssuanceFailureType.UNEXPECTED,
@@ -616,15 +658,24 @@ describe("itwCredentialIssuanceMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
     isSkipNavigation.mockImplementation(() => false);
 
-    requestCredential.mockImplementation(() =>
-      Promise.resolve({
-        clientId: T_CLIENT_ID,
-        codeVerifier: T_CODE_VERIFIER,
-        credentialDefinition: T_CREDENTIAL_DEFINITION,
-        requestedCredential: T_REQUESTED_CREDENTIAL,
-        issuerConf: T_ISSUER_CONFIG
-      })
+    requestCredential.mockImplementation(
+      () =>
+        new Promise(resolve =>
+          setTimeout(
+            () =>
+              resolve({
+                clientId: T_CLIENT_ID,
+                codeVerifier: T_CODE_VERIFIER,
+                credentialDefinition: T_CREDENTIAL_DEFINITION,
+                requestedCredential: T_REQUESTED_CREDENTIAL,
+                issuerConf: T_ISSUER_CONFIG
+              }),
+            10
+          )
+        )
     );
+
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
     actor.send({
       type: "select-credential",
@@ -632,9 +683,18 @@ describe("itwCredentialIssuanceMachine", () => {
       mode: "reissuance"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "ObtainingWalletInstanceAttestation"
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual(
+        "TrustFederationVerification"
+      )
     );
+
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
     expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(1);
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("DisplayingTrustIssuer")
+    );
   });
 });
