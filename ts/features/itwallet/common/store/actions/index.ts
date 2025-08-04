@@ -5,6 +5,7 @@ import { ItwLifecycleActions } from "../../../lifecycle/store/actions";
 import { ItwWalletInstanceActions } from "../../../walletInstance/store/actions";
 import { ItwPreferencesActions } from "./preferences";
 import { ItwEnvironmentActions } from "./environment";
+import { ItwSecurePreferencesActions } from "./securePreferences";
 
 export type ItwActions =
   | ItwEnvironmentActions
@@ -13,4 +14,5 @@ export type ItwActions =
   | ItwLifecycleActions
   | ItwCredentialsActions
   | ItwWalletInstanceActions
-  | ItwPreferencesActions;
+  | ItwPreferencesActions
+  | ItwSecurePreferencesActions;
