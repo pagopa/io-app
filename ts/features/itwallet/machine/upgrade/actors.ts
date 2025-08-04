@@ -39,7 +39,7 @@ export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
       codeVerifier,
       pid,
       isNewIssuanceFlowEnabled: true,
-      isUpgrading: true
+      operationType: "reissuing"
     });
 
     return {

@@ -34,17 +34,17 @@ export type CieContext = {
 
 /**
  * The EidIssuanceMode represents the different modes of eID issuance.
- * - "issuing": The user is issuing a new PID credential.
- * - "reissuing": The user is reissuing an existing PID credential.
- * - "upgrading": The user is upgrading from Documenti su IO to IT Wallet.
+ * - "issuance": The user is issuing a new PID credential.
+ * - "reissuance": The user is reissuing an existing PID credential.
+ * - "upgrade": The user is upgrading from Documenti su IO to IT Wallet.
  * This is used to determine the flow and actions available in the eID issuance process.
  */
-export type EidIssuanceMode = "issuing" | "reissuing" | "upgrading";
+export type EidIssuanceMode = "issuance" | "reissuance" | "upgrade";
 
 export type Context = {
   /**
    * The mode of eID issuance. This determines the flow and actions available in the
-   * eID issuance process. Defaults to "issuing" if not specified.
+   * eID issuance process. Defaults to "issuance" if not specified.
    */
   mode: EidIssuanceMode | undefined;
   /**
@@ -80,7 +80,7 @@ export type Context = {
   failure: IssuanceFailure | undefined;
   /**
    * Flag to check if IT Wallet L3 features are enabled and thus we should allow to request
-   * a PID credential and upgrade the existing credentials to L3
+   * a PID credential and upgrade the existing credentials to the new format.
    */
   isL3: boolean | undefined;
   /**
@@ -88,9 +88,9 @@ export type Context = {
    */
   isL2Fallback: boolean;
   /**
-   * The credentials that need to be upgraded to L3.
+   * The credentials that need to be upgraded to the new format.
    */
-  credentials: ReadonlyArray<StoredCredential> | undefined;
+  legacyCredentials: ReadonlyArray<StoredCredential>;
   /**
    * Credentials that failed the upgrade process.
    */
@@ -108,6 +108,6 @@ export const InitialContext: Context = {
   failure: undefined,
   isL3: undefined,
   isL2Fallback: false,
-  credentials: undefined,
+  legacyCredentials: [],
   failedCredentials: undefined
 };

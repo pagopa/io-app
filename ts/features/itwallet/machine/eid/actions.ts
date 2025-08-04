@@ -18,7 +18,7 @@ import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
 } from "../../credentials/store/actions";
-import { itwCredentialsSelector } from "../../credentials/store/selectors";
+import { itwLegacyCredentialsSelector } from "../../credentials/store/selectors";
 import {
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
@@ -42,12 +42,12 @@ export const createEidIssuanceActionsImplementation = (
       const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(state);
       const walletInstanceAttestation =
         itwWalletInstanceAttestationSelector(state);
-      const credentials = itwCredentialsSelector(state);
+      const legacyCredentials = itwLegacyCredentialsSelector(state);
 
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
         walletInstanceAttestation,
-        credentials: Object.values(credentials)
+        legacyCredentials
       };
     }
   ),

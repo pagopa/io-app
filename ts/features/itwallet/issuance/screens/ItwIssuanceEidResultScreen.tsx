@@ -30,7 +30,7 @@ export const ItwIssuanceEidResultScreen = () => {
 
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
 
-  if (issuanceMode === "upgrading") {
+  if (issuanceMode === "upgrade") {
     return <ItwIssuanceEidUpgradeResultContent />;
   }
 

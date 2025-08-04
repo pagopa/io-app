@@ -1222,7 +1222,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    actor.send({ type: "start", mode: "reissuing" });
+    actor.send({ type: "start", mode: "reissuance" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
@@ -1232,7 +1232,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,
-      mode: "reissuing"
+      mode: "reissuance"
     });
 
     expect(navigateToL2IdentificationScreen).toHaveBeenCalledTimes(1);
@@ -1275,7 +1275,7 @@ describe("itwEidIssuanceMachine", () => {
       ...initialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      mode: "reissuing",
+      mode: "reissuance",
       identification: {
         mode: "spid",
         level: "L2",
@@ -1328,7 +1328,7 @@ describe("itwEidIssuanceMachine", () => {
       ...initialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      mode: "reissuing",
+      mode: "reissuance",
       identification: {
         mode: "spid",
         level: "L2",
@@ -1349,7 +1349,7 @@ describe("itwEidIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { UserIdentification: { Identification: "L2" } },
       context: {
-        mode: "reissuing"
+        mode: "reissuance"
       }
     } as MachineSnapshot);
 
@@ -1691,11 +1691,11 @@ describe("itwEidIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { Issuance: "DisplayingPreview" },
       context: {
-        mode: "upgrading",
+        mode: "upgrade",
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
         isL3: true,
-        credentials: [
+        legacyCredentials: [
           ItwStoredCredentialsMocks.mdl
         ] as ReadonlyArray<StoredCredential>
       }
@@ -1716,11 +1716,11 @@ describe("itwEidIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { Issuance: "DisplayingPreview" },
       context: {
-        mode: "upgrading",
+        mode: "upgrade",
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
         isL3: true,
-        credentials: [] as ReadonlyArray<StoredCredential>
+        legacyCredentials: [] as ReadonlyArray<StoredCredential>
       }
     } as MachineSnapshot);
 

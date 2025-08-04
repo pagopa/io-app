@@ -134,11 +134,10 @@ export const itwEidIssuanceMachine = setup({
     isOperationAborted: notImplemented,
     hasIntegrityKeyTag: ({ context }) => context.integrityKeyTag !== undefined,
     hasValidWalletInstanceAttestation: notImplemented,
-    hasCredentials: ({ context }) =>
-      context.credentials ? context.credentials.length > 0 : false,
+    hasLegacyCredentials: ({ context }) => context.legacyCredentials.length > 0,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
-    isReissuing: ({ context }) => context.mode === "reissuing",
-    isUpgrading: ({ context }) => context.mode === "upgrading",
+    isReissuance: ({ context }) => context.mode === "reissuance",
+    isUpgrade: ({ context }) => context.mode === "upgrade",
     isL3FeaturesEnabled: ({ context }) => context.isL3 || false,
     isL2Fallback: ({ context }) => context.isL2Fallback || false
   }
@@ -185,7 +184,7 @@ export const itwEidIssuanceMachine = setup({
     EvaluatingIssuanceMode: {
       always: [
         {
-          guard: and(["isReissuing", "hasValidWalletInstanceAttestation"]),
+          guard: and(["isReissuance", "hasValidWalletInstanceAttestation"]),
           target: "UserIdentification.Identification.L2"
         },
         {
@@ -249,7 +248,7 @@ export const itwEidIssuanceMachine = setup({
       invoke: {
         src: "createWalletInstance",
         input: ({ context }) => ({
-          isL3IssuanceEnabled: context.isL3FeaturesEnabled
+          isL3IssuanceEnabled: context.isL3
         }),
         onDone: {
           actions: [
@@ -314,7 +313,7 @@ export const itwEidIssuanceMachine = setup({
         }),
         onDone: [
           {
-            guard: "isReissuing",
+            guard: "isReissuance",
             actions: [
               assign(({ event }) => ({
                 walletInstanceAttestation: event.output
@@ -335,7 +334,7 @@ export const itwEidIssuanceMachine = setup({
         ],
         onError: [
           {
-            guard: and(["isReissuing", "isSessionExpired"]),
+            guard: and(["isReissuance", "isSessionExpired"]),
             actions: ["handleSessionExpired", "closeIssuance"],
             target: "#itwEidIssuanceMachine.Idle"
           },
@@ -413,7 +412,7 @@ export const itwEidIssuanceMachine = setup({
                 ],
                 back: [
                   {
-                    guard: "isReissuing",
+                    guard: "isReissuance",
                     target: "#itwEidIssuanceMachine.Idle"
                   },
                   {
@@ -716,8 +715,10 @@ export const itwEidIssuanceMachine = setup({
                   target: "#itwEidIssuanceMachine.Failure"
                 }
               },
-              back: {
-                target: "PreparationCie"
+              on: {
+                back: {
+                  target: "PreparationCie"
+                }
               }
             },
             ReadingCieCard: {
@@ -844,11 +845,11 @@ export const itwEidIssuanceMachine = setup({
       },
       onDone: [
         {
-          guard: "isReissuing",
+          guard: "isReissuance",
           actions: ["navigateToWallet"]
         },
         {
-          guard: and(["hasCredentials", "isUpgrading"]),
+          guard: and(["hasLegacyCredentials", "isUpgrade"]),
           target: "#itwEidIssuanceMachine.CredentialsUpgrade"
         },
         {
@@ -873,7 +874,7 @@ export const itwEidIssuanceMachine = setup({
           return {
             pid: context.eid,
             walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-            credentials: context.credentials || []
+            credentials: context.legacyCredentials
           };
         },
         onDone: {

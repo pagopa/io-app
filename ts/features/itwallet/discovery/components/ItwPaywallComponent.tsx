@@ -100,7 +100,7 @@ export const ItwPaywallComponent = ({
     machineRef.send({
       type: "start",
       isL3: true,
-      mode: isWalletValid ? "upgrading" : "issuing"
+      mode: isWalletValid ? "upgrade" : "issuance"
     });
   });
 
