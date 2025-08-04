@@ -59,6 +59,17 @@ export const cgnMerchantVersionSelector = createSelector(
     )
 );
 
+export const cgnMerchantsModalSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean | undefined =>
+    pipe(
+      remoteConfig,
+      // O.map(config => config.cgn.show_cgn_categories_modal),
+      O.map(config => false),
+      O.toUndefined
+    )
+);
+
 export const assistanceToolConfigSelector = createSelector(
   remoteConfigSelector,
   (remoteConfig): ToolEnum | undefined =>
