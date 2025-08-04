@@ -23,6 +23,10 @@ const IdPayInitiativeLastUpdateCounter = (props: Props) => {
     O.toUndefined
   );
 
+  if (!lastUpdateString) {
+    return null;
+  }
+
   return (
     <BodySmall
       style={styles.lastUpdate}

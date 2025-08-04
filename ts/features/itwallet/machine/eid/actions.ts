@@ -8,7 +8,10 @@ import ROUTES from "../../../../navigation/routes";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
-import { itwCredentialsStore } from "../../credentials/store/actions";
+import {
+  itwCredentialsRemoveByType,
+  itwCredentialsStore
+} from "../../credentials/store/actions";
 import {
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
@@ -104,7 +107,9 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   navigateToWallet: () => {
-    toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
+    toast.success(
+      I18n.t("features.itWallet.issuance.eidResult.successL2.toast")
+    );
     navigation.reset({
       index: 1,
       routes: [
@@ -219,6 +224,10 @@ export const createEidIssuanceActionsImplementation = (
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.eid, "eID is undefined");
+    // When upgrading to IT-Wallet it is possible to end up with the old and the new PID
+    // at the same time, because they have different IDs and are not overwritten. To avoid this issue,
+    // the eID is always removed before storing the new one. If no previous eID is present, the action is a no-op.
+    store.dispatch(itwCredentialsRemoveByType(context.eid.credentialType));
     store.dispatch(itwCredentialsStore([context.eid]));
   },
 
@@ -230,7 +239,9 @@ export const createEidIssuanceActionsImplementation = (
   resetWalletInstance: () => {
     store.dispatch(itwLifecycleWalletReset());
     store.dispatch(itwSetAuthLevel(undefined));
-    toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
+    toast.success(
+      I18n.t("features.itWallet.issuance.eidResult.successL2.toast")
+    );
   },
 
   trackWalletInstanceCreation: () => {

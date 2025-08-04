@@ -18,9 +18,10 @@ export type Context = {
   codeVerifier: string | undefined;
   credentialDefinition: AuthorizationDetail | undefined;
   requestedCredential: RequestObject | undefined;
-  credential: StoredCredential | undefined;
+  credentials: Array<StoredCredential> | undefined;
   failure: CredentialIssuanceFailure | undefined;
   isAsyncContinuation: boolean;
+  isWhiteListed?: boolean;
 };
 
 export const InitialContext: Context = {
@@ -32,7 +33,7 @@ export const InitialContext: Context = {
   codeVerifier: undefined,
   credentialDefinition: undefined,
   requestedCredential: undefined,
-  credential: undefined,
+  credentials: undefined,
   failure: undefined,
   isAsyncContinuation: false
 };

@@ -221,6 +221,33 @@ const ContentView = ({ failure }: ContentViewProps) => {
               onPress: () => machineRef.send({ type: "close" })
             }
           };
+        case IssuanceFailureType.UNTRUSTED_ISS:
+          return {
+            title: I18n.t(
+              `features.itWallet.issuance.issuerNotTrustedCommonError.title`
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.issuerNotTrustedCommonError.subtitle",
+              {
+                credential: "IT-Wallet"
+              }
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                `features.itWallet.issuance.issuerNotTrustedCommonError.primaryAction`
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                `features.itWallet.issuance.issuerNotTrustedCommonError.secondaryAction`
+              ),
+              onPress: () => {
+                supportModal.present();
+              }
+            }
+          };
       }
     };
 

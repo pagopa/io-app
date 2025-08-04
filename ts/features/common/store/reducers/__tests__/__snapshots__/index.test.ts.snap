@@ -120,6 +120,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "initiativesWithInstrument": {
         "kind": "PotNone",
       },
+      "onboardingSucceeded": false,
     },
   },
   "ingress": {
@@ -144,6 +145,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "preferences": {
       "requestedCredentials": {},
+    },
+    "securePreferences": {
+      "offlineAccessCounter": 0,
     },
     "walletInstance": {
       "attestation": undefined,

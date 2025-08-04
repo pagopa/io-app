@@ -50,5 +50,5 @@ export const environmentReducer = (
   return state;
 };
 
-export const areNotificationPermissionsEnabled = (state: GlobalState) =>
+export const areNotificationPermissionsEnabledSelector = (state: GlobalState) =>
   state.notifications.environment.systemNotificationsEnabled;

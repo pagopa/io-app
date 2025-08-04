@@ -2,7 +2,8 @@ import { Fragment, JSX } from "react";
 import { Linking, View } from "react-native";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-import { Errors } from "@pagopa/io-react-native-wallet";
+import { Errors as LegacyErrors } from "@pagopa/io-react-native-wallet";
+import { Errors } from "@pagopa/io-react-native-wallet-v2";
 import {
   Body,
   Divider,
@@ -37,6 +38,7 @@ import { IssuanceFailure } from "../../machine/eid/failure";
 import { CredentialIssuanceFailure } from "../../machine/credential/failure";
 import { ItwFailure } from "../utils/ItwFailureTypes.ts";
 import { RemoteFailure } from "../../presentation/remote/machine/failure.ts";
+import { isDefined } from "../../../../utils/guards.ts";
 
 const { isWalletProviderResponseError, isIssuerResponseError } = Errors;
 
@@ -76,7 +78,10 @@ const extractErrorCode = (failure: Props["failure"]) => {
   const rawError = failure.reason;
   if (
     isWalletProviderResponseError(rawError) ||
-    isIssuerResponseError(rawError)
+    isIssuerResponseError(rawError) ||
+    // TODO: [SIW-2530]: remove after full migration to API 1.0
+    LegacyErrors.isWalletProviderResponseError(rawError) ||
+    LegacyErrors.isIssuerResponseError(rawError)
   ) {
     return rawError.code ?? failure.type;
   }
@@ -88,8 +93,6 @@ const extractErrorCode = (failure: Props["failure"]) => {
   }
   return failure.type;
 };
-
-const isDefined = <T,>(x: T | undefined | null | ""): x is T => Boolean(x);
 
 type Props = {
   failure:

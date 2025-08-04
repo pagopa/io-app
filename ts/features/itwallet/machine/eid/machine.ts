@@ -10,7 +10,9 @@ import { trackItWalletIntroScreen } from "../../analytics";
 import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
-  StartAuthFlowActorParams
+  StartAuthFlowActorParams,
+  VerifyTrustFederationParams,
+  CreateWalletInstanceActorParams
 } from "./actors";
 import {
   AuthenticationContext,
@@ -108,8 +110,13 @@ export const itwEidIssuanceMachine = setup({
     }
   },
   actors: {
+    verifyTrustFederation: fromPromise<void, VerifyTrustFederationParams>(
+      notImplemented
+    ),
     getCieStatus: fromPromise<CieContext>(notImplemented),
-    createWalletInstance: fromPromise<string>(notImplemented),
+    createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
+      notImplemented
+    ),
     revokeWalletInstance: fromPromise<void>(notImplemented),
     getWalletAttestation: fromPromise<
       WalletInstanceAttestations,
@@ -190,6 +197,23 @@ export const itwEidIssuanceMachine = setup({
       on: {
         "accept-tos": [
           {
+            // Verify the trust federation
+            target: "TrustFederationVerification"
+          }
+        ]
+      }
+    },
+    TrustFederationVerification: {
+      description:
+        "Verification of the trust federation. This state verifies the trust chain of the wallet provider with the PID provider.",
+      tags: [ItwTags.Loading],
+      invoke: {
+        input: ({ context }) => ({
+          isL3IssuanceEnabled: context.isL3FeaturesEnabled
+        }),
+        src: "verifyTrustFederation",
+        onDone: [
+          {
             // When no integrity hardware key exists,
             // we need to create a new integrity key tag and a new wallet instance
             guard: not("hasIntegrityKeyTag"),
@@ -206,6 +230,12 @@ export const itwEidIssuanceMachine = setup({
             // we can proceed to the IPZS privacy acceptance
             target: "IpzsPrivacyAcceptance"
           }
+        ],
+        onError: [
+          {
+            actions: "setFailure",
+            target: "#itwEidIssuanceMachine.Failure"
+          }
         ]
       }
     },
@@ -215,6 +245,9 @@ export const itwEidIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "createWalletInstance",
+        input: ({ context }) => ({
+          isL3IssuanceEnabled: context.isL3FeaturesEnabled
+        }),
         onDone: {
           actions: [
             assign(({ event }) => ({

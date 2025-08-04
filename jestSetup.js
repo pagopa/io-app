@@ -23,6 +23,10 @@ import "react-native-get-random-values";
 require("@shopify/flash-list/jestSetup");
 jest.mock("rn-qr-generator", () => mockRNQRGenerator);
 jest.mock("react-native-screenshot-prevent", () => ({}));
+jest.mock("react-native-haptic-feedback", () => ({
+  ...jest.requireActual("react-native-haptic-feedback"),
+  trigger: jest.fn()
+}));
 
 // eslint-disable-next-line functional/immutable-data
 global.CanvasKit = {
@@ -70,6 +74,7 @@ jest.mock("react-native-reanimated", () => {
 
   return {
     ...Reanimated,
+    LayoutAnimationConfig: require("react-native").View,
     useScrollViewOffset: jest.fn,
     useReducedMotion: jest.fn
   };
