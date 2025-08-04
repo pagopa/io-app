@@ -100,21 +100,21 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   }),
 
   // Version 4
-  // Change legacy MDL's credentialType to mDL to be consistent with the new API 1.0
-  // Their credentialId is left unchanged as MDL to be able to access the related
-  // `credential_configurations_supported` in the legacy Entity Configuration
+  // * Change legacy MDL's credentialType to mDL to be consistent with the new API 1.0
+  //   Their credentialId is left unchanged as MDL to be able to access the related
+  //   `credential_configurations_supported` in the legacy Entity Configuration
+  // * Remove legacy status attestation so the new one can be fetched with the new API
   "4": (state: MigrationState) => ({
     ...state,
     credentials: Object.fromEntries(
-      Object.values<Record<string, any>>(state.credentials).map(credential => {
-        if (credential.credentialType === "MDL") {
-          return [
-            credential.credentialId,
-            { ...credential, credentialType: "mDL" }
-          ];
+      Object.values<Record<string, any>>(state.credentials).map(credential => [
+        credential.credentialId,
+        {
+          ...credential,
+          credentialType: credential.credentialType.replace("MDL", "mDL"),
+          storedStatusAttestation: undefined
         }
-        return [credential.credentialId, credential];
-      })
+      ])
     )
   })
 };

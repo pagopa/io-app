@@ -248,7 +248,7 @@ const getCredentialInvalidStatusDetails = (
         O.fromEither(StatusAttestationError.decode(reason?.reason)),
         O.map(({ error }) => error)
       ),
-      credentialConfigurationId: O.fromNullable(reason?.credentialId)
+      credentialConfigurationId: O.fromNullable(reason?.metadata?.credentialId)
     })),
     O.getOrElse(() => ({
       errorCodeOption: O.none as O.Option<string>,

@@ -63,14 +63,6 @@ export type ParsedStatusAttestation = Awaited<
 >["parsedStatusAssertion"]["payload"];
 
 /**
- * Alias for the ParsedStatusAttestation type v0.7.1
- * TODO: [SIW-2530]: remove the legacy type
- */
-export type LegacyParsedStatusAttestation = Awaited<
-  ReturnType<LegacyCredential.Status.VerifyAndParseStatusAttestation>
->["parsedStatusAttestation"]["payload"];
-
-/**
  * Alias for the WalletInstanceStatus type
  */
 export type WalletInstanceStatus = Awaited<
@@ -87,7 +79,7 @@ export type StoredStatusAttestation =
   | {
       credentialStatus: "valid";
       statusAttestation: string;
-      parsedStatusAttestation: ParsedStatusAttestation | LegacyParsedStatusAttestation;
+      parsedStatusAttestation: ParsedStatusAttestation;
     }
   | {
       credentialStatus: "invalid" | "unknown";
