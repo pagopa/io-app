@@ -14,18 +14,12 @@ import {
   newTokenActiveSessionLoginSelector
 } from "../store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
-import { sessionCorrupted } from "../../common/store/actions";
-import { restartCleanApplication } from "../../../../sagas/commons";
 
 export function* watchActiveSessionLoginSaga() {
   yield* takeLatest(
     [getType(setStartActiveSessionLogin), getType(setRetryActiveSessionLogin)],
     handleActiveSessionLoginSaga
   );
-}
-
-export function* watchSessionCorruptedSaga(): IterableIterator<ReduxSagaEffect> {
-  yield* takeLatest(getType(sessionCorrupted), restartCleanApplication);
 }
 
 export function* handleActiveSessionLoginSaga(): Generator<

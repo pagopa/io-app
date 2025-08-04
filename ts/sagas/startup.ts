@@ -27,7 +27,7 @@ import {
   watchCheckSessionSaga
 } from "../features/authentication/common/saga/watchCheckSessionSaga";
 import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
-import { watchSessionExpiredSaga } from "../features/authentication/common/saga/watchSessionExpiredSaga";
+import { watchSessionExpiredOrCorruptedSaga } from "../features/authentication/common/saga/watchSessionExpiredSaga";
 import { sessionExpired } from "../features/authentication/common/store/actions";
 import {
   sessionInfoSelector,
@@ -130,10 +130,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
-import {
-  watchActiveSessionLoginSaga,
-  watchSessionCorruptedSaga
-} from "../features/authentication/activeSessionLogin/saga";
+import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
 import ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { previousInstallationDataDeleteSaga } from "./installation";
@@ -321,17 +318,14 @@ export function* initializeApplicationSaga(
     });
   }
 
-  // If the session is corrupted, the startup saga will restart.
-  yield* fork(watchSessionCorruptedSaga);
-
   // BE CAREFUL where you get lollipop keyInfo.
   // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
   // Get keyInfo for lollipop
 
   const keyInfo = yield* call(getKeyInfo);
 
-  // Handles the expiration of the session token
-  yield* fork(watchSessionExpiredSaga);
+  // Watches for session expiration or corruption and resets the application state accordingly
+  yield* fork(watchSessionExpiredOrCorruptedSaga);
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token
