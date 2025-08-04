@@ -4,7 +4,7 @@ import { useIONavigation } from "../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../navigation/params/MainTabParamsList";
 import { useHeaderFirstLevelActionPropHelp } from "./useHeaderFirstLevelActionPropHelp";
 import { useHeaderFirstLevelActionPropSettings } from "./useHeaderFirstLevelActionPropSettings";
-import { useStatusAlertProps } from "./useStatusAlertProps";
+import { useIOAlertVisible } from "../components/StatusMessages";
 
 type useHeaderFirstLevelProps = {
   currentRoute: keyof MainTabParamsList;
@@ -34,7 +34,7 @@ export const useHeaderFirstLevel = ({
 
   const actionHelp = useHeaderFirstLevelActionPropHelp(currentRoute);
   const actionSettings = useHeaderFirstLevelActionPropSettings();
-  const alertProps = useStatusAlertProps(currentRoute);
+  const { isAlertVisible } = useIOAlertVisible();
 
   const actions: HeaderFirstLevel["actions"] = useMemo(() => {
     const fallbackActions: HeaderFirstLevel["actions"] = [
@@ -70,9 +70,9 @@ export const useHeaderFirstLevel = ({
         <HeaderFirstLevel
           {...rest}
           actions={actions}
-          ignoreSafeAreaMargin={!!alertProps}
+          ignoreSafeAreaMargin={isAlertVisible}
         />
       )
     });
-  }, [navigation, alertProps, rest, actions]);
+  }, [navigation, isAlertVisible, rest, actions]);
 };

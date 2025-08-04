@@ -91,9 +91,7 @@ type AlertProps = {
   alertProps?: AlertEdgeToEdgeProps;
   bottomSheet?: JSX.Element;
 };
-export const useStatusAlertProps = (
-  routeName?: string
-): AlertProps | undefined => {
+export const useStatusAlertProps = (): AlertProps | undefined => {
   const [connectivityAlert, setConnectivityAlert] = useState<
     AlertEdgeToEdgeProps | undefined
   >(undefined);
@@ -104,9 +102,7 @@ export const useStatusAlertProps = (
     )
   });
   const handleAppRestart = useAppRestartAction("banner");
-  const currentStatusMessage = useIOSelector(
-    statusMessageByRouteSelector(routeName)
-  );
+  const currentStatusMessage = useIOSelector(statusMessageByRouteSelector);
   const currentRoute = useIOSelector(currentRouteSelector);
   const isConnected = useIOSelector(isConnectedSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
