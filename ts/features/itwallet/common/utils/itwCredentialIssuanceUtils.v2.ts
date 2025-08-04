@@ -87,7 +87,7 @@ export type ObtainCredentialParams = {
   clientId: string;
   codeVerifier: string;
   issuerConf: IssuerConf;
-  isUpgrading?: boolean;
+  operationType?: "reissuing";
 };
 
 // TODO: [SIW-2530] Update JSDoc accordingly
@@ -102,7 +102,7 @@ export type ObtainCredentialParams = {
  * @param codeVerifier - The code verifier
  * @param credentialDefinition - The credential definition
  * @param issuerConf - The issuer configuration
- * @param isUpgrading - Whether the credential is being upgraded
+ * @param operationType - The operation type, e.g., "reissuing"
  * @returns The obtained credential
  */
 export const obtainCredential = async ({
@@ -115,7 +115,7 @@ export const obtainCredential = async ({
   clientId,
   codeVerifier,
   issuerConf,
-  isUpgrading
+  operationType
 }: ObtainCredentialParams) => {
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
@@ -170,7 +170,7 @@ export const obtainCredential = async ({
               dPopCryptoContext,
               credentialCryptoContext
             },
-            isUpgrading ? "reissuing" : undefined
+            operationType
           ).catch(enrichIssuerResponseError(credential_configuration_id));
 
         // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.

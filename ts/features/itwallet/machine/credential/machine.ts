@@ -8,7 +8,8 @@ import {
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput
+  RequestCredentialActorOutput,
+  VerifyTrustFederationActorInput
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
@@ -43,6 +44,9 @@ export const itwCredentialIssuanceMachine = setup({
     trackCredentialIssuingDataShareAccepted: notImplemented
   },
   actors: {
+    verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
+      notImplemented
+    ),
     getWalletAttestation: fromPromise<
       GetWalletAttestationActorOutput,
       GetWalletAttestationActorInput
@@ -65,8 +69,7 @@ export const itwCredentialIssuanceMachine = setup({
     isDeferredIssuance: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
     isStatusError: notImplemented,
-    isEidExpired: notImplemented,
-    isSkipNavigation: notImplemented
+    isEidExpired: notImplemented
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
@@ -79,35 +82,46 @@ export const itwCredentialIssuanceMachine = setup({
         "Waits for a credential selection in order to proceed with the issuance",
       tags: [ItwTags.Loading],
       on: {
-        "select-credential": [
-          {
-            guard: "isEidExpired",
-            actions: "navigateToEidVerificationExpiredScreen",
-            target: "Idle"
-          },
-          {
-            guard: "isSkipNavigation",
-            target: "CheckingWalletInstanceAttestation",
-            actions: [
-              assign(({ event }) => ({
-                credentialType: event.credentialType,
-                isAsyncContinuation: event.asyncContinuation
-              })),
-              "trackStartAddCredential"
-            ]
-          },
-          {
-            target: "CheckingWalletInstanceAttestation",
-            actions: [
-              assign(({ event }) => ({
-                credentialType: event.credentialType,
-                isAsyncContinuation: event.asyncContinuation
-              })),
-              "navigateToTrustIssuerScreen",
-              "trackStartAddCredential"
-            ]
-          }
-        ]
+        "select-credential": {
+          target: "EvaluateFlow",
+          actions: assign(({ event }) => ({
+            credentialType: event.credentialType,
+            mode: event.mode,
+            isAsyncContinuation: event.isAsyncContinuation ?? false // TODO to be removed in [SIW-2839]
+          }))
+        }
+      }
+    },
+    EvaluateFlow: {
+      always: [
+        {
+          guard: "isEidExpired",
+          actions: "navigateToEidVerificationExpiredScreen",
+          target: "Idle"
+        },
+        {
+          guard: ({ context }) => context.mode === "issuance",
+          target: "TrustFederationVerification",
+          actions: ["trackStartAddCredential"]
+        },
+        {
+          target: "TrustFederationVerification",
+          actions: ["trackStartAddCredential", "navigateToTrustIssuerScreen"]
+        }
+      ]
+    },
+    TrustFederationVerification: {
+      description:
+        "Verification of the trust federation. This state verifies the trust chain of the wallet provider with the EAA provider.",
+      tags: [ItwTags.Loading],
+      invoke: {
+        input: ({ context }) => ({
+          isNewIssuanceFlowEnabled: context.isWhiteListed
+        }),
+        src: "verifyTrustFederation",
+        onDone: {
+          target: "CheckingWalletInstanceAttestation"
+        }
       }
     },
     CheckingWalletInstanceAttestation: {
@@ -189,6 +203,7 @@ export const itwCredentialIssuanceMachine = setup({
       always: {
         // If we are in the async continuation flow means we are already showing the trust issuer screen
         // but on a different route. We need to avoid a navigation to show a "double" navigation animation.
+        // TODO to be removed in [SIW-2839]
         guard: ({ context }) => !context.isAsyncContinuation,
         actions: "navigateToTrustIssuerScreen"
       },
@@ -218,7 +233,11 @@ export const itwCredentialIssuanceMachine = setup({
               credentialDefinition: context.credentialDefinition,
               requestedCredential: context.requestedCredential,
               issuerConf: context.issuerConf,
-              isNewIssuanceFlowEnabled: context.isWhiteListed
+              isNewIssuanceFlowEnabled: context.isWhiteListed,
+              // If we are upprading the credential to the new forma we need to pass the operationType
+              // header witth the value "reissuing"
+              operationType:
+                context.mode === "upgrade" ? "reissuing" : undefined
             }),
             onDone: [
               {

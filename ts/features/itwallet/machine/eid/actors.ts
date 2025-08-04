@@ -34,6 +34,10 @@ import type {
   IdentificationContext
 } from "./context";
 
+export type CreateWalletInstanceActorParams = {
+  isL3IssuanceEnabled?: boolean;
+};
+
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
   walletInstanceAttestation: string | undefined;
@@ -100,34 +104,41 @@ export const createEidIssuanceActorsImplementation = (
     }
   ),
 
-  createWalletInstance: fromPromise<string>(async () => {
-    const sessionToken = sessionTokenSelector(store.getState());
-    assert(sessionToken, "sessionToken is undefined");
+  createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
+    async ({ input }) => {
+      const sessionToken = sessionTokenSelector(store.getState());
+      assert(sessionToken, "sessionToken is undefined");
 
-    // Reset the wallet store to prevent having dirty state before registering a new wallet instance
-    store.dispatch(itwLifecycleStoresReset());
+      // Reset the wallet store to prevent having dirty state before registering a new wallet instance
+      store.dispatch(itwLifecycleStoresReset());
 
-    // Await the integrity preparation before requesting the integrity key tag
-    const integrityServiceStatus = await pollForStoreValue({
-      getState: store.getState,
-      selector: itwIntegrityServiceStatusSelector,
-      condition: value => value !== undefined
-    }).catch(() => {
-      throw new Error("Integrity service status check timed out");
-    });
+      // Await the integrity preparation before requesting the integrity key tag
+      const integrityServiceStatus = await pollForStoreValue({
+        getState: store.getState,
+        selector: itwIntegrityServiceStatusSelector,
+        condition: value => value !== undefined
+      }).catch(() => {
+        throw new Error("Integrity service status check timed out");
+      });
 
-    // If the integrity service preparation is not ready (still undefined) or in an error state after 10 seconds the user will be prompted with an error,
-    // he will need to retry.
-    assert(
-      integrityServiceStatus === "ready",
-      `Integrity service status is ${integrityServiceStatus}`
-    );
+      // If the integrity service preparation is not ready (still undefined) or in an error state after 10 seconds the user will be prompted with an error,
+      // he will need to retry.
+      assert(
+        integrityServiceStatus === "ready",
+        `Integrity service status is ${integrityServiceStatus}`
+      );
 
-    const hardwareKeyTag = await getIntegrityHardwareKeyTag();
-    await registerWalletInstance(env, hardwareKeyTag, sessionToken);
+      const hardwareKeyTag = await getIntegrityHardwareKeyTag();
+      await registerWalletInstance(
+        env,
+        hardwareKeyTag,
+        sessionToken,
+        input.isL3IssuanceEnabled
+      );
 
-    return hardwareKeyTag;
-  }),
+      return hardwareKeyTag;
+    }
+  ),
 
   getWalletAttestation: fromPromise<
     WalletInstanceAttestations,
