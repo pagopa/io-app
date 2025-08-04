@@ -83,7 +83,6 @@ export type ObtainCredentialParams = {
   env: Env;
   credentialType: string;
   walletInstanceAttestation: string;
-  // TODO: [SIW-2530] After fully migrating to the new API, rename this param to "requestObject"
   requestedCredential: RequestObject;
   pid: StoredCredential;
   clientId: string;
@@ -91,24 +90,21 @@ export type ObtainCredentialParams = {
   issuerConf: IssuerConf;
 };
 
-// TODO: [SIW-2530] Update JSDoc accordingly
 /**
  * Obtains a credential from the issuer.
  * @param env - The environment to use for the wallet provider base URL
  * @param credentialType - The type of credential to request
- * @param requestedCredential - The requested credential
+ * @param requestedCredential - The requested credential as a RequestObject
  * @param pid - The PID credential
  * @param walletInstanceAttestation - The wallet instance attestation
  * @param clientId - The client ID
  * @param codeVerifier - The code verifier
- * @param credentialDefinition - The credential definition
  * @param issuerConf - The issuer configuration
  * @returns The obtained credential
  */
 export const obtainCredential = async ({
   env,
   credentialType,
-  // TODO: [SIW-2530] After fully migrating to the new API, rename this param to "requestObject"
   requestedCredential: requestObject,
   pid,
   walletInstanceAttestation,
