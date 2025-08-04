@@ -7,7 +7,7 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";
 
 type ItwNestedClaimsListItemProps = {
-  itemTitle: string;
+  itemTitle?: string;
   summaryLabel?: string;
   summaryValue?: string;
   itemClaims: Array<ClaimDisplayFormat>;

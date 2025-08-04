@@ -1,5 +1,5 @@
 {
-  "credential": "eyJraWQiOiJISDlKWTl4RkEzZUJwN0d2UXNKRWZ2Z1lYekh2NGRFZThsbmt4dDB2MGNRIiwidHlwIjoiZGMrc2Qtand0IiwiYWxnIjoiRVMyNTYifQ.eyJfc2QiOlsiWENsNGZIdk10eU4za1hkZ2ZuLU1pbEtxajNJeUlCTXlidUtsYmVLVEZyWSIsImRCd1NMZzFnc0J0S2YzSWZ6bl9uUnM4azdKRURSejcxckFsTng0SzdOYmciLCJkekFwQzl6T2IxNGtleVNTSk14eUF4QWFrd3Fvbk5PeFpQMTUwUzdpTlhZIiwiZTBuU0d2eXdlWS1jWFVIQnozVFN1U0Z3bWkwcTQ4NVRxcW1SZ0FXS2VjUSIsIm9vVzJ3amtKUUZNMWwzS2ZOdzNMcjQ4WVAyTkJwbUotVzJPYWJ5WnZteU0iLCJ0TjNncFJoa1Z5SWpPUkF2SGNRczVNY3diSEN3YVpwYzJDdU8tazU3TjNBIl0sInN1YiI6IjFkMWVjYjI0LTY4YjctNDFkYS04NWNlLWM0MjJkNmZkOTMwOSIsInZjdCNpbnRlZ3JpdHkiOiJzaGEyNTYtZjQ5Mzk5Mzc4MmJlY2E3NTk1YTIyZGIxZDY3MjNlMzU5ZDRhMzIxNzFmMjk5NWU2ODdiYzM0MTA0YjA2NjZlNCIsImlzc3VpbmdfY291bnRyeSI6IklUIiwiX3NkX2FsZyI6InNoYS0yNTYiLCJ2Y3QiOiJodHRwczovL3ByZS50YS53YWxsZXQuaXB6cy5pdC9zY2hlbWFzL3YxLjAuMC9lZHVjYXRpb25kZWdyZWUuanNvbiIsImlzc3VpbmdfYXV0aG9yaXR5IjoiSXN0aXR1dG8gUG9saWdyYWZpY28gZSBaZWNjYSBkZWxsbyBTdGF0byIsImlzcyI6Imh0dHBzOi8vcHJlLmVhYS53YWxsZXQuaXB6cy5pdC8xLTAiLCJjbmYiOnsiandrIjp7Imt0eSI6IkVDIiwiY3J2IjoiUC0yNTYiLCJraWQiOiJTYUhmU0dYZlRMaG1aVEo0b3lUcVpZazFmaVJNTWV6ZEd5WnJCV1hNamNRIiwieCI6ImlCNWt1clBJTWNMcHpGOXlEWll4enQtUzFGR2FlMlM2Ym4yLTFwajhOVVkiLCJ5IjoiOGVUOENrRW9Ua2xOdmROVmljNGZveGg4WlBaT2doLWdYcmV4SWp3QlNZRSJ9fSwiZXhwIjoxNzg1ODQ4NDA1LCJzdGF0dXMiOnsic3RhdHVzX2Fzc2VydGlvbiI6eyJjcmVkZW50aWFsX2hhc2hfYWxnIjoic2hhLTI1NiJ9fX0.sbIgzRFUKRAXeqhO-pjvnll5VoHyW7jJMryTIm1kJnLyUu7ebnH9nIKJpEwkSmaOU6imzHXT5d9M0RzQ86kc1w~WyI3SXB4T2JCSl9OcS1WUmZMc2RpT2tBIiwiY3JlZGVudGlhbF9pZGVudGlmaWVyIiwiZGNfc2Rfand0X2VkdWNhdGlvbl9kZWdyZWUtY3JlZGlkIl0~WyI4TlBpN0hlOERMSXo5TmpabURUQnVnIiwiZWR1Y2F0aW9uX2RlZ3JlZXMiLFt7Imluc3RpdHV0ZV9uYW1lIjoiVW5pdmVyc2l0w6AgZGVnbGkgc3R1ZGkgZGkgUm9tYSBMYSBTYXBpZW56YSIsInF1YWxpZmljYXRpb25fbmFtZSI6IiBEb3R0b3JlIE1hZ2lzdHJhbGUiLCJwcm9ncmFtbWVfdHlwZV9uYW1lIjoiTGF1cmVhIE1hZ2lzdHJhbGUgKERNIDI3MC8wNCkiLCJkZWdyZWVfY291cnNlX25hbWUiOiJMZXR0ZXJlIiwiZGVncmVlX2NsYXNzX25hbWUiOiJMZXR0ZXJlIiwiYWNhZGVtaWNfcXVhbGlmaWNhdGlvbl9kYXRlIjoiMjAyNC0wMS0yNCIsInF1YWxpZmljYXRpb25fZ3JhZGVfdmFsdWUiOiI3MS8xMTAiLCJkZWdyZWVfY2xhc3MiOiI1In0seyJpbnN0aXR1dGVfbmFtZSI6IlVuaXZlcnNpdMOgIGRlZ2xpIHN0dWRpIGRpIFJvbWEgTGEgU2FwaWVuemEiLCJxdWFsaWZpY2F0aW9uX25hbWUiOiJEb3R0b3JlIiwicHJvZ3JhbW1lX3R5cGVfbmFtZSI6IkxhdXJlYSBUcmllbm5hbGUgKERNIDUwOS85OSkiLCJkZWdyZWVfY291cnNlX25hbWUiOiJGaXNpY2EiLCJkZWdyZWVfY2xhc3NfbmFtZSI6IlNjaWVuemUgZSB0ZWNub2xvZ2llIGZpc2ljaGUiLCJhY2FkZW1pY19xdWFsaWZpY2F0aW9uX2RhdGUiOiIyMDIxLTAxLTI0IiwicXVhbGlmaWNhdGlvbl9ncmFkZV92YWx1ZSI6Ijk1LzExMCIsImRlZ3JlZV9jbGFzcyI6IjI1In1dXQ~WyJ1NTNUOGpZQ1VJT1kzbjk3bW04VzlRIiwicGVyc29uYWxfYWRtaW5pc3RyYXRpdmVfbnVtYmVyIiwiSkY5NzI2NUFYIl0~WyJKQXdzNndJempuWDVHV1JrN0xYMy1nIiwidGF4X2lkX2NvZGUiLCJMVkxEQUE4NVQ1MEc3MDJCIl0~WyJXckdNSzdLQWRRb3lKbHA0UEVXWVZBIiwiaWF0IiwxNzU0MzEyNDA1XQ~WyJTNjgtOXJYQkFrSHdabTdjOVRtelpRIiwidmVyaWZpY2F0aW9uIix7ImV2aWRlbmNlIjpbeyJhdHRlc3RhdGlvbiI6eyJkYXRlX29mX2lzc3VhbmNlIjoiMjAyNS0wOC0wNCIsInZvdWNoZXIiOnsib3JnYW5pemF0aW9uIjoiSXN0aXR1dG8gUG9saWdyYWZpY28gZSBaZWNjYSBkZWxsbyBTdGF0byBTLnAuQS4ifSwidHlwZSI6ImRpZ2l0YWxfYXR0ZXN0YXRpb24iLCJyZWZlcmVuY2VfbnVtYmVyIjoiOWY2MTUzN2YtYTBjZC00ZmNlLTg1MDEtNTdiNGUxMTc0ZjJmIn0sInRpbWUiOiIyMDI1LTA4LTA0VDE1OjAwOjA0WiIsInR5cGUiOiJ2b3VjaCJ9XSwidHJ1c3RfZnJhbWV3b3JrIjoiaXRfd2FsbGV0IiwiYXNzdXJhbmNlX2xldmVsIjoic3Vic3RhbnRpYWwifV0~",
+  "credential": "eyJraWQiOiJISDlKWTl4RkEzZUJwN0d2UXNKRWZ2Z1lYekh2NGRFZThsbmt4dDB2MGNRIiwidHlwIjoiZGMrc2Qtand0IiwiYWxnIjoiRVMyNTYifQ.eyJfc2QiOlsiM1dCd1BrWmpCcS05a1VfNERKdkc1c2lnRFhKZy05ME9MZEFKeVFmWEE4cyIsIkFraXBHd0JlRmxBRVd2MHc1MTktTlBnSW5XVDUwUFI3a0tkb0JWOG51dmsiLCJNaW80YVlianUzSDgyTFJIYVd6NUVfZkp4REVhWWZGTm01MEI0bXRveFNvIiwiU1hSN3dXajNhUnBJc2ZzcHloTUpBYXh2eE53VXlZZndkMVo5X0huQUZUUSIsIlR0Y25JaVhFOVE4MWRHbzJUZXhqR2xjTGxrc1pUbUVpWkJvdjJMSWlRcUUiLCJaUkxCRGFfWUN5eUlMMjRubWlrSmNDSHBQUE5vamV1azJyMTdpeW1NdE4wIl0sInN1YiI6Ijk5MmJiMmFhLTEwMTYtNGM2YS1iNTliLTFmZGEwNTIwMmQ3YyIsInZjdCNpbnRlZ3JpdHkiOiJzaGEyNTYtNWYyMzVjMDNhMDI5ZWI0MWFiNTAxNDgxYjdmYjgwMmU0MGVmNDY0MWI1YjhlOGQ3OGQyMjIxMTcyN2ViYzE2ZSIsImlzc3VpbmdfY291bnRyeSI6IklUIiwiX3NkX2FsZyI6InNoYS0yNTYiLCJ2Y3QiOiJodHRwczovL3ByZS50YS53YWxsZXQuaXB6cy5pdC9zY2hlbWFzL3YxLjAuMC9lZHVjYXRpb25lbnJvbGxtZW50Lmpzb24iLCJpc3N1aW5nX2F1dGhvcml0eSI6IklzdGl0dXRvIFBvbGlncmFmaWNvIGUgWmVjY2EgZGVsbG8gU3RhdG8iLCJpc3MiOiJodHRwczovL3ByZS5lYWEud2FsbGV0LmlwenMuaXQvMS0wIiwiY25mIjp7Imp3ayI6eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2Iiwia2lkIjoiNHpNcWRhc2xvV0ZnRUV6WmxweUdLR3pyalk1MTFzbFZZYzl4a0ZtVzFCYyIsIngiOiJnZDFWbEJkMlpFLXhCMnIzNGtyclBWdlh4NUMxcGtLZzc1ak1INUU3TFhnIiwieSI6IjBjRE8wMS1JazJ4dXNDYUxpSmt3cWxXVzdRNFBoTmRqaTJRS2R0bDR6WGcifX0sImV4cCI6MTc4NTg0OTI1MCwic3RhdHVzIjp7InN0YXR1c19hc3NlcnRpb24iOnsiY3JlZGVudGlhbF9oYXNoX2FsZyI6InNoYS0yNTYifX19.MgBkppScOgmNu2XH2rsxg0VvmOgNfggmgSOoC0EEuROHonRCNjRHdiqJ5RZp11jfsfCT9TQheX4QOwWWPxnplw~WyI4RWJYUDI5d0tPZzZ2d1ltWHVueTdBIiwiY3JlZGVudGlhbF9pZGVudGlmaWVyIiwiZGNfc2Rfand0X2VkdWNhdGlvbl9lbnJvbGxtZW50LWNyZWRpZCJd~WyIxaWFYLU81UGlUbWs3SjExWEpOQ0FnIiwicGVyc29uYWxfYWRtaW5pc3RyYXRpdmVfbnVtYmVyIiwiSkY5NzI2NUFYIl0~WyJxNGtyMDJoLWhVb19uNUdtaE5HN09BIiwidGF4X2lkX2NvZGUiLCJMVkxEQUE4NVQ1MEc3MDJCIl0~WyI3T1pfQkR3QkpuTEVXak5tMzNzQ0pnIiwiZWR1Y2F0aW9uX2Vucm9sbG1lbnRzIixbeyJpbnN0aXR1dGVfbmFtZSI6IlVuaXZlcnNpdMOgIGRlZ2xpIHN0dWRpIGRpIFJvbWEgTGEgU2FwaWVuemEiLCJwcm9ncmFtbWVfdHlwZV9uYW1lIjoiTGF1cmVhIE1hZ2lzdHJhbGUgKERNIDI3MC8wNCkiLCJkZWdyZWVfY291cnNlX25hbWUiOiJMZXR0ZXJlIiwiZGVncmVlX2NsYXNzX25hbWUiOiJMZXR0ZXJlIiwiYWNhZGVtaWNfeWVhciI6IjIwMjMvMjAyNCIsImRlZ3JlZV9jb3Vyc2VfeWVhciI6IjHCsCIsImRlZ3JlZV9jbGFzcyI6IjUifSx7Imluc3RpdHV0ZV9uYW1lIjoiVW5pdmVyc2l0w6AgZGVnbGkgc3R1ZGkgZGkgUm9tYSBMYSBTYXBpZW56YSIsInByb2dyYW1tZV90eXBlX25hbWUiOiJNYXN0ZXIgZGkgUHJpbW8gTGl2ZWxsbyIsImRlZ3JlZV9jb3Vyc2VfbmFtZSI6ImNpbmVtYSwgc2VyaWUgdHYsIGZvcm1hdDogc2NlbmVnZ2lhdHVyYSwgcHJvZHV6aW9uZSwgbWFya2V0aW5nIiwiZGVncmVlX2NsYXNzX25hbWUiOiJDbGFzc2Ugbm9uIGRlZmluaXRhIiwiYWNhZGVtaWNfeWVhciI6IjIwMjQvMjAyNSIsImRlZ3JlZV9jb3Vyc2VfeWVhciI6IjHCsCIsImRlZ3JlZV9jbGFzcyI6Ijk5OTk5In1dXQ~WyI2RUU2SGJkeGhDNG5aaTU1eVZ0aElnIiwiaWF0IiwxNzU0MzEzMjUwXQ~WyIyWnluNGduSmctbUJsMzQ2UlRUemZnIiwidmVyaWZpY2F0aW9uIix7ImV2aWRlbmNlIjpbeyJhdHRlc3RhdGlvbiI6eyJkYXRlX29mX2lzc3VhbmNlIjoiMjAyNS0wOC0wNCIsInZvdWNoZXIiOnsib3JnYW5pemF0aW9uIjoiSXN0aXR1dG8gUG9saWdyYWZpY28gZSBaZWNjYSBkZWxsbyBTdGF0byBTLnAuQS4ifSwidHlwZSI6ImRpZ2l0YWxfYXR0ZXN0YXRpb24iLCJyZWZlcmVuY2VfbnVtYmVyIjoiOWY2MTUzN2YtYTBjZC00ZmNlLTg1MDEtNTdiNGUxMTc0ZjJmIn0sInRpbWUiOiIyMDI1LTA4LTA0VDE1OjE0OjA4WiIsInR5cGUiOiJ2b3VjaCJ9XSwidHJ1c3RfZnJhbWV3b3JrIjoiaXRfd2FsbGV0IiwiYXNzdXJhbmNlX2xldmVsIjoic3Vic3RhbnRpYWwifV0~",
   "parsedCredential": {
     "tax_id_code": {
       "value": "LVLDAA85T50G702B",
@@ -15,7 +15,7 @@
         "en-US": "Personal Administrative Number"
       }
     },
-    "education_degrees": {
+    "education_enrollments": {
       "value": [
         {
           "institute_name": {
@@ -23,27 +23,6 @@
             "name": {
               "it-IT": "Nome dell'Istituto",
               "en-US": "Institute name"
-            }
-          },
-          "qualification_name": {
-            "value": " Dottore Magistrale",
-            "name": {
-              "it-IT": "Nome del titolo di studio",
-              "en-US": "Qualification name"
-            }
-          },
-          "qualification_grade_value": {
-            "value": "71/110",
-            "name": {
-              "it-IT": "Voto del titolo di studio",
-              "en-US": "Qualification grade value"
-            }
-          },
-          "academic_qualification_date": {
-            "value": "2024-01-24",
-            "name": {
-              "it-IT": "Data di conseguimento del titolo di studio",
-              "en-US": "Qualification date"
             }
           },
           "programme_type_name": {
@@ -73,6 +52,20 @@
               "it-IT": "Nome del corso di laurea",
               "en-US": "Degree course name"
             }
+          },
+          "degree_course_year": {
+            "value": "1°",
+            "name": {
+              "it-IT": "Anno del corso di laurea",
+              "en-US": "Degree course year"
+            }
+          },
+          "academic_year": {
+            "value": "2023/2024",
+            "name": {
+              "it-IT": "Anno accademico",
+              "en-US": "Academic year"
+            }
           }
         },
         {
@@ -83,65 +76,58 @@
               "en-US": "Institute name"
             }
           },
-          "qualification_name": {
-            "value": "Dottore",
-            "name": {
-              "it-IT": "Nome del titolo di studio",
-              "en-US": "Qualification name"
-            }
-          },
-          "qualification_grade_value": {
-            "value": "95/110",
-            "name": {
-              "it-IT": "Voto del titolo di studio",
-              "en-US": "Qualification grade value"
-            }
-          },
-          "academic_qualification_date": {
-            "value": "2021-01-24",
-            "name": {
-              "it-IT": "Data di conseguimento del titolo di studio",
-              "en-US": "Qualification date"
-            }
-          },
           "programme_type_name": {
-            "value": "Laurea Triennale (DM 509/99)",
+            "value": "Master di Primo Livello",
             "name": {
               "it-IT": "Tipologia del corso di laurea",
               "en-US": "Program type name"
             }
           },
           "degree_class_name": {
-            "value": "Scienze e tecnologie fisiche",
+            "value": "Classe non definita",
             "name": {
               "it-IT": "Nome della classe di laurea",
               "en-US": "Degree class name"
             }
           },
           "degree_class": {
-            "value": "25",
+            "value": "99999",
             "name": {
               "it-IT": "Codice della classe di laurea",
               "en-US": "Degree class code"
             }
           },
           "degree_course_name": {
-            "value": "Fisica",
+            "value": "cinema, serie tv, format: sceneggiatura, produzione, marketing",
             "name": {
               "it-IT": "Nome del corso di laurea",
               "en-US": "Degree course name"
+            }
+          },
+          "degree_course_year": {
+            "value": "1°",
+            "name": {
+              "it-IT": "Anno del corso di laurea",
+              "en-US": "Degree course year"
+            }
+          },
+          "academic_year": {
+            "value": "2024/2025",
+            "name": {
+              "it-IT": "Anno accademico",
+              "en-US": "Academic year"
             }
           }
         }
       ],
       "name": {
-        "it-IT": "Elenco dei titoli di studio",
-        "en-US": "List of education degrees"
+        "it-IT": "Iscrizioni universitarie",
+        "en-US": "Education enrollments"
       }
     }
   },
   "keyTag": "f7b9d056-9e6b-49a0-b8bc-678f855fe5ab",
-  "credentialType": "education_degree",
+  "credentialType": "education_enrollment",
   "format": "dc+sd-jwt",
   "issuerConf": {
     "federation_entity": {

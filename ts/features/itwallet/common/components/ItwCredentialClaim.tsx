@@ -34,6 +34,68 @@ import { CREDENTIALS_MAP, trackCopyListItem } from "../../analytics";
 import { ItwNestedClaimsListItem } from "./ItwNestedClaimsListItem.tsx";
 
 /**
+ * Type for the configuration of nested credential summaries.
+ */
+type NestedCredentialSummaryConfig = {
+  summaryLabelId: string;
+  summaryValueId: string;
+};
+
+/**
+ * Map of nested credential summary configurations.
+ * This is used to define how to summarize nested credentials in the UI.
+ * Each key is the type of the nested credential, and the value is an object
+ * containing the IDs of the label and value to be displayed in the summary.
+ * Map more types here as needed.
+ */
+const itwNestedCredentialSummaryMap: Record<
+  string,
+  NestedCredentialSummaryConfig
+> = {
+  education_degrees: {
+    summaryLabelId: "programme_type_name",
+    summaryValueId: "degree_course_name"
+  },
+  education_enrollments: {
+    summaryLabelId: "programme_type_name",
+    summaryValueId: "degree_course_name"
+  }
+};
+
+/**
+ * Given a set of claims for a single nested item and its parent's claim ID,
+ * this function looks up the correct configuration and returns the
+ * appropriate summary fields.
+ *
+ * @param claimId The ID of the parent claim (e.g., "education_degrees").
+ * @param singleItemClaims The array of claims for the one nested item.
+ * @returns An object with the summaryLabel and summaryValue.
+ */
+const getNestedItemSummary = (
+  claimId: string,
+  singleItemClaims: Array<ClaimDisplayFormat>
+): { summaryLabel?: string; summaryValue?: string } => {
+  const summaryConfig = itwNestedCredentialSummaryMap[claimId];
+
+  if (!summaryConfig) {
+    return {};
+  }
+
+  const claimsMap = new Map(
+    singleItemClaims.map(claim => [claim.id, claim.value])
+  );
+
+  const summaryLabel = claimsMap.get(summaryConfig.summaryLabelId) as
+    | string
+    | undefined;
+  const summaryValue = claimsMap.get(summaryConfig.summaryValueId) as
+    | string
+    | undefined;
+
+  return { summaryLabel, summaryValue };
+};
+
+/**
  * Component which renders a place of birth type claim.
  * @param label - the label of the claim
  * @param claim - the claim value
@@ -387,11 +449,9 @@ export const ItwCredentialClaim = ({
         }
 
         if (ParsedNestedClaim.is(decoded)) {
-          const parsedNestedCredentials = decoded;
-
           // If there is exactly ONE nested item, display its claims directly
-          if (parsedNestedCredentials.length === 1) {
-            const singleItemClaims = parsedNestedCredentials[0];
+          if (decoded.length === 1) {
+            const singleItemClaims = decoded[0];
             return (
               <>
                 {singleItemClaims.map(nestedClaim => (
@@ -410,16 +470,14 @@ export const ItwCredentialClaim = ({
 
           // If there are MULTIPLE nested items, render each as a clickable ListItemInfo
           // that opens a bottom sheet with all claims of the item
-          if (parsedNestedCredentials.length > 1) {
+          if (decoded.length > 1) {
             return (
               <>
-                {parsedNestedCredentials.map((singleItemClaims, index) => {
-                  const summaryLabel = singleItemClaims.find(
-                    c => c.id === "programme_type_name"
-                  )?.value as string;
-                  const summaryValue = singleItemClaims.find(
-                    c => c.id === "degree_course_name"
-                  )?.value as string;
+                {decoded.map((singleItemClaims, index) => {
+                  const { summaryLabel, summaryValue } = getNestedItemSummary(
+                    claim.id,
+                    singleItemClaims
+                  );
 
                   return (
                     <ItwNestedClaimsListItem
