@@ -65,8 +65,7 @@ export const itwCredentialIssuanceMachine = setup({
     isDeferredIssuance: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
     isStatusError: notImplemented,
-    isEidExpired: notImplemented,
-    isSkipNavigation: notImplemented
+    isEidExpired: notImplemented
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
@@ -83,8 +82,8 @@ export const itwCredentialIssuanceMachine = setup({
           target: "EvaluateFlow",
           actions: assign(({ event }) => ({
             credentialType: event.credentialType,
-            isAsyncContinuation: event.asyncContinuation,
-            isUpgrade: event.isUpgrade || false
+            mode: event.mode,
+            isAsyncContinuation: event.isAsyncContinuation ?? false // TODO to be removed in [SIW-2839]
           }))
         }
       }
@@ -98,7 +97,7 @@ export const itwCredentialIssuanceMachine = setup({
           target: "Idle"
         },
         {
-          guard: "isSkipNavigation",
+          guard: ({ context }) => context.mode === "issuance",
           target: "CheckingWalletInstanceAttestation",
           actions: ["trackStartAddCredential"]
         },
@@ -168,7 +167,6 @@ export const itwCredentialIssuanceMachine = setup({
             clientId: event.output.clientId,
             codeVerifier: event.output.codeVerifier,
             requestedCredential: event.output.requestedCredential,
-            issuerConf: event.output.issuerConf,
             // TODO: [SIW-2530] In the new APIs is not needed
             credentialDefinition:
               "credentialDefinition" in event.output
@@ -187,7 +185,8 @@ export const itwCredentialIssuanceMachine = setup({
       always: {
         // If we are in the async continuation flow means we are already showing the trust issuer screen
         // but on a different route. We need to avoid a navigation to show a "double" navigation animation.
-        guard: ({ context }) => !context.isAsyncContinuation,
+        // TODO to be removed in [SIW-2839]
+        guard: ({ context }) => context.isAsyncContinuation,
         actions: "navigateToTrustIssuerScreen"
       },
       on: {
@@ -217,7 +216,10 @@ export const itwCredentialIssuanceMachine = setup({
               requestedCredential: context.requestedCredential,
               issuerConf: context.issuerConf,
               isNewIssuanceFlowEnabled: context.isWhiteListed,
-              operationType: context.isUpgrade ? "reissuing" : undefined
+              // If we are upprading the credential to the new forma we need to pass the operationType
+              // header witth the value "reissuing"
+              operationType:
+                context.mode === "upgrade" ? "reissuing" : undefined
             }),
             onDone: [
               {

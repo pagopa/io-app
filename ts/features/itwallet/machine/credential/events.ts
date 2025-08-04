@@ -1,11 +1,11 @@
 import { ErrorActorEvent } from "xstate";
+import { CredentialIssuanceMode } from "./context";
 
 export type SelectCredential = {
   type: "select-credential";
   credentialType: string;
-  skipNavigation?: boolean;
-  asyncContinuation?: boolean;
-  isUpgrade?: boolean;
+  mode: CredentialIssuanceMode;
+  isAsyncContinuation?: boolean; // TODO to be removed in [SIW-2839]
 };
 
 export type ConfirmTrustData = {

@@ -47,8 +47,8 @@ export const createCredentialIssuanceActionsImplementation = (
     const state = store.getState();
 
     return {
-      walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
-      isWhiteListed: itwIsL3EnabledSelector(state)
+      isWhiteListed: itwIsL3EnabledSelector(state),
+      walletInstanceAttestation: itwWalletInstanceAttestationSelector(state)
     };
   }),
 
@@ -216,16 +216,11 @@ const trackDataShareEvent = (
         credentialType
       ),
       O.map(() => {
-        if (isMdlRequested && isAsyncContinuation) {
-          return "async_continuation";
+        if (isAsyncContinuation) {
+          // TODO to be removed in [SIW-2839]
+          return isMdlRequested ? "async_continuation" : "old_message_request";
         }
-        if (isMdlRequested && !isAsyncContinuation) {
-          return "request_in_progress";
-        }
-        if (!isMdlRequested && isAsyncContinuation) {
-          return "old_message_request";
-        }
-        return "initial_request";
+        return isMdlRequested ? "request_in_progress" : "initial_request";
       }),
       O.fold(
         () => ({ credential }),
