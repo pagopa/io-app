@@ -32,7 +32,7 @@ export const getProximityDetails = (
   // Exclude the WIA document type from the request
   const { [WIA_DOC_TYPE]: _, ...otherDocuments } = request;
 
-  return Object.entries(otherDocuments).flatMap(
+  return Object.entries(otherDocuments).map(
     ([docType, { isAuthenticated, ...namespaces }]) => {
       const credential = credentialsByType[docType];
 
@@ -52,12 +52,10 @@ export const getProximityDetails = (
           .map(field => [field, credential.parsedCredential[field]])
       );
 
-      return [
-        {
-          credentialType: credential.credentialType,
-          claimsToDisplay: parseClaims(parsedCredential)
-        }
-      ];
+      return {
+        credentialType: credential.credentialType,
+        claimsToDisplay: parseClaims(parsedCredential)
+      };
     }
   );
 };
