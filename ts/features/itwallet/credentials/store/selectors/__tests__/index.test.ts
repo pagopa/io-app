@@ -12,10 +12,12 @@ import {
   selectFiscalCodeFromEid,
   selectNameSurnameFromEid,
   itwCredentialsByTypeSelector,
-  itwCredentialsListByTypeSelector
+  itwCredentialsListByTypeSelector,
+  itwLegacyCredentialsSelector
 } from "../index";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
+  CredentialFormat,
   ParsedCredential,
   StoredCredential
 } from "../../../../common/utils/itwTypesUtils";
@@ -63,6 +65,20 @@ const mockedDrivingLicense: StoredCredential = {
   credentialId: "dc_sd_jwt_mDL",
   parsedCredential: {},
   format: "dc+sd-jwt",
+  keyTag: "d191ad52-2674-46f3-9610-6eb7bd9146a3",
+  issuerConf: {} as StoredCredential["issuerConf"],
+  jwt: {
+    issuedAt: "2024-09-30T07:32:49.000Z",
+    expiration: "2025-09-30T07:32:50.000Z"
+  }
+};
+
+const mockedLegacyDrivingLicense: StoredCredential = {
+  credential: "",
+  credentialType: CredentialType.DRIVING_LICENSE,
+  credentialId: "dc_sd_jwt_mDL",
+  parsedCredential: {},
+  format: CredentialFormat.LEGACY_SD_JWT,
   keyTag: "d191ad52-2674-46f3-9610-6eb7bd9146a3",
   issuerConf: {} as StoredCredential["issuerConf"],
   jwt: {
@@ -359,5 +375,18 @@ describe("itwCredentialsListByTypeSelector", () => {
     expect(
       itwCredentialsListByTypeSelector(CredentialType.DRIVING_LICENSE)(state)
     ).toEqual([]);
+  });
+});
+
+describe("itwLegacyCredentialsSelector", () => {
+  it("returns the legacy credentials from the global state", () => {
+    const state = getStateWithCredentials({
+      [mockedEid.credentialId]: mockedEid,
+      [mockedLegacyDrivingLicense.credentialId]: mockedLegacyDrivingLicense,
+      [mockedDisabilityCard.credentialId]: mockedDisabilityCard
+    });
+    expect(itwLegacyCredentialsSelector(state)).toEqual([
+      mockedLegacyDrivingLicense
+    ]);
   });
 });
