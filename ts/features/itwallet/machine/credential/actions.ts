@@ -20,7 +20,10 @@ import {
   itwFlagCredentialAsRequested,
   itwUnflagCredentialAsRequested
 } from "../../common/store/actions/preferences";
-import { itwCredentialsStore } from "../../credentials/store/actions";
+import {
+  itwCredentialsRemoveByType,
+  itwCredentialsStore
+} from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
@@ -118,7 +121,11 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents,
     CredentialIssuanceEvents
   >) => {
+    assert(context.credentialType, "credentialType is undefined");
     assert(context.credentials, "credential is undefined");
+    // Removes any credentials with thye same type stored in the wallet
+    store.dispatch(itwCredentialsRemoveByType(context.credentialType));
+    // Stores the new obtained credentials
     store.dispatch(itwCredentialsStore(context.credentials));
   },
 
