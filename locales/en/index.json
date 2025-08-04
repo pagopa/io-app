@@ -839,6 +839,11 @@
         "body": "We need to check your identity from time to time for security reasons",
         "linkButtonLabel": "Read more"
       },
+      "session_corrupted": {
+        "title": "Accedi di nuovo",
+        "body": "Abbiamo avuto un problema tecnico, dobbiamo verificare di nuovo la tua identità",
+        "linkButtonLabel": "Non ricordi come accedere?"
+      },
       "active_session_login": {
         "title": "Accedi subito",
         "body": "Autenticati ora per usare l’app senza interruzioni. Così sarà sempre pronta quando ti serve."

@@ -57,7 +57,10 @@ import {
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
-import { isSessionExpiredSelector } from "../../../common/store/selectors";
+import {
+  isSessionCorruptedSelector,
+  isSessionExpiredSelector
+} from "../../../common/store/selectors";
 import { cieIDDisableTourGuide } from "../../cie/store/actions";
 import {
   isCieIDTourGuideEnabledSelector,
@@ -188,11 +191,11 @@ export const LandingScreen = () => {
   const navigation = useIONavigation();
 
   const isSessionExpired = useIOSelector(isSessionExpiredSelector);
+  const isSessionCorrupted = useIOSelector(isSessionCorruptedSelector);
   // Since the page is rendered more than once
   // and if the session is expired
   // we dispatch the resetAuthenticationState action,
   // we need to keep track of the session expiration.
-  const isSessionExpiredRef = useRef(false);
 
   const isContinueWithRootOrJailbreak = useIOSelector(
     continueWithRootOrJailbreakSelector
@@ -211,21 +214,7 @@ export const LandingScreen = () => {
   useOnFirstRender(() => {
     const isRootedOrJailbrokenFromJailMonkey = JailMonkey.isJailBroken();
     setIsRootedOrJailbroken(O.some(isRootedOrJailbrokenFromJailMonkey));
-    if (isSessionExpired) {
-      // eslint-disable-next-line functional/immutable-data
-      isSessionExpiredRef.current = isSessionExpired;
-    }
   });
-
-  // We reset the session expiration flag
-  // when the component is unmounted
-  useEffect(
-    () => () => {
-      // eslint-disable-next-line functional/immutable-data
-      isSessionExpiredRef.current = false;
-    },
-    []
-  );
 
   const displayTabletAlert = useCallback(() => {
     if (!hasTabletCompatibilityAlertAlreadyShown) {
@@ -352,26 +341,32 @@ export const LandingScreen = () => {
       );
     };
 
+    const sessionIssueKey = isSessionExpired
+      ? "session_expired"
+      : "session_corrupted";
+
     return (
       <View style={{ flex: 1 }} testID="LandingScreen">
-        {isSessionExpiredRef.current ? (
+        {isSessionExpired || isSessionCorrupted ? (
           <LandingSessionExpiredComponent
             ref={accessibilityFirstFocuseViewRef}
             pictogramName={"identityCheck"}
-            title={I18n.t("authentication.landing.session_expired.title")}
-            content={I18n.t("authentication.landing.session_expired.body")}
+            title={I18n.t(`authentication.landing.${sessionIssueKey}.title`)}
+            content={I18n.t(`authentication.landing.${sessionIssueKey}.body`)}
             buttonLink={{
               label: I18n.t(
-                "authentication.landing.session_expired.linkButtonLabel"
+                `authentication.landing.${sessionIssueKey}.linkButtonLabel`
               ),
               color: "primary",
               icon: "instruction",
               onPress: () => {
-                trackHelpCenterCtaTapped(
-                  sessionExpired.toString(),
-                  helpCenterHowToDoWhenSessionIsExpiredUrl,
-                  routeName
-                );
+                if (isSessionExpired) {
+                  trackHelpCenterCtaTapped(
+                    sessionExpired.toString(),
+                    helpCenterHowToDoWhenSessionIsExpiredUrl,
+                    routeName
+                  );
+                }
                 openWebUrl(helpCenterHowToDoWhenSessionIsExpiredUrl, () => {
                   error(I18n.t("global.jserror.title"));
                 });

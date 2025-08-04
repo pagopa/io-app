@@ -130,7 +130,10 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
-import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
+import {
+  watchActiveSessionLoginSaga,
+  watchSessionCorruptedSaga
+} from "../features/authentication/activeSessionLogin/saga";
 import ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { previousInstallationDataDeleteSaga } from "./installation";
@@ -317,6 +320,10 @@ export function* initializeApplicationSaga(
       screen: MESSAGES_ROUTES.MESSAGES_HOME
     });
   }
+
+  // If the session is corrupted, the startup saga will restart.
+  yield* fork(watchSessionCorruptedSaga);
+
   // BE CAREFUL where you get lollipop keyInfo.
   // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
   // Get keyInfo for lollipop
