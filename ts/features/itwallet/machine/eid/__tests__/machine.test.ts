@@ -23,6 +23,7 @@ import {
   InitialContext
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
+import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -132,7 +133,8 @@ describe("itwEidIssuanceMachine", () => {
       startAuthFlow: fromPromise<
         AuthenticationContext,
         StartAuthFlowActorParams
-      >(startAuthFlow)
+      >(startAuthFlow),
+      credentialUpgradeMachine: itwCredentialUpgradeMachine
     },
     guards: {
       issuedEidMatchesAuthenticatedUser,
@@ -1684,7 +1686,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("Should handle credentials upgrade", async () => {
+  it("Should handle credentials upgrade", (onDone: jest.DoneCallback) => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
@@ -1692,6 +1694,7 @@ describe("itwEidIssuanceMachine", () => {
       value: { Issuance: "DisplayingPreview" },
       context: {
         mode: "upgrade",
+        eid: ItwStoredCredentialsMocks.eid,
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
         isL3: true,
@@ -1704,9 +1707,13 @@ describe("itwEidIssuanceMachine", () => {
     const actor = createActor(mockedMachine, { snapshot });
     actor.start();
 
-    actor.send({ type: "add-to-wallet" });
+    actor.subscribe(snap => {
+      if (snap.matches("CredentialsUpgrade")) {
+        onDone();
+      }
+    });
 
-    expect(actor.getSnapshot().value).toStrictEqual("CredentialsUpgrade");
+    actor.send({ type: "add-to-wallet" });
   });
 
   it("Should skip credentials upgrade if no credentials are present", async () => {
