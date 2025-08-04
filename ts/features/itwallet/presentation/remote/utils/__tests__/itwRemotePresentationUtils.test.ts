@@ -1,9 +1,13 @@
+import { createCryptoContextFor } from "@pagopa/io-react-native-wallet-v2";
 import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
 import {
   enrichPresentationDetails,
   groupCredentialsByPurpose
 } from "../itwRemotePresentationUtils";
-import { type EnrichedPresentationDetails } from "../itwRemoteTypeUtils";
+import {
+  PresentationDetails,
+  type EnrichedPresentationDetails
+} from "../itwRemoteTypeUtils";
 
 type Expected = ReturnType<typeof groupCredentialsByPurpose>;
 
@@ -12,9 +16,9 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
-        vct: "PID",
+        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json",
         credential: "",
-        keyTag: "keytag",
+        cryptoContext: createCryptoContextFor("keytag"),
         purposes: [{ required: true }],
         claimsToDisplay: [{ id: "name", label: "Nome", value: "John" }],
         requiredDisclosures: [["a", "name", "John"]]
@@ -33,18 +37,18 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
-        vct: "PID",
+        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json",
         credential: "",
-        keyTag: "keytag",
+        cryptoContext: createCryptoContextFor("keytag"),
         purposes: [{ required: true }],
         claimsToDisplay: [{ id: "name", label: "Nome", value: "John" }],
         requiredDisclosures: [["a", "name", "John"]]
       },
       {
         id: "cred_2",
-        vct: "MDL",
+        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/mdl.json",
         credential: "",
-        keyTag: "keytag",
+        cryptoContext: createCryptoContextFor("keytag"),
         purposes: [{ required: false }],
         claimsToDisplay: [{ id: "taxcode", label: "Codice", value: "123" }],
         requiredDisclosures: [["b", "taxcode", "123"]]
@@ -63,9 +67,9 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
-        vct: "PID",
+        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json",
         credential: "",
-        keyTag: "keytag",
+        cryptoContext: createCryptoContextFor("keytag"),
         purposes: [{ description: "Identification", required: true }],
         claimsToDisplay: [{ id: "name", label: "Nome", value: "John" }],
         requiredDisclosures: [["a", "name", "John"]]
@@ -86,18 +90,18 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
-        vct: "PID",
+        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json",
         credential: "",
-        keyTag: "keytag",
+        cryptoContext: createCryptoContextFor("keytag"),
         purposes: [{ description: "Identification", required: true }],
         claimsToDisplay: [{ id: "name", label: "Nome", value: "John" }],
         requiredDisclosures: [["a", "name", "John"]]
       },
       {
         id: "cred_2",
-        vct: "MDL",
+        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/mdl.json",
         credential: "",
-        keyTag: "keytag",
+        cryptoContext: createCryptoContextFor("keytag"),
         purposes: [{ description: "Extra services", required: false }],
         claimsToDisplay: [{ id: "taxcode", label: "Codice", value: "123" }],
         requiredDisclosures: [["b", "taxcode", "123"]]
@@ -120,9 +124,9 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
-        vct: "PID",
+        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json",
         credential: "",
-        keyTag: "keytag",
+        cryptoContext: createCryptoContextFor("keytag"),
         purposes: [
           { description: "Identification", required: true },
           { description: "Extra services", required: false }
@@ -132,9 +136,9 @@ describe("groupCredentialsByPurpose", () => {
       },
       {
         id: "cred_2",
-        vct: "MDL",
+        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/mdl.json",
         credential: "",
-        keyTag: "keytag",
+        cryptoContext: createCryptoContextFor("keytag"),
         purposes: [
           { description: "Extra services", required: false },
           { description: "Top service", required: false }
@@ -179,8 +183,8 @@ describe("enrichPresentationDetails", () => {
         {
           id: "one",
           credential: "",
-          keyTag: "one-keytag",
-          vct: "PID",
+          cryptoContext: createCryptoContextFor("one-keytag"),
+          vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json",
           requiredDisclosures: [
             ["salt1", "name", "Mario"],
             ["salt2", "surname", "Rossi"]
@@ -188,7 +192,7 @@ describe("enrichPresentationDetails", () => {
           purposes: [{ required: true }]
         }
       ],
-      { PID: storedCredentialMock }
+      { PersonIdentificationData: storedCredentialMock }
     );
 
     expect(result.claimsToDisplay).toEqual([
@@ -203,8 +207,8 @@ describe("enrichPresentationDetails", () => {
         {
           id: "one",
           credential: "",
-          keyTag: "one-keytag",
-          vct: "PID",
+          cryptoContext: createCryptoContextFor("one-keytag"),
+          vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json",
           requiredDisclosures: [
             ["salt1", "name", "Mario"],
             ["salt2", "surname", "Rossi"],
@@ -213,7 +217,7 @@ describe("enrichPresentationDetails", () => {
           purposes: [{ required: true }]
         }
       ],
-      { PID: storedCredentialMock }
+      { PersonIdentificationData: storedCredentialMock }
     );
 
     expect(result.claimsToDisplay).toEqual([
@@ -222,25 +226,28 @@ describe("enrichPresentationDetails", () => {
     ]);
   });
 
-  it("should throw when a credential is not found", () => {
-    expect(() =>
-      enrichPresentationDetails(
-        [
-          {
-            id: "one",
-            credential: "",
-            keyTag: "one-keytag",
-            vct: "missing_PID",
-            requiredDisclosures: [
-              ["salt1", "name", "Mario"],
-              ["salt2", "surname", "Rossi"],
-              ["salt3", "iat", 123456]
-            ],
-            purposes: [{ required: true }]
-          }
-        ],
-        { PID: storedCredentialMock }
-      )
-    ).toThrow("missing_PID credential was not found in the wallet");
+  it("should work even when a credential is not found", () => {
+    const missingCredentialDetails: PresentationDetails[number] = {
+      id: "one",
+      credential: "",
+      cryptoContext: createCryptoContextFor("one-keytag"),
+      vct: "missing_PID",
+      requiredDisclosures: [
+        ["salt1", "name", "Mario"],
+        ["salt2", "surname", "Rossi"],
+        ["salt3", "iat", 123456]
+      ],
+      purposes: [{ required: true }]
+    };
+    expect(
+      enrichPresentationDetails([missingCredentialDetails], {
+        PersonIdentificationData: storedCredentialMock
+      })
+    ).toEqual([
+      {
+        ...missingCredentialDetails,
+        claimsToDisplay: []
+      }
+    ]);
   });
 });

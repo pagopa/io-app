@@ -8,6 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { useFocusEffect } from "@react-navigation/native";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import I18n from "../../../../../i18n.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
@@ -26,6 +27,11 @@ import { ISSUER_MOCK_NAME } from "../../../common/utils/itwMocksUtils.ts";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 import { ProximityDetails } from "../utils/itwProximityTypeUtils.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
+import {
+  trackItwProximityContinuePresentation,
+  trackItwProximityDataShare
+} from "../analytics";
+import { ITW_PROXIMITY_SCREENVIEW_EVENTS } from "../analytics/enum";
 
 export const ItwProximityClaimsDisclosureScreen = () => {
   const proximityDetails = ItwProximityMachineContext.useSelector(
@@ -75,12 +81,18 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
 
+  useFocusEffect(trackItwProximityDataShare);
+
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => machineRef.send({ type: "back" }),
     customLabels: {
       body: I18n.t(
         "features.itWallet.presentation.proximity.selectiveDisclosure.alert.message"
       )
+    },
+    dismissalContext: {
+      screen_name: ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_PROXIMITY_DATA_SHARE,
+      itw_flow: "L3"
     }
   });
 
@@ -109,7 +121,10 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
           type: "TwoButtons",
           primary: {
             label: I18n.t("global.buttons.continue"),
-            onPress: confirmVerifiablePresentation
+            onPress: () => {
+              trackItwProximityContinuePresentation();
+              confirmVerifiablePresentation();
+            }
           },
           secondary: {
             label: I18n.t("global.buttons.cancel"),
