@@ -64,6 +64,7 @@ export const itwProximityMachine = setup({
         "The machine is in idle, ready to start the proximity presentation flow",
       on: {
         start: {
+          actions: assign({ ...InitialContext }),
           target: "Permissions"
         }
       }
