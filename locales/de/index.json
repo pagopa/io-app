@@ -3694,7 +3694,7 @@
               }
             }
           },
-          "MDL": {
+          "mDL": {
             "expiring": {
               "title": "Führerschein in IO: ablaufendes Dokument",
               "content": "Verlängere deinen Führerschein in den Büros des Ministeriums für Infrastruktur und Verkehr - Generaldirektion für Motorisierung oder bei einer autorisierten Stelle in deiner Nähe.\n\nDu musst dich einer medizinischen Untersuchung bei einem qualifizierten Arzt unterziehen und die vorgeschriebenen Formulare ausfüllen.\n\n###### Welche Dokumente sollte ich bereithalten?\n\n - den ablaufenden oder abgelaufenen Führerschein\n - ein Ausweisdokument\n - die Steuernummer\n - ein aktuelles Foto in Passgröße"
