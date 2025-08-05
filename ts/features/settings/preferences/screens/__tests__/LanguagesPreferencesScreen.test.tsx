@@ -18,10 +18,15 @@ jest.mock("../../../../../store/hooks", () => ({
 }));
 
 // Mock the useIOAlertVisible hook
-jest.mock("../../../../../components/StatusMessages", () => ({
-  ...jest.requireActual("../../../../../components/StatusMessages"),
-  useIOAlertVisible: jest.fn()
-}));
+jest.mock(
+  "../../../../../components/StatusMessages/IOAlertVisibleContext",
+  () => ({
+    ...jest.requireActual(
+      "../../../../../components/StatusMessages/IOAlertVisibleContext"
+    ),
+    useIOAlertVisible: jest.fn()
+  })
+);
 
 describe("LanguagesPreferencesScreen", () => {
   beforeAll(() => {

@@ -18,7 +18,7 @@ import {
   useSharedValue
 } from "react-native-reanimated";
 import { IOScrollView } from "../components/ui/IOScrollView";
-import { useIOAlertVisible } from "../components/StatusMessages";
+import { useIOAlertVisible } from "../components/StatusMessages/StatusMessages";
 
 const GRADIENT_OPACITY_SCROLL_TRIGGER = 0.85;
 const EXTRA_COLOR_STOPS = 20;

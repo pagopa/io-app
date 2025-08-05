@@ -71,6 +71,9 @@ export function* connectionStatusSaga(
 }
 
 export default function* root(): IterableIterator<ReduxSagaEffect> {
-  const client = yield* call(createConnectivityClient, apiUrlPrefix);
+  const client = yield* call(
+    createConnectivityClient,
+    "http://192.168.0.146:3000"
+  );
   yield* fork(connectionStatusSaga, client);
 }

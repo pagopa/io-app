@@ -1,9 +1,4 @@
 import React, { PropsWithChildren, useState } from "react";
-import { AlertEdgeToEdgeWrapper, IOColors } from "@pagopa/io-app-design-system";
-import { StatusBar } from "react-native";
-import { useStatusAlertProps } from "../hooks/useStatusAlertProps";
-
-type StatusMessagesProps = PropsWithChildren;
 
 type IOAlertVisibleContext = {
   isAlertVisible: boolean;
@@ -30,29 +25,9 @@ export const IOAlertVisibleContextProvider = ({
   children
 }: PropsWithChildren<IOAlertVisibleContextProviderProps>) => {
   const [isAlertVisible, setAlertVisible] = useState(false);
-
   return (
     <IOAlertVisibleContext.Provider value={{ isAlertVisible, setAlertVisible }}>
       {children}
     </IOAlertVisibleContext.Provider>
-  );
-};
-
-export const StatusMessages = ({ children }: StatusMessagesProps) => {
-  const statusAlert = useStatusAlertProps();
-
-  return (
-    <IOAlertVisibleContextProvider>
-      <AlertEdgeToEdgeWrapper alertProps={statusAlert?.alertProps}>
-        {statusAlert && (
-          <StatusBar
-            barStyle="dark-content"
-            backgroundColor={IOColors["info-100"]}
-          />
-        )}
-        {children}
-        {statusAlert?.bottomSheet}
-      </AlertEdgeToEdgeWrapper>
-    </IOAlertVisibleContextProvider>
   );
 };

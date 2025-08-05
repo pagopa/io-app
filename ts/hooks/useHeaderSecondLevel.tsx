@@ -11,7 +11,7 @@ import {
 } from "../components/screens/BaseScreenComponent";
 import I18n from "../i18n";
 import { FAQsCategoriesType } from "../utils/faq";
-import { useIOAlertVisible } from "../components/StatusMessages.tsx";
+import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
 import { useStartSupportRequest } from "./useStartSupportRequest";
 import { useOfflineToastGuard } from "./useOfflineToastGuard.ts";
 

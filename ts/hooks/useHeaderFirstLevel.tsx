@@ -2,9 +2,9 @@ import { HeaderFirstLevel } from "@pagopa/io-app-design-system";
 import { useLayoutEffect, useMemo } from "react";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../navigation/params/MainTabParamsList";
+import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
 import { useHeaderFirstLevelActionPropHelp } from "./useHeaderFirstLevelActionPropHelp";
 import { useHeaderFirstLevelActionPropSettings } from "./useHeaderFirstLevelActionPropSettings";
-import { useIOAlertVisible } from "../components/StatusMessages";
 
 type useHeaderFirstLevelProps = {
   currentRoute: keyof MainTabParamsList;
@@ -35,7 +35,6 @@ export const useHeaderFirstLevel = ({
   const actionHelp = useHeaderFirstLevelActionPropHelp(currentRoute);
   const actionSettings = useHeaderFirstLevelActionPropSettings();
   const { isAlertVisible } = useIOAlertVisible();
-
   const actions: HeaderFirstLevel["actions"] = useMemo(() => {
     const fallbackActions: HeaderFirstLevel["actions"] = [
       actionSettings,

@@ -32,7 +32,7 @@ import { resetOfflineAccessReason } from "../features/ingress/store/actions";
 import { startApplicationInitialization } from "../store/actions/application";
 import { startupLoadSuccess } from "../store/actions/startup";
 import { StartupStatusEnum } from "../store/reducers/startup";
-import { useIOAlertVisible } from "../components/StatusMessages";
+import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
 import { useOfflineAlertDetailModal } from "../features/itwallet/common/hooks/useOfflineAlertDetailModal";
 
 // This is a list of routes where the offline alert should not be shown
