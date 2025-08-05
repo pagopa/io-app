@@ -13,7 +13,7 @@ import {
 } from "../store/actions";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 import { SessionToken } from "../../../../types/SessionToken";
-import CieIdActiveSessionLoginScreen from "../screens/CieIdLoginWebViewActiveSessionLogin";
+import ActiveSessionCieIdLoginScreen from "../screens/ActiveSessionCieIdLoginScreen";
 
 const API_PREFIX_URL = "http://example.com";
 const SPID_LEVEL = "SpidL2";
@@ -240,7 +240,7 @@ function renderComponent() {
   const store = createStore(appReducer, globalState as any);
 
   return renderScreenWithNavigationStoreContext(
-    CieIdActiveSessionLoginScreen,
+    ActiveSessionCieIdLoginScreen,
     AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN,
     { spidLevel: SPID_LEVEL, isUat: IS_UAT },
     store

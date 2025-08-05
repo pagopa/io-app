@@ -45,7 +45,7 @@ import {
   defaultUserAgent
 } from "../../login/cie/shared/utils";
 
-const CieIdLoginWebViewActiveSessionLogin = ({
+const ActiveSessionCieIdLoginWebView = ({
   spidLevel,
   isUat
 }: CieIdLoginProps) => {
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const CieIdActiveSessionLoginScreen = () => {
+const ActiveSessionCieIdLoginScreen = () => {
   const route =
     useRoute<
       RouteProp<
@@ -314,7 +314,7 @@ const CieIdActiveSessionLoginScreen = () => {
       >
     >();
 
-  return <CieIdLoginWebViewActiveSessionLogin {...route.params} />;
+  return <ActiveSessionCieIdLoginWebView {...route.params} />;
 };
 
-export default CieIdActiveSessionLoginScreen;
+export default ActiveSessionCieIdLoginScreen;
