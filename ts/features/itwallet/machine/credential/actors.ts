@@ -138,7 +138,8 @@ export const createCredentialIssuanceActorsImplementation = (
       clientId,
       codeVerifier,
       credentialDefinition,
-      isNewIssuanceFlowEnabled
+      isNewIssuanceFlowEnabled,
+      operationType
     } = input;
 
     const eid = itwCredentialsEidSelector(store.getState());
@@ -166,7 +167,8 @@ export const createCredentialIssuanceActorsImplementation = (
       codeVerifier,
       credentialDefinition,
       pid: eid.value,
-      isNewIssuanceFlowEnabled: !!isNewIssuanceFlowEnabled
+      isNewIssuanceFlowEnabled: !!isNewIssuanceFlowEnabled,
+      operationType
     });
   });
 
