@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
@@ -77,30 +76,23 @@ export const IngressScreen = () => {
   }, [isMixpanelInitialized, isMixpanelEnabled]);
 
   useEffect(() => {
-    const timeouts: Array<number> = [];
+    const timeoutChangeLabel = setTimeout(() => {
+      setContentTitle(I18n.t("startup.title2"));
+    }, TIMEOUT_CHANGE_LABEL);
 
-    timeouts.push(
-      setTimeout(() => {
-        setContentTitle(I18n.t("startup.title2"));
-        timeouts.shift();
-      }, TIMEOUT_CHANGE_LABEL)
-    );
-
-    timeouts.push(
-      setTimeout(() => {
-        if (isOfflineAccessAvailable) {
-          // Avoid to show the blocking screen if offline access is available
-          showOfflineWallet();
-        } else {
-          setShowBlockingScreen(true);
-          dispatch(setIsBlockingScreen());
-        }
-        timeouts.shift();
-      }, TIMEOUT_BLOCKING_SCREEN)
-    );
+    const timeoutBlockingScreen = setTimeout(() => {
+      if (isOfflineAccessAvailable) {
+        // Avoid to show the blocking screen if offline access is available
+        showOfflineWallet();
+      } else {
+        setShowBlockingScreen(true);
+        dispatch(setIsBlockingScreen());
+      }
+    }, TIMEOUT_BLOCKING_SCREEN);
 
     return () => {
-      timeouts?.forEach(clearTimeout);
+      clearTimeout(timeoutChangeLabel);
+      clearTimeout(timeoutBlockingScreen);
     };
   }, [dispatch, showOfflineWallet, isOfflineAccessAvailable]);
 

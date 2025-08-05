@@ -91,6 +91,10 @@ describe(IngressScreen, () => {
       jest.clearAllMocks();
     });
     it("Should update LoadingScreenContent contentTitle after 5 sec and display the cdn unreachable blocking screen after 10", async () => {
+      jest
+        .spyOn(itwSelectors, "itwOfflineAccessAvailableSelector")
+        .mockImplementation(() => false);
+
       const {
         getDeviceBlockingScreen,
         queryByText,
@@ -116,6 +120,9 @@ describe(IngressScreen, () => {
       jest
         .spyOn(backendStatusSelectors, "isBackendStatusLoadedSelector")
         .mockImplementation(() => true);
+      jest
+        .spyOn(itwSelectors, "itwOfflineAccessAvailableSelector")
+        .mockImplementation(() => false);
 
       const {
         getDeviceBlockingScreen,
