@@ -106,15 +106,13 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   "4": (state: MigrationState) => ({
     ...state,
     credentials: Object.fromEntries(
-      Object.values<Record<string, any>>(state.credentials).map(credential => {
-        if (credential.credentialType === "MDL") {
-          return [
-            credential.credentialId,
-            { ...credential, credentialType: "mDL" }
-          ];
+      Object.values<Record<string, any>>(state.credentials).map(credential => [
+        credential.credentialId,
+        {
+          ...credential,
+          credentialType: credential.credentialType.replace("MDL", "mDL")
         }
-        return [credential.credentialId, credential];
-      })
+      ])
     )
   })
 };
