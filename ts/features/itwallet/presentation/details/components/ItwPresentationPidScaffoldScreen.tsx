@@ -41,9 +41,7 @@ const ScreenHeader = memo(() => (
       <VStack space={16}>
         <H2>{I18n.t("features.itWallet.credentialName.pid")}</H2>
         <Body color="black">
-          {I18n.t(
-            "features.itWallet.presentation.itWalletId.detail.description"
-          )}
+          {I18n.t("features.itWallet.presentation.itWalletId.description")}
         </Body>
       </VStack>
     </ContentWrapper>
