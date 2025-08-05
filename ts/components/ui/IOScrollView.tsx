@@ -46,7 +46,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { WithTestID } from "../../types/WithTestID";
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
-import { useIOAlertVisible } from "../StatusMessages/StatusMessages";
+import { useIOAlertVisible } from "../StatusMessages/IOAlertVisibleContext";
 
 type ButtonBlockProps = Omit<
   IOButtonBlockSpecificProps,
