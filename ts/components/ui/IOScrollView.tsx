@@ -82,7 +82,7 @@ type IOSCrollViewHeaderScrollValues = ComponentProps<
 type IOScrollView = WithTestID<
   PropsWithChildren<{
     headerConfig?: ComponentProps<typeof HeaderSecondLevel>;
-    actions?: IOScrollViewActions;
+    actions?: WithTestID<IOScrollViewActions>;
     debugMode?: boolean;
     animatedRef?: AnimatedRef<Animated.ScrollView>;
     snapOffset?: number;
