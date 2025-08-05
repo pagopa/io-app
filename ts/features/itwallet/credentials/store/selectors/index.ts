@@ -46,14 +46,30 @@ const withLegacyFallback = (
 export const itwCredentialsByTypeSelector = createSelector(
   (state: GlobalState) => state.features.itWallet.credentials.credentials,
   credentials =>
-    Object.values(credentials).reduce(
+    Object.values(credentials).reduce<CredentialsByType>(
       (acc, c) => ({
         ...acc,
         [c.credentialType]: { ...acc[c.credentialType], [c.format]: c }
       }),
-      {} as CredentialsByType
+      {}
     )
 );
+
+/**
+ * Creates a memoized selector to retrieve all credentials of a specific format.
+ *
+ * @param format - The credential format
+ * @returns The credentials object.
+ */
+export const makeSelectAllCredentials = (format: CredentialFormat) =>
+  createSelector(itwCredentialsByTypeSelector, credentials =>
+    Object.values(credentials)
+      .map(c => withLegacyFallback(c, format))
+      .reduce<Record<string, StoredCredential>>(
+        (acc, c) => (c ? { ...acc, [c.credentialType]: c } : acc),
+        {}
+      )
+  );
 
 /**
  * Returns the credentials object from the itw credentials state, including the PID credential.
@@ -62,15 +78,8 @@ export const itwCredentialsByTypeSelector = createSelector(
  * @param state - The global state.
  * @returns The credentials object.
  */
-export const itwCredentialsAllSelector = createSelector(
-  itwCredentialsByTypeSelector,
-  credentials =>
-    Object.values(credentials)
-      .map(c => withLegacyFallback(c, CredentialFormat.SD_JWT))
-      .reduce<Record<string, StoredCredential>>(
-        (acc, c) => (c ? { ...acc, [c.credentialType]: c } : acc),
-        {}
-      )
+export const itwCredentialsAllSelector = makeSelectAllCredentials(
+  CredentialFormat.SD_JWT
 );
 
 /**
