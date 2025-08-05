@@ -4303,6 +4303,7 @@
           "invalid": "Non valida",
           "verificationExpiring": "Verifica",
           "verificationExpired": "Verifica",
+          "upgradePending": "Da aggiornare",
           "unknown": "Non disponibile"
         },
         "digital": "Versione digitale"
@@ -5278,7 +5279,7 @@
           },
           "modal": {
             "title": "Nessuna connessione",
-            "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
+            "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline** per un uso controllato, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
             "footerAction": "Ricarica l'app IO"
           }
         },
@@ -5300,7 +5301,7 @@
           },
           "modal": {
             "title": "Servizi dell’app limitati",
-            "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
+            "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi** per un uso controllato, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
             "footerAction": "Ricarica l'app IO"
           }
         },
@@ -5308,6 +5309,18 @@
           "alert": {
             "content": "Sei di nuovo online. Per usare tutti i servizi ",
             "action": "ricarica l'app IO"
+          }
+        },
+        "gate": {
+          "limitWarning": {
+            "title": "Ultimo accesso a IO offline disponibile",
+            "subtitle": "Per ragioni di sicurezza, al prossimo accesso dovrai avere una connessione a internet per continuare con Documenti su IO. ",
+            "primaryAction": "Ho capito"
+          },
+          "limitReached": {
+            "title": "Hai usato IO offline troppe volte",
+            "subtitle": "Per ragioni di sicurezza, collegati a internet e ricarica l’app per continuare con Documenti su IO e altri servizi in app.",
+            "primaryAction": "Ricarica l’app"
           }
         },
         "action": "Ricarica l'app IO",
@@ -5653,8 +5666,8 @@
             "labels": {
               "business": "Esercente",
               "status": "Stato",
-              "totalAmount": "Importo totale",
-              "idpayAmount": "Importo transazione ID Pay",
+              "totalAmount": "Importo del bene",
+              "idpayAmount": "Sconto riconosciuto",
               "transactionID": "ID transazione"
             }
           }
