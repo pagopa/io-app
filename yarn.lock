@@ -3955,6 +3955,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pagopa/io-react-native-iso18013@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@pagopa/io-react-native-iso18013@npm:0.3.0"
+  dependencies:
+    zod: ^3.25.67
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 2a31113e90144ba0af7514f2f83819a173d8f16834660be1e1e152ed6a3d9d49269d3c8301f2ce7a00a459bf1f649aa4d3973e40834fbda7a6ca10f5742af6b4
+  languageName: node
+  linkType: hard
+
 "@pagopa/io-react-native-jwt@npm:^2.1.0":
   version: 2.1.0
   resolution: "@pagopa/io-react-native-jwt@npm:2.1.0"
@@ -3978,16 +3990,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-proximity@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "@pagopa/io-react-native-proximity@npm:0.6.0"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 52ed752ff4e0a09fdc56e169baedbe483e9e37d6008007eaecc7a93d934e0d30ef7fe0f33c94c583b9a586da54e162f83741f3e7caeae03c6b74c2ba37b4c9b9
-  languageName: node
-  linkType: hard
-
 "@pagopa/io-react-native-secure-storage@npm:^0.2.1":
   version: 0.2.1
   resolution: "@pagopa/io-react-native-secure-storage@npm:0.2.1"
@@ -3998,14 +4000,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet-v2@npm:@pagopa/io-react-native-wallet@2.0.0-next.6":
-  version: 2.0.0-next.6
-  resolution: "@pagopa/io-react-native-wallet@npm:2.0.0-next.6"
+"@pagopa/io-react-native-wallet-v2@npm:@pagopa/io-react-native-wallet@2.0.0-next.7":
+  version: 2.0.0-next.7
+  resolution: "@pagopa/io-react-native-wallet@npm:2.0.0-next.7"
   dependencies:
     dcql: ^0.2.21
     js-base64: ^3.7.7
     js-sha256: ^0.9.0
     jsonpath-plus: ^10.2.0
+    jsrsasign: ^11.1.0
     parse-url: ^9.2.0
     react-native-url-polyfill: ^2.0.0
     react-native-uuid: ^2.0.1
@@ -4013,10 +4016,11 @@ __metadata:
     zod: ^3.21.4
   peerDependencies:
     "@pagopa/io-react-native-crypto": "*"
+    "@pagopa/io-react-native-iso18013": "*"
     "@pagopa/io-react-native-jwt": "*"
     react: "*"
     react-native: "*"
-  checksum: fbfd0451ed05609e25971785bc8b8524fa22165f957a58899de780f9e6fd2214c6bbafbd4dc8fce3f932a1062075a8dd6e42cffc2636a3a3fde3e847037ea25d
+  checksum: 49d3bf9afcb0192e812d724a318971a141a51104404a10775bf6aa13bf097529ae884ed2780c2cf97f60591f8a10166883bc463a5755fc238918e94d27f8622d
   languageName: node
   linkType: hard
 
@@ -12950,12 +12954,12 @@ __metadata:
     "@pagopa/io-react-native-crypto": ^1.2.3
     "@pagopa/io-react-native-http-client": 1.0.5
     "@pagopa/io-react-native-integrity": ^0.3.2
+    "@pagopa/io-react-native-iso18013": ^0.3.0
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": ^1.1.0
-    "@pagopa/io-react-native-proximity": ^0.6.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
     "@pagopa/io-react-native-wallet": ^0.30.0
-    "@pagopa/io-react-native-wallet-v2": "npm:@pagopa/io-react-native-wallet@2.0.0-next.6"
+    "@pagopa/io-react-native-wallet-v2": "npm:@pagopa/io-react-native-wallet@2.0.0-next.7"
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.0.1
     "@pagopa/react-native-cie": ^1.4.2
@@ -13952,6 +13956,13 @@ __metadata:
     jsonpath: bin/jsonpath-cli.js
     jsonpath-plus: bin/jsonpath-cli.js
   checksum: b0f7e9af4d3c586911690c0afc20cbdc3c8af963a739c7f7a62905ed34a25bf5279f2c254e7222aa65f834d2ae3c8cc217986d528c8206896afa008d6619cde7
+  languageName: node
+  linkType: hard
+
+"jsrsasign@npm:^11.1.0":
+  version: 11.1.0
+  resolution: "jsrsasign@npm:11.1.0"
+  checksum: 1ce5eb44490be260c8b667d14fa8c62bfd75ee2b28f8193043ebd62dc9ac9d371a424d3e648cc2f0c220edada1ea4910d5c8cdebc69fc8c49087539c2e9009c6
   languageName: node
   linkType: hard
 
@@ -21735,6 +21746,13 @@ __metadata:
   version: 3.25.67
   resolution: "zod@npm:3.25.67"
   checksum: 56ab904d33b1cd00041ce64ae05b0628fcbfeb7e707fa31cd498a97b540135e4dfe685200c9c62aea307695ee132870b4bc34f035228ea728aa75cc96a4954cb
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.25.67":
+  version: 3.25.76
+  resolution: "zod@npm:3.25.76"
+  checksum: c9a403a62b329188a5f6bd24d5d935d2bba345f7ab8151d1baa1505b5da9f227fb139354b043711490c798e91f3df75991395e40142e6510a4b16409f302b849
   languageName: node
   linkType: hard
 

@@ -166,7 +166,8 @@ export const obtainCredential = async ({
             {
               dPopCryptoContext,
               credentialCryptoContext
-            }
+            },
+            "reissuing"
           ).catch(enrichIssuerResponseError(credential_configuration_id));
 
         // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
@@ -175,7 +176,8 @@ export const obtainCredential = async ({
             issuerConf,
             credential,
             credential_configuration_id,
-            { credentialCryptoContext, ignoreMissingAttributes: false }
+            { credentialCryptoContext, ignoreMissingAttributes: false },
+            `${env.X509_CERT_ROOT}`
           );
 
         return {
@@ -217,9 +219,7 @@ const getCredentialConfigurationIds = (
 
     return {
       ...acc,
-      // TODO: [SIW-2740] This check can be removed once `mso_mdoc` format supports verification and parsing.
-      [scope]:
-        value.format === "dc+sd-jwt" ? [...(acc[scope] || []), key] : acc[scope]
+      [scope]: [...(acc[scope] || []), key]
     };
   }, {});
 
