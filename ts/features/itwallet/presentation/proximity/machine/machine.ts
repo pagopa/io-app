@@ -48,7 +48,7 @@ export const itwProximityMachine = setup({
     checkPermissions: fromPromise<boolean, CheckPermissionsInput>(
       notImplemented
     ),
-    checkBluetoothIsActive: fromPromise<boolean>(notImplemented),
+    checkBluetoothIsActive: fromPromise<boolean, void>(notImplemented),
     startProximityFlow: fromPromise<void, StartProximityFlowInput>(
       notImplemented
     ),

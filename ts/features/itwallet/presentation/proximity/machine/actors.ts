@@ -106,7 +106,7 @@ export const createProximityActorsImplementation = (
     }
   );
 
-  const checkBluetoothIsActive = fromPromise<boolean>(async () => {
+  const checkBluetoothIsActive = fromPromise<boolean, void>(async () => {
     const bluetoothState = await BluetoothStateManager.getState();
 
     return bluetoothState === "PoweredOn";

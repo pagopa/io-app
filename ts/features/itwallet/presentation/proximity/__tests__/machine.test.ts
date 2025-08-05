@@ -90,7 +90,9 @@ describe("itwProximityMachine", () => {
       checkPermissions: fromPromise<boolean, CheckPermissionsInput>(
         checkPermissions
       ),
-      checkBluetoothIsActive: fromPromise<boolean>(checkBluetoothIsActive),
+      checkBluetoothIsActive: fromPromise<boolean, void>(
+        checkBluetoothIsActive
+      ),
       startProximityFlow: fromPromise<void, StartProximityFlowInput>(
         startProximityFlow
       ),
