@@ -40,35 +40,35 @@ export function* handleActiveSessionLoginSaga(): Generator<
   }
 
   if (success) {
-    const newTokenActiveSessionLogin = yield* select(
-      newTokenActiveSessionLoginSelector
-    );
-    const idpSelectedActiveSessionLogin = yield* select(
-      idpSelectedActiveSessionLoginSelector
-    );
-
-    const fastLoginOptInActiveSessionLogin = yield* select(
+    const token = yield* select(newTokenActiveSessionLoginSelector);
+    const idp = yield* select(idpSelectedActiveSessionLoginSelector);
+    const fastLoginOptIn = yield* select(
       fastLoginOptInActiveSessionLoginSelector
     );
-    if (
-      idpSelectedActiveSessionLogin &&
-      newTokenActiveSessionLogin &&
-      fastLoginOptInActiveSessionLogin !== undefined
-    ) {
+
+    // Even though we are sure that all three values are present at this point,
+    // we still need to perform this runtime check due to the lack of strict typing in the reducer state.
+    // This is mostly a workaround to satisfy TypeScript.
+    // Also note: the `token` is only available *after* success is received,
+    // so this check cannot be moved earlier in the flow.
+    const isDataComplete = token && idp && fastLoginOptIn !== undefined;
+
+    if (isDataComplete) {
       yield* put(
         consolidateActiveSessionLoginData({
-          idp: idpSelectedActiveSessionLogin,
-          token: newTokenActiveSessionLogin,
-          fastLoginOptIn: fastLoginOptInActiveSessionLogin
+          idp,
+          token,
+          fastLoginOptIn
+        })
+      );
+
+      yield* put(
+        startApplicationInitialization({
+          handleSessionExpiration: false,
+          showIdentificationModalAtStartup: false,
+          isActiveLoginSuccess: true
         })
       );
     }
-    yield* put(
-      startApplicationInitialization({
-        handleSessionExpiration: false,
-        showIdentificationModalAtStartup: false,
-        isActiveLoginSuccess: true
-      })
-    );
   }
 }
