@@ -5,6 +5,7 @@ import { useIOStore } from "../../../../../store/hooks.ts";
 import { itwProximityMachine } from "./machine.ts";
 import { createProximityActorsImplementation } from "./actors.ts";
 import { createProximityActionsImplementation } from "./actions.ts";
+import { createProximityGuardsImplementation } from "./guards.ts";
 
 export const ItwProximityMachineContext =
   createActorContext(itwProximityMachine);
@@ -16,8 +17,9 @@ export const ItwProximityMachineProvider = ({
   const store = useIOStore();
 
   const proximityMachine = itwProximityMachine.provide({
-    actions: createProximityActionsImplementation(navigation, store),
-    actors: createProximityActorsImplementation()
+    actions: createProximityActionsImplementation(navigation),
+    actors: createProximityActorsImplementation(store),
+    guards: createProximityGuardsImplementation()
   });
 
   return (
