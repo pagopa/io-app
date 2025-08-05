@@ -2,12 +2,13 @@ import { HeaderFirstLevel } from "@pagopa/io-app-design-system";
 import { useEffect } from "react";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
-import { ItwWalletCardsContainer } from "../components/ItwWalletCardsContainer";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackItwOfflineWallet } from "../../analytics";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
+import { ItwOfflineAccessGate } from "../components/ItwOfflineAccessGate.tsx";
+import { ItwWalletCardsContainer } from "../components/ItwWalletCardsContainer";
 
-const ItwOfflineWalletScreen = () => {
+const OfflineWalletScreenContent = () => {
   const navigation = useIONavigation();
 
   useOnFirstRender(() => {
@@ -36,6 +37,8 @@ const ItwOfflineWalletScreen = () => {
   );
 };
 
-const ItwOfflineWalletScreenWithAlert = ItwOfflineWalletScreen;
-
-export { ItwOfflineWalletScreenWithAlert as ItwOfflineWalletScreen };
+export const ItwOfflineWalletScreen = () => (
+  <ItwOfflineAccessGate>
+    <OfflineWalletScreenContent />
+  </ItwOfflineAccessGate>
+);

@@ -1,5 +1,6 @@
 import React, { PropsWithChildren, useState } from "react";
-import { AlertEdgeToEdgeWrapper } from "@pagopa/io-app-design-system";
+import { AlertEdgeToEdgeWrapper, IOColors } from "@pagopa/io-app-design-system";
+import { StatusBar } from "react-native";
 import { useStatusAlertProps } from "../hooks/useStatusAlertProps";
 
 type StatusMessagesProps = PropsWithChildren;
@@ -43,6 +44,12 @@ export const StatusMessages = ({ children }: StatusMessagesProps) => {
   return (
     <IOAlertVisibleContextProvider>
       <AlertEdgeToEdgeWrapper alertProps={statusAlert?.alertProps}>
+        {statusAlert && (
+          <StatusBar
+            barStyle="dark-content"
+            backgroundColor={IOColors["info-100"]}
+          />
+        )}
         {children}
         {statusAlert?.bottomSheet}
       </AlertEdgeToEdgeWrapper>
