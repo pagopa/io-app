@@ -11,7 +11,8 @@ import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
   StartAuthFlowActorParams,
-  VerifyTrustFederationParams
+  VerifyTrustFederationParams,
+  CreateWalletInstanceActorParams
 } from "./actors";
 import {
   AuthenticationContext,
@@ -113,7 +114,9 @@ export const itwEidIssuanceMachine = setup({
       notImplemented
     ),
     getCieStatus: fromPromise<CieContext>(notImplemented),
-    createWalletInstance: fromPromise<string>(notImplemented),
+    createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
+      notImplemented
+    ),
     revokeWalletInstance: fromPromise<void>(notImplemented),
     getWalletAttestation: fromPromise<
       WalletInstanceAttestations,
@@ -242,6 +245,9 @@ export const itwEidIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "createWalletInstance",
+        input: ({ context }) => ({
+          isL3IssuanceEnabled: context.isL3FeaturesEnabled
+        }),
         onDone: {
           actions: [
             assign(({ event }) => ({
@@ -266,6 +272,7 @@ export const itwEidIssuanceMachine = setup({
     },
     WalletInstanceRevocation: {
       tags: [ItwTags.Loading],
+      entry: "navigateToWalletRevocationScreen",
       invoke: {
         src: "revokeWalletInstance",
         onDone: {

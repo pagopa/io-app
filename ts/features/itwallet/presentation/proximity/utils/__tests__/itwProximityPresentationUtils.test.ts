@@ -1,25 +1,25 @@
-import { type VerifierRequest } from "@pagopa/io-react-native-proximity";
 import { UntrustedRpError } from "../itwProximityErrors";
 import {
   generateAcceptedFields,
   getProximityDetails
 } from "../itwProximityPresentationUtils";
+import type { VerifierRequest } from "../itwProximityTypeUtils";
 import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
 
-const mockCredentialType = "org.iso.18013.5.1.mDL";
+const mockDocType = "org.iso.18013.5.1.mDL";
 const mockCredential: StoredCredential = {
   credential: "",
-  credentialType: mockCredentialType,
+  credentialType: "MDL",
   credentialId: "mso_mdoc_mDL",
   format: "mso_mdoc",
   keyTag: "ee1576b6-f5ba-4f49-94c4-507e62786ebc",
   issuerConf: {} as StoredCredential["issuerConf"],
   parsedCredential: {
-    family_name: {
+    "org.iso.18013.5.1.aamva:family_name": {
       name: { "en-US": "Family name", "it-IT": "Cognome" },
       value: "ROSSI"
     },
-    tax_id_code: {
+    "org.iso.18013.5.1:tax_id_code": {
       name: { "en-US": "Tax Id number", "it-IT": "Codice Fiscale" },
       value: 1000
     }
@@ -34,7 +34,7 @@ describe("getProximityDetails", () => {
   it("should throw if the verifier is not marked as trusted", () => {
     const parsedRequest = {
       request: {
-        [mockCredentialType]: {
+        [mockDocType]: {
           "org.iso.18013.5.1.aamva": {
             family_name: false
           },
@@ -54,7 +54,7 @@ describe("getProximityDetails", () => {
     } as unknown as VerifierRequest;
 
     const credentials: Record<string, StoredCredential> = {
-      [mockCredentialType]: mockCredential
+      [mockDocType]: mockCredential
     };
 
     expect(() =>
@@ -81,7 +81,7 @@ describe("getProximityDetails", () => {
   it("should return parsed claims for a valid request", () => {
     const parsedRequest = {
       request: {
-        [mockCredentialType]: {
+        [mockDocType]: {
           "org.iso.18013.5.1.aamva": {
             family_name: false
           },
@@ -94,7 +94,7 @@ describe("getProximityDetails", () => {
     } as unknown as VerifierRequest;
 
     const credentials: Record<string, StoredCredential> = {
-      [mockCredentialType]: mockCredential
+      [mockDocType]: mockCredential
     };
 
     const proximityDetails = getProximityDetails(
@@ -105,10 +105,18 @@ describe("getProximityDetails", () => {
     expect(proximityDetails).toEqual([
       {
         claimsToDisplay: [
-          { id: "family_name", label: "Family name", value: "ROSSI" },
-          { id: "tax_id_code", label: "Tax Id number", value: 1000 }
+          {
+            id: "org.iso.18013.5.1.aamva:family_name",
+            label: "Family name",
+            value: "ROSSI"
+          },
+          {
+            id: "org.iso.18013.5.1:tax_id_code",
+            label: "Tax Id number",
+            value: 1000
+          }
         ],
-        credentialType: mockCredentialType
+        credentialType: mockCredential.credentialType
       }
     ]);
   });

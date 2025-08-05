@@ -17,8 +17,8 @@ export const ItwProximityMachineProvider = ({
   const store = useIOStore();
 
   const proximityMachine = itwProximityMachine.provide({
-    actions: createProximityActionsImplementation(navigation, store),
-    actors: createProximityActorsImplementation(),
+    actions: createProximityActionsImplementation(navigation),
+    actors: createProximityActorsImplementation(store),
     guards: createProximityGuardsImplementation()
   });
 

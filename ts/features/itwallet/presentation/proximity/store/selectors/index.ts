@@ -1,17 +1,48 @@
 import { createSelector } from "reselect";
-import { itwCredentialsSelector } from "../../../../credentials/store/selectors";
-import { itwWalletInstanceAttestationSelector } from "../../../../walletInstance/store/selectors";
-import { WIA_TYPE } from "../../utils/itwProximityPresentationUtils";
-import { ProximityCredentials } from "../../utils/itwProximityTypeUtils";
+import { makeSelectAllCredentials } from "../../../../credentials/store/selectors";
+import {
+  CredentialFormat,
+  MdocSupportedCredentialConfiguration,
+  StoredCredential
+} from "../../../../common/utils/itwTypesUtils";
 
 /**
- * Returns a combined set of credentials and the WIA (`mso_mdoc`).
+ * Returns the credentials object from the itw credentials state.
+ * Only MDOC credentials are returned.
+ *
+ * @param state - The global state.
+ * @returns The credentials object.
  */
-export const itwProximityCredentialsByTypeSelector = createSelector(
-  itwCredentialsSelector,
-  itwWalletInstanceAttestationSelector,
-  (credentials, wia): ProximityCredentials => ({
-    ...credentials,
-    [WIA_TYPE]: wia?.mso_mdoc
-  })
+const itwCredentialsAsMdocSelector = makeSelectAllCredentials(
+  CredentialFormat.MDOC
+);
+
+/**
+ * Returns the credentials object by doc type.
+ * Only MDOC credentials are returned.
+ *
+ * @param state - The global state.
+ * @returns The credentials object by doc type.
+ */
+export const itwCredentialsByTypeSelector = createSelector(
+  itwCredentialsAsMdocSelector,
+  (credentials): Record<string, StoredCredential> =>
+    Object.values(credentials).reduce<Record<string, StoredCredential>>(
+      (acc, credential) => {
+        const { credentialId, issuerConf } = credential;
+
+        const doctype = (
+          issuerConf.openid_credential_issuer
+            .credential_configurations_supported[
+            credentialId
+          ] as MdocSupportedCredentialConfiguration
+        ).doctype;
+
+        return {
+          ...acc,
+          [doctype]: credential
+        };
+      },
+      {}
+    )
 );

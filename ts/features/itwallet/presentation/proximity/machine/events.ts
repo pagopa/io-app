@@ -1,5 +1,7 @@
-import { type VerifierRequest } from "@pagopa/io-react-native-proximity";
-import { ProximityDetails } from "../utils/itwProximityTypeUtils";
+import type {
+  ProximityDetails,
+  VerifierRequest
+} from "../utils/itwProximityTypeUtils";
 
 export type Start = {
   type: "start";

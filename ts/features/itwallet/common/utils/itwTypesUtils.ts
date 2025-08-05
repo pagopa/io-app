@@ -49,6 +49,14 @@ export type IssuerConfiguration =
   | LegacyIssuerConfiguration;
 
 /**
+ * Alias for the SupportedCredentialConfiguration type
+ */
+export type MdocSupportedCredentialConfiguration = Extract<
+  IssuerConfiguration["openid_credential_issuer"]["credential_configurations_supported"][string],
+  { format: "mso_mdoc" }
+>;
+
+/**
  * Alias for the AuthorizationDetail type
  * TODO: [SIW-2530]: remove the legacy type
  */
@@ -71,14 +79,14 @@ export type CredentialAccessToken = Awaited<
  * Alias for the ParseCredential type
  */
 export type ParsedCredential = Awaited<
-  ReturnType<typeof Credential.Issuance.verifyAndParseCredential>
+  ReturnType<Credential.Issuance.VerifyAndParseCredential>
 >["parsedCredential"];
 
 /**
  * Alias for the ParsedStatusAttestation type
  */
 export type ParsedStatusAttestation = Awaited<
-  ReturnType<typeof Credential.Status.verifyAndParseStatusAttestation>
+  ReturnType<typeof _legacy_Credential.Status.verifyAndParseStatusAttestation>
 >["parsedStatusAttestation"]["payload"];
 
 /**
@@ -142,10 +150,14 @@ export type ItwCredentialStatus =
 
 export type ItwAuthLevel = "L2" | "L3";
 
-export type CredentialFormat = "dc+sd-jwt" | "mso_mdoc" | "vc+sd-jwt"; // TODO: [SIW-2530] remove legacy format
+export const enum CredentialFormat {
+  MDOC = "mso_mdoc",
+  SD_JWT = "dc+sd-jwt",
+  LEGACY_SD_JWT = "vc+sd-jwt"
+}
 
 export type WalletInstanceAttestations = {
   jwt: string;
-  "dc+sd-jwt"?: string;
-  mso_mdoc?: string;
+  [CredentialFormat.SD_JWT]?: string;
+  [CredentialFormat.MDOC]?: string;
 };

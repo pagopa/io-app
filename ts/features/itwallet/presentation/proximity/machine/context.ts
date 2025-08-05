@@ -1,15 +1,10 @@
-import { type VerifierRequest } from "@pagopa/io-react-native-proximity";
-import {
-  ProximityCredentials,
-  ProximityDetails
+import type {
+  ProximityDetails,
+  VerifierRequest
 } from "../utils/itwProximityTypeUtils";
 import { ProximityFailure } from "./failure";
 
 export type Context = {
-  /**
-   * A map of stored credentials indexed by credential type
-   */
-  credentialsByType: ProximityCredentials;
   /**
    * The string used to generate the QR Code
    */
@@ -39,7 +34,6 @@ export type Context = {
 };
 
 export const InitialContext: Context = {
-  credentialsByType: {},
   failure: undefined,
   proximityDetails: undefined,
   verifierRequest: undefined

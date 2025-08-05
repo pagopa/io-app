@@ -4,12 +4,9 @@ import { ProximityEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
 import {
   SendErrorResponseActorOutput,
-  ProximityCommunicationLogicActorInput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
   StartProximityFlowInput,
-  GetQrCodeStringActorOutput,
-  CloseActorOutput,
   CheckPermissionsInput
 } from "./actors";
 import { mapEventToFailure } from "./failure";
@@ -24,8 +21,6 @@ export const itwProximityMachine = setup({
     events: {} as ProximityEvents
   },
   actions: {
-    onInit: notImplemented,
-
     /**
      * Context manipulation
      */
@@ -55,13 +50,9 @@ export const itwProximityMachine = setup({
     startProximityFlow: fromPromise<void, StartProximityFlowInput>(
       notImplemented
     ),
-    generateQrCodeString:
-      fromPromise<GetQrCodeStringActorOutput>(notImplemented),
-    closeProximityFlow: fromPromise<CloseActorOutput>(notImplemented),
-    proximityCommunicationLogic: fromCallback<
-      ProximityEvents,
-      ProximityCommunicationLogicActorInput
-    >(notImplemented),
+    generateQrCodeString: fromPromise<string, void>(notImplemented),
+    closeProximityFlow: fromPromise<boolean, void>(notImplemented),
+    proximityCommunicationLogic: fromCallback<ProximityEvents>(notImplemented),
     terminateProximitySession:
       fromPromise<SendErrorResponseActorOutput>(notImplemented),
     sendDocuments: fromPromise<
@@ -76,13 +67,13 @@ export const itwProximityMachine = setup({
   id: "itwProximityMachine",
   context: { ...InitialContext },
   initial: "Idle",
-  entry: "onInit",
   states: {
     Idle: {
       description:
         "The machine is in idle, ready to start the proximity presentation flow",
       on: {
         start: {
+          actions: assign({ ...InitialContext }),
           target: "Permissions"
         }
       }
@@ -320,10 +311,7 @@ export const itwProximityMachine = setup({
         "Manages the communication lifecycle between the device and the verifier",
       invoke: {
         id: "proximityCommunicationLogic",
-        src: "proximityCommunicationLogic",
-        input: ({ context }) => ({
-          credentialsByType: context.credentialsByType
-        })
+        src: "proximityCommunicationLogic"
       },
       on: {
         "device-connecting": {
@@ -341,14 +329,14 @@ export const itwProximityMachine = setup({
         },
         "device-disconnected": [
           {
-            description:
-              "This event is dispatched when the verifier app disconnects after sendDocuments. At this point, the verification process is complete and we can safely navigate to the success state",
+            // This event is dispatched when the verifier sends the END (0x02) termination flag after sendDocuments.
+            // At this point, the verification process is complete and we can navigate to the success state.
             guard: stateIn("DeviceCommunication.SendingDocuments"),
             target: "#itwProximityMachine.Success"
           },
           {
-            description:
-              "This event is dispatched when the verifier app disconnects before sendDocuments. At this point, we can safely close the proximity session",
+            // This event is dispatched when the verifier sends the END (0x02) termination flag before sendDocuments.
+            // At this point, the verification process is NOT complete and we can safely close the proximity session.
             actions: "setFailure",
             target: "DeviceCommunication.Closing"
           }
@@ -398,12 +386,11 @@ export const itwProximityMachine = setup({
             id: "sendDocuments",
             src: "sendDocuments",
             input: ({ context }) => ({
-              credentialsByType: context.credentialsByType,
               verifierRequest: context.verifierRequest
             }),
             onDone: {
-              // There's not evidence of the verifier app responding to this request
-              // We are waiting for the onDeviceDisconnected event
+              // There's not evidence of the verifier responding to this request.
+              // We are waiting for the onDeviceDisconnected event.
             },
             onError: {
               actions: "setFailure",

@@ -6,13 +6,9 @@ import {
   fromPromise,
   SimulatedClock
 } from "xstate";
-import { VerifierRequest } from "@pagopa/io-react-native-proximity";
 import { itwProximityMachine } from "../machine/machine";
 import {
-  CloseActorOutput,
-  GetQrCodeStringActorOutput,
   CheckPermissionsInput,
-  ProximityCommunicationLogicActorInput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
   SendErrorResponseActorOutput,
@@ -21,6 +17,7 @@ import {
 import { ProximityEvents } from "../machine/events";
 import { ItwTags } from "../../../machine/tags";
 import { ItwPresentationTags } from "../machine/tags";
+import type { VerifierRequest } from "../utils/itwProximityTypeUtils";
 
 const QR_CODE_STRING = "qr-code-string";
 const CREDENTIAL_TYPE = "org.iso.18013.5.1.mDL";
@@ -48,7 +45,6 @@ const VERIFIER_REQUEST = {
 
 /* eslint-disable sonarjs/no-identical-functions */
 describe("itwProximityMachine", () => {
-  const onInit = jest.fn();
   const setFailure = jest.fn();
   const setQRCodeGenerationError = jest.fn();
   const setHasGivenConsent = jest.fn();
@@ -86,8 +82,7 @@ describe("itwProximityMachine", () => {
       navigateToSendDocumentsResponseScreen,
       navigateToWallet,
       closeProximity,
-      trackQrCodeGenerationOutcome,
-      onInit: assign(onInit)
+      trackQrCodeGenerationOutcome
     },
     actors: {
       checkPermissions: fromPromise<boolean, CheckPermissionsInput>(
@@ -97,13 +92,11 @@ describe("itwProximityMachine", () => {
       startProximityFlow: fromPromise<void, StartProximityFlowInput>(
         startProximityFlow
       ),
-      generateQrCodeString:
-        fromPromise<GetQrCodeStringActorOutput>(generateQrCodeString),
-      closeProximityFlow: fromPromise<CloseActorOutput>(closeProximityFlow),
-      proximityCommunicationLogic: fromCallback<
-        ProximityEvents,
-        ProximityCommunicationLogicActorInput
-      >(proximityCommunicationLogic),
+      generateQrCodeString: fromPromise<string, void>(generateQrCodeString),
+      closeProximityFlow: fromPromise<boolean, void>(closeProximityFlow),
+      proximityCommunicationLogic: fromCallback<ProximityEvents>(
+        proximityCommunicationLogic
+      ),
       terminateProximitySession: fromPromise<SendErrorResponseActorOutput>(
         terminateProximitySession
       ),
@@ -127,7 +120,6 @@ describe("itwProximityMachine", () => {
       actor.start();
 
       expect(actor.getSnapshot().value).toStrictEqual("Idle");
-      expect(onInit).toHaveBeenCalled();
     });
   });
 
@@ -554,7 +546,7 @@ describe("itwProximityMachine", () => {
         })
       );
 
-      // This event is dispatched when the verifier app disconnects after sendDocuments
+      // This event is dispatched when the verifier sends the END (0x02) termination flag after sendDocuments.
       actor.send({ type: "device-disconnected" });
 
       await waitFor(() =>

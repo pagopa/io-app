@@ -4303,6 +4303,7 @@
           "invalid": "Non valida",
           "verificationExpiring": "Verifica",
           "verificationExpired": "Verifica",
+          "upgradePending": "Da aggiornare",
           "unknown": "Non disponibile"
         },
         "digital": "Versione digitale"
@@ -4767,7 +4768,7 @@
         },
         "issuerNotTrustedCommonError": {
           "title": "Un problema non permette di continuare",
-          "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere IT-Wallet. Riprova.\nSe il problema persiste, contatta l’assistenza.",
+          "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere {{credential}}. Riprova.\nSe il problema persiste, contatta l’assistenza.",
           "primaryAction": "Ho capito",
           "secondaryAction": "Mostra dettagli"
         },
@@ -5211,9 +5212,18 @@
           }
         },
         "itWalletId": {
-          "detail": {
-            "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
-            "listItemHeader": "Dati del mio IT-Wallet ID"
+          "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
+          "listItemHeader": "Dati del mio IT-Wallet ID",
+          "cta": {
+            "revoke": "Disattiva IT-Wallet"
+          },
+          "dialog": {
+            "revoke": {
+              "title": "Vuoi davvero disattivare IT-Wallet?",
+              "message": "Eliminerai i documenti che hai aggiunto al Portafoglio.\nSe cambi idea, potrai riattivare IT-Wallet in futuro.",
+              "confirm": "Sì, disattiva",
+              "cancel": "No, torna indietro"
+            }
           }
         }
       },
@@ -5238,7 +5248,7 @@
           "action": "Conferma e continua"
         },
         "loadingScreen": {
-          "title": "Stiamo disattivando Documenti su IO...",
+          "title": "Stiamo disattivando {{name}}...",
           "subtitle": "Attendi qualche secondo"
         },
         "failureScreen": {
@@ -5288,7 +5298,7 @@
           },
           "modal": {
             "title": "Nessuna connessione",
-            "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
+            "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline** per un uso controllato, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
             "footerAction": "Ricarica l'app IO"
           }
         },
@@ -5310,7 +5320,7 @@
           },
           "modal": {
             "title": "Servizi dell’app limitati",
-            "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
+            "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi** per un uso controllato, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
             "footerAction": "Ricarica l'app IO"
           }
         },
@@ -5318,6 +5328,18 @@
           "alert": {
             "content": "Sei di nuovo online. Per usare tutti i servizi ",
             "action": "ricarica l'app IO"
+          }
+        },
+        "gate": {
+          "limitWarning": {
+            "title": "Ultimo accesso a IO offline disponibile",
+            "subtitle": "Per ragioni di sicurezza, al prossimo accesso dovrai avere una connessione a internet per continuare con Documenti su IO. ",
+            "primaryAction": "Ho capito"
+          },
+          "limitReached": {
+            "title": "Hai usato IO offline troppe volte",
+            "subtitle": "Per ragioni di sicurezza, collegati a internet e ricarica l’app per continuare con Documenti su IO e altri servizi in app.",
+            "primaryAction": "Ricarica l’app"
           }
         },
         "action": "Ricarica l'app IO",
@@ -5449,7 +5471,7 @@
           "body": "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
           "validUpTo": "Vale fino a ",
           "expiresIn": "Il codice scade tra ",
-          "saveImageCta": "Salva come immagine",
+          "copyCodeCta": "Copia codice",
           "expired": {
             "header": "Il codice è scaduto",
             "CTA": "Usa un nuovo codice"
@@ -5593,7 +5615,7 @@
       "discountDetails": {
         "bottomSheetOptions": {
           "scanQr": "Inquadra un codice QR",
-          "generateBarcode": "Crea un codice sconto"
+          "generateBarcode": "Genera un codice sconto"
         },
         "authorizeButton": "Usa il bonus",
         "addExpenseButton": "Aggiungi spesa",
@@ -5663,8 +5685,8 @@
             "labels": {
               "business": "Esercente",
               "status": "Stato",
-              "totalAmount": "Importo totale",
-              "idpayAmount": "Importo transazione ID Pay",
+              "totalAmount": "Importo del bene",
+              "idpayAmount": "Sconto riconosciuto",
               "transactionID": "ID transazione"
             }
           }
@@ -6009,19 +6031,18 @@
     "payment": {
       "authorization": {
         "header": "Confermi l’operazione?",
-        "toAuth": "Da autorizzare",
-        "amount": "Importo del bene",
+        "discountedAmount": "Importo scontato",
+        "amount": "Importo totale",
         "businessName": "Richiesto da",
-        "dateTime": "Data e Ora",
-        "infoDivider": "Informazioni sull’iniziativa",
+        "dateTime": "Data e ora",
         "initiativeName": "Iniziativa",
         "availableAmount": "Credito disponibile",
-        "error": "C’è stato un errore, riprova"
+        "error": "C’è stato un errore, riprova",
+        "deny": "Annulla l'operazione"
       },
       "result": {
         "success": {
-          "title": "Operazione autorizzata con successo!",
-          "body": "Potrai controllare i dettagli dallo storico delle tue operazioni."
+          "title": "Fatto!"
         },
         "cancelled": {
           "title": "L’operazione è stata annullata"
@@ -6067,7 +6088,7 @@
       "manualInput": {
         "title": "Autorizza una transazione",
         "subtitle": "Inserisci il codice di 8 caratteri riportato sotto al codice QR.",
-        "input": "Codice Transazione",
+        "input": "Codice sconto",
         "button": "Continua"
       }
     }
