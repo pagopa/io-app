@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.11.0-rc.4](https://github.com/pagopa/io-app/compare/3.11.0-rc.3...3.11.0-rc.4) (2025-08-01)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2820](https://pagopa.atlassian.net/browse/SIW-2820)] Adds blocking logic when offline usage limit is reached ([#7244](https://github.com/pagopa/io-app/issues/7244)) ([178f1c1](https://github.com/pagopa/io-app/commit/178f1c1af692666b0e72be1002306a72f8d185d5))
+* [[IOCOM-2517](https://pagopa.atlassian.net/browse/IOCOM-2517)] Update SEND AAR QRCode regex  ([#7247](https://github.com/pagopa/io-app/issues/7247)) ([e46ab0d](https://github.com/pagopa/io-app/commit/e46ab0d765d1a891f7ddf0bb206af732fa810921))
+* **IT Wallet:** [[SIW-2819](https://pagopa.atlassian.net/browse/SIW-2819)] Adds access counter for offline wallet ([#7241](https://github.com/pagopa/io-app/issues/7241)) ([7193f42](https://github.com/pagopa/io-app/commit/7193f42ab9c5ce3b56f1b3fbe3835db1a0fbf7a6))
+
+## [3.11.0-rc.3](https://github.com/pagopa/io-app/compare/3.11.0-rc.2...3.11.0-rc.3) (2025-07-31)
+
+
+### Features
+
+* [[IOCOM-2514](https://pagopa.atlassian.net/browse/IOCOM-2514)] FIMS singleSignOn automatic tests actions ([#7243](https://github.com/pagopa/io-app/issues/7243)) ([d8a21ed](https://github.com/pagopa/io-app/commit/d8a21ed69d1acd6ed6a5c07590f068454e99e0c9))
+* **IT Wallet:** [[SIW-2283](https://pagopa.atlassian.net/browse/SIW-2283)] Implement trust verification during credential issuing ([#7213](https://github.com/pagopa/io-app/issues/7213)) ([4ed0a14](https://github.com/pagopa/io-app/commit/4ed0a14328fd81f949b8db10ecb9cb4b6486c78c))
+
+
+### Bug Fixes
+
+* [[IOPLT-1285](https://pagopa.atlassian.net/browse/IOPLT-1285)] Add dark mode support to `ItwRequestedClaimsList` ([#7226](https://github.com/pagopa/io-app/issues/7226)) ([0a5082e](https://github.com/pagopa/io-app/commit/0a5082e389356b92742f1b6e749b0b15f7d5ebbd))
+* **IT Wallet:** [[SIW-2463](https://pagopa.atlassian.net/browse/SIW-2463)] Mixpanel credential status events ([#7069](https://github.com/pagopa/io-app/issues/7069)) ([f079bfe](https://github.com/pagopa/io-app/commit/f079bfed8d5b7b49e8c91701a24d8c542d09f017))
+* **IT Wallet:** [[SIW-2813](https://pagopa.atlassian.net/browse/SIW-2813)] Split attestation utils between v1 and v2 ([#7235](https://github.com/pagopa/io-app/issues/7235)) ([1157970](https://github.com/pagopa/io-app/commit/1157970c34983ee8c93aff267c78cadcef84c2ad))
+
+## [3.11.0-rc.2](https://github.com/pagopa/io-app/compare/3.11.0-rc.1...3.11.0-rc.2) (2025-07-30)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2559](https://pagopa.atlassian.net/browse/SIW-2559)] Include Wallet Attestation in remote presentation ([#7233](https://github.com/pagopa/io-app/issues/7233)) ([5166db5](https://github.com/pagopa/io-app/commit/5166db55df3772fd03dfde3931ef25031bededee))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2788](https://pagopa.atlassian.net/browse/SIW-2788)] error handling in the new PID issuance flow ([#7214](https://github.com/pagopa/io-app/issues/7214)) ([8151db5](https://github.com/pagopa/io-app/commit/8151db57c7490861d85d4ad96c6570ec4ba11253))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2816](https://pagopa.atlassian.net/browse/SIW-2816)] Update `io-react-native-crypto` and `io-react-native-wallet-v2` ([#7238](https://github.com/pagopa/io-app/issues/7238)) ([0f77cbe](https://github.com/pagopa/io-app/commit/0f77cbef8f01e0c274c044fa70dad8f459165c80))
+
 ## [3.11.0-rc.1](https://github.com/pagopa/io-app/compare/3.11.0-rc.0...3.11.0-rc.1) (2025-07-29)
 
 ## [3.11.0-rc.0](https://github.com/pagopa/io-app/compare/3.10.0-rc.6...3.11.0-rc.0) (2025-07-29)
