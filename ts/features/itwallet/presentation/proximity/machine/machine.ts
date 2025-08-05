@@ -42,6 +42,11 @@ export const itwProximityMachine = setup({
     navigateToSendDocumentsResponseScreen: notImplemented,
     navigateToWallet: notImplemented,
     closeProximity: notImplemented,
+
+    /**
+     * Analytics
+     */
+
     trackQrCodeGenerationOutcome: notImplemented
   },
   actors: {
