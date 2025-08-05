@@ -7,7 +7,9 @@ import {
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
   StartProximityFlowInput,
-  CheckPermissionsInput
+  CheckPermissionsInput,
+  CloseActorOutput,
+  GetQrCodeStringActorOutput
 } from "./actors";
 import { mapEventToFailure } from "./failure";
 
@@ -50,8 +52,10 @@ export const itwProximityMachine = setup({
     startProximityFlow: fromPromise<void, StartProximityFlowInput>(
       notImplemented
     ),
-    generateQrCodeString: fromPromise<string, void>(notImplemented),
-    closeProximityFlow: fromPromise<boolean, void>(notImplemented),
+    generateQrCodeString: fromPromise<GetQrCodeStringActorOutput, void>(
+      notImplemented
+    ),
+    closeProximityFlow: fromPromise<CloseActorOutput, void>(notImplemented),
     proximityCommunicationLogic: fromCallback<ProximityEvents>(notImplemented),
     terminateProximitySession:
       fromPromise<SendErrorResponseActorOutput>(notImplemented),

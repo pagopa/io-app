@@ -25,6 +25,13 @@ export const promiseWithTimeout = <T>(
   return Promise.race<T>([promise, timeout]);
 };
 
+/**
+ * Get the Presentation details based on the request from the Verifier.
+ *
+ * @param request The request from the Verifier, specifying which document types and claims are required
+ * @param credentialsByType The credentials object by doc type
+ * @returns The Presentation details
+ */
 export const getProximityDetails = (
   request: VerifierRequest["request"],
   credentialsByType: Record<string, StoredCredential | undefined>
@@ -65,6 +72,14 @@ export const getProximityDetails = (
   );
 };
 
+/**
+ * Get the requested documents based on the request from the Verifier.
+ *
+ * @param request The request from the Verifier, specifying which document types and claims are required
+ * @param credentialsByType The credentials object by doc type
+ * @param wiaMdoc The WIA in mdoc format
+ * @returns The requested documents
+ */
 export const getDocuments = (
   request: VerifierRequest["request"],
   credentialsByType: Record<string, StoredCredential | undefined>,
@@ -74,17 +89,15 @@ export const getDocuments = (
   const { [WIA_DOC_TYPE]: _, ...rest } = request;
 
   const documents = Object.entries(rest).map(([docType]) => {
-    const storedCredential = credentialsByType[docType];
+    const credential = credentialsByType[docType];
 
     // This should be guaranteed by getProximityDetails having already validated credentials
-    assert(storedCredential, "Credential not found in the wallet");
-
-    const { credential, keyTag } = storedCredential;
+    assert(credential, "Credential not found in the wallet");
 
     return {
-      alias: keyTag,
+      alias: credential.keyTag,
       docType,
-      issuerSignedContent: credential
+      issuerSignedContent: credential.credential
     };
   });
 
