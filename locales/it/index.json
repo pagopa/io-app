@@ -4318,6 +4318,7 @@
           "invalid": "Non valida",
           "verificationExpiring": "Verifica",
           "verificationExpired": "Verifica",
+          "upgradePending": "Da aggiornare",
           "unknown": "Non disponibile"
         },
         "digital": "Versione digitale"
@@ -5216,9 +5217,18 @@
           }
         },
         "itWalletId": {
-          "detail": {
-            "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
-            "listItemHeader": "Dati del mio IT-Wallet ID"
+          "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
+          "listItemHeader": "Dati del mio IT-Wallet ID",
+          "cta": {
+            "revoke": "Disattiva IT-Wallet"
+          },
+          "dialog": {
+            "revoke": {
+              "title": "Vuoi davvero disattivare IT-Wallet?",
+              "message": "Eliminerai i documenti che hai aggiunto al Portafoglio.\nSe cambi idea, potrai riattivare IT-Wallet in futuro.",
+              "confirm": "Sì, disattiva",
+              "cancel": "No, torna indietro"
+            }
           }
         }
       },
@@ -5243,7 +5253,7 @@
           "action": "Conferma e continua"
         },
         "loadingScreen": {
-          "title": "Stiamo disattivando Documenti su IO...",
+          "title": "Stiamo disattivando {{name}}...",
           "subtitle": "Attendi qualche secondo"
         },
         "failureScreen": {
@@ -5466,7 +5476,7 @@
           "body": "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
           "validUpTo": "Vale fino a ",
           "expiresIn": "Il codice scade tra ",
-          "saveImageCta": "Salva come immagine",
+          "copyCodeCta": "Copia codice",
           "expired": {
             "header": "Il codice è scaduto",
             "CTA": "Usa un nuovo codice"
@@ -5610,7 +5620,7 @@
       "discountDetails": {
         "bottomSheetOptions": {
           "scanQr": "Inquadra un codice QR",
-          "generateBarcode": "Crea un codice sconto"
+          "generateBarcode": "Genera un codice sconto"
         },
         "authorizeButton": "Usa il bonus",
         "addExpenseButton": "Aggiungi spesa",
@@ -5680,8 +5690,8 @@
             "labels": {
               "business": "Esercente",
               "status": "Stato",
-              "totalAmount": "Importo totale",
-              "idpayAmount": "Importo transazione ID Pay",
+              "totalAmount": "Importo del bene",
+              "idpayAmount": "Sconto riconosciuto",
               "transactionID": "ID transazione"
             }
           }
@@ -6026,19 +6036,18 @@
     "payment": {
       "authorization": {
         "header": "Confermi l’operazione?",
-        "toAuth": "Da autorizzare",
-        "amount": "Importo del bene",
+        "discountedAmount": "Importo scontato",
+        "amount": "Importo totale",
         "businessName": "Richiesto da",
-        "dateTime": "Data e Ora",
-        "infoDivider": "Informazioni sull’iniziativa",
+        "dateTime": "Data e ora",
         "initiativeName": "Iniziativa",
         "availableAmount": "Credito disponibile",
-        "error": "C’è stato un errore, riprova"
+        "error": "C’è stato un errore, riprova",
+        "deny": "Annulla l'operazione"
       },
       "result": {
         "success": {
-          "title": "Operazione autorizzata con successo!",
-          "body": "Potrai controllare i dettagli dallo storico delle tue operazioni."
+          "title": "Fatto!"
         },
         "cancelled": {
           "title": "L’operazione è stata annullata"
@@ -6084,7 +6093,7 @@
       "manualInput": {
         "title": "Autorizza una transazione",
         "subtitle": "Inserisci il codice di 8 caratteri riportato sotto al codice QR.",
-        "input": "Codice Transazione",
+        "input": "Codice sconto",
         "button": "Continua"
       }
     }
