@@ -11,11 +11,7 @@ import {
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
-import {
-  CredentialFormat,
-  RequestObject,
-  StoredCredential
-} from "./itwTypesUtils";
+import { RequestObject, StoredCredential } from "./itwTypesUtils";
 import { Env } from "./environment";
 
 export type RequestCredentialParams = {
@@ -169,7 +165,8 @@ export const obtainCredential = async ({
             {
               dPopCryptoContext,
               credentialCryptoContext
-            }
+            },
+            "reissuing"
           ).catch(enrichIssuerResponseError(credential_configuration_id));
 
         // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
@@ -178,7 +175,8 @@ export const obtainCredential = async ({
             issuerConf,
             credential,
             credential_configuration_id,
-            { credentialCryptoContext, ignoreMissingAttributes: false }
+            { credentialCryptoContext, ignoreMissingAttributes: false },
+            `${env.X509_CERT_ROOT}`
           );
 
         return {
@@ -216,11 +214,7 @@ const getCredentialConfigurationIds = (
   ).reduce<Record<string, Array<string>>>(
     (acc, [configId, config]) => ({
       ...acc,
-      // TODO: [SIW-2740] This check can be removed once `mso_mdoc` format supports verification and parsing.
-      [config.scope]:
-        config.format === CredentialFormat.SD_JWT
-          ? [...(acc[config.scope] || []), configId]
-          : acc[config.scope]
+      [config.scope]: [...(acc[config.scope] || []), configId]
     }),
     {}
   );
