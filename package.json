@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "3.11.0-rc.2",
+  "version": "3.11.0-rc.4",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -68,7 +68,6 @@
     "@pagopa/io-react-native-iso18013": "^0.3.0",
     "@pagopa/io-react-native-jwt": "^2.1.0",
     "@pagopa/io-react-native-login-utils": "^1.1.0",
-    "@pagopa/io-react-native-proximity": "^0.6.0",
     "@pagopa/io-react-native-secure-storage": "^0.2.1",
     "@pagopa/io-react-native-wallet": "^0.30.0",
     "@pagopa/io-react-native-wallet-v2": "git+https://github.com/pagopa/io-react-native-wallet.git#SIW-2523",

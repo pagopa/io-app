@@ -19,6 +19,7 @@ const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
       }
     });
   };
+
   return (
     <WalletCardPressableBase onPress={handleOnPress}>
       <ItwCredentialCard {...props} />

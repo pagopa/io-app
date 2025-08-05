@@ -2,8 +2,10 @@ import { HStack, IOText, Tag } from "@pagopa/io-app-design-system";
 import Color from "color";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
+import { itwShouldRenderNewItWalletSelector } from "../../store/selectors";
 import {
   getCredentialNameFromType,
   tagPropsByStatus,
@@ -15,16 +17,28 @@ import {
   isMultiLevelCredential
 } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
-import { itwShouldRenderNewItWalletSelector } from "../../store/selectors";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
-import { CardColorScheme } from "./types";
 import { ItwCardValidityCheckMark } from "./ItwCardValidityCheckMark";
+import { CardColorScheme } from "./types";
 import { ItwCardMultiCredentialBadge } from "./ItwCardMultiCredentialBadge.tsx";
 
 export type ItwCredentialCard = {
+  /**
+   * Type of the credential, which is used to determine the
+   * visual representation and styling of the card.
+   */
   credentialType: string;
-  status?: ItwCredentialStatus;
+  /**
+   * Current status of the credential, used to determine the
+   * visual representation and the status tag to display.
+   */
+  credentialStatus?: ItwCredentialStatus;
+  /**
+   * Used to determine if the card should be displayed with a
+   * badge for the upgrade pending status.
+   */
+  isLegacyFormat?: boolean;
 };
 
 type StyleProps = {
@@ -34,21 +48,40 @@ type StyleProps = {
 };
 
 export const ItwCredentialCard = ({
-  status = "valid",
-  credentialType
+  credentialType,
+  credentialStatus = "valid",
+  isLegacyFormat = false
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
-
-  const borderColorMap = useBorderColorByStatus();
-  const statusTagProps = tagPropsByStatus[status];
+  const needsItwUpgrade = isNewItwRenderable && isLegacyFormat;
   const isMultiCredential = isMultiLevelCredential(credentialType);
+  const borderColorMap = useBorderColorByStatus();
+
+  const statusTagProps = useMemo<Tag | undefined>(() => {
+    if (needsItwUpgrade) {
+      return {
+        variant: "info",
+        text: I18n.t("features.itWallet.card.status.upgradePending")
+      };
+    }
+
+    return tagPropsByStatus[credentialStatus];
+  }, [credentialStatus, needsItwUpgrade]);
 
   const { titleColor, titleOpacity, colorScheme } = useMemo<StyleProps>(() => {
-    const isValid = validCredentialStatuses.includes(status);
+    const isValid = validCredentialStatuses.includes(credentialStatus);
     const theme = getThemeColorByCredentialType(credentialType);
 
-    if (status === "unknown") {
+    if (needsItwUpgrade) {
+      return {
+        titleColor: theme.textColor,
+        titleOpacity: 0.5,
+        colorScheme: "faded"
+      };
+    }
+
+    if (credentialStatus === "unknown") {
       return {
         titleColor: Color(theme.textColor).grayscale().hex(),
         titleOpacity: 0.5,
@@ -69,7 +102,7 @@ export const ItwCredentialCard = ({
       titleOpacity: 0.5,
       colorScheme: "faded"
     };
-  }, [credentialType, status]);
+  }, [credentialType, credentialStatus, needsItwUpgrade]);
 
   return (
     <View style={styles.cardContainer}>
@@ -113,7 +146,12 @@ export const ItwCredentialCard = ({
         credentialType={credentialType}
         colorScheme={colorScheme}
       />
-      <View style={[styles.border, { borderColor: borderColorMap[status] }]} />
+      <View
+        style={[
+          styles.border,
+          { borderColor: borderColorMap[credentialStatus] }
+        ]}
+      />
     </View>
   );
 };
