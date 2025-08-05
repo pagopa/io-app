@@ -8,7 +8,7 @@ import { ItwCredentialStatus } from "../../../utils/itwTypesUtils";
 import { ItwCredentialCard } from "../ItwCredentialCard";
 
 describe("ItwCredentialCard", () => {
-  it.each(["EuropeanHealthInsuranceCard", "EuropeanDisabilityCard", "MDL"])(
+  it.each(["EuropeanHealthInsuranceCard", "EuropeanDisabilityCard", "mDL"])(
     "should match snapshot when credential type is %p",
     type => {
       const globalState = appReducer(
@@ -52,7 +52,7 @@ describe("ItwCredentialCard", () => {
 
       const component = render(
         <Provider store={store}>
-          <ItwCredentialCard credentialType={"MDL"} status={status} />
+          <ItwCredentialCard credentialType={"mDL"} status={status} />
         </Provider>
       );
       expect(component).toMatchSnapshot();

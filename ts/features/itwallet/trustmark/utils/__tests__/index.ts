@@ -47,7 +47,7 @@ describe("ITW trustmark utils", () => {
       expect(Credential.Trustmark.getCredentialTrustmark).toHaveBeenCalledWith({
         walletInstanceAttestation: "walletInstanceAttestation",
         wiaCryptoContext: expect.any(Object),
-        credentialType: "MDL",
+        credentialType: "mDL",
         docNumber: "RM8375131N"
       });
 
