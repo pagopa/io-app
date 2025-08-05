@@ -15,6 +15,10 @@ export type Context = {
    */
   credentials: ReadonlyArray<StoredCredential>;
   /**
+   * The index of the current credential being processed
+   */
+  credentialIndex: number;
+  /**
    * Credentials that failed the upgrade process
    */
   failedCredentials: ReadonlyArray<StoredCredential>;
@@ -24,5 +28,6 @@ export const getInitialContext = (input: Input): Context => ({
   walletInstanceAttestation: input.walletInstanceAttestation,
   pid: input.pid,
   credentials: input.credentials,
+  credentialIndex: -1,
   failedCredentials: []
 });
