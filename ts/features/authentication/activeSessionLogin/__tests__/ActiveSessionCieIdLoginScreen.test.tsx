@@ -63,7 +63,7 @@ jest.mock("../../../../hooks/useHeaderSecondLevel", () => ({
     mockUseHeaderSecondLevel(...args)
 }));
 
-describe("CieIdActiveSessionLoginScreen", () => {
+describe("ActiveSessionCieIdLoginScreen", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
