@@ -1,26 +1,12 @@
-import { put, select } from "typed-redux-saga/macro";
 import * as O from "fp-ts/lib/Option";
-import {
-  itwCredentialsSelector,
-  itwCredentialsEidSelector
-} from "../store/selectors";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { WalletCard } from "../../../wallet/types";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { put, select } from "typed-redux-saga/macro";
 import { walletAddCards } from "../../../wallet/store/actions/cards";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-
-const mapCredentialsToWalletCards = (
-  credentials: Array<StoredCredential>
-): Array<WalletCard> =>
-  credentials.map(credential => ({
-    key: `ITW_${credential.credentialType}`,
-    type: "itw",
-    category: "itw",
-    credentialType: credential.credentialType as CredentialType,
-    status: getCredentialStatus(credential)
-  }));
+import { mapCredentialToWalletCard } from "../../wallet/utils";
+import {
+  itwCredentialsEidSelector,
+  itwCredentialsSelector
+} from "../store/selectors";
 
 /**
  * This saga adds stored credentials to the wallet screen as cards.
@@ -37,5 +23,5 @@ export function* handleWalletCredentialsRehydration() {
   }
 
   const allItwCredentials = Object.values(credentials);
-  yield* put(walletAddCards(mapCredentialsToWalletCards(allItwCredentials)));
+  yield* put(walletAddCards(allItwCredentials.map(mapCredentialToWalletCard)));
 }
