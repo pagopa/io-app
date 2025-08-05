@@ -1,3 +1,4 @@
+import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
@@ -123,6 +124,7 @@ const PaymentsHomeScreen = () => {
   if (isTransactionsEmpty) {
     return (
       <IOScrollView
+        includeContentMargins={false}
         animatedRef={scrollViewContentRef}
         contentContainerStyle={{
           flexGrow: 1
@@ -190,7 +192,11 @@ const PaymentsHomeScreenContent = () => {
 
   return (
     <>
-      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoadingFirstTime} />
+      <ContentWrapper>
+        <PaymentsHomeUserMethodsList
+          enforcedLoadingState={isLoadingFirstTime}
+        />
+      </ContentWrapper>
       <PaymentsHomeTransactionsList enforcedLoadingState={isLoadingFirstTime} />
     </>
   );

@@ -1,6 +1,4 @@
 import {
-  IOButton,
-  ContentWrapper,
   H6,
   IOSkeleton,
   Pictogram,
@@ -13,7 +11,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
@@ -115,24 +113,9 @@ const useIdPayTimelineDetailsBottomSheet = (
       O.toUndefined
     );
   };
-
-  const modalFooter = (
-    <ContentWrapper>
-      <View style={styles.footer}>
-        <IOButton
-          fullWidth
-          variant="outline"
-          label={I18n.t("global.buttons.close")}
-          onPress={() => modal.dismiss()}
-        />
-      </View>
-    </ContentWrapper>
-  );
-
   const modal = useIOBottomSheetModal({
     component: getModalContent(),
-    title: titleComponent,
-    footer: modalFooter
+    title: titleComponent
   });
 
   const present = (operation: OperationListDTO) =>
@@ -179,12 +162,6 @@ const ErrorComponent = () => (
     <H6>{I18n.t("idpay.initiative.operationDetails.errorBody")}</H6>
   </View>
 );
-
-const styles = StyleSheet.create({
-  footer: {
-    paddingVertical: 16
-  }
-});
 
 export { useIdPayTimelineDetailsBottomSheet };
 export type { IdPayTimelineDetailsBottomSheetModal };
