@@ -5582,13 +5582,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsrsasign@npm:^10.5.15":
-  version: 10.5.15
-  resolution: "@types/jsrsasign@npm:10.5.15"
-  checksum: e88fd213e5ae8a4c694ddad2accb282df7b0665bfa53c9e1be2ebfddbee342c328e185e1ffdffd684cc3ed0b83a9c1933c9c15b776a2250a3dfbdf0b45f17c7d
-  languageName: node
-  linkType: hard
-
 "@types/lodash@npm:^4.14.157":
   version: 4.14.159
   resolution: "@types/lodash@npm:4.14.159"
@@ -13005,7 +12998,6 @@ __metadata:
     "@types/hoist-non-react-statics": ^3.0.1
     "@types/jest": ^29.5.14
     "@types/js-yaml": ^3.12.1
-    "@types/jsrsasign": ^10.5.15
     "@types/lodash": ^4.14.157
     "@types/node": ^10.1.0
     "@types/node-fetch": ^2.1.7
