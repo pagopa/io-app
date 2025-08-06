@@ -51,14 +51,14 @@ export function* handleActiveSessionLoginSaga(): Generator<
     // This is mostly a workaround to satisfy TypeScript.
     // Also note: the `token` is only available *after* success is received,
     // so this check cannot be moved earlier in the flow.
-    const isDataComplete = token && idp && fastLoginOptIn !== undefined;
+    const isDataComplete = token && idp;
 
     if (isDataComplete) {
       yield* put(
         consolidateActiveSessionLoginData({
           idp,
           token,
-          fastLoginOptIn
+          fastLoginOptIn: !!fastLoginOptIn
         })
       );
 

@@ -453,7 +453,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Accedi subito
+                                Log in now
                               </Text>
                               <View
                                 style={
@@ -484,7 +484,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Autenticati ora per usare l’app senza interruzioni. Così sarà sempre pronta quando ti serve.
+                                Log in now to use the app without interruption. That way, it will always be ready when you need it.
                               </Text>
                             </View>
                           </View>
