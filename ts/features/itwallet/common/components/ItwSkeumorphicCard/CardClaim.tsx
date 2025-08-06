@@ -72,6 +72,12 @@ const CardClaim = ({
         claim?.value,
         ClaimValue.decode,
         E.fold(constNull, decoded => {
+          if (ParsedNestedClaim.is(decoded)) {
+            // If the claim is a ParsedNestedClaim, we don't render it directly
+            // but we return null to skip rendering
+            return null;
+          }
+
           if (SimpleDateClaim.is(decoded)) {
             const formattedDate = decoded.toString(dateFormat);
             return <ClaimLabel {...labelProps}>{formattedDate}</ClaimLabel>;
@@ -84,9 +90,6 @@ const CardClaim = ({
             return <ClaimLabel {...labelProps}>{privileges}</ClaimLabel>;
           } else if (PlaceOfBirthClaim.is(decoded)) {
             return <ClaimLabel {...labelProps}>{decoded.locality}</ClaimLabel>;
-            // Skip rendering for ParsedNestedClaim since they are not meant to be displayed directly in a Skeumorphic card
-          } else if (ParsedNestedClaim.is(decoded)) {
-            return undefined;
           } else {
             return <ClaimLabel {...labelProps}>{decoded}</ClaimLabel>;
           }
