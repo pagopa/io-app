@@ -5831,7 +5831,7 @@
       },
       "boolPrerequisites": {
         "header": "Dichiaro che:",
-        "emptyValueError": "Scegli un’opzione per continuare"
+        "emptyValueError": "Seleziona un’opzione per continuare"
       },
       "enableMessages": {
         "title": "Attiva la possibilità di contattarti in app",

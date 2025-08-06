@@ -28,7 +28,9 @@ const IdPayBoolValuePrerequisitesScreen = () => {
 
   const continueOnPress = () => {
     if (!areAllSelfCriteriaBoolAccepted) {
-      IOToast.error("Seleziona un’opzione per continuare");
+      IOToast.error(
+        I18n.t("idpay.onboarding.boolPrerequisites.emptyValueError")
+      );
       return;
     }
     machine.send({ type: "next" });
