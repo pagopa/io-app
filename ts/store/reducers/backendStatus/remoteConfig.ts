@@ -64,9 +64,15 @@ export const cgnMerchantsModalSelector = createSelector(
   (remoteConfig): boolean | undefined =>
     pipe(
       remoteConfig,
-      // O.map(config => config.cgn.show_cgn_categories_modal),
-      O.map(config => false),
-      O.toUndefined
+      O.map(config =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? config.cgn.show_cgn_categories_modal?.ios
+            : config.cgn.show_cgn_categories_modal?.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
     )
 );
 
