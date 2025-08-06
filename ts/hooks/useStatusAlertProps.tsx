@@ -1,9 +1,9 @@
-import { AlertEdgeToEdgeProps, useIOToast } from "@pagopa/io-app-design-system";
+import { AlertEdgeToEdgeProps } from "@pagopa/io-app-design-system";
 import { JSX, useCallback, useEffect, useMemo, useState } from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { GestureResponderEvent } from "react-native";
-import { useIODispatch, useIOSelector } from "../store/hooks";
+import { useIOSelector } from "../store/hooks";
 import { statusMessageByRouteSelector } from "../store/reducers/backendStatus/statusMessages";
 import {
   fallbackForLocalizedMessageKeys,
@@ -22,18 +22,10 @@ import { buildEventProperties } from "../utils/analytics";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
-import {
-  ItwOfflineRicaricaAppIOSource,
-  trackItwOfflineBottomSheet,
-  trackItwOfflineReloadFailure,
-  trackItwOfflineRicaricaAppIO
-} from "../features/itwallet/analytics";
-import { resetOfflineAccessReason } from "../features/ingress/store/actions";
-import { startApplicationInitialization } from "../store/actions/application";
-import { startupLoadSuccess } from "../store/actions/startup";
-import { StartupStatusEnum } from "../store/reducers/startup";
+import { trackItwOfflineBottomSheet } from "../features/itwallet/analytics";
 import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
 import { useOfflineAlertDetailModal } from "../features/itwallet/common/hooks/useOfflineAlertDetailModal";
+import { useAppRestartAction } from "../features/itwallet/wallet/hooks/useAppRestartAction";
 
 // This is a list of routes where the offline alert should not be shown
 const blackListOfflineAlertRoutes = new Set<string>([
@@ -58,63 +50,36 @@ type AlertActionProps =
       onPress?: never;
     };
 
-/**
- * Hook that creates and manages a function to restart the application.
- *
- * @param source - The source of the app restart action, for analytics purposes
- * @returns A function to restart the application
- */
-const useAppRestartAction = (source: ItwOfflineRicaricaAppIOSource) => {
-  const toast = useIOToast();
-  const dispatch = useIODispatch();
-  const isConnected = useIOSelector(isConnectedSelector);
-
-  return useCallback(() => {
-    if (isConnected) {
-      trackItwOfflineRicaricaAppIO(source);
-      // Reset the offline access reason.
-      // Since this state is `undefined` when the user is online,
-      // the startup saga will proceed without blocking.
-      dispatch(resetOfflineAccessReason());
-      // Dispatch this action to mount the correct navigator.
-      dispatch(startupLoadSuccess(StartupStatusEnum.INITIAL));
-      // restart startup saga
-      dispatch(startApplicationInitialization());
-    } else {
-      toast.error(I18n.t("features.itWallet.offline.failure"));
-      trackItwOfflineReloadFailure();
-    }
-  }, [dispatch, isConnected, toast, source]);
-};
-
 type AlertProps = {
   alertProps?: AlertEdgeToEdgeProps;
   bottomSheet?: JSX.Element;
 };
 export const useStatusAlertProps = (): AlertProps | undefined => {
+  const { setAlertVisible } = useIOAlertVisible();
   const [connectivityAlert, setConnectivityAlert] = useState<
     AlertEdgeToEdgeProps | undefined
   >(undefined);
+
+  const currentStatusMessage = useIOSelector(statusMessageByRouteSelector);
+  const currentRoute = useIOSelector(currentRouteSelector);
+  const isConnected = useIOSelector(isConnectedSelector);
+  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+  const prevIsConnected = usePrevious(isConnected);
+
+  // Bottom sheets
+  const detailModal = useOfflineAlertDetailModal(offlineAccessReason);
   const { present, bottomSheet } = useIOBottomSheetModal({
     title: I18n.t("global.offline.bottomSheet.title"),
     component: (
       <IOMarkdown content={I18n.t("global.offline.bottomSheet.content")} />
     )
   });
-  const handleAppRestart = useAppRestartAction("banner");
-  const currentStatusMessage = useIOSelector(statusMessageByRouteSelector);
-  const currentRoute = useIOSelector(currentRouteSelector);
-  const isConnected = useIOSelector(isConnectedSelector);
-  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
-  const detailModal = useOfflineAlertDetailModal(offlineAccessReason);
-
-  const { setAlertVisible } = useIOAlertVisible();
   const openItwOfflineBottomSheet = useCallback(() => {
     detailModal?.present();
     trackItwOfflineBottomSheet();
   }, [detailModal]);
 
-  const prevIsConnected = usePrevious(isConnected);
+  const handleAppRestart = useAppRestartAction("banner");
 
   const locale = getFullLocale();
   const localeFallback = fallbackForLocalizedMessageKeys(locale);
@@ -181,6 +146,7 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
           screen: currentRoute
         })
       );
+      return;
     }
     if (prevIsConnected === false && isConnected === true) {
       setConnectivityAlert({
@@ -249,7 +215,7 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
       }
     };
   }, [
-    setAlertVisible,
+    // setAlertVisible,
     connectivityAlert,
     currentStatusMessage,
     localeFallback,
