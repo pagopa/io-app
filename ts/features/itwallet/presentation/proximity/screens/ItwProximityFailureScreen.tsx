@@ -15,6 +15,7 @@ import {
 import I18n from "../../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
+import { trackItwProximityUnofficialVerifierBottomSheet } from "../analytics/index.ts";
 
 export const ItwProximityFailureScreen = () => {
   const failureOption =
@@ -99,7 +100,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 `${i18nNs}.relyingParty.untrustedRp.secondaryAction`
               ),
-              onPress: present
+              onPress: () => {
+                trackItwProximityUnofficialVerifierBottomSheet();
+                present();
+              }
             }
           };
       }
