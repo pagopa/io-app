@@ -11,13 +11,17 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useLayoutEffect, useRef } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector, useIOStore } from "../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
@@ -34,6 +38,8 @@ import { isCieLoginUatEnabledSelector } from "../../login/cie/store/selectors";
 import { SpidLevel } from "../../login/cie/utils";
 import useNavigateToLoginMethod from "../../login/hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../../login/landing/components/LandingSessionExpiredComponent";
+import { setStartActiveSessionLogin } from "../store/actions";
+import { isActiveSessionLoginSelector } from "../store/selectors";
 
 const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
@@ -42,6 +48,8 @@ const SPID_LEVEL: SpidLevel = "SpidL2";
 export const ActiveSessionLandingScreen = () => {
   const store = useIOStore();
   const insets = useSafeAreaInsets();
+  const dispatch = useIODispatch();
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const {
@@ -66,6 +74,12 @@ export const ActiveSessionLandingScreen = () => {
     void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
     navigateToCieIdLoginScreen(SPID_LEVEL);
   }, [store, navigateToCieIdLoginScreen]);
+
+  useEffect(() => {
+    if (!isActiveSessionLogin) {
+      dispatch(setStartActiveSessionLogin());
+    }
+  }, [dispatch, isActiveSessionLogin]);
 
   const {
     present,

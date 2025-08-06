@@ -53,6 +53,7 @@ const ActiveSessionCieIdLoginWebView = ({
   const webView = useRef<WebView>(null);
   const dispatch = useIODispatch();
   const [authenticatedUrl, setAuthenticatedUrl] = useState<string | null>(null);
+  const isLoginUrlWithTokenRef = useRef<boolean>(false);
   const activeSessionUserLogged = useIOSelector(
     activeSessionUserLoggedSelector
   );
@@ -231,14 +232,15 @@ const ActiveSessionCieIdLoginWebView = ({
       return false;
     }
 
-    const isLoginUrlWithToken = onLoginUriChanged(
+    // eslint-disable-next-line functional/immutable-data
+    isLoginUrlWithTokenRef.current = onLoginUriChanged(
       handleLoginFailure,
       handleLoginSuccess,
       "cieid"
     )(event);
     // URL can be loaded if it's not the login URL containing the session token - this avoids
     // making a (useless) GET request with the session in the URL
-    return !isLoginUrlWithToken;
+    return !isLoginUrlWithTokenRef.current;
   };
 
   const handleLoadingError = useCallback(
@@ -247,14 +249,23 @@ const ActiveSessionCieIdLoginWebView = ({
       const webViewHttpError = error as WebViewHttpErrorEvent;
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
-        if (url.includes(apiLoginUrlPrefix) || statusCode !== 403) {
+        if (
+          url.includes(apiLoginUrlPrefix) ||
+          (statusCode !== 403 && statusCode !== 400)
+        ) {
           forceLogoutAndNavigateToLanding();
+        } else if (statusCode === 400) {
+          navigateToCieIdAuthenticationError();
         }
       } else {
         forceLogoutAndNavigateToLanding();
       }
     },
-    [apiLoginUrlPrefix, forceLogoutAndNavigateToLanding]
+    [
+      apiLoginUrlPrefix,
+      forceLogoutAndNavigateToLanding,
+      navigateToCieIdAuthenticationError
+    ]
   );
 
   useHeaderSecondLevel({
@@ -272,24 +283,27 @@ const ActiveSessionCieIdLoginWebView = ({
 
   return (
     <SafeAreaView style={styles.container} edges={["bottom"]}>
-      {(webviewSource || authenticatedUrl) && (
-        <WebView
-          testID="cie-id-webview"
-          ref={webView}
-          startInLoadingState={true}
-          userAgent={defaultUserAgent}
-          javaScriptEnabled={true}
-          renderLoading={() => (
-            <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
-          )}
-          onLoadEnd={() => setIsLoadingWebView(false)}
-          originWhitelist={originSchemasWhiteList}
-          onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-          onHttpError={handleLoadingError}
-          onError={handleLoadingError}
-          source={authenticatedUrl ? { uri: authenticatedUrl } : webviewSource}
-        />
-      )}
+      {(webviewSource || authenticatedUrl) &&
+        !isLoginUrlWithTokenRef.current && (
+          <WebView
+            testID="cie-id-webview"
+            ref={webView}
+            startInLoadingState={true}
+            userAgent={defaultUserAgent}
+            javaScriptEnabled={true}
+            renderLoading={() => (
+              <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
+            )}
+            onLoadEnd={() => setIsLoadingWebView(false)}
+            originWhitelist={originSchemasWhiteList}
+            onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+            onHttpError={handleLoadingError}
+            onError={handleLoadingError}
+            source={
+              authenticatedUrl ? { uri: authenticatedUrl } : webviewSource
+            }
+          />
+        )}
       {!webviewSource && (
         <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
       )}
