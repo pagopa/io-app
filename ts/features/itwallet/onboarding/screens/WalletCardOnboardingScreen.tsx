@@ -128,7 +128,7 @@ const ItwCredentialOnboardingSection = () => {
   const shouldShowUpcoming = isL3Enabled && env === "pre";
   const displayedCredentials = shouldShowUpcoming
     ? [...availableCredentials, ...newCredentials, ...upcomingCredentials]
-    : [...availableCredentials];
+    : [...availableCredentials, ...newCredentials];
 
   const beginCredentialIssuance = useOfflineToastGuard(
     useCallback(

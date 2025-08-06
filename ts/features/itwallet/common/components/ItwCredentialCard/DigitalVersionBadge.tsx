@@ -5,9 +5,21 @@ import {
   IOColors,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
+import {
+  Canvas,
+  LinearGradient,
+  RoundedRect,
+  vec
+} from "@shopify/react-native-skia";
 import Color from "color";
-import { memo } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { memo, useState } from "react";
+import {
+  LayoutChangeEvent,
+  Platform,
+  StyleSheet,
+  Text,
+  View
+} from "react-native";
 import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
@@ -19,7 +31,7 @@ type DigitalVersionBadgeProps = {
 };
 
 type CredentialTypesProps = {
-  background: string;
+  background: string | Array<string>;
   foreground: string;
 };
 
@@ -42,11 +54,11 @@ const getColorPropsByScheme = (
     },
     education_degree: {
       foreground: "#403C36",
-      background: "#F2F1CE"
+      background: ["#ECECEC", "#F2F1CE"]
     },
     education_enrollment: {
       foreground: "#403C36",
-      background: "#E0F2CE"
+      background: ["#ECECEC", "#E0F2CE"]
     }
   };
 
@@ -56,6 +68,14 @@ const getColorPropsByScheme = (
   }
 
   if (colorScheme === "greyscale") {
+    if (Array.isArray(baseColorProps.background)) {
+      return {
+        foreground: Color(baseColorProps.foreground).grayscale().hex(),
+        background: baseColorProps.background.map(c =>
+          Color(c).grayscale().hex()
+        )
+      };
+    }
     return {
       foreground: Color(baseColorProps.foreground).grayscale().hex(),
       background: Color(baseColorProps.background).grayscale().hex()
@@ -70,6 +90,10 @@ const DigitalVersionBadge = ({
   colorScheme = "default"
 }: DigitalVersionBadgeProps) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
+  const [layout, setLayout] = useState<{
+    width: number;
+    height: number;
+  } | null>(null);
 
   const colorProps = getColorPropsByScheme(credentialType, colorScheme);
 
@@ -79,10 +103,41 @@ const DigitalVersionBadge = ({
   }
 
   const { background, foreground } = colorProps;
+  const isGradient = Array.isArray(background);
+
+  const handleLayout = (event: LayoutChangeEvent) => {
+    const { width, height } = event.nativeEvent.layout;
+    setLayout({ width, height });
+  };
 
   return (
     <View style={styles.wrapper}>
-      <View style={[styles.badge, { backgroundColor: background }]}>
+      <View
+        onLayout={handleLayout}
+        style={[
+          styles.badge,
+          {
+            backgroundColor: isGradient ? undefined : (background as string)
+          }
+        ]}
+      >
+        {isGradient && layout && (
+          <Canvas style={styles.gradientCanvas}>
+            <RoundedRect
+              x={0}
+              y={0}
+              width={layout.width}
+              height={layout.height}
+              r={IOBadgeRadius}
+            >
+              <LinearGradient
+                start={vec(0, 0)}
+                end={vec(layout.width, 0)}
+                colors={background as Array<string>}
+              />
+            </RoundedRect>
+          </Canvas>
+        )}
         {colorScheme !== "default" && <View style={styles.faded} />}
         <Text
           numberOfLines={1}
@@ -93,13 +148,14 @@ const DigitalVersionBadge = ({
             alignSelf: "center",
             textTransform: "uppercase",
             flexShrink: 1,
+            zIndex: 20,
             ...makeFontStyleObject(
               12,
               typefacePreference === "comfortable"
                 ? "Titillio"
                 : "TitilliumSansPro",
               16,
-              "Regular"
+              "Semibold"
             )
           }}
         >
@@ -138,6 +194,10 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     opacity: 0.6,
     zIndex: 10
+  },
+  gradientCanvas: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 0
   }
 });
 
