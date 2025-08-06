@@ -1,13 +1,13 @@
 import configureMockStore from "redux-mock-store";
 import { createActor } from "xstate";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwL3IdentificationModeSelectionScreen } from "../ItwL3IdentificationModeSelectionScreen";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
+import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
+import { ITW_ROUTES } from "../../../../navigation/routes";
+import { ItwL3IdentificationModeSelectionScreen } from "../../../common/screens/ItwL3IdentificationModeSelectionScreen";
 
 jest.mock("../../../../../config", () => ({
   itwEnabled: true

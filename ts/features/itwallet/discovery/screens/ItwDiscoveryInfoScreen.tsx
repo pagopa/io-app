@@ -6,9 +6,9 @@ import { ItwPaywallComponent } from "../components/ItwPaywallComponent.tsx";
 import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
 import { trackItWalletActivationStart } from "../../analytics/index.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
-import { itwHasNfcFeatureSelector } from "../../identification/store/selectors/index.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
+import { itwHasNfcFeatureSelector } from "../../identification/common/store/selectors/index.ts";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
   isL3?: boolean;

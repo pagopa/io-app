@@ -5,14 +5,14 @@ import { createActor } from "xstate";
 import _ from "lodash";
 import { Linking } from "react-native";
 import { isCieIdAvailable, openCieIdApp } from "@pagopa/io-react-native-cieid";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
-import { ITW_ROUTES } from "../../../navigation/routes";
-import ItwCieIdLoginScreen from "../cieId/ItwCieIdLoginScreen";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
+import { ITW_ROUTES } from "../../../../navigation/routes";
+import ItwCieIdLoginScreen from "../../../cieId/screens/ItwCieIdLoginScreen";
+import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 
 jest.mock("@pagopa/io-react-native-cieid", () => ({
   isCieIdAvailable: jest.fn(),
