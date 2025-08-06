@@ -66,6 +66,7 @@ import {
   ItwCredentialIssuanceMachineContext,
   ItwCredentialIssuanceMachineProvider
 } from "../machine/credential/provider";
+import { ItwIssuanceInvalidWalletScreen } from "../issuance/screens/ItwIssuanceInvalidWalletScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -252,6 +253,11 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL}
         component={ItwIssuanceUpcomingCredentialScreen}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.IT_WALLET_INACTIVE}
+        component={ItwIssuanceInvalidWalletScreen}
         options={hiddenHeader}
       />
       {/* CREDENTIAL PRESENTATION */}

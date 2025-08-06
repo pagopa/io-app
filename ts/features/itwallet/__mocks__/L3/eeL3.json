@@ -135,17 +135,12 @@
       "homepage_uri": "https://pre.eaa.wallet.ipzs.it/1-0",
       "policy_uri": "https://pre.eaa.wallet.ipzs.it/1-0/public/privacy_policy.html",
       "logo_uri": "https://pre.eaa.wallet.ipzs.it/1-0/public/logo.svg",
-      "contacts": [
-        "informazioni@ipzs.it",
-        "protocollo@pec.ipzs.it"
-      ],
+      "contacts": ["informazioni@ipzs.it", "protocollo@pec.ipzs.it"],
       "tos_uri": "https://pre.eaa.wallet.ipzs.it/1-0/public/info_policy.html"
     },
     "openid_credential_issuer": {
       "credential_hash_alg_supported": "sha-256",
-      "trust_frameworks_supported": [
-        "it_wallet"
-      ],
+      "trust_frameworks_supported": ["it_wallet"],
       "jwks": {
         "keys": [
           {
@@ -178,17 +173,13 @@
           }
         }
       ],
-      "evidence_supported": [
-        "vouch"
-      ],
+      "evidence_supported": ["vouch"],
       "status_attestation_endpoint": "https://pre.eaa.wallet.ipzs.it/1-0/status",
       "credential_configurations_supported": {
         "dc_sd_jwt_EuropeanDisabilityCard": {
           "format": "dc+sd-jwt",
           "scope": "EuropeanDisabilityCard",
-          "cryptographic_binding_methods_supported": [
-            "jwk"
-          ],
+          "cryptographic_binding_methods_supported": ["jwk"],
           "credential_signing_alg_values_supported": [
             "ES256",
             "ES384",
@@ -196,11 +187,7 @@
           ],
           "proof_types_supported": {
             "jwt": {
-              "proof_signing_alg_values_supported": [
-                "ES256",
-                "ES384",
-                "ES512"
-              ]
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
             }
           },
           "display": [
@@ -216,9 +203,7 @@
           "vct": "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/europeandisabilitycard",
           "claims": [
             {
-              "path": [
-                "link_qr_code"
-              ],
+              "path": ["link_qr_code"],
               "display": [
                 {
                   "locale": "it-IT",
@@ -231,9 +216,7 @@
               ]
             },
             {
-              "path": [
-                "given_name"
-              ],
+              "path": ["given_name"],
               "display": [
                 {
                   "locale": "it-IT",
@@ -246,9 +229,7 @@
               ]
             },
             {
-              "path": [
-                "family_name"
-              ],
+              "path": ["family_name"],
               "display": [
                 {
                   "name": "Cognome",
@@ -261,9 +242,7 @@
               ]
             },
             {
-              "path": [
-                "birth_date"
-              ],
+              "path": ["birth_date"],
               "display": [
                 {
                   "name": "Data di nascita",
@@ -276,9 +255,7 @@
               ]
             },
             {
-              "path": [
-                "expiry_date"
-              ],
+              "path": ["expiry_date"],
               "display": [
                 {
                   "name": "Data di scadenza",
@@ -291,9 +268,7 @@
               ]
             },
             {
-              "path": [
-                "document_number"
-              ],
+              "path": ["document_number"],
               "display": [
                 {
                   "name": "Numero",
@@ -306,9 +281,7 @@
               ]
             },
             {
-              "path": [
-                "portrait"
-              ],
+              "path": ["portrait"],
               "display": [
                 {
                   "name": "Fotografia",
@@ -321,9 +294,7 @@
               ]
             },
             {
-              "path": [
-                "constant_attendance_allowance"
-              ],
+              "path": ["constant_attendance_allowance"],
               "display": [
                 {
                   "name": "Indennità di assistenza continua",
@@ -340,9 +311,7 @@
         "dc_sd_jwt_EuropeanHealthInsuranceCard": {
           "format": "dc+sd-jwt",
           "scope": "EuropeanHealthInsuranceCard",
-          "cryptographic_binding_methods_supported": [
-            "jwk"
-          ],
+          "cryptographic_binding_methods_supported": ["jwk"],
           "credential_signing_alg_values_supported": [
             "ES256",
             "ES384",
@@ -350,11 +319,7 @@
           ],
           "proof_types_supported": {
             "jwt": {
-              "proof_signing_alg_values_supported": [
-                "ES256",
-                "ES384",
-                "ES512"
-              ]
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
             }
           },
           "display": [
@@ -370,9 +335,7 @@
           "vct": "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/europeanhealthinsurancecard",
           "claims": [
             {
-              "path": [
-                "content"
-              ],
+              "path": ["content"],
               "display": [
                 {
                   "locale": "it-IT",
@@ -389,9 +352,7 @@
         "dc_sd_jwt_mDL": {
           "format": "dc+sd-jwt",
           "scope": "mDL",
-          "cryptographic_binding_methods_supported": [
-            "jwk"
-          ],
+          "cryptographic_binding_methods_supported": ["jwk"],
           "credential_signing_alg_values_supported": [
             "ES256",
             "ES384",
@@ -399,11 +360,7 @@
           ],
           "proof_types_supported": {
             "jwt": {
-              "proof_signing_alg_values_supported": [
-                "ES256",
-                "ES384",
-                "ES512"
-              ]
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
             }
           },
           "display": [
@@ -484,9 +441,7 @@
           "vct": "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/mdl",
           "claims": [
             {
-              "path": [
-                "given_name"
-              ],
+              "path": ["given_name"],
               "display": [
                 {
                   "name": "Nome",
@@ -499,9 +454,7 @@
               ]
             },
             {
-              "path": [
-                "family_name"
-              ],
+              "path": ["family_name"],
               "display": [
                 {
                   "name": "Cognome",
@@ -514,9 +467,7 @@
               ]
             },
             {
-              "path": [
-                "birth_date"
-              ],
+              "path": ["birth_date"],
               "display": [
                 {
                   "name": "Data di nascita",
@@ -529,9 +480,7 @@
               ]
             },
             {
-              "path": [
-                "birth_place"
-              ],
+              "path": ["birth_place"],
               "display": [
                 {
                   "name": "Luogo di nascita",
@@ -544,9 +493,7 @@
               ]
             },
             {
-              "path": [
-                "issue_date"
-              ],
+              "path": ["issue_date"],
               "display": [
                 {
                   "name": "Data di rilascio",
@@ -559,9 +506,7 @@
               ]
             },
             {
-              "path": [
-                "issuing_country"
-              ],
+              "path": ["issuing_country"],
               "display": [
                 {
                   "name": "Paese di rilascio",
@@ -574,9 +519,7 @@
               ]
             },
             {
-              "path": [
-                "issuing_authority"
-              ],
+              "path": ["issuing_authority"],
               "display": [
                 {
                   "name": "Rilasciato da",
@@ -589,9 +532,7 @@
               ]
             },
             {
-              "path": [
-                "expiry_date"
-              ],
+              "path": ["expiry_date"],
               "display": [
                 {
                   "name": "Data di scadenza",
@@ -604,9 +545,7 @@
               ]
             },
             {
-              "path": [
-                "document_number"
-              ],
+              "path": ["document_number"],
               "display": [
                 {
                   "name": "Numero",
@@ -619,9 +558,7 @@
               ]
             },
             {
-              "path": [
-                "portrait"
-              ],
+              "path": ["portrait"],
               "display": [
                 {
                   "name": "Fotografia",
@@ -634,9 +571,7 @@
               ]
             },
             {
-              "path": [
-                "un_distinguishing_sign"
-              ],
+              "path": ["un_distinguishing_sign"],
               "display": [
                 {
                   "name": "EU/UN distinguishing sign",
@@ -649,9 +584,7 @@
               ]
             },
             {
-              "path": [
-                "driving_privileges"
-              ],
+              "path": ["driving_privileges"],
               "display": [
                 {
                   "name": "Codici",
@@ -664,9 +597,7 @@
               ]
             },
             {
-              "path": [
-                "document_iss_country"
-              ],
+              "path": ["document_iss_country"],
               "display": [
                 {
                   "name": "Paese di rilascio",
@@ -679,9 +610,7 @@
               ]
             },
             {
-              "path": [
-                "document_iss_authority"
-              ],
+              "path": ["document_iss_authority"],
               "display": [
                 {
                   "name": "Rilasciato da",
@@ -698,9 +627,7 @@
         "mso_mdoc_mDL": {
           "format": "mso_mdoc",
           "scope": "mDL",
-          "cryptographic_binding_methods_supported": [
-            "cose_key"
-          ],
+          "cryptographic_binding_methods_supported": ["cose_key"],
           "credential_signing_alg_values_supported": [
             "ES256",
             "ES384",
@@ -708,11 +635,7 @@
           ],
           "proof_types_supported": {
             "jwt": {
-              "proof_signing_alg_values_supported": [
-                "ES256",
-                "ES384",
-                "ES512"
-              ]
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
             }
           },
           "display": [
@@ -727,10 +650,7 @@
           ],
           "claims": [
             {
-              "path": [
-                "org.iso.18013.5.1",
-                "given_name"
-              ],
+              "path": ["org.iso.18013.5.1", "given_name"],
               "display": [
                 {
                   "name": "Nome",
@@ -743,10 +663,7 @@
               ]
             },
             {
-              "path": [
-                "org.iso.18013.5.1",
-                "family_name"
-              ],
+              "path": ["org.iso.18013.5.1", "family_name"],
               "display": [
                 {
                   "name": "Cognome",
@@ -759,10 +676,7 @@
               ]
             },
             {
-              "path": [
-                "org.iso.18013.5.1",
-                "birth_date"
-              ],
+              "path": ["org.iso.18013.5.1", "birth_date"],
               "display": [
                 {
                   "name": "Data di nascita (YYYY-MM-GG)",
@@ -775,10 +689,7 @@
               ]
             },
             {
-              "path": [
-                "org.iso.18013.5.1",
-                "birth_place"
-              ],
+              "path": ["org.iso.18013.5.1", "birth_place"],
               "display": [
                 {
                   "name": "Luogo di Nascita",
@@ -791,10 +702,7 @@
               ]
             },
             {
-              "path": [
-                "org.iso.18013.5.1",
-                "issue_date"
-              ],
+              "path": ["org.iso.18013.5.1", "issue_date"],
               "display": [
                 {
                   "name": "Data di rilascio (YYYY-MM-GG)",
@@ -807,10 +715,7 @@
               ]
             },
             {
-              "path": [
-                "org.iso.18013.5.1",
-                "expiry_date"
-              ],
+              "path": ["org.iso.18013.5.1", "expiry_date"],
               "display": [
                 {
                   "name": "Data di scadenza (YYYY-MM-GG)",
@@ -823,10 +728,7 @@
               ]
             },
             {
-              "path": [
-                "org.iso.18013.5.1",
-                "issuing_country"
-              ],
+              "path": ["org.iso.18013.5.1", "issuing_country"],
               "display": [
                 {
                   "name": "Paese di rilascio",
@@ -839,10 +741,7 @@
               ]
             },
             {
-              "path": [
-                "org.iso.18013.5.1",
-                "issuing_authority"
-              ],
+              "path": ["org.iso.18013.5.1", "issuing_authority"],
               "display": [
                 {
                   "name": "Autorità di rilascio",
@@ -855,10 +754,7 @@
               ]
             },
             {
-              "path": [
-                "org.iso.18013.5.1",
-                "document_number"
-              ],
+              "path": ["org.iso.18013.5.1", "document_number"],
               "display": [
                 {
                   "name": "Numero di documento",
@@ -871,10 +767,7 @@
               ]
             },
             {
-              "path": [
-                "org.iso.18013.5.1",
-                "portrait"
-              ],
+              "path": ["org.iso.18013.5.1", "portrait"],
               "display": [
                 {
                   "name": "Foto codificata in base64",
@@ -887,10 +780,7 @@
               ]
             },
             {
-              "path": [
-                "org.iso.18013.5.1",
-                "driving_privileges"
-              ],
+              "path": ["org.iso.18013.5.1", "driving_privileges"],
               "display": [
                 {
                   "name": "Elenco delle categorie di abilitazione e relativi dettagli su restrizioni/condizioni",
@@ -903,10 +793,7 @@
               ]
             },
             {
-              "path": [
-                "org.iso.18013.5.1",
-                "un_distinguishing_sign"
-              ],
+              "path": ["org.iso.18013.5.1", "un_distinguishing_sign"],
               "display": [
                 {
                   "name": "Codice identificativo della Nazione",
@@ -989,9 +876,7 @@
         "dc_sd_jwt_education_degree": {
           "format": "dc+sd-jwt",
           "scope": "education_degree",
-          "cryptographic_binding_methods_supported": [
-            "jwk"
-          ],
+          "cryptographic_binding_methods_supported": ["jwk"],
           "credential_signing_alg_values_supported": [
             "ES256",
             "ES384",
@@ -999,11 +884,7 @@
           ],
           "proof_types_supported": {
             "jwt": {
-              "proof_signing_alg_values_supported": [
-                "ES256",
-                "ES384",
-                "ES512"
-              ]
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
             }
           },
           "display": [
@@ -1019,9 +900,7 @@
           "vct": "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/education_degree",
           "claims": [
             {
-              "path": [
-                "tax_id_code"
-              ],
+              "path": ["tax_id_code"],
               "display": [
                 {
                   "locale": "it-IT",
@@ -1034,9 +913,7 @@
               ]
             },
             {
-              "path": [
-                "personal_administrative_number"
-              ],
+              "path": ["personal_administrative_number"],
               "display": [
                 {
                   "locale": "it-IT",
@@ -1049,10 +926,7 @@
               ]
             },
             {
-              "path": [
-                "education_degrees",
-                null
-              ],
+              "path": ["education_degrees", null],
               "display": [
                 {
                   "name": "Elenco dei titoli di studio",
@@ -1065,11 +939,7 @@
               ]
             },
             {
-              "path": [
-                "education_degrees",
-                null,
-                "institute_name"
-              ],
+              "path": ["education_degrees", null, "institute_name"],
               "display": [
                 {
                   "name": "Nome dell'Istituto",
@@ -1082,11 +952,7 @@
               ]
             },
             {
-              "path": [
-                "education_degrees",
-                null,
-                "qualification_name"
-              ],
+              "path": ["education_degrees", null, "qualification_name"],
               "display": [
                 {
                   "name": "Nome del titolo di studio",
@@ -1099,11 +965,7 @@
               ]
             },
             {
-              "path": [
-                "education_degrees",
-                null,
-                "qualification_grade_value"
-              ],
+              "path": ["education_degrees", null, "qualification_grade_value"],
               "display": [
                 {
                   "name": "Voto del titolo di studio",
@@ -1133,11 +995,7 @@
               ]
             },
             {
-              "path": [
-                "education_degrees",
-                null,
-                "programme_type_name"
-              ],
+              "path": ["education_degrees", null, "programme_type_name"],
               "display": [
                 {
                   "name": "Tipologia del corso di laurea",
@@ -1150,11 +1008,7 @@
               ]
             },
             {
-              "path": [
-                "education_degrees",
-                null,
-                "degree_class_name"
-              ],
+              "path": ["education_degrees", null, "degree_class_name"],
               "display": [
                 {
                   "name": "Nome della classe di laurea",
@@ -1167,11 +1021,7 @@
               ]
             },
             {
-              "path": [
-                "education_degrees",
-                null,
-                "degree_class"
-              ],
+              "path": ["education_degrees", null, "degree_class"],
               "display": [
                 {
                   "name": "Codice della classe di laurea",
@@ -1184,11 +1034,7 @@
               ]
             },
             {
-              "path": [
-                "education_degrees",
-                null,
-                "degree_course_name"
-              ],
+              "path": ["education_degrees", null, "degree_course_name"],
               "display": [
                 {
                   "name": "Nome del corso di laurea",
@@ -1205,9 +1051,7 @@
         "dc_sd_jwt_education_enrollment": {
           "format": "dc+sd-jwt",
           "scope": "education_enrollment",
-          "cryptographic_binding_methods_supported": [
-            "jwk"
-          ],
+          "cryptographic_binding_methods_supported": ["jwk"],
           "credential_signing_alg_values_supported": [
             "ES256",
             "ES384",
@@ -1215,11 +1059,7 @@
           ],
           "proof_types_supported": {
             "jwt": {
-              "proof_signing_alg_values_supported": [
-                "ES256",
-                "ES384",
-                "ES512"
-              ]
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
             }
           },
           "display": [
@@ -1235,9 +1075,7 @@
           "vct": "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/education_enrollment",
           "claims": [
             {
-              "path": [
-                "tax_id_code"
-              ],
+              "path": ["tax_id_code"],
               "display": [
                 {
                   "locale": "it-IT",
@@ -1250,9 +1088,7 @@
               ]
             },
             {
-              "path": [
-                "personal_administrative_number"
-              ],
+              "path": ["personal_administrative_number"],
               "display": [
                 {
                   "locale": "it-IT",
@@ -1265,10 +1101,7 @@
               ]
             },
             {
-              "path": [
-                "education_enrollments",
-                null
-              ],
+              "path": ["education_enrollments", null],
               "display": [
                 {
                   "name": "Iscrizioni universitarie",
@@ -1281,11 +1114,7 @@
               ]
             },
             {
-              "path": [
-                "education_enrollments",
-                null,
-                "institute_name"
-              ],
+              "path": ["education_enrollments", null, "institute_name"],
               "display": [
                 {
                   "name": "Nome dell'Istituto",
@@ -1298,11 +1127,7 @@
               ]
             },
             {
-              "path": [
-                "education_enrollments",
-                null,
-                "programme_type_name"
-              ],
+              "path": ["education_enrollments", null, "programme_type_name"],
               "display": [
                 {
                   "name": "Tipologia del corso di laurea",
@@ -1315,11 +1140,7 @@
               ]
             },
             {
-              "path": [
-                "education_enrollments",
-                null,
-                "degree_class_name"
-              ],
+              "path": ["education_enrollments", null, "degree_class_name"],
               "display": [
                 {
                   "name": "Nome della classe di laurea",
@@ -1332,11 +1153,7 @@
               ]
             },
             {
-              "path": [
-                "education_enrollments",
-                null,
-                "degree_class"
-              ],
+              "path": ["education_enrollments", null, "degree_class"],
               "display": [
                 {
                   "name": "Codice della classe di laurea",
@@ -1349,11 +1166,7 @@
               ]
             },
             {
-              "path": [
-                "education_enrollments",
-                null,
-                "degree_course_name"
-              ],
+              "path": ["education_enrollments", null, "degree_course_name"],
               "display": [
                 {
                   "name": "Nome del corso di laurea",
@@ -1366,11 +1179,7 @@
               ]
             },
             {
-              "path": [
-                "education_enrollments",
-                null,
-                "degree_course_year"
-              ],
+              "path": ["education_enrollments", null, "degree_course_year"],
               "display": [
                 {
                   "name": "Anno del corso di laurea",
@@ -1383,11 +1192,7 @@
               ]
             },
             {
-              "path": [
-                "education_enrollments",
-                null,
-                "academic_year"
-              ],
+              "path": ["education_enrollments", null, "academic_year"],
               "display": [
                 {
                   "name": "Anno accademico",
@@ -1434,39 +1239,20 @@
         "https://www.spid.gov.it/SpidL3"
       ],
       "authorization_endpoint": "https://pre.eaa.wallet.ipzs.it/1-0/authorize",
-      "token_endpoint_auth_methods_supported": [
-        "attest_jwt_client_auth"
-      ],
-      "response_modes_supported": [
-        "query",
-        "form_post.jwt"
-      ],
+      "token_endpoint_auth_methods_supported": ["attest_jwt_client_auth"],
+      "response_modes_supported": ["query", "form_post.jwt"],
       "token_endpoint": "https://pre.eaa.wallet.ipzs.it/1-0/token",
-      "response_types_supported": [
-        "code"
-      ],
-      "client_registration_types_supported": [
-        "automatic"
-      ],
-      "grant_types_supported": [
-        "authorization_code"
-      ],
+      "response_types_supported": ["code"],
+      "client_registration_types_supported": ["automatic"],
+      "grant_types_supported": ["authorization_code"],
       "token_endpoint_auth_signing_alg_values_supported": [
         "ES256",
         "ES384",
         "ES512"
       ],
-      "code_challenge_methods_supported": [
-        "S256"
-      ],
-      "authorization_signing_alg_values_supported": [
-        "ES256"
-      ],
-      "request_object_signing_alg_values_supported": [
-        "ES256",
-        "ES384",
-        "ES512"
-      ]
+      "code_challenge_methods_supported": ["S256"],
+      "authorization_signing_alg_values_supported": ["ES256"],
+      "request_object_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
     },
     "openid_credential_verifier": {
       "authorization_signed_response_alg": "ES256",
@@ -1486,33 +1272,16 @@
         ]
       },
       "application_type": "web",
-      "response_uris": [
-        "https://pre.eaa.wallet.ipzs.it/1-0/response_uri"
-      ],
-      "request_uris": [
-        "https://pre.eaa.wallet.ipzs.it/1-0/request_uri"
-      ],
-      "redirect_uris": [
-        "https://pre.eaa.wallet.ipzs.it/1-0/response_uri"
-      ],
+      "response_uris": ["https://pre.eaa.wallet.ipzs.it/1-0/response_uri"],
+      "request_uris": ["https://pre.eaa.wallet.ipzs.it/1-0/request_uri"],
+      "redirect_uris": ["https://pre.eaa.wallet.ipzs.it/1-0/response_uri"],
       "client_name": "Istituto Poligrafico e Zecca dello Stato S.P.A.",
       "client_id": "https://pre.eaa.wallet.ipzs.it/1-0",
-      "contacts": [
-        "informazioni@ipzs.it",
-        "protocollo@pec.ipzs.it"
-      ],
+      "contacts": ["informazioni@ipzs.it", "protocollo@pec.ipzs.it"],
       "vp_formats": {
         "dc+sd-jwt": {
-          "sd-jwt_alg_values": [
-            "ES256",
-            "ES384",
-            "ES512"
-          ],
-          "kb-jwt_alg_values": [
-            "ES256",
-            "ES384",
-            "ES512"
-          ]
+          "sd-jwt_alg_values": ["ES256", "ES384", "ES512"],
+          "kb-jwt_alg_values": ["ES256", "ES384", "ES512"]
         }
       }
     }

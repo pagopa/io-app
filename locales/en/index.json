@@ -4795,6 +4795,12 @@
           "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
           "primaryAction": "Ho capito"
         },
+        "invalidWallet": {
+          "title": "Ottieni IT-Wallet per continuare",
+          "subtitle": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti bastano la Carta di Identità Elettronica (CIE) e il suo PIN.",
+          "primaryAction": "Inizia",
+          "secondaryAction": "Non ora"
+        },
         "cieNotRegistered": {
           "title": "Registra la CIE in app CieID per continuare",
           "subtitle": "Per ottenere IT-Wallet, completa prima la registrazione della tua CIE in app CieID e poi riprova."

@@ -37,7 +37,10 @@ import {
 } from "../../common/store/selectors/remoteConfig";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import {
   selectCredentialTypeOption,
   selectIsLoading
@@ -78,7 +81,6 @@ const isNewCredential = (type: string): boolean =>
 const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
-
   useFocusEffect(trackShowCredentialsList);
 
   const isItwSectionVisible = useMemo(
@@ -118,6 +120,7 @@ const ItwCredentialOnboardingSection = () => {
   const env = useIOSelector(selectItwEnv);
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
+  const isITWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const isCredentialIssuancePending =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -126,9 +129,22 @@ const ItwCredentialOnboardingSection = () => {
 
   // Show upcoming credentials only if L3 is enabled and env is "pre"
   const shouldShowUpcoming = isL3Enabled && env === "pre";
-  const displayedCredentials = shouldShowUpcoming
-    ? [...availableCredentials, ...newCredentials, ...upcomingCredentials]
-    : [...availableCredentials, ...newCredentials];
+
+  const getCredentialToDisplay = useCallback(() => {
+    if (shouldShowUpcoming) {
+      return [
+        ...availableCredentials,
+        ...newCredentials,
+        ...upcomingCredentials
+      ];
+    } else if (isL3Enabled) {
+      return [...availableCredentials, ...newCredentials];
+    } else {
+      return [...availableCredentials];
+    }
+  }, [isL3Enabled, shouldShowUpcoming]);
+
+  const displayedCredentials = getCredentialToDisplay();
 
   const beginCredentialIssuance = useOfflineToastGuard(
     useCallback(
@@ -136,6 +152,10 @@ const ItwCredentialOnboardingSection = () => {
         if (isUpcomingCredential(type)) {
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
+          });
+        } else if (!isITWalletValid && isNewCredential(type)) {
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.ISSUANCE.IT_WALLET_INACTIVE
           });
         } else {
           machineRef.send({
@@ -145,7 +165,7 @@ const ItwCredentialOnboardingSection = () => {
           });
         }
       },
-      [machineRef, navigation]
+      [isITWalletValid, machineRef, navigation]
     )
   );
 
