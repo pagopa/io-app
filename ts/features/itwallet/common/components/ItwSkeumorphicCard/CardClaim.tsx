@@ -3,13 +3,14 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 
-import { ReactElement, ReactNode, memo, useMemo } from "react";
+import { memo, ReactElement, ReactNode, useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { Either, Prettify } from "../../../../../types/helpers";
 import {
   ClaimValue,
   DrivingPrivilegesClaim,
   ImageClaim,
+  ParsedNestedClaim,
   PlaceOfBirthClaim,
   SimpleDateClaim,
   SimpleDateFormat
@@ -83,6 +84,9 @@ const CardClaim = ({
             return <ClaimLabel {...labelProps}>{privileges}</ClaimLabel>;
           } else if (PlaceOfBirthClaim.is(decoded)) {
             return <ClaimLabel {...labelProps}>{decoded.locality}</ClaimLabel>;
+            // Skip rendering for ParsedNestedClaim since they are not meant to be displayed directly in a Skeumorphic card
+          } else if (ParsedNestedClaim.is(decoded)) {
+            return undefined;
           } else {
             return <ClaimLabel {...labelProps}>{decoded}</ClaimLabel>;
           }
