@@ -3779,7 +3779,7 @@
           "action": "Bestätige und fortfahren"
         },
         "loadingScreen": {
-          "title": "Wir deaktivieren Dokumente in IO...",
+          "title": "Wir deaktivieren {{name}}...",
           "subtitle": "Warte ein paar Sekunden"
         },
         "failureScreen": {
