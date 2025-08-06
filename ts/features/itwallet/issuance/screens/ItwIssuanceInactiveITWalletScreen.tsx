@@ -4,7 +4,7 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 
-export const ItwIssuanceInvalidWalletScreen = () => {
+export const ItwIssuanceInactiveITWalletScreen = () => {
   const navigation = useIONavigation();
 
   useHeaderSecondLevel({
