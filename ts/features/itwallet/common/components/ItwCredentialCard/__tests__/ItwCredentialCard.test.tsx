@@ -74,7 +74,7 @@ describe("ItwCredentialCard", () => {
 
     const component = render(
       <Provider store={store}>
-        <ItwCredentialCard credentialType={"MDL"} isLegacyFormat={true} />
+        <ItwCredentialCard credentialType="mDL" isLegacyFormat={true} />
       </Provider>
     );
     expect(component).toMatchSnapshot();
