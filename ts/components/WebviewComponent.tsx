@@ -5,6 +5,7 @@ import {
   WebViewHttpErrorEvent,
   WebViewSourceUri
 } from "react-native-webview/lib/WebViewTypes";
+import { Platform } from "react-native";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import { resetDebugData, setDebugData } from "../store/actions/debug";
@@ -14,9 +15,10 @@ import { OperationResultScreenContent } from "./screens/OperationResultScreenCon
 
 type Props = {
   source: WebViewSourceUri;
+  playgroundEnabled?: boolean;
 };
 
-const WebviewComponent = ({ source }: Props) => {
+const WebviewComponent = ({ source, playgroundEnabled }: Props) => {
   const dispatch = useIODispatch();
   const [loading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
@@ -39,6 +41,10 @@ const WebviewComponent = ({ source }: Props) => {
     [dispatch]
   );
 
+  useEffect(() => {
+    setHasError(false);
+  }, [source]);
+
   const handleError = (event: WebViewErrorEvent | WebViewHttpErrorEvent) => {
     void mixpanelTrack("CGN_LANDING_PAGE_LOAD_ERROR", {
       uri: source.uri,
@@ -58,7 +64,7 @@ const WebviewComponent = ({ source }: Props) => {
 
   return (
     <>
-      {hasError ? (
+      {hasError && !playgroundEnabled ? (
         <OperationResultScreenContent
           testID="webview-error"
           pictogram="umbrella"
@@ -82,13 +88,29 @@ const WebviewComponent = ({ source }: Props) => {
             ref={ref}
             onLoadEnd={() => setLoading(false)}
             onHttpError={handleError}
+            userAgent={getDefaultUserAgent()}
             onError={handleError}
-            source={source}
+            source={{
+              ...source,
+              headers: {
+                ...(source.headers ?? {}),
+                "User-Agent": getDefaultUserAgent()
+              }
+            }}
           />
         </LoadingSpinnerOverlay>
       )}
     </>
   );
+};
+
+const getDefaultUserAgent = () => {
+  if (Platform.OS === "ios") {
+    return "AppIO IOS";
+  } else if (Platform.OS === "android") {
+    return "AppIO Android";
+  }
+  return "AppIO";
 };
 
 export default WebviewComponent;
