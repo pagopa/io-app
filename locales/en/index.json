@@ -840,13 +840,13 @@
         "linkButtonLabel": "Read more"
       },
       "session_corrupted": {
-        "title": "Accedi di nuovo",
-        "body": "Abbiamo avuto un problema tecnico, dobbiamo verificare di nuovo la tua identità",
-        "linkButtonLabel": "Non ricordi come accedere?"
+        "title": "Log in again",
+        "body": "We had a technical problem, so we need to check your identity again.",
+        "linkButtonLabel": "Can't remember how to log in?"
       },
       "active_session_login": {
-        "title": "Accedi subito",
-        "body": "Autenticati ora per usare l’app senza interruzioni. Così sarà sempre pronta quando ti serve."
+        "title": "Log in now",
+        "body": "Log in now to use the app without interruption. That way, it will always be ready when you need it."
       },
       "cie_bottom_sheet": {
         "title": "How do you want to login?",
@@ -1006,9 +1006,9 @@
         "subtitle": "It is currently not possible to log in with your SPID identity provider. Please try again in a few minutes."
       },
       "not_same_cf": {
-        "title": "Sei proprio tu?",
-        "subtitle": "Hai fatto l’accesso con un’altra identità. Per usare l’app, accedi con le tue credenziali.",
-        "button": "Accedi di nuovo"
+        "title": "Is that really you?",
+        "subtitle": "You have logged in with a different identity. To use the app, log in with your credentials.",
+        "button": "Log in again"
       },
       "generic": {
         "title": "Sorry, access was not available.",
