@@ -11,5 +11,6 @@ export type IdPayOnboardingParamsList = {
   [IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS]: undefined;
   [IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM]: undefined;
   [IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_NOTIFICATIONS]: undefined;
+  [IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE_TO_RETRY]: undefined;
   [IdPayOnboardingRoutes.IDPAY_ONBOARDING_LOADING]: undefined;
 };
