@@ -41,6 +41,8 @@ const getCredentialType = (params: unknown) =>
   );
 
 /**
+ * @deprecated [SIW-2839] This screen is going to be removed soon along with the async issuance
+ *
  * Landing screen to resume the async issuance flow from a deep link.
  * We can not assume the route params will be of the expected shape,
  * so we guard against invalid values in this screen.
