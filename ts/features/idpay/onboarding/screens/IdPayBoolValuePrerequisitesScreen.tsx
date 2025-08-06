@@ -28,7 +28,7 @@ const IdPayBoolValuePrerequisitesScreen = () => {
 
   const continueOnPress = () => {
     if (!areAllSelfCriteriaBoolAccepted) {
-      IOToast.error("Scegli un’opzione per continuare");
+      IOToast.error("Seleziona un’opzione per continuare");
       return;
     }
     machine.send({ type: "next" });
