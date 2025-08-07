@@ -16,19 +16,19 @@ describe("ItwRemoteFailureScreen", () => {
   test.each<RemoteFailure>([
     {
       type: RemoteFailureType.INVALID_CREDENTIALS_STATUS,
-      reason: { invalidCredentials: ["MDL"] }
+      reason: { invalidCredentials: ["mDL"] }
     },
     {
       type: RemoteFailureType.INVALID_CREDENTIALS_STATUS,
-      reason: { invalidCredentials: ["MDL", "EuropeanDisabilityCard"] }
+      reason: { invalidCredentials: ["mDL", "EuropeanDisabilityCard"] }
     },
     {
       type: RemoteFailureType.MISSING_CREDENTIALS,
-      reason: { missingCredentials: ["MDL"] }
+      reason: { missingCredentials: ["mDL"] }
     },
     {
       type: RemoteFailureType.MISSING_CREDENTIALS,
-      reason: { missingCredentials: ["MDL", "EuropeanDisabilityCard"] }
+      reason: { missingCredentials: ["mDL", "EuropeanDisabilityCard"] }
     },
     { type: RemoteFailureType.WALLET_INACTIVE, reason: "" },
     { type: RemoteFailureType.EID_EXPIRED, reason: "" },
