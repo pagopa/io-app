@@ -87,6 +87,7 @@ export type ObtainCredentialParams = {
   clientId: string;
   codeVerifier: string;
   issuerConf: IssuerConf;
+  operationType?: "reissuing";
 };
 
 // TODO: [SIW-2530] Update JSDoc accordingly
@@ -101,6 +102,7 @@ export type ObtainCredentialParams = {
  * @param codeVerifier - The code verifier
  * @param credentialDefinition - The credential definition
  * @param issuerConf - The issuer configuration
+ * @param operationType - The operation type, e.g., "reissuing"
  * @returns The obtained credential
  */
 export const obtainCredential = async ({
@@ -112,7 +114,8 @@ export const obtainCredential = async ({
   walletInstanceAttestation,
   clientId,
   codeVerifier,
-  issuerConf
+  issuerConf,
+  operationType
 }: ObtainCredentialParams) => {
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
@@ -166,7 +169,8 @@ export const obtainCredential = async ({
             {
               dPopCryptoContext,
               credentialCryptoContext
-            }
+            },
+            operationType
           ).catch(enrichIssuerResponseError(credential_configuration_id));
 
         // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
@@ -175,7 +179,8 @@ export const obtainCredential = async ({
             issuerConf,
             credential,
             credential_configuration_id,
-            { credentialCryptoContext, ignoreMissingAttributes: false }
+            { credentialCryptoContext, ignoreMissingAttributes: false },
+            `${env.X509_CERT_ROOT}`
           );
 
         return {
@@ -217,9 +222,7 @@ const getCredentialConfigurationIds = (
 
     return {
       ...acc,
-      // TODO: [SIW-2740] This check can be removed once `mso_mdoc` format supports verification and parsing.
-      [scope]:
-        value.format === "dc+sd-jwt" ? [...(acc[scope] || []), key] : acc[scope]
+      [scope]: [...(acc[scope] || []), key]
     };
   }, {});
 
