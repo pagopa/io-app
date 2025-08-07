@@ -167,7 +167,7 @@ describe("singleSignOn selectors", () => {
         pot.some(consent),
         pot.someLoading(consent),
         pot.someUpdating(consent, consent),
-        pot.someError(consent as Consent, {
+        pot.someError(consent, {
           errorTag,
           debugMessage: "Failed"
         })
@@ -219,7 +219,7 @@ describe("singleSignOn selectors", () => {
         pot.some(consent),
         pot.someLoading(consent),
         pot.someUpdating(consent, consent),
-        pot.someError(consent as Consent, {
+        pot.someError(consent, {
           errorTag,
           debugMessage: "Failed"
         })
@@ -280,9 +280,12 @@ describe("singleSignOn selectors", () => {
         pot.some({}),
         pot.someLoading({}),
         pot.someUpdating({}, {}),
-        pot.someError({} as Consent, {
-          errorTag
-        })
+        pot.someError(
+          {},
+          {
+            errorTag
+          }
+        )
       ].forEach(ssoDataPot => {
         const isError =
           ssoDataPot.kind === "PotNoneError" ||
@@ -325,9 +328,12 @@ describe("singleSignOn selectors", () => {
         pot.some({}),
         pot.someLoading({}),
         pot.someUpdating({}, {}),
-        pot.someError({} as Consent, {
-          debugMessage
-        })
+        pot.someError(
+          {},
+          {
+            debugMessage
+          }
+        )
       ].forEach(ssoDataPot => {
         const isError =
           ssoDataPot.kind === "PotNoneError" ||
