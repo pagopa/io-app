@@ -63,7 +63,7 @@ const BonusCardCounter = (props: BonusCardCounter) => {
         {props.label}
       </LabelMini>
       <VSpacer size={4} />
-      <H3 color="blueItalia-500" style={styles.value}>
+      <H3 color={isDark ? "blueIO-200" : "blueItalia-500"} style={styles.value}>
         {props.value}
       </H3>
       {props.type === "ValueWithProgress" && (
