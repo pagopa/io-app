@@ -72,7 +72,7 @@ describe("singleSignOn selectors", () => {
 
   describe("fimsRelyingPartyDomainSelector", () => {
     const relyingPartyUrl = "https://pagopa.gov.it/test";
-    const expectUrl = "https://pagopa.gov.it";
+    const expectedUrl = "https://pagopa.gov.it";
     it("should extract domain from URL", () => {
       const state = {
         features: {
@@ -83,8 +83,8 @@ describe("singleSignOn selectors", () => {
           }
         }
       } as GlobalState;
-      const consentsData = fimsRelyingPartyDomainSelector(state);
-      expect(consentsData).toBe(expectUrl);
+      const domain = fimsRelyingPartyDomainSelector(state);
+      expect(domain).toBe(expectedUrl);
     });
 
     it("should return undefined when relyingPartyUrl is undefined", () => {
@@ -95,8 +95,8 @@ describe("singleSignOn selectors", () => {
           }
         }
       } as GlobalState;
-      const consentsData = fimsRelyingPartyDomainSelector(state);
-      expect(consentsData).toBeUndefined();
+      const domain = fimsRelyingPartyDomainSelector(state);
+      expect(domain).toBeUndefined();
     });
   });
 
@@ -112,8 +112,8 @@ describe("singleSignOn selectors", () => {
           }
         }
       } as GlobalState;
-      const consentsData = fimsRelyingPartyUrlSelector(state);
-      expect(consentsData).toBe(relyingPartyUrl);
+      const url = fimsRelyingPartyUrlSelector(state);
+      expect(url).toBe(relyingPartyUrl);
     });
   });
 
@@ -129,8 +129,8 @@ describe("singleSignOn selectors", () => {
           }
         }
       } as GlobalState;
-      const consentsData = fimsCtaTextSelector(state);
-      expect(consentsData).toBe(ctaText);
+      const ctaTextResult = fimsCtaTextSelector(state);
+      expect(ctaTextResult).toBe(ctaText);
     });
   });
 
@@ -146,8 +146,8 @@ describe("singleSignOn selectors", () => {
           }
         }
       } as GlobalState;
-      const consentsData = relyingPartyServiceIdSelector(state);
-      expect(consentsData).toBe(serviceId);
+      const serviceIdResult = relyingPartyServiceIdSelector(state);
+      expect(serviceIdResult).toBe(serviceId);
     });
   });
 
@@ -163,8 +163,8 @@ describe("singleSignOn selectors", () => {
             }
           }
         } as GlobalState;
-        const consentsData = fimsEphemeralSessionOniOSSelector(state);
-        expect(consentsData).toBe(ephemeralSessionOniOS);
+        const sessionFlag = fimsEphemeralSessionOniOSSelector(state);
+        expect(sessionFlag).toBe(ephemeralSessionOniOS);
       })
     );
   });
@@ -201,9 +201,9 @@ describe("singleSignOn selectors", () => {
             }
           } as GlobalState;
 
-          const consentsDataPot = fimsPartialAbortUrl(globalState);
+          const partialAbortUrl = fimsPartialAbortUrl(globalState);
           const expected = isSome ? abortUrl : undefined;
-          expect(consentsDataPot).toEqual(expected);
+          expect(partialAbortUrl).toEqual(expected);
         });
       })
     );
@@ -231,9 +231,9 @@ describe("singleSignOn selectors", () => {
         it(`When pot is of type '${ssoDataPot.kind}', it should return '${
           isSome ? "O.some(abortUrl)" : "O.none"
         }'`, () => {
-          const consentsDataPot = abortUrlFromConsentsPot(ssoDataPot);
+          const abortUrlFromConsents = abortUrlFromConsentsPot(ssoDataPot);
           const expected = isSome ? O.some(abortUrl) : O.none;
-          expect(consentsDataPot).toEqual(expected);
+          expect(abortUrlFromConsents).toEqual(expected);
         });
       })
     );
@@ -254,8 +254,9 @@ describe("singleSignOn selectors", () => {
             }
           }
         } as GlobalState;
-        const consentsDataPot = fimsAuthenticationFailedSelector(globalState);
-        expect(consentsDataPot).toBe(expectedOutput);
+        const authenticationFailed =
+          fimsAuthenticationFailedSelector(globalState);
+        expect(authenticationFailed).toBe(expectedOutput);
       });
     }));
 
@@ -279,12 +280,12 @@ describe("singleSignOn selectors", () => {
               }
             }
           } as GlobalState;
-          const consentsDataPot =
+          const errorTagResult =
             fimsAuthenticationErrorTagSelector(globalState);
           if (isError) {
-            expect(consentsDataPot).toBe(errorTag);
+            expect(errorTagResult).toBe(errorTag);
           } else {
-            expect(consentsDataPot).toBeUndefined();
+            expect(errorTagResult).toBeUndefined();
           }
         });
       })
@@ -316,11 +317,11 @@ describe("singleSignOn selectors", () => {
                 }
               }
             } as GlobalState;
-            const consentsDataPot = fimsDebugDataSelector(globalState);
+            const debugData = fimsDebugDataSelector(globalState);
             if (isDebugModeEnabled && isError) {
-              expect(consentsDataPot).toBe(debugMessage);
+              expect(debugData).toBe(debugMessage);
             } else {
-              expect(consentsDataPot).toBeUndefined();
+              expect(debugData).toBeUndefined();
             }
           });
         }
@@ -358,16 +359,16 @@ describe("singleSignOn selectors", () => {
             jest.spyOn(pot, "isLoading").mockReturnValue(isLoading);
             jest.spyOn(potUtils, "isStrictNone").mockReturnValue(_isStrictNone);
 
-            const consentsData = fimsLoadingStateSelector(globalState);
+            const loadingState = fimsLoadingStateSelector(globalState);
 
             if (flowState === "consents") {
               if (isLoading || _isStrictNone) {
-                expect(consentsData).toEqual("consents");
+                expect(loadingState).toEqual("consents");
               } else {
-                expect(consentsData).toBeUndefined();
+                expect(loadingState).toBeUndefined();
               }
             } else {
-              expect(consentsData).toEqual(flowState);
+              expect(loadingState).toEqual(flowState);
             }
           });
         });
@@ -393,13 +394,16 @@ describe("singleSignOn selectors", () => {
             }
           } as GlobalState;
 
-          const consentsData =
+          const relyingPartyUrlIfFastLogin =
             fimsRelyingPartyUrlIfFastLoginSelector(globalState);
 
-          if (consentsData && currentFlowState === "fastLogin_forced_restart") {
-            expect(consentsData).toBe(url);
+          if (
+            relyingPartyUrlIfFastLogin &&
+            currentFlowState === "fastLogin_forced_restart"
+          ) {
+            expect(relyingPartyUrlIfFastLogin).toBe(url);
           } else {
-            expect(consentsData).toBeUndefined();
+            expect(relyingPartyUrlIfFastLogin).toBeUndefined();
           }
         })
       )
