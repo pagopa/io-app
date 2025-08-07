@@ -1,7 +1,6 @@
 import { createActor } from "xstate";
 import { createStore } from "redux";
-import { Credential, Errors } from "@pagopa/io-react-native-wallet";
-import { FederationError } from "@pagopa/io-react-native-wallet-v2/src/trust/errors";
+import { Credential, Errors, Trust } from "@pagopa/io-react-native-wallet";
 import { RemoteFailure, RemoteFailureType } from "../../machine/failure";
 import { itwRemoteMachine } from "../../machine/machine";
 import { ItwRemoteMachineContext } from "../../machine/provider";
@@ -47,7 +46,7 @@ describe("ItwRemoteFailureScreen", () => {
     },
     {
       type: RemoteFailureType.UNTRUSTED_RP,
-      reason: new Error() as FederationError
+      reason: new Error() as Trust.Errors.FederationError
     }
   ])("should render failure screen for $type", failure => {
     expect(renderComponent(failure)).toMatchSnapshot();
