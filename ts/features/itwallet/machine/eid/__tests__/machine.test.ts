@@ -9,11 +9,9 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
-  CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   RequestEidActorParams,
-  StartAuthFlowActorParams,
-  VerifyTrustFederationParams
+  StartAuthFlowActorParams
 } from "../actors";
 import {
   AuthenticationContext,
@@ -116,13 +114,8 @@ describe("itwEidIssuanceMachine", () => {
       })
     },
     actors: {
-      verifyTrustFederation: fromPromise<void, VerifyTrustFederationParams>(
-        verifyTrustFederation
-      ),
-      createWalletInstance: fromPromise<
-        string,
-        CreateWalletInstanceActorParams
-      >(createWalletInstance),
+      verifyTrustFederation: fromPromise(verifyTrustFederation),
+      createWalletInstance: fromPromise<string>(createWalletInstance),
       revokeWalletInstance: fromPromise<void>(revokeWalletInstance),
       getWalletAttestation: fromPromise<
         WalletInstanceAttestations,

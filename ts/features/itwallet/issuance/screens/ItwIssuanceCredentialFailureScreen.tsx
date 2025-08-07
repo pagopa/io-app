@@ -238,7 +238,7 @@ type GetCredentialInvalidStatusDetailsParams = {
  */
 const getCredentialInvalidStatusDetails = (
   failure: CredentialIssuanceFailure,
-  { credentialType, issuerConf }: GetCredentialInvalidStatusDetailsParams
+  { issuerConf }: GetCredentialInvalidStatusDetailsParams
 ) => {
   const { errorCodeOption, credentialConfigurationId } = pipe(
     failure,

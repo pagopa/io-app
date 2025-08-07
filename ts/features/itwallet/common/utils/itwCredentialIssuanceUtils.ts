@@ -9,11 +9,7 @@ import {
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
-import {
-  CredentialFormat,
-  RequestObject,
-  StoredCredential
-} from "./itwTypesUtils";
+import { RequestObject, StoredCredential } from "./itwTypesUtils";
 import { Env } from "./environment";
 import { enrichErrorWithMetadata } from "./itwFailureUtils";
 

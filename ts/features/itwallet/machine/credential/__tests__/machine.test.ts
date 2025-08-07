@@ -20,14 +20,12 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
-  GetWalletAttestationActorInput,
   GetWalletAttestationActorOutput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput,
-  VerifyTrustFederationActorInput
+  RequestCredentialActorOutput
 } from "../actors";
 import { Context, InitialContext } from "../context";
 import { CredentialIssuanceFailureType } from "../failure";
@@ -67,6 +65,9 @@ const T_ISSUER_CONFIG: IssuerConfiguration = {
     credential_endpoint: "",
     credential_issuer: "",
     status_attestation_endpoint: "",
+    trust_frameworks_supported: [],
+    evidence_supported: [],
+    nonce_endpoint: "",
     revocation_endpoint: "",
     display: [],
     jwks: {
@@ -81,7 +82,6 @@ const T_ISSUER_CONFIG: IssuerConfiguration = {
 };
 const T_CREDENTIAL_DEFINITION: AuthorizationDetail = {
   credential_configuration_id: "",
-  format: "vc+sd-jwt",
   type: "openid_credential"
 };
 const T_REQUESTED_CREDENTIAL: RequestObject = {
@@ -152,13 +152,9 @@ describe("itwCredentialIssuanceMachine", () => {
       trackCredentialIssuingDataShareAccepted
     },
     actors: {
-      verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
-        verifyTrustFederation
-      ),
-      getWalletAttestation: fromPromise<
-        GetWalletAttestationActorOutput,
-        GetWalletAttestationActorInput
-      >(getWalletAttestation),
+      verifyTrustFederation: fromPromise(verifyTrustFederation),
+      getWalletAttestation:
+        fromPromise<GetWalletAttestationActorOutput>(getWalletAttestation),
       requestCredential: fromPromise<
         RequestCredentialActorOutput,
         RequestCredentialActorInput
