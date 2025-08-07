@@ -482,30 +482,62 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                             >
                               Ċentru tas-Saħħa
                             </Text>
-                            <Text
+                            <View
                               accessibilityRole="button"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="footnote"
-                              maxFontSizeMultiplier={1.5}
-                              onPress={[Function]}
-                              style={
-                                [
-                                  {
-                                    "textDecorationLine": "none",
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 14,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 21,
-                                  },
-                                ]
+                              accessibilityState={
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": undefined,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
                               }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
                             >
-                              health
-                            </Text>
+                              <Text
+                                accessibilityRole="button"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="footnote"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {
+                                      "textDecorationLine": "none",
+                                    },
+                                    {
+                                      "color": "#0B3EE3",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 14,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 21,
+                                    },
+                                  ]
+                                }
+                              >
+                                health
+                              </Text>
+                            </View>
                           </View>
                           <View>
                             <View
