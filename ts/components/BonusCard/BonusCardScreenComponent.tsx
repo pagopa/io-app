@@ -70,15 +70,21 @@ const BonusCardScreenComponent = ({
 
   return (
     <>
-      <FocusAwareStatusBar
-        barStyle={isAndroid && isDark ? "light-content" : "dark-content"}
-      />
+      {isCGNType && (
+        <FocusAwareStatusBar
+          barStyle={isAndroid && isDark ? "light-content" : "dark-content"}
+        />
+      )}
       <IOScrollView
         animatedRef={animatedScrollViewRef}
         actions={actions}
         includeContentMargins={false}
       >
-        <BonusCard hideLogo={isDeviceScreenSmall} {...cardProps} />
+        <BonusCard
+          hideLogo={isDeviceScreenSmall}
+          {...cardProps}
+          isCGNType={isCGNType}
+        />
         {children}
       </IOScrollView>
     </>
