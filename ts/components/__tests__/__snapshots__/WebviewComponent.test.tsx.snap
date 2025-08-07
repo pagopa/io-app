@@ -291,6 +291,12 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
         messagingModuleName=""
         newSource={
           {
+            "headers": [
+              {
+                "name": "User-Agent",
+                "value": "AppIO IOS",
+              },
+            ],
             "uri": "https://google.com",
           }
         }
@@ -304,6 +310,9 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
         onShouldStartLoadWithRequest={[Function]}
         source={
           {
+            "headers": {
+              "User-Agent": "AppIO IOS",
+            },
             "uri": "https://google.com",
           }
         }
@@ -324,6 +333,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
         testID="webview"
         textInteractionEnabled={true}
         useSharedProcessPool={true}
+        userAgent="AppIO IOS"
       />
     </View>
   </View>
