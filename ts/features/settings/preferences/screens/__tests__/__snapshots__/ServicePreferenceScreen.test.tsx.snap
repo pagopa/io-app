@@ -880,9 +880,6 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
