@@ -60,11 +60,9 @@ const IDPayPaymentResultScreen = () => {
 };
 
 const genericErrorProps: OperationResultScreenContentProps = {
-  pictogram: "umbrella",
+  pictogram: "accessDenied",
   title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
-  subtitle: I18n.t("idpay.payment.result.failure.GENERIC.subtitle"),
-  enableAnimatedPictogram: true,
-  loop: true
+  subtitle: I18n.t("idpay.payment.result.failure.GENERIC.subtitle")
 };
 
 const mapFailureToContentProps = (

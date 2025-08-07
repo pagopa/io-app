@@ -6040,8 +6040,8 @@
         },
         "failure": {
           "GENERIC": {
-            "title": "Si è verificato un errore imprevisto",
-            "subtitle": "Non è stato addebitato alcun importo."
+            "title": "Il codice non è valido",
+            "subtitle": "Se si tratta di un errore, chiedi all’esercente di crearne uno nuovo."
           },
           "TRANSACTION_EXPIRED": {
             "title": "Il codice è scaduto",
