@@ -32,6 +32,8 @@ import CieIdLoginScreen from "../../login/cie/screens/CieIdLoginScreen";
 import CieIdNotInstalledScreen from "../../login/cie/screens/CieIdNotInstalledScreen";
 import CieIdAuthUrlError from "../../login/cie/screens/CieIdAuthUrlError";
 import CloseButton from "../../../../navigation/components/CloseButton";
+import { ActiveSessionLandingScreen } from "../../activeSessionLogin/screens/ActiveSessionLandingScreen";
+import ActiveSessionCieIdLoginScreen from "../../activeSessionLogin/screens/ActiveSessionCieIdLoginScreen";
 import { AUTHENTICATION_ROUTES } from "./routes";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 
@@ -45,6 +47,12 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={AUTHENTICATION_ROUTES.LANDING}
       component={LandingScreen}
+      options={{ headerShown: true }}
+    />
+
+    <Stack.Screen
+      name={AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN}
+      component={ActiveSessionLandingScreen}
       options={{ headerShown: true }}
     />
 
@@ -114,6 +122,12 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={AUTHENTICATION_ROUTES.CIE_ID_LOGIN}
       component={CieIdLoginScreen}
+      options={{ headerShown: false }}
+    />
+
+    <Stack.Screen
+      name={AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN}
+      component={ActiveSessionCieIdLoginScreen}
       options={{ headerShown: false }}
     />
 

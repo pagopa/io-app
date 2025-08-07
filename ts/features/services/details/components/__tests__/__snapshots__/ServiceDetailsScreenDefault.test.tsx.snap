@@ -274,9 +274,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                               },
                               {},
                               {
-                                "backgroundColor": "#F4F5F8",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -1150,9 +1147,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                 "borderColor": "rgba(244,245,248,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#F4F5F8",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -2170,9 +2164,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                 "borderColor": "rgba(244,245,248,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#F4F5F8",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
