@@ -292,9 +292,6 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
