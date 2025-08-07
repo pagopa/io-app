@@ -23,6 +23,21 @@ export const getCredentialDocumentNumber = (
 };
 
 /**
+ * Maps a credential type to the correct type for the trustmark generation.
+ * This type is used to display the correct credential name in the verifier website.
+ * @param credential The stored credential
+ * @returns The credential type for trustmark generation
+ */
+const getCredentialTypeForTrustmark = ({
+  credentialType
+}: StoredCredential) => {
+  const trustmarkCredentialTypes: Record<string, string> = {
+    mDL: "MDL"
+  };
+  return trustmarkCredentialTypes[credentialType] ?? credentialType;
+};
+
+/**
  * Generates the trustmark URL for a credential.
  * @param env - The environment to use for the verifier base URL
  * @param walletInstanceAttestation - The wallet instance attestation
@@ -51,8 +66,8 @@ export const getCredentialTrustmark = async (
     await Credential.Trustmark.getCredentialTrustmark({
       walletInstanceAttestation,
       wiaCryptoContext,
-      credentialType: credential.credentialType,
-      docNumber
+      docNumber,
+      credentialType: getCredentialTypeForTrustmark(credential)
     });
 
   return {

@@ -80,7 +80,7 @@ const ItwMetadataIssuanceListItem = ({
 const getAuthSource = (credential: StoredCredential) =>
   pipe(
     credential.issuerConf.openid_credential_issuer
-      .credential_configurations_supported?.[credential.credentialType],
+      .credential_configurations_supported?.[credential.credentialId],
     O.fromNullable,
     O.map(config => config.authentic_source),
     O.toUndefined

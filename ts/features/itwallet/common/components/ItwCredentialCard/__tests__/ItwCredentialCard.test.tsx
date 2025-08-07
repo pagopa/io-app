@@ -9,7 +9,7 @@ import { ItwCredentialCard } from "../ItwCredentialCard";
 import * as selectors from "../../../store/selectors";
 
 describe("ItwCredentialCard", () => {
-  it.each(["EuropeanHealthInsuranceCard", "EuropeanDisabilityCard", "MDL"])(
+  it.each(["EuropeanHealthInsuranceCard", "EuropeanDisabilityCard", "mDL"])(
     "should match snapshot when credential type is %p",
     type => {
       const globalState = appReducer(
@@ -53,7 +53,7 @@ describe("ItwCredentialCard", () => {
 
       const component = render(
         <Provider store={store}>
-          <ItwCredentialCard credentialType={"MDL"} credentialStatus={status} />
+          <ItwCredentialCard credentialType={"mDL"} credentialStatus={status} />
         </Provider>
       );
       expect(component).toMatchSnapshot();
@@ -74,7 +74,7 @@ describe("ItwCredentialCard", () => {
 
     const component = render(
       <Provider store={store}>
-        <ItwCredentialCard credentialType={"MDL"} isLegacyFormat={true} />
+        <ItwCredentialCard credentialType="mDL" isLegacyFormat={true} />
       </Provider>
     );
     expect(component).toMatchSnapshot();
