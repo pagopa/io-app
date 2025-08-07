@@ -4,6 +4,7 @@
 import { getType } from "typesafe-actions";
 import {
   logoutSuccess,
+  sessionCorrupted,
   sessionExpired
 } from "../../../../features/authentication/common/store/actions";
 import { loadServiceDetail } from "../../../../features/services/details/store/actions/details";
@@ -46,6 +47,7 @@ const reducer = (
       return state;
     case getType(logoutSuccess):
     case getType(sessionExpired):
+    case getType(sessionCorrupted):
       return INITIAL_STATE;
 
     default:
