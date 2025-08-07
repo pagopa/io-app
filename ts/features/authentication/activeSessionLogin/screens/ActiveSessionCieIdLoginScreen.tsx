@@ -249,16 +249,13 @@ const ActiveSessionCieIdLoginWebView = ({
       const webViewHttpError = error as WebViewHttpErrorEvent;
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
-        if (
-          url.includes(apiLoginUrlPrefix) ||
-          (statusCode !== 403 && statusCode !== 400)
-        ) {
+        if (url.includes(apiLoginUrlPrefix)) {
           forceLogoutAndNavigateToLanding();
-        } else if (statusCode === 400) {
+        } else if (statusCode !== 403) {
           navigateToCieIdAuthenticationError();
         }
       } else {
-        forceLogoutAndNavigateToLanding();
+        navigateToCieIdAuthenticationError();
       }
     },
     [
