@@ -5,21 +5,10 @@ import {
   IOColors,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
-import {
-  Canvas,
-  LinearGradient,
-  RoundedRect,
-  vec
-} from "@shopify/react-native-skia";
+import { Canvas, LinearGradient, RoundedRect, vec } from "@shopify/react-native-skia";
 import Color from "color";
 import { memo, useState } from "react";
-import {
-  LayoutChangeEvent,
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
+import { LayoutChangeEvent, Platform, StyleSheet, Text, View } from "react-native";
 import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
@@ -117,7 +106,7 @@ const DigitalVersionBadge = ({
         style={[
           styles.badge,
           {
-            backgroundColor: isGradient ? undefined : (background as string)
+            backgroundColor: isGradient ? undefined : background
           }
         ]}
       >
@@ -133,7 +122,7 @@ const DigitalVersionBadge = ({
               <LinearGradient
                 start={vec(0, 0)}
                 end={vec(layout.width, 0)}
-                colors={background as Array<string>}
+                colors={background}
               />
             </RoundedRect>
           </Canvas>
