@@ -12,7 +12,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
 import { useState } from "react";
 import { View } from "react-native";
-import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
+import { InitiativeDTO1 } from "../../../../../definitions/idpay/InitiativeDTO1";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
 import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../definitions/idpay/TransactionDetailDTO";
@@ -50,7 +50,7 @@ type IdPayTimelineDetailsBottomSheetModal = Omit<
  * @param initiativeId ID of the initiative associated to the operation details
  */
 const useIdPayTimelineDetailsBottomSheet = (
-  initiativeId: InitiativeDTO["initiativeId"]
+  initiativeId: InitiativeDTO1["initiativeId"]
 ): IdPayTimelineDetailsBottomSheetModal => {
   const dispatch = useIODispatch();
 

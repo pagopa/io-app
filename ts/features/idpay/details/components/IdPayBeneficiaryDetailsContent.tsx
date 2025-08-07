@@ -15,11 +15,10 @@ import { pipe } from "fp-ts/lib/function";
 import { ReactNode } from "react";
 import { View } from "react-native";
 import {
-  InitiativeDTO,
+  InitiativeDTO1,
   InitiativeRewardTypeEnum
-} from "../../../../../definitions/idpay/InitiativeDTO";
+} from "../../../../../definitions/idpay/InitiativeDTO1";
 import { InitiativeDetailDTO } from "../../../../../definitions/idpay/InitiativeDetailDTO";
-import { OnboardingStatusDTO } from "../../../../../definitions/idpay/OnboardingStatusDTO";
 import {
   RewardValueDTO,
   RewardValueTypeEnum
@@ -48,15 +47,13 @@ type TableRow = WithTestID<{
 export type BeneficiaryDetailsProps =
   | {
       isLoading?: false;
-      initiativeDetails: InitiativeDTO;
+      initiativeDetails: InitiativeDTO1;
       beneficiaryDetails: InitiativeDetailDTO;
-      onboardingStatus: OnboardingStatusDTO;
     }
   | {
       isLoading: true;
       initiativeDetails?: never;
       beneficiaryDetails?: never;
-      onboardingStatus?: never;
     };
 
 const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
@@ -64,8 +61,7 @@ const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const { startIdPaySupport } = useIdPaySupportModal();
-  const { initiativeDetails, beneficiaryDetails, onboardingStatus, isLoading } =
-    props;
+  const { initiativeDetails, beneficiaryDetails, isLoading } = props;
 
   if (isLoading) {
     return <BeneficiaryDetailsContentSkeleton />;
@@ -83,7 +79,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   );
 
   const endDateString = pipe(
-    initiativeDetails.endDate,
+    initiativeDetails.voucherEndDate,
     O.fromNullable,
     O.map(formatDate("DD/MM/YYYY, HH:mm")),
     O.getOrElse(() => "-")
@@ -123,8 +119,8 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     O.getOrElse<TableRow>(() => ({ label: "-", value: undefined }))
   );
 
-  const onboardingDateString = pipe(
-    onboardingStatus.onboardingOkDate,
+  const voucherStartDateString = pipe(
+    initiativeDetails.voucherStartDate,
     O.fromNullable,
     O.map(formatDate("DD MMM YYYY, HH:mm")),
     O.getOrElse(() => "-")
@@ -202,7 +198,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const enrollmentData = [
     {
       label: I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDate"),
-      value: onboardingDateString,
+      value: voucherStartDateString,
       testID: "onboardingDateTestID"
     }
   ];

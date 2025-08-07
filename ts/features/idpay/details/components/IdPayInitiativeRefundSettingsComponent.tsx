@@ -9,9 +9,9 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { View } from "react-native";
 import {
-  InitiativeDTO,
+  InitiativeDTO1,
   StatusEnum as InitiativeStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO";
+} from "../../../../../definitions/idpay/InitiativeDTO1";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
@@ -20,7 +20,7 @@ import {
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 
 type Props = {
-  initiative?: InitiativeDTO;
+  initiative?: InitiativeDTO1;
 };
 
 const IdPayInitiativeRefundSettingsComponent = (props: Props) => {

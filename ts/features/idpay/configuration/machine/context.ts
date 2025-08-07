@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
-import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
+import { InitiativeDTO1 } from "../../../../../definitions/idpay/InitiativeDTO1";
 import { InstrumentDTO } from "../../../../../definitions/idpay/InstrumentDTO";
 import { Wallet } from "../../../../types/pagopa";
 import { ConfigurationMode, InstrumentStatusByIdWallet } from "../types";
@@ -9,7 +9,7 @@ import { InitiativeFailureType } from "../types/failure";
 export type Context = {
   readonly initiativeId: string;
   readonly mode: ConfigurationMode;
-  readonly initiative: O.Option<InitiativeDTO>;
+  readonly initiative: O.Option<InitiativeDTO1>;
   readonly ibanList: ReadonlyArray<IbanDTO>;
   readonly walletInstruments: ReadonlyArray<Wallet>;
   readonly initiativeInstruments: ReadonlyArray<InstrumentDTO>;

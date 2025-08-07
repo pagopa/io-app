@@ -23,7 +23,7 @@ import {
   idpayOperationListSelector,
   idpayPaginatedTimelineSelector
 } from "../store";
-import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
+import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO1";
 import { IdPayTimelineOperationListItem } from "./IdPayTimelineOperationListItem";
 
 type Props = {

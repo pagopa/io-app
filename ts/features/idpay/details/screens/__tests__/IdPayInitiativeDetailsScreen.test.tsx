@@ -8,10 +8,10 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import {
-  InitiativeDTO,
+  InitiativeDTO1,
   InitiativeRewardTypeEnum,
   StatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO";
+} from "../../../../../../definitions/idpay/InitiativeDTO1";
 import { NetworkError } from "../../../../../utils/errors";
 import I18n from "../../../../../i18n";
 
@@ -21,8 +21,8 @@ jest.mock("../../../../../components/helpers/withAppRequiredUpdate", () => ({
   ) => Component
 }));
 
-const mockedInitiative: InitiativeDTO = {
-  endDate: new Date(2023, 1, 1),
+const mockedInitiative = {
+  voucherEndDate: new Date(2023, 1, 1),
   initiativeId: "ABC123",
   initiativeName: "Fake initiative",
   organizationName: "Fake organization",
@@ -30,7 +30,7 @@ const mockedInitiative: InitiativeDTO = {
   status: StatusEnum.REFUNDABLE,
   initiativeRewardType: InitiativeRewardTypeEnum.REFUND,
   lastCounterUpdate: new Date()
-};
+} as InitiativeDTO1;
 
 describe("Test IdPayInitiativeDetailsScreen screen", () => {
   beforeEach(() => {
@@ -155,7 +155,7 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
 });
 
 const renderComponent = (
-  initiativePot: pot.Pot<InitiativeDTO, NetworkError> = pot.none
+  initiativePot: pot.Pot<InitiativeDTO1, NetworkError> = pot.none
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();

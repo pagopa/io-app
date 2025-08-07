@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/core";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { View } from "react-native";
-import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
+import { InitiativeDTO1 } from "../../../../../definitions/idpay/InitiativeDTO1";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { IdPayConfigurationParamsList } from "../../configuration/navigation/params";
@@ -16,7 +16,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 type Props = {
-  initiative: InitiativeDTO;
+  initiative: InitiativeDTO1;
 };
 
 const IdPayInitiativeDiscountSettingsComponent = (props: Props) => {
@@ -32,7 +32,7 @@ const IdPayInitiativeDiscountSettingsComponent = (props: Props) => {
   const navigateToInstrumentsConfiguration = ({
     initiativeId,
     initiativeName
-  }: InitiativeDTO) => {
+  }: InitiativeDTO1) => {
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
