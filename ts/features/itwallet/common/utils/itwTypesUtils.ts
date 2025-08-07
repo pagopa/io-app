@@ -47,6 +47,14 @@ export type IssuerConfiguration =
   | LegacyIssuerConfiguration;
 
 /**
+ * Alias for the SupportedCredentialConfiguration type
+ */
+export type MdocSupportedCredentialConfiguration = Extract<
+  IssuerConfiguration["openid_credential_issuer"]["credential_configurations_supported"][string],
+  { format: "mso_mdoc" }
+>;
+
+/**
  * Alias for the AuthorizationDetail type
  * TODO: [SIW-2530]: remove the legacy type
  */

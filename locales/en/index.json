@@ -4303,6 +4303,7 @@
           "invalid": "Non valida",
           "verificationExpiring": "Verifica",
           "verificationExpired": "Verifica",
+          "upgradePending": "Da aggiornare",
           "unknown": "Non disponibile"
         },
         "digital": "Versione digitale"
@@ -5201,9 +5202,18 @@
           }
         },
         "itWalletId": {
-          "detail": {
-            "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
-            "listItemHeader": "Dati del mio IT-Wallet ID"
+          "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
+          "listItemHeader": "Dati del mio IT-Wallet ID",
+          "cta": {
+            "revoke": "Disattiva IT-Wallet"
+          },
+          "dialog": {
+            "revoke": {
+              "title": "Vuoi davvero disattivare IT-Wallet?",
+              "message": "Eliminerai i documenti che hai aggiunto al Portafoglio.\nSe cambi idea, potrai riattivare IT-Wallet in futuro.",
+              "confirm": "Sì, disattiva",
+              "cancel": "No, torna indietro"
+            }
           }
         }
       },
@@ -5228,7 +5238,7 @@
           "action": "Conferma e continua"
         },
         "loadingScreen": {
-          "title": "Stiamo disattivando Documenti su IO...",
+          "title": "Stiamo disattivando {{name}}...",
           "subtitle": "Attendi qualche secondo"
         },
         "failureScreen": {
@@ -5451,7 +5461,7 @@
           "body": "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
           "validUpTo": "Vale fino a ",
           "expiresIn": "Il codice scade tra ",
-          "saveImageCta": "Salva come immagine",
+          "copyCodeCta": "Copy code",
           "expired": {
             "header": "Il codice è scaduto",
             "CTA": "Usa un nuovo codice"
@@ -5597,7 +5607,7 @@
         "addExpenseButton": "Aggiungi spesa",
         "bottomSheetOptions": {
           "scanQr": "Inquadra un codice QR",
-          "generateBarcode": "Crea un codice sconto"
+          "generateBarcode": "Generate a discount code"
         },
         "IDPayCode": {
           "banner": {
@@ -5724,7 +5734,7 @@
           "body": "Riceverai un messaggio con l’esito dell’operazione."
         },
         "button": {
-          "continue": "Ho capito!"
+          "continue": "Ok, chiudi"
         }
       },
       "failure": {
@@ -5733,8 +5743,8 @@
         },
         "message": {
           "GENERIC": {
-            "title": "Si è verificato un errore imprevisto",
-            "subtitle": "Siamo già a lavoro per risolverlo. Prova più tardi ad accedere all’iniziativa."
+            "title": "Non riusciamo a inviare la richiesta per questa iniziativa",
+            "subtitle": "Siamo già a lavoro per risolvere. \nRiprova tra un po’."
           },
           "INITIATIVE_NOT_FOUND": {
             "title": "Non riusciamo a trovare quest’iniziativa",
@@ -5754,11 +5764,11 @@
           },
           "INITIATIVE_ENDED": {
             "title": "Le iscrizioni sono terminate",
-            "subtitle": "Non è più possibile aderire all’iniziativa. Per maggiori informazioni, contatta l’ente promotore."
+            "subtitle": "Non è più possibile aderire all’iniziativa."
           },
           "BUDGET_EXHAUSTED": {
             "title": "I fondi messi a disposizione dall’ente sono terminati",
-            "subtitle": "Non è più possibile aderire all’iniziativa. Per maggiori informazioni, contatta l’ente promotore."
+            "subtitle": "Non è più possibile aderire all’iniziativa."
           },
           "USER_UNSUBSCRIBED": {
             "title": "Non puoi aderire di nuovo",
@@ -5777,25 +5787,25 @@
           }
         }
       },
-      "headerTitle": "Adesione all'iniziativa",
+      "headerTitle": "Verifica dei requisiti",
       "beforeContinue": {
         "text": "By clicking Continue, you declare that you have read, understood, and accepted the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions]({{tosUrl}}) of use.",
         "requestBonus": "Request bonus"
       },
       "navigation": {
-        "header": "Adesione all'iniziativa"
+        "header": "Verifica dei requisiti"
       },
       "PDNDPrerequisites": {
         "fallbackInitiativeName": "l'iniziativa",
         "prerequisites": {
           "info": {
             "header": "Come avviene la verifica?",
-            "body": "Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione. Comodo, no?",
+            "body": "Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
             "understoodCTA": "Ho capito"
           }
         },
-        "title": "Possiedi i seguenti requisiti?",
-        "subtitle": "Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}.",
+        "title": "Per continuare dobbiamo verificare questi dati",
+        "subtitle": "Per accedere all’iniziativa {{service}}, verificheremo con alcuni enti se hai i requisiti.",
         "code": {
           "ISEE": "ISEE",
           "BIRTHDATE": "Data di nascita",
@@ -5820,13 +5830,13 @@
         "emptyValueError": "Select an option to continue"
       },
       "boolPrerequisites": {
-        "header": "To proceed, you declare that:",
+        "header": "Dichiaro che:",
         "emptyValueError": "Select an option to continue"
       },
       "enableMessages": {
         "cancelAction": "Cancel",
-        "subtitle": "Activate the possibility to contact you in the app to receive updates on the {{initiativeName}}. \nThis step is necessary to proceed with the request.",
-        "title": "Activate messages",
+        "subtitle": "Questo passaggio è necessario per procedere con la richiesta. Ti permetterà di ricevere gli aggiornamenti sul {{initiativeName}}.",
+        "title": "Attiva la possibilità di contattarti in app",
         "confirmAction": "Ok, active"
       },
       "enableNotification": {
@@ -6011,19 +6021,18 @@
     "payment": {
       "authorization": {
         "header": "Confermi l’operazione?",
-        "toAuth": "Da autorizzare",
-        "amount": "Importo del bene",
-        "businessName": "Richiesto da",
-        "dateTime": "Data e Ora",
-        "infoDivider": "Informazioni sull’iniziativa",
+        "discountedAmount": "Discounted amount",
+        "amount": "Total amount",
+        "businessName": "Requested by",
+        "dateTime": "Data e ora",
         "initiativeName": "Iniziativa",
         "availableAmount": "Credito disponibile",
-        "error": "C’è stato un errore, riprova"
+        "error": "C’è stato un errore, riprova",
+        "deny": "Deny operation"
       },
       "result": {
         "success": {
-          "title": "Operazione autorizzata con successo!",
-          "body": "Potrai controllare i dettagli dallo storico delle tue operazioni."
+          "title": "Done!"
         },
         "cancelled": {
           "title": "L’operazione è stata annullata"
@@ -6069,7 +6078,7 @@
       "manualInput": {
         "title": "Autorizza una transazione",
         "subtitle": "Inserisci il codice di 8 caratteri riportato sotto al codice QR.",
-        "input": "Codice Transazione",
+        "input": "Discount code",
         "button": "Continua"
       }
     }
