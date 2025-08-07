@@ -48,7 +48,8 @@ describe("singleSignOn selectors", () => {
           }
         }
       } as GlobalState;
-      expect(fimsConsentsDataSelector(state)).toBe(ssoData);
+      const consentsData = fimsConsentsDataSelector(state);
+      expect(consentsData).toBe(ssoData);
     });
   });
 
@@ -65,7 +66,8 @@ describe("singleSignOn selectors", () => {
           }
         }
       } as GlobalState;
-      expect(fimsRelyingPartyDomainSelector(state)).toBe(expectUrl);
+      const consentsData = fimsRelyingPartyDomainSelector(state);
+      expect(consentsData).toBe(expectUrl);
     });
 
     it("should return undefined when relyingPartyUrl is undefined", () => {
@@ -76,7 +78,8 @@ describe("singleSignOn selectors", () => {
           }
         }
       } as GlobalState;
-      expect(fimsRelyingPartyDomainSelector(state)).toBeUndefined();
+      const consentsData = fimsRelyingPartyDomainSelector(state);
+      expect(consentsData).toBeUndefined();
     });
   });
 
@@ -92,7 +95,8 @@ describe("singleSignOn selectors", () => {
           }
         }
       } as GlobalState;
-      expect(fimsRelyingPartyUrlSelector(state)).toBe(relyingPartyUrl);
+      const consentsData = fimsRelyingPartyUrlSelector(state);
+      expect(consentsData).toBe(relyingPartyUrl);
     });
   });
 
@@ -108,7 +112,8 @@ describe("singleSignOn selectors", () => {
           }
         }
       } as GlobalState;
-      expect(fimsCtaTextSelector(state)).toBe(ctaText);
+      const consentsData = fimsCtaTextSelector(state);
+      expect(consentsData).toBe(ctaText);
     });
   });
 
@@ -124,7 +129,8 @@ describe("singleSignOn selectors", () => {
           }
         }
       } as GlobalState;
-      expect(relyingPartyServiceIdSelector(state)).toBe(serviceId);
+      const consentsData = relyingPartyServiceIdSelector(state);
+      expect(consentsData).toBe(serviceId);
     });
   });
 
@@ -140,9 +146,8 @@ describe("singleSignOn selectors", () => {
             }
           }
         } as GlobalState;
-        expect(fimsEphemeralSessionOniOSSelector(state)).toBe(
-          ephemeralSessionOniOS
-        );
+        const consentsData = fimsEphemeralSessionOniOSSelector(state);
+        expect(consentsData).toBe(ephemeralSessionOniOS);
       })
     );
   });
