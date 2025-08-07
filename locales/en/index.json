@@ -6035,7 +6035,8 @@
           "title": "Done!"
         },
         "cancelled": {
-          "title": "L’operazione è stata annullata"
+          "title": "L’operazione è stata annullata",
+          "subtitle": "Non è stato addebitato alcun importo."
         },
         "failure": {
           "GENERIC": {

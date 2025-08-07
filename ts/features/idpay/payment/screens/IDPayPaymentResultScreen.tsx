@@ -40,6 +40,7 @@ const IDPayPaymentResultScreen = () => {
       <OperationResultScreenContent
         pictogram="trash"
         title={I18n.t("idpay.payment.result.cancelled.title")}
+        subtitle={I18n.t("idpay.payment.result.cancelled.subtitle")}
         action={defaultCloseAction}
         testID="paymentCancelledScreenTestID"
       />
