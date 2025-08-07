@@ -35,6 +35,24 @@ const flowStateTags: ReadonlyArray<FimsFlowStateTags> = [
   "in-app-browser-loading"
 ];
 
+const ssoDataPots = (
+  consent: Consent,
+  errorTag: FIMS_SSO_ERROR_TAGS = "GENERIC",
+  debugMessage: string = "Failed"
+) => [
+  pot.none,
+  pot.noneLoading,
+  pot.noneUpdating(consent),
+  pot.noneError({ errorTag, debugMessage }),
+  pot.some(consent),
+  pot.someLoading(consent),
+  pot.someUpdating(consent, consent),
+  pot.someError(consent, {
+    errorTag,
+    debugMessage
+  })
+];
+
 describe("singleSignOn selectors", () => {
   describe("fimsConsentsDataSelector", () => {
     it("should return ssoData from fims.sso", () => {
@@ -164,19 +182,7 @@ describe("singleSignOn selectors", () => {
       }
     } as Consent;
     errorTags.forEach(errorTag =>
-      [
-        pot.none,
-        pot.noneLoading,
-        pot.noneUpdating(consent),
-        pot.noneError({ errorTag, debugMessage: "Failed" }),
-        pot.some(consent),
-        pot.someLoading(consent),
-        pot.someUpdating(consent, consent),
-        pot.someError(consent, {
-          errorTag,
-          debugMessage: "Failed"
-        })
-      ].forEach(ssoDataPot => {
+      ssoDataPots(consent, errorTag).forEach(ssoDataPot => {
         const isSome =
           ssoDataPot.kind === "PotSome" ||
           ssoDataPot.kind === "PotSomeError" ||
@@ -216,19 +222,7 @@ describe("singleSignOn selectors", () => {
       }
     } as Consent;
     errorTags.forEach(errorTag =>
-      [
-        pot.none,
-        pot.noneLoading,
-        pot.noneUpdating(consent),
-        pot.noneError({ errorTag, debugMessage: "Failed" }),
-        pot.some(consent),
-        pot.someLoading(consent),
-        pot.someUpdating(consent, consent),
-        pot.someError(consent, {
-          errorTag,
-          debugMessage: "Failed"
-        })
-      ].forEach(ssoDataPot => {
+      ssoDataPots(consent, errorTag).forEach(ssoDataPot => {
         const isSome =
           ssoDataPot.kind === "PotSome" ||
           ssoDataPot.kind === "PotSomeError" ||
@@ -247,16 +241,7 @@ describe("singleSignOn selectors", () => {
   });
 
   describe("fimsAuthenticationFailedSelector", () =>
-    [
-      pot.none,
-      pot.noneLoading,
-      pot.noneUpdating({}),
-      pot.noneError("An error"),
-      pot.some({}),
-      pot.someLoading({}),
-      pot.someUpdating({}, {}),
-      pot.someError({}, "An error")
-    ].forEach(ssoDataPot => {
+    ssoDataPots({} as Consent).forEach(ssoDataPot => {
       const expectedOutput =
         ssoDataPot.kind === "PotNoneError" ||
         ssoDataPot.kind === "PotSomeError";
@@ -277,21 +262,7 @@ describe("singleSignOn selectors", () => {
 
   describe("fimsAuthenticationErrorTagSelector", () => {
     errorTags.forEach(errorTag =>
-      [
-        pot.none,
-        pot.noneLoading,
-        pot.noneUpdating({}),
-        pot.noneError({ errorTag }),
-        pot.some({}),
-        pot.someLoading({}),
-        pot.someUpdating({}, {}),
-        pot.someError(
-          {},
-          {
-            errorTag
-          }
-        )
-      ].forEach(ssoDataPot => {
+      ssoDataPots({} as Consent, errorTag).forEach(ssoDataPot => {
         const isError =
           ssoDataPot.kind === "PotNoneError" ||
           ssoDataPot.kind === "PotSomeError";
@@ -325,51 +296,39 @@ describe("singleSignOn selectors", () => {
   describe("fimsDebugDataSelector", () => {
     const debugMessage = "Failed to load consents";
     [true, false].forEach(isDebugModeEnabled =>
-      [
-        pot.none,
-        pot.noneLoading,
-        pot.noneUpdating({}),
-        pot.noneError({ debugMessage }),
-        pot.some({}),
-        pot.someLoading({}),
-        pot.someUpdating({}, {}),
-        pot.someError(
-          {},
-          {
-            debugMessage
-          }
-        )
-      ].forEach(ssoDataPot => {
-        const isError =
-          ssoDataPot.kind === "PotNoneError" ||
-          ssoDataPot.kind === "PotSomeError";
-        it(`When isDebugModeEnabled=${isDebugModeEnabled} and 'features.fims.sso.ssoData' is of type '${
-          ssoDataPot.kind
-        }', it should return ${
-          isError ? "debugMessage='" + debugMessage + "'" : "'undefined'"
-        }`, () => {
-          const globalState = {
-            debug: {
-              isDebugModeEnabled
-            },
-            features: {
-              fims: {
-                sso: {
-                  ssoData: ssoDataPot
+      ssoDataPots({} as Consent, undefined, debugMessage).forEach(
+        ssoDataPot => {
+          const isError =
+            ssoDataPot.kind === "PotNoneError" ||
+            ssoDataPot.kind === "PotSomeError";
+          it(`When isDebugModeEnabled=${isDebugModeEnabled} and 'features.fims.sso.ssoData' is of type '${
+            ssoDataPot.kind
+          }', it should return ${
+            isError ? "debugMessage='" + debugMessage + "'" : "'undefined'"
+          }`, () => {
+            const globalState = {
+              debug: {
+                isDebugModeEnabled
+              },
+              features: {
+                fims: {
+                  sso: {
+                    ssoData: ssoDataPot
+                  }
                 }
               }
-            }
-          } as GlobalState;
-          const ssoPot = fimsDebugDataSelector(globalState);
-          pipe(
-            isDebugModeEnabled && isError ? O.some(debugMessage) : O.none,
-            O.fold(
-              () => expect(ssoPot).toBeUndefined(),
-              message => expect(ssoPot).toBe(message)
-            )
-          );
-        });
-      })
+            } as GlobalState;
+            const ssoPot = fimsDebugDataSelector(globalState);
+            pipe(
+              isDebugModeEnabled && isError ? O.some(debugMessage) : O.none,
+              O.fold(
+                () => expect(ssoPot).toBeUndefined(),
+                message => expect(ssoPot).toBe(message)
+              )
+            );
+          });
+        }
+      )
     );
   });
 
