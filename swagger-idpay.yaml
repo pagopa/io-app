@@ -407,322 +407,149 @@ paths:
               $ref: '#/components/headers/RateLimit-Reset'
             Retry-After:
               $ref: '#/components/headers/Retry-After'
+  '/onboarding/{initiativeId}/detail':
+    get:
+      tags:
+        - onboarding
+      summary: >-
+        ENG: Returns the detail of an active initiative - IT: Ritorna i dettagli
+        di un'iniziativa attiva
+      description: Returns the detail of an active initiative
+      operationId: webInitiativeDetail
+      parameters:
+        - $ref: '#/components/parameters/ApiVersionHeader'
+        - name: Accept-Language
+          in: header
+          description: 'ENG: Language - IT: Lingua'
+          schema:
+            type: string
+            pattern: '^[ -~]{2,5}$'
+            minLength: 2
+            maxLength: 5
+            example: it-IT
+            default: it-IT
+          required: true
+        - name: initiativeId
+          in: path
+          description: The initiative ID
+          required: true
+          schema:
+            type: string
+            description: >-
+              ENG: Unique identifier of the subscribed initiative - IT:
+              Identificativo univoco dell'iniziativa sottoscritta
+            maxLength: 24
+            pattern: '^[a-zA-Z0-9]+$'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiativeDTO'
+          headers:
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+            Retry-After:
+              $ref: '#/components/headers/Retry-After'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_INVALID_REQUEST
+                message: Something went wrong handling the request
+          headers:
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+            Retry-After:
+              $ref: '#/components/headers/Retry-After'
+        '401':
+          description: Authentication failed
+          content:
+            application/json: {}
+          headers:
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+            Retry-After:
+              $ref: '#/components/headers/Retry-After'
+        '404':
+          description: The requested inititative was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_INITIATIVE_NOT_FOUND
+                message: Initiative not found
+          headers:
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+            Retry-After:
+              $ref: '#/components/headers/Retry-After'
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_TOO_MANY_REQUESTS
+                message: Too many requests
+          headers:
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+            Retry-After:
+              $ref: '#/components/headers/Retry-After'
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_GENERIC_ERROR
+                message: Application error
+          headers:
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+            Retry-After:
+              $ref: '#/components/headers/Retry-After'
   /onboarding/:
     put:
       tags:
         - onboarding
       summary: >-
-        ENG: Acceptance of Terms & Conditions - IT: Accettazione dei Termini e
-        condizioni
-      description: Acceptance of Terms & Conditions
-      operationId: onboardingCitizen
-      parameters:
-        - $ref: '#/components/parameters/ApiVersionHeader'
-        - name: Accept-Language
-          in: header
-          description: 'ENG: Language - IT: Lingua'
-          schema:
-            type: string
-            pattern: '^[ -~]{2,5}$'
-            minLength: 2
-            maxLength: 5
-            example: it-IT
-            default: it-IT
-          required: true
-      requestBody:
-        description: 'ENG: Id of the initiative IT: Identificativo dell''iniziativa'
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OnboardingPutDTO'
-      responses:
-        '204':
-          description: Acceptance successful
-          content:
-            application/json: {}
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OnboardingErrorDTO'
-              example:
-                code: ONBOARDING_INVALID_REQUEST
-                message: Something went wrong handling the request
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-        '401':
-          description: Authentication failed
-          content:
-            application/json: {}
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-        '403':
-          description: This onboarding is forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OnboardingErrorDTO'
-              example:
-                code: ONBOARDING_BUDGET_EXHAUSTED
-                message: Budget exhausted for initiative XXXXX
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-        '404':
-          description: The requested resource was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OnboardingErrorDTO'
-              example:
-                code: ONBOARDING_INITIATIVE_NOT_FOUND
-                message: Cannot find initiative XXXXX
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-        '429':
-          description: Too many Requests
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OnboardingErrorDTO'
-              example:
-                code: ONBOARDING_TOO_MANY_REQUESTS
-                message: Too many requests
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-        '500':
-          description: Server ERROR
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OnboardingErrorDTO'
-              example:
-                code: ONBOARDING_GENERIC_ERROR
-                message: An error occurred in the microservice admissibility
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-  /onboarding/initiative:
-    put:
-      tags:
-        - onboarding
-      summary: >-
-        ENG: Checks the initiative prerequisites - IT: Verifica i prerequisiti
-        dell'iniziativa
-      description: Checks the initiative prerequisites
-      operationId: checkPrerequisites
-      parameters:
-        - $ref: '#/components/parameters/ApiVersionHeader'
-        - name: Accept-Language
-          in: header
-          description: 'ENG: Language - IT: Lingua'
-          schema:
-            type: string
-            pattern: '^[ -~]{2,5}$'
-            minLength: 2
-            maxLength: 5
-            example: it-IT
-            default: it-IT
-          required: true
-      requestBody:
-        description: 'ENG: Id of the initiative - IT: Identificatico dell''iniziativa'
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OnboardingPutDTO'
-      responses:
-        '200':
-          description: Check successful
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RequiredCriteriaDTO'
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-        '202':
-          description: Accepted - Request Taken Over
-          content:
-            application/json: {}
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OnboardingErrorDTO'
-              example:
-                code: ONBOARDING_INVALID_REQUEST
-                message: Something went wrong handling the request
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-        '401':
-          description: Authentication failed
-          content:
-            application/json: {}
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-        '403':
-          description: This onboarding is forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OnboardingErrorDTO'
-              example:
-                code: ONBOARDING_BUDGET_EXHAUSTED
-                message: Budget exhausted for initiative XXXXX
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-        '404':
-          description: The requested resource was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OnboardingErrorDTO'
-              example:
-                code: ONBOARDING_INITIATIVE_NOT_FOUND
-                message: Cannot find initiative XXXXX
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-        '429':
-          description: Too many Requests
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OnboardingErrorDTO'
-              example:
-                code: ONBOARDING_TOO_MANY_REQUESTS
-                message: Too many requests
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-        '500':
-          description: Server ERROR
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OnboardingErrorDTO'
-              example:
-                code: ONBOARDING_GENERIC_ERROR
-                message: An error occurred in the microservice admissibility
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            RateLimit-Limit:
-              $ref: '#/components/headers/RateLimit-Limit'
-            RateLimit-Reset:
-              $ref: '#/components/headers/RateLimit-Reset'
-            Retry-After:
-              $ref: '#/components/headers/Retry-After'
-  /onboarding/consent:
-    put:
-      tags:
-        - onboarding
-      summary: >-
-        ENG: Saves the consensus of both PDND and self-declaration - IT: Salva i
-        consensi di PDND e le autodichiarazioni
-      description: Saves the consensus of both PDND and self-declaration
-      operationId: consentOnboarding
+        ENG: Saving mail and self-declarations - IT: Salvataggio della mail e
+        delle autodichiarazioni
+      description: Saving mail and self-declarations
+      operationId: saveOnboarding
       parameters:
         - $ref: '#/components/parameters/ApiVersionHeader'
         - name: Accept-Language
@@ -740,13 +567,13 @@ paths:
         description: >-
           ENG: Unique identifier of the subscribed initiative, flag for PDND
           acceptation and the list of accepted self-declared criteria - IT:
-          Identificativo univoco dell'iniziativa sottoscritta, flag per
-          l'accettazione PDND e l'elenco dei criteri autodichiarati accettati
+          Identificativo univoco dell'iniziativa sottoscritta, elenco dei
+          criteri autodichiarati accettati,
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ConsentPutDTO'
+              $ref: '#/components/schemas/OnboardingDTO'
       responses:
         '202':
           description: Accepted - Request Taken Over
@@ -1681,7 +1508,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InitiativeDTO'
+                $ref: '#/components/schemas/InitiativeDTO1'
           headers:
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
@@ -3681,9 +3508,6 @@ components:
         iban:
           type: string
           description: 'ENG: IBAN of the citizen - IT: IBAN del cittadino'
-          pattern: '^IT[0-9]{2}[A-Z]{1}[0-9]{5}[0-9]{5}[A-Z0-9]{12}$'
-          minLength: 27
-          maxLength: 27
         checkIbanStatus:
           type: string
           description: 'ENG: Status of checkIban - IT: Stato del checkIban'
@@ -3694,22 +3518,16 @@ components:
         holderBank:
           type: string
           description: 'ENG: Holder Bank name - IT: Nome della banca'
-          pattern: '^[a-zA-Z0-9_]+$'
-          maxLength: 100
         description:
           type: string
           description: >-
             ENG: General description associated with the iban - IT: Descrizione
             generale associata alll'IBAN
-          pattern: '^[a-zA-Z0-9_]+$'
-          maxLength: 255
         channel:
           type: string
           description: >-
             ENG: Channel from which the IBAN has been inserted - IT: Canale da
             cui l'IBAN è stato inserito
-          pattern: '^[a-zA-Z0-9_]+$'
-          maxLength: 50
     IbanListDTO:
       type: object
       required:
@@ -3738,50 +3556,23 @@ components:
             - IBAN_TOO_MANY_REQUESTS
             - IBAN_GENERIC_ERROR
           description: |-
-            "ENG: Error code: IBAN_NOT_FOUND: Iban not found,
+            'ENG: Error code: IBAN_NOT_FOUND: Iban not found,
              IBAN_INVALID_REQUEST: Something went wrong handling request,
              IBAN_TOO_MANY_REQUESTS: Too many requests,
              IBAN_GENERIC_ERROR: Application Error - IT: Codice di errore:
              IBAN_NOT_FOUND: Iban non trovato,
              IBAN_INVALID_REQUEST: Qualcosa è andato storto durante l'invio della richiesta,
              IBAN_TOO_MANY_REQUESTS: Troppe richieste,
-             IBAN_GENERIC_ERROR: Errore generico"
+             IBAN_GENERIC_ERROR: Errore generico'
         message:
           type: string
           description: 'ENG: Error message - IT: Messaggio di errore'
-          maxLength: 2500
-          pattern: '^[a-zA-Z0-9 _@\-.!?]+'
-    ConsentPutDTO:
-      title: ConsentPutDTO
-      type: object
-      required:
-        - initiativeId
-        - pdndAccept
-        - selfDeclarationList
-      properties:
-        initiativeId:
-          type: string
-          description: >-
-            ENG: Unique identifier of the subscribed initiative - IT:
-            Identificativo univoco dell'iniziativa sottoscritta
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
-        pdndAccept:
-          type: boolean
-          description: 'ENG: Flag for PDND acceptation - IT: Flag per l''accettazione PDND'
-        selfDeclarationList:
-          type: array
-          items:
-            $ref: '#/components/schemas/SelfConsentDTO'
-          description: >-
-            ENG: The list of accepted self-declared criteria - IT: Lista dei
-            criteri autodichiarati
-          maxItems: 10
     SelfConsentDTO:
       oneOf:
         - $ref: '#/components/schemas/SelfConsentBoolDTO'
         - $ref: '#/components/schemas/SelfConsentMultiDTO'
         - $ref: '#/components/schemas/SelfConsentTextDTO'
+        - $ref: '#/components/schemas/SelfConsentMultiTypeDTO'
     ListUsersOnboardingStatusDTO:
       title: ListUsersOnboardingStatusDTO
       type: array
@@ -3790,21 +3581,8 @@ components:
       description: >-
         ENG: List of initiatives in Waiting List or In Evaluation status, to
         which the user is onboarded - IT: Lista delle iniziative in stato Lista
-        d''attesa o In Valutazione, a cui l'utente è onboardato
+        d'attesa o In Valutazione, a cui l'utente è onboardato
       maxItems: 10
-    OnboardingPutDTO:
-      title: OnboardingPutDTO
-      type: object
-      required:
-        - initiativeId
-      properties:
-        initiativeId:
-          type: string
-          description: >-
-            ENG: Unique identifier of the subscribed initiative - IT:
-            Identificativo univoco dell'iniziativa sottoscritta
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
     UserOnboardingStatusDTO:
       title: UserOnboardingStatusDTO
       type: object
@@ -3818,21 +3596,15 @@ components:
         initiativeName:
           type: string
           description: 'ENG: Name of the initiative - IT: Nome dell''iniziativa'
-          pattern: '^[ -~]{1,255}$'
           example: Bonus Elettrodomestici
-          maxLength: 255
         serviceId:
           type: string
           description: 'ENG: The service ID - IT: Identificativo del service'
-          maxLength: 50
-          pattern: '^[a-zA-Z0-9]+$'
         initiativeId:
           type: string
           description: >-
             ENG: Unique identifier of the subscribed initiative - IT:
             Identificativo univoco dell'iniziativa sottoscritta
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
         status:
           enum:
             - ON_WAITING_LIST
@@ -3844,8 +3616,6 @@ components:
         statusDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: >-
             ENG: Date on which the status changed to the current one - IT: Data
             in cui lo stato è cambiato allo stato attuale
@@ -3874,198 +3644,15 @@ components:
         statusDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: >-
             ENG: Date on which the status changed to the current one - IT: Data
             in cui lo stato è cambiato allo stato attuale
         onboardingOkDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: >-
             ENG: Date on which the onboarding successfully went through - IT:
             Data in cui l'adesione è avvenuta con successo
-    RequiredCriteriaDTO:
-      type: object
-      required:
-        - pdndCriteria
-        - selfDeclarationList
-      properties:
-        pdndCriteria:
-          type: array
-          items:
-            $ref: '#/components/schemas/PDNDCriteriaDTO'
-          description: >-
-            ENG: The list of checks made on the PDND platform - IT: Lista dei
-            controlli effettutati dalla piattaforma PDND
-          maxItems: 5
-        selfDeclarationList:
-          type: array
-          items:
-            $ref: '#/components/schemas/SelfDeclarationDTO'
-          description: >-
-            ENG: The list of required self-declared criteria - IT: Lista dei
-            criteri richiesti da autodichiarare
-          maxItems: 10
-    SelfDeclarationDTO:
-      oneOf:
-        - $ref: '#/components/schemas/SelfDeclarationBoolDTO'
-        - $ref: '#/components/schemas/SelfDeclarationMultiDTO'
-        - $ref: '#/components/schemas/SelfDeclarationTextDTO'
-    PDNDCriteriaDTO:
-      type: object
-      required:
-        - code
-        - description
-        - value
-        - authority
-      properties:
-        code:
-          type: string
-          enum:
-            - ISEE
-            - BIRTHDATE
-            - RESIDENCE
-            - FAMILY_UNIT
-          description: >-
-            ENG: A code that identifies the type of criteria - IT: Codice che
-            identifica il tipo di criterio
-        description:
-          type: string
-          description: 'ENG: Description of the criteria - IT: Descrizione del criterio'
-          maxLength: 255
-          example: descrizione del criterio
-          pattern: '^[ -~]{0,255}$'
-        value:
-          type: string
-          description: >-
-            "ENG: The expected value for the criteria. It is used in conjunction
-            with the operator to define a range or an equality over that
-            criteria. - IT: Valore atteso dal criterio. E' usato insieme al
-            campo operator per definire un insieme di valori o un'uguaglianza
-            con un valore"
-          maxLength: 255
-          example: valore del criterio
-          pattern: '^[ -~]{0,255}$'
-        value2:
-          type: string
-          description: >-
-            "ENG: In situations where the operator expects two values (e.g
-            BETWEEN) this field is populated - IT: Popolato quando il campo
-            operator si aspetta due valori (e.g BETWEEN)"
-          maxLength: 255
-          example: BETWEEN
-          pattern: '^[ -~]{0,255}$'
-        operator:
-          type: string
-          description: >-
-            ENG: Represents the relation between the criteria and the value
-            field - IT: Rappresenta la relazione tra il criterio ed il campo
-            value
-          enum:
-            - EQ
-            - NOT_EQ
-            - LT
-            - LE
-            - GT
-            - GE
-            - BTW_CLOSED
-            - BTW_OPEN
-        authority:
-          type: string
-          description: >-
-            ENG: Authority to request PDND criteria value - IT: Autorità a cui
-            richiedere il valore dei criteri PDND
-          enum:
-            - INPS
-            - AGID
-    SelfDeclarationBoolDTO:
-      type: object
-      required:
-        - _type
-        - code
-        - description
-        - value
-      properties:
-        _type:
-          type: string
-          description: >-
-            ENG: Self-declaration boolean type - IT: Autodichiarazione di tipo
-            boolean
-          enum:
-            - boolean
-        code:
-          type: string
-          description: 'ENG: Self-declaration code - IT: Codice dell''autodichiarazione'
-          maxLength: 10
-          pattern: '^[ -~]{1,10}$'
-        description:
-          type: string
-          example: descrizione
-          description: >-
-            ENG: Self-declaration description - IT: Descrizione
-            dell'autodichiarazione
-          maxLength: 255
-          pattern: '^[ -~]{0,255}$'
-        subDescription:
-          type: string
-          example: sotto descrizione
-          description: >-
-            ENG: Self-declaration sub-description - IT: Sotto descrizione
-            dell'autodichiarazione
-          maxLength: 255
-          pattern: '^[ -~]{0,255}$'
-        value:
-          type: boolean
-          description: >-
-            ENG: Indicates whether the self-declaration is accepted or not - IT:
-            Indica se l'autodichiarazione è accettata o no
-    SelfDeclarationMultiDTO:
-      type: object
-      required:
-        - _type
-        - code
-        - description
-        - value
-      properties:
-        _type:
-          type: string
-          description: >-
-            ENG: Self-declaration value type - IT: Autodichiarazione di tipo
-            multipli
-          enum:
-            - multi
-        code:
-          type: string
-          description: 'ENG: Self-declaration code - IT: Codice dell''autodichiarazione'
-          maxLength: 10
-          pattern: '^[ -~]{1,10}$'
-        description:
-          type: string
-          example: descrizione
-          description: >-
-            ENG: Self-declaration description - IT: Descrizione
-            dell'autodichiarazione
-          maxLength: 255
-          pattern: '^[ -~]{0,255}$'
-        subDescription:
-          type: string
-          example: sotto descrizione
-          description: >-
-            ENG: Self-declaration sub-description - IT: Sotto descrizione
-            dell'autodichiarazione
-          maxLength: 255
-          pattern: '^[ -~]{0,255}$'
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/RowDataDTO'
-          description: >-
-            ENG: Indicates self-declaration values - IT: Indica i valori per
-            l'autodichiarazione
-          maxItems: 10
     RowDataDTO:
       type: object
       required:
@@ -4077,59 +3664,12 @@ components:
           description: >-
             ENG: Self-declaration description - IT: Descrizione del record di
             autodichiarazione
-          pattern: '^[ -~]{0,250}$'
-          maxLength: 250
         subDescription:
           type: string
           example: sotto descrizione
           description: >-
             ENG: Self-declaration sub-description - IT: Sotto descrizione del
             record di autodichiarazione
-          maxLength: 255
-          pattern: '^[ -~]{0,255}$'
-    SelfDeclarationTextDTO:
-      type: object
-      required:
-        - _type
-        - code
-        - description
-        - value
-      properties:
-        _type:
-          type: string
-          description: >-
-            ENG: Self-declaration value type free text - IT: Autodichiarazione
-            di tipo testo libero
-          enum:
-            - text
-        code:
-          type: string
-          description: 'ENG: Self-declaration code - IT: Codice dell''autodichiarazione'
-          maxLength: 10
-          pattern: '^[ -~]{1,10}$'
-        description:
-          type: string
-          example: descrizione
-          description: >-
-            ENG: Self-declaration description - IT: Descrizione
-            dell'autodichiarazione
-          maxLength: 255
-          pattern: '^[ -~]{0,255}$'
-        subDescription:
-          type: string
-          example: sotto descrizione
-          description: >-
-            ENG: Self-declaration sub-description - IT: Sotto descrizione
-            dell'autodichiarazione
-          maxLength: 255
-          pattern: '^[ -~]{0,255}$'
-        value:
-          type: string
-          description: >-
-            ENG: Indicates self-declaration values - IT: Indica i valori per
-            l'autodichiarazione
-          pattern: '^[ -~]{0,250}$'
-          maxLength: 250
     SelfConsentBoolDTO:
       type: object
       required:
@@ -4145,8 +3685,6 @@ components:
         code:
           type: string
           description: 'ENG: Self-consent code - IT: Codice dell''auto consenso'
-          maxLength: 10
-          pattern: '^[ -~]{1,10}$'
         accepted:
           type: boolean
           description: >-
@@ -4167,16 +3705,12 @@ components:
         code:
           type: string
           description: 'ENG: Self-consent code - IT: Codice dell''auto consenso'
-          pattern: '^[ -~]{0,10}$'
-          maxLength: 10
         value:
           type: string
           example: '0, 1'
           description: >-
             ENG: Indicates self-consent values - IT: Indica i valori per gli
             auto consensi
-          pattern: '^[ -~]{0,10}$'
-          maxLength: 10
     SelfConsentTextDTO:
       type: object
       required:
@@ -4194,15 +3728,36 @@ components:
         code:
           type: string
           description: 'ENG: Self-consent code - IT: Codice dell''auto consenso'
-          pattern: '^[ -~]{0,10}$'
-          maxLength: 10
         value:
           type: string
           description: >-
             ENG: Indicates self-consent values - IT: Indica i valori per gli
             auto consensi
-          pattern: '^[ -~]{0,255}$'
-          maxLength: 255
+    SelfConsentMultiTypeDTO:
+      type: object
+      required:
+        - _type
+        - code
+        - value
+      properties:
+        _type:
+          type: string
+          enum:
+            - multi_consent
+          description: >-
+            ENG: ISEE Self-consent value type - IT: Auto consenso di tipo
+            multipli ISEE
+        code:
+          type: string
+          enum:
+            - isee
+          description: 'ENG: Self-consent code - IT: Tipologia di multiconsenso'
+        value:
+          type: string
+          example: '1, 2, 3'
+          description: >-
+            ENG: Indicates self-consent values - IT: Indica i valori per gli
+            auto consensi
     InitiativeDataDTO:
       type: object
       required:
@@ -4217,66 +3772,44 @@ components:
         initiativeId:
           type: string
           description: 'ENG: The initiative ID - IT: Identificativo dell''iniziativa'
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
         initiativeName:
           type: string
           description: 'ENG: Initiative''s name - IT: Nome dell''iniziativa'
-          pattern: '^[ -~]{1,255}$'
           example: Bonus Elettrodomestici
-          maxLength: 255
         description:
           type: string
           example: Descrizione dell'iniziativa
           description: 'ENG: Initiative''s description - IT: Descrizione dell''iniziativa'
-          pattern: '^[ -~]{1,255}$'
-          maxLength: 255
         organizationId:
           type: string
           description: >-
             ENG: Id of the organization that created the initiative - IT:
             Identificativo dell'organizzazione che ha creato l'iniziativa
-          pattern: '^[ -~]{1,50}$'
-          maxLength: 50
         organizationName:
           type: string
           description: >-
             ENG: Name of the organization that created the initiative - IT: Nome
             dell'organizzazione che ha creato l'iniziativa
-          pattern: '^[ -~]{1,50}$'
-          maxLength: 50
         tcLink:
           type: string
           description: >-
             ENG: URL that redirects to the terms and conditions - IT: URL che
             porta ai termini e condizioni
-          pattern: >-
-            ^(https):\/\/[a-zA-Z0-9.-]+(:[0-9]+)?(\/[a-zA-Z0-9._~!$&'()*+,;=:@%-]*)*(\?[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?(#[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?$
-          maxLength: 255
         privacyLink:
           type: string
           description: >-
             ENG: URL that redirects to the privacy policy - IT: URL che
             reindirizza all'informativa della privacy
-          pattern: >-
-            ^(https):\/\/[a-zA-Z0-9.-]+(:[0-9]+)?(\/[a-zA-Z0-9._~!$&'()*+,;=:@%-]*)*(\?[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?(#[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?$
-          maxLength: 255
         logoURL:
           type: string
           description: >-
             ENG: URL for the initiative's logo image - IT: URL del logo
             dell'iniziativa
-          pattern: >-
-            ^(https):\/\/[a-zA-Z0-9.-]+(:[0-9]+)?(\/[a-zA-Z0-9._~!$&'()*+,;=:@%-]*)*(\?[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?(#[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?$
-          maxLength: 255
         thumbnailUrl:
           type: string
           description: >-
             ENG: ToS Initiative Image URL - IT: URL dell'immagine
             dell'iniziativa per i ToS
-          pattern: >-
-            ^(https):\/\/[a-zA-Z0-9.-]+(:[0-9]+)?(\/[a-zA-Z0-9._~!$&'()*+,;=:@%-]*)*(\?[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?(#[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?$
-          maxLength: 255
     InitiativeErrorDTO:
       type: object
       properties:
@@ -4289,7 +3822,7 @@ components:
             - INITIATIVE_TOO_MANY_REQUESTS
             - INITIATIVE_GENERIC_ERROR
           description: |-
-            "ENG: Error code:
+            'ENG: Error code:
              INITIATIVE_INVALID_LOCALE_FORMAT: Initiative not found due to invalid locale format,
              INITIATIVE_INVALID_REQUEST: Something went wrong handling the request,
              INITIATIVE_NOT_FOUND: Initiative not found,
@@ -4300,12 +3833,10 @@ components:
              INITIATIVE_INVALID_REQUEST: Qualcosa è andato storto durante l'invio della richiesta,
              INITIATIVE_NOT_FOUND: Iniziativa non trovata,
              INITIATIVE_TOO_MANY_REQUESTS: Troppe richieste,
-             INITIATIVE_GENERIC_ERROR: Errore generico"
+             INITIATIVE_GENERIC_ERROR: Errore generico'
         message:
           type: string
           description: 'ENG: Error message - IT: Messaggio di errore'
-          maxLength: 2500
-          pattern: '^[a-zA-Z0-9 _@\-.!?]+'
     OnboardingErrorDTO:
       type: object
       required:
@@ -4336,7 +3867,7 @@ components:
             - ONBOARDING_FAMILY_UNIT_ALREADY_JOINED
             - ONBOARDING_WAITING_LIST
           description: >-
-            "ENG: Error code: ONBOARDING_USER_UNSUBSCRIBED: The user has
+            'ENG: Error code: ONBOARDING_USER_UNSUBSCRIBED: The user has
             unsubscribed from initiative, ONBOARDING_PAGE_SIZE_NOT_ALLOWED: Page
             size not allowed, ONBOARDING_PDND_CONSENT_DENIED: The PDND consent
             was denied by the user for the initiative,
@@ -4386,12 +3917,301 @@ components:
             ONBOARDING_GENERIC_ERROR: Errore applicativo,
             ONBOARDING_USER_NOT_ONBOARDED: Utente non onboardato all'iniziativa,
             ONBOARDING_INITIATIVE_NOT_FOUND: Iniziativa non trovata,
-            ONBOARDING_TOO_MANY_REQUESTS: Troppe richieste"
+            ONBOARDING_TOO_MANY_REQUESTS: Troppe richieste'
         message:
           type: string
           description: 'ENG: Error message- IT: Messaggio di errore'
-          maxLength: 2500
-          pattern: '^[a-zA-Z0-9 _@\-.!?]+'
+    OnboardingDTO:
+      title: OnboardingWebDTO
+      type: object
+      required:
+        - initiativeId
+        - confirmedTos
+        - pdndAccept
+        - selfDeclarationList
+      properties:
+        initiativeId:
+          type: string
+          description: >-
+            ENG: Unique identifier of the subscribed initiative - IT:
+            Identificativo univoco dell'iniziativa sottoscritta
+          maxLength: 24
+          pattern: '^[a-zA-Z0-9]+$'
+        confirmedTos:
+          type: boolean
+          description: >-
+            'ENG: Indicates whether the user has correctly accepted the Terms
+            and Conditions of the initiative - IT: Indica se l'utente ha
+            correttamente accettato i Termini e Condizioni dell'iniziativa'
+        pdndAccept:
+          type: boolean
+          description: >-
+            'ENG: Indicates whether the user has correctly accepted the PDND
+            Criteria of the initiative - IT: Indica se l'utente ha correttamente
+            accettato i PDND Criteria dell'iniziativa'
+        selfDeclarationList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfConsentDTO'
+          description: >-
+            ENG: The list of accepted self-declared criteria - IT: Lista dei
+            criteri autodichiarati
+          maxItems: 10
+        userMail:
+          type: string
+          description: >-
+            ENG: Contact email provided by the user during web onboarding - IT:
+            Mail di contatto fornita dall'utente in fase di onboarding web
+          maxLength: 24
+          example: utente@email.it
+          pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        userMailConfirmation:
+          type: string
+          description: >-
+            ENG: Confirm email provided by the user during web onboarding - IT:
+            Mail di conferma fornita dall'utente in fase di onboarding web
+          maxLength: 24
+          example: utente@email.it
+          pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    InitiativeDTO:
+      type: object
+      properties:
+        general:
+          $ref: '#/components/schemas/InitiativeGeneralDTO'
+        beneficiaryRule:
+          $ref: '#/components/schemas/InitiativeBeneficiaryRuleDTO'
+    InitiativeGeneralDTO:
+      type: object
+      properties:
+        budget:
+          type: number
+          example: 10
+        beneficiaryType:
+          enum:
+            - PF
+            - PG
+            - NF
+          type: string
+        familyUnitComposition:
+          enum:
+            - INPS
+            - ANPR
+          type: string
+        beneficiaryKnown:
+          type: boolean
+        beneficiaryBudget:
+          type: number
+          example: 10
+        startDate:
+          type: string
+          description: Start date
+          format: date
+          example: '2022-01-30'
+        endDate:
+          type: string
+          description: Start date
+          format: date
+          example: '2022-01-30'
+        rankingStartDate:
+          type: string
+          description: Start date
+          format: date
+          example: '2022-01-30'
+        rankingEndDate:
+          type: string
+          description: Start date
+          format: date
+          example: '2022-01-30'
+        rankingEnabled:
+          type: boolean
+        termAndCondition:
+          type: string
+          example: termAndCondition
+          description: 'ENG: Term and Condition - IT: Termini e Condizioni'
+    InitiativeBeneficiaryRuleDTO:
+      type: object
+      properties:
+        selfDeclarationCriteria:
+          type: array
+          maxItems: 10
+          items:
+            $ref: >-
+              #/components/schemas/AnyOfInitiativeBeneficiaryRuleDTOSelfDeclarationCriteriaItems
+        automatedCriteria:
+          type: array
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/AutomatedCriteriaDTO'
+    AnyOfInitiativeBeneficiaryRuleDTOSelfDeclarationCriteriaItems:
+      type: object
+      anyOf:
+        - $ref: '#/components/schemas/SelfCriteriaBoolDTO'
+        - $ref: '#/components/schemas/SelfCriteriaMultiDTO'
+        - $ref: '#/components/schemas/SelfCriteriaMultiTypeDTO'
+        - $ref: '#/components/schemas/SelfCriteriaTextDTO'
+    SelfCriteriaBoolDTO:
+      type: object
+      properties:
+        _type:
+          type: string
+          description: >-
+            ENG: Self-declaration boolean type - IT: Autodichiarazione di tipo
+            boolean
+          enum:
+            - boolean
+        description:
+          type: string
+          example: descrizione
+          description: >-
+            ENG: Self-declaration description - IT: Descrizione
+            dell'autodichiarazione
+        subDescription:
+          type: string
+          example: sotto descrizione
+          description: >-
+            ENG: Self-declaration sub-description - IT: Sotto descrizione
+            dell'autodichiarazione
+        value:
+          type: boolean
+          description: >-
+            ENG: Indicates whether the self-declaration is accepted or not - IT:
+            Indica se l'autodichiarazione è accettata o no
+        code:
+          type: string
+          description: 'ENG: Self-declaration code - IT: Codice dell''autodichiarazione'
+    SelfCriteriaMultiDTO:
+      title: SelfCriteriaMultiDTO
+      type: object
+      properties:
+        _type:
+          type: string
+          description: >-
+            ENG: Self-declaration value type - IT: Autodichiarazione di tipo
+            multipli
+          enum:
+            - multi
+        description:
+          type: string
+          example: descrizione
+          description: >-
+            ENG: Self-declaration description - IT: Descrizione
+            dell'autodichiarazione
+        subDescription:
+          type: string
+          example: sotto descrizione
+          description: >-
+            ENG: Self-declaration sub-description - IT: Sotto descrizione
+            dell'autodichiarazione
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/RowDataDTO'
+          description: >-
+            ENG: Indicates self-declaration values - IT: Indica i valori per
+            l'autodichiarazione
+          maxItems: 10
+        code:
+          type: string
+          description: 'ENG: Self-declaration code - IT: Codice dell''autodichiarazione'
+    SelfCriteriaMultiTypeDTO:
+      title: SelfCriteriaMultiDTO
+      type: object
+      properties:
+        _type:
+          type: string
+          description: >-
+            ENG: Self-declaration value type - IT: Autodichiarazione di tipo
+            multipli
+          enum:
+            - multi_consent
+        description:
+          type: string
+          example: descrizione
+          description: >-
+            ENG: Self-declaration description - IT: Descrizione
+            dell'autodichiarazione
+        subDescription:
+          type: string
+          example: sotto descrizione
+          description: >-
+            ENG: Self-declaration sub-description - IT: Sotto descrizione
+            dell'autodichiarazione
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/RowDataDTO'
+          description: >-
+            ENG: Indicates self-declaration values - IT: Indica i valori per
+            l'autodichiarazione
+          maxItems: 10
+        code:
+          type: string
+          description: 'ENG: Self-declaration code - IT: Codice dell''autodichiarazione'
+          enum:
+            - isee
+    SelfCriteriaTextDTO:
+      title: SelfCriteriaTextDTO
+      type: object
+      properties:
+        _type:
+          type: string
+          description: >-
+            ENG: Self-declaration value type free text - IT: Autodichiarazione
+            di tipo testo libero
+          enum:
+            - text
+        description:
+          type: string
+          example: descrizione
+          description: >-
+            ENG: Self-declaration description - IT: Descrizione
+            dell'autodichiarazione
+        subDescription:
+          type: string
+          example: sotto descrizione
+          description: >-
+            ENG: Self-declaration sub-description - IT: Sotto descrizione
+            dell'autodichiarazione
+        value:
+          type: string
+          example: '0, 1'
+          description: >-
+            ENG: Indicates self-declaration values - IT: Indica i valori per
+            l'autodichiarazione
+        code:
+          type: string
+          description: 'ENG: Self-declaration code - IT: Codice dell''autodichiarazione'
+    AutomatedCriteriaDTO:
+      type: object
+      properties:
+        authority:
+          type: string
+          description: 'ENG: The information agency - IT: L''ente che ti da l''informazione'
+          example: authority
+        code:
+          type: string
+          enum:
+            - ISEE
+            - RESIDENCE
+            - BIRTHDAY
+            - FAMILY_UNIT
+          description: 'ENG: Criteria code - IT: Codice del criterio'
+        field:
+          type: string
+          description: 'ENG:  - IT: '
+          example: field
+        operator:
+          type: string
+          description: 'ENG:  - IT: '
+          example: operator
+        value:
+          type: string
+          description: 'ENG:  - IT: '
+          example: value
+        value2:
+          type: string
+          description: 'ENG:  - IT: '
+          example: value2
     OperationDTO:
       oneOf:
         - $ref: '#/components/schemas/TransactionDetailDTO'
@@ -4416,8 +4236,6 @@ components:
           type: string
           description: 'ENG: Date of the last update - IT: Data dell''ultimo aggiornamento'
           format: date-time
-          minLength: 19
-          maxLength: 19
         operationList:
           type: array
           minItems: 1
@@ -4476,8 +4294,6 @@ components:
       properties:
         operationId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Id of operation - IT: Identificativo dell''operazione'
         operationType:
           enum:
@@ -4494,35 +4310,24 @@ components:
         operationDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: 'ENG: Operation date - IT: Data dell''operazione'
         brandLogo:
           type: string
           format: uri
-          pattern: '^[ -~]{1,2048}$'
-          minLength: 1
-          maxLength: 2048
           description: >-
             ENG: Card's brand logo URL - IT: URL del logo del marchio della
             carta
         brand:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: >-
             ENG: Card's brand as mastercard, visa, ecc. - IT: Marchio della
             carta come mastercard, visa, ecc...
         instrumentId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Id instrument - IT: Identificativo dello strumento'
         maskedPan:
           type: string
-          maxLength: 19
           example: 1234-****-****-5678
-          pattern: '^(\d{4}[- ]?)([*Xx]{4}[- ]?){2}(\d{4})$'
           description: 'ENG: masked PAN - IT: masked PAN'
         channel:
           type: string
@@ -4553,8 +4358,6 @@ components:
       properties:
         operationId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Id of the operation - IT: Identificativo dell''operazione'
         operationType:
           enum:
@@ -4565,53 +4368,35 @@ components:
           description: 'ENG: Operation type - IT: Tipologia di operazione'
         eventId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
         brandLogo:
           type: string
           format: uri
-          pattern: '^[ -~]{1,2048}$'
-          minLength: 1
-          maxLength: 2048
           description: >-
             ENG: Card's brand logo URL - IT: URL del logo del marchio della
             carta
         brand:
           type: string
-          maxLength: 50
-          pattern: '^[a-zA-Z0-9]+$'
           description: >-
             ENG: Card's brand as mastercard, visa, ecc. - IT: Marchio della
             carta come mastercard, visa, ecc...
         maskedPan:
           type: string
           example: 1234-****-****-5678
-          maxLength: 19
-          pattern: '^(\d{4}[- ]?)([*Xx]{4}[- ]?){2}(\d{4})$'
           description: 'ENG: Masked Pan - IT: Masked Pan'
         amountCents:
           type: integer
           format: int64
-          minimum: 1
-          maximum: 999999999999999
           description: 'ENG: Transaction amount - IT: Importo della transazione'
         accruedCents:
           type: integer
           format: int64
-          minimum: 1
-          maximum: 999999999999999
           description: 'ENG: Transaction accrued - IT: Importo accumulato'
         operationDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: 'ENG: Operation date - IT: Data dell''operazione'
         circuitType:
           type: string
-          minLength: 2
-          maxLength: 2
-          pattern: '^\d{2}$'
           example: '00'
           description: >-
             ENG: Circuit type - IT: Tipologia del circuito 00-> Bancomat,
@@ -4620,15 +4405,11 @@ components:
             10->PrivateCircuit
         idTrxIssuer:
           type: string
-          maxLength: 64
-          pattern: '^[a-zA-Z0-9]+$'
           description: >-
             ENG: Transaction issuer ID - IT: Identificativo della transazione
             rispetto all'issuer
         idTrxAcquirer:
           type: string
-          maxLength: 64
-          pattern: '^[a-zA-Z0-9]+$'
           description: >-
             ENG: Transaction acquirer ID- IT: Identificativo della transazione
             rispetto all'acquirer
@@ -4657,8 +4438,6 @@ components:
             cui avviene la transazione
         businessName:
           type: string
-          maxLength: 250
-          pattern: '^[a-zA-Z0-9]+$'
     InstrumentOperationDTO:
       type: object
       required:
@@ -4670,8 +4449,6 @@ components:
       properties:
         operationId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Operation ID - IT: Identificativo dell''operazione'
         operationType:
           enum:
@@ -4682,30 +4459,21 @@ components:
         operationDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: 'ENG: Operation date - IT: Data dell''operazione'
         brandLogo:
           type: string
           format: uri
-          pattern: '^[ -~]{1,2048}$'
-          minLength: 1
-          maxLength: 2048
           description: >-
             ENG: Card's brand logo URL - IT: URL del logo del marchio della
             carta
         brand:
           type: string
-          maxLength: 50
-          pattern: '^[a-zA-Z0-9]+$'
           description: >-
             ENG: Card's brand as mastercard, visa, ecc. - IT: Marchio della
             carta come mastercard, visa, ecc...
         maskedPan:
           type: string
-          maxLength: 19
           example: 1234-****-****-5678
-          pattern: '^(\d{4}[- ]?)([*Xx]{4}[- ]?){2}(\d{4})$'
           description: 'ENG: Masked Pan - IT: Masked Pan'
         channel:
           type: string
@@ -4734,8 +4502,6 @@ components:
       properties:
         operationId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Operation ID - IT: Identificativo dell''operazione'
         operationType:
           enum:
@@ -4745,14 +4511,9 @@ components:
         operationDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: 'ENG: Operation date - IT: Data dell''operazione'
         iban:
           type: string
-          minLength: 27
-          maxLength: 27
-          pattern: '^IT[0-9]{2}[A-Z0-9]{23}$'
           description: 'ENG: IBAN of the citizen - IT: IBAN del cittadino'
         channel:
           type: string
@@ -4774,8 +4535,6 @@ components:
       properties:
         operationId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Operation ID - IT: Identificativo dell''operazione'
         operationType:
           enum:
@@ -4785,8 +4544,6 @@ components:
         operationDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: 'ENG: Operation date - IT: Data dell''operazione'
     RefundOperationDTO:
       type: object
@@ -4799,13 +4556,9 @@ components:
       properties:
         operationId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Operation ID - IT: Identificativo dell''operazione'
         eventId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Event ID - IT: Identificativo dell''evento'
         operationType:
           enum:
@@ -4819,14 +4572,10 @@ components:
         operationDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: 'ENG: Operation date - IT: Data dell''operazione'
         amountCents:
           type: integer
           format: int64
-          minimum: 1
-          maximum: 999999999999999
           description: 'ENG: Refund amount - IT: Importo da rimborsare'
     TransactionOperationDTO:
       type: object
@@ -4839,8 +4588,6 @@ components:
       properties:
         operationId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9 _@\-.!?]+'
           description: 'ENG: Id of the operation - IT: Identificativo dell''operazione'
         operationType:
           enum:
@@ -4850,54 +4597,36 @@ components:
           description: 'ENG: Operation type - IT: Tipologia dell''operazione'
         eventId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Event ID - IT: Identificativo dell''evento'
         operationDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: 'ENG: Operation date - IT: Data dell''operazione'
         brandLogo:
           type: string
           format: uri
-          pattern: '^[ -~]{1,2048}$'
-          minLength: 1
-          maxLength: 2048
           description: >-
             ENG: Card's brand logo URL - IT: URL del logo del marchio della
             carta
         brand:
           type: string
-          maxLength: 50
-          pattern: '^[a-zA-Z0-9]+$'
           description: >-
             ENG: Card's brand as mastercard, visa, ecc. - IT: Marchio della
             carta come mastercard, visa, ecc...
         maskedPan:
           type: string
-          maxLength: 19
           example: 1234-****-****-5678
-          pattern: '^(\d{4}[- ]?)([*Xx]{4}[- ]?){2}(\d{4})$'
           description: 'ENG: Masked PAN - IT: Masked PAN'
         amountCents:
           type: integer
           format: int64
-          minimum: 1
-          maximum: 999999999999999
           description: 'ENG: Transaction amount - IT: Importo della transazione'
         accruedCents:
           type: integer
           format: int64
-          minimum: 1
-          maximum: 999999999999999
           description: 'ENG: Accrued amount - IT: Importo accumulato'
         circuitType:
           type: string
-          minLength: 2
-          maxLength: 2
-          pattern: '^\d{2}$'
           example: '00'
           description: >-
             ENG: Circuit type - IT: Tipologia di circuito 00-> Bancomat,
@@ -4925,8 +4654,6 @@ components:
             cui avviene la transazione
         businessName:
           type: string
-          maxLength: 250
-          pattern: '^[a-zA-Z0-9]+$'
     SuspendOperationDTO:
       type: object
       required:
@@ -4936,8 +4663,6 @@ components:
       properties:
         operationId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Operation ID - IT: Identificativo dell''operazione'
         operationType:
           enum:
@@ -4950,8 +4675,6 @@ components:
         operationDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: 'ENG: Operation date - IT: Data dell''operazione'
     RefundDetailDTO:
       type: object
@@ -4964,8 +4687,6 @@ components:
       properties:
         operationId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Operation ID - IT: Identificativo dell''operazione'
         operationType:
           enum:
@@ -4979,65 +4700,42 @@ components:
             Rimborso pagato, REJECTED_REFUND: Rimborso rifiutato]
         eventId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Event ID - IT: Identificativo dell''evento'
         iban:
           type: string
-          minLength: 27
-          maxLength: 27
-          pattern: '^IT[0-9]{2}[A-Z0-9]{23}$'
           description: 'ENG: IBAN - IT: IBAN'
         operationDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: 'ENG: Operation date - IT: Data dell''operazione'
         amountCents:
           type: integer
           format: int64
-          minimum: 1
-          maximum: 999999999999999
           description: 'ENG: Refund amount - IT: Importo da rimborsare'
         status:
           type: string
-          maxLength: 250
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Refund status - IT: Stato del rimborso'
         refundType:
           type: string
-          maxLength: 250
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Refund type - IT: Tipologia di rimborso'
         startDate:
           type: string
           format: date
-          minLength: 10
-          maxLength: 10
           description: 'ENG: Start date - IT: Data di inizio'
         endDate:
           type: string
           format: date
-          minLength: 10
-          maxLength: 10
           description: 'ENG: End date - IT Data di fine'
         transferDate:
           type: string
           format: date
-          minLength: 10
-          maxLength: 10
           description: 'ENG: Transfer date - IT: Data della trasferenza'
         userNotificationDate:
           type: string
           format: date
-          minLength: 10
-          maxLength: 10
           description: 'ENG: User notification date - IT: Data di notificazione all''utente'
         cro:
           type: string
-          maxLength: 11
-          pattern: '^[a-zA-Z0-9]+$'
           description: >-
             ENG: Code that identifies a bank transaction/credit transfer - IT:
             Codice che identifica una transazione bancaria/bonifico
@@ -5050,8 +4748,6 @@ components:
       properties:
         operationId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Id of the operation - IT: Identificativo dell''operazione'
         operationType:
           enum:
@@ -5062,8 +4758,6 @@ components:
         operationDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: 'ENG: Operation date - IT: Data dell''operazione'
     TimelineErrorDTO:
       type: object
@@ -5081,7 +4775,7 @@ components:
             - TIMELINE_TOO_MANY_REQUESTS
             - TIMELINE_GENERIC_ERROR
           description: >-
-            "ENG: Error code: TIMELINE_DETAIL_NOT_FOUND: Detail of Timeline not
+            'ENG: Error code: TIMELINE_DETAIL_NOT_FOUND: Detail of Timeline not
             found,
              TIMELINE_USER_NOT_FOUND: Timeline for the current user not found,
              TIMELINE_REFUNDS_NOT_FOUND: Refund for current initiative not found,
@@ -5093,12 +4787,10 @@ components:
              TIMELINE_REFUNDS_NOT_FOUND:  Rimborso per la corrente iniziativa non trovato,
              TIMELINE_INVALID_REQUEST: Qualcosa è andato storto durante l'invio della richiesta,
              TIMELINE_TOO_MANY_REQUESTS: Troppe richieste,
-             TIMELINE_GENERIC_ERROR: Errore generico"
+             TIMELINE_GENERIC_ERROR: Errore generico'
           example: TIMELINE_DETAIL_NOT_FOUND
         message:
           type: string
-          maxLength: 2500
-          pattern: '^[a-zA-Z0-9 _@\-.!?]+'
           description: 'ENG: Error message - IT: Messaggio di errore'
     UnsubscribeOperationDTO:
       type: object
@@ -5109,8 +4801,6 @@ components:
       properties:
         operationId:
           type: string
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
           description: 'ENG: Id of the operation - IT: Identificativo dell''operazione'
         operationType:
           enum:
@@ -5121,8 +4811,6 @@ components:
         operationDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: 'ENG: Operation date - IT: Data dell''operazione'
     CheckEnrollmentDTO:
       type: object
@@ -5146,8 +4834,6 @@ components:
         idpayCode:
           type: string
           description: 'ENG: Numeric code - IT: codice numerico'
-          maxLength: 10
-          pattern: '^[a-zA-Z0-9]+$'
     IbanPutDTO:
       title: IbanPutDTO
       type: object
@@ -5203,7 +4889,7 @@ components:
           type: array
           maxItems: 100
           items:
-            $ref: '#/components/schemas/InitiativeDTO'
+            $ref: '#/components/schemas/InitiativeDTO1'
           description: >-
             ENG: The list of active initiatives of a citizen - IT: Lista delle
             iniziative attive di un cittadino
@@ -5218,9 +4904,9 @@ components:
           items:
             $ref: '#/components/schemas/InstrumentDTO'
           description: >-
-            "ENG: The list of payment instruments associated to the initiative
+            'ENG: The list of payment instruments associated to the initiative
             by the citizen - IT: Lista degli strumenti di pagamenti di un
-            cittadino associati ad una iniziativa"
+            cittadino associati ad una iniziativa'
     InstrumentDTO:
       title: InstrumentDTO
       type: object
@@ -5233,43 +4919,30 @@ components:
           description: >-
             ENG: Wallet's id provided by the Payment manager - IT:
             Identificativo del portafoglio fornito dal gestore di pagamenti
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
         instrumentId:
           type: string
           description: >-
             ENG: Payment instrument id - IT: Identificativo dello strumento di
             pagamento
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
         maskedPan:
           type: string
           description: 'ENG: Masked Pan - IT: Masked Pan'
-          maxLength: 19
           example: 1234 **** **** 5678
-          pattern: '^(\d{4}[- ]?)([*Xx]{4}[- ]?){2}(\d{4})$'
         channel:
           type: string
           description: 'ENG: Channel - IT: Canale di richiesta'
-          maxLength: 10
-          pattern: '^[ -~]{0,10}$'
         brandLogo:
           type: string
           example: 'https://cstarpayment/logo.png'
           description: >-
             ENG: Card's brand logo URL - IT: URL del logo del marchio della
             carta
-          minLength: 1
-          maxLength: 2048
-          pattern: '^[ -~]{1,2048}$'
         brand:
           type: string
           example: 'https://cstarpayment/cardBrand'
           description: >-
             ENG: Card's brand as mastercard, visa, ecc. - IT: Marchio della
             carta come mastercard, visa, ecc...
-          maxLength: 2048
-          pattern: '^https://[a-zA-Z0-9./_-]+$'
         status:
           enum:
             - ACTIVE
@@ -5286,12 +4959,10 @@ components:
         activationDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: >-
             ENG: Activation date of the instrument - IT: Data di attivazione
             dello strumento
-    InitiativeDTO:
+    InitiativeDTO1:
       type: object
       required:
         - initiativeId
@@ -5302,19 +4973,13 @@ components:
         familyId:
           type: string
           description: 'ENG: Id of the family unit - IT: Identificativo del nucleo familiare'
-          maxLength: 36
-          pattern: '^[ -~]{36}$'
         initiativeId:
           type: string
           description: 'ENG: Id initiative - IT: Identificativo dell''iniziativa'
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
         initiativeName:
           type: string
           description: 'ENG: Name of the initiative - IT: Nome dell''iniziativa'
-          pattern: '^[ -~]{1,255}$'
           example: Bonus Elettrodomestici
-          maxLength: 255
         status:
           enum:
             - NOT_REFUNDABLE_ONLY_IBAN
@@ -5340,8 +5005,6 @@ components:
             ENG: End date for the time window in which it is possible to use the
             initiative's rewards - IT: Data che indica la fine del periodo di
             fruizione dell'iniziativa
-          minLength: 10
-          maxLength: 10
         voucherStartDate:
           type: string
           format: date
@@ -5349,8 +5012,6 @@ components:
             ENG: START date for the time window in which it is possible to use
             the voucher's rewards - IT: Data che indica l'inizio del periodo di
             fruizione del voucher
-          minLength: 10
-          maxLength: 10
         voucherEndDate:
           type: string
           format: date
@@ -5358,50 +5019,35 @@ components:
             ENG: End date for the time window in which it is possible to use the
             voucher's rewards - IT: Data che indica la fine del periodo di
             fruizione del voucher
-          minLength: 10
-          maxLength: 10
         amountCents:
           type: integer
           format: int64
           description: 'ENG: Initiative total amount - IT: Importo totale dell''iniziativa'
-          minimum: 0
-          maximum: 999999999
         accruedCents:
           type: integer
           format: int64
           description: >-
             ENG: Initiative accrued amount IT: Importo accumulato
             dell'iniziativa
-          minimum: 0
-          maximum: 1000
         refundedCents:
           type: integer
           format: int64
           description: >-
             ENG: Refunded amount of the initiative - IT: Importo rimborsato
             dell'iniziativa
-          minimum: 0
-          maximum: 1000
         lastCounterUpdate:
           type: string
           format: date-time
           description: >-
             ENG: Date of the last update of the counters - IT: Data dell'ultimo
             aggiornamento dei contatori
-          minLength: 19
-          maxLength: 19
         iban:
           type: string
           description: 'ENG: IBAN - IT: IBAN'
-          pattern: '^IT[0-9]{2}[A-Z]{1}[0-9]{5}[0-9]{5}[A-Z0-9]{12}$'
-          minLength: 27
-          maxLength: 27
         nInstr:
           type: integer
           format: int32
           description: 'ENG: Number of instruments - IT: Numero di strumenti'
-          minimum: 0
-          maximum: 20
         initiativeRewardType:
           enum:
             - DISCOUNT
@@ -5414,31 +5060,19 @@ components:
         logoURL:
           type: string
           description: 'ENG: Url of the logo - IT: Url del logo'
-          pattern: >-
-            ^(https):\/\/[a-zA-Z0-9.-]+(:[0-9]+)?(\/[a-zA-Z0-9._~!$&'()*+,;=:@%-]*)*(\?[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?(#[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?$
-          maxLength: 255
         organizationName:
           type: string
           description: 'ENG: Organization name - IT: Nome dell''organizzazione'
-          pattern: '^[ -~]{1,50}$'
-          maxLength: 50
         nTrx:
           type: integer
           format: int64
           description: 'ENG:Number of transaction - IT: Numero di transazione'
-          minimum: 0
-          maximum: 20
         webViewUrl:
           type: string
           description: 'ENG: webViewUrl - IT: Url della webView'
-          pattern: >-
-            ^(https):\/\/[a-zA-Z0-9.-]+(:[0-9]+)?(\/[a-zA-Z0-9._~!$&'()*+,;=:@%-]*)*(\?[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?(#[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?$
-          maxLength: 255
         serviceId:
           type: string
           description: 'ENG: The service ID - IT: Identificativo del service'
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
     InitiativesWithInstrumentDTO:
       type: object
       required:
@@ -5450,22 +5084,16 @@ components:
         idWallet:
           type: string
           description: 'ENG: Id of the wallet - IT: Identificativo del portafoglio'
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
         maskedPan:
           type: string
           description: 'ENG: Masked Pan - IT: Masked Pan'
-          maxLength: 19
           example: 1234 **** **** 5678
-          pattern: '^(\d{4}[- ]?)([*Xx]{4}[- ]?){2}(\d{4})$'
         brand:
           type: string
           example: 'https://cstarpayment/cardBrand'
           description: >-
             ENG: Card's brand as mastercard, visa, ecc. - IT: Marchio della
             carta come mastercard, visa, ecc...
-          maxLength: 2048
-          pattern: '^https://[a-zA-Z0-9./_-]+$'
         initiativeList:
           type: array
           maxItems: 100
@@ -5485,19 +5113,13 @@ components:
         initiativeId:
           type: string
           description: 'ENG: Initiative ID - IT: Identificativo dell''iniziativa'
-          maxLength: 24
-          pattern: '^[a-zA-Z0-9]+$'
         initiativeName:
           type: string
           description: 'ENG: Name of the initiative - IT: Nome dell''iniziativa'
-          pattern: '^[ -~]{1,255}$'
           example: Bonus Elettrodomestici
-          maxLength: 255
         idInstrument:
           type: string
           description: 'ENG: Instrument ID - IT: Identificativo dello strumento'
-          pattern: '^[ -~]{0,50}$'
-          maxLength: 50
         status:
           type: string
           enum:
@@ -5515,13 +5137,15 @@ components:
             in attesa]
     InitiativeDetailDTO:
       type: object
+      required:
+        - initiativeId
       properties:
         initiativeName:
           type: string
           description: 'ENG: Name of the initiative - IT: Nome dell''iniziativa'
-          pattern: '^[ -~]{1,255}$'
           example: Bonus Elettrodomestici
-          maxLength: 255
+        initiativeId:
+          type: string
         status:
           type: string
           description: 'ENG: Status of the initiative - IT: Stato dell''iniziativa'
@@ -5536,18 +5160,12 @@ components:
         description:
           type: string
           description: 'ENG: Description of the initiative - IT: Descrizione dell''iniziativa'
-          maxLength: 255
-          pattern: '^[ -~]{0,255}$'
         ruleDescription:
           type: string
           description: 'ENG: Description of the rules - IT: Descrizione delle regole'
-          maxLength: 255
-          pattern: '^[ -~]{0,255}$'
         onboardingStartDate:
           type: string
           format: date
-          minLength: 10
-          maxLength: 10
           description: >-
             ENG: Start date for the initiative's onboarding time window - IT:
             Data di inizio della finestra temporale in cui si può aderire
@@ -5555,8 +5173,6 @@ components:
         onboardingEndDate:
           type: string
           format: date
-          minLength: 10
-          maxLength: 10
           description: >-
             ENG: End date for the initiative's onboarding time window - IT: Data
             di fine della finestra temporale in cui si può aderire
@@ -5564,8 +5180,6 @@ components:
         fruitionStartDate:
           type: string
           format: date
-          minLength: 10
-          maxLength: 10
           description: >-
             ENG: Start date of the time window in which it is possible to use
             the initiative's rewards - IT: Data di inizio della finestra
@@ -5573,8 +5187,6 @@ components:
         fruitionEndDate:
           type: string
           format: date
-          minLength: 10
-          maxLength: 10
           description: >-
             ENG: End date of the time window in which it is possible to use the
             initiative's rewards - IT: Data di fine della finestra temporale in
@@ -5588,34 +5200,21 @@ components:
           description: >-
             ENG: URL that redirects to the privacy policy - IT: URL che
             reindirizza all informativa della privacy
-          pattern: >-
-            ^(https):\/\/[a-zA-Z0-9.-]+(:[0-9]+)?(\/[a-zA-Z0-9._~!$&'()*+,;=:@%-]*)*(\?[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?(#[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?$
-          maxLength: 255
         tcLink:
           type: string
           description: >-
             ENG: URL that redirects to the terms and conditions - IT: URL che
             porta ai termini e condizioni
-          pattern: >-
-            ^(https):\/\/[a-zA-Z0-9.-]+(:[0-9]+)?(\/[a-zA-Z0-9._~!$&'()*+,;=:@%-]*)*(\?[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?(#[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?$
-          maxLength: 255
         logoURL:
           type: string
           description: 'ENG: Url of the logo - IT: Url del logo'
-          pattern: >-
-            ^(https):\/\/[a-zA-Z0-9.-]+(:[0-9]+)?(\/[a-zA-Z0-9._~!$&'()*+,;=:@%-]*)*(\?[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?(#[a-zA-Z0-9._~!$&'()*+,;=:@%/?-]*)?$
-          maxLength: 255
         updateDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: 'ENG: Update date - IT: Data di aggiornamento dell''iniziativa'
         serviceId:
           type: string
           description: 'ENG: The service ID - IT: Identificativo del service'
-          maxLength: 50
-          pattern: '^[a-zA-Z0-9]+$'
     InitiativeRefundRuleDTO:
       type: object
       properties:
@@ -5704,7 +5303,7 @@ components:
             - WALLET_INVALID_REQUEST
             - WALLET_TOO_MANY_REQUESTS
           description: >-
-            "ENG: Error code: WALLET_USER_UNSUBSCRIBED: The user has
+            'ENG: Error code: WALLET_USER_UNSUBSCRIBED: The user has
             unsubscribed from initiative,
             WALLET_ENROLL_INSTRUMENT_NOT_ALLOWED_FOR_DISCOUNT_INITIATIVE: It is
             not possible to enroll a payment instrument for a discount
@@ -5751,12 +5350,10 @@ components:
             strumento di pagamento selezionato non è stato trovato per l'utente
             corrente, WALLET_GENERIC_ERROR: Errore generico,
             WALLET_INVALID_REQUEST: Qualcosa è andato storto durante l'invio
-            della richiesta, WALLET_TOO_MANY_REQUESTS: Troppe richieste"
+            della richiesta, WALLET_TOO_MANY_REQUESTS: Troppe richieste'
         message:
           type: string
           description: 'ENG: Error message- IT: Messaggio di errore'
-          maxLength: 2500
-          pattern: '^[a-zA-Z0-9 _@\-.!?]+'
     PaymentInstrumentErrorDTO:
       type: object
       required:
@@ -5781,7 +5378,7 @@ components:
             - PAYMENT_INSTRUMENT_TOO_MANY_REQUESTS
             - PAYMENT_INSTRUMENT_GENERIC_ERROR
           description: >-
-            "ENG: Error code: PAYMENT_INSTRUMENT_PIN_LENGTH_NOT_VALID: Pin
+            'ENG: Error code: PAYMENT_INSTRUMENT_PIN_LENGTH_NOT_VALID: Pin
             length is not valid, PAYMENT_INSTRUMENT_INVALID_REQUEST: Something
             went wrong handling the request,
             PAYMENT_INSTRUMENT_ALREADY_ASSOCIATED: Payment Instrument is already
@@ -5824,12 +5421,10 @@ components:
             trovato per l'utente corrente,
             PAYMENT_INSTRUMENT_USER_NOT_ONBOARDED: L'utente corrente non è
             onboardato all'iniziativa, PAYMENT_INSTRUMENT_TOO_MANY_REQUESTS:
-            Troppe richieste, PAYMENT_INSTRUMENT_GENERIC_ERROR: Errore generico"
+            Troppe richieste, PAYMENT_INSTRUMENT_GENERIC_ERROR: Errore generico'
         message:
           type: string
           description: 'ENG: Error message- IT: Messaggio di errore'
-          maxLength: 250
-          pattern: '^[a-zA-Z0-9 _@\-.!?]+'
     AuthPaymentResponseDTO:
       type: object
       required:
@@ -5852,8 +5447,6 @@ components:
         trxDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: 'ENG: Transaction date - IT: Data della transazione'
         initiativeId:
           type: string
@@ -5862,14 +5455,10 @@ components:
           description: 'ENG: Id of the initiative - IT: Identificativo dell''iniziativa'
         initiativeName:
           type: string
-          pattern: '^[ -~]{1,255}$'
-          maxLength: 255
           description: 'ENG: Name of the initiative - IT: Nome della iniziativa'
           example: Bonus Elettrodomestici
         businessName:
           type: string
-          pattern: '^[ -~]{1,255}$'
-          maxLength: 255
           description: 'ENG: Business name - IT: Nome dell''esercente'
         status:
           type: string
@@ -5937,7 +5526,7 @@ components:
             - PAYMENT_TRANSACTION_VERSION_PENDING
             - PAYMENT_AUTH_ERROR
           description: >-
-            "ENG: Error code: PAYMENT_NOT_FOUND_OR_EXPIRED: transaction not
+            'ENG: Error code: PAYMENT_NOT_FOUND_OR_EXPIRED: transaction not
             found or expired, PAYMENT_TRANSACTION_EXPIRED: transaction expired,
             PAYMENT_INITIATIVE_NOT_FOUND: initiative not found,
             PAYMENT_INITIATIVE_INVALID_DATE: initiative invalid date,
@@ -5992,7 +5581,7 @@ components:
             PAYMENT_MERCHANT_NOT_ONBOARDED: il merchant non è onboardato,
             PAYMENT_INVALID_REQUEST: errore di validazione della richiesta,
             PAYMENT_TRANSACTION_VERSION_PENDING: La versione del contatore è
-            attualmente bloccata"
+            attualmente bloccata'
         message:
           type: string
           maxLength: 2500
@@ -6032,7 +5621,7 @@ components:
             - PAYMENT_INVALID_REQUEST
             - PAYMENT_TRANSACTION_VERSION_PENDING
           description: >-
-            "ENG: Error code: PAYMENT_NOT_FOUND_OR_EXPIRED: transaction not
+            'ENG: Error code: PAYMENT_NOT_FOUND_OR_EXPIRED: transaction not
             found or expired, PAYMENT_TRANSACTION_EXPIRED: transaction expired,
             PAYMENT_INITIATIVE_NOT_FOUND: initiative not found,
             PAYMENT_INITIATIVE_INVALID_DATE: initiative invalid date,
@@ -6087,7 +5676,7 @@ components:
             PAYMENT_MERCHANT_NOT_ONBOARDED: il merchant non è onboardato,
             PAYMENT_INVALID_REQUEST: errore di validazione della richiesta,
             PAYMENT_TRANSACTION_VERSION_PENDING: La versione del contatore è
-            attualmente bloccata"
+            attualmente bloccata'
         message:
           type: string
           maxLength: 2500
@@ -6139,8 +5728,6 @@ components:
         trxDate:
           type: string
           format: date-time
-          minLength: 19
-          maxLength: 19
           description: 'ENG: Transaction date - IT: Data della transazione'
         trxExpirationSeconds:
           type: number

@@ -1,6 +1,6 @@
 import { Divider, IOToast, ListItemSwitch } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
+import { _typeEnum as SelfConsentBoolTypeEnum } from "../../../../../definitions/idpay/SelfConsentBoolDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
@@ -13,6 +13,7 @@ import {
   boolRequiredCriteriaSelector,
   selectSelfDeclarationBoolAnswers
 } from "../machine/selectors";
+import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
 
 const IdPayBoolValuePrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -39,14 +40,23 @@ const IdPayBoolValuePrerequisitesScreen = () => {
   const goBackOnPress = () => machine.send({ type: "back" });
 
   const toggleCriteria =
-    (criteria: SelfDeclarationBoolDTO) => (value: boolean) =>
+    (criteria: SelfCriteriaBoolDTO) => (value: boolean) => {
+      if (!criteria.code) {
+        return;
+      }
+
       machine.send({
         type: "toggle-bool-criteria",
-        criteria: { ...criteria, value }
+        criteria: {
+          _type: SelfConsentBoolTypeEnum.boolean,
+          code: criteria.code,
+          accepted: value
+        }
       });
+    };
 
-  const getSelfCriteriaBoolAnswer = (criteria: SelfDeclarationBoolDTO) =>
-    selfCriteriaBoolAnswers[criteria.code] ?? false;
+  const getSelfCriteriaBoolAnswer = (criteria: SelfCriteriaBoolDTO) =>
+    criteria.code ? selfCriteriaBoolAnswers[criteria.code] ?? false : false;
 
   return (
     <IOScrollViewWithLargeHeader
@@ -71,7 +81,7 @@ const IdPayBoolValuePrerequisitesScreen = () => {
         {selfCriteriaBool.map((criteria, index) => (
           <View key={criteria.code}>
             <ListItemSwitch
-              label={criteria.description}
+              label={criteria.description ?? ""}
               onSwitchValueChange={toggleCriteria(criteria)}
               value={getSelfCriteriaBoolAnswer(criteria)}
             />

@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { memo } from "react";
 import { View } from "react-native";
-import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
+import { InitiativeDTO1 } from "../../../../../definitions/idpay/InitiativeDTO1";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -13,7 +13,7 @@ import { IDPayDetailsRoutes } from "../../details/navigation";
 import IDPayCardPreviewComponent from "./IDPayCardPreviewComponent";
 
 type Props = {
-  initiativeList: ReadonlyArray<InitiativeDTO>;
+  initiativeList: ReadonlyArray<InitiativeDTO1>;
 };
 
 const IDPayCardsList = (props: Props) => {

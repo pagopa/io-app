@@ -3,9 +3,9 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import {
-  InitiativeDTO,
+  InitiativeDTO1,
   StatusEnum as InitiativeStatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO";
+} from "../../../../../../definitions/idpay/InitiativeDTO1";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { idpayInitiativeGet } from "../../store/actions";
 import { handleGetInitiativeDetails } from "../handleGetInitiativeDetails";
@@ -19,7 +19,7 @@ describe("idpayInitiativeGet", () => {
     voucherEndDate: new Date(2023, 1, 1),
     nInstr: 1,
     status: InitiativeStatusEnum.REFUNDABLE
-  } as InitiativeDTO;
+  } as InitiativeDTO1;
 
   describe("when the response is successful", () => {
     it(`should put ${getType(

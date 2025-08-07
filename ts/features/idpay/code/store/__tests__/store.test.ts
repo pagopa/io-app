@@ -1,9 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Store, createStore } from "redux";
 import {
-  InitiativeDTO,
+  InitiativeDTO1,
   StatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO";
+} from "../../../../../../definitions/idpay/InitiativeDTO1";
 import {
   InstrumentDTO,
   InstrumentTypeEnum
@@ -329,7 +329,7 @@ const createStoreWith = (
             voucherEndDate: new Date(),
             nInstr: 0,
             status: StatusEnum.REFUNDABLE
-          } as InitiativeDTO)
+          } as InitiativeDTO1)
         },
         configuration: {
           ...globalState.features.idPay.configuration,

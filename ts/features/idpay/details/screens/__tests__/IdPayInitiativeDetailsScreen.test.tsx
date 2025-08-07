@@ -8,10 +8,10 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import {
-  InitiativeDTO,
+  InitiativeDTO1,
   InitiativeRewardTypeEnum,
   StatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO";
+} from "../../../../../../definitions/idpay/InitiativeDTO1";
 import { NetworkError } from "../../../../../utils/errors";
 import I18n from "../../../../../i18n";
 
@@ -30,7 +30,7 @@ const mockedInitiative = {
   status: StatusEnum.REFUNDABLE,
   initiativeRewardType: InitiativeRewardTypeEnum.REFUND,
   lastCounterUpdate: new Date()
-} as InitiativeDTO;
+} as InitiativeDTO1;
 
 describe("Test IdPayInitiativeDetailsScreen screen", () => {
   beforeEach(() => {
@@ -155,7 +155,7 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
 });
 
 const renderComponent = (
-  initiativePot: pot.Pot<InitiativeDTO, NetworkError> = pot.none
+  initiativePot: pot.Pot<InitiativeDTO1, NetworkError> = pot.none
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();

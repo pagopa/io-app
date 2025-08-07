@@ -9,9 +9,9 @@ import {
   idpayTimelineLastUpdateSelector
 } from "..";
 import {
-  InitiativeDTO,
+  InitiativeDTO1,
   StatusEnum as InitativeStatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO";
+} from "../../../../../../definitions/idpay/InitiativeDTO1";
 import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
 import {
   StatusEnum,
@@ -29,7 +29,7 @@ const mockResponseSuccess = {
   status: InitativeStatusEnum.REFUNDABLE,
   voucherEndDate: new Date(),
   nInstr: 123
-} as InitiativeDTO;
+} as InitiativeDTO1;
 
 const mockFailure: NetworkError = {
   kind: "generic",
