@@ -1,20 +1,15 @@
 import { useCallback } from "react";
-import { VStack, IOButton, useIOToast } from "@pagopa/io-app-design-system";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { VStack, IOButton } from "@pagopa/io-app-design-system";
+import { useIODispatch } from "../../../../store/hooks";
 import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
-import {
-  ItwOfflineRicaricaAppIOSource,
-  trackItwOfflineReloadFailure,
-  trackItwOfflineRicaricaAppIO
-} from "../../analytics";
+import { trackItwOfflineRicaricaAppIO } from "../../analytics";
 import { resetOfflineAccessReason } from "../../../ingress/store/actions";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { startApplicationInitialization } from "../../../../store/actions/application";
-import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import I18n from "../../../../i18n";
+import { useAppRestartAction } from "../../wallet/hooks/useAppRestartAction";
 
 /**
  * Hook that creates and manages a bottom sheet modal to display detailed information
@@ -78,33 +73,4 @@ export const useOfflineAlertDetailModal = (
       </VStack>
     )
   });
-};
-
-/**
- * Hook that creates and manages a function to restart the application.
- *
- * @param source - The source of the app restart action, for analytics purposes
- * @returns A function to restart the application
- */
-const useAppRestartAction = (source: ItwOfflineRicaricaAppIOSource) => {
-  const toast = useIOToast();
-  const dispatch = useIODispatch();
-  const isConnected = useIOSelector(isConnectedSelector);
-
-  return useCallback(() => {
-    if (isConnected) {
-      trackItwOfflineRicaricaAppIO(source);
-      // Reset the offline access reason.
-      // Since this state is `undefined` when the user is online,
-      // the startup saga will proceed without blocking.
-      dispatch(resetOfflineAccessReason());
-      // Dispatch this action to mount the correct navigator.
-      dispatch(startupLoadSuccess(StartupStatusEnum.INITIAL));
-      // restart startup saga
-      dispatch(startApplicationInitialization());
-    } else {
-      toast.error(I18n.t("features.itWallet.offline.failure"));
-      trackItwOfflineReloadFailure();
-    }
-  }, [dispatch, isConnected, toast, source]);
 };
