@@ -49,15 +49,15 @@ const BonusCardScreenComponent = ({
   // Custom background color for CGN based on the platform
   const cgnBackgroundColor = isAndroid ? IOColors.white : IOColors["grey-50"];
   // If the card is not a CGN type, we set the default header background color as card color
-  const backgroundColor = isCGNType
-    ? cgnBackgroundColor
-    : IOColors["blueIO-50"];
+  const idPayBackgroundColor = isDark ? "#35364C" : IOColors["blueIO-50"];
+
+  const backgroundColor = isCGNType ? cgnBackgroundColor : idPayBackgroundColor;
 
   useHeaderSecondLevel({
     title: title || "",
     transparent: !screenReaderEnabled,
     supportRequest: true,
-    variant: "neutral",
+    variant: isCGNType ? "neutral" : undefined,
     backgroundColor,
     faqCategories,
     contextualHelpMarkdown,
