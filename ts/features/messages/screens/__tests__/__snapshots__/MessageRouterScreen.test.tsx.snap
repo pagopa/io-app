@@ -514,9 +514,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -1369,9 +1366,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -2469,9 +2463,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -3326,9 +3317,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -4181,9 +4169,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",

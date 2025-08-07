@@ -673,9 +673,6 @@ exports[`SendQrScanPushEngagementScreen should match snapshot and track analytic
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -1138,9 +1135,6 @@ exports[`SendQrScanPushEngagementScreen should render a blank page when told to 
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
