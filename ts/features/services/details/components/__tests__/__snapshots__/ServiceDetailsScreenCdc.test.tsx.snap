@@ -274,9 +274,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                               },
                               {},
                               {
-                                "backgroundColor": "#F4F5F8",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -891,9 +888,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                                 "borderColor": "rgba(244,245,248,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#F4F5F8",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
