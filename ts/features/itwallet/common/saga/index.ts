@@ -12,6 +12,7 @@ import {
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
+import { handleItwLastEidStatusSaga } from "../../credentials/saga/handleItwLastEidStatusSaga";
 import { watchItwEnvironment } from "./environment";
 import { watchItwOfflineAccess } from "./offlineAccess.ts";
 
@@ -35,6 +36,9 @@ export function* watchItwSaga(): SagaIterator {
   yield* call(checkWalletInstanceStateSaga);
   yield* call(checkCurrentWalletInstanceStateSaga);
   yield* call(checkCredentialsStatusAttestation);
+
+  // Save the updated status of the eID, if available
+  yield* call(handleItwLastEidStatusSaga);
 }
 
 /**

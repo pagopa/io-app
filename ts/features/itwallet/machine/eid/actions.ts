@@ -22,12 +22,17 @@ import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/ac
 import {
   trackItwDeactivated,
   trackSaveCredentialSuccess,
-  updateITWStatusAndIDProperties
+  updateITWStatusAndPIDProperties
 } from "../../analytics";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import { itwSetAuthLevel } from "../../common/store/actions/preferences";
+import {
+  itwSetAuthLevel,
+  itwSetLastEidStatus
+} from "../../common/store/actions/preferences";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
+import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -229,6 +234,21 @@ export const createEidIssuanceActionsImplementation = (
     // the eID is always removed before storing the new one. If no previous eID is present, the action is a no-op.
     store.dispatch(itwCredentialsRemoveByType(context.eid.credentialType));
     store.dispatch(itwCredentialsStore([context.eid]));
+
+    /**
+     * Although the eID is always valid immediately after issuance,
+     * we store its status explicitly to ensure consistency in Mixpanel tracking,
+     * especially in cases where the app is not restarted and the saga responsible for setting `lastEidStatus` is not triggered.
+     * This applies only to L2 eIDs (issued through "Documenti su IO").
+     */
+    const isL2 = context.identification?.level === "L2";
+    if (isL2) {
+      store.dispatch(
+        itwSetLastEidStatus(
+          getCredentialStatus(context.eid) as ItwJwtCredentialStatus
+        )
+      );
+    }
   },
 
   requestAssistance: () => {},
@@ -244,13 +264,18 @@ export const createEidIssuanceActionsImplementation = (
     );
   },
 
-  trackWalletInstanceCreation: () => {
-    trackSaveCredentialSuccess("ITW_ID_V2");
-    updateITWStatusAndIDProperties(store.getState());
+  trackWalletInstanceCreation: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    const isL3 = context.identification?.level === "L3";
+    trackSaveCredentialSuccess(isL3 ? "ITW_PID" : "ITW_ID_V2");
+    updateITWStatusAndPIDProperties(store.getState());
   },
-
-  trackWalletInstanceRevocation: () => {
-    trackItwDeactivated(store.getState());
+  trackWalletInstanceRevocation: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    const isL3 = context.identification?.level === "L3";
+    trackItwDeactivated(store.getState(), isL3 ? "ITW_PID" : "ITW_ID_V2");
   },
 
   storeAuthLevel: ({

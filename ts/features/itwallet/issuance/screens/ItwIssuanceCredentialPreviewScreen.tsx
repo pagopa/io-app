@@ -98,7 +98,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   });
 
   const handleSaveToWallet = () => {
-    trackSaveCredentialToWallet(credential.credentialType);
+    trackSaveCredentialToWallet(mixPanelCredential);
     dispatch(
       identificationRequest(
         false,
