@@ -88,6 +88,7 @@ export type ObtainCredentialParams = {
   clientId: string;
   codeVerifier: string;
   issuerConf: IssuerConf;
+  operationType?: "reissuing";
 };
 
 /**
@@ -100,6 +101,7 @@ export type ObtainCredentialParams = {
  * @param clientId - The client ID
  * @param codeVerifier - The code verifier
  * @param issuerConf - The issuer configuration
+ * @param operationType - The operation type, e.g., "reissuing"
  * @returns The obtained credential
  */
 export const obtainCredential = async ({
@@ -110,7 +112,8 @@ export const obtainCredential = async ({
   walletInstanceAttestation,
   clientId,
   codeVerifier,
-  issuerConf
+  issuerConf,
+  operationType
 }: ObtainCredentialParams) => {
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
@@ -164,7 +167,8 @@ export const obtainCredential = async ({
             {
               dPopCryptoContext,
               credentialCryptoContext
-            }
+            },
+            operationType
           ).catch(
             enrichErrorWithMetadata({
               credentialId: credential_configuration_id
@@ -215,11 +219,7 @@ const getCredentialConfigurationIds = (
   ).reduce<Record<string, Array<string>>>(
     (acc, [configId, config]) => ({
       ...acc,
-      // TODO: [SIW-2740] This check can be removed once `mso_mdoc` format supports verification and parsing.
-      [config.scope]:
-        config.format === CredentialFormat.SD_JWT
-          ? [...(acc[config.scope] || []), configId]
-          : acc[config.scope]
+      [config.scope]: [...(acc[config.scope] || []), configId]
     }),
     {}
   );

@@ -223,7 +223,10 @@ export const itwCredentialIssuanceMachine = setup({
               codeVerifier: context.codeVerifier,
               credentialDefinition: context.credentialDefinition,
               requestedCredential: context.requestedCredential,
-              issuerConf: context.issuerConf
+              issuerConf: context.issuerConf,
+              // if the user has access to the L3 features we need to pass the operationType
+              // header with the value "reissuing"
+              operationType: context.isWhiteListed ? "reissuing" : undefined
             }),
             onDone: {
               target: "ObtainingStatusAttestation",

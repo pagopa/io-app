@@ -2,7 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useIOStore } from "../../../../../store/hooks.ts";
 import { isItwEnabledSelector } from "../../../common/store/selectors/remoteConfig.ts";
-import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
 import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
 import { isWalletInstanceAttestationValid } from "../../../common/utils/itwAttestationUtils.ts";
@@ -13,11 +13,10 @@ import { RemoteEvents } from "./events.ts";
 export const createRemoteGuardsImplementation = (
   store: ReturnType<typeof useIOStore>
 ) => ({
-  isWalletActive: () =>
-    itwLifecycleIsValidSelector(store.getState()) &&
-    isItwEnabledSelector(store.getState()),
-
-  isL3Enabled: () => itwIsL3EnabledSelector(store.getState()),
+  isItWalletL3Active: () =>
+    isItwEnabledSelector(store.getState()) &&
+    itwIsL3EnabledSelector(store.getState()) &&
+    itwLifecycleIsITWalletValidSelector(store.getState()),
 
   isEidExpired: () => {
     const eidStatus = itwCredentialsEidStatusSelector(store.getState());

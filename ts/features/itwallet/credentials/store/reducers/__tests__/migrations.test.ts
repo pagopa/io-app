@@ -257,10 +257,7 @@ describe("ITW credentials reducer migrations", () => {
         PersonIdentificationData: {
           credentialId: "dc_sd_jwt_PersonIdentificationData",
           credentialType: "PersonIdentificationData",
-          storedStatusAttestation: {
-            status: "valid",
-            statusAttestation: ""
-          },
+          storedStatusAttestation: undefined,
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
@@ -269,10 +266,7 @@ describe("ITW credentials reducer migrations", () => {
         MDL: {
           credentialId: "MDL",
           credentialType: "MDL",
-          storedStatusAttestation: {
-            status: "valid",
-            statusAttestation: ""
-          },
+          storedStatusAttestation: undefined,
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"

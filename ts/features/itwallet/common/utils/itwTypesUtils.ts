@@ -42,6 +42,14 @@ export type IssuerConfiguration = Awaited<
 >["issuerConf"];
 
 /**
+ * Alias for the SupportedCredentialConfiguration type
+ */
+export type MdocSupportedCredentialConfiguration = Extract<
+  IssuerConfiguration["openid_credential_issuer"]["credential_configurations_supported"][string],
+  { format: "mso_mdoc" }
+>;
+
+/**
  * Alias for the AccessToken type
  */
 export type CredentialAccessToken = Awaited<

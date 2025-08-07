@@ -61,7 +61,11 @@ export enum WellKnownClaim {
   /**
    * Claim that contains the family name, if applicable for the credential
    */
-  family_name = "family_name"
+  family_name = "family_name",
+  /**
+   * Claim that contains the portrait image
+   */
+  portrait = "portrait"
 }
 
 /**

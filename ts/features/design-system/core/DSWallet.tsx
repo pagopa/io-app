@@ -69,21 +69,21 @@ export const DSWallet = () => {
       type: "itw",
       category: "itw",
       credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
-      status: "valid"
+      credentialStatus: "valid"
     },
     {
       key: "7",
       type: "itw",
       category: "itw",
       credentialType: CredentialType.DRIVING_LICENSE,
-      status: "valid"
+      credentialStatus: "valid"
     },
     {
       key: "8",
       type: "itw",
       category: "itw",
       credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
-      status: "valid"
+      credentialStatus: "valid"
     },
     {
       key: "9",

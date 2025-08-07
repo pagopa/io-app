@@ -3779,7 +3779,7 @@
           "action": "Bestätige und fortfahren"
         },
         "loadingScreen": {
-          "title": "Wir deaktivieren Dokumente in IO...",
+          "title": "Wir deaktivieren {{name}}...",
           "subtitle": "Warte ein paar Sekunden"
         },
         "failureScreen": {
@@ -4119,8 +4119,8 @@
     "onboarding": {
       "enableMessages": {
         "cancelAction": "Stornieren",
-        "subtitle": "Aktivieren Sie die Möglichkeit, Sie in der App zu kontaktieren, um Aktualisierungen auf dem {{initiativeName}} zu erhalten. Dieser Schritt ist erforderlich, um mit der Anfrage fortzufahren.",
-        "title": "Nachrichten aktivieren",
+        "subtitle": "Questo passaggio è necessario per procedere con la richiesta. Ti permetterà di ricevere gli aggiornamenti sul {{initiativeName}}.",
+        "title": "Aktivieren Sie die Möglichkeit, Sie in der App zu kontaktieren",
         "confirmAction": "OK, aktiv"
       },
       "enableNotification": {
