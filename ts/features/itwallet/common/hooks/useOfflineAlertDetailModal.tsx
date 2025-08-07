@@ -34,7 +34,7 @@ import I18n from "../../../../i18n";
  * @returns An object with the bottom sheet modal controller (present, dismiss) and the modal component
  */
 export const useOfflineAlertDetailModal = (
-  offlineAccessReason?: OfflineAccessReasonEnum
+  offlineAccessReason: OfflineAccessReasonEnum
 ) => {
   const dispatch = useIODispatch();
   const handleAppRestart = useAppRestartAction("bottom_sheet");
@@ -57,11 +57,6 @@ export const useOfflineAlertDetailModal = (
     }
   }, [handleAppRestart, navigateOnAuthPage, offlineAccessReason]);
 
-  if (offlineAccessReason === undefined) {
-    return;
-  }
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   return useIOBottomSheetModal({
     title: I18n.t(
       `features.itWallet.offline.${offlineAccessReason}.modal.title`

@@ -67,7 +67,9 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
   const prevIsConnected = usePrevious(isConnected);
 
   // Bottom sheets
-  const detailModal = useOfflineAlertDetailModal(offlineAccessReason);
+  const detailModal = useOfflineAlertDetailModal(
+    offlineAccessReason ?? OfflineAccessReasonEnum.DEVICE_OFFLINE
+  );
   const { present, bottomSheet } = useIOBottomSheetModal({
     title: I18n.t("global.offline.bottomSheet.title"),
     component: (
@@ -94,42 +96,24 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
       setAlertVisible(false);
       return;
     }
-    if (offlineAccessReason !== undefined) {
-      if (
-        offlineAccessReason === OfflineAccessReasonEnum.DEVICE_OFFLINE &&
-        prevIsConnected === false &&
-        isConnected === true
-      ) {
-        setConnectivityAlert({
-          content: I18n.t(
-            `features.itWallet.offline.back_online.alert.content`
-          ),
-          action: I18n.t(`features.itWallet.offline.back_online.alert.action`),
-          variant: "success",
-          onPress: handleAppRestart
-        });
-        setAlertVisible(true);
-        return;
-      }
-      setConnectivityAlert({
-        content: I18n.t(
-          `features.itWallet.offline.${offlineAccessReason}.alert.content`
-        ),
-        action: I18n.t(
-          `features.itWallet.offline.${offlineAccessReason}.alert.action`
-        ),
-        variant: "info",
-        onPress: openItwOfflineBottomSheet
-      });
-      setAlertVisible(true);
-      return;
-    }
     if (isConnected === false) {
       setConnectivityAlert({
         variant: "info",
-        content: I18n.t("global.offline.statusMessage.message"),
-        action: I18n.t("global.offline.statusMessage.action"),
+        content: offlineAccessReason
+          ? I18n.t(
+              `features.itWallet.offline.${offlineAccessReason}.alert.content`
+            )
+          : I18n.t("global.offline.statusMessage.message"),
+        action: offlineAccessReason
+          ? I18n.t(
+              `features.itWallet.offline.${offlineAccessReason}.alert.action`
+            )
+          : I18n.t("global.offline.statusMessage.action"),
         onPress: () => {
+          if (offlineAccessReason !== undefined) {
+            openItwOfflineBottomSheet();
+            return;
+          }
           present();
           void mixpanelTrack(
             "APP_OFFLINE_BOTTOM_SHEET",
@@ -149,6 +133,18 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
       return;
     }
     if (prevIsConnected === false && isConnected === true) {
+      if (offlineAccessReason === OfflineAccessReasonEnum.DEVICE_OFFLINE) {
+        setConnectivityAlert({
+          content: I18n.t(
+            `features.itWallet.offline.back_online.alert.content`
+          ),
+          action: I18n.t(`features.itWallet.offline.back_online.alert.action`),
+          variant: "success",
+          onPress: handleAppRestart
+        });
+        setAlertVisible(true);
+        return;
+      }
       setConnectivityAlert({
         variant: "success",
         content: I18n.t("global.offline.connectionRestored")
@@ -215,9 +211,9 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
       }
     };
   }, [
-    // setAlertVisible,
     connectivityAlert,
     currentStatusMessage,
+    setAlertVisible,
     localeFallback,
     offlineAccessReason,
     detailModal?.bottomSheet,
