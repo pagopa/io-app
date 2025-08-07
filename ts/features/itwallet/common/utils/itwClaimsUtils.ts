@@ -384,8 +384,6 @@ export const PdfClaim = PatternString(PDF_DATA_REGEX);
  */
 export const SimpleListClaim = t.array(t.string);
 
-// Add this to your decoder section in itwClaimsUtils.ts
-
 /**
  * Decoder for a single nested claim.
  * This is used to represent a claim that has a nested structure,
