@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0-rc.0](https://github.com/pagopa/io-app/compare/3.11.0-rc.4...3.12.0-rc.0) (2025-08-07)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2815](https://pagopa.atlassian.net/browse/SIW-2815)] Adds "pending upgrade" status for credential cards ([#7234](https://github.com/pagopa/io-app/issues/7234)) ([1193d64](https://github.com/pagopa/io-app/commit/1193d6499b81a6a1788dbc6678dd241def59a263))
+* **IT Wallet:** [[SIW-2817](https://pagopa.atlassian.net/browse/SIW-2817)] Adds revocation CTA in the IT Wallet ID details screen ([#7239](https://github.com/pagopa/io-app/issues/7239)) ([b9a8d58](https://github.com/pagopa/io-app/commit/b9a8d5875241bf2b4746fd2cfba8712f5b8f439d)), closes [1#diff-85e939ce71e71f460fe654ed57a9b92c028315169e4c7338340854568c123669](https://github.com/pagopa/1/issues/diff-85e939ce71e71f460fe654ed57a9b92c028315169e4c7338340854568c123669)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-2821](https://pagopa.atlassian.net/browse/SIW-2821)] Enable remote presentation for IT-Wallet only (PID L3) ([#7242](https://github.com/pagopa/io-app/issues/7242)) ([dbcb339](https://github.com/pagopa/io-app/commit/dbcb339021677abf7dfb4bd71d467ce95c5af9ee))
+* [[IOBP-1940](https://pagopa.atlassian.net/browse/IOBP-1940)] Wrong banner and text layout alignment ([#7251](https://github.com/pagopa/io-app/issues/7251)) ([57188aa](https://github.com/pagopa/io-app/commit/57188aaa1ed57cf927825ebc9a191cabf4281a35))
+* **IT Wallet:** [[SIW-2764](https://pagopa.atlassian.net/browse/SIW-2764)] Update CieID authUrlRegex to support L3 flow ([#7223](https://github.com/pagopa/io-app/issues/7223)) ([8124395](https://github.com/pagopa/io-app/commit/8124395d7d45cb240510e0451fe22c2396eb04e4))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2714](https://pagopa.atlassian.net/browse/SIW-2714)] Update `proximity` feature to use `ISO18013` library ([#7253](https://github.com/pagopa/io-app/issues/7253)) ([21dbfbb](https://github.com/pagopa/io-app/commit/21dbfbbbe48281a041b69a39e481444fd5bc8175)), closes [/github.com/pagopa/io-app/blob/74a3944df164dc58594b76e95ef507034bfc8836/ts/features/itwallet/common/utils/itwCredentialIssuanceUtils.v2.ts#L179](https://github.com/pagopa//github.com/pagopa/io-app/blob/74a3944df164dc58594b76e95ef507034bfc8836/ts/features/itwallet/common/utils/itwCredentialIssuanceUtils.v2.ts/issues/L179)
+
 ## [3.11.0-rc.4](https://github.com/pagopa/io-app/compare/3.11.0-rc.3...3.11.0-rc.4) (2025-08-01)
 
 
