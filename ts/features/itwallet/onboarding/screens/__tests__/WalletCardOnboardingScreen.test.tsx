@@ -113,14 +113,20 @@ describe("WalletCardOnboardingScreen", () => {
       shouldRender: true
     },
     {
+      description: "renders when L3 is enabled and env is prod",
+      isL3Enabled: true,
+      env: "prod",
+      shouldRender: true
+    },
+    {
       description: "does NOT render when L3 is disabled and env is pre",
       isL3Enabled: false,
       env: "pre",
       shouldRender: false
     },
     {
-      description: "does NOT render when L3 is enabled and env is prod",
-      isL3Enabled: true,
+      description: "does NOT render when L3 is disabled and env is prod",
+      isL3Enabled: false,
       env: "prod",
       shouldRender: false
     }
@@ -143,7 +149,7 @@ describe("WalletCardOnboardingScreen", () => {
 
       const { queryByTestId } = renderComponent();
 
-      const testID = `${CredentialType.DEGREE_CERTIFICATES}ModuleTestID`;
+      const testID = `${CredentialType.EDUCATION_DEGREE}ModuleTestID`;
 
       if (shouldRender) {
         expect(queryByTestId(testID)).toBeTruthy();

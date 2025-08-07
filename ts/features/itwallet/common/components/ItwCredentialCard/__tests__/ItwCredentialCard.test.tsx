@@ -9,28 +9,28 @@ import { ItwCredentialCard } from "../ItwCredentialCard";
 import * as selectors from "../../../store/selectors";
 
 describe("ItwCredentialCard", () => {
-  it.each(["EuropeanHealthInsuranceCard", "EuropeanDisabilityCard", "MDL"])(
-    "should match snapshot when credential type is %p",
-    type => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
+  it.each([
+    "EuropeanHealthInsuranceCard",
+    "EuropeanDisabilityCard",
+    "MDL",
+    "education_degree",
+    "education_enrollment"
+  ])("should match snapshot when credential type is %p", type => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
 
-      const mockStore = configureMockStore<GlobalState>();
-      const store: ReturnType<typeof mockStore> = mockStore({
-        ...globalState
-      } as GlobalState);
+    const mockStore = configureMockStore<GlobalState>();
+    const store: ReturnType<typeof mockStore> = mockStore({
+      ...globalState
+    } as GlobalState);
 
-      const component = render(
-        <Provider store={store}>
-          <ItwCredentialCard credentialType={type} />
-        </Provider>
-      );
+    const component = render(
+      <Provider store={store}>
+        <ItwCredentialCard credentialType={type} />
+      </Provider>
+    );
 
-      expect(component).toMatchSnapshot();
-    }
-  );
+    expect(component).toMatchSnapshot();
+  });
 
   it.each([
     "valid",

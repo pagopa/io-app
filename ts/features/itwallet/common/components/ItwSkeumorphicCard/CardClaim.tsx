@@ -3,13 +3,14 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 
-import { ReactElement, ReactNode, memo, useMemo } from "react";
+import { memo, ReactElement, ReactNode, useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { Either, Prettify } from "../../../../../types/helpers";
 import {
   ClaimValue,
   DrivingPrivilegesClaim,
   ImageClaim,
+  ParsedNestedClaim,
   PlaceOfBirthClaim,
   SimpleDateClaim,
   SimpleDateFormat
@@ -71,6 +72,12 @@ const CardClaim = ({
         claim?.value,
         ClaimValue.decode,
         E.fold(constNull, decoded => {
+          if (ParsedNestedClaim.is(decoded)) {
+            // If the claim is a ParsedNestedClaim, we don't render it directly
+            // but we return null to skip rendering
+            return null;
+          }
+
           if (SimpleDateClaim.is(decoded)) {
             const formattedDate = decoded.toString(dateFormat);
             return <ClaimLabel {...labelProps}>{formattedDate}</ClaimLabel>;

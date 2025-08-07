@@ -12,12 +12,16 @@ import {
   useBorderColorByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
-import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
+import {
+  getThemeColorByCredentialType,
+  isMultiLevelCredential
+} from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { ItwCardValidityCheckMark } from "./ItwCardValidityCheckMark";
 import { CardColorScheme } from "./types";
+import { ItwCardMultiCredentialBadge } from "./ItwCardMultiCredentialBadge.tsx";
 
 export type ItwCredentialCard = {
   /**
@@ -51,7 +55,7 @@ export const ItwCredentialCard = ({
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
   const needsItwUpgrade = isNewItwRenderable && isLegacyFormat;
-
+  const isMultiCredential = isMultiLevelCredential(credentialType);
   const borderColorMap = useBorderColorByStatus();
 
   const statusTagProps = useMemo<Tag | undefined>(() => {
@@ -129,9 +133,13 @@ export const ItwCredentialCard = ({
             {getCredentialNameFromType(credentialType, "").toUpperCase()}
           </IOText>
           {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
-          {!statusTagProps && isNewItwRenderable && (
-            <ItwCardValidityCheckMark />
-          )}
+          {!statusTagProps &&
+            isNewItwRenderable &&
+            (isMultiCredential ? (
+              <ItwCardMultiCredentialBadge />
+            ) : (
+              <ItwCardValidityCheckMark />
+            ))}
         </HStack>
       </View>
       <DigitalVersionBadge
