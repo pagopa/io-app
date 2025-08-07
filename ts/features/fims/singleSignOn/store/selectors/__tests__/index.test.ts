@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import {
   abortUrlFromConsentsPot,
   fimsAuthenticationErrorTagSelector,
@@ -202,9 +201,9 @@ describe("singleSignOn selectors", () => {
             }
           } as GlobalState;
 
-          const ssoPot = fimsPartialAbortUrl(globalState);
+          const consentsDataPot = fimsPartialAbortUrl(globalState);
           const expected = isSome ? abortUrl : undefined;
-          expect(ssoPot).toEqual(expected);
+          expect(consentsDataPot).toEqual(expected);
         });
       })
     );
@@ -232,9 +231,9 @@ describe("singleSignOn selectors", () => {
         it(`When pot is of type '${ssoDataPot.kind}', it should return '${
           isSome ? "O.some(abortUrl)" : "O.none"
         }'`, () => {
-          const ssoPot = abortUrlFromConsentsPot(ssoDataPot);
+          const consentsDataPot = abortUrlFromConsentsPot(ssoDataPot);
           const expected = isSome ? O.some(abortUrl) : O.none;
-          expect(ssoPot).toEqual(expected);
+          expect(consentsDataPot).toEqual(expected);
         });
       })
     );
@@ -255,8 +254,8 @@ describe("singleSignOn selectors", () => {
             }
           }
         } as GlobalState;
-        const ssoPot = fimsAuthenticationFailedSelector(globalState);
-        expect(ssoPot).toBe(expectedOutput);
+        const consentsDataPot = fimsAuthenticationFailedSelector(globalState);
+        expect(consentsDataPot).toBe(expectedOutput);
       });
     }));
 
@@ -280,14 +279,13 @@ describe("singleSignOn selectors", () => {
               }
             }
           } as GlobalState;
-          const ssoPot = fimsAuthenticationErrorTagSelector(globalState);
-          pipe(
-            isError ? O.some(errorTag) : O.none,
-            O.fold(
-              () => expect(ssoPot).toBeUndefined(),
-              value => expect(ssoPot).toBe(value)
-            )
-          );
+          const consentsDataPot =
+            fimsAuthenticationErrorTagSelector(globalState);
+          if (isError) {
+            expect(consentsDataPot).toBe(errorTag);
+          } else {
+            expect(consentsDataPot).toBeUndefined();
+          }
         });
       })
     );
@@ -318,14 +316,12 @@ describe("singleSignOn selectors", () => {
                 }
               }
             } as GlobalState;
-            const ssoPot = fimsDebugDataSelector(globalState);
-            pipe(
-              isDebugModeEnabled && isError ? O.some(debugMessage) : O.none,
-              O.fold(
-                () => expect(ssoPot).toBeUndefined(),
-                message => expect(ssoPot).toBe(message)
-              )
-            );
+            const consentsDataPot = fimsDebugDataSelector(globalState);
+            if (isDebugModeEnabled && isError) {
+              expect(consentsDataPot).toBe(debugMessage);
+            } else {
+              expect(consentsDataPot).toBeUndefined();
+            }
           });
         }
       )
@@ -362,23 +358,17 @@ describe("singleSignOn selectors", () => {
             jest.spyOn(pot, "isLoading").mockReturnValue(isLoading);
             jest.spyOn(potUtils, "isStrictNone").mockReturnValue(_isStrictNone);
 
-            const result = fimsLoadingStateSelector(globalState);
+            const consentsData = fimsLoadingStateSelector(globalState);
 
-            const expected = pipe(
-              O.fromPredicate<string>(tag => tag === "consents")(flowState),
-              O.fold(
-                () => O.some(flowState),
-                tag => (isLoading || _isStrictNone ? O.some(tag) : O.none)
-              )
-            );
-
-            pipe(
-              expected,
-              O.fold(
-                () => expect(result).toBeUndefined(),
-                value => expect(result).toEqual(value)
-              )
-            );
+            if (flowState === "consents") {
+              if (isLoading || _isStrictNone) {
+                expect(consentsData).toEqual("consents");
+              } else {
+                expect(consentsData).toBeUndefined();
+              }
+            } else {
+              expect(consentsData).toEqual(flowState);
+            }
           });
         });
       });
@@ -403,17 +393,14 @@ describe("singleSignOn selectors", () => {
             }
           } as GlobalState;
 
-          const selector = fimsRelyingPartyUrlIfFastLoginSelector(globalState);
-          pipe(
-            O.fromNullable(selector),
-            O.fold(
-              () => expect(selector).toBeUndefined(),
-              value =>
-                currentFlowState === "fastLogin_forced_restart"
-                  ? expect(value).toBe(url)
-                  : expect(selector).toBeUndefined()
-            )
-          );
+          const consentsData =
+            fimsRelyingPartyUrlIfFastLoginSelector(globalState);
+
+          if (consentsData && currentFlowState === "fastLogin_forced_restart") {
+            expect(consentsData).toBe(url);
+          } else {
+            expect(consentsData).toBeUndefined();
+          }
         })
       )
     );
