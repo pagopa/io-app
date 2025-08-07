@@ -23,8 +23,7 @@ export enum CredentialType {
   DRIVING_LICENSE = "MDL",
   PID = "PersonIdentificationData",
   EDUCATION_DEGREE = "education_degree",
-  EDUCATION_ENROLLMENT = "education_enrollment",
-  MDL = "org.iso.18013.5.1.mDL"
+  EDUCATION_ENROLLMENT = "education_enrollment"
 }
 
 export const ItwStoredCredentialsMocks = {

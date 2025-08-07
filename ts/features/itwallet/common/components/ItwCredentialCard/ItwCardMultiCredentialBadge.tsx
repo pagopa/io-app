@@ -1,5 +1,3 @@
-// The path data for the two shapes that make up the badge.
-// These are extracted directly from the original SVG.
 import { Canvas, Group, Path } from "@shopify/react-native-skia";
 
 const PATH_BACK_CARD =
@@ -11,8 +9,7 @@ const ORIGINAL_WIDTH = 23;
 const ORIGINAL_HEIGHT = 15;
 
 /**
- * A React Native component to display a multi-credential badge icon using Skia.
- * This version is drawn programmatically with Path components.
+ * A component to display a multi-credential badge icon
  */
 export const ItwCardMultiCredentialBadge = () => (
   <Canvas style={{ width: ORIGINAL_WIDTH, height: ORIGINAL_HEIGHT }}>

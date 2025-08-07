@@ -28,8 +28,7 @@ export const itwGetCredentialNameByCredentialType = (
   ),
   [CredentialType.EDUCATION_ENROLLMENT]: I18n.t(
     "features.itWallet.credentialName.ee"
-  ),
-  [CredentialType.MDL]: I18n.t("features.itWallet.credentialName.mdl")
+  )
 });
 
 export const getCredentialNameFromType = (
