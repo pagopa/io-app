@@ -81,17 +81,12 @@ const getNestedItemSummary = (
     return {};
   }
 
-  const claimsMap = new Map(
-    singleItemClaims.map(claim => [claim.id, claim.value])
+  const claimsMap = new Map<string, string>(
+    singleItemClaims.map(claim => [claim.id, claim.value as string])
   );
 
-  const summaryLabel = claimsMap.get(summaryConfig.summaryLabelId) as
-    | string
-    | undefined;
-  const summaryValue = claimsMap.get(summaryConfig.summaryValueId) as
-    | string
-    | undefined;
-
+  const summaryLabel = claimsMap.get(summaryConfig.summaryLabelId);
+  const summaryValue = claimsMap.get(summaryConfig.summaryValueId);
   return { summaryLabel, summaryValue };
 };
 
