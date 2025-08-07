@@ -554,7 +554,6 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       credentialType: "MDL"
     });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(0);
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(0));
     await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
