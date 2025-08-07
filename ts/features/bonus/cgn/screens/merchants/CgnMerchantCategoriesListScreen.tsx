@@ -27,6 +27,7 @@ import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
+import { cgnMerchantsModalSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 
 export const CgnMerchantCategoriesListScreen = () => {
   const theme = useIOTheme();
@@ -34,6 +35,8 @@ export const CgnMerchantCategoriesListScreen = () => {
   const dispatch = useIODispatch();
   const [isPullRefresh, setIsPullRefresh] = useState(false);
   const potCategories = useIOSelector(cgnCategoriesListSelector);
+
+  const showSortingInfo = useIOSelector(cgnMerchantsModalSelector);
 
   const navigation =
     useNavigation<
@@ -151,7 +154,7 @@ export const CgnMerchantCategoriesListScreen = () => {
       refreshing: isPullRefresh,
       onRefresh: onPullRefresh
     },
-    ListFooterComponent: (
+    ListFooterComponent: showSortingInfo ? (
       <>
         <Divider />
         <ListItemAction
@@ -166,7 +169,7 @@ export const CgnMerchantCategoriesListScreen = () => {
         />
         {bottomSheet}
       </>
-    ),
+    ) : undefined,
     ListEmptyComponent: undefined,
     skeleton: <CgnMerchantListSkeleton hasIcons count={10} />
   };

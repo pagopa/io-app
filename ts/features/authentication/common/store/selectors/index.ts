@@ -6,6 +6,7 @@ import {
   isLoggedIn,
   isLoggedInWithSessionInfo,
   isLoggedOutWithIdp,
+  isSessionCorrupted,
   isSessionExpired
 } from "../utils/guards";
 import { SpidIdp } from "../../../../../utils/idps";
@@ -27,6 +28,9 @@ export const isLogoutRequested = (state: GlobalState) =>
 
 export const isSessionExpiredSelector = (state: GlobalState) =>
   !isLoggedIn(state.authentication) && isSessionExpired(state.authentication);
+
+export const isSessionCorruptedSelector = (state: GlobalState) =>
+  !isLoggedIn(state.authentication) && isSessionCorrupted(state.authentication);
 
 export const sessionTokenSelector = (
   state: GlobalState
