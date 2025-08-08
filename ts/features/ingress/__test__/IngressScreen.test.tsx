@@ -91,6 +91,10 @@ describe(IngressScreen, () => {
       jest.clearAllMocks();
     });
     it("Should update LoadingScreenContent contentTitle after 5 sec and display the cdn unreachable blocking screen after 10", async () => {
+      jest
+        .spyOn(itwSelectors, "itwOfflineAccessAvailableSelector")
+        .mockImplementation(() => false);
+
       const {
         getDeviceBlockingScreen,
         queryByText,
@@ -116,6 +120,9 @@ describe(IngressScreen, () => {
       jest
         .spyOn(backendStatusSelectors, "isBackendStatusLoadedSelector")
         .mockImplementation(() => true);
+      jest
+        .spyOn(itwSelectors, "itwOfflineAccessAvailableSelector")
+        .mockImplementation(() => false);
 
       const {
         getDeviceBlockingScreen,
@@ -137,6 +144,22 @@ describe(IngressScreen, () => {
       ).toBeTruthy();
       expect(getFirstText()).toBeNull();
       expect(getSecondText()).toBeNull();
+    });
+    it("Should not display the slowdowns blocking screen if offline wallet is available", async () => {
+      jest
+        .spyOn(backendStatusSelectors, "isBackendStatusLoadedSelector")
+        .mockImplementation(() => true);
+      jest
+        .spyOn(itwSelectors, "itwOfflineAccessAvailableSelector")
+        .mockImplementation(() => true);
+
+      const { getDeviceBlockingScreen } = await renderComponentWithSlowdowns();
+
+      await act(() => {
+        jest.advanceTimersByTime(5000);
+      });
+
+      expect(getDeviceBlockingScreen()).toBeFalsy();
     });
   });
 });
