@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0-rc.2](https://github.com/pagopa/io-app/compare/3.12.0-rc.1...3.12.0-rc.2) (2025-08-07)
+
+## [3.12.0-rc.1](https://github.com/pagopa/io-app/compare/3.12.0-rc.0...3.12.0-rc.1) (2025-08-07)
+
+
+### Features
+
+* [[IOPID-2927](https://pagopa.atlassian.net/browse/IOPID-2927)] Active session login - CieID flow ([#7240](https://github.com/pagopa/io-app/issues/7240)) ([0445751](https://github.com/pagopa/io-app/commit/0445751f68a2ac84fd5578b8031b17a05908ac84)), closes [/github.com/pagopa/io-app/pull/7240/files#diff-fbd0f324277d93d92d9eebf19335d6e6b5d28e45350fbe33ddee4e3de622f4d3](https://github.com/pagopa//github.com/pagopa/io-app/pull/7240/files/issues/diff-fbd0f324277d93d92d9eebf19335d6e6b5d28e45350fbe33ddee4e3de622f4d3) [/github.com/pagopa/io-app/pull/7240/files#diff-0a1b70a0de9f8ab34ff34ab8d4c4c3940aa65644b480abd066bb6bff8bd00d8](https://github.com/pagopa//github.com/pagopa/io-app/pull/7240/files/issues/diff-0a1b70a0de9f8ab34ff34ab8d4c4c3940aa65644b480abd066bb6bff8bd00d8)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2843](https://pagopa.atlassian.net/browse/SIW-2843)] Add optional `operationType` in `obtainCredential` utility function ([#7255](https://github.com/pagopa/io-app/issues/7255)) ([4b1733e](https://github.com/pagopa/io-app/commit/4b1733e600e296fbfe3704a60b5494adafd5d21b))
+* **IT Wallet:** [[SIW-2849](https://pagopa.atlassian.net/browse/SIW-2849)] Extract correct credential type from VCT in remote presentation ([#7257](https://github.com/pagopa/io-app/issues/7257)) ([4148577](https://github.com/pagopa/io-app/commit/41485775d0fbaa147fdaeb03a87fd96313ee078a))
+* [[IOPLT-1301](https://pagopa.atlassian.net/browse/IOPLT-1301),[IOPLT-1172](https://pagopa.atlassian.net/browse/IOPLT-1172)] Fix header background bug after dark mode switch + Improve external keyboard support ([#7264](https://github.com/pagopa/io-app/issues/7264)) ([c2268b4](https://github.com/pagopa/io-app/commit/c2268b4cff05699f757c8f9c2a59bf986f43da04))
+* [[SIW-2853](https://pagopa.atlassian.net/browse/SIW-2853)] Upgraded `io-react-native-wallet-v2` version ([#7263](https://github.com/pagopa/io-app/issues/7263)) ([1c334ca](https://github.com/pagopa/io-app/commit/1c334ca565512578127edb22c2b6e39e5abfcdcc))
+
 ## [3.12.0-rc.0](https://github.com/pagopa/io-app/compare/3.11.0-rc.4...3.12.0-rc.0) (2025-08-07)
 
 
