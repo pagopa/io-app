@@ -24,7 +24,8 @@ export const ItwPresentationCredentialVerificationExpired = ({
   const beginCredentialIssuance = () => {
     machineRef.send({
       type: "select-credential",
-      credentialType: credential.credentialType
+      credentialType: credential.credentialType,
+      mode: "reissuance"
     });
   };
 

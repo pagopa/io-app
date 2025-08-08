@@ -30,15 +30,17 @@ export const ItwWalletReadyBanner = () => {
         title={
           isNewItwRenderable
             ? undefined
-            : I18n.t("features.itWallet.issuance.eidResult.successL2.title")
+            : I18n.t(
+                "features.itWallet.issuance.emptyWallet.readyBannerL2.title"
+              )
         }
         content={I18n.t(
           isNewItwRenderable
-            ? "features.itWallet.issuance.emptyWallet.itwReadyBanner.content"
-            : "features.itWallet.issuance.eidResult.successL2.subtitle"
+            ? "features.itWallet.issuance.emptyWallet.readyBanner.content"
+            : "features.itWallet.issuance.emptyWallet.readyBannerL2.content"
         )}
         action={I18n.t(
-          "features.itWallet.issuance.eidResult.successL2.actions.continueAlt"
+          "features.itWallet.issuance.emptyWallet.readyBanner.action"
         )}
         color="turquoise"
         onPress={handleOnPress}
