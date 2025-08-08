@@ -56,7 +56,8 @@ import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailur
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
   credentialType?: string;
-  asyncContinuation?: boolean;
+  asyncContinuation?: boolean; // TODO to be removed in [SIW-2839]
+  isUpgrade?: boolean;
 };
 
 type ScreenProps =
@@ -69,7 +70,7 @@ type ScreenProps =
   | ItwIssuanceCredentialTrustIssuerNavigationParams;
 
 const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
-  const { credentialType, asyncContinuation } =
+  const { credentialType, asyncContinuation, isUpgrade } =
     ("route" in props ? props.route.params : props) ?? {};
 
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -95,12 +96,12 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
       if (credentialType) {
         machineRef.send({
           type: "select-credential",
-          skipNavigation: true,
           credentialType,
-          asyncContinuation
+          mode: isUpgrade ? "upgrade" : "issuance",
+          isAsyncContinuation: asyncContinuation // TODO to be removed in [SIW-2839]
         });
       }
-    }, [credentialType, asyncContinuation, machineRef])
+    }, [credentialType, asyncContinuation, machineRef, isUpgrade])
   );
 
   if (isLoading) {

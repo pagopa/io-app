@@ -21,6 +21,7 @@ const ItwCredentialNotFound = ({
   const navigateToCredential = () => {
     machineRef.send({
       type: "select-credential",
+      mode: "issuance",
       credentialType
     });
   };
