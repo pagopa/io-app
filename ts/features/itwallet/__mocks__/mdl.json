@@ -106,7 +106,8 @@
       }
     }
   },
-  "credentialType": "MDL",
+  "credentialId": "MDL",
+  "credentialType": "mDL",
   "format": "vc+sd-jwt",
   "issuerConf": {
     "federation_entity": {
