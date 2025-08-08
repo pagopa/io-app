@@ -12,7 +12,10 @@ import { CREDENTIALS_MAP, trackWalletShowBack } from "../../../analytics";
 import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import {
+  CredentialFormat,
+  StoredCredential
+} from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
@@ -42,7 +45,9 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   }, [credential.credentialType]);
 
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
-  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isPidL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isL3Credential =
+    isPidL3 && credential.format !== CredentialFormat.LEGACY_SD_JWT;
 
   const handleCardPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -56,7 +61,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
 
   const { backgroundColor } = getThemeColorByCredentialType(
     credential.credentialType,
-    withL3Design
+    isL3Credential
   );
 
   return (
@@ -73,9 +78,9 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
         </FlipGestureDetector>
       </CardContainer>
       <ContentWrapper
-        style={withL3Design ? styles.horizontalLayout : styles.centeredLayout}
+        style={isL3Credential ? styles.horizontalLayout : styles.centeredLayout}
       >
-        {withL3Design && <ItwBadge />}
+        {isL3Credential && <ItwBadge />}
         <ItwPresentationCredentialCardFlipButton
           isFlipped={isFlipped}
           handleOnPress={handleFlipButtonPress}

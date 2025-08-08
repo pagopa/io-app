@@ -18,7 +18,10 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { getHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import {
+  CredentialFormat,
+  StoredCredential
+} from "../../../common/utils/itwTypesUtils.ts";
 import { useIOSelector } from "../../../../../store/hooks";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
@@ -43,7 +46,9 @@ const ItwPresentationDetailsScreenBase = ({
 }: ItwPresentationDetailsScreenBaseProps) => {
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const safeAreaInsets = useSafeAreaInsets();
-  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isPidL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isL3Credential =
+    isPidL3 && credential.format !== CredentialFormat.LEGACY_SD_JWT;
 
   const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);
@@ -68,7 +73,7 @@ const ItwPresentationDetailsScreenBase = ({
 
   const headerProps = getHeaderPropsByCredentialType(
     credential.credentialType,
-    withL3Design
+    isL3Credential
   );
 
   useHeaderSecondLevel({

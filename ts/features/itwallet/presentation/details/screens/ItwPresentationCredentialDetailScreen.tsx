@@ -22,7 +22,10 @@ import {
   trackWalletCredentialShowTrustmark
 } from "../../../analytics";
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import {
+  CredentialFormat,
+  StoredCredential
+} from "../../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialSelector,
   itwCredentialStatusSelector
@@ -116,10 +119,12 @@ export const ItwPresentationCredentialDetail = ({
     ItwProximityMachineContext.useSelector(selectIsLoading);
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isPidL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
+  const isL3Credential =
+    isPidL3 && credential.format !== CredentialFormat.LEGACY_SD_JWT;
 
   useDebugInfo(credential);
   usePreventScreenCapture();
