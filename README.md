@@ -540,6 +540,12 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
             <td>ioit://wallet/card-onboarding-attempts</td>
         <tr>
     </table>
+    <h3>institutions</h3>
+    <table>
+        <tr>
+            <td>ioit://institutions?institutionId=:institutionId&institutionName=:institutionName</td>
+        </tr>
+    </table>
     <h3>services</h3>
     <table>
         <tr>
