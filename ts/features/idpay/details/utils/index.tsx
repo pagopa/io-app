@@ -1,4 +1,8 @@
-import { LabelMini, Tag } from "@pagopa/io-app-design-system";
+import {
+  LabelMini,
+  Tag,
+  useIOThemeContext
+} from "@pagopa/io-app-design-system";
 import {
   InitiativeDTO,
   StatusEnum
@@ -33,12 +37,14 @@ export const getInitiativeStatus = ({
 };
 
 export function IdPayCardStatus({ now, initiative }: InitiativeProps) {
+  const { themeType } = useIOThemeContext();
+  const isDark = themeType === "dark";
   switch (getInitiativeStatus({ now, initiative })) {
     case "ACTIVE":
       return (
         <LabelMini
           weight="Regular"
-          color="grey-650"
+          color={isDark ? "white" : "grey-650"}
           testID="idpay-card-status-active"
         >
           {I18n.t("bonusCard.validUntil", {
