@@ -4891,7 +4891,7 @@
               }
             }
           },
-          "MDL": {
+          "mDL": {
             "expiring": {
               "title": "Patente su IO: documento in scadenza",
               "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nDovrai effettuare una visita medica con un medico abilitato e completare il pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\n - La Patente di guida in scadenza o scaduta \n - Un documento di identità \n - Il Codice fiscale \n - Una foto recente formato tessera"
@@ -4907,12 +4907,6 @@
             "expiring": {
               "title": "Carta europea della disabilità su IO: documento in scadenza",
               "content": "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
-            }
-          },
-          "org.iso.18013.5.1.mDL": {
-            "expiring": {
-              "title": "Patente su IO: documento in scadenza",
-              "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nDovrai effettuare una visita medica con un medico abilitato e completare il pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\n - La Patente di guida in scadenza o scaduta \n - Un documento di identità \n - Il Codice fiscale \n - Una foto recente formato tessera"
             }
           }
         },
