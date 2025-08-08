@@ -83,21 +83,6 @@ export const itwCredentialsAllSelector = makeSelectAllCredentials(
 );
 
 /**
- * Returns the credentials with the vc+sd-jwt format from the itw credentials state,
- * excluding the PID credential.
- *
- * @param state - The global state.
- * @returns The credentials object.
- */
-export const itwLegacyCredentialsSelector = createSelector(
-  itwCredentialsByTypeSelector,
-  credentials =>
-    Object.values(credentials)
-      .map(c => c?.[CredentialFormat.LEGACY_SD_JWT])
-      .filter(c => c !== undefined)
-);
-
-/**
  * Returns the credentials object from the itw credentials state, excluding the PID credential.
  * Only SD-JWT credentials are returned.
  *
