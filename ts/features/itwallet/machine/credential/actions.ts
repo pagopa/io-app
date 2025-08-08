@@ -13,6 +13,7 @@ import {
   trackAddCredentialProfileAndSuperProperties,
   trackSaveCredentialSuccess,
   trackStartAddNewCredential,
+  trackStartCredentialUpgrade,
   trackWalletDataShare,
   trackWalletDataShareAccepted
 } from "../../analytics";
@@ -20,7 +21,10 @@ import {
   itwFlagCredentialAsRequested,
   itwUnflagCredentialAsRequested
 } from "../../common/store/actions/preferences";
-import { itwCredentialsStore } from "../../credentials/store/actions";
+import {
+  itwCredentialsRemoveByType,
+  itwCredentialsStore
+} from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
@@ -47,8 +51,8 @@ export const createCredentialIssuanceActionsImplementation = (
     const state = store.getState();
 
     return {
-      walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
-      isWhiteListed: itwIsL3EnabledSelector(state)
+      isWhiteListed: itwIsL3EnabledSelector(state),
+      walletInstanceAttestation: itwWalletInstanceAttestationSelector(state)
     };
   }),
 
@@ -118,7 +122,11 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents,
     CredentialIssuanceEvents
   >) => {
+    assert(context.credentialType, "credentialType is undefined");
     assert(context.credentials, "credential is undefined");
+    // Removes any credentials with thye same type stored in the wallet
+    store.dispatch(itwCredentialsRemoveByType(context.credentialType));
+    // Stores the new obtained credentials
     store.dispatch(itwCredentialsStore(context.credentials));
   },
 
@@ -182,7 +190,18 @@ export const createCredentialIssuanceActionsImplementation = (
   trackCredentialIssuingDataShareAccepted: ({
     context
   }: ActionArgs<Context, CredentialIssuanceEvents, CredentialIssuanceEvents>) =>
-    trackDataShareEvent(context, store, true)
+    trackDataShareEvent(context, store, true),
+
+  trackStartCredentialReissuing: ({
+    context
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
+    assert(context.credentialType, "credentialType is undefined");
+    trackStartCredentialUpgrade(CREDENTIALS_MAP[context.credentialType]);
+  }
 });
 
 const trackDataShareEvent = (
@@ -216,16 +235,11 @@ const trackDataShareEvent = (
         credentialType
       ),
       O.map(() => {
-        if (isMdlRequested && isAsyncContinuation) {
-          return "async_continuation";
+        if (isAsyncContinuation) {
+          // TODO to be removed in [SIW-2839]
+          return isMdlRequested ? "async_continuation" : "old_message_request";
         }
-        if (isMdlRequested && !isAsyncContinuation) {
-          return "request_in_progress";
-        }
-        if (!isMdlRequested && isAsyncContinuation) {
-          return "old_message_request";
-        }
-        return "initial_request";
+        return isMdlRequested ? "request_in_progress" : "initial_request";
       }),
       O.fold(
         () => ({ credential }),
