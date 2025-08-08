@@ -1,3 +1,4 @@
+import { UntrustedRpError } from "../itwProximityErrors";
 import {
   generateAcceptedFields,
   getProximityDetails
@@ -30,6 +31,37 @@ const mockCredential: StoredCredential = {
 };
 
 describe("getProximityDetails", () => {
+  it("should throw if the verifier is not marked as trusted", () => {
+    const parsedRequest = {
+      request: {
+        [mockDocType]: {
+          "org.iso.18013.5.1.aamva": {
+            family_name: false
+          },
+          "org.iso.18013.5.1": {
+            tax_id_code: false
+          },
+          isAuthenticated: true
+        },
+        unknown_credential: {
+          "org.iso.18013.5.1": {
+            unknown_field: true,
+            family_name: true
+          },
+          isAuthenticated: false
+        }
+      }
+    } as unknown as VerifierRequest;
+
+    const credentials: Record<string, StoredCredential> = {
+      [mockDocType]: mockCredential
+    };
+
+    expect(() =>
+      getProximityDetails(parsedRequest.request, credentials)
+    ).toThrow(UntrustedRpError);
+  });
+
   it("should throw if credential is not found", () => {
     const parsedRequest = {
       request: {
@@ -38,7 +70,7 @@ describe("getProximityDetails", () => {
             unknown_field: true,
             family_name: true
           },
-          isAuthenticated: false
+          isAuthenticated: true
         }
       }
     } as unknown as VerifierRequest;
@@ -56,7 +88,7 @@ describe("getProximityDetails", () => {
           "org.iso.18013.5.1": {
             tax_id_code: false
           },
-          isAuthenticated: false
+          isAuthenticated: true
         }
       }
     } as unknown as VerifierRequest;
@@ -102,7 +134,7 @@ describe("generateAcceptedFields", () => {
             unknown_field: false,
             tax_id_code: false
           },
-          isAuthenticated: false
+          isAuthenticated: true
         },
         credential_B: {
           "org.iso.18013.5.1.aamva": {
@@ -112,7 +144,7 @@ describe("generateAcceptedFields", () => {
             unknown_field: false,
             tax_id_code: false
           },
-          isAuthenticated: false
+          isAuthenticated: true
         }
       }
     } as unknown as VerifierRequest;
