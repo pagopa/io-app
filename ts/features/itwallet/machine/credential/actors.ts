@@ -11,6 +11,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { Env } from "../../common/utils/environment";
+import { enrichErrorWithMetadata } from "../../common/utils/itwFailureUtils";
 import { type Context } from "./context";
 
 export type GetWalletAttestationActorInput = {
@@ -39,7 +40,9 @@ export type ObtainCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.obtainCredential>
 >;
 
-export type ObtainStatusAttestationActorInput = Pick<Context, "credentials">;
+export type ObtainStatusAttestationActorInput = Pick<Context, "credentials"> & {
+  isNewIssuanceFlowEnabled?: boolean;
+};
 
 /**
  * Creates the actors for the eid issuance machine
@@ -181,7 +184,9 @@ export const createCredentialIssuanceActorsImplementation = (
     return await Promise.all(
       input.credentials.map(async credential => {
         const { statusAttestation, parsedStatusAttestation } =
-          await getCredentialStatusAttestation(credential);
+          await getCredentialStatusAttestation(credential, env).catch(
+            enrichErrorWithMetadata({ credentialId: credential.credentialId })
+          );
 
         return {
           ...credential,
