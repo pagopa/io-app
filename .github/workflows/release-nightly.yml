@@ -22,6 +22,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+
+          # If manually dispatched, force run
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
+            echo "Manual dispatch detected: forcing HAS_CHANGES=true"
+            echo "HAS_CHANGES=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
           BASE_REF="origin/${BRANCH_NAME}"
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
 
