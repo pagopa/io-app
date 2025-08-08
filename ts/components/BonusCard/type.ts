@@ -3,4 +3,5 @@ export type BonusStatus =
   | "PAUSED"
   | "EXPIRING"
   | "EXPIRED"
-  | "REMOVED";
+  | "REMOVED"
+  | "USED";
