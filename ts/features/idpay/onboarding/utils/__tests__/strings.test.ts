@@ -1,4 +1,4 @@
-import { CodeEnum } from "../../../../../../definitions/idpay/PDNDCriteriaDTO";
+import { CodeEnum } from "../../../../../../definitions/idpay/AutomatedCriteriaDTO";
 import I18n from "../../../../../i18n";
 import { getPDNDCriteriaValueString } from "../strings";
 
@@ -25,11 +25,11 @@ describe("getPDNDCriteriaValueString", () => {
     );
     expect(result).toStrictEqual("-");
   });
-  it("returns correct string for BIRTHDATE value", () => {
+  it("returns correct string for BIRTHDAY value", () => {
     const tYear = 1993;
     const tString = tYear.toString();
     const result = getPDNDCriteriaValueString(
-      CodeEnum.BIRTHDATE,
+      CodeEnum.BIRTHDAY,
       tYear.toString()
     );
     expect(result).toStrictEqual(tString);

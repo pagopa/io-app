@@ -14,7 +14,10 @@ export const idPayGenerateBarcode = createAsyncAction(
 )<
   IdPayGenerateBarcodePayload,
   TransactionBarCodeResponse,
-  { initiativeId: string; error: TransactionErrorDTO | NetworkError }
+  {
+    initiativeId: string;
+    error: TransactionErrorDTO | NetworkError;
+  }
 >();
 
 export type IdPayBarcodeActions = ActionType<typeof idPayGenerateBarcode>;

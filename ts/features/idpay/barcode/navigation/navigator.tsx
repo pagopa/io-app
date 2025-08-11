@@ -12,6 +12,9 @@ export const IdPayBarcodeNavigator = () => (
     <Stack.Screen
       name={IdPayBarcodeRoutes.IDPAY_BARCODE_RESULT}
       component={IdPayBarcodeResultScreen}
+      options={{
+        headerShown: false
+      }}
     />
   </Stack.Navigator>
 );

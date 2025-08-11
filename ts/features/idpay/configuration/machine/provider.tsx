@@ -10,6 +10,8 @@ import {
   fetchPaymentManagerLongTimeout,
   idPayApiBaseUrl,
   idPayApiUatBaseUrl,
+  idPayApiUatVersion,
+  idPayApiVersion,
   idPayTestToken,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
@@ -72,6 +74,8 @@ export const IDPayConfigurationMachineProvider = ({ children }: Props) => {
     defaultRetryingFetch(fetchPaymentManagerLongTimeout, 0)
   );
 
+  const apiVersion = isPagoPATestEnabled ? idPayApiUatVersion : idPayApiVersion;
+
   const getPaymentManagerSession = async () => {
     try {
       const response = await paymentManagerClient.getSession(walletToken);
@@ -87,7 +91,8 @@ export const IDPayConfigurationMachineProvider = ({ children }: Props) => {
   const pmSessionManager = new SessionManager(getPaymentManagerSession);
 
   const idPayClient = createIDPayClient(
-    isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
+    isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl,
+    apiVersion
   );
 
   const actors = createActorsImplementation(

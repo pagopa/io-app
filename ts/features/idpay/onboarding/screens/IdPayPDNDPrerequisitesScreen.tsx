@@ -86,18 +86,20 @@ export const IdPayPDNDPrerequisitesScreen = () => {
       contextualHelp={emptyContextualHelp}
       headerActionsProp={{ showHelp: true }}
     >
-      {pdndCriteria.map((criteria, index) => (
+      {pdndCriteria?.map((criteria, index) => (
         <Fragment key={index}>
-          <ModuleSummary
-            label={I18n.t(
-              `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
-            )}
-            description={getPDNDCriteriaDescription(criteria)}
-            onPress={() => {
-              setAuthority(criteria.authority);
-              present();
-            }}
-          />
+          {criteria.code && (
+            <ModuleSummary
+              label={I18n.t(
+                `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
+              )}
+              description={getPDNDCriteriaDescription(criteria)}
+              onPress={() => {
+                setAuthority(criteria.authority);
+                present();
+              }}
+            />
+          )}
           <VSpacer size={16} />
         </Fragment>
       ))}

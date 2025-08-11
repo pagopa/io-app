@@ -7,7 +7,7 @@ import { PreferredLanguage } from "../../../../../definitions/backend/PreferredL
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 import { CodeEnum as OnboardingErrorCodeEnum } from "../../../../../definitions/idpay/OnboardingErrorDTO";
 import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
-import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
+import { InitiativeBeneficiaryRuleDTO } from "../../../../../definitions/idpay/InitiativeBeneficiaryRuleDTO";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/SelfConsentDTO";
 import { IDPayClient } from "../../common/api/client";
 import {
@@ -99,56 +99,20 @@ export const createActorsImplementation = (
     return data;
   });
 
-  const acceptTos = fromPromise<undefined, O.Option<string>>(async params => {
-    if (O.isNone(params.input)) {
-      throw new Error("Initiative ID was not provided");
-    }
-
-    const response = await client.onboardingCitizen({
-      ...clientOptions,
-      body: {
-        initiativeId: params.input.value
-      }
-    });
-
-    const dataPromise: Promise<undefined> = pipe(
-      response,
-      E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
-        ({ status, value }) => {
-          switch (status) {
-            case 204:
-              return Promise.resolve(undefined);
-            case 403:
-              return Promise.reject(mapErrorCodeToFailure(value.code));
-            case 401:
-              return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
-            default:
-              return Promise.reject(OnboardingFailureEnum.GENERIC);
-          }
-        }
-      )
-    );
-
-    return dataPromise;
-  });
-
   const getRequiredCriteria = fromPromise<
-    O.Option<RequiredCriteriaDTO>,
+    O.Option<InitiativeBeneficiaryRuleDTO>,
     O.Option<string>
   >(async params => {
     if (O.isNone(params.input)) {
       throw new Error("Initiative ID was not provided");
     }
 
-    const response = await client.checkPrerequisites({
+    const response = await client.webInitiativeDetail({
       ...clientOptions,
-      body: {
-        initiativeId: params.input.value
-      }
+      initiativeId: params.input.value
     });
 
-    const dataPromise: Promise<O.Option<RequiredCriteriaDTO>> = pipe(
+    const dataPromise: Promise<O.Option<InitiativeBeneficiaryRuleDTO>> = pipe(
       response,
       E.fold(
         _ => Promise.reject(OnboardingFailureEnum.GENERIC),
@@ -156,10 +120,6 @@ export const createActorsImplementation = (
           switch (status) {
             case 200:
               return Promise.resolve(O.some(value));
-            case 202:
-              return Promise.resolve(O.none);
-            case 403:
-              return Promise.reject(mapErrorCodeToFailure(value.code));
             case 401:
               return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
             default:
@@ -199,11 +159,12 @@ export const createActorsImplementation = (
         ...Object.values(selfDeclarationsTextAnswers)
       ] as Array<SelfConsentDTO>;
 
-      const response = await client.consentOnboarding({
+      const response = await client.saveOnboarding({
         ...clientOptions,
         body: {
           initiativeId: initiative.value.initiativeId,
           pdndAccept: true,
+          confirmedTos: true,
           selfDeclarationList: consentsArray
         }
       });
@@ -232,7 +193,6 @@ export const createActorsImplementation = (
   return {
     getInitiativeInfo,
     getOnboardingStatus,
-    acceptTos,
     getRequiredCriteria,
     acceptRequiredCriteria
   };

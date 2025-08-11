@@ -21,8 +21,8 @@ jest.mock("../../../../../components/helpers/withAppRequiredUpdate", () => ({
   ) => Component
 }));
 
-const mockedInitiative: InitiativeDTO = {
-  endDate: new Date(2023, 1, 1),
+const mockedInitiative = {
+  voucherEndDate: new Date(2023, 1, 1),
   initiativeId: "ABC123",
   initiativeName: "Fake initiative",
   organizationName: "Fake organization",
@@ -30,7 +30,7 @@ const mockedInitiative: InitiativeDTO = {
   status: StatusEnum.REFUNDABLE,
   initiativeRewardType: InitiativeRewardTypeEnum.REFUND,
   lastCounterUpdate: new Date()
-};
+} as InitiativeDTO;
 
 describe("Test IdPayInitiativeDetailsScreen screen", () => {
   beforeEach(() => {
