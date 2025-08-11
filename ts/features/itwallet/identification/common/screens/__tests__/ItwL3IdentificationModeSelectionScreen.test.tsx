@@ -9,7 +9,7 @@ import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import { ItwL3IdentificationModeSelectionScreen } from "../../../common/screens/ItwL3IdentificationModeSelectionScreen";
 
-jest.mock("../../../../../config", () => ({
+jest.mock("../../../../../../config", () => ({
   itwEnabled: true
 }));
 
