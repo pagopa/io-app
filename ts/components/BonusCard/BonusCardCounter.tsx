@@ -3,6 +3,7 @@ import {
   IOColors,
   IOSkeleton,
   LabelMini,
+  useIOThemeContext,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useEffect } from "react";
@@ -43,6 +44,8 @@ type LoadingProps =
 export type BonusCardCounter = BaseProps & LoadingProps;
 
 const BonusCardCounter = (props: BonusCardCounter) => {
+  const isDark = useIOThemeContext().themeType === "dark";
+
   if (props.isLoading) {
     return <BonusCardCounterSkeleton type={props.type} />;
   }
@@ -55,12 +58,12 @@ const BonusCardCounter = (props: BonusCardCounter) => {
       <LabelMini
         weight="Regular"
         style={{ textAlign: "center" }}
-        color="blueItalia-850"
+        color={isDark ? "white" : "blueItalia-850"}
       >
         {props.label}
       </LabelMini>
       <VSpacer size={4} />
-      <H3 color="blueItalia-500" style={styles.value}>
+      <H3 color={isDark ? "blueIO-200" : "blueItalia-500"} style={styles.value}>
         {props.value}
       </H3>
       {props.type === "ValueWithProgress" && (

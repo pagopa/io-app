@@ -418,7 +418,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
                                   [
                                     {},
                                     {
-                                      "color": "#001F3D",
+                                      "color": "#031344",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
@@ -501,11 +501,11 @@ exports[`IdPayCard should match the snapshot 1`] = `
                                 [
                                   {},
                                   {
-                                    "color": "#0E0F13",
+                                    "color": "#031344",
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                 ]
@@ -521,7 +521,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
                                 [
                                   {},
                                   {
-                                    "color": "#0066CC",
+                                    "color": "#0B3EE3",
                                     "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
@@ -543,11 +543,11 @@ exports[`IdPayCard should match the snapshot 1`] = `
                               [
                                 {},
                                 {
-                                  "color": "#001F3D",
+                                  "color": "#031344",
                                   "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
-                                  "fontWeight": "600",
+                                  "fontWeight": "400",
                                   "lineHeight": 24,
                                 },
                               ]
