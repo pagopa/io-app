@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { voidType } from "io-ts";
 import { useMemo } from "react";
 import {
   OperationResultScreenContent,
@@ -41,11 +42,23 @@ const IdPayFailureScreen = () => {
       pictogram: "umbrella",
       title: I18n.t("idpay.onboarding.failure.message.GENERIC.title"),
       subtitle: I18n.t("idpay.onboarding.failure.message.GENERIC.subtitle"),
-      action: defaultCloseAction,
+      action: {
+        label: I18n.t("global.buttons.back"),
+        accessibilityLabel: I18n.t("global.buttons.back"),
+        onPress: () => machine.send({ type: "close" })
+      },
+      secondaryAction: {
+        label: I18n.t(`wallet.onboarding.outcome.BE_KO.secondaryAction`),
+        accessibilityLabel: I18n.t(
+          `wallet.onboarding.outcome.BE_KO.secondaryAction`
+        ),
+        // TODO: implement this in IOBP-1943
+        onPress: () => voidType
+      },
       enableAnimatedPictogram: true,
       loop: true
     }),
-    [defaultCloseAction]
+    [machine]
   );
 
   const mapFailureToContentProps = (

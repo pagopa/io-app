@@ -13,7 +13,6 @@ import {
 } from "./itwCryptoContextUtils";
 import { RequestObject, StoredCredential } from "./itwTypesUtils";
 import { Env } from "./environment";
-import { CredentialType } from "./itwMocksUtils";
 
 export type RequestCredentialParams = {
   env: Env;
@@ -87,6 +86,7 @@ export type ObtainCredentialParams = {
   clientId: string;
   codeVerifier: string;
   issuerConf: IssuerConf;
+  operationType?: "reissuing";
 };
 
 // TODO: [SIW-2530] Update JSDoc accordingly
@@ -101,6 +101,7 @@ export type ObtainCredentialParams = {
  * @param codeVerifier - The code verifier
  * @param credentialDefinition - The credential definition
  * @param issuerConf - The issuer configuration
+ * @param operationType - The operation type, e.g., "reissuing"
  * @returns The obtained credential
  */
 export const obtainCredential = async ({
@@ -112,7 +113,8 @@ export const obtainCredential = async ({
   walletInstanceAttestation,
   clientId,
   codeVerifier,
-  issuerConf
+  issuerConf,
+  operationType
 }: ObtainCredentialParams) => {
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
@@ -167,7 +169,7 @@ export const obtainCredential = async ({
               dPopCryptoContext,
               credentialCryptoContext
             },
-            "reissuing"
+            operationType
           ).catch(enrichIssuerResponseError(credential_configuration_id));
 
         // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
@@ -210,20 +212,17 @@ const getCredentialConfigurationIds = (
 ) => {
   const { credential_configurations_supported } =
     issuerConfig.openid_credential_issuer;
-  const configurationSupportedByScope = Object.entries(
+  const supportedConfigurationsByScope = Object.entries(
     credential_configurations_supported
-  ).reduce<Record<string, Array<string>>>((acc, [key, value]) => {
-    // TODO: [SIW-2530] remove this check after fully migrating to the new API
-    const scope =
-      value.scope === "mDL" ? CredentialType.DRIVING_LICENSE : value.scope;
-
-    return {
+  ).reduce<Record<string, Array<string>>>(
+    (acc, [configId, config]) => ({
       ...acc,
-      [scope]: [...(acc[scope] || []), key]
-    };
-  }, {});
+      [config.scope]: [...(acc[config.scope] || []), configId]
+    }),
+    {}
+  );
 
-  return configurationSupportedByScope[credentialType] || [];
+  return supportedConfigurationsByScope[credentialType] || [];
 };
 
 // Extend `IssuerResponseError` with `credentialId`

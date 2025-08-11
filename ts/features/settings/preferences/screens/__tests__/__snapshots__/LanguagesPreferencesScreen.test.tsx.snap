@@ -1011,9 +1011,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },

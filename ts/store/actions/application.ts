@@ -9,6 +9,7 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 type ApplicationInitializationPayload = {
   handleSessionExpiration?: boolean;
   showIdentificationModalAtStartup?: boolean;
+  isActiveLoginSuccess?: boolean;
 } | void;
 export const startApplicationInitialization = createStandardAction(
   "START_APPLICATION_INITIALIZATION"
