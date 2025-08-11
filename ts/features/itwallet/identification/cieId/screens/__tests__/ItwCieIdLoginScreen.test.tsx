@@ -34,7 +34,7 @@ jest.mock("react-native-webview", () => {
 
 let mockIsIOS = false;
 let mockIsAndroid = true;
-jest.mock("../../../../../utils/platform", () => ({
+jest.mock("../../../../../../utils/platform", () => ({
   get isIos() {
     return mockIsIOS;
   },

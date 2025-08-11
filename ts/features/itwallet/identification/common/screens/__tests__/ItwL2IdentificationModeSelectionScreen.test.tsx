@@ -13,7 +13,7 @@ import {
   ItwL2IdentificationModeSelectionScreenProps
 } from "../../../common/screens/ItwL2IdentificationModeSelectionScreen";
 
-jest.mock("../../../../../config", () => ({
+jest.mock("../../../../../../config", () => ({
   itwEnabled: true
 }));
 
