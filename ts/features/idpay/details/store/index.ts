@@ -5,9 +5,9 @@ import * as _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import {
-  InitiativeDTO1,
+  InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO1";
+} from "../../../../../definitions/idpay/InitiativeDTO";
 import { InitiativeDetailDTO } from "../../../../../definitions/idpay/InitiativeDetailDTO";
 import { OnboardingStatusDTO } from "../../../../../definitions/idpay/OnboardingStatusDTO";
 import { TimelineDTO } from "../../../../../definitions/idpay/TimelineDTO";
@@ -24,7 +24,7 @@ import {
 export type PaginatedTimelineDTO = Record<number, TimelineDTO>;
 
 export type IdPayInitiativeState = {
-  details: pot.Pot<InitiativeDTO1, NetworkError>;
+  details: pot.Pot<InitiativeDTO, NetworkError>;
   beneficiaryDetails: pot.Pot<InitiativeDetailDTO, NetworkError>;
   onboardingStatus: pot.Pot<OnboardingStatusDTO, NetworkError>;
   timeline: pot.Pot<PaginatedTimelineDTO, NetworkError>;

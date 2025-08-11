@@ -15,9 +15,9 @@ import { pipe } from "fp-ts/lib/function";
 import { ReactNode } from "react";
 import { View } from "react-native";
 import {
-  InitiativeDTO1,
+  InitiativeDTO,
   InitiativeRewardTypeEnum
-} from "../../../../../definitions/idpay/InitiativeDTO1";
+} from "../../../../../definitions/idpay/InitiativeDTO";
 import { InitiativeDetailDTO } from "../../../../../definitions/idpay/InitiativeDetailDTO";
 import {
   RewardValueDTO,
@@ -47,7 +47,7 @@ type TableRow = WithTestID<{
 export type BeneficiaryDetailsProps =
   | {
       isLoading?: false;
-      initiativeDetails: InitiativeDTO1;
+      initiativeDetails: InitiativeDTO;
       beneficiaryDetails: InitiativeDetailDTO;
     }
   | {

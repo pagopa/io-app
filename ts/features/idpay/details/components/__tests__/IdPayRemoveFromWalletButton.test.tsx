@@ -1,9 +1,9 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { Alert } from "react-native";
 import {
-  InitiativeDTO1,
+  InitiativeDTO,
   StatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO1";
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import IdPayRemoveFromWalletButton from "../IdPayRemoveFromWalletButton";
 const mockNavigation = jest.fn();
 
@@ -27,7 +27,7 @@ const hideButtonProps = {
   nInstr: 1,
   lastCounterUpdate: new Date(),
   status: StatusEnum.UNSUBSCRIBED
-} as InitiativeDTO1;
+} as InitiativeDTO;
 
 const mockedInitiative = {
   initiativeId: "initiativeId",
@@ -38,7 +38,7 @@ const mockedInitiative = {
   nInstr: 1,
   lastCounterUpdate: new Date(),
   status: StatusEnum.REFUNDABLE
-} as InitiativeDTO1;
+} as InitiativeDTO;
 
 describe("IdPayRemoveFromWalletButton", () => {
   beforeAll(() => {

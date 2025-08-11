@@ -9,10 +9,10 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { IDPayDetailsRoutes } from "../../../details/navigation";
 import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import {
-  InitiativeDTO1,
+  InitiativeDTO,
   InitiativeRewardTypeEnum,
   StatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO1";
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
 
 const IDPAY_INITIATIVE_ID_MOCK = "1";
@@ -38,7 +38,7 @@ const baseInitiativeCardDetails = {
       status: StatusEnum.NOT_REFUNDABLE_ONLY_IBAN,
       initiativeName: IDPAY_INITIATIVE_NAME,
       amountCents: IDPAY_INITIATIVE_AMOUNT_CENTS_MOCK
-    } as InitiativeDTO1
+    } as InitiativeDTO
   ]
 } as WalletDTO;
 

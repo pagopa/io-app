@@ -1,11 +1,11 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { InitiativeDTO1 } from "../../../../../../definitions/idpay/InitiativeDTO1";
+import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { NetworkError } from "../../../../../utils/errors";
 
 export type IdPayTimelineDetailsGetPayloadType = {
-  initiativeId: InitiativeDTO1["initiativeId"];
+  initiativeId: InitiativeDTO["initiativeId"];
   operationId: OperationListDTO["operationId"];
 };
 

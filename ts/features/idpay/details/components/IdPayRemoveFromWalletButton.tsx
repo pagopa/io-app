@@ -11,11 +11,11 @@ import {
   isUnsubscriptionSuccessSelector
 } from "../../unsubscription/store/selectors";
 import {
-  InitiativeDTO1,
+  InitiativeDTO,
   VoucherStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO1";
+} from "../../../../../definitions/idpay/InitiativeDTO";
 
-const IdPayRemoveFromWalletButton = (initiative: InitiativeDTO1) => {
+const IdPayRemoveFromWalletButton = (initiative: InitiativeDTO) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isSuccess = useIOSelector(isUnsubscriptionSuccessSelector);

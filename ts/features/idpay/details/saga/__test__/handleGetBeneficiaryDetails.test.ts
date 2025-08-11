@@ -11,7 +11,6 @@ describe("idPayBeneficiaryDetailsGet", () => {
   const initiativeId = "abcdef";
 
   const initiativeDetails: InitiativeDetailDTO = {
-    initiativeId,
     initiativeName: "initiativeName"
   };
 

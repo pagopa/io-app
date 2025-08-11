@@ -7,7 +7,7 @@ import I18n from "../../../../i18n";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { useIOSelector } from "../../../../store/hooks";
 import { idPayWalletInitiativeListSelector } from "../store/reducers";
-import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO1";
+import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 
 export type IdPayCardProps = {
   name: string;

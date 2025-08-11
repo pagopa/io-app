@@ -7,9 +7,9 @@ import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { format } from "../../../utils/dates";
 import {
-  InitiativeDTO1,
+  InitiativeDTO,
   StatusEnum
-} from "../../../../definitions/idpay/InitiativeDTO1";
+} from "../../../../definitions/idpay/InitiativeDTO";
 import { IdPayCardStatus } from "../../../features/idpay/details/utils";
 
 jest.mock("react-native-safe-area-context", () => {
@@ -27,7 +27,7 @@ describe("Test BonusCardStatus", () => {
     status: StatusEnum.REFUNDABLE,
     nInstr: 1,
     initiativeId: "1"
-  } as InitiativeDTO1;
+  } as InitiativeDTO;
 
   describe("when the status is ACTIVE", () => {
     it("should display the correct content", () => {
@@ -68,7 +68,7 @@ describe("Test BonusCardStatus", () => {
   });
 });
 
-const renderComponent = (initiative: InitiativeDTO1) => {
+const renderComponent = (initiative: InitiativeDTO) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const store: Store<GlobalState> = createStore(appReducer, globalState as any);

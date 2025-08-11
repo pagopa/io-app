@@ -2,7 +2,7 @@ import { Alert, VSpacer } from "@pagopa/io-app-design-system";
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { createRef } from "react";
 import { View } from "react-native";
-import { StatusEnum as InitiativeStatusEnum } from "../../../../../definitions/idpay/InitiativeDTO1";
+import { StatusEnum as InitiativeStatusEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { IdPayConfigurationParamsList } from "../../configuration/navigation/params";

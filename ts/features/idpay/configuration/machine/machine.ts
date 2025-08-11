@@ -13,9 +13,9 @@ import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import { IbanListDTO } from "../../../../../definitions/idpay/IbanListDTO";
 import { IbanPutDTO } from "../../../../../definitions/idpay/IbanPutDTO";
 import {
-  InitiativeDTO1,
+  InitiativeDTO,
   StatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO1";
+} from "../../../../../definitions/idpay/InitiativeDTO";
 import {
   InstrumentDTO,
   StatusEnum as InstrumentStatusEnum
@@ -117,7 +117,7 @@ export const idPayConfigurationMachine = setup({
     handleSessionExpired: notImplementedStub
   },
   actors: {
-    getInitiative: fromPromise<InitiativeDTO1, string>(notImplementedStub),
+    getInitiative: fromPromise<InitiativeDTO, string>(notImplementedStub),
     getIbanList: fromPromise<IbanListDTO>(notImplementedStub),
     getWalletInstruments:
       fromPromise<ReadonlyArray<Wallet>>(notImplementedStub),

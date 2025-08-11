@@ -1,13 +1,13 @@
 import { LabelMini, Tag } from "@pagopa/io-app-design-system";
 import {
-  InitiativeDTO1,
+  InitiativeDTO,
   VoucherStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO1";
+} from "../../../../../definitions/idpay/InitiativeDTO";
 import I18n from "../../../../i18n";
 import { format } from "../../../../utils/dates";
 
 type InitiativeProps = {
-  initiative: InitiativeDTO1;
+  initiative: InitiativeDTO;
 };
 
 export function IdPayCardStatus({ initiative }: InitiativeProps) {

@@ -1,10 +1,10 @@
 import { within } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 import {
-  InitiativeDTO1,
+  InitiativeDTO,
   InitiativeRewardTypeEnum,
   StatusEnum as InitiativeStatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO1";
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import I18n, { setLocale } from "../../../../../i18n";
 import {
   IdPayBeneficiaryDetailsContent,
@@ -197,9 +197,8 @@ const renderComponent = (
       iban: T_IBAN,
       initiativeName: T_INITIATIVE_NAME,
       initiativeRewardType
-    } as InitiativeDTO1,
+    } as InitiativeDTO,
     beneficiaryDetails: {
-      initiativeId: T_INITIATIVE_ID,
       fruitionStartDate: T_FRUITION_START_DATE,
       fruitionEndDate: T_FRUITION_END_DATE,
       rewardRule: {

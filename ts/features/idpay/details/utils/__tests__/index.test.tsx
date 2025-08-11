@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react-native";
 import { IdPayCardStatus } from "..";
-import { InitiativeDTO1 } from "../../../../../../definitions/idpay/InitiativeDTO1";
+import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 
 describe("IDPay screen details utils tests", () => {
   describe("IdPayCardStatus ", () => {
     it("should render ACTIVE status correctly", () => {
-      const initiative: InitiativeDTO1 = {
+      const initiative: InitiativeDTO = {
         initiativeId: "1",
         initiativeName: "Test Initiative",
         organizationName: "Test Organization",
@@ -13,7 +13,7 @@ describe("IDPay screen details utils tests", () => {
         lastCounterUpdate: new Date(),
         status: "REFUNDABLE",
         voucherEndDate: new Date("2023-10-31T00:00:00Z")
-      } as InitiativeDTO1;
+      } as InitiativeDTO;
 
       const { getByTestId } = render(
         <IdPayCardStatus initiative={initiative} />
@@ -23,7 +23,7 @@ describe("IDPay screen details utils tests", () => {
     });
 
     it("should render EXPIRING status correctly", () => {
-      const initiative: InitiativeDTO1 = {
+      const initiative: InitiativeDTO = {
         initiativeId: "2",
         initiativeName: "Test Initiative",
         organizationName: "Test Organization",
@@ -31,7 +31,7 @@ describe("IDPay screen details utils tests", () => {
         nInstr: 1,
         lastCounterUpdate: new Date(),
         status: "REFUNDABLE"
-      } as InitiativeDTO1;
+      } as InitiativeDTO;
 
       const { getByTestId } = render(
         <IdPayCardStatus initiative={initiative} />
@@ -41,7 +41,7 @@ describe("IDPay screen details utils tests", () => {
     });
 
     it("should render EXPIRED status correctly", () => {
-      const initiative: InitiativeDTO1 = {
+      const initiative: InitiativeDTO = {
         initiativeId: "3",
         initiativeName: "Test Initiative",
         organizationName: "Test Organization",
@@ -49,7 +49,7 @@ describe("IDPay screen details utils tests", () => {
         nInstr: 1,
         lastCounterUpdate: new Date(),
         status: "REFUNDABLE"
-      } as InitiativeDTO1;
+      } as InitiativeDTO;
 
       const { getByTestId } = render(
         <IdPayCardStatus initiative={initiative} />
@@ -59,7 +59,7 @@ describe("IDPay screen details utils tests", () => {
     });
 
     it("should render REMOVED status correctly", () => {
-      const initiative: InitiativeDTO1 = {
+      const initiative: InitiativeDTO = {
         initiativeId: "4",
         initiativeName: "Test Initiative",
         organizationName: "Test Organization",
@@ -67,7 +67,7 @@ describe("IDPay screen details utils tests", () => {
         nInstr: 1,
         lastCounterUpdate: new Date(),
         status: "UNSUBSCRIBED"
-      } as InitiativeDTO1;
+      } as InitiativeDTO;
 
       const { getByTestId } = render(
         <IdPayCardStatus initiative={initiative} />

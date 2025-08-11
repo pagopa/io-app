@@ -17,10 +17,10 @@ import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
-  InitiativeDTO1,
+  InitiativeDTO,
   InitiativeRewardTypeEnum,
   VoucherStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO1";
+} from "../../../../../definitions/idpay/InitiativeDTO";
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
@@ -133,7 +133,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   }
 
   const getInitiativeCounters = (
-    initiative: InitiativeDTO1
+    initiative: InitiativeDTO
   ): ReadonlyArray<BonusCardCounter> => {
     const availableAmount = initiative.amountCents || 0;
     const accruedAmount = initiative.accruedCents || 0;
@@ -216,7 +216,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     );
   };
 
-  const getInitiativeDetailsContent = (initiative: InitiativeDTO1) =>
+  const getInitiativeDetailsContent = (initiative: InitiativeDTO) =>
     pipe(
       initiative.initiativeRewardType,
       O.fromNullable,

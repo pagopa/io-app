@@ -8,9 +8,9 @@ import {
 import { IbanListDTO } from "../../../../../../definitions/idpay/IbanListDTO";
 import { IbanPutDTO } from "../../../../../../definitions/idpay/IbanPutDTO";
 import {
-  InitiativeDTO1,
+  InitiativeDTO,
   StatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO1";
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import {
   InstrumentDTO,
   InstrumentTypeEnum
@@ -53,14 +53,14 @@ export const T_NOT_REFUNDABLE_INITIATIVE_DTO = {
   status: StatusEnum.NOT_REFUNDABLE,
   voucherEndDate: new Date("2023-01-25T13:00:25.477Z"),
   nInstr: 1
-} as InitiativeDTO1;
+} as InitiativeDTO;
 
 export const T_REFUNDABLE_INITIATIVE_DTO = {
   initiativeId: T_INITIATIVE_ID,
   status: StatusEnum.REFUNDABLE,
   voucherEndDate: new Date("2023-01-25T13:00:25.477Z"),
   nInstr: 1
-} as InitiativeDTO1;
+} as InitiativeDTO;
 
 export const T_IBAN_LIST = [
   {
@@ -115,7 +115,7 @@ describe("IDPay configuration machine", () => {
       showFailureToast
     },
     actors: {
-      getInitiative: fromPromise<InitiativeDTO1, string>(getInitiative),
+      getInitiative: fromPromise<InitiativeDTO, string>(getInitiative),
       getIbanList: fromPromise<IbanListDTO>(getIbanList),
       enrollIban: fromPromise<
         undefined,

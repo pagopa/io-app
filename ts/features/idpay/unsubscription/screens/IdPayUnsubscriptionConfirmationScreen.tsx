@@ -7,7 +7,7 @@ import {
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useEffect } from "react";
 import { View } from "react-native";
-import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO1";
+import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
