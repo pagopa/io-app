@@ -6,11 +6,9 @@ import {
   fromPromise,
   SimulatedClock
 } from "xstate";
-import { VerifierRequest } from "@pagopa/io-react-native-proximity";
 import { itwProximityMachine } from "../machine/machine";
 import {
   CheckPermissionsInput,
-  ProximityCommunicationLogicActorInput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
   SendErrorResponseActorOutput,
@@ -19,6 +17,7 @@ import {
 import { ProximityEvents } from "../machine/events";
 import { ItwTags } from "../../../machine/tags";
 import { ItwPresentationTags } from "../machine/tags";
+import type { VerifierRequest } from "../utils/itwProximityTypeUtils";
 
 const QR_CODE_STRING = "qr-code-string";
 const CREDENTIAL_TYPE = "org.iso.18013.5.1.mDL";
@@ -46,7 +45,6 @@ const VERIFIER_REQUEST = {
 
 /* eslint-disable sonarjs/no-identical-functions */
 describe("itwProximityMachine", () => {
-  const onInit = jest.fn();
   const setFailure = jest.fn();
   const setQRCodeGenerationError = jest.fn();
   const setHasGivenConsent = jest.fn();
@@ -68,6 +66,8 @@ describe("itwProximityMachine", () => {
   const terminateProximitySession = jest.fn();
   const sendDocuments = jest.fn();
 
+  const hasFailure = jest.fn();
+
   const mockedMachine = itwProximityMachine.provide({
     actions: {
       setFailure,
@@ -82,8 +82,7 @@ describe("itwProximityMachine", () => {
       navigateToSendDocumentsResponseScreen,
       navigateToWallet,
       closeProximity,
-      trackQrCodeGenerationOutcome,
-      onInit: assign(onInit)
+      trackQrCodeGenerationOutcome
     },
     actors: {
       checkPermissions: fromPromise<boolean, CheckPermissionsInput>(
@@ -97,10 +96,9 @@ describe("itwProximityMachine", () => {
       ),
       generateQrCodeString: fromPromise<string, void>(generateQrCodeString),
       closeProximityFlow: fromPromise<boolean, void>(closeProximityFlow),
-      proximityCommunicationLogic: fromCallback<
-        ProximityEvents,
-        ProximityCommunicationLogicActorInput
-      >(proximityCommunicationLogic),
+      proximityCommunicationLogic: fromCallback<ProximityEvents>(
+        proximityCommunicationLogic
+      ),
       terminateProximitySession: fromPromise<SendErrorResponseActorOutput>(
         terminateProximitySession
       ),
@@ -109,7 +107,9 @@ describe("itwProximityMachine", () => {
         SendDocumentsActorInput
       >(sendDocuments)
     },
-    guards: {}
+    guards: {
+      hasFailure
+    }
   });
 
   afterEach(() => {
@@ -122,7 +122,6 @@ describe("itwProximityMachine", () => {
       actor.start();
 
       expect(actor.getSnapshot().value).toStrictEqual("Idle");
-      expect(onInit).toHaveBeenCalled();
     });
   });
 
@@ -469,7 +468,7 @@ describe("itwProximityMachine", () => {
 
       expect(actor.getSnapshot().context.isQRCodeGenerationError).toBe(true);
 
-      actor.send({ type: "close" });
+      actor.send({ type: "dismiss" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual("ClosePresentation")
@@ -542,19 +541,21 @@ describe("itwProximityMachine", () => {
       expect(navigateToSendDocumentsResponseScreen).toHaveBeenCalled();
 
       await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual({
+          DeviceCommunication: {
+            SendingDocuments: "Initial"
+          }
+        })
+      );
+
+      // This event is dispatched when the verifier sends the END (0x02) termination flag after sendDocuments.
+      actor.send({ type: "device-disconnected" });
+
+      await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual("Success")
       );
 
       expect(actor.getSnapshot().tags).toStrictEqual(new Set());
-
-      expect(sendDocuments).toHaveBeenCalledWith(
-        expect.objectContaining({
-          input: expect.objectContaining({
-            credentialsByType: expect.any(Object),
-            verifiedRequest: VERIFIER_REQUEST
-          })
-        })
-      );
 
       expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
       expect(navigateToSendDocumentsResponseScreen).toHaveBeenCalledTimes(1);
@@ -664,6 +665,8 @@ describe("itwProximityMachine", () => {
     });
 
     it("should handle device connection errors and show failure screen", async () => {
+      hasFailure.mockImplementation(() => true);
+
       const actor = createActor(mockedMachine);
       actor.start();
       actor.send({ type: "start" });
@@ -679,6 +682,13 @@ describe("itwProximityMachine", () => {
       const deviceError = new Error("Device connection failed");
       actor.send({ type: "device-error", error: deviceError });
 
+      await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual({
+          DeviceCommunication: "Closing"
+        })
+      );
+
+      expect(terminateProximitySession).toHaveBeenCalled();
       expect(actor.getSnapshot().value).toStrictEqual("Failure");
       expect(navigateToFailureScreen).toHaveBeenCalled();
     });

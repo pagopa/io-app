@@ -71,7 +71,7 @@ const getCredentialActions = (credential: StoredCredential): ReactNode => {
   const docNumber = getCredentialDocumentNumber(parsedCredential);
 
   return {
-    MDL: [
+    mDL: [
       <IPatenteListItemAction key="iPatenteActionMdl" docNumber={docNumber} />
     ],
     EuropeanHealthInsuranceCard: [],

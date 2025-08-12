@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0-rc.2](https://github.com/pagopa/io-app/compare/3.12.0-rc.1...3.12.0-rc.2) (2025-08-07)
+
+## [3.12.0-rc.1](https://github.com/pagopa/io-app/compare/3.12.0-rc.0...3.12.0-rc.1) (2025-08-07)
+
+
+### Features
+
+* [[IOPID-2927](https://pagopa.atlassian.net/browse/IOPID-2927)] Active session login - CieID flow ([#7240](https://github.com/pagopa/io-app/issues/7240)) ([0445751](https://github.com/pagopa/io-app/commit/0445751f68a2ac84fd5578b8031b17a05908ac84)), closes [/github.com/pagopa/io-app/pull/7240/files#diff-fbd0f324277d93d92d9eebf19335d6e6b5d28e45350fbe33ddee4e3de622f4d3](https://github.com/pagopa//github.com/pagopa/io-app/pull/7240/files/issues/diff-fbd0f324277d93d92d9eebf19335d6e6b5d28e45350fbe33ddee4e3de622f4d3) [/github.com/pagopa/io-app/pull/7240/files#diff-0a1b70a0de9f8ab34ff34ab8d4c4c3940aa65644b480abd066bb6bff8bd00d8](https://github.com/pagopa//github.com/pagopa/io-app/pull/7240/files/issues/diff-0a1b70a0de9f8ab34ff34ab8d4c4c3940aa65644b480abd066bb6bff8bd00d8)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2843](https://pagopa.atlassian.net/browse/SIW-2843)] Add optional `operationType` in `obtainCredential` utility function ([#7255](https://github.com/pagopa/io-app/issues/7255)) ([4b1733e](https://github.com/pagopa/io-app/commit/4b1733e600e296fbfe3704a60b5494adafd5d21b))
+* **IT Wallet:** [[SIW-2849](https://pagopa.atlassian.net/browse/SIW-2849)] Extract correct credential type from VCT in remote presentation ([#7257](https://github.com/pagopa/io-app/issues/7257)) ([4148577](https://github.com/pagopa/io-app/commit/41485775d0fbaa147fdaeb03a87fd96313ee078a))
+* [[IOPLT-1301](https://pagopa.atlassian.net/browse/IOPLT-1301),[IOPLT-1172](https://pagopa.atlassian.net/browse/IOPLT-1172)] Fix header background bug after dark mode switch + Improve external keyboard support ([#7264](https://github.com/pagopa/io-app/issues/7264)) ([c2268b4](https://github.com/pagopa/io-app/commit/c2268b4cff05699f757c8f9c2a59bf986f43da04))
+* [[SIW-2853](https://pagopa.atlassian.net/browse/SIW-2853)] Upgraded `io-react-native-wallet-v2` version ([#7263](https://github.com/pagopa/io-app/issues/7263)) ([1c334ca](https://github.com/pagopa/io-app/commit/1c334ca565512578127edb22c2b6e39e5abfcdcc))
+
+## [3.12.0-rc.0](https://github.com/pagopa/io-app/compare/3.11.0-rc.4...3.12.0-rc.0) (2025-08-07)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2815](https://pagopa.atlassian.net/browse/SIW-2815)] Adds "pending upgrade" status for credential cards ([#7234](https://github.com/pagopa/io-app/issues/7234)) ([1193d64](https://github.com/pagopa/io-app/commit/1193d6499b81a6a1788dbc6678dd241def59a263))
+* **IT Wallet:** [[SIW-2817](https://pagopa.atlassian.net/browse/SIW-2817)] Adds revocation CTA in the IT Wallet ID details screen ([#7239](https://github.com/pagopa/io-app/issues/7239)) ([b9a8d58](https://github.com/pagopa/io-app/commit/b9a8d5875241bf2b4746fd2cfba8712f5b8f439d)), closes [1#diff-85e939ce71e71f460fe654ed57a9b92c028315169e4c7338340854568c123669](https://github.com/pagopa/1/issues/diff-85e939ce71e71f460fe654ed57a9b92c028315169e4c7338340854568c123669)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-2821](https://pagopa.atlassian.net/browse/SIW-2821)] Enable remote presentation for IT-Wallet only (PID L3) ([#7242](https://github.com/pagopa/io-app/issues/7242)) ([dbcb339](https://github.com/pagopa/io-app/commit/dbcb339021677abf7dfb4bd71d467ce95c5af9ee))
+* [[IOBP-1940](https://pagopa.atlassian.net/browse/IOBP-1940)] Wrong banner and text layout alignment ([#7251](https://github.com/pagopa/io-app/issues/7251)) ([57188aa](https://github.com/pagopa/io-app/commit/57188aaa1ed57cf927825ebc9a191cabf4281a35))
+* **IT Wallet:** [[SIW-2764](https://pagopa.atlassian.net/browse/SIW-2764)] Update CieID authUrlRegex to support L3 flow ([#7223](https://github.com/pagopa/io-app/issues/7223)) ([8124395](https://github.com/pagopa/io-app/commit/8124395d7d45cb240510e0451fe22c2396eb04e4))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2714](https://pagopa.atlassian.net/browse/SIW-2714)] Update `proximity` feature to use `ISO18013` library ([#7253](https://github.com/pagopa/io-app/issues/7253)) ([21dbfbb](https://github.com/pagopa/io-app/commit/21dbfbbbe48281a041b69a39e481444fd5bc8175)), closes [/github.com/pagopa/io-app/blob/74a3944df164dc58594b76e95ef507034bfc8836/ts/features/itwallet/common/utils/itwCredentialIssuanceUtils.v2.ts#L179](https://github.com/pagopa//github.com/pagopa/io-app/blob/74a3944df164dc58594b76e95ef507034bfc8836/ts/features/itwallet/common/utils/itwCredentialIssuanceUtils.v2.ts/issues/L179)
+
+## [3.11.0-rc.4](https://github.com/pagopa/io-app/compare/3.11.0-rc.3...3.11.0-rc.4) (2025-08-01)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2820](https://pagopa.atlassian.net/browse/SIW-2820)] Adds blocking logic when offline usage limit is reached ([#7244](https://github.com/pagopa/io-app/issues/7244)) ([178f1c1](https://github.com/pagopa/io-app/commit/178f1c1af692666b0e72be1002306a72f8d185d5))
+* [[IOCOM-2517](https://pagopa.atlassian.net/browse/IOCOM-2517)] Update SEND AAR QRCode regex  ([#7247](https://github.com/pagopa/io-app/issues/7247)) ([e46ab0d](https://github.com/pagopa/io-app/commit/e46ab0d765d1a891f7ddf0bb206af732fa810921))
+* **IT Wallet:** [[SIW-2819](https://pagopa.atlassian.net/browse/SIW-2819)] Adds access counter for offline wallet ([#7241](https://github.com/pagopa/io-app/issues/7241)) ([7193f42](https://github.com/pagopa/io-app/commit/7193f42ab9c5ce3b56f1b3fbe3835db1a0fbf7a6))
+
 ## [3.11.0-rc.3](https://github.com/pagopa/io-app/compare/3.11.0-rc.2...3.11.0-rc.3) (2025-07-31)
 
 

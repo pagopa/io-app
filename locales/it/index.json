@@ -839,6 +839,15 @@
         "body": "Per la tua sicurezza, di tanto in tanto dobbiamo verificare la tua identità",
         "linkButtonLabel": "Leggi come fare"
       },
+      "session_corrupted": {
+        "title": "Accedi di nuovo",
+        "body": "Abbiamo avuto un problema tecnico, dobbiamo verificare di nuovo la tua identità",
+        "linkButtonLabel": "Non ricordi come accedere?"
+      },
+      "active_session_login": {
+        "title": "Accedi subito",
+        "body": "Autenticati ora per usare l’app senza interruzioni. Così sarà sempre pronta quando ti serve."
+      },
       "cie_bottom_sheet": {
         "title": "Come vuoi entrare?",
         "module_cie_pin": {
@@ -996,6 +1005,11 @@
         "title": "Non è stato possibile accedere",
         "subtitle": "Al momento non è possibile accedere con il tuo fornitore d’identità SPID. Riprova tra qualche minuto."
       },
+      "not_same_cf": {
+        "title": "Sei proprio tu?",
+        "subtitle": "Hai fatto l’accesso con un’altra identità. Per usare l’app, accedi con le tue credenziali.",
+        "button": "Accedi di nuovo"
+      },
       "generic": {
         "title": "Non è stato possibile accedere",
         "subtitle": "Si è verificato un problema durante l’accesso. Riprova tra qualche minuto."
@@ -1019,7 +1033,8 @@
         "description": "Per accedere, devi avere l'app installata sul tuo dispositivo.",
         "primary_action_label": "Scarica CieID",
         "link_error": "Non siamo riusciti a indirizzarti allo store. Aprilo manualmente e cerca CieID"
-      }
+      },
+      "feature_not_already_implemented": "Questa funzionalità è attualmente in fase di sviluppo e non ancora disponibile."
     },
     "cie": {
       "genericTitle": "Entra con CIE",
@@ -4303,6 +4318,7 @@
           "invalid": "Non valida",
           "verificationExpiring": "Verifica",
           "verificationExpired": "Verifica",
+          "upgradePending": "Da aggiornare",
           "unknown": "Non disponibile"
         },
         "digital": "Versione digitale"
@@ -4867,7 +4883,7 @@
               }
             }
           },
-          "MDL": {
+          "mDL": {
             "expiring": {
               "title": "Patente su IO: documento in scadenza",
               "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nDovrai effettuare una visita medica con un medico abilitato e completare il pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\n - La Patente di guida in scadenza o scaduta \n - Un documento di identità \n - Il Codice fiscale \n - Una foto recente formato tessera"
@@ -4883,12 +4899,6 @@
             "expiring": {
               "title": "Carta europea della disabilità su IO: documento in scadenza",
               "content": "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
-            }
-          },
-          "org.iso.18013.5.1.mDL": {
-            "expiring": {
-              "title": "Patente su IO: documento in scadenza",
-              "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nDovrai effettuare una visita medica con un medico abilitato e completare il pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\n - La Patente di guida in scadenza o scaduta \n - Un documento di identità \n - Il Codice fiscale \n - Una foto recente formato tessera"
             }
           }
         },
@@ -5204,9 +5214,18 @@
           }
         },
         "itWalletId": {
-          "detail": {
-            "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
-            "listItemHeader": "Dati del mio IT-Wallet ID"
+          "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
+          "listItemHeader": "Dati del mio IT-Wallet ID",
+          "cta": {
+            "revoke": "Disattiva IT-Wallet"
+          },
+          "dialog": {
+            "revoke": {
+              "title": "Vuoi davvero disattivare IT-Wallet?",
+              "message": "Eliminerai i documenti che hai aggiunto al Portafoglio.\nSe cambi idea, potrai riattivare IT-Wallet in futuro.",
+              "confirm": "Sì, disattiva",
+              "cancel": "No, torna indietro"
+            }
           }
         }
       },
@@ -5231,7 +5250,7 @@
           "action": "Conferma e continua"
         },
         "loadingScreen": {
-          "title": "Stiamo disattivando Documenti su IO...",
+          "title": "Stiamo disattivando {{name}}...",
           "subtitle": "Attendi qualche secondo"
         },
         "failureScreen": {
@@ -5281,7 +5300,7 @@
           },
           "modal": {
             "title": "Nessuna connessione",
-            "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
+            "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline** per un uso controllato, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
             "footerAction": "Ricarica l'app IO"
           }
         },
@@ -5303,7 +5322,7 @@
           },
           "modal": {
             "title": "Servizi dell’app limitati",
-            "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
+            "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi** per un uso controllato, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
             "footerAction": "Ricarica l'app IO"
           }
         },
@@ -5311,6 +5330,18 @@
           "alert": {
             "content": "Sei di nuovo online. Per usare tutti i servizi ",
             "action": "ricarica l'app IO"
+          }
+        },
+        "gate": {
+          "limitWarning": {
+            "title": "Ultimo accesso a IO offline disponibile",
+            "subtitle": "Per ragioni di sicurezza, al prossimo accesso dovrai avere una connessione a internet per continuare con Documenti su IO. ",
+            "primaryAction": "Ho capito"
+          },
+          "limitReached": {
+            "title": "Hai usato IO offline troppe volte",
+            "subtitle": "Per ragioni di sicurezza, collegati a internet e ricarica l’app per continuare con Documenti su IO e altri servizi in app.",
+            "primaryAction": "Ricarica l’app"
           }
         },
         "action": "Ricarica l'app IO",
@@ -5442,7 +5473,7 @@
           "body": "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
           "validUpTo": "Vale fino a ",
           "expiresIn": "Il codice scade tra ",
-          "saveImageCta": "Salva come immagine",
+          "copyCodeCta": "Copia codice",
           "expired": {
             "header": "Il codice è scaduto",
             "CTA": "Usa un nuovo codice"
@@ -5586,7 +5617,7 @@
       "discountDetails": {
         "bottomSheetOptions": {
           "scanQr": "Inquadra un codice QR",
-          "generateBarcode": "Crea un codice sconto"
+          "generateBarcode": "Genera un codice sconto"
         },
         "authorizeButton": "Usa il bonus",
         "addExpenseButton": "Aggiungi spesa",
@@ -5656,8 +5687,8 @@
             "labels": {
               "business": "Esercente",
               "status": "Stato",
-              "totalAmount": "Importo totale",
-              "idpayAmount": "Importo transazione ID Pay",
+              "totalAmount": "Importo del bene",
+              "idpayAmount": "Sconto riconosciuto",
               "transactionID": "ID transazione"
             }
           }
@@ -5724,8 +5755,8 @@
         },
         "message": {
           "GENERIC": {
-            "title": "Si è verificato un errore imprevisto",
-            "subtitle": "Siamo già a lavoro per risolverlo. Prova più tardi ad accedere all’iniziativa."
+            "title": "Non riusciamo a inviare la richiesta per questa iniziativa",
+            "subtitle": "Siamo già a lavoro per risolvere. \nRiprova tra un po’."
           },
           "INITIATIVE_NOT_FOUND": {
             "title": "Non riusciamo a trovare quest’iniziativa",
@@ -5745,11 +5776,11 @@
           },
           "INITIATIVE_ENDED": {
             "title": "Le iscrizioni sono terminate",
-            "subtitle": "Non è più possibile aderire all’iniziativa. Per maggiori informazioni, contatta l’ente promotore."
+            "subtitle": "Non è più possibile aderire all’iniziativa."
           },
           "BUDGET_EXHAUSTED": {
             "title": "I fondi messi a disposizione dall’ente sono terminati",
-            "subtitle": "Non è più possibile aderire all’iniziativa. Per maggiori informazioni, contatta l’ente promotore."
+            "subtitle": "Non è più possibile aderire all’iniziativa."
           },
           "USER_UNSUBSCRIBED": {
             "title": "Non puoi aderire di nuovo",
@@ -5774,19 +5805,19 @@
         "requestBonus": "Richiedi il bonus"
       },
       "navigation": {
-        "header": "Adesione all'iniziativa"
+        "header": "Verifica dei requisiti"
       },
       "PDNDPrerequisites": {
         "fallbackInitiativeName": "l'iniziativa",
         "prerequisites": {
           "info": {
             "header": "Come avviene la verifica?",
-            "body": "Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione. Comodo, no?",
+            "body": "Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
             "understoodCTA": "Ho capito"
           }
         },
-        "title": "Possiedi i seguenti requisiti?",
-        "subtitle": "Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}.",
+        "title": "Per continuare dobbiamo verificare questi dati",
+        "subtitle": "Per accedere all’iniziativa {{service}}, verificheremo con alcuni enti se hai i requisiti.",
         "code": {
           "ISEE": "ISEE",
           "BIRTHDATE": "Data di nascita",
@@ -5811,12 +5842,12 @@
         "emptyValueError": "Scegli un’opzione per continuare"
       },
       "boolPrerequisites": {
-        "header": "Per aderire, dichiari di:",
-        "emptyValueError": "Scegli un’opzione per continuare"
+        "header": "Dichiaro che:",
+        "emptyValueError": "Seleziona un’opzione per continuare"
       },
       "enableMessages": {
-        "title": "Attiva i messaggi",
-        "subtitle": "Attiva la possibilità di contattarti in app per ricevere aggiornamenti sul {{initiativeName}}. Questo passaggio è necessario per procedere con la richiesta.",
+        "title": "Attiva la possibilità di contattarti in app",
+        "subtitle": "Questo passaggio è necessario per procedere con la richiesta. Ti permetterà di ricevere gli aggiornamenti sul {{initiativeName}}.",
         "confirmAction": "Ok, attiva",
         "cancelAction": "Annulla"
       },
@@ -6002,19 +6033,18 @@
     "payment": {
       "authorization": {
         "header": "Confermi l’operazione?",
-        "toAuth": "Da autorizzare",
-        "amount": "Importo del bene",
+        "discountedAmount": "Importo scontato",
+        "amount": "Importo totale",
         "businessName": "Richiesto da",
-        "dateTime": "Data e Ora",
-        "infoDivider": "Informazioni sull’iniziativa",
+        "dateTime": "Data e ora",
         "initiativeName": "Iniziativa",
         "availableAmount": "Credito disponibile",
-        "error": "C’è stato un errore, riprova"
+        "error": "C’è stato un errore, riprova",
+        "deny": "Annulla l'operazione"
       },
       "result": {
         "success": {
-          "title": "Operazione autorizzata con successo!",
-          "body": "Potrai controllare i dettagli dallo storico delle tue operazioni."
+          "title": "Fatto!"
         },
         "cancelled": {
           "title": "L’operazione è stata annullata"
@@ -6060,7 +6090,7 @@
       "manualInput": {
         "title": "Autorizza una transazione",
         "subtitle": "Inserisci il codice di 8 caratteri riportato sotto al codice QR.",
-        "input": "Codice Transazione",
+        "input": "Codice sconto",
         "button": "Continua"
       }
     }
