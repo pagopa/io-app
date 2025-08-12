@@ -1,11 +1,9 @@
 import { generate } from "@pagopa/io-react-native-crypto";
 import {
   createCryptoContextFor,
-  Credential,
-  Errors
+  Credential
 } from "@pagopa/io-react-native-wallet-v2";
 import { v4 as uuidv4 } from "uuid";
-import { isIssuerResponseError } from "@pagopa/io-react-native-wallet-v2/src/utils/errors";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
@@ -13,6 +11,7 @@ import {
 } from "./itwCryptoContextUtils";
 import { RequestObject, StoredCredential } from "./itwTypesUtils";
 import { Env } from "./environment";
+import { enrichErrorWithMetadata } from "./itwFailureUtils";
 
 export type RequestCredentialParams = {
   env: Env;
@@ -170,7 +169,11 @@ export const obtainCredential = async ({
               credentialCryptoContext
             },
             operationType
-          ).catch(enrichIssuerResponseError(credential_configuration_id));
+          ).catch(
+            enrichErrorWithMetadata({
+              credentialId: credential_configuration_id
+            })
+          );
 
         // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
         const { parsedCredential, issuedAt, expiration } =
@@ -224,38 +227,3 @@ const getCredentialConfigurationIds = (
 
   return supportedConfigurationsByScope[credentialType] || [];
 };
-
-// Extend `IssuerResponseError` with `credentialId`
-// to dynamically retrieve the error from `issuerConfig`.
-// This workaround ensures we can access the failing credential ID
-// during multi-credential issuing.
-const enrichIssuerResponseError = (credentialId: string) => (e: unknown) => {
-  if (
-    isIssuerResponseError(
-      e,
-      Errors.IssuerResponseErrorCodes.CredentialInvalidStatus
-    )
-  ) {
-    throw new EnrichedIssuerResponseError({
-      credentialId,
-      ...e
-    });
-  }
-
-  throw e;
-};
-
-type EnrichedIssuerResponseErrorProps = ConstructorParameters<
-  typeof Errors.IssuerResponseError
->[number] & { credentialId: string };
-export class EnrichedIssuerResponseError extends Errors.IssuerResponseError {
-  credentialId?: string;
-
-  constructor({
-    credentialId,
-    ...parentProps
-  }: EnrichedIssuerResponseErrorProps) {
-    super(parentProps);
-    this.credentialId = credentialId;
-  }
-}
