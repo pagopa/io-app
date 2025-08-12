@@ -40,7 +40,7 @@ export type KoState = {
 /**
  * This is the list of credentials that are tracked in MixPanel
  * ITW_ID_V2: PersonIdentificationData
- * ITW_PG_V2: MDL
+ * ITW_PG_V2: mDL
  * ITW_CED_V2: EuropeanDisabilityCard
  * ITW_TS_V2: EuropeanHealthInsuranceCard
  */
@@ -66,13 +66,13 @@ type ItwFailureCause = "CredentialIssuer" | "WalletProvider";
 /**
  * This map is used to map the credential type to the MixPanel credential
  * ITW_ID_V2: PersonIdentificationData
- * ITW_PG_V2: MDL
+ * ITW_PG_V2: mDL
  * ITW_CED_V2: EuropeanDisabilityCard
  * ITW_TS_V2: EuropeanHealthInsuranceCard
  */
 export const CREDENTIALS_MAP: Record<string, MixPanelCredential> = {
   PersonIdentificationData: "ITW_ID_V2",
-  MDL: "ITW_PG_V2",
+  mDL: "ITW_PG_V2",
   EuropeanDisabilityCard: "ITW_CED_V2",
   EuropeanHealthInsuranceCard: "ITW_TS_V2"
 };

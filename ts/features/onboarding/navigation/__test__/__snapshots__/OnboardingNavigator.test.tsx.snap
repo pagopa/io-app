@@ -445,33 +445,65 @@ exports[`OnboardingNavigator renders all routes (snapshot) 1`] = `
                                     </Text>
                                     to monitor how the app is working and to make the services we offer better.
                                   </Text>
-                                  <Text
-                                    accessibilityElementsHidden={false}
+                                  <View
                                     accessibilityRole="link"
-                                    accessible={true}
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    importantForAccessibility="yes"
-                                    maxFontSizeMultiplier={1.5}
-                                    onPress={[Function]}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": undefined,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
                                     }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                   >
-                                    Why we collect data
-                                  </Text>
+                                    <Text
+                                      accessibilityElementsHidden={false}
+                                      accessibilityRole="link"
+                                      accessible={true}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      importantForAccessibility="yes"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {
+                                            "textDecorationLine": "underline",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Why we collect data
+                                    </Text>
+                                  </View>
                                 </View>
                               </View>
                               <Modal
@@ -747,33 +779,65 @@ We use tools that allow us to record data on how you use the app, to provide you
                                     </Text>
                                     your data.
                                   </Text>
-                                  <Text
-                                    accessibilityElementsHidden={false}
+                                  <View
                                     accessibilityRole="link"
-                                    accessible={true}
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    importantForAccessibility="yes"
-                                    maxFontSizeMultiplier={1.5}
-                                    onPress={[Function]}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": undefined,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
                                     }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                   >
-                                    How we keep data safe
-                                  </Text>
+                                    <Text
+                                      accessibilityElementsHidden={false}
+                                      accessibilityRole="link"
+                                      accessible={true}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      importantForAccessibility="yes"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {
+                                            "textDecorationLine": "underline",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      How we keep data safe
+                                    </Text>
+                                  </View>
                                 </View>
                               </View>
                               <View
@@ -900,33 +964,65 @@ We use tools that allow us to record data on how you use the app, to provide you
                                       in a transparent and secure way.
                                     </Text>
                                   </Text>
-                                  <Text
-                                    accessibilityElementsHidden={false}
+                                  <View
                                     accessibilityRole="link"
-                                    accessible={true}
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    importantForAccessibility="yes"
-                                    maxFontSizeMultiplier={1.5}
-                                    onPress={[Function]}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": undefined,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
                                     }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                   >
-                                    Who are the suppliers
-                                  </Text>
+                                    <Text
+                                      accessibilityElementsHidden={false}
+                                      accessibilityRole="link"
+                                      accessible={true}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      importantForAccessibility="yes"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {
+                                            "textDecorationLine": "underline",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Who are the suppliers
+                                    </Text>
+                                  </View>
                                 </View>
                               </View>
                               <View
@@ -956,31 +1052,63 @@ We use tools that allow us to record data on how you use the app, to provide you
                                 }
                               >
                                 For more information, please read 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
-                                  testID="additionalInformation"
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  the Privacy Policy and Terms and Conditions
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                    testID="additionalInformation"
+                                  >
+                                    the Privacy Policy and Terms and Conditions
+                                  </Text>
+                                </View>
                               </Text>
                               <View
                                 style={
@@ -1655,9 +1783,6 @@ We use tools that allow us to record data on how you use the app, to provide you
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,

@@ -1,10 +1,10 @@
 import {
   Divider,
-  H2,
+  H3,
   H6,
   IOSkeleton,
-  ListItemHeader,
   ListItemInfo,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
@@ -26,8 +26,8 @@ import {
 } from "../../common/utils/strings";
 import { IdPayPaymentMachineContext } from "../machine/provider";
 import {
+  areButtonsDisabledSelector,
   isAuthorizingSelector,
-  isCancellingSelector,
   transactionDataSelector
 } from "../machine/selectors";
 import { IdPayPaymentParamsList } from "../navigation/params";
@@ -58,13 +58,20 @@ const IDPayPaymentAuthorizationScreen = () => {
   const transactionData = useSelector(transactionDataSelector);
   const isLoading = useSelector(isLoadingSelector);
   const isAuthorizing = useSelector(isAuthorizingSelector);
-  const isCancelling = useSelector(isCancellingSelector);
+  const areButtonsDisabled = useSelector(areButtonsDisabledSelector);
+  const showSkeletons = isLoading && !transactionData;
 
   const handleCancel = () => {
+    if (areButtonsDisabled) {
+      return;
+    }
     machine.send({ type: "close" });
   };
 
   const handleConfirm = () => {
+    if (areButtonsDisabled) {
+      return;
+    }
     dispatch(
       identificationRequest(
         false,
@@ -82,7 +89,7 @@ const IDPayPaymentAuthorizationScreen = () => {
   };
 
   const renderContent = () => {
-    if (!isLoading && O.isSome(transactionData)) {
+    if (O.isSome(transactionData) && !showSkeletons) {
       return <AuthorizationScreenContent data={transactionData.value} />;
     }
     return <AuthorizationScreenSkeleton />;
@@ -101,12 +108,13 @@ const IDPayPaymentAuthorizationScreen = () => {
         primary: {
           label: I18n.t("global.buttons.confirm"),
           onPress: handleConfirm,
-          disabled: isLoading || isAuthorizing
+          disabled: areButtonsDisabled,
+          loading: isLoading || isAuthorizing
         },
         secondary: {
-          label: I18n.t("global.buttons.deny"),
+          label: I18n.t("idpay.payment.authorization.deny"),
           onPress: handleCancel,
-          disabled: isLoading || isCancelling
+          disabled: areButtonsDisabled
         }
       }}
       includeContentMargins
@@ -120,58 +128,62 @@ const AuthorizationScreenContent = ({
   data
 }: {
   data: AuthPaymentResponseDTO;
-}) => (
-  <>
-    <Divider />
-    <VSpacer size={16} />
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center"
-      }}
-    >
-      <H6>{I18n.t("idpay.payment.authorization.toAuth")}</H6>
-      <H2>{formatNumberCurrencyCentsOrDefault(data.rewardCents)}</H2>
-    </View>
-    <VSpacer size={16} />
-    <Divider />
-    <ListItemInfo
-      label={I18n.t("idpay.payment.authorization.amount")}
-      value={formatNumberCurrencyCents(data.amountCents)}
-      accessibilityLabel={I18n.t("idpay.payment.authorization.amount")}
-    />
-    <Divider />
-    <ListItemInfo
-      label={I18n.t("idpay.payment.authorization.businessName")}
-      value={data.businessName || "-"}
-      accessibilityLabel={I18n.t("idpay.payment.authorization.businessName")}
-    />
-    <Divider />
-    <ListItemInfo
-      label={I18n.t("idpay.payment.authorization.dateTime")}
-      value={formatDateOrDefault(data.trxDate)}
-      accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
-    />
-
-    <VSpacer size={24} />
-    <ListItemHeader
-      label={I18n.t("idpay.payment.authorization.infoDivider")}
-      iconName="initiatives"
-    />
-    <ListItemInfo
-      label={I18n.t("idpay.payment.authorization.initiativeName")}
-      value={data.initiativeName || "-"}
-      accessibilityLabel={I18n.t("idpay.payment.authorization.initiativeName")}
-    />
-    <Divider />
-    <ListItemInfo
-      label={I18n.t("idpay.payment.authorization.availableAmount")}
-      value={formatNumberCurrencyCentsOrDefault(data.residualBudgetCents)}
-      accessibilityLabel={I18n.t("idpay.payment.authorization.availableAmount")}
-    />
-  </>
-);
+}) => {
+  const theme = useIOTheme();
+  return (
+    <>
+      <VSpacer size={16} />
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center"
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}
+        >
+          <H6 color={theme["textBody-tertiary"]}>
+            {I18n.t("idpay.payment.authorization.discountedAmount")}
+          </H6>
+          <H3>{formatNumberCurrencyCentsOrDefault(data.rewardCents)}</H3>
+        </View>
+      </View>
+      <VSpacer size={16} />
+      <Divider />
+      <ListItemInfo
+        label={I18n.t("idpay.payment.authorization.amount")}
+        value={formatNumberCurrencyCents(data.amountCents)}
+        accessibilityLabel={I18n.t("idpay.payment.authorization.amount")}
+      />
+      <Divider />
+      <ListItemInfo
+        label={I18n.t("idpay.payment.authorization.businessName")}
+        value={data.businessName || "-"}
+        accessibilityLabel={I18n.t("idpay.payment.authorization.businessName")}
+      />
+      <Divider />
+      <ListItemInfo
+        label={I18n.t("idpay.payment.authorization.dateTime")}
+        value={formatDateOrDefault(data.trxDate)}
+        accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
+      />
+      <Divider />
+      <ListItemInfo
+        label={I18n.t("idpay.payment.authorization.initiativeName")}
+        value={data.initiativeName || "-"}
+        accessibilityLabel={I18n.t(
+          "idpay.payment.authorization.initiativeName"
+        )}
+      />
+    </>
+  );
+};
 
 const SmallSkeleton = () => (
   <IOSkeleton shape="rectangle" width={178} height={24} radius={8} />
@@ -209,22 +221,11 @@ const AuthorizationScreenSkeleton = () => (
       value={<SmallSkeleton />}
       accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
     />
-    <VSpacer size={24} />
-    <ListItemHeader
-      label={I18n.t("idpay.payment.authorization.infoDivider")}
-      iconName="initiatives"
-    />
-    <VSpacer size={16} />
+    <Divider />
     <ListItemInfo
       label={I18n.t("idpay.payment.authorization.initiativeName")}
       value={<SmallSkeleton />}
       accessibilityLabel={I18n.t("idpay.payment.authorization.initiativeName")}
-    />
-    <Divider />
-    <ListItemInfo
-      label={I18n.t("idpay.payment.authorization.availableAmount")}
-      value={<SmallSkeleton />}
-      accessibilityLabel={I18n.t("idpay.payment.authorization.availableAmount")}
     />
   </>
 );
