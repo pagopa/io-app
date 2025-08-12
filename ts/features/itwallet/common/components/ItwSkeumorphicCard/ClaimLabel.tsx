@@ -1,8 +1,7 @@
 import {
   IOColors,
   IOFontWeight,
-  makeFontStyleObject,
-  useIOTheme
+  makeFontStyleObject
 } from "@pagopa/io-app-design-system";
 import { FunctionComponent, PropsWithChildren } from "react";
 import { Text, TextStyle, useWindowDimensions } from "react-native";
@@ -27,7 +26,6 @@ export const ClaimLabel: FunctionComponent<
   hidden,
   ...props
 }) => {
-  const theme = useIOTheme();
   const { width } = useWindowDimensions();
 
   // 360 is the width of the screen in the smallest device
