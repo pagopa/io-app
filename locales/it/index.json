@@ -4839,7 +4839,10 @@
           "statusAction": "Cosa posso fare?",
           "mdl": {
             "content": "Puoi usare la tua Patente su IO solo in Italia esclusivamente per dimostrare l'abilitazione alla guida in caso di controlli delle Forze dell'ordine.",
-            "contentL3": "La tua Patente su IO ha lo stesso valore legale del documento fisico, solo sul territorio italiano."
+            "contentL3": "La tua Patente su IO ha lo stesso valore legale del documento fisico, solo sul territorio italiano.",
+            "invalid": {
+              "cta": "Rimuovi documento dal Portafoglio"
+            }
           },
           "ehc": {
             "content": "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
