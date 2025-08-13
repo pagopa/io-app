@@ -19,7 +19,6 @@ import { ItwCiePreparationCardScreen } from "../identification/cie/screens/ItwCi
 import { ItwCiePreparationPinScreen } from "../identification/cie/screens/ItwCiePreparationPinScreen.tsx";
 import { ItwIdentificationCieWarningScreen } from "../identification/cie/screens/ItwIdentificationCieWarningScreen.tsx";
 import ItwCieIdLoginScreen from "../identification/cieId/screens/ItwCieIdLoginScreen.tsx";
-import { ItwCieCardReaderL2Screen } from "../identification/cie/screens/ItwCieCardReaderL2Screen.tsx";
 import { ItwCieExpiredOrInvalidScreen } from "../identification/cie/screens/ItwCieExpiredOrInvalidScreen.tsx";
 import { ItwCieUnexpectedErrorScreen } from "../identification/cie/screens/ItwCieUnexpectedErrorScreen.tsx";
 import { ItwCieWrongCardScreen } from "../identification/cie/screens/ItwCieWrongCardScreen.tsx";
@@ -170,12 +169,7 @@ const InnerNavigator = () => {
         component={ItwCiePinScreen}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L2}
-        component={ItwCieCardReaderL2Screen}
-        options={hiddenHeader}
-      />
-      <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L3}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN}
         component={ItwCieCardReaderL3Screen}
         options={hiddenHeader}
       />
