@@ -54,8 +54,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToCiePreparationScreen: notImplemented,
     navigateToCiePinPreparationScreen: notImplemented,
     navigateToCiePinScreen: notImplemented,
-    navigateToCieReadCardL2Screen: notImplemented,
-    navigateToCieReadCardL3Screen: notImplemented,
+    navigateToCieReadCardScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
     navigateToCieWarningScreen: notImplemented,
@@ -668,17 +667,10 @@ export const itwEidIssuanceMachine = setup({
                 "This state handles the CIE preparation screen, where the user is informed about the CIE card",
               entry: "navigateToCiePreparationScreen",
               on: {
-                next: [
-                  {
-                    guard: "isL3FeaturesEnabled",
-                    actions: "navigateToCieReadCardL3Screen",
-                    target: "StartingCieAuthFlow"
-                  },
-                  {
-                    actions: "navigateToCieReadCardL2Screen",
-                    target: "StartingCieAuthFlow"
-                  }
-                ],
+                next: {
+                  actions: "navigateToCieReadCardScreen",
+                  target: "StartingCieAuthFlow"
+                },
                 "go-to-cie-warning": {
                   target: "CieWarning.PreparationCie"
                 },

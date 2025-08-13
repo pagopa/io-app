@@ -1,20 +1,20 @@
-import { memo, useCallback, useMemo, useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { WebView, WebViewNavigation } from "react-native-webview";
 import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-import { selectAuthUrlOption } from "../../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import I18n from "../../../../../i18n";
-import { originSchemasWhiteList } from "../../../../authentication/common/utils/originSchemasWhiteList";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { memo, useCallback, useMemo, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { WebView, WebViewNavigation } from "react-native-webview";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
-import { useCieIdApp } from "../../hooks/useCieIdApp";
-import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
+import { originSchemasWhiteList } from "../../../../authentication/common/utils/originSchemasWhiteList";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { getEnv } from "../../../common/utils/environment";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { selectAuthUrlOption } from "../../../machine/eid/selectors";
+import { useCieIdApp } from "../hooks/useCieIdApp";
 
 // To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
 const defaultUserAgent =

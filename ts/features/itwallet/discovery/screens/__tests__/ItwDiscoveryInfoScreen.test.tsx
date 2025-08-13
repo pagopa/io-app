@@ -3,7 +3,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import * as itwLifecycleSelectors from "../../../lifecycle/store/selectors";
-import * as itwIdentificationSelectors from "../../../identification/store/selectors";
+import * as itwIdentificationSelectors from "../../../identification/common/store/selectors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
