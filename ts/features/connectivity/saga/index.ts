@@ -8,7 +8,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../store/reducers/types";
 import { ConnectivityClient, createConnectivityClient } from "../api/client";
-import { apiUrlPrefix } from "../../../config";
+// import { apiUrlPrefix } from "../../../config";
 
 const CONNECTIVITY_STATUS_LOAD_INTERVAL = (30 * 1000) as Millisecond;
 const CONNECTIVITY_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
@@ -71,6 +71,9 @@ export function* connectionStatusSaga(
 }
 
 export default function* root(): IterableIterator<ReduxSagaEffect> {
-  const client = yield* call(createConnectivityClient, apiUrlPrefix);
+  const client = yield* call(
+    createConnectivityClient,
+    "http://192.168.0.146:3000"
+  );
   yield* fork(connectionStatusSaga, client);
 }

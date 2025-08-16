@@ -18,7 +18,7 @@ import {
   useSharedValue
 } from "react-native-reanimated";
 import { IOScrollView } from "../components/ui/IOScrollView";
-import { useStatusAlertProps } from "./useStatusAlertProps";
+import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
 
 const GRADIENT_OPACITY_SCROLL_TRIGGER = 0.85;
 const EXTRA_COLOR_STOPS = 20;
@@ -39,7 +39,7 @@ export const useScrollHeaderAnimation = ({
   const scrollPositionAbsolute = useSharedValue(0);
   const scrollPositionPercentage = useSharedValue(0);
   const theme = useIOTheme();
-  const alertProps = useStatusAlertProps();
+  const { isAlertVisible } = useIOAlertVisible();
   const navigation = useNavigation();
 
   const HEADER_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
@@ -79,11 +79,11 @@ export const useScrollHeaderAnimation = ({
   );
 
   const ignoreSafeAreaMargin = useMemo(() => {
-    if (alertProps !== undefined) {
+    if (isAlertVisible !== undefined) {
       return true;
     }
     return headerConfig?.ignoreSafeAreaMargin;
-  }, [headerConfig?.ignoreSafeAreaMargin, alertProps]);
+  }, [headerConfig?.ignoreSafeAreaMargin, isAlertVisible]);
 
   useLayoutEffect(() => {
     const scrollValues: IOViewHeaderScrollValues = {
