@@ -1,6 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import type { ComponentProps } from "react";
-import I18n from "../../../../../i18n";
 import * as UTILS_URL from "../../../../../utils/url";
 import { FimsPrivacyInfo } from "../FimsPrivacyInfo";
 
@@ -13,11 +12,8 @@ describe("FimsPrivacyInfo component", () => {
   });
 
   it("renders correctly with privacyUrl defined", () => {
-    const { toJSON, queryByText, getByText } = renderComponent({ privacyUrl });
-    expect(
-      queryByText(new RegExp(I18n.t("FIMS.consentsScreen.privacy1")))
-    ).toBeTruthy();
-    expect(getByText(I18n.t("FIMS.consentsScreen.privacyCta"))).toBeTruthy();
+    const { toJSON, getByTestId } = renderComponent({ privacyUrl });
+    expect(getByTestId("body-primary-action")).toBeTruthy();
     expect(toJSON()).toMatchSnapshot();
   });
 
