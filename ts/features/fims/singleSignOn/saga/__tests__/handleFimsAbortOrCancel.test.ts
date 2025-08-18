@@ -108,7 +108,7 @@ describe("handleFimsAbortOrCancel", () => {
       .isDone();
   });
 
-  it("should skip abort call if oidcProviderDomain or abortUrl are missing", () => {
+  it("should skip abort call if oidcProviderDomain and abortUrl are both missing", () => {
     testSaga(handleFimsAbortOrCancel)
       .next()
       .call(cancelAllRunningRequests)
@@ -116,6 +116,48 @@ describe("handleFimsAbortOrCancel", () => {
       .next()
       .select(oidcProviderDomainSelector)
       .next(undefined)
+
+      .select(fimsPartialAbortUrl)
+      .next(undefined)
+
+      .call(handleFimsResourcesDeallocation)
+
+      .next()
+      .call(handleFimsBackNavigation)
+
+      .next()
+      .isDone();
+  });
+
+  it("should skip abort call if oidcProviderDomain is missing but abortUrl is defined", () => {
+    testSaga(handleFimsAbortOrCancel)
+      .next()
+      .call(cancelAllRunningRequests)
+
+      .next()
+      .select(oidcProviderDomainSelector)
+      .next(undefined)
+
+      .select(fimsPartialAbortUrl)
+      .next(mockedPartialAbortUrl)
+
+      .call(handleFimsResourcesDeallocation)
+
+      .next()
+      .call(handleFimsBackNavigation)
+
+      .next()
+      .isDone();
+  });
+
+  it("should skip abort call if abortUrl is missing but oidcProviderDomain is defined", () => {
+    testSaga(handleFimsAbortOrCancel)
+      .next()
+      .call(cancelAllRunningRequests)
+
+      .next()
+      .select(oidcProviderDomainSelector)
+      .next(mockedOidcProviderDomain)
 
       .select(fimsPartialAbortUrl)
       .next(undefined)
