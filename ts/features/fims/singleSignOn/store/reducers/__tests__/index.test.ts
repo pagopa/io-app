@@ -70,7 +70,7 @@ describe("singleSignOn reducer", () => {
     expect(fimsSSOState).toEqual(INITIAL_STATE);
   });
 
-  describe("singleSignOnReducer, receiving 'startApplicationInitialization'", () => {
+  describe("Receiving 'startApplicationInitialization'", () => {
     const startApplicationInitializationAction =
       startApplicationInitialization();
 
@@ -112,7 +112,7 @@ describe("singleSignOn reducer", () => {
     );
   });
 
-  describe("singleSignOnReducer, receiving 'fimsGetConsentsListAction.request'", () => {
+  describe("Receiving 'fimsGetConsentsListAction.request'", () => {
     const consentsResponse = {} as Consent;
     const ctaText = "Click here";
     const ctaUrl = "https://an.url/consent";
@@ -153,7 +153,7 @@ describe("singleSignOn reducer", () => {
     );
   });
 
-  describe("singleSignOnReducer, receiving 'fimsGetConsentsListAction.success'", () => {
+  describe("Receiving 'fimsGetConsentsListAction.success'", () => {
     const relyingPartyServiceId = "01K1E048EYQ7212T55N82S6GVM" as ServiceId;
     const consent: Consent = {
       _links: {
@@ -195,7 +195,7 @@ describe("singleSignOn reducer", () => {
     );
   });
 
-  describe("singleSignOnReducer, receiving 'fimsAcceptConsentsAction'", () => {
+  describe("Receiving 'fimsAcceptConsentsAction'", () => {
     ["https://an.url/acceptUrl", undefined].forEach(acceptUrl =>
       currentFlowStateTags.forEach(currentFlowState =>
         it(`should handle fimsAcceptConsentsAction with acceptUrl='${acceptUrl}', currentFlowState='${currentFlowState}'`, () => {
@@ -218,7 +218,7 @@ describe("singleSignOn reducer", () => {
     );
   });
 
-  describe("singleSignOnReducer, receiving 'fimsSignAndRetrieveInAppBrowserUrlAction.request'", () => {
+  describe("Receiving 'fimsSignAndRetrieveInAppBrowserUrlAction.request'", () => {
     currentFlowStateTags.forEach(currentFlowState =>
       it(`should handle fimsSignAndRetrieveInAppBrowserUrlAction.request with currentFlowState='${currentFlowState}'`, () => {
         const actionPayload: HttpClientSuccessResponse = {
@@ -250,7 +250,7 @@ describe("singleSignOn reducer", () => {
     );
   });
 
-  describe("singleSignOnReducer, receiving 'fimsSignAndRetrieveInAppBrowserUrlAction.success'", () => {
+  describe("Receiving 'fimsSignAndRetrieveInAppBrowserUrlAction.success'", () => {
     const relyingPartyServiceId = "01K1E048EYQ7212T55N82S6GVM" as ServiceId;
     const consent: Consent = {
       _links: {
@@ -289,7 +289,7 @@ describe("singleSignOn reducer", () => {
     );
   });
 
-  describe(`singleSignOnReducer, receiving 'fimsGetConsentsListAction.failure' or 'fimsAcceptConsentsFailureAction' or 'fimsSignAndRetrieveInAppBrowserUrlAction.failure'`, () => {
+  describe(` receiving 'fimsGetConsentsListAction.failure' or 'fimsAcceptConsentsFailureAction' or 'fimsSignAndRetrieveInAppBrowserUrlAction.failure'`, () => {
     const failureActions: ReadonlyArray<
       [string, (payload: FimsErrorStateType) => Action]
     > = [
@@ -330,7 +330,7 @@ describe("singleSignOn reducer", () => {
     });
   });
 
-  describe("singleSignOnReducer, receiving 'fimsCancelOrAbortAction'", () => {
+  describe("Receiving 'fimsCancelOrAbortAction'", () => {
     afterEach(() => {
       jest.clearAllMocks();
     });
