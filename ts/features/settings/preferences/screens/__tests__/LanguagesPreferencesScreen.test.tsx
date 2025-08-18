@@ -24,7 +24,10 @@ jest.mock(
     ...jest.requireActual(
       "../../../../../components/StatusMessages/IOAlertVisibleContext"
     ),
-    useIOAlertVisible: jest.fn()
+    useIOAlertVisible: () => ({
+      isAlertVisible: false,
+      setAlertVisible: jest.fn()
+    })
   })
 );
 
