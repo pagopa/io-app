@@ -16,7 +16,7 @@ import {
   handleFimsResourcesDeallocation
 } from "../sagaUtils";
 
-const abortTimeoutMillisecondsGenerator = () => 8000;
+const abortTimeoutMillisecondsGenerator: number = 8000;
 
 describe("handleFimsAbortOrCancel", () => {
   const mockedOidcProviderDomain = "https://provider.com";
@@ -55,7 +55,7 @@ describe("handleFimsAbortOrCancel", () => {
         url: mockedAbsoluteUrl,
         verb: "post",
         followRedirects: true,
-        timeoutMilliseconds: abortTimeoutMillisecondsGenerator()
+        timeoutMilliseconds: abortTimeoutMillisecondsGenerator
       })
       .next(failureResponse)
 
@@ -159,7 +159,7 @@ describe("handleFimsAbortOrCancel", () => {
         url: mockedAbsoluteUrl,
         verb: "post",
         followRedirects: true,
-        timeoutMilliseconds: abortTimeoutMillisecondsGenerator()
+        timeoutMilliseconds: abortTimeoutMillisecondsGenerator
       })
       .next(successResponse)
 
@@ -170,9 +170,5 @@ describe("handleFimsAbortOrCancel", () => {
 
       .next()
       .isDone();
-  });
-
-  it("should return the expected value from abortTimeoutMillisecondsGenerator", () => {
-    expect(abortTimeoutMillisecondsGenerator()).toBe(8000);
   });
 });
