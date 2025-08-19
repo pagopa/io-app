@@ -4,13 +4,13 @@ import i18nJS from "i18n-js";
 import i18next, { InitOptions } from "i18next";
 import { initReactI18next } from "react-i18next";
 
-import { PreferredLanguageEnum } from "../definitions/auth/PreferredLanguage";
 import { BackendStatusMessage } from "../definitions/content/BackendStatusMessage";
 import { Locales } from "../locales/locales";
 
 import it from "../locales/it/index.json";
 import en from "../locales/en/index.json";
 import de from "../locales/de/index.json";
+import { PreferredLanguageEnum } from "../definitions/session_manager/PreferredLanguage";
 
 const resources = {
   it: {
