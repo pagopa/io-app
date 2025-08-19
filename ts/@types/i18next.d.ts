@@ -1,9 +1,7 @@
-import itJson from "../../locales/it/index.json";
-
+import Resources from "./resources";
 declare module "i18next" {
   interface CustomTypeOptions {
-    resources: {
-      translation: typeof itJson;
-    };
+    defaultNS: "index";
+    resources: Resources;
   }
 }

@@ -42,7 +42,9 @@ export const IngressScreen = () => {
   );
 
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
-  const [contentTitle, setContentTitle] = useState(I18n.t("startup.title"));
+  const [contentTitle, setContentTitle] = useState<string>(
+    I18n.t("startup.title")
+  );
 
   useEffect(() => {
     // Since the screen is shown for a very short time,

@@ -87,7 +87,7 @@ export function convertLocalCalendarName(calendarTitle: string) {
     O.fromNullable,
     O.fold(
       () => calendarTitle,
-      s => I18n.t(s)
+      s => I18n.t(s as any)
     )
   );
 }

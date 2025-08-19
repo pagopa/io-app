@@ -85,8 +85,8 @@ export const NotificationPreviewSample = ({
       <Icon size={24} name="productIOAppBlueBg" />
       <HSpacer />
       <View style={{ flex: 1 }}>
-        <H6>{I18n.t(titleKey)}</H6>
-        <BodySmall weight="Regular">{I18n.t(messageKey)}</BodySmall>
+        <H6>{I18n.t(titleKey as any)}</H6>
+        <BodySmall weight="Regular">{I18n.t(messageKey as any)}</BodySmall>
       </View>
     </View>
   );

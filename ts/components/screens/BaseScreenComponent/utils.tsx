@@ -44,8 +44,8 @@ export const getContextualHelpConfig = (
     ? { body: contextualHelp.body, title: contextualHelp.title }
     : contextualHelpMarkdown
     ? {
-        body: I18n.t(contextualHelpMarkdown.body),
-        title: I18n.t(contextualHelpMarkdown.title)
+        body: I18n.t(contextualHelpMarkdown.body as any),
+        title: I18n.t(contextualHelpMarkdown.title as any)
       }
     : undefined;
 

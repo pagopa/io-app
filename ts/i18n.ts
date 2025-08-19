@@ -14,13 +14,13 @@ import de from "../locales/de/index.json";
 
 const resources = {
   it: {
-    translation: it
+    index: it
   },
   en: {
-    translation: en
+    index: en
   },
   de: {
-    translation: de
+    index: de
   }
 };
 
@@ -71,6 +71,7 @@ export const initI18n = async () =>
   await i18next.use(initReactI18next).init({
     lng: "it",
     fallbackLng: "it",
+    defaultNS: "index",
     react: {
       useSuspense: true
     },

@@ -55,7 +55,7 @@ const ProfileDataScreen = () => {
     () =>
       pipe(
         profileEmail,
-        O.getOrElse(() => I18n.t("global.remoteStates.notAvailable"))
+        O.getOrElse(() => I18n.t("global.remoteStates.notAvailable") as string)
       ),
     [profileEmail]
   );

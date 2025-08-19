@@ -405,16 +405,18 @@ const WalletPaymentOutcomeScreen = () => {
           ),
           subtitle: pipe(
             profileEmailOption,
-            O.map(email =>
-              I18n.t(
-                "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.subtitle",
-                { email }
-              )
+            O.map(
+              email =>
+                I18n.t(
+                  "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.subtitle",
+                  { email }
+                ) as string
             ),
-            O.getOrElse(() =>
-              I18n.t(
-                "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.defaultSubtitle"
-              )
+            O.getOrElse(
+              () =>
+                I18n.t(
+                  "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.defaultSubtitle"
+                ) as string
             )
           ),
           action: closeFailureAction

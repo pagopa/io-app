@@ -85,7 +85,9 @@ describe("Test ProfileDataScreen", () => {
       component.queryByText(
         pipe(
           profileEmailSelector(store.getState()),
-          O.getOrElse(() => I18n.t("global.remoteStates.notAvailable"))
+          O.getOrElse(
+            () => I18n.t("global.remoteStates.notAvailable") as string
+          )
         )
       )
     ).not.toBeNull();

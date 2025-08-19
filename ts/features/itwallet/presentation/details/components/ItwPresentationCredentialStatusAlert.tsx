@@ -155,8 +155,8 @@ const getLocalizedMessageOrFallback = (
     O.fromNullable,
     O.alt(() => O.fromNullable(message[ClaimsLocales.it])),
     O.getOrElse(() => ({
-      title: I18n.t("features.itWallet.card.status.unknown"),
-      description: I18n.t("features.itWallet.card.status.unknown")
+      title: I18n.t("features.itWallet.card.status.unknown") as string,
+      description: I18n.t("features.itWallet.card.status.unknown") as string
     }))
   );
 

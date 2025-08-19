@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Locales } from "../../../locales/locales";
-import { I18nJS, localeFallback, setLocale } from "../../i18n";
+import { localeFallback, setLocale } from "../../i18n";
 import {
   getLocalePrimary,
   getLocalePrimaryWithFallback,

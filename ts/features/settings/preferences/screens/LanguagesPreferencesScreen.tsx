@@ -70,7 +70,7 @@ const LanguagesPreferencesScreen = () => {
     () =>
       pipe(
         preferredLanguageSelect,
-        O.getOrElse(() => "it")
+        O.getOrElse(() => "it" as Locales)
       ),
     [preferredLanguageSelect]
   );
@@ -171,7 +171,7 @@ const LanguagesPreferencesScreen = () => {
           `${I18n.t(
             "profile.preferences.list.preferred_language.alert.title"
             // eslint-disable-next-line sonarjs/no-nested-template-literals
-          )} ${I18n.t(`locales.${language}`)}?`,
+          )} ${I18n.t(`locales.${language}` as any)}?`,
           I18n.t("profile.preferences.list.preferred_language.alert.subtitle"),
           [
             {
