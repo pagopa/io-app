@@ -2,4 +2,4 @@ locales/locales.ts
 ts/utils/__tests__/xss.test.ts
 definitions/*
 **/*.typegen.ts
-ts/@types/resources.d.ts
+locales/resources.d.ts

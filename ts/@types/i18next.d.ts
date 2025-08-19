@@ -1,4 +1,4 @@
-import Resources from "./resources";
+import Resources from "../../locales/resources";
 declare module "i18next" {
   interface CustomTypeOptions {
     defaultNS: "index";

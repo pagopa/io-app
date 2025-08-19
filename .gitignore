@@ -120,7 +120,3 @@ sentry.properties
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-
-
-# i18next resources
-ts/@types/resources.d.ts
