@@ -1,7 +1,7 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import I18n from "i18next";
 import { Discount } from "../../../../../../../../definitions/cgn/merchants/Discount";
 import { ProductCategoryEnum } from "../../../../../../../../definitions/cgn/merchants/ProductCategory";
-import I18n from "../../../../../../../i18n";
 import {
   isValidDiscount,
   moduleCGNaccessibilityLabel,

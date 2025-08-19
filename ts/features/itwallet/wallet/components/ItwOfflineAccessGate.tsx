@@ -1,4 +1,5 @@
 import { PropsWithChildren, useState } from "react";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -6,7 +7,6 @@ import {
   itwShouldDisplayOfflineAccessLimitWarning
 } from "../../common/store/selectors/securePreferences";
 import { useAppRestartAction } from "../hooks/useAppRestartAction";
-import I18n from "../../../../i18n";
 
 export const ItwOfflineAccessGate = ({ children }: PropsWithChildren) => {
   const [warningViewed, setWarningViewed] = useState(false);

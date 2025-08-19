@@ -524,7 +524,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  Expires on 21/03/2024 at 10:33
+                                  Scade il 21&#x2F;03&#x2F;2024 alle ore 10:33
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -545,7 +545,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  Add reminder
+                                  Aggiungi promemoria
                                 </Text>
                               </View>
                             </View>

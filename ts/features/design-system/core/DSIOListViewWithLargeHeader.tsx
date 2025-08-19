@@ -1,8 +1,8 @@
 import { ListItemHeader, ListItemInfo } from "@pagopa/io-app-design-system";
 import { useState } from "react";
 import { Alert } from "react-native";
+import I18n from "i18next";
 import { IOListViewWithLargeHeader } from "../../../components/ui/IOListViewWithLargeHeader";
-import I18n from "../../../i18n";
 
 export const DSIOListViewWithLargeHeader = () => {
   const [refreshing, setRefreshing] = useState(false);

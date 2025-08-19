@@ -8,11 +8,11 @@ import { useNavigation } from "@react-navigation/core";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { View } from "react-native";
+import I18n from "i18next";
 import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
-import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp

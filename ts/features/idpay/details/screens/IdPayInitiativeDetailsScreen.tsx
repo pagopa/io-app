@@ -15,6 +15,7 @@ import { pipe } from "fp-ts/lib/function";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
   InitiativeDTO,
@@ -24,7 +25,6 @@ import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
-import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp

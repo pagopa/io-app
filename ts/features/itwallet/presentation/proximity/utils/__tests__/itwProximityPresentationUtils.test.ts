@@ -75,12 +75,12 @@ describe("getProximityDetails", () => {
         claimsToDisplay: [
           {
             id: "org.iso.18013.5.1.aamva:family_name",
-            label: "Family name",
+            label: "Cognome",
             value: "ROSSI"
           },
           {
             id: "org.iso.18013.5.1:tax_id_code",
-            label: "Tax Id number",
+            label: "Codice Fiscale",
             value: 1000
           }
         ],

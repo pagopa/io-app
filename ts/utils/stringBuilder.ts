@@ -1,5 +1,6 @@
+import I18n from "i18next";
 import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
-import I18n from "../i18n";
+import { I18nJS } from "../i18n";
 
 const DISPLAYED_DIGITS = 2;
 
@@ -18,7 +19,7 @@ export const formatNumberAmount = (
   displayCurrency: boolean = false,
   currencyPosition: "left" | "right" = "left"
 ): string =>
-  I18n.toCurrency(amount, {
+  I18nJS.toCurrency(amount, {
     precision: DISPLAYED_DIGITS,
     delimiter: I18n.t("global.localization.delimiterSeparator"),
     separator: I18n.t("global.localization.decimalSeparator"),
@@ -38,7 +39,7 @@ export const formatNumberWithNoDigits = (
   amount: number,
   displayCurrency: boolean = false
 ): string =>
-  I18n.toCurrency(amount, {
+  I18nJS.toCurrency(amount, {
     precision: 0,
     delimiter: I18n.t("global.localization.delimiterSeparator"),
     separator: I18n.t("global.localization.decimalSeparator"),
@@ -61,7 +62,7 @@ export const buildExpirationDate = (creditCard: CardInfo): string =>
  * @param amount
  */
 export const formatIntegerNumber = (amount: number): string =>
-  I18n.toNumber(amount, {
+  I18nJS.toNumber(amount, {
     precision: 0,
     delimiter: I18n.t("global.localization.delimiterSeparator"),
     separator: I18n.t("global.localization.decimalSeparator")

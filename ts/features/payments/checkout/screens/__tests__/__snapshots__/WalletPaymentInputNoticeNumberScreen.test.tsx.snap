@@ -816,7 +816,7 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                             }
                           >
                             <View
-                              accessibilityLabel="Continue"
+                              accessibilityLabel="Continua"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -932,7 +932,7 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                       ]
                                     }
                                   >
-                                    Continue
+                                    Continua
                                   </Text>
                                 </View>
                               </View>

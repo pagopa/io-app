@@ -8,8 +8,8 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { TranslationKeys } from "../../../../locales/locales";
-import I18n from "../../../i18n";
 
 const notificationMarginVertical: IOSpacingScale = 4;
 const notificationPaddingVertical: IOSpacingScale = 8;

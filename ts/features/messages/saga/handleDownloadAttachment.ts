@@ -15,7 +15,7 @@ import { v4 as uuid } from "uuid";
 import { pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/lib/Either";
 import { NumberFromString } from "@pagopa/ts-commons/lib/numbers";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { fetchTimeout } from "../../../config";
 import { SessionToken } from "../../../types/SessionToken";
 import { getError } from "../../../utils/errors";

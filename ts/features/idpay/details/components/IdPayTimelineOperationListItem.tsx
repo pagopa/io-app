@@ -4,6 +4,7 @@ import {
   ListItemTransactionLogo,
   WithTestID
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import {
   IbanOperationDTO,
   OperationTypeEnum as IbanOperationTypeEnum
@@ -44,7 +45,6 @@ import {
   OperationTypeEnum as TransactionOperationTypeEnum,
   StatusEnum as TransactionStatusEnum
 } from "../../../../../definitions/idpay/TransactionOperationDTO";
-import I18n from "../../../../i18n";
 import {
   getAccessibleAmountText,
   hoursAndMinutesToAccessibilityReadableFormat

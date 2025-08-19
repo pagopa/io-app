@@ -3,13 +3,13 @@ import { View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { Alert } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { preferredCalendarSelector } from "../../../../store/reducers/persistedPreferences";
 import { UIMessageId } from "../../types";
 import { useMessageReminder } from "../../hooks/useMessageReminder";
 import { localeDateFormat } from "../../../../utils/locale";
-import I18n from "../../../../i18n";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 
 type MessageDetailsReminderExpiringProps = {

@@ -12,10 +12,10 @@ import {
   useFooterActionsMeasurements,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import I18n from "../../../i18n";
 import { PNMessage } from "../store/types/types";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { MessageDetailsHeader } from "../../messages/components/MessageDetail/MessageDetailsHeader";

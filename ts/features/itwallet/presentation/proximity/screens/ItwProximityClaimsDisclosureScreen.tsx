@@ -9,8 +9,8 @@ import {
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
-import I18n from "../../../../../i18n.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";

@@ -1,9 +1,9 @@
 import { format, subDays, subYears } from "date-fns";
 import MockDate from "mockdate";
+import I18n from "i18next";
 import { convertDateToWordDistance } from "../convertDateToWordDistance";
 import { formatDateAsLocal } from "../../../../utils/dates";
 
-import I18n from "../../../../i18n";
 import { localeDateFormat } from "../../../../utils/locale";
 
 describe("convertDateToWordDistance", () => {

@@ -3,11 +3,11 @@ import {
   ListItemInfoCopy,
   Divider
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { EycaCardActivated } from "../../../../../../../definitions/cgn/EycaCardActivated";
 import { EycaCardExpired } from "../../../../../../../definitions/cgn/EycaCardExpired";
 import { EycaCardRevoked } from "../../../../../../../definitions/cgn/EycaCardRevoked";
 
-import I18n from "../../../../../../i18n";
 import { localeDateFormat } from "../../../../../../utils/locale";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import { getAccessibleExpirationDate } from "../../../utils/dates";

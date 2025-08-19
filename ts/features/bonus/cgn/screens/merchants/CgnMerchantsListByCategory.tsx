@@ -15,6 +15,7 @@ import * as O from "fp-ts/lib/Option";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, RefreshControl, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+import I18n from "i18next";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import {
@@ -25,7 +26,6 @@ import {
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";

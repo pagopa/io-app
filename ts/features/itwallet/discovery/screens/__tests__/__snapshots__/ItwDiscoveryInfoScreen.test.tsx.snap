@@ -652,7 +652,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                           }
                         >
                           <View
-                            accessibilityLabel="Continue"
+                            accessibilityLabel="Continua"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -768,7 +768,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                                     ]
                                   }
                                 >
-                                  Continue
+                                  Continua
                                 </Text>
                               </View>
                             </View>
@@ -821,7 +821,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -987,7 +987,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -3799,7 +3799,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -3965,7 +3965,7 @@ IT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantene
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

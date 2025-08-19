@@ -1,7 +1,7 @@
 import { differenceInCalendarDays } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { dateToAccessibilityReadableFormat } from "../../../utils/accessibility";
 import { format, formatDateAsLocal } from "../../../utils/dates";
 import { localeDateFormat } from "../../../utils/locale";

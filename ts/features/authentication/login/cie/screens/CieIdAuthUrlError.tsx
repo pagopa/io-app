@@ -1,10 +1,10 @@
 import { useCallback } from "react";
 import { Route, useRoute } from "@react-navigation/native";
+import i18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { trackCieIdNoWhitelistUrl } from "../analytics";
-import i18n from "../../../../../i18n";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";

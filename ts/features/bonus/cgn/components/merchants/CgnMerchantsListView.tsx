@@ -6,10 +6,10 @@ import {
   ListItemNav
 } from "@pagopa/io-app-design-system";
 import { ListRenderItem, View } from "react-native";
+import I18n from "i18next";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
-import I18n from "../../../../../i18n";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 
 type Props = {
@@ -21,14 +21,15 @@ export const CgnMerchantListViewRenderItem =
   (props: Props): ListRenderItem<OfflineMerchant | OnlineMerchant> =>
   ({ item, index }) => {
     const accessibilityLabel =
-      (item?.numberOfNewDiscounts
+      ((item?.numberOfNewDiscounts
         ? I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
             name: item.name,
             count: item.numberOfNewDiscounts
           })
         : item.newDiscounts
         ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
-        : item.name) + getListItemAccessibilityLabelCount(props.count, index);
+        : item.name) as string) +
+      getListItemAccessibilityLabelCount(props.count, index);
 
     return (
       <ContentWrapper>

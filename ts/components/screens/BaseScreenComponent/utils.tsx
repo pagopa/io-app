@@ -2,9 +2,9 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { ScreenCHData } from "../../../../definitions/content/ScreenCHData";
 import { ContextualHelpData } from "../../../features/zendesk/screens/ZendeskSupportHelpCenter";
-import I18n from "../../../i18n";
 import { handleItemOnPress } from "../../../utils/url";
 import {
   deriveCustomHandledLink,

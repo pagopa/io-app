@@ -532,7 +532,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
                               }
                               testID="idpay-card-amount"
                             >
-                              99.99 €
+                              99,99 €
                             </Text>
                           </View>
                           <Text
@@ -553,7 +553,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
                               ]
                             }
                           >
-                            Valida fino al 12/23
+                            Valida fino al 12&#x2F;23
                           </Text>
                         </View>
                       </View>

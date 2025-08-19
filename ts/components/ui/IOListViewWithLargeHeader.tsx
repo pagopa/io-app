@@ -13,8 +13,8 @@ import { useNavigation } from "@react-navigation/native";
 import { ComponentProps, useState, forwardRef, JSX } from "react";
 
 import { LayoutChangeEvent, View } from "react-native";
+import I18n from "i18next";
 import { useHeaderProps } from "../../hooks/useHeaderProps";
-import I18n from "../../i18n";
 import { IOScrollViewWithLargeHeader } from "./IOScrollViewWithLargeHeader";
 import { IOListView } from "./IOListView";
 

@@ -7,8 +7,9 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { Errors } from "io-ts";
+import I18n from "i18next";
 import { Locales } from "../../locales/locales";
-import I18n from "../i18n";
+import { I18nJS } from "../i18n";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 import { getLocalePrimary, localeDateFormat } from "./locale";
 import { NumberFromString } from "./number";
@@ -50,7 +51,7 @@ export const formatFiscalCodeBirthdayAsShortFormat = (
 export const formatDateAsShortFormat = (date: Date): string =>
   isNaN(date.getTime())
     ? I18n.t("global.date.invalid")
-    : I18n.strftime(date, I18n.t("global.dateFormats.shortFormat"));
+    : I18nJS.strftime(date, I18n.t("global.dateFormats.shortFormat"));
 
 export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
   return format(date, "MMM");
@@ -90,7 +91,7 @@ export function format(
   date: string | number | Date,
   dateFormat?: string
 ): ReturnType<typeof dateFnsFormat> {
-  const localePrimary = getLocalePrimary(I18n.currentLocale());
+  const localePrimary = getLocalePrimary(I18n.language);
   return dateFnsFormat(
     date,
     dateFormat,

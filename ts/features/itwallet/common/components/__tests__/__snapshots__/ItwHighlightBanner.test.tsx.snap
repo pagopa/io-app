@@ -302,7 +302,7 @@ exports[`ItwHighlightBanner should match the snapshot for large variant 1`] = `
                   ]
                 }
               >
-                New
+                Novità
               </Text>
             </View>
           </View>
@@ -828,7 +828,7 @@ exports[`ItwHighlightBanner should match the snapshot for small variant 1`] = `
                     ]
                   }
                 >
-                  New
+                  Novità
                 </Text>
               </View>
             </View>

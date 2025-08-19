@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react-native";
+import I18n from "i18next";
 import { Card } from "../../../../../../../definitions/cgn/Card";
 import { StatusEnum as CgnActivatedStatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
-import I18n from "../../../../../../i18n";
 import { localeDateFormat } from "../../../../../../utils/locale";
 import {
   CardRevoked,

@@ -4,12 +4,12 @@ import {
   ListItemInfo
 } from "@pagopa/io-app-design-system";
 import { FunctionComponent } from "react";
+import I18n from "i18next";
 import { Card } from "../../../../../../definitions/cgn/Card";
 import { CardActivated } from "../../../../../../definitions/cgn/CardActivated";
 import { CardExpired } from "../../../../../../definitions/cgn/CardExpired";
 import { CardPending } from "../../../../../../definitions/cgn/CardPending";
 import { CardRevoked } from "../../../../../../definitions/cgn/CardRevoked";
-import I18n from "../../../../../i18n";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { getAccessibleExpirationDate } from "../../utils/dates";
 

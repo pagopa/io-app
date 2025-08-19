@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react-native";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { ReceiptTotalAmount } from "../ReceiptTotalAmount";
 import { formatAmountText } from "../../utils";
 describe("ReceiptTotalAmount", () => {

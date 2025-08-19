@@ -5,6 +5,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
 import { UIMessageId } from "../types";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessagesParamsList } from "../navigation/params";
@@ -28,7 +29,6 @@ import {
 import { MessageDetailsAttachments } from "../components/MessageDetail/MessageDetailsAttachments";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { MessageDetailsHeader } from "../components/MessageDetail/MessageDetailsHeader";
-import I18n from "../../../i18n";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { getMessageCTAs } from "../utils/ctas";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";

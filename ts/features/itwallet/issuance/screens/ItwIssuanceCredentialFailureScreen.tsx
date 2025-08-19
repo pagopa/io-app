@@ -2,12 +2,12 @@ import { Errors } from "@pagopa/io-react-native-wallet";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   fallbackForLocalizedMessageKeys,

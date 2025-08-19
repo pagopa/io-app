@@ -19,11 +19,12 @@ import { pipe } from "fp-ts/lib/function";
 import { Alert, View } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
+import I18n from "i18next";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
-import I18n, { availableTranslations } from "../../../../i18n";
+import { availableTranslations } from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
-import { Locales, TranslationKeys } from "../../../../../locales/locales";
+import { Locales } from "../../../../../locales/locales";
 import { profileUpsert } from "../../common/store/actions";
 import {
   fromLocaleToPreferredLanguage,
@@ -167,10 +168,10 @@ const LanguagesPreferencesScreen = () => {
     (language: string) => {
       if (selectedItem !== language) {
         Alert.alert(
-          I18n.t("profile.preferences.list.preferred_language.alert.title") +
-            " " +
-            I18n.t(`locales.${language}` as TranslationKeys) +
-            "?",
+          `${I18n.t(
+            "profile.preferences.list.preferred_language.alert.title"
+            // eslint-disable-next-line sonarjs/no-nested-template-literals
+          )} ${I18n.t(`locales.${language}`)}?`,
           I18n.t("profile.preferences.list.preferred_language.alert.subtitle"),
           [
             {

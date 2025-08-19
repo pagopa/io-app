@@ -5,8 +5,8 @@ import {
   IOVisualCostants,
   ListItemAction
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import I18n from "../../../i18n";
 import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
 import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
 import { localeDateFormat } from "../../../utils/locale";

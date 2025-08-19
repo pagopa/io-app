@@ -4,13 +4,13 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { StatusBarProps } from "react-native";
+import I18n from "i18next";
 import {
   ProductCategory,
   ProductCategoryEnum
 } from "../../../../../definitions/cgn/merchants/ProductCategory";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { TranslationKeys } from "../../../../../locales/locales";
-import I18n from "../../../../i18n";
 
 export type Category = {
   type: ProductCategory;

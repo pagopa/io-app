@@ -515,12 +515,12 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       ]
                                     }
                                   >
-                                    Legal value
+                                    Valore legale
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
-                                  accessibilityLabel="Includes attachments"
+                                  accessibilityLabel="Contiene allegati"
                                   accessible={false}
                                   align="xMidYMid"
                                   bbHeight={16}

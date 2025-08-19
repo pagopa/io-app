@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import { selectFailureOption } from "../machine/selectors.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
@@ -11,7 +12,6 @@ import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../../components/screens/OperationResultScreenContent.tsx";
-import I18n from "../../../../../i18n.ts";
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
 
 export const ItwProximityFailureScreen = () => {
