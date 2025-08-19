@@ -10,7 +10,6 @@ import * as selectors from "../../store/selectors";
 import { ItwUpgradeBanner } from "../ItwUpgradeBanner";
 import { ITW_ROUTES } from "../../../navigation/routes";
 
-
 const mockNavigate = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
