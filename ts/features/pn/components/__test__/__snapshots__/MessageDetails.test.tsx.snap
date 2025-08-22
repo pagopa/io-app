@@ -623,7 +623,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                     ]
                                   }
                                 >
-                                  01 Jan 2020, 00:00
+                                  01 gen 2020, 00:00
                                 </Text>
                               </View>
                             </View>

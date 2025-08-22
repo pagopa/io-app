@@ -2,7 +2,6 @@ import { render } from "@testing-library/react-native";
 import I18n from "i18next";
 import { Card } from "../../../../../../../definitions/cgn/Card";
 import { StatusEnum as CgnActivatedStatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
-import { localeDateFormat } from "../../../../../../utils/locale";
 import {
   CardRevoked,
   StatusEnum as CgnRevokedStatusEnum
@@ -10,6 +9,7 @@ import {
 import { StatusEnum as CgnExpiredStatusEnum } from "../../../../../../../definitions/cgn/CardExpired";
 import { StatusEnum as CgnPendingStatusEnum } from "../../../../../../../definitions/cgn/CardPending";
 import CgnStatusDetail from "../CgnStatusDetail";
+import { formatDateAsShortFormat } from "../../../../../../utils/dates";
 
 const cgnStatusActivated: Card = {
   status: CgnActivatedStatusEnum.ACTIVATED,
@@ -49,10 +49,7 @@ describe("CgnStatusDetail", () => {
     ).not.toBeNull();
     expect(
       component.queryByText(
-        localeDateFormat(
-          cgnStatusActivated.activation_date,
-          I18n.t("global.dateFormats.shortFormat")
-        )
+        formatDateAsShortFormat(cgnStatusActivated.activation_date)
       )
     ).not.toBeNull();
     expect(
@@ -60,10 +57,7 @@ describe("CgnStatusDetail", () => {
     ).not.toBeNull();
     expect(
       component.queryByText(
-        localeDateFormat(
-          cgnStatusActivated.expiration_date,
-          I18n.t("global.dateFormats.shortFormat")
-        )
+        formatDateAsShortFormat(cgnStatusActivated.expiration_date)
       )
     ).not.toBeNull();
     expect(
@@ -82,10 +76,7 @@ describe("CgnStatusDetail", () => {
     ).not.toBeNull();
     expect(
       component.queryByText(
-        localeDateFormat(
-          cgnStatusRevoked.activation_date,
-          I18n.t("global.dateFormats.shortFormat")
-        )
+        formatDateAsShortFormat(cgnStatusRevoked.activation_date)
       )
     ).not.toBeNull();
     expect(
@@ -93,10 +84,7 @@ describe("CgnStatusDetail", () => {
     ).toBeNull();
     expect(
       component.queryByText(
-        localeDateFormat(
-          cgnStatusRevoked.expiration_date,
-          I18n.t("global.dateFormats.shortFormat")
-        )
+        formatDateAsShortFormat(cgnStatusRevoked.expiration_date)
       )
     ).toBeNull();
     expect(
@@ -104,10 +92,7 @@ describe("CgnStatusDetail", () => {
     ).not.toBeNull();
     expect(
       component.queryByText(
-        localeDateFormat(
-          cgnStatusRevoked.revocation_date,
-          I18n.t("global.dateFormats.shortFormat")
-        )
+        formatDateAsShortFormat(cgnStatusRevoked.revocation_date)
       )
     ).not.toBeNull();
   });
@@ -123,10 +108,7 @@ describe("CgnStatusDetail", () => {
     ).not.toBeNull();
     expect(
       component.queryByText(
-        localeDateFormat(
-          cgnStatusExpired.activation_date,
-          I18n.t("global.dateFormats.shortFormat")
-        )
+        formatDateAsShortFormat(cgnStatusExpired.activation_date)
       )
     ).not.toBeNull();
     expect(
@@ -137,10 +119,7 @@ describe("CgnStatusDetail", () => {
     ).not.toBeNull();
     expect(
       component.queryByText(
-        localeDateFormat(
-          cgnStatusExpired.expiration_date,
-          I18n.t("global.dateFormats.shortFormat")
-        )
+        formatDateAsShortFormat(cgnStatusExpired.expiration_date)
       )
     ).not.toBeNull();
   });

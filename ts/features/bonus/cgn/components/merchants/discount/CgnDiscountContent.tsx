@@ -5,7 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
-import { localeDateFormat } from "../../../../../../utils/locale";
+import { formatDateAsShortFormat } from "../../../../../../utils/dates";
 
 type CgnDiscountContentProps = {
   discountDetails: Discount;
@@ -39,25 +39,15 @@ export const CgnDiscountContent = ({
       <ListItemInfo
         numberOfLines={0}
         label={I18n.t("bonus.cgn.merchantDetail.discount.validity")}
-        value={`${localeDateFormat(
-          discountDetails.startDate,
-          I18n.t("global.dateFormats.shortFormat")
-        )} - ${localeDateFormat(
-          discountDetails.endDate,
-          I18n.t("global.dateFormats.shortFormat")
-        )}`}
+        value={`${formatDateAsShortFormat(
+          discountDetails.startDate
+        )} - ${formatDateAsShortFormat(discountDetails.endDate)}`}
         accessibilityLabel={`${I18n.t(
           "bonus.cgn.merchantDetail.discount.validity"
         )} 
           ${I18n.t("bonus.validity_interval", {
-            from: localeDateFormat(
-              discountDetails.startDate,
-              I18n.t("global.dateFormats.shortFormat")
-            ),
-            to: localeDateFormat(
-              discountDetails.endDate,
-              I18n.t("global.dateFormats.shortFormat")
-            )
+            from: formatDateAsShortFormat(discountDetails.startDate),
+            to: formatDateAsShortFormat(discountDetails.endDate)
           })}`}
       />
     )}

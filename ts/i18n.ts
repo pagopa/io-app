@@ -1,6 +1,3 @@
-// eslint-disable-next-line no-restricted-imports
-import i18nJS from "i18n-js";
-
 import i18next, { InitOptions } from "i18next";
 import { initReactI18next } from "react-i18next";
 
@@ -22,14 +19,6 @@ const resources = {
   de: {
     index: de
   }
-};
-
-// This setup is needed to properly handle date and currency formats
-// eslint-disable-next-line functional/immutable-data
-i18nJS.translations = {
-  it,
-  en,
-  de
 };
 
 export type LocalizedMessageKeys = keyof BackendStatusMessage;
@@ -75,13 +64,10 @@ export const initI18n = async () =>
     react: {
       useSuspense: true
     },
+    interpolation: { escapeValue: false },
     resources
   } as InitOptions);
 
 export const setLocale = (locale: Locales) => {
   void i18next.changeLanguage(locale);
-  // This change is needed to properly handle date and currency formats
-  // eslint-disable-next-line functional/immutable-data
-  i18nJS.locale = locale;
 };
-export const I18nJS = i18nJS;

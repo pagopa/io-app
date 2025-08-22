@@ -6,7 +6,6 @@ import { PreferredLanguageEnum } from "../../definitions/backend/PreferredLangua
 import { Locales } from "../../locales/locales";
 import {
   availableTranslations,
-  I18nJS,
   localeFallback,
   localeToLocalizedMessageKey,
   localeToPreferredLanguageMapping,
@@ -62,11 +61,6 @@ const preferredLanguageMappingToLocale = new Map<
   PreferredLanguageEnum,
   Locales
 >(Array.from(localeToPreferredLanguageMapping).map(item => [item[1], item[0]]));
-
-export const localeDateFormat = (date: Date, format: string): string =>
-  isNaN(date.getTime())
-    ? I18n.t("global.date.invalid")
-    : I18nJS.strftime(date, format);
 
 // from a given Locales return the relative PreferredLanguageEnum
 export const fromLocaleToPreferredLanguage = (

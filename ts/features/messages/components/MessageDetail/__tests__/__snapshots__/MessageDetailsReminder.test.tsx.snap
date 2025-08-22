@@ -864,7 +864,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                   ]
                                 }
                               >
-                                Scaduto il 01 Feb alle ore 01:01
+                                Scaduto il 01 feb alle ore 01:01
                               </Text>
                             </View>
                           </View>
@@ -1414,7 +1414,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                     ]
                                   }
                                 >
-                                  Scade il 01&#x2F;02&#x2F;2099 alle ore 01:01
+                                  Scade il 01/02/99 alle ore 01:01
                                 </Text>
                                 <Text
                                   allowFontScaling={true}

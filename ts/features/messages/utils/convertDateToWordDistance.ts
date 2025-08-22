@@ -4,7 +4,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { dateToAccessibilityReadableFormat } from "../../../utils/accessibility";
 import { format, formatDateAsLocal } from "../../../utils/dates";
-import { localeDateFormat } from "../../../utils/locale";
 import { maybeNotNullyString } from "../../../utils/strings";
 
 /**
@@ -36,10 +35,10 @@ export function convertDateToWordDistance(
     return lastDayLabel;
   } // 1 day < distance, year is the current year
   else if (distance > 1 && date.getFullYear() === today.getFullYear()) {
-    return localeDateFormat(
-      date,
-      I18n.t("global.dateFormats.dayMonthWithoutTime")
-    );
+    return new Intl.DateTimeFormat("it", {
+      day: "2-digit",
+      month: "short"
+    }).format(date);
   } else if (isNaN(distance)) {
     return pipe(
       invalidDateLabel,

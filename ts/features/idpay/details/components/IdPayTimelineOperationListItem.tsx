@@ -49,7 +49,6 @@ import {
   getAccessibleAmountText,
   hoursAndMinutesToAccessibilityReadableFormat
 } from "../../../../utils/accessibility";
-import { localeDateFormat } from "../../../../utils/locale";
 import { getBadgePropsByTransactionStatus } from "../../../payments/common/utils";
 import { formatAbsNumberAmountCentsOrDefault } from "../../common/utils/strings";
 
@@ -375,10 +374,11 @@ const getUnsubscribedOperationProps = (
 });
 
 export const getOperationSubtitle = (operationDate: Date): string => {
-  const dateString = localeDateFormat(
-    operationDate,
-    I18n.t("global.dateFormats.fullFormatShortMonthLiteral")
-  );
+  const dateString = new Intl.DateTimeFormat("it", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  }).format(operationDate);
   const timeString =
     hoursAndMinutesToAccessibilityReadableFormat(operationDate);
 

@@ -524,7 +524,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  Scade il 21&#x2F;03&#x2F;2024 alle ore 10:33
+                                  Scade il 21/03/24 alle ore 10:33
                                 </Text>
                                 <Text
                                   allowFontScaling={true}

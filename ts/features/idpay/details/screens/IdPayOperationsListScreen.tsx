@@ -17,7 +17,6 @@ import { OperationListDTO } from "../../../../../definitions/idpay/OperationList
 import { IOListViewWithLargeHeader } from "../../../../components/ui/IOListViewWithLargeHeader";
 import customVariables from "../../../../theme/variables";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { localeDateFormat } from "../../../../utils/locale";
 import { useIdPayTimelineDetailsBottomSheet } from "../../timeline/components/IdPayTimelineDetailsBottomSheet";
 import { IdPayTimelineOperationListItem } from "../components/IdPayTimelineOperationListItem";
 import { useInitiativeTimelineFetcher } from "../hooks/useInitiativeTimelineFetcher";
@@ -85,10 +84,11 @@ export const IdPayOperationsListScreen = () => {
     lastUpdate,
     O.fromNullable,
     O.map(date =>
-      localeDateFormat(
-        date,
-        I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
-      )
+      new Intl.DateTimeFormat("it", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+      }).format(date)
     ),
     O.fold(
       () => <IOSkeleton shape="rectangle" height={18} width={70} radius={4} />,

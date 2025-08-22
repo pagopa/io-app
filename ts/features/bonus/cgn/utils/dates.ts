@@ -1,6 +1,6 @@
 import I18n from "i18next";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
-import { localeDateFormat } from "../../../../utils/locale";
+import { formatDateAsShortFormat } from "../../../../utils/dates";
 
 type CgnUserAgeRange = "18-25" | "26-30" | "31-35" | "unrecognized";
 
@@ -40,9 +40,8 @@ export const getAccessibleExpirationDate = (
   expirationDate: Date,
   status: CGNBadgeStatus
 ) =>
-  `${getStatusLabel(status)}: ${localeDateFormat(
-    expirationDate,
-    I18n.t("global.dateFormats.shortFormat")
+  `${getStatusLabel(status)}: ${formatDateAsShortFormat(
+    expirationDate
   )}. ${I18n.t("bonus.cgn.detail.status.a11y.cardStatus", {
     status: I18n.t(`bonus.cgn.detail.status.badge.${status}`)
   })}`;

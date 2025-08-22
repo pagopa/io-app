@@ -5509,13 +5509,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/i18n-js@npm:3.0.3":
-  version: 3.0.3
-  resolution: "@types/i18n-js@npm:3.0.3"
-  checksum: 0df787af45bae42dd6c27ad9b0993200f1e4ebfcadfd9b65a8e812e0953f7b3b2553cb15daade614756e149e62878f555f2b6fbb23989e429a8c1db917109781
-  languageName: node
-  linkType: hard
-
 "@types/istanbul-lib-coverage@npm:*, @types/istanbul-lib-coverage@npm:^2.0.0, @types/istanbul-lib-coverage@npm:^2.0.1":
   version: 2.0.3
   resolution: "@types/istanbul-lib-coverage@npm:2.0.3"
@@ -12119,13 +12112,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18n-js@npm:3.0.11":
-  version: 3.0.11
-  resolution: "i18n-js@npm:3.0.11"
-  checksum: 2fe94bf00f507068a3e9ac632a93d10d9aa7d254bbec33108311f0ee992a9d262fc68b4e48fd14d5fcffc539f6e58d78bfff24252266ebfd493df09618b440f4
-  languageName: node
-  linkType: hard
-
 "i18next-resources-for-ts@npm:^1.6.0":
   version: 1.6.0
   resolution: "i18next-resources-for-ts@npm:1.6.0"
@@ -13029,7 +13015,6 @@ __metadata:
     "@types/color": ^3.0.0
     "@types/fs-extra": ^5.0.4
     "@types/hoist-non-react-statics": ^3.0.1
-    "@types/i18n-js": 3.0.3
     "@types/jest": ^29.5.14
     "@types/js-yaml": ^3.12.1
     "@types/lodash": ^4.14.157
@@ -13078,7 +13063,6 @@ __metadata:
     hastscript: ^7.0.2
     hoist-non-react-statics: ^3.0.1
     husky: ^8.0.0
-    i18n-js: 3.0.11
     i18next: ^25.3.6
     i18next-resources-for-ts: ^1.6.0
     io-ts: ^2.2.16

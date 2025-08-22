@@ -2,18 +2,15 @@ import I18n from "i18next";
 
 import { CodeEnum } from "../../../../../../definitions/idpay/PDNDCriteriaDTO";
 import { getPDNDCriteriaValueString } from "../strings";
-import { I18nJS } from "../../../../../i18n";
 
 describe("getPDNDCriteriaValueString", () => {
   it("returns correct string for ISEE value", () => {
     const tAmountCents = 1000;
     const tAmountDecimal = tAmountCents / 100;
-    const tString = I18nJS.toCurrency(tAmountDecimal, {
-      precision: 2,
-      delimiter: I18n.t("global.localization.delimiterSeparator"),
-      separator: I18n.t("global.localization.decimalSeparator"),
-      format: "%n €"
-    });
+    const tString = `${new Intl.NumberFormat(I18n.language, {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2
+    }).format(tAmountDecimal)} €`;
     const result = getPDNDCriteriaValueString(
       CodeEnum.ISEE,
       tAmountCents.toString()

@@ -8,9 +8,9 @@ import { EycaCardActivated } from "../../../../../../../definitions/cgn/EycaCard
 import { EycaCardExpired } from "../../../../../../../definitions/cgn/EycaCardExpired";
 import { EycaCardRevoked } from "../../../../../../../definitions/cgn/EycaCardRevoked";
 
-import { localeDateFormat } from "../../../../../../utils/locale";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import { getAccessibleExpirationDate } from "../../../utils/dates";
+import { formatDateAsShortFormat } from "../../../../../../utils/dates";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;
@@ -31,10 +31,7 @@ const EycaStatusDetailsComponent = (props: Props) => (
     <ListItemInfo
       icon="calendar"
       label={I18n.t("bonus.cgn.detail.status.expiration.cgn")}
-      value={localeDateFormat(
-        props.eycaCard.expiration_date,
-        I18n.t("global.dateFormats.shortFormat")
-      )}
+      value={formatDateAsShortFormat(props.eycaCard.expiration_date)}
       accessibilityLabel={getAccessibleExpirationDate(
         props.eycaCard.expiration_date,
         "active"

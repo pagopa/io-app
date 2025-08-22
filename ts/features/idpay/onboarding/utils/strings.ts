@@ -31,7 +31,7 @@ const getPDNDCriteriaDescription = (criteria: PDNDCriteriaDTO) =>
   pipe(
     criteria.operator,
     O.fromNullable,
-    O.alt(() => O.some(OperatorEnum.EQ)),
+    O.alt(() => O.some(OperatorEnum.EQ as OperatorEnum)),
     O.map(operator => ({
       operator,
       value: getPDNDCriteriaValueString(criteria.code, criteria.value),

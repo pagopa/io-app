@@ -10,8 +10,8 @@ import { CardActivated } from "../../../../../../definitions/cgn/CardActivated";
 import { CardExpired } from "../../../../../../definitions/cgn/CardExpired";
 import { CardPending } from "../../../../../../definitions/cgn/CardPending";
 import { CardRevoked } from "../../../../../../definitions/cgn/CardRevoked";
-import { localeDateFormat } from "../../../../../utils/locale";
 import { getAccessibleExpirationDate } from "../../utils/dates";
+import { formatDateAsShortFormat } from "../../../../../utils/dates";
 
 type Props = {
   cgnDetail: Card;
@@ -25,20 +25,14 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
         <ListItemInfo
           icon="calendar"
           label={I18n.t("bonus.cgn.detail.status.date.activated")}
-          value={localeDateFormat(
-            cgnDetail.activation_date,
-            I18n.t("global.dateFormats.shortFormat")
-          )}
+          value={formatDateAsShortFormat(cgnDetail.activation_date)}
         />
         <Divider />
         {CardRevoked.is(cgnDetail) && (
           <ListItemInfo
             icon="calendar"
             label={I18n.t("bonus.cgn.detail.status.date.revoked")}
-            value={localeDateFormat(
-              cgnDetail.revocation_date,
-              I18n.t("global.dateFormats.shortFormat")
-            )}
+            value={formatDateAsShortFormat(cgnDetail.revocation_date)}
             accessibilityLabel={`${getAccessibleExpirationDate(
               cgnDetail.revocation_date,
               "revoked"
@@ -58,10 +52,7 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
           <ListItemInfo
             icon="calendar"
             label={I18n.t("bonus.cgn.detail.status.date.expired")}
-            value={localeDateFormat(
-              cgnDetail.expiration_date,
-              I18n.t("global.dateFormats.shortFormat")
-            )}
+            value={formatDateAsShortFormat(cgnDetail.expiration_date)}
             accessibilityLabel={`${getAccessibleExpirationDate(
               cgnDetail.expiration_date,
               "expired"
@@ -81,10 +72,7 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
           <ListItemInfo
             icon="calendar"
             label={I18n.t("bonus.cgn.detail.status.expiration.cgn")}
-            value={localeDateFormat(
-              cgnDetail.expiration_date,
-              I18n.t("global.dateFormats.shortFormat")
-            )}
+            value={formatDateAsShortFormat(cgnDetail.expiration_date)}
             accessibilityLabel={`${getAccessibleExpirationDate(
               cgnDetail.expiration_date,
               "active"
