@@ -607,33 +607,65 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   >
                                     If you lose your device, log out from the web.
                                   </Text>
-                                  <Text
-                                    accessibilityElementsHidden={false}
+                                  <View
                                     accessibilityRole="link"
-                                    accessible={true}
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    importantForAccessibility="yes"
-                                    maxFontSizeMultiplier={1.5}
-                                    onPress={[Function]}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": undefined,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
                                     }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                   >
-                                    Go to website
-                                  </Text>
+                                    <Text
+                                      accessibilityElementsHidden={false}
+                                      accessibilityRole="link"
+                                      accessible={true}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      importantForAccessibility="yes"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {
+                                            "textDecorationLine": "underline",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Go to website
+                                    </Text>
+                                  </View>
                                 </View>
                               </View>
                               <View
@@ -741,33 +773,65 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   >
                                     If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.
                                   </Text>
-                                  <Text
-                                    accessibilityElementsHidden={false}
+                                  <View
                                     accessibilityRole="link"
-                                    accessible={true}
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    importantForAccessibility="yes"
-                                    maxFontSizeMultiplier={1.5}
-                                    onPress={[Function]}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": undefined,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
                                     }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                   >
-                                    Go to website
-                                  </Text>
+                                    <Text
+                                      accessibilityElementsHidden={false}
+                                      accessibilityRole="link"
+                                      accessible={true}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      importantForAccessibility="yes"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {
+                                            "textDecorationLine": "underline",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Go to website
+                                    </Text>
+                                  </View>
                                 </View>
                               </View>
                               <View

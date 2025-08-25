@@ -9,9 +9,9 @@ import { CardColorScheme } from "../types";
 
 describe("DigitalVersionBadge", () => {
   it.each([
-    ["MDL", "default"],
-    ["MDL", "faded"],
-    ["MDL", "greyscale"],
+    ["mDL", "default"],
+    ["mDL", "faded"],
+    ["mDL", "greyscale"],
     ["EuropeanDisabilityCard", "default"],
     ["EuropeanDisabilityCard", "faded"],
     ["EuropeanDisabilityCard", "greyscale"],

@@ -1,5 +1,7 @@
-import { type VerifierRequest } from "@pagopa/io-react-native-proximity";
-import { ProximityDetails } from "../utils/itwProximityTypeUtils";
+import type {
+  ProximityDetails,
+  VerifierRequest
+} from "../utils/itwProximityTypeUtils";
 
 export type Start = {
   type: "start";
@@ -33,6 +35,10 @@ export type DeviceConnected = {
   type: "device-connected";
 };
 
+export type DeviceDisconnected = {
+  type: "device-disconnected";
+};
+
 export type DeviceError = {
   type: "device-error";
   error: Error;
@@ -58,5 +64,6 @@ export type ProximityEvents =
   | Retry
   | DeviceConnecting
   | DeviceConnected
+  | DeviceDisconnected
   | DeviceError
   | DeviceDocumentRequestReceived;

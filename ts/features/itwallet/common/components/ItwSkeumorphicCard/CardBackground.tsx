@@ -33,7 +33,7 @@ type CardAssets = Record<CardSide, ImageSourcePropType>;
  * Map that defines which assets to use for each credential type
  */
 const assetsMap: Record<string, CardAssets> = {
-  MDL: {
+  mDL: {
     front: require("../../../../../../img/features/itWallet/credential/mdl_front.png"),
     back: require("../../../../../../img/features/itWallet/credential/mdl_back.png")
   },

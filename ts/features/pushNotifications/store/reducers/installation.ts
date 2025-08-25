@@ -3,6 +3,7 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   logoutRequest,
+  sessionCorrupted,
   sessionExpired,
   sessionInvalid
 } from "../../../authentication/common/store/actions";
@@ -111,6 +112,7 @@ export const installationReducer = (
     // Clear registeredToken when the authentication is not longer valid
     // IO backend will automatically delete it on the next user login
     case getType(sessionExpired):
+    case getType(sessionCorrupted):
     case getType(sessionInvalid):
     case getType(logoutRequest): // even if the logout fails
     case getType(clearCache):

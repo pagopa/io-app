@@ -235,7 +235,10 @@ export const itwCredentialIssuanceMachine = setup({
               credentialDefinition: context.credentialDefinition,
               requestedCredential: context.requestedCredential,
               issuerConf: context.issuerConf,
-              isNewIssuanceFlowEnabled: context.isWhiteListed
+              isNewIssuanceFlowEnabled: context.isWhiteListed,
+              // if the user has access to the L3 features we need to pass the operationType
+              // header with the value "reissuing"
+              operationType: context.isWhiteListed ? "reissuing" : undefined
             }),
             onDone: [
               {

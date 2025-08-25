@@ -51,7 +51,7 @@ const itwReducer = combineReducers({
   securePreferences: securePreferencesReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 4;
+const CURRENT_REDUX_ITW_STORE_VERSION = 5;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -75,7 +75,24 @@ export const migrations: MigrationManifest = {
 
   // Added environment reducer
   "4": (state: PersistedState): PersistedState =>
-    _.set(state, "environment", { env: "prod" })
+    _.set(state, "environment", { env: "prod" }),
+
+  // Renamed MDL to mDL
+  "5": (state: PersistedState): PersistedState => {
+    const requestedCredentials = Object.fromEntries(
+      Object.entries(_.get(state, "preferences.requestedCredentials")).map(
+        ([credentialType, requestedAt]) => [
+          credentialType.replace("MDL", "mDL"),
+          requestedAt
+        ]
+      )
+    );
+    return _.set(
+      state,
+      "preferences.requestedCredentials",
+      requestedCredentials
+    );
+  }
 };
 
 const itwPersistConfig: PersistConfig = {

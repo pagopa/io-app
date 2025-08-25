@@ -1472,9 +1472,6 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },

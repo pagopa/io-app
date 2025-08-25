@@ -17,6 +17,8 @@ import {
 } from "./itwTypesUtils";
 import { Env } from "./environment";
 
+// TODO: [SIW-2530] This file will be removed soon
+
 export type RequestCredentialParams = {
   env: Env;
   credentialType: string;
@@ -48,7 +50,7 @@ export const requestCredential = async ({
   const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
     await Credential.Issuance.startUserAuthorization(
       issuerConf,
-      credentialType,
+      credentialType.replace("mDL", "MDL"),
       {
         walletInstanceAttestation,
         redirectUri: `${env.ISSUANCE_REDIRECT_URI}`,
@@ -174,7 +176,7 @@ export const obtainCredential = async ({
     credential,
     parsedCredential,
     credentialType,
-    credentialId: credentialType,
+    credentialId: credentialType.replace("mDL", "MDL"),
     format,
     issuerConf,
     keyTag: credentialKeyTag,

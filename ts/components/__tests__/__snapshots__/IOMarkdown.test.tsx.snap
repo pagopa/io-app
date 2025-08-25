@@ -1024,30 +1024,62 @@ exports[`IOMarkdown Should match snapshot 1`] = `
                           }
                         >
                           Here is a link: 
-                          <Text
+                          <View
                             accessibilityRole="link"
-                            allowFontScaling={true}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.5}
-                            onPress={[Function]}
-                            style={
-                              [
-                                {
-                                  "textDecorationLine": "underline",
-                                },
-                                {
-                                  "color": "#0B3EE3",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "600",
-                                  "lineHeight": 24,
-                                },
-                              ]
+                            accessibilityState={
+                              {
+                                "busy": undefined,
+                                "checked": undefined,
+                                "disabled": undefined,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
                             }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
+                              }
+                            }
+                            accessible={true}
+                            collapsable={false}
+                            focusable={true}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
                           >
-                            Go to Privacy and ToS
-                          </Text>
+                            <Text
+                              accessibilityRole="link"
+                              allowFontScaling={true}
+                              dynamicTypeRamp="body"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {
+                                    "textDecorationLine": "underline",
+                                  },
+                                  {
+                                    "color": "#0B3EE3",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Go to Privacy and ToS
+                            </Text>
+                          </View>
                         </Text>
                         <View
                           style={

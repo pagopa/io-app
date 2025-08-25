@@ -3278,9 +3278,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },

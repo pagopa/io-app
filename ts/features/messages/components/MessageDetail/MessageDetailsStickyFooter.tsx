@@ -1,41 +1,31 @@
-import { JSX, useCallback } from "react";
-import { StyleSheet, View } from "react-native";
+import { FooterActions, useIOToast } from "@pagopa/io-app-design-system";
 import { useLinkTo } from "@react-navigation/native";
+import { ComponentProps, useCallback } from "react";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import I18n from "../../../../i18n";
 import {
-  IOButton,
-  IOStyles,
-  VSpacer,
-  buttonSolidHeight
-} from "@pagopa/io-app-design-system";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { PaymentData, UIMessageId } from "../../types";
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
+import { CTA, CTAS } from "../../../../types/LocalizedCTAs";
+import { useFIMSFromServiceId } from "../../../fims/common/hooks";
+import { trackPNOptInMessageAccepted } from "../../../pn/analytics";
 import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
-import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import {
   canNavigateToPaymentFromMessageSelector,
   paymentsButtonStateSelector
 } from "../../store/reducers/payments";
-import { trackPNOptInMessageAccepted } from "../../../pn/analytics";
+import { PaymentData, UIMessageId } from "../../types";
+import {
+  getRptIdStringFromPaymentData,
+  initializeAndNavigateToWalletForPayment
+} from "../../utils";
 import { handleCtaAction } from "../../utils/ctas";
-import { CTA, CTAS } from "../../../../types/LocalizedCTAs";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { useFIMSFromServiceId } from "../../../fims/common/hooks";
-import { MessageDetailsPaymentButton } from "./MessageDetailsPaymentButton";
-import { computeAndTrackCTAPressAnalytics } from "./detailsUtils";
-
-const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    overflow: "hidden",
-    bottom: 0,
-    width: "100%"
-  },
-  buttonLinkInFooter: {
-    height: buttonSolidHeight,
-    justifyContent: "center",
-    alignSelf: "center"
-  }
-});
+import {
+  computeAndTrackCTAPressAnalytics,
+  computeAndTrackPaymentStart
+} from "./detailsUtils";
 
 type MessageDetailsPaymentButtonProps = {
   ctas?: CTAS;
@@ -84,32 +74,6 @@ type FooterData =
 const isNone = (footerData: FooterData): footerData is FooterNone =>
   footerData.tag === "None";
 
-const foldFooterData = (
-  footerData: FooterData,
-  onPaymentWithDoubleCTA: (
-    paymentWithDoubleCTA: FooterPaymentWithDoubleCTA
-  ) => JSX.Element,
-  onPaymentWithCTA: (paymentWithCTA: FooterPaymentWithCTA) => JSX.Element,
-  onDoubleCTA: (doubleCTA: FooterDoubleCTA) => JSX.Element,
-  onPayment: (paymentCTA: FooterPayment) => JSX.Element,
-  onCTA: (cta: FooterCTA) => JSX.Element,
-  onNone: () => JSX.Element | null
-) => {
-  switch (footerData.tag) {
-    case "PaymentWithDoubleCTA":
-      return onPaymentWithDoubleCTA(footerData);
-    case "PaymentWithCTA":
-      return onPaymentWithCTA(footerData);
-    case "DoubleCTA":
-      return onDoubleCTA(footerData);
-    case "Payment":
-      return onPayment(footerData);
-    case "CTA":
-      return onCTA(footerData);
-  }
-  return onNone();
-};
-
 const computeFooterData = (
   paymentData: PaymentData | undefined,
   paymentButtonStatus: "hidden" | "loading" | "enabled",
@@ -153,115 +117,84 @@ const computeFooterData = (
   return { tag: "None" };
 };
 
-const renderPaymentWithDoubleCTA = (
-  serviceId: ServiceId,
-  paymentData: PaymentData,
+const mapFooterDataToActions = (
+  footerData: FooterData,
+  onCTAPress: (
+    isFirstCTA: boolean,
+    cta: CTA,
+    isPNOptInMessage: boolean
+  ) => void,
+  firstCTAIsPNOptInMessage: boolean,
+  secondCTAIsPNOptInMessage: boolean,
   canNavigateToPayment: boolean,
   isLoadingPayment: boolean,
-  cta1: CTA,
-  cta1IsPNOptInMessage: boolean,
-  cta2: CTA,
-  cta2IsPNOptInMessage: boolean,
-  onCTAPress: (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => void
-) => (
-  <>
-    <MessageDetailsPaymentButton
-      serviceId={serviceId}
-      paymentData={paymentData}
-      canNavigateToPayment={canNavigateToPayment}
-      isLoading={isLoadingPayment}
-    />
-    <VSpacer size={8} />
-    <IOButton
-      variant="outline"
-      label={cta1.text}
-      onPress={() => onCTAPress(true, cta1, cta1IsPNOptInMessage)}
-    />
-    <VSpacer size={8} />
-    <View style={styles.buttonLinkInFooter}>
-      <IOButton
-        variant="link"
-        label={cta2.text}
-        onPress={() => onCTAPress(false, cta2, cta2IsPNOptInMessage)}
-      />
-    </View>
-  </>
-);
-const renderPaymentWithCTA = (
-  serviceId: ServiceId,
-  paymentData: PaymentData,
-  canNavigateToPayment: boolean,
-  isLoadingPayment: boolean,
-  cta1: CTA,
-  cta1IsPNOptInMessage: boolean,
-  onCTAPress: (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => void
-) => (
-  <>
-    <MessageDetailsPaymentButton
-      serviceId={serviceId}
-      paymentData={paymentData}
-      canNavigateToPayment={canNavigateToPayment}
-      isLoading={isLoadingPayment}
-    />
-    <VSpacer size={8} />
-    <View style={styles.buttonLinkInFooter}>
-      <IOButton
-        variant="link"
-        label={cta1.text}
-        onPress={() => onCTAPress(true, cta1, cta1IsPNOptInMessage)}
-      />
-    </View>
-  </>
-);
-const renderDoubleCTA = (
-  cta1: CTA,
-  cta1IsPNOptInMessage: boolean,
-  cta2: CTA,
-  cta2IsPNOptInMessage: boolean,
-  onCTAPress: (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => void
-) => (
-  <>
-    <IOButton
-      fullWidth
-      variant="solid"
-      label={cta1.text}
-      onPress={() => onCTAPress(true, cta1, cta1IsPNOptInMessage)}
-    />
-    <VSpacer size={8} />
-    <View style={styles.buttonLinkInFooter}>
-      <IOButton
-        variant="link"
-        label={cta2.text}
-        onPress={() => onCTAPress(false, cta2, cta2IsPNOptInMessage)}
-      />
-    </View>
-  </>
-);
-const renderPayment = (
-  serviceId: ServiceId,
-  paymentData: PaymentData,
-  canNavigateToPayment: boolean,
-  isLoadingPayment: boolean
-) => (
-  <MessageDetailsPaymentButton
-    serviceId={serviceId}
-    paymentData={paymentData}
-    canNavigateToPayment={canNavigateToPayment}
-    isLoading={isLoadingPayment}
-  />
-);
-const renderCTA = (
-  cta: CTA,
-  isPNOptInMessage: boolean,
-  onCTAPress: (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => void
-) => (
-  <IOButton
-    fullWidth
-    variant="solid"
-    label={cta.text}
-    onPress={() => onCTAPress(true, cta, isPNOptInMessage)}
-  />
-);
+  handlePaymentPress: () => void
+): ComponentProps<typeof FooterActions>["actions"] | undefined => {
+  const paymentButtonConfig = {
+    label: I18n.t("features.messages.payments.pay"),
+    onPress: handlePaymentPress,
+    disabled: !canNavigateToPayment,
+    loading: isLoadingPayment
+  };
+
+  switch (footerData.tag) {
+    case "PaymentWithDoubleCTA":
+      return {
+        type: "ThreeButtons",
+        primary: paymentButtonConfig,
+        secondary: {
+          label: footerData.cta1.text,
+          onPress: () =>
+            onCTAPress(true, footerData.cta1, firstCTAIsPNOptInMessage)
+        },
+        tertiary: {
+          label: footerData.cta2.text,
+          onPress: () =>
+            onCTAPress(false, footerData.cta2, secondCTAIsPNOptInMessage)
+        }
+      };
+    case "PaymentWithCTA":
+      return {
+        type: "TwoButtons",
+        primary: paymentButtonConfig,
+        secondary: {
+          label: footerData.cta1.text,
+          onPress: () =>
+            onCTAPress(true, footerData.cta1, firstCTAIsPNOptInMessage)
+        }
+      };
+    case "DoubleCTA":
+      return {
+        type: "TwoButtons",
+        primary: {
+          label: footerData.cta1.text,
+          onPress: () =>
+            onCTAPress(true, footerData.cta1, firstCTAIsPNOptInMessage)
+        },
+        secondary: {
+          label: footerData.cta2.text,
+          onPress: () =>
+            onCTAPress(false, footerData.cta2, secondCTAIsPNOptInMessage)
+        }
+      };
+    case "Payment":
+      return {
+        type: "SingleButton",
+        primary: paymentButtonConfig
+      };
+    case "CTA":
+      return {
+        type: "SingleButton",
+        primary: {
+          label: footerData.cta1.text,
+          onPress: () =>
+            onCTAPress(true, footerData.cta1, firstCTAIsPNOptInMessage)
+        }
+      };
+    case "None":
+      return undefined;
+  }
+};
 
 export const MessageDetailsStickyFooter = ({
   ctas,
@@ -270,8 +203,10 @@ export const MessageDetailsStickyFooter = ({
   secondCTAIsPNOptInMessage,
   serviceId
 }: MessageDetailsPaymentButtonProps) => {
-  const safeAreaInsets = useSafeAreaInsets();
   const store = useIOStore();
+  const dispatch = useIODispatch();
+  const toast = useIOToast();
+
   const paymentData = useIOSelector(state =>
     messagePaymentDataSelector(state, messageId)
   );
@@ -284,6 +219,7 @@ export const MessageDetailsStickyFooter = ({
 
   const { startFIMSAuthenticationFlow } = useFIMSFromServiceId(serviceId);
   const linkTo = useLinkTo();
+
   const onCTAPressedCallback = useCallback(
     (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => {
       const state = store.getState();
@@ -298,64 +234,36 @@ export const MessageDetailsStickyFooter = ({
     [linkTo, serviceId, startFIMSAuthenticationFlow, store]
   );
 
+  const handlePaymentPress = useCallback(() => {
+    if (!paymentData) {
+      return;
+    }
+    initializeAndNavigateToWalletForPayment(
+      getRptIdStringFromPaymentData(paymentData),
+      true,
+      canNavigateToPayment,
+      dispatch,
+      () => computeAndTrackPaymentStart(serviceId, store.getState()),
+      () => toast.error(I18n.t("genericError"))
+    );
+  }, [paymentData, canNavigateToPayment, dispatch, serviceId, store, toast]);
+
   const footerData = computeFooterData(paymentData, paymentButtonStatus, ctas);
   if (isNone(footerData)) {
     return null;
   }
 
-  const paddingBottom =
-    safeAreaInsets.bottom +
-    (footerData.tag === "CTA" || footerData.tag === "Payment"
-      ? IOStyles.footer.paddingBottom
-      : 0);
-
   const isPaymentLoading = paymentButtonStatus === "loading";
 
-  return (
-    <View style={[IOStyles.footer, styles.container, { paddingBottom }]}>
-      {foldFooterData(
-        footerData,
-        paymentWithDoubleCTA =>
-          renderPaymentWithDoubleCTA(
-            serviceId,
-            paymentWithDoubleCTA.paymentData,
-            canNavigateToPayment,
-            isPaymentLoading,
-            paymentWithDoubleCTA.cta1,
-            firstCTAIsPNOptInMessage,
-            paymentWithDoubleCTA.cta2,
-            secondCTAIsPNOptInMessage,
-            onCTAPressedCallback
-          ),
-        paymentWithCTA =>
-          renderPaymentWithCTA(
-            serviceId,
-            paymentWithCTA.paymentData,
-            canNavigateToPayment,
-            isPaymentLoading,
-            paymentWithCTA.cta1,
-            firstCTAIsPNOptInMessage,
-            onCTAPressedCallback
-          ),
-        doubleCTA =>
-          renderDoubleCTA(
-            doubleCTA.cta1,
-            firstCTAIsPNOptInMessage,
-            doubleCTA.cta2,
-            secondCTAIsPNOptInMessage,
-            onCTAPressedCallback
-          ),
-        payment =>
-          renderPayment(
-            serviceId,
-            payment.paymentData,
-            canNavigateToPayment,
-            isPaymentLoading
-          ),
-        cta =>
-          renderCTA(cta.cta1, firstCTAIsPNOptInMessage, onCTAPressedCallback),
-        () => null
-      )}
-    </View>
+  const actions = mapFooterDataToActions(
+    footerData,
+    onCTAPressedCallback,
+    firstCTAIsPNOptInMessage,
+    secondCTAIsPNOptInMessage,
+    canNavigateToPayment,
+    isPaymentLoading,
+    handlePaymentPress
   );
+
+  return actions && <FooterActions actions={actions} />;
 };

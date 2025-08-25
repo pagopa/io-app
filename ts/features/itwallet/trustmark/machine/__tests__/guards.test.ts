@@ -39,7 +39,7 @@ describe("itwTrustmarkMachine guards", () => {
         hasValidWalletInstanceAttestation({
           context: {
             walletInstanceAttestation: { jwt: wia },
-            credentialType: "MDL"
+            credentialType: "mDL"
           }
         })
       ).toBe(expected);
@@ -52,7 +52,7 @@ describe("itwTrustmarkMachine guards", () => {
         hasValidWalletInstanceAttestation({
           context: {
             walletInstanceAttestation: { jwt: "not a WIA" },
-            credentialType: "MDL"
+            credentialType: "mDL"
           }
         })
       ).toEqual(false);

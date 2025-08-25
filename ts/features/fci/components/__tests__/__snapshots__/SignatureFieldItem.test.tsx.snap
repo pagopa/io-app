@@ -232,33 +232,65 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       }
     }
   >
-    <Text
-      accessibilityHint="Go to the page that displays the signature field"
-      accessibilityLabel="See on document"
+    <View
       accessibilityRole="link"
-      allowFontScaling={true}
-      dynamicTypeRamp="body"
-      maxFontSizeMultiplier={1.5}
-      onPress={[MockFunction]}
-      style={
-        [
-          {
-            "textDecorationLine": "underline",
-          },
-          {
-            "color": "#0B3EE3",
-            "fontFamily": "Titillio",
-            "fontSize": 16,
-            "fontStyle": "normal",
-            "fontWeight": "600",
-            "lineHeight": 24,
-          },
-        ]
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
       }
-      testID="SignatureFieldItemDetailTestID"
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
     >
-      See on document
-    </Text>
+      <Text
+        accessibilityHint="Go to the page that displays the signature field"
+        accessibilityLabel="See on document"
+        accessibilityRole="link"
+        allowFontScaling={true}
+        dynamicTypeRamp="body"
+        maxFontSizeMultiplier={1.5}
+        style={
+          [
+            {
+              "textDecorationLine": "underline",
+            },
+            {
+              "color": "#0B3EE3",
+              "fontFamily": "Titillio",
+              "fontSize": 16,
+              "fontStyle": "normal",
+              "fontWeight": "600",
+              "lineHeight": 24,
+            },
+          ]
+        }
+        testID="SignatureFieldItemDetailTestID"
+      >
+        See on document
+      </Text>
+    </View>
   </View>
 </View>
 `;

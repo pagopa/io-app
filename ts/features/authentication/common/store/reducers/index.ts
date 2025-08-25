@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { PersistPartial } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 import {
@@ -10,7 +11,9 @@ import {
   sessionExpired,
   sessionInformationLoadSuccess,
   sessionInvalid,
-  logoutRequest
+  logoutRequest,
+  loginFailure,
+  sessionCorrupted
 } from "../actions";
 import { Action } from "../../../../../store/actions/types";
 import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
@@ -20,6 +23,7 @@ import {
   isLoggedOutWithIdp,
   isSessionExpired
 } from "../utils/guards";
+import { consolidateActiveSessionLoginData } from "../../../activeSessionLogin/store/actions";
 
 // Here we mix the plain AuthenticationState with the keys added by redux-persist
 type PersistedAuthenticationState = AuthenticationState & PersistPartial;
@@ -51,6 +55,18 @@ const authenticationReducer = (
     return {
       kind: "LoggedInWithoutSessionInfo",
       idp: state.idp,
+      sessionToken: action.payload.token
+    };
+  }
+
+  if (
+    isActionOf(consolidateActiveSessionLoginData, action) &&
+    isLoggedIn(state)
+  ) {
+    // Save the SessionToken (got from the WebView redirect url) in the state
+    return {
+      ...state,
+      idp: action.payload.idp,
       sessionToken: action.payload.token
     };
   }
@@ -88,6 +104,8 @@ const authenticationReducer = (
 
   if (
     (isActionOf(sessionExpired, action) ||
+      isActionOf(sessionCorrupted, action) ||
+      isActionOf(loginFailure, action) ||
       isActionOf(sessionInvalid, action) ||
       isActionOf(logoutSuccess, action) ||
       isActionOf(logoutFailure, action)) &&
@@ -98,6 +116,8 @@ const authenticationReducer = (
       idp: state.idp,
       reason: isActionOf(sessionExpired, action)
         ? "SESSION_EXPIRED"
+        : isActionOf(sessionCorrupted, action)
+        ? "SESSION_CORRUPTED"
         : "NOT_LOGGED_IN"
     };
   }

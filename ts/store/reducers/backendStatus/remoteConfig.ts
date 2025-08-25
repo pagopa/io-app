@@ -59,6 +59,23 @@ export const cgnMerchantVersionSelector = createSelector(
     )
 );
 
+export const cgnMerchantsModalSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean | undefined =>
+    pipe(
+      remoteConfig,
+      O.map(config =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? config.cgn.show_cgn_categories_modal?.ios
+            : config.cgn.show_cgn_categories_modal?.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+    )
+);
+
 export const assistanceToolConfigSelector = createSelector(
   remoteConfigSelector,
   (remoteConfig): ToolEnum | undefined =>

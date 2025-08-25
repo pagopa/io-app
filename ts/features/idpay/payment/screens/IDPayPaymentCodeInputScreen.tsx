@@ -61,6 +61,7 @@ const IDPayPaymentCodeInputScreen = () => {
           autoCapitalize: "characters",
           autoCorrect: false
         }}
+        icon="barcode"
         onChangeText={value => {
           setInputState({
             value,

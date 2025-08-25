@@ -1,16 +1,16 @@
-import {
-  AcceptedFields,
-  Proximity,
-  type VerifierRequest
-} from "@pagopa/io-react-native-proximity";
-import {
-  ParsedCredential,
-  StoredCredential
-} from "../../../common/utils/itwTypesUtils";
 import { parseClaims } from "../../../common/utils/itwClaimsUtils";
 import { assert } from "../../../../../utils/assert";
 import { TimeoutError } from "../machine/failure";
-import { ProximityDetails } from "./itwProximityTypeUtils";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
+import type {
+  AcceptedFields,
+  ProximityDetails,
+  RequestedDocument,
+  VerifierRequest
+} from "./itwProximityTypeUtils";
+
+const WIA_DOC_TYPE = "org.iso.18013.5.1.IT.WalletAttestation";
 
 export const promiseWithTimeout = <T>(
   promise: Promise<T>,
@@ -28,65 +28,70 @@ export const promiseWithTimeout = <T>(
 export const getProximityDetails = (
   request: VerifierRequest["request"],
   credentialsByType: Record<string, StoredCredential | undefined>
-): ProximityDetails =>
-  Object.entries(request).map(
-    ([credentialType, { isAuthenticated, ...namespaces }]) => {
-      const credential = credentialsByType[credentialType];
+): ProximityDetails => {
+  // Exclude the WIA document type from the request
+  const { [WIA_DOC_TYPE]: _, ...otherDocuments } = request;
+
+  return Object.entries(otherDocuments).map(
+    ([docType, { isAuthenticated, ...namespaces }]) => {
+      const credential = credentialsByType[docType];
 
       assert(credential, "Credential not found in the wallet");
 
-      // Extract required fields that are part of the verifier request
-      const requiredFields = Object.values(namespaces).flatMap(Object.keys);
-
-      // Only include required claims that are part of the parsed credential
-      const parsedCredential = requiredFields.reduce<ParsedCredential>(
-        (acc, field) => {
-          const claim = credential.parsedCredential[field];
-
-          // Ignore required fields that are missing from the parsed credential
-          if (!claim) {
-            return acc;
-          }
-
-          return {
-            ...acc,
-            [field]: claim
-          };
-        },
-        {}
+      // Extract required fields from the verifier request.
+      // Each field is formatted as "namespace:field" to match the structure
+      // of parsedCredential, which uses colon-separated keys.
+      const requiredFields = Object.entries(namespaces).flatMap(
+        ([namespace, fields]) =>
+          Object.keys(fields).map(field => `${namespace}:${field}`)
+      );
+      // Only include required claims that are part of the parsed credential.
+      const parsedCredential = Object.fromEntries(
+        requiredFields
+          .filter(field => field in credential.parsedCredential)
+          .map(field => [field, credential.parsedCredential[field]])
       );
 
       return {
-        credentialType,
+        credentialType: credential.credentialType,
         claimsToDisplay: parseClaims(parsedCredential)
       };
     }
   );
+};
 
 export const getDocuments = (
   request: VerifierRequest["request"],
-  credentialsByType: Record<string, StoredCredential | undefined>
-): Array<Proximity.Document> =>
-  Object.entries(request).reduce<Array<Proximity.Document>>(
-    (acc, [credentialKey]) => {
-      const storedCredential = credentialsByType[credentialKey];
+  credentialsByType: Record<string, StoredCredential | undefined>,
+  wiaMdoc: string
+): Array<RequestedDocument> => {
+  // Exclude the WIA document type from the request
+  const { [WIA_DOC_TYPE]: _, ...rest } = request;
 
-      // This should be guaranteed by getProximityDetails having already validated credentials
-      assert(storedCredential, "Credential not found in the wallet");
+  const documents = Object.entries(rest).map(([docType]) => {
+    const storedCredential = credentialsByType[docType];
 
-      const { credential, credentialType, keyTag } = storedCredential;
+    // This should be guaranteed by getProximityDetails having already validated credentials
+    assert(storedCredential, "Credential not found in the wallet");
 
-      return [
-        ...acc,
-        {
-          alias: keyTag,
-          docType: credentialType,
-          issuerSignedContent: credential
-        }
-      ];
-    },
-    []
-  );
+    const { credential, keyTag } = storedCredential;
+
+    return {
+      alias: keyTag,
+      docType,
+      issuerSignedContent: credential
+    };
+  });
+
+  return [
+    ...documents,
+    {
+      alias: WIA_KEYTAG,
+      docType: WIA_DOC_TYPE,
+      issuerSignedContent: wiaMdoc
+    }
+  ];
+};
 
 interface NestedBooleanMap {
   [key: string]: boolean | NestedBooleanMap;
@@ -107,9 +112,9 @@ export const generateAcceptedFields = (
   request: VerifierRequest["request"]
 ): AcceptedFields =>
   Object.entries(request).reduce(
-    (acc, [credentialKey, { isAuthenticated, ...namespaces }]) => ({
+    (acc, [docType, { isAuthenticated, ...namespaces }]) => ({
       ...acc,
-      [credentialKey]: acceptAllFields(namespaces)
+      [docType]: acceptAllFields(namespaces)
     }),
     {}
   );

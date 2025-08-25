@@ -34,11 +34,11 @@ const credentialTypesByVct: { [vct: string]: CredentialType } = {
  */
 export const getCredentialTypeByVct = (vct: string): string | undefined => {
   // Extracts the name from the vct. For example:
-  // From "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json"
-  // Gets "/personidentificationdata.json"
-  const match = vct.match(/\/([^/]+)\.json$/);
+  // From "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata"
+  // Gets "/vct/v1.0.0/personidentificationdata"
+  const match = vct.match(/\/vct(.*)\/([^/]+)$/);
   // Extracts "personidentificationdata"
-  const name = match ? match[1] : null;
+  const name = match ? match[2] : null;
   // Tries to match the extracted value to a credential type
   return name ? credentialTypesByVct[name] : undefined;
 };

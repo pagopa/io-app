@@ -18,6 +18,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwFailure } from "../../utils/ItwFailureTypes.ts";
+import { CredentialType } from "../../utils/itwMocksUtils.ts";
 
 jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
   // Mock the bottom sheet to immediately render the component
@@ -46,7 +47,7 @@ describe("useItwFailureSupportModal", () => {
   it("renders contact methods for MDL", () => {
     const { queryByTestId } = renderHook({
       supportChatEnabled: false,
-      credentialType: "MDL",
+      credentialType: CredentialType.DRIVING_LICENSE,
       zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
       failure: {
         type: CredentialIssuanceFailureType.ISSUER_GENERIC,
@@ -63,7 +64,7 @@ describe("useItwFailureSupportModal", () => {
   it("renders contact methods for EuropeanHealthInsuranceCard", () => {
     const { queryByTestId } = renderHook({
       supportChatEnabled: false,
-      credentialType: "EuropeanHealthInsuranceCard",
+      credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
       zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
       failure: {
         type: CredentialIssuanceFailureType.ISSUER_GENERIC,
@@ -80,7 +81,7 @@ describe("useItwFailureSupportModal", () => {
   it("renders contact methods for EuropeanDisabilityCard", () => {
     const { queryByTestId } = renderHook({
       supportChatEnabled: false,
-      credentialType: "EuropeanDisabilityCard",
+      credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
       zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
       failure: {
         type: CredentialIssuanceFailureType.ISSUER_GENERIC,

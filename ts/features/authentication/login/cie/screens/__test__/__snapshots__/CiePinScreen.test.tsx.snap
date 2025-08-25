@@ -436,30 +436,62 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                     }
                                   }
                                 />
-                                <Text
+                                <View
                                   accessibilityRole="button"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  Where can I find it?
-                                </Text>
+                                  <Text
+                                    accessibilityRole="button"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Where can I find it?
+                                  </Text>
+                                </View>
                                 <View
                                   style={
                                     {

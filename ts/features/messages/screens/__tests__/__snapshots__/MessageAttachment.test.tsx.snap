@@ -676,9 +676,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -1519,9 +1516,6 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",

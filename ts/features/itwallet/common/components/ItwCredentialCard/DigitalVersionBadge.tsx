@@ -28,7 +28,7 @@ const getColorPropsByScheme = (
   colorScheme: CardColorScheme
 ) => {
   const mapCredentialTypes: Record<string, CredentialTypesProps> = {
-    MDL: {
+    mDL: {
       foreground: "#5E303E",
       background: "#FADCF5"
     },

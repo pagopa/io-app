@@ -41,7 +41,7 @@ export type FimsSSOState = {
   relyingPartyUrl?: string;
 };
 
-const INITIAL_STATE: FimsSSOState = {
+export const INITIAL_STATE: FimsSSOState = {
   ssoData: pot.none,
   ephemeralSessionOniOS: false,
   ctaText: undefined,

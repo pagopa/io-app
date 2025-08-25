@@ -1,11 +1,9 @@
-import { ActionArgs, assign } from "xstate";
+import { ActionArgs } from "xstate";
 import { StackActions } from "@react-navigation/native";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useIOStore } from "../../../../../store/hooks";
 import ROUTES from "../../../../../navigation/routes";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { itwCredentialsSelector } from "../../../credentials/store/selectors";
 import {
   trackItwProximityQrCode,
   trackItwProximityQrCodeLoadingFailure
@@ -16,18 +14,8 @@ import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
 
 export const createProximityActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>,
-  store: ReturnType<typeof useIOStore>
+  navigation: ReturnType<typeof useIONavigation>
 ) => ({
-  onInit: assign<Context, ProximityEvents, unknown, ProximityEvents, any>(
-    () => {
-      const credentialsByType = itwCredentialsSelector(store.getState());
-      return {
-        credentialsByType
-      };
-    }
-  ),
-
   navigateToGrantPermissionsScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.PROXIMITY.DEVICE_PERMISSIONS

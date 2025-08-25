@@ -206,7 +206,10 @@ const CieWebView = (props: Props) => {
       return false;
     }
 
-    if (cieFlowForDevServerEnabled && url.indexOf("token=") !== -1) {
+    // On the dev-server, the ACS endpoint is /idp-login.
+    // Intercepting it allows us to extract the authentication result
+    // (token or error) after a successful CIE login.
+    if (cieFlowForDevServerEnabled && url.indexOf("idp-login") !== -1) {
       setInternalState(state => generateFoundAuthUrlState(url, state));
       return false;
     }

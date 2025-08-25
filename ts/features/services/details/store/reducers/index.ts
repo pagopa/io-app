@@ -14,6 +14,7 @@ import { isStrictSome } from "../../../../../utils/pot";
 import { EnabledChannels } from "../../../../../utils/profile";
 import {
   logoutSuccess,
+  sessionCorrupted,
   sessionExpired
 } from "../../../../authentication/common/store/actions";
 import { ServiceKind } from "../../components/ServiceDetailsScreenComponent";
@@ -142,6 +143,7 @@ const servicesDetailsReducer = (
 
     case getType(logoutSuccess):
     case getType(sessionExpired):
+    case getType(sessionCorrupted):
       return INITIAL_STATE;
   }
   return state;

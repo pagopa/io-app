@@ -272,6 +272,7 @@ export const itwEidIssuanceMachine = setup({
     },
     WalletInstanceRevocation: {
       tags: [ItwTags.Loading],
+      entry: "navigateToWalletRevocationScreen",
       invoke: {
         src: "revokeWalletInstance",
         onDone: {

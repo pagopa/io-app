@@ -8,6 +8,7 @@ import {
   logoutSuccess
 } from "../../../../authentication/common/store/actions";
 import { isDevEnv } from "../../../../../utils/environment";
+import { consolidateActiveSessionLoginData } from "../../../activeSessionLogin/store/actions";
 
 export type FastLoginOptInState = {
   enabled: boolean | undefined;
@@ -29,6 +30,11 @@ const fastLoginOptInReducer = (
       return {
         ...state,
         enabled: action.payload.enabled
+      };
+    case getType(consolidateActiveSessionLoginData):
+      return {
+        ...state,
+        enabled: action.payload.fastLoginOptIn
       };
     default:
       return state;

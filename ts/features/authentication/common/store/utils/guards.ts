@@ -37,3 +37,9 @@ export function isSessionExpired(
 ): state is LoggedOutWithoutIdp | LoggedOutWithIdp {
   return isLoggedOutWithIdp(state) && state.reason === "SESSION_EXPIRED";
 }
+
+export function isSessionCorrupted(
+  state: AuthenticationState
+): state is LoggedOutWithoutIdp | LoggedOutWithIdp {
+  return isLoggedOutWithIdp(state) && state.reason === "SESSION_CORRUPTED";
+}

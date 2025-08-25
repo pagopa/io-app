@@ -41,6 +41,7 @@ export type ObtainCredentialParams = {
   credentialDefinition?: AuthorizationDetail;
   issuerConf: IssuerConfiguration;
   isNewIssuanceFlowEnabled: boolean;
+  operationType?: "reissuing";
 };
 
 /**
@@ -54,6 +55,7 @@ export type ObtainCredentialParams = {
  * @param codeVerifier - The code verifier
  * @param credentialDefinition - The credential definition
  * @param issuerConf - The issuer configuration
+ * @param operationType - The operation type, e.g., "reissuing"
  * @returns The obtained credential
  */
 export const obtainCredential = async (params: ObtainCredentialParams) =>

@@ -665,9 +665,6 @@ exports[`SendQRScanRedirectComponent should match snapshot and track the screen 
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]

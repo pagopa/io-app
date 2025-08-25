@@ -665,30 +665,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -951,9 +983,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -1963,30 +1992,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -2249,9 +2310,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -3261,30 +3319,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -3547,9 +3637,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -4559,30 +4646,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -4845,9 +4964,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -5857,30 +5973,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -6143,9 +6291,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -7155,30 +7300,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -7441,9 +7618,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -8453,30 +8627,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -8739,9 +8945,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -9751,30 +9954,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -10037,9 +10272,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -11049,30 +11281,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -11335,9 +11599,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -12347,30 +12608,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -12633,9 +12926,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -13645,30 +13935,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -13931,9 +14253,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -14943,30 +15262,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -15229,9 +15580,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -16241,30 +16589,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -16527,9 +16907,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -17539,30 +17916,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -17825,9 +18234,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -18837,30 +19243,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -19123,9 +19561,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -20135,30 +20570,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -20421,9 +20888,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -21433,30 +21897,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -21719,9 +22215,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -22731,30 +23224,62 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  More info
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -23017,9 +23542,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,

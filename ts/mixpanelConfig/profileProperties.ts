@@ -85,7 +85,7 @@ export const updateMixpanelProfileProperties = async (
     const FONT_PREFERENCE = fontPreferenceSelector(state);
 
     const ITW_ID_V2 = idStatusHandler(state);
-    const ITW_PG_V2 = credentialStatusHandler("MDL", state);
+    const ITW_PG_V2 = credentialStatusHandler("mDL", state);
     const ITW_TS_V2 = credentialStatusHandler(
       "EuropeanHealthInsuranceCard",
       state

@@ -17,6 +17,8 @@ import {
   Identifier
 } from "../../login/optIn/screens/OptInScreen";
 import { cieIDSetSelectedSecurityLevel } from "../cie/store/actions";
+import { isActiveSessionLoginSelector } from "../../activeSessionLogin/store/selectors";
+import { setIdpSelectedActiveSessionLogin } from "../../activeSessionLogin/store/actions";
 
 export const IdpCIE: SpidIdp = {
   id: "cie",
@@ -40,6 +42,8 @@ const useNavigateToLoginMethod = () => {
   const isFastLoginOptInFFEnabled = useIOSelector(fastLoginOptInFFEnabled);
   const { navigate } = useIONavigation();
   const isCIEAuthenticationSupported = useIOSelector(isCieSupportedSelector);
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+
   const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
 
   const isCieSupported =
@@ -89,8 +93,19 @@ const useNavigateToLoginMethod = () => {
 
   const navigateToCieIdLoginScreen = useCallback(
     (spidLevel: SpidLevel = "SpidL2") => {
-      dispatch(idpSelected(IdpCIE_ID));
-      dispatch(cieIDSetSelectedSecurityLevel(spidLevel));
+      if (isActiveSessionLogin) {
+        // TODO: this logic will need to be uncommented
+        // (and moved outside the if statement, as it is common logic)
+        // when the tracking strategy will be added (including the
+        // logic for mismatches between the required security level
+        // and the actual security level).
+        // TASK: https://pagopa.atlassian.net/browse/IOPID-3343
+        // dispatch(cieIDSetSelectedSecurityLevel(spidLevel));
+        dispatch(setIdpSelectedActiveSessionLogin(IdpCIE_ID));
+      } else {
+        dispatch(idpSelected(IdpCIE_ID));
+        dispatch(cieIDSetSelectedSecurityLevel(spidLevel));
+      }
 
       if (isCieIdAvailable(isCieUatEnabled) || cieFlowForDevServerEnabled) {
         const params = {
@@ -101,7 +116,9 @@ const useNavigateToLoginMethod = () => {
         withIsFastLoginOptInCheck(
           () => {
             navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen: AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
+              screen: isActiveSessionLogin
+                ? AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN
+                : AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
               params
             });
           },
@@ -116,7 +133,13 @@ const useNavigateToLoginMethod = () => {
         });
       }
     },
-    [isCieUatEnabled, withIsFastLoginOptInCheck, navigate, dispatch]
+    [
+      dispatch,
+      isCieUatEnabled,
+      withIsFastLoginOptInCheck,
+      navigate,
+      isActiveSessionLogin
+    ]
   );
 
   return {

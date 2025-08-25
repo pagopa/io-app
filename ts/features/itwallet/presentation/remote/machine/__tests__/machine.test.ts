@@ -47,8 +47,7 @@ describe("itwRemoteMachine", () => {
   const trackRemoteDataShare = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
 
-  const isWalletActive = jest.fn();
-  const isL3Enabled = jest.fn().mockReturnValue(true);
+  const isItWalletL3Active = jest.fn();
   const isEidExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn().mockReturnValue(true);
 
@@ -90,8 +89,7 @@ describe("itwRemoteMachine", () => {
         fromPromise<WalletInstanceAttestations>(getWalletAttestation)
     },
     guards: {
-      isWalletActive,
-      isL3Enabled,
+      isItWalletL3Active,
       isEidExpired,
       hasValidWalletInstanceAttestation
     }
@@ -108,28 +106,8 @@ describe("itwRemoteMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
   });
 
-  it("should transition from Idle to WalletInactive when wallet is inactive", () => {
-    isWalletActive.mockReturnValue(false);
-
-    const actor = createActor(mockedMachine);
-    actor.start();
-
-    actor.send({
-      type: "start",
-      payload: qrCodePayload
-    });
-
-    const snapshot = actor.getSnapshot();
-    expect(snapshot.value).toStrictEqual("Failure");
-    expect(snapshot.context.failure?.type).toEqual(
-      RemoteFailureType.WALLET_INACTIVE
-    );
-    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
-  });
-
-  it("should transition from Idle to WalletInactive when the identification is not L3", () => {
-    isWalletActive.mockReturnValue(true);
-    isL3Enabled.mockReturnValueOnce(false);
+  it("should transition from Idle to WalletInactive when wallet is inactive or the identification is not L3", () => {
+    isItWalletL3Active.mockReturnValue(false);
 
     const actor = createActor(mockedMachine);
     actor.start();
@@ -208,7 +186,7 @@ describe("itwRemoteMachine", () => {
   });
 
   it("should transition from Idle to Failure when EID is expired", () => {
-    isWalletActive.mockReturnValue(true);
+    isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(true);
 
     const actor = createActor(mockedMachine);
@@ -231,7 +209,7 @@ describe("itwRemoteMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
-    isWalletActive.mockReturnValue(true);
+    isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
 
     actor.send({
@@ -265,7 +243,7 @@ describe("itwRemoteMachine", () => {
       }
     };
 
-    isWalletActive.mockReturnValue(true);
+    isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
     evaluateRelyingPartyTrust.mockResolvedValue({
       rpConf,
@@ -395,7 +373,7 @@ describe("itwRemoteMachine", () => {
   });
 
   it("should transition to failure when an error occurs in GettingPresentationDetails", async () => {
-    isWalletActive.mockReturnValue(true);
+    isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
     evaluateRelyingPartyTrust.mockResolvedValue({});
     getRequestObject.mockReturnValue("");
@@ -444,7 +422,7 @@ describe("itwRemoteMachine", () => {
   });
 
   it("should transition to Failure when an error occurs in EvaluatingRelyingPartyTrust", async () => {
-    isWalletActive.mockReturnValue(true);
+    isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
 
     evaluateRelyingPartyTrust.mockImplementation(() => {
@@ -492,8 +470,7 @@ describe("itwRemoteMachine", () => {
       "dc+sd-jwt": "wallet-attestation-sdjwt"
     };
 
-    isWalletActive.mockReturnValue(true);
-    isL3Enabled.mockReturnValue(true);
+    isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
     hasValidWalletInstanceAttestation.mockReturnValueOnce(false);
     getWalletAttestation.mockResolvedValue(mockWalletAttestation);

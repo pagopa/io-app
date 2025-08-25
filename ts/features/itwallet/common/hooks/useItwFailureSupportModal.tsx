@@ -61,7 +61,7 @@ const contactMethodsByCredentialType: Record<
   string,
   SupportContactMethods | undefined
 > = {
-  MDL: {
+  mDL: {
     mobile: "06.4577.5927",
     landline: "800.232323",
     email: "uco.dgmot@mit.gov.it"

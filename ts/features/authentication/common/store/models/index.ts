@@ -3,7 +3,10 @@ import { SessionToken } from "../../../../../types/SessionToken";
 import { SpidIdp } from "../../../../../utils/idps";
 
 // reason for the user to be in the unauthenticated state
-type LoggedOutReason = "NOT_LOGGED_IN" | "SESSION_EXPIRED";
+type LoggedOutReason =
+  | "NOT_LOGGED_IN"
+  | "SESSION_EXPIRED"
+  | "SESSION_CORRUPTED";
 
 // PublicSession attributes
 export type TokenName = keyof Omit<

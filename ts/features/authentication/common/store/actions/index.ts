@@ -84,6 +84,9 @@ export const checkCurrentSession = createAsyncAction(
 
 export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
 
+// Login successful on the backend but not propagated to the app
+export const sessionCorrupted = createStandardAction("SESSION_CORRUPTED")();
+
 export const sessionInvalid = createStandardAction("SESSION_INVALID")();
 
 export const clearCurrentSession = createStandardAction(
@@ -104,6 +107,7 @@ export type AuthenticationActions =
   | ActionType<typeof sessionInformationLoadFailure>
   | ActionType<typeof checkCurrentSession>
   | ActionType<typeof sessionExpired>
+  | ActionType<typeof sessionCorrupted>
   | ActionType<typeof sessionInvalid>
   | ActionType<typeof clearCurrentSession>
   | ActionType<typeof resetAuthenticationState>

@@ -78,7 +78,7 @@ describe("WalletCardOnboardingScreen", () => {
     expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
   });
 
-  test.each([["MDL"], ["MDL", "EuropeanHealthInsuranceCard"]] as ReadonlyArray<
+  test.each([["mDL"], ["mDL", "EuropeanHealthInsuranceCard"]] as ReadonlyArray<
     ReadonlyArray<string>
   >)(
     "it should hide credential modules when %1 are remotely disabled",

@@ -32,6 +32,7 @@ import { IOMarkdownPlayground } from "../../devMode/playgrounds/IOMarkdownPlaygr
 import { AppFeedbackPlayground } from "../../devMode/playgrounds/AppFeedbackPlayground";
 import AppearancePreferenceScreen from "../../preferences/screens/AppearancePreferenceScreen";
 import { CiePlayground } from "../../devMode/playgrounds/CiePlayground";
+import AuthenticationNavigator from "../../../authentication/common/navigation/AuthenticationNavigator";
 import { SettingsParamsList } from "./params/SettingsParamsList";
 import { SETTINGS_ROUTES } from "./routes";
 
@@ -188,6 +189,14 @@ const SettingsStackNavigator = () => (
     <Stack.Screen
       name={SETTINGS_ROUTES.CIE_PLAYGROUND}
       component={CiePlayground}
+    />
+    <Stack.Screen
+      name={SETTINGS_ROUTES.AUTHENTICATION}
+      component={AuthenticationNavigator}
+      options={{
+        headerShown: false,
+        gestureEnabled: false
+      }}
     />
   </Stack.Navigator>
 );

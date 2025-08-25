@@ -49,6 +49,7 @@ import { PinSetActions } from "../../features/settings/security/store/actions/pi
 import { ProfileEmailValidationAction } from "../../features/mailCheck/store/actions/profileEmailValidationChange";
 import { IdentificationActions } from "../../features/identification/store/actions";
 import { OnboardingActions } from "../../features/onboarding/store/actions";
+import { LoginInfoActions } from "../../features/authentication/activeSessionLogin/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { BackendStatusActions } from "./backendStatus";
@@ -70,6 +71,7 @@ export type Action =
   | AuthenticationActions
   | BackendStatusActions
   | CieAuthenticationActions
+  | LoginInfoActions
   | VersionInfoActions
   | MessagesActions
   | MixpanelActions

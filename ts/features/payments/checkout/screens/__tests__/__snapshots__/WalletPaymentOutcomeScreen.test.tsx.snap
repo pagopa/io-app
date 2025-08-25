@@ -1611,30 +1611,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -1753,9 +1785,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -3544,30 +3573,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -3686,9 +3747,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -5458,30 +5516,62 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -5600,9 +5690,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -7357,30 +7444,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -7499,9 +7618,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -9270,30 +9386,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -9412,9 +9560,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -11283,30 +11428,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -11425,9 +11602,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -13268,30 +13442,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -13410,9 +13616,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -15167,30 +15370,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -15309,9 +15544,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -17016,30 +17248,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -17158,9 +17422,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -18949,30 +19210,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -19091,9 +19384,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -20862,30 +21152,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -21004,9 +21326,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -22795,30 +23114,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -22937,9 +23288,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -24808,30 +25156,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -24950,9 +25330,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -26741,30 +27118,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -26883,9 +27292,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -28674,30 +29080,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -28816,9 +29254,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -30615,30 +31050,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -30757,9 +31224,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -32528,30 +32992,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -32670,9 +33166,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -34543,30 +35036,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -34685,9 +35210,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -36456,30 +36978,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -36598,9 +37152,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -38519,30 +39070,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -38661,9 +39244,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -40689,30 +41269,62 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -40831,9 +41443,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -42750,30 +43359,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -42892,9 +43533,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -44766,30 +45404,62 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -44908,9 +45578,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -46843,30 +47510,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -46985,9 +47684,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -48742,30 +49438,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -48884,9 +49612,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -50683,30 +51408,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -50825,9 +51582,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -52596,30 +53350,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -52738,9 +53524,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -54529,30 +55312,62 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  scopri gli altri canali abilitati a pagoPA
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    scopri gli altri canali abilitati a pagoPA
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                             <View
@@ -54671,9 +55486,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
