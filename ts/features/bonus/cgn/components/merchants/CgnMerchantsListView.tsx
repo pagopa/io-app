@@ -21,15 +21,14 @@ export const CgnMerchantListViewRenderItem =
   (props: Props): ListRenderItem<OfflineMerchant | OnlineMerchant> =>
   ({ item, index }) => {
     const accessibilityLabel =
-      ((item?.numberOfNewDiscounts
+      (item?.numberOfNewDiscounts
         ? I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
             name: item.name,
             count: item.numberOfNewDiscounts
           })
         : item.newDiscounts
         ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
-        : item.name) as string) +
-      getListItemAccessibilityLabelCount(props.count, index);
+        : item.name) + getListItemAccessibilityLabelCount(props.count, index);
 
     return (
       <ContentWrapper>

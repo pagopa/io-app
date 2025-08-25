@@ -108,7 +108,7 @@ const ZendeskAskPermissions = () => {
     () => dispatch(zendeskStopPolling()),
     [dispatch]
   );
-  const notAvailable: string = I18n.t("global.remoteStates.notAvailable");
+  const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
   const identityProvider = pipe(
     useIOSelector(idpSelector, _.isEqual),
