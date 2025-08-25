@@ -30,7 +30,7 @@ export const createRemoteGuardsImplementation = (
     );
     return pipe(
       O.fromNullable(walletAttestation?.jwt),
-      O.map(wia => isWalletInstanceAttestationValid(wia)),
+      O.map(isWalletInstanceAttestationValid),
       O.getOrElse(() => false)
     );
   },
