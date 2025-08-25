@@ -144,7 +144,7 @@ export const createProximityActorsImplementation = (
         const { error } = eventPayload ?? {};
         sendBack({
           type: "device-error",
-          error: ISO18013_5.parseEventError(error)
+          error
         });
       };
 
@@ -182,22 +182,24 @@ export const createProximityActorsImplementation = (
         }
       };
 
-      ISO18013_5.addListener("onDeviceConnecting", handleDeviceConnecting);
-      ISO18013_5.addListener("onDeviceConnected", handleDeviceConnected);
-      ISO18013_5.addListener(
-        "onDocumentRequestReceived",
-        handleDocumentRequestReceived
-      );
-      ISO18013_5.addListener("onDeviceDisconnected", handleDeviceDisconnected);
-      ISO18013_5.addListener("onError", handleError);
+      const listeners = [
+        ISO18013_5.addListener("onDeviceConnecting", handleDeviceConnecting),
+        ISO18013_5.addListener("onDeviceConnected", handleDeviceConnected),
+        ISO18013_5.addListener(
+          "onDocumentRequestReceived",
+          handleDocumentRequestReceived
+        ),
+        ISO18013_5.addListener(
+          "onDeviceDisconnected",
+          handleDeviceDisconnected
+        ),
+        ISO18013_5.addListener("onError", handleError)
+      ];
 
       return () => {
-        // Cleanup function
-        ISO18013_5.removeListener("onDeviceConnected");
-        ISO18013_5.removeListener("onDeviceConnecting");
-        ISO18013_5.removeListener("onDeviceDisconnected");
-        ISO18013_5.removeListener("onDocumentRequestReceived");
-        ISO18013_5.removeListener("onError");
+        // Remove event listeners
+        listeners.forEach(listener => listener.remove());
+        // Close the Bluetooth connection and clear all resources
         void ISO18013_5.close();
       };
     }
