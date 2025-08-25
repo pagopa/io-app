@@ -3,7 +3,9 @@ import i18n from "../../../../../../i18n";
 import * as analytics from "../../analytics";
 import CieIdAuthUrlError from "../CieIdAuthUrlError";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+
 const mockNavigate = jest.fn();
+const mockReplace = jest.fn();
 const mockUrl = "https://unauthorized-url.com";
 
 jest.mock("@react-navigation/native", () => ({
@@ -14,11 +16,18 @@ jest.mock("@react-navigation/native", () => ({
     }
   }),
   useNavigation: () => ({
-    navigate: mockNavigate
+    navigate: mockNavigate,
+    replace: mockReplace
   })
 }));
 
 jest.mock("../../analytics");
+
+jest.mock("../../../../../../store/hooks", () => ({
+  useIODispatch: jest.fn(),
+  useIOStore: jest.fn(),
+  useIOSelector: jest.fn()
+}));
 
 describe("CieIdAuthUrlError", () => {
   it("Should match the snapshot", () => {
@@ -48,7 +57,7 @@ describe("CieIdAuthUrlError", () => {
     const closeButton = getByText(i18n.t("global.buttons.close"));
     fireEvent.press(closeButton);
 
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.LANDING
     });
   });
