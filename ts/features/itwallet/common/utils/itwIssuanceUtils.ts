@@ -7,21 +7,17 @@ import {
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import { v4 as uuidv4 } from "uuid";
 import { type IdentificationContext } from "../../machine/eid/context";
-import { StoredCredential } from "./itwTypesUtils";
+import {
+  CredentialAccessToken,
+  IssuerConfiguration,
+  StoredCredential
+} from "./itwTypesUtils";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
 import { Env } from "./environment";
-
-type AccessToken = Awaited<
-  ReturnType<Credential.Issuance.AuthorizeAccess>
->["accessToken"];
-
-type IssuerConf = Awaited<
-  ReturnType<Credential.Issuance.EvaluateIssuerTrust>
->["issuerConf"];
 
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
@@ -93,7 +89,7 @@ const startAuthFlow = async ({
 
 export type CompleteAuthFlowParams = {
   callbackUrl: string;
-  issuerConf: IssuerConf;
+  issuerConf: IssuerConfiguration;
   clientId: string;
   codeVerifier: string;
   walletAttestation: string;
@@ -146,8 +142,8 @@ const completeAuthFlow = async ({
 };
 
 export type PidIssuanceParams = {
-  issuerConf: IssuerConf;
-  accessToken: AccessToken;
+  issuerConf: IssuerConfiguration;
+  accessToken: CredentialAccessToken;
   clientId: string;
   dPoPContext: CryptoContext;
   credentialDefinition: AuthorizationDetail;
@@ -219,7 +215,7 @@ export { startAuthFlow, completeAuthFlow, getPid };
  * @returns `credential_configuration_id` and `credential_identifier`
  */
 function getCredentialIdentifierFromAccessToken(
-  accessToken: AccessToken,
+  accessToken: CredentialAccessToken,
   authorizationDetail: AuthorizationDetail
 ) {
   const accessTokenAuthDetail = accessToken.authorization_details.find(
