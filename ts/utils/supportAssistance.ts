@@ -161,6 +161,15 @@ export const defaultIdPayExpenseCategory: ZendeskCategory = {
   }
 };
 
+export const defaultZendeskIDPayCategory: ZendeskCategory = {
+  value: "idpay",
+  description: {
+    "it-IT": "IDPay",
+    "en-EN": "IDPay",
+    "de-DE": "IDPay"
+  }
+};
+
 export const resetAssistanceData = () => {
   resetCustomFields();
   resetLog();
