@@ -6091,6 +6091,15 @@
         "input": "Codice sconto",
         "button": "Continua"
       }
+    },
+    "support": {
+      "errorCode": "Codice errore",
+      "serviceId": "ID servizio",
+      "initiativeId": "ID iniziativa",
+      "supportTitle": "Contatta l'assistenza",
+      "chat": "Chiedi aiuto in chat",
+      "additionalDataTitle": "Dati aggiuntivi",
+      "copyAll": "Copia tutti"
     }
   },
   "barcodeScan": {
