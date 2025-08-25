@@ -48,15 +48,13 @@ type CredentialStatusAlertProps = {
   onTrack: TrackCredentialAlert;
 };
 
-const useAlertPressHandler = (
-  onTrack: TrackCredentialAlert,
-  bottomSheet: { present: () => void }
-) =>
-  useCallback(() => {
+const useAlertPressHandler =
+  (onTrack: TrackCredentialAlert, bottomSheet: { present: () => void }) =>
+  () => {
     onTrack("tap_banner");
     bottomSheet.present();
     onTrack("open_bottom_sheet");
-  }, [onTrack, bottomSheet]);
+  };
 
 /**
  * This component renders an alert related to the credential status (expiring or invalid).
@@ -194,7 +192,7 @@ const DocumentExpiringAlert = ({
               variant="outline"
               fullWidth
               label={I18n.t(
-                "features.itWallet.presentation.bottomSheets.MDL.expiring.cta"
+                "features.itWallet.presentation.bottomSheets.mDL.expiring.cta"
               )}
               onPress={handleCtaPress}
             />
