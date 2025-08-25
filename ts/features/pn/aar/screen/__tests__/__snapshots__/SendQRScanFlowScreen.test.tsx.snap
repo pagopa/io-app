@@ -739,9 +739,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]

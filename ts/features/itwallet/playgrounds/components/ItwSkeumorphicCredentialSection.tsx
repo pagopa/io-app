@@ -15,7 +15,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
 
 const credentialsWithCard: ReadonlyArray<string> = [
-  "MDL",
+  "mDL",
   "EuropeanDisabilityCard"
 ];
 
