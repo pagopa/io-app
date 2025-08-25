@@ -7,7 +7,7 @@ import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
 import { Consent } from "../../../../../../definitions/fims_sso/Consent";
 import { FimsErrorStateType } from "../reducers";
 
-type FimsGetConsentsListRequestType = {
+export type FimsGetConsentsListRequestType = {
   ctaText: string;
   ctaUrl: string;
   ephemeralSessionOniOS: boolean;
