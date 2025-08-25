@@ -5574,7 +5574,7 @@
                 "action": "Configura"
               }
             },
-            "yourOperations": "Le tue Operazioni",
+            "yourOperations": "Le tue operazioni",
             "yourOperationsSubtitle": "Qui vedrai le transazioni effettuate con i metodi che hai associato. ",
             "settings": {
               "showMore": "Vedi tutte",
@@ -6044,12 +6044,13 @@
           "title": "Done!"
         },
         "cancelled": {
-          "title": "L’operazione è stata annullata"
+          "title": "L’operazione è stata annullata",
+          "subtitle": "Non è stato addebitato alcun importo."
         },
         "failure": {
           "GENERIC": {
-            "title": "Si è verificato un errore imprevisto",
-            "subtitle": "Non è stato addebitato alcun importo."
+            "title": "Il codice non è valido",
+            "subtitle": "Se si tratta di un errore, chiedi all’esercente di crearne uno nuovo."
           },
           "TRANSACTION_EXPIRED": {
             "title": "Il codice è scaduto",
