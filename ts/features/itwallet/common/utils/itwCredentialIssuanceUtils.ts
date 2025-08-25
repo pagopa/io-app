@@ -9,7 +9,11 @@ import {
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
-import { RequestObject, StoredCredential } from "./itwTypesUtils";
+import {
+  IssuerConfiguration,
+  RequestObject,
+  StoredCredential
+} from "./itwTypesUtils";
 import { Env } from "./environment";
 import { enrichErrorWithMetadata } from "./itwFailureUtils";
 
@@ -18,10 +22,6 @@ export type RequestCredentialParams = {
   credentialType: string;
   walletInstanceAttestation: string;
 };
-
-type IssuerConf = Awaited<
-  ReturnType<Credential.Issuance.EvaluateIssuerTrust>
->["issuerConf"];
 
 /**
  * Requests a credential from the issuer.
@@ -55,7 +55,7 @@ export const requestCredential = async ({
       credentialIds,
       {
         walletInstanceAttestation,
-        redirectUri: `${env.ISSUANCE_REDIRECT_URI}`,
+        redirectUri: env.ISSUANCE_REDIRECT_URI,
         wiaCryptoContext
       }
     );
@@ -83,7 +83,7 @@ export type ObtainCredentialParams = {
   pid: StoredCredential;
   clientId: string;
   codeVerifier: string;
-  issuerConf: IssuerConf;
+  issuerConf: IssuerConfiguration;
   operationType?: "reissuing";
 };
 
@@ -133,7 +133,7 @@ export const obtainCredential = async ({
     issuerConf,
     code,
     clientId,
-    `${env.ISSUANCE_REDIRECT_URI}`,
+    env.ISSUANCE_REDIRECT_URI,
     codeVerifier,
     {
       walletInstanceAttestation,
@@ -177,7 +177,8 @@ export const obtainCredential = async ({
             issuerConf,
             credential,
             credential_configuration_id,
-            { credentialCryptoContext, ignoreMissingAttributes: false }
+            { credentialCryptoContext, ignoreMissingAttributes: false },
+            env.X509_CERT_ROOT
           );
 
         return {
