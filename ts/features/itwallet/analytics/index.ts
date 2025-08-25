@@ -44,11 +44,11 @@ export type KoState = {
 
 /**
  * This is the list of credentials that are tracked in MixPanel
- * ITW_ID_V2: PersonIdentificationData ( obtained with Documenti su IO)
- * ITW_PG_V2: MDL
+ * ITW_ID_V2: PersonIdentificationData (obtained with Documenti su IO)
+ * ITW_PG_V2: mDL
  * ITW_CED_V2: EuropeanDisabilityCard
  * ITW_TS_V2: EuropeanHealthInsuranceCard
- * ITW_PID: PID ( obtained with IT Wallet)
+ * ITW_PID: PID (obtained with IT Wallet)
  */
 const mixPanelCredentials = [
   "ITW_ID_V2",
@@ -72,15 +72,15 @@ type ItwFailureCause = "CredentialIssuer" | "WalletProvider";
 
 /**
  * This map is used to map the credential type to the MixPanel credential
- * ITW_ID_V2: PersonIdentificationData ( obtained with Documenti su IO)
- * ITW_PG_V2: MDL
+ * ITW_ID_V2: PersonIdentificationData (obtained with Documenti su IO)
+ * ITW_PG_V2: mDL
  * ITW_CED_V2: EuropeanDisabilityCard
  * ITW_TS_V2: EuropeanHealthInsuranceCard,
- * ITW_PID: PID ( obtained with IT Wallet)
+ * ITW_PID: PID (obtained with IT Wallet)
  */
 export const CREDENTIALS_MAP: Record<string, MixPanelCredential> = {
   PersonIdentificationData: "ITW_ID_V2",
-  MDL: "ITW_PG_V2",
+  mDL: "ITW_PG_V2",
   EuropeanDisabilityCard: "ITW_CED_V2",
   EuropeanHealthInsuranceCard: "ITW_TS_V2",
   PID: "ITW_PID"
@@ -1181,7 +1181,7 @@ export const updatePropertiesWalletRevoked = (state: GlobalState) => {
 /**
  * Returns the PID status for Mixpanel analytics, depending on the context.
  * If `isL3` is true, we use the status from the current L3 PID (IT Wallet).
- * If `isL3` is false, we fall back to the last known L2 PID ( or eID) status.
+ * If `isL3` is false, we fall back to the last known L2 PID (or eID) status.
  */
 export const getPIDMixpanelStatus = (
   state: GlobalState,

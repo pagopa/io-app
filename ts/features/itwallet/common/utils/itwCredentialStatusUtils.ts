@@ -93,7 +93,7 @@ export const getCredentialStatus = (
  * The message is dynamic and extracted from the issuer configuration.
  */
 export const getCredentialStatusObject = (credential: StoredCredential) => {
-  const { storedStatusAttestation, issuerConf, credentialType } = credential;
+  const { storedStatusAttestation, issuerConf, credentialId } = credential;
 
   const errorCode =
     storedStatusAttestation?.credentialStatus === "invalid"
@@ -105,7 +105,7 @@ export const getCredentialStatusObject = (credential: StoredCredential) => {
     message: errorCode
       ? Errors.extractErrorMessageFromIssuerConf(errorCode, {
           issuerConf: issuerConf as LegacyIssuerConfiguration,
-          credentialType
+          credentialType: credentialId
         })
       : undefined
   };
