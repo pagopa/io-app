@@ -391,6 +391,7 @@ exports[`IngressScreen Should match the snapshot 1`] = `
                         <View
                           style={
                             {
+                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -400,8 +401,10 @@ exports[`IngressScreen Should match the snapshot 1`] = `
                               {
                                 "alignItems": "center",
                                 "display": "flex",
+                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
+                                "justifyContent": "center",
                               }
                             }
                           >
@@ -557,6 +560,14 @@ exports[`IngressScreen Should match the snapshot 1`] = `
                             </Text>
                           </View>
                         </View>
+                        <View
+                          style={
+                            {
+                              "marginBottom": 16,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>

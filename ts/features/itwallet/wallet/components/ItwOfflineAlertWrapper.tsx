@@ -106,6 +106,15 @@ const AlertWrapper = ({
       };
     }
 
+    if (offlineAccessReason === OfflineAccessReasonEnum.TIMEOUT) {
+      return {
+        content: I18n.t(`features.itWallet.offline.timeout.alert.content`),
+        action: I18n.t(`features.itWallet.offline.timeout.alert.action`),
+        variant: "info",
+        onPress: handleAppRestart
+      };
+    }
+
     return {
       content: I18n.t(
         `features.itWallet.offline.${offlineAccessReason}.alert.content`

@@ -2,6 +2,7 @@
  * An ingress screen to choose the real first screen the user must navigate to.
  */
 import {
+  Banner,
   ContentWrapper,
   H3,
   IOColors,
@@ -18,6 +19,7 @@ import {
   AnimatedPictogram,
   IOAnimatedPictograms
 } from "../ui/AnimatedPictogram";
+import I18n from "../../i18n";
 
 const styles = StyleSheet.create({
   container: {
@@ -33,6 +35,7 @@ type LoadingScreenContentProps = WithTestID<{
   children?: ReactNode;
   headerVisible?: boolean;
   animatedPictogramSource?: IOAnimatedPictograms;
+  banner: { showBanner?: boolean; onPress: () => void };
 }>;
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
@@ -42,7 +45,8 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
     children,
     headerVisible,
     testID,
-    animatedPictogramSource
+    animatedPictogramSource,
+    banner = { showBanner: false }
   } = props;
 
   useEffect(() => {
@@ -66,10 +70,10 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
       edges={headerVisible ? ["bottom"] : undefined}
       testID={testID}
     >
-      <ContentWrapper>
+      <ContentWrapper style={{ flex: 1 }}>
         <VStack
           space={SPACE_BETWEEN_SPINNER_AND_TEXT}
-          style={{ alignItems: "center" }}
+          style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
         >
           <View
             accessible={false}
@@ -93,9 +97,21 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
           >
             {contentTitle}
           </H3>
+          {children}
         </VStack>
       </ContentWrapper>
-      {children}
+      <ContentWrapper style={{ marginBottom: 16 }}>
+        {banner.showBanner && (
+          <Banner
+            pictogramName="identityCheck"
+            color="neutral"
+            title={I18n.t("startup.offline_access_banner.title")}
+            content={I18n.t("startup.offline_access_banner.content")}
+            action={I18n.t("startup.offline_access_banner.action")}
+            onPress={banner.onPress}
+          />
+        )}
+      </ContentWrapper>
     </SafeAreaView>
   );
 };

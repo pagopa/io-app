@@ -352,6 +352,11 @@
     "contextualHelp": {
       "title": "Problemi di inizializzazione?"
     },
+    "offline_access_banner": {
+      "title": "Ti servono i documenti?",
+      "content": "Non attendere, sono sempre disponibili, anche se non hai connessione!",
+      "action": "Vai ai documenti"
+    },
     "connection_lost": {
       "title": "Non hai una connessione a internet attiva",
       "description": "Controlla la tua connessione e riavvia l’app."
@@ -5321,6 +5326,17 @@
             "title": "Servizi dell’app limitati",
             "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi** per un uso controllato, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
             "footerAction": "Ricarica l'app IO"
+          }
+        },
+        "timeout": {
+          "alert": {
+            "content": " Hai bisogno di tornare alla versione completa di IO?",
+            "action": "Ricarica l’app IO"
+          },
+          "modal": {
+            "title": "Il tuo accesso all’app è scaduto",
+            "content": "###### Cosa posso fare?\n\nQuando la tua sessione di accesso all’app scade, alcuni servizi dell’app potrebbero essere limitati per motivi di sicurezza.\n\nAccedi di nuovo con SPID o CIE per continuare ad usare tutti i servizi di IO.",
+            "footerAction": "Accedi di nuovo"
           }
         },
         "back_online": {
