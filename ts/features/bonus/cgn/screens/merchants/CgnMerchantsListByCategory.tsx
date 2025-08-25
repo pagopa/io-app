@@ -118,7 +118,7 @@ const CgnMerchantsListByCategory = () => {
         O.fromNullable,
         O.fold(
           () => "bonus.cgn.merchantsList.navigationTitle",
-          cs => cs.nameKey
+          cs => cs.nameKey as any
         )
       )
     ),
@@ -193,7 +193,7 @@ const CgnMerchantsListByCategory = () => {
             <HSpacer size={16} />
             <View style={{ flex: 1 }}>
               <H3 color={categorySpecs.textColor}>
-                {I18n.t(categorySpecs.nameKey)}
+                {I18n.t(categorySpecs.nameKey as any)}
               </H3>
             </View>
           </View>

@@ -2978,7 +2978,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.27.0, @babel/runtime@npm:^7.27.6":
+"@babel/runtime@npm:^7.27.6":
   version: 7.28.3
   resolution: "@babel/runtime@npm:7.28.3"
   checksum: dd22662b9e02b6e66cfb061d6f9730eb0aa3b3a390a7bd70fe9a64116d86a3704df6d54ab978cb4acc13b58dbf63a3d7dd4616b0b87030eb14a22835e0aa602d
@@ -12112,18 +12112,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next-resources-for-ts@npm:^1.6.0":
-  version: 1.6.0
-  resolution: "i18next-resources-for-ts@npm:1.6.0"
-  dependencies:
-    "@babel/runtime": ^7.27.0
-    yaml: ^2.7.1
-  bin:
-    i18next-resources-for-ts: bin/i18next-resources-for-ts.js
-  checksum: 2f64182b5a3dcde58471f851028da174dccb7b74963e168ee71e810be06f517954d5f9ab49b64576a55b87348a28ff91d5ccbfb7b44c65567cfa2c590df66c83
-  languageName: node
-  linkType: hard
-
 "i18next@npm:^25.3.6":
   version: 25.3.6
   resolution: "i18next@npm:25.3.6"
@@ -13064,7 +13052,6 @@ __metadata:
     hoist-non-react-statics: ^3.0.1
     husky: ^8.0.0
     i18next: ^25.3.6
-    i18next-resources-for-ts: ^1.6.0
     io-ts: ^2.2.16
     jail-monkey: ^2.8.3
     jest: ^29.7.0
@@ -21667,15 +21654,6 @@ __metadata:
   version: 2.2.1
   resolution: "yaml@npm:2.2.1"
   checksum: 84f68cbe462d5da4e7ded4a8bded949ffa912bc264472e5a684c3d45b22d8f73a3019963a32164023bdf3d83cfb6f5b58ff7b2b10ef5b717c630f40bd6369a23
-  languageName: node
-  linkType: hard
-
-"yaml@npm:^2.7.1":
-  version: 2.8.1
-  resolution: "yaml@npm:2.8.1"
-  bin:
-    yaml: bin.mjs
-  checksum: 35b46150d48bc1da2fd5b1521a48a4fa36d68deaabe496f3c3fa9646d5796b6b974f3930a02c4b5aee6c85c860d7d7f79009416724465e835f40b87898c36de4
   languageName: node
   linkType: hard
 

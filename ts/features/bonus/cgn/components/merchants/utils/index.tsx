@@ -30,7 +30,7 @@ export const moduleCGNaccessibilityLabel = (discountData: Discount) => {
     ${productCategories
       .map(categoryKey => {
         const category = getCategorySpecs(categoryKey);
-        return O.isSome(category) ? I18n.t(category.value.nameKey) : "";
+        return O.isSome(category) ? I18n.t(category.value.nameKey as any) : "";
       })
       .join(", ")}
       `;

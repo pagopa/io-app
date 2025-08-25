@@ -148,9 +148,11 @@ export const orderCategoriesByNameKey = (
     } else if (O.isSome(c1Specs) && O.isNone(c2Specs)) {
       return -1;
     } else if (O.isSome(c1Specs) && O.isSome(c2Specs)) {
-      return I18n.t(c1Specs.value.nameKey)
+      return I18n.t(c1Specs.value.nameKey as any)
         .toLocaleLowerCase()
-        .localeCompare(I18n.t(c2Specs.value.nameKey).toLocaleLowerCase());
+        .localeCompare(
+          I18n.t(c2Specs.value.nameKey as any).toLocaleLowerCase()
+        );
     }
 
     return 0;

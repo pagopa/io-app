@@ -9,7 +9,6 @@ import ReactNativeBlobUtil from "react-native-blob-util";
 import I18n from "i18next";
 import { SignatureField } from "../../../../definitions/fci/SignatureField";
 import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
-import { TranslationKeys } from "../../../../locales/locales";
 import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
 import { DocumentDetailView } from "../../../../definitions/fci/DocumentDetailView";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
@@ -24,7 +23,7 @@ const clausesEnumValues = {
 };
 
 export const getClauseLabel = (clauseType: ClauseTypeEnum) =>
-  I18n.t(`${clausesEnumValues[clauseType] as TranslationKeys}`);
+  I18n.t(clausesEnumValues[clauseType] as any);
 
 export type LIST_DATA_TYPE = {
   title: string;

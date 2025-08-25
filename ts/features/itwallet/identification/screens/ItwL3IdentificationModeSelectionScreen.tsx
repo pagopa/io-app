@@ -265,7 +265,7 @@ export const useNoCieBottomSheet = () => {
             <View style={{ flex: 1 }}>
               <IOMarkdown
                 content={I18n.t(
-                  `features.itWallet.identification.mode.l3.bottomSheet.noCie.warnings.${index}`
+                  `features.itWallet.identification.mode.l3.bottomSheet.noCie.warnings.${index}` as any
                 )}
               />
             </View>
