@@ -65,7 +65,8 @@ const itwNestedCredentialSummaryMap: Record<
 /**
  * Given a set of claims for a single nested item and its parent's claim ID,
  * this function looks up the correct configuration and returns the
- * appropriate summary fields.
+ * appropriate summary fields. If no configuration is found, it falls back
+ * to searching for claims with the IDs "label" and "value".
  *
  * @param claimId The ID of the parent claim (e.g., "education_degrees").
  * @param singleItemClaims The array of claims for the one nested item.
@@ -77,17 +78,25 @@ const getNestedItemSummary = (
 ): { summaryLabel?: string; summaryValue?: string } => {
   const summaryConfig = itwNestedCredentialSummaryMap[claimId];
 
-  if (!summaryConfig) {
+  if (summaryConfig) {
+    // custom configuration
+    const claimsMap = new Map<string, string>(
+      singleItemClaims.map(claim => [claim.id, claim.value as string])
+    );
+    const summaryLabel = claimsMap.get(summaryConfig.summaryLabelId);
+    const summaryValue = claimsMap.get(summaryConfig.summaryValueId);
+    return { summaryLabel, summaryValue };
+  } else {
+    // fallback: use the label and value from the first claim in the array.
+    if (singleItemClaims.length > 0) {
+      const firstClaim = singleItemClaims[0];
+      return {
+        summaryLabel: firstClaim.label,
+        summaryValue: firstClaim.value as string
+      };
+    }
     return {};
   }
-
-  const claimsMap = new Map<string, string>(
-    singleItemClaims.map(claim => [claim.id, claim.value as string])
-  );
-
-  const summaryLabel = claimsMap.get(summaryConfig.summaryLabelId);
-  const summaryValue = claimsMap.get(summaryConfig.summaryValueId);
-  return { summaryLabel, summaryValue };
 };
 
 /**
@@ -475,17 +484,19 @@ export const ItwCredentialClaim = ({
                   );
 
                   return (
-                    <ItwNestedClaimsListItem
-                      key={index}
-                      itemTitle={summaryValue}
-                      itemClaims={singleItemClaims}
-                      summaryLabel={summaryLabel}
-                      summaryValue={summaryValue}
-                      hidden={hidden}
-                      isPreview={isPreview}
-                      credentialStatus={credentialStatus}
-                      credentialType={credentialType}
-                    />
+                    <Fragment key={`${index}_${claim.id}_${claim.label}`}>
+                      {index > 0 && <Divider />}
+                      <ItwNestedClaimsListItem
+                        itemTitle={summaryValue}
+                        itemClaims={singleItemClaims}
+                        summaryLabel={summaryLabel}
+                        summaryValue={summaryValue}
+                        hidden={hidden}
+                        isPreview={isPreview}
+                        credentialStatus={credentialStatus}
+                        credentialType={credentialType}
+                      />
+                    </Fragment>
                   );
                 })}
               </>
