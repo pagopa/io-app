@@ -7,7 +7,9 @@ import {
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
   StartProximityFlowInput,
-  CheckPermissionsInput
+  CheckPermissionsInput,
+  CloseActorOutput,
+  GetQrCodeStringActorOutput
 } from "./actors";
 import { mapEventToFailure } from "./failure";
 
@@ -21,9 +23,18 @@ export const itwProximityMachine = setup({
     events: {} as ProximityEvents
   },
   actions: {
+    /**
+     * Context manipulation
+     */
+
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     setQRCodeGenerationError: assign({ isQRCodeGenerationError: true }),
     setHasGivenConsent: assign({ hasGivenConsent: true }),
+
+    /**
+     * Navigation
+     */
+
     navigateToGrantPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
@@ -31,6 +42,11 @@ export const itwProximityMachine = setup({
     navigateToSendDocumentsResponseScreen: notImplemented,
     navigateToWallet: notImplemented,
     closeProximity: notImplemented,
+
+    /**
+     * Analytics
+     */
+
     trackQrCodeGenerationOutcome: notImplemented
   },
   actors: {
@@ -41,8 +57,10 @@ export const itwProximityMachine = setup({
     startProximityFlow: fromPromise<void, StartProximityFlowInput>(
       notImplemented
     ),
-    generateQrCodeString: fromPromise<string, void>(notImplemented),
-    closeProximityFlow: fromPromise<boolean, void>(notImplemented),
+    generateQrCodeString: fromPromise<GetQrCodeStringActorOutput, void>(
+      notImplemented
+    ),
+    closeProximityFlow: fromPromise<CloseActorOutput, void>(notImplemented),
     proximityCommunicationLogic: fromCallback<ProximityEvents>(notImplemented),
     terminateProximitySession:
       fromPromise<SendErrorResponseActorOutput>(notImplemented),
