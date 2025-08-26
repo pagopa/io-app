@@ -1220,7 +1220,9 @@ describe("itwEidIssuanceMachine", () => {
 
     actor.send({ type: "start-reissuing" });
 
-    expect(actor.getSnapshot().value).toStrictEqual("TrustFederationVerification");
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
     await waitFor(() => {
