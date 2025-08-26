@@ -3,10 +3,7 @@ import _ from "lodash";
 import { assign, createActor, fromPromise, StateFrom } from "xstate";
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
-import {
-  StoredCredential,
-  WalletInstanceAttestations
-} from "../../../common/utils/itwTypesUtils";
+import { StoredCredential, WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
   CreateWalletInstanceActorParams,
@@ -15,12 +12,7 @@ import {
   StartAuthFlowActorParams,
   VerifyTrustFederationParams
 } from "../actors";
-import {
-  AuthenticationContext,
-  CieContext,
-  Context,
-  InitialContext
-} from "../context";
+import { AuthenticationContext, CieContext, Context, InitialContext } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
 import { CiePreparationType } from "../../../identification/cie/components/ItwCiePreparationBaseScreenContent";
 
@@ -1219,6 +1211,7 @@ describe("itwEidIssuanceMachine", () => {
     actor.getSnapshot().context = initialContext;
 
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
@@ -1227,11 +1220,18 @@ describe("itwEidIssuanceMachine", () => {
 
     actor.send({ type: "start-reissuing" });
 
-    expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: {
-        Identification: "L2"
-      }
+    expect(actor.getSnapshot().value).toStrictEqual("TrustFederationVerification");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+
+    await waitFor(() => {
+      expect(actor.getSnapshot().value).toStrictEqual({
+        UserIdentification: {
+          Identification: "L2"
+        }
+      });
     });
+
+    expect(verifyTrustFederation).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,

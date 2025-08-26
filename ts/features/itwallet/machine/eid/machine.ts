@@ -8,11 +8,11 @@ import { ItwTags } from "../tags";
 import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
 import {
+  CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
   StartAuthFlowActorParams,
-  VerifyTrustFederationParams,
-  CreateWalletInstanceActorParams
+  VerifyTrustFederationParams
 } from "./actors";
 import {
   AuthenticationContext,
@@ -177,17 +177,10 @@ export const itwEidIssuanceMachine = setup({
         "revoke-wallet-instance": {
           target: "WalletInstanceRevocation"
         },
-        "start-reissuing": [
-          {
-            guard: not("hasValidWalletInstanceAttestation"),
-            actions: "setIsReissuing",
-            target: "WalletInstanceAttestationObtainment"
-          },
-          {
-            actions: "setIsReissuing",
-            target: "UserIdentification.Identification.L2"
-          }
-        ]
+        "start-reissuing": {
+          actions: "setIsReissuing",
+          target: "TrustFederationVerification"
+        }
       }
     },
     TosAcceptance: {
@@ -218,6 +211,17 @@ export const itwEidIssuanceMachine = setup({
             // we need to create a new integrity key tag and a new wallet instance
             guard: not("hasIntegrityKeyTag"),
             target: "WalletInstanceCreation"
+          },
+          {
+            guard: and([
+              "isReissuing",
+              not("hasValidWalletInstanceAttestation")
+            ]),
+            target: "WalletInstanceAttestationObtainment"
+          },
+          {
+            guard: "isReissuing",
+            target: "UserIdentification.Identification.L2"
           },
           {
             // When an integrity key tag exists but the wallet instance attestation is invalid,
