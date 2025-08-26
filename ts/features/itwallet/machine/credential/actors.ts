@@ -147,22 +147,31 @@ export const createCredentialIssuanceActorsImplementation = (
   >(async ({ input }) => {
     assert(input.credentials, "credentials are undefined");
 
-    return await Promise.all(
-      input.credentials.map(async credential => {
-        const { statusAttestation, parsedStatusAttestation } =
-          await getCredentialStatusAttestation(credential, env).catch(
-            enrichErrorWithMetadata({ credentialId: credential.credentialId })
-          );
+    const requestStatusAttestationOrSkip = async (
+      credential: StoredCredential
+    ): Promise<StoredCredential> => {
+      // Status assertions for mDoc credentials are not supported yet
+      if (credential.format === "mso_mdoc") {
+        return credential;
+      }
 
-        return {
-          ...credential,
-          storedStatusAttestation: {
-            credentialStatus: "valid",
-            statusAttestation,
-            parsedStatusAttestation: parsedStatusAttestation.payload
-          }
-        };
-      })
+      const { statusAttestation, parsedStatusAttestation } =
+        await getCredentialStatusAttestation(credential, env).catch(
+          enrichErrorWithMetadata({ credentialId: credential.credentialId })
+        );
+
+      return {
+        ...credential,
+        storedStatusAttestation: {
+          credentialStatus: "valid",
+          statusAttestation,
+          parsedStatusAttestation: parsedStatusAttestation.payload
+        }
+      };
+    };
+
+    return await Promise.all(
+      input.credentials.map(requestStatusAttestationOrSkip)
     );
   });
 
