@@ -2,10 +2,11 @@ import {
   ListItemHeader,
   RadioGroup,
   useIONewTypeface,
+  useIOThemeContext,
   VStack
 } from "@pagopa/io-app-design-system";
-import { ReactElement, useState } from "react";
-import { View } from "react-native";
+import { ReactElement, useEffect, useState } from "react";
+import { Appearance, useColorScheme, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -32,6 +33,8 @@ const AppearancePreferenceScreen = (): ReactElement => {
   const store = useIOStore();
   const dispatch = useIODispatch();
   const { newTypefaceEnabled, setNewTypefaceEnabled } = useIONewTypeface();
+  const { setTheme } = useIOThemeContext();
+  const systemColorScheme = useColorScheme();
 
   useFocusEffect(() => {
     trackAppearancePreferenceScreenView();
@@ -83,20 +86,21 @@ const AppearancePreferenceScreen = (): ReactElement => {
       ),
       description: I18n.t(
         "profile.preferences.list.appearance.theme.automatic.description"
-      ),
-      disabled: true
+      )
     },
     {
       id: "light" as ColorModeChoice,
-      value: I18n.t("profile.preferences.list.appearance.theme.light"),
-      disabled: true
+      value: I18n.t("profile.preferences.list.appearance.theme.light")
     },
     {
       id: "dark" as ColorModeChoice,
-      value: I18n.t("profile.preferences.list.appearance.theme.dark"),
-      disabled: true
+      value: I18n.t("profile.preferences.list.appearance.theme.dark")
     }
   ];
+
+  useEffect(() => {
+    console.log("hook", systemColorScheme);
+  }, [systemColorScheme]);
 
   return (
     <IOScrollViewWithLargeHeader
@@ -141,7 +145,13 @@ const AppearancePreferenceScreen = (): ReactElement => {
             type="radioListItem"
             items={colorModeOptions}
             selectedItem={selectedColorMode}
-            onPress={setSelectedColorMode}
+            onPress={(mode: ColorModeChoice) => {
+              if (mode === "system") {
+                Appearance.setColorScheme(undefined);
+              }
+              setTheme(mode === "system" ? systemColorScheme : mode);
+              setSelectedColorMode(mode);
+            }}
           />
         </View>
       </VStack>
