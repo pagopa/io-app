@@ -259,7 +259,7 @@ const dataComponentMap: Record<
   string,
   Record<CardSide, ElementType<DataComponentProps>>
 > = {
-  MDL: { front: MdlFrontData, back: MdlBackData },
+  mDL: { front: MdlFrontData, back: MdlBackData },
   EuropeanDisabilityCard: { front: DcFrontData, back: DcBackData }
 };
 

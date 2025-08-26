@@ -132,9 +132,8 @@ const renderComponent = (
 
   const logic = itwRemoteMachine.provide({
     guards: {
-      isWalletActive: jest.fn().mockReturnValue(true),
-      isEidExpired: jest.fn().mockReturnValue(false),
-      isL3Enabled: jest.fn().mockReturnValue(true)
+      isItWalletL3Active: jest.fn().mockReturnValue(true),
+      isEidExpired: jest.fn().mockReturnValue(false)
     },
     actions: {
       navigateToClaimsDisclosureScreen: jest.fn()
