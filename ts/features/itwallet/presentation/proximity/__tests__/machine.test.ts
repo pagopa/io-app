@@ -9,6 +9,8 @@ import {
 import { itwProximityMachine } from "../machine/machine";
 import {
   CheckPermissionsInput,
+  CloseActorOutput,
+  GetQrCodeStringActorOutput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
   SendErrorResponseActorOutput,
@@ -94,8 +96,12 @@ describe("itwProximityMachine", () => {
       startProximityFlow: fromPromise<void, StartProximityFlowInput>(
         startProximityFlow
       ),
-      generateQrCodeString: fromPromise<string, void>(generateQrCodeString),
-      closeProximityFlow: fromPromise<boolean, void>(closeProximityFlow),
+      generateQrCodeString: fromPromise<GetQrCodeStringActorOutput, void>(
+        generateQrCodeString
+      ),
+      closeProximityFlow: fromPromise<CloseActorOutput, void>(
+        closeProximityFlow
+      ),
       proximityCommunicationLogic: fromCallback<ProximityEvents>(
         proximityCommunicationLogic
       ),
