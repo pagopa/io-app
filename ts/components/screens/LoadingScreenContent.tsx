@@ -35,7 +35,7 @@ type LoadingScreenContentProps = WithTestID<{
   children?: ReactNode;
   headerVisible?: boolean;
   animatedPictogramSource?: IOAnimatedPictograms;
-  banner: { showBanner?: boolean; onPress: () => void };
+  banner?: { showBanner?: boolean; onPress: () => void };
 }>;
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
