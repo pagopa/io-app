@@ -1,9 +1,9 @@
 import {
+  IOColors,
   IOFontWeight,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
 import { FunctionComponent, PropsWithChildren } from "react";
-
 import { Text, TextStyle, useWindowDimensions } from "react-native";
 import { HIDDEN_CLAIM_TEXT } from "../../utils/constants.ts";
 
@@ -51,6 +51,9 @@ export const ClaimLabel: FunctionComponent<
           undefined,
           false
         ),
+        // Skeumorphic MUST NOT change appearance based on the current theme (both system and app theme)
+        // so it is safe to force the text color and make sure it is readable
+        color: IOColors["grey-900"],
         textTransform
       }}
     >
