@@ -1,4 +1,7 @@
-import { parseClaims } from "../../../common/utils/itwClaimsUtils";
+import {
+  parseClaims,
+  WellKnownClaim
+} from "../../../common/utils/itwClaimsUtils";
 import { assert } from "../../../../../utils/assert";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
@@ -37,9 +40,9 @@ export const getProximityDetails = (
   credentialsByType: Record<string, StoredCredential | undefined>
 ): ProximityDetails => {
   // Exclude the WIA document type from the request
-  const { [WIA_DOC_TYPE]: _, ...otherDocuments } = request;
+  const { [WIA_DOC_TYPE]: _, ...rest } = request;
 
-  return Object.entries(otherDocuments).map(
+  return Object.entries(rest).map(
     ([docType, { isAuthenticated, ...namespaces }]) => {
       // Stop the flow if the verifier (RP) is not trusted
       if (!isAuthenticated) {
@@ -66,7 +69,9 @@ export const getProximityDetails = (
 
       return {
         credentialType: credential.credentialType,
-        claimsToDisplay: parseClaims(parsedCredential)
+        claimsToDisplay: parseClaims(parsedCredential, {
+          exclude: [WellKnownClaim.unique_id]
+        })
       };
     }
   );

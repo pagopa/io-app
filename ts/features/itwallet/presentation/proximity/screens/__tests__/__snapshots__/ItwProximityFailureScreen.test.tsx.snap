@@ -833,7 +833,7 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                             >
                               IO controlla sempre chi sta richiedendo la lettura dei tuoi dati e non ti permette di continuare se non riconosce il sistema utilizzato per la verifica.
 
-L'app puo' condividere i tuoi dati solo con enti e soggetti autorizzati.
+L'app può condividere i tuoi dati solo con enti e soggetti autorizzati.
                             </Text>
                             <View
                               style={
@@ -1698,7 +1698,7 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                             >
                               IO controlla sempre chi sta richiedendo la lettura dei tuoi dati e non ti permette di continuare se non riconosce il sistema utilizzato per la verifica.
 
-L'app puo' condividere i tuoi dati solo con enti e soggetti autorizzati.
+L'app può condividere i tuoi dati solo con enti e soggetti autorizzati.
                             </Text>
                             <View
                               style={
@@ -2715,7 +2715,7 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                             >
                               IO controlla sempre chi sta richiedendo la lettura dei tuoi dati e non ti permette di continuare se non riconosce il sistema utilizzato per la verifica.
 
-L'app puo' condividere i tuoi dati solo con enti e soggetti autorizzati.
+L'app può condividere i tuoi dati solo con enti e soggetti autorizzati.
                             </Text>
                             <View
                               style={
