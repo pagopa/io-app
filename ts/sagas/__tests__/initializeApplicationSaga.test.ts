@@ -41,7 +41,10 @@ import { watchLogoutSaga } from "../../features/authentication/common/saga/watch
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 import { startupTransientErrorInitialState } from "../../store/reducers/startup";
-import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
+import {
+  isBlockingScreenSelector,
+  offlineAccessReasonSelector
+} from "../../features/ingress/store/selectors";
 import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
 import { trackKeychainFailures } from "../../utils/analytics";
 import { checkSession } from "../../features/authentication/common/saga/watchCheckSessionSaga";
@@ -120,6 +123,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(isDeviceOfflineWithWalletSaga)
       .next()
+      .select(offlineAccessReasonSelector)
+      .next()
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -179,6 +184,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(isDeviceOfflineWithWalletSaga)
       .next()
+      .select(offlineAccessReasonSelector)
+      .next()
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -231,6 +238,8 @@ describe("initializeApplicationSaga", () => {
       .fork(watchItwOfflineSaga)
       .next()
       .call(isDeviceOfflineWithWalletSaga)
+      .next()
+      .select(offlineAccessReasonSelector)
       .next()
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
@@ -289,6 +298,8 @@ describe("initializeApplicationSaga", () => {
       .fork(watchItwOfflineSaga)
       .next()
       .call(isDeviceOfflineWithWalletSaga)
+      .next()
+      .select(offlineAccessReasonSelector)
       .next()
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
@@ -361,6 +372,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(isDeviceOfflineWithWalletSaga)
       .next()
+      .select(offlineAccessReasonSelector)
+      .next()
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -418,6 +431,8 @@ describe("initializeApplicationSaga", () => {
       .fork(watchItwOfflineSaga)
       .next()
       .call(isDeviceOfflineWithWalletSaga)
+      .next()
+      .select(offlineAccessReasonSelector)
       .next()
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
