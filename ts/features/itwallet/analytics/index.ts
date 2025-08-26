@@ -429,6 +429,20 @@ export const trackItwCredentialNeedsVerification = (
   );
 };
 
+export const trackItwOfflineAccessExpiring = () => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_ACCESS_EXPIRING,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
+export const trackItwOfflineAccessExpired = () => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_ACCESS_EXPIRED,
+    buildEventProperties("KO", "screen_view")
+  );
+};
+
 // #endregion SCREEN VIEW EVENTS
 
 // #region ACTIONS
