@@ -400,7 +400,7 @@ exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard
 
 exports[`DigitalVersionBadge should render correctly InvalidCredentialType in state default 1`] = `null`;
 
-exports[`DigitalVersionBadge should render correctly MDL in state default 1`] = `
+exports[`DigitalVersionBadge should render correctly mDL in state default 1`] = `
 <View
   style={
     {
@@ -457,7 +457,7 @@ exports[`DigitalVersionBadge should render correctly MDL in state default 1`] = 
 </View>
 `;
 
-exports[`DigitalVersionBadge should render correctly MDL in state faded 1`] = `
+exports[`DigitalVersionBadge should render correctly mDL in state faded 1`] = `
 <View
   style={
     {
@@ -528,7 +528,7 @@ exports[`DigitalVersionBadge should render correctly MDL in state faded 1`] = `
 </View>
 `;
 
-exports[`DigitalVersionBadge should render correctly MDL in state greyscale 1`] = `
+exports[`DigitalVersionBadge should render correctly mDL in state greyscale 1`] = `
 <View
   style={
     {

@@ -4,6 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isMinAppVersionSupported } from "../../../../../store/reducers/featureFlagWithMinAppVersionStatus";
 import { isActiveSessionLoginLocallyEnabledSelector } from "../../../loginPreferences/store/selectors";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 export const isActiveSessionLoginRemotelyEnabledSelector = createSelector(
   remoteConfigSelector,
@@ -21,3 +22,24 @@ export const isActiveSessionLoginEnabledSelector = createSelector(
   (isRemotelyEnabled, isLocalFlagEnabled) =>
     isRemotelyEnabled || isLocalFlagEnabled
 );
+
+export const isActiveSessionLoginSelector = (state: GlobalState) =>
+  state.features.loginFeatures.activeSessionLogin.isActiveSessionLogin ?? false;
+
+export const activeSessionLoginFailedSelector = (state: GlobalState) =>
+  state.features.loginFeatures.activeSessionLogin.isActiveSessionLoginFailed;
+
+export const activeSessionUserLoggedSelector = (state: GlobalState) =>
+  state.features.loginFeatures.activeSessionLogin.isUserLoggedIn;
+
+export const idpSelectedActiveSessionLoginSelector = (state: GlobalState) =>
+  state.features.loginFeatures.activeSessionLogin?.loginInfo?.idp;
+
+export const newTokenActiveSessionLoginSelector = (state: GlobalState) =>
+  state.features.loginFeatures.activeSessionLogin?.loginInfo?.token;
+
+export const fastLoginOptInActiveSessionLoginSelector = (state: GlobalState) =>
+  state.features.loginFeatures.activeSessionLogin?.loginInfo?.fastLoginOptIn;
+
+export const activeSessionLoginInfoSelector = (state: GlobalState) =>
+  state.features.loginFeatures.activeSessionLogin?.loginInfo;

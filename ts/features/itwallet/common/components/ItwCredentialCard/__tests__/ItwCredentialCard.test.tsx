@@ -12,7 +12,7 @@ describe("ItwCredentialCard", () => {
   it.each([
     "EuropeanHealthInsuranceCard",
     "EuropeanDisabilityCard",
-    "MDL",
+    "mDL",
     "education_degree",
     "education_enrollment"
   ])("should match snapshot when credential type is %p", type => {
@@ -53,7 +53,7 @@ describe("ItwCredentialCard", () => {
 
       const component = render(
         <Provider store={store}>
-          <ItwCredentialCard credentialType={"MDL"} credentialStatus={status} />
+          <ItwCredentialCard credentialType={"mDL"} credentialStatus={status} />
         </Provider>
       );
       expect(component).toMatchSnapshot();
@@ -74,7 +74,7 @@ describe("ItwCredentialCard", () => {
 
     const component = render(
       <Provider store={store}>
-        <ItwCredentialCard credentialType={"MDL"} isLegacyFormat={true} />
+        <ItwCredentialCard credentialType="mDL" isLegacyFormat={true} />
       </Provider>
     );
     expect(component).toMatchSnapshot();

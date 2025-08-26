@@ -839,6 +839,15 @@
         "body": "Per la tua sicurezza, di tanto in tanto dobbiamo verificare la tua identità",
         "linkButtonLabel": "Leggi come fare"
       },
+      "session_corrupted": {
+        "title": "Accedi di nuovo",
+        "body": "Abbiamo avuto un problema tecnico, dobbiamo verificare di nuovo la tua identità",
+        "linkButtonLabel": "Non ricordi come accedere?"
+      },
+      "active_session_login": {
+        "title": "Accedi subito",
+        "body": "Autenticati ora per usare l’app senza interruzioni. Così sarà sempre pronta quando ti serve."
+      },
       "cie_bottom_sheet": {
         "title": "Come vuoi entrare?",
         "module_cie_pin": {
@@ -996,6 +1005,11 @@
         "title": "Non è stato possibile accedere",
         "subtitle": "Al momento non è possibile accedere con il tuo fornitore d’identità SPID. Riprova tra qualche minuto."
       },
+      "not_same_cf": {
+        "title": "Sei proprio tu?",
+        "subtitle": "Hai fatto l’accesso con un’altra identità. Per usare l’app, accedi con le tue credenziali.",
+        "button": "Accedi di nuovo"
+      },
       "generic": {
         "title": "Non è stato possibile accedere",
         "subtitle": "Si è verificato un problema durante l’accesso. Riprova tra qualche minuto."
@@ -1019,7 +1033,8 @@
         "description": "Per accedere, devi avere l'app installata sul tuo dispositivo.",
         "primary_action_label": "Scarica CieID",
         "link_error": "Non siamo riusciti a indirizzarti allo store. Aprilo manualmente e cerca CieID"
-      }
+      },
+      "feature_not_already_implemented": "Questa funzionalità è attualmente in fase di sviluppo e non ancora disponibile."
     },
     "cie": {
       "genericTitle": "Entra con CIE",
@@ -4873,10 +4888,11 @@
               }
             }
           },
-          "MDL": {
+          "mDL": {
             "expiring": {
               "title": "Patente su IO: documento in scadenza",
-              "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nDovrai effettuare una visita medica con un medico abilitato e completare il pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\n - La Patente di guida in scadenza o scaduta \n - Un documento di identità \n - Il Codice fiscale \n - Una foto recente formato tessera"
+              "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nÈ necessaria una visita medica con un medico autorizzato e provvedere al pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).",
+              "cta": "Scopri di più"
             }
           },
           "EuropeanHealthInsuranceCard": {
@@ -4889,12 +4905,6 @@
             "expiring": {
               "title": "Carta europea della disabilità su IO: documento in scadenza",
               "content": "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
-            }
-          },
-          "org.iso.18013.5.1.mDL": {
-            "expiring": {
-              "title": "Patente su IO: documento in scadenza",
-              "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nDovrai effettuare una visita medica con un medico abilitato e completare il pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\n - La Patente di guida in scadenza o scaduta \n - Un documento di identità \n - Il Codice fiscale \n - Una foto recente formato tessera"
             }
           }
         },
@@ -5573,7 +5583,7 @@
                 "action": "Configura"
               }
             },
-            "yourOperations": "Le tue Operazioni",
+            "yourOperations": "Le tue operazioni",
             "yourOperationsSubtitle": "Qui vedrai le transazioni effettuate con i metodi che hai associato. ",
             "settings": {
               "showMore": "Vedi tutte",
@@ -6043,12 +6053,13 @@
           "title": "Fatto!"
         },
         "cancelled": {
-          "title": "L’operazione è stata annullata"
+          "title": "L’operazione è stata annullata",
+          "subtitle": "Non è stato addebitato alcun importo."
         },
         "failure": {
           "GENERIC": {
-            "title": "Si è verificato un errore imprevisto",
-            "subtitle": "Non è stato addebitato alcun importo."
+            "title": "Il codice non è valido",
+            "subtitle": "Se si tratta di un errore, chiedi all’esercente di crearne uno nuovo."
           },
           "TRANSACTION_EXPIRED": {
             "title": "Il codice è scaduto",

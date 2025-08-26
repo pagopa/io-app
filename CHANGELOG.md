@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0-rc.3](https://github.com/pagopa/io-app/compare/3.12.0-rc.2...3.12.0-rc.3) (2025-08-26)
+
+
+### Features
+
+* [[IOCOM-1834](https://pagopa.atlassian.net/browse/IOCOM-1834)] FimsClaims component automatic tests ([#7276](https://github.com/pagopa/io-app/issues/7276)) ([d4808d7](https://github.com/pagopa/io-app/commit/d4808d77ab7b021610ab305d4d69d1b627906820))
+* [[IOCOM-1836](https://pagopa.atlassian.net/browse/IOCOM-1836)] FimsPrivacyInfo component automatic tests ([#7274](https://github.com/pagopa/io-app/issues/7274)) ([61d2bee](https://github.com/pagopa/io-app/commit/61d2bee09dc05981de0efc559438f098f6fee0fb))
+* [[IOCOM-1838](https://pagopa.atlassian.net/browse/IOCOM-1838)] FIMS handleFimsAbortOrCancel saga automatic tests ([#7275](https://github.com/pagopa/io-app/issues/7275)) ([f494d4b](https://github.com/pagopa/io-app/commit/f494d4bb25f99a173be1f6fac7cc813beda63efa))
+* [[IOCOM-2515](https://pagopa.atlassian.net/browse/IOCOM-2515)] FIMS singleSignOn automatic tests reducers ([#7272](https://github.com/pagopa/io-app/issues/7272)) ([76ad764](https://github.com/pagopa/io-app/commit/76ad76431cfe1765e8c8af3c66ad3fad1bcf171f))
+* [[IOCOM-2516](https://pagopa.atlassian.net/browse/IOCOM-2516)] FIMS singleSignOn automatic tests selectors ([#7262](https://github.com/pagopa/io-app/issues/7262)) ([4e7b348](https://github.com/pagopa/io-app/commit/4e7b3486f2d91b7b52e4f85fb9183706a49de999))
+* [[IOPLT-1286](https://pagopa.atlassian.net/browse/IOPLT-1286)] Refactor `MessageDetailsStickyFooter` to adopt `FooterActions` (and add dark mode support) ([#7230](https://github.com/pagopa/io-app/issues/7230)) ([4e17de1](https://github.com/pagopa/io-app/commit/4e17de1a9fa53b09c3c10eb28fef82b2197faa39))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2865](https://pagopa.atlassian.net/browse/SIW-2865)] Claim labels not visible with dark theme on Android ([#7271](https://github.com/pagopa/io-app/issues/7271)) ([4732696](https://github.com/pagopa/io-app/commit/4732696a0a62dea8fd69543126a79bdb0c7d0c31))
+
+
+### Chores
+
+* [[IOBP-1886](https://pagopa.atlassian.net/browse/IOBP-1886)] IDPay update bonus flow copy ([#7265](https://github.com/pagopa/io-app/issues/7265)) ([c0408b5](https://github.com/pagopa/io-app/commit/c0408b5f7f42f8de8521a0b283b973c7fecc7637))
+
+## [3.12.0-rc.2](https://github.com/pagopa/io-app/compare/3.12.0-rc.1...3.12.0-rc.2) (2025-08-07)
+
+## [3.12.0-rc.1](https://github.com/pagopa/io-app/compare/3.12.0-rc.0...3.12.0-rc.1) (2025-08-07)
+
+
+### Features
+
+* [[IOPID-2927](https://pagopa.atlassian.net/browse/IOPID-2927)] Active session login - CieID flow ([#7240](https://github.com/pagopa/io-app/issues/7240)) ([0445751](https://github.com/pagopa/io-app/commit/0445751f68a2ac84fd5578b8031b17a05908ac84)), closes [/github.com/pagopa/io-app/pull/7240/files#diff-fbd0f324277d93d92d9eebf19335d6e6b5d28e45350fbe33ddee4e3de622f4d3](https://github.com/pagopa//github.com/pagopa/io-app/pull/7240/files/issues/diff-fbd0f324277d93d92d9eebf19335d6e6b5d28e45350fbe33ddee4e3de622f4d3) [/github.com/pagopa/io-app/pull/7240/files#diff-0a1b70a0de9f8ab34ff34ab8d4c4c3940aa65644b480abd066bb6bff8bd00d8](https://github.com/pagopa//github.com/pagopa/io-app/pull/7240/files/issues/diff-0a1b70a0de9f8ab34ff34ab8d4c4c3940aa65644b480abd066bb6bff8bd00d8)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2843](https://pagopa.atlassian.net/browse/SIW-2843)] Add optional `operationType` in `obtainCredential` utility function ([#7255](https://github.com/pagopa/io-app/issues/7255)) ([4b1733e](https://github.com/pagopa/io-app/commit/4b1733e600e296fbfe3704a60b5494adafd5d21b))
+* **IT Wallet:** [[SIW-2849](https://pagopa.atlassian.net/browse/SIW-2849)] Extract correct credential type from VCT in remote presentation ([#7257](https://github.com/pagopa/io-app/issues/7257)) ([4148577](https://github.com/pagopa/io-app/commit/41485775d0fbaa147fdaeb03a87fd96313ee078a))
+* [[IOPLT-1301](https://pagopa.atlassian.net/browse/IOPLT-1301),[IOPLT-1172](https://pagopa.atlassian.net/browse/IOPLT-1172)] Fix header background bug after dark mode switch + Improve external keyboard support ([#7264](https://github.com/pagopa/io-app/issues/7264)) ([c2268b4](https://github.com/pagopa/io-app/commit/c2268b4cff05699f757c8f9c2a59bf986f43da04))
+* [[SIW-2853](https://pagopa.atlassian.net/browse/SIW-2853)] Upgraded `io-react-native-wallet-v2` version ([#7263](https://github.com/pagopa/io-app/issues/7263)) ([1c334ca](https://github.com/pagopa/io-app/commit/1c334ca565512578127edb22c2b6e39e5abfcdcc))
+
 ## [3.12.0-rc.0](https://github.com/pagopa/io-app/compare/3.11.0-rc.4...3.12.0-rc.0) (2025-08-07)
 
 
