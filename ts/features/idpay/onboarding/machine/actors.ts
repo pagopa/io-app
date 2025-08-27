@@ -107,7 +107,7 @@ export const createActorsImplementation = (
       throw new Error("Initiative ID was not provided");
     }
 
-    const response = await client.webInitiativeDetail({
+    const response = await client.initiativeDetail({
       ...clientOptions,
       initiativeId: params.input.value
     });
