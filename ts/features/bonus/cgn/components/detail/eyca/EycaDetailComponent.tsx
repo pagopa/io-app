@@ -8,6 +8,7 @@ import {
   ListItemHeader,
   LoadingSpinner
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
 import { Dispatch } from "../../../../../../store/actions/types";
@@ -25,7 +26,6 @@ import {
   eycaCardSelector,
   eycaDetailSelector
 } from "../../../store/reducers/eyca/details";
-import I18n from "../../../../../../i18n";
 import { useEycaInformationBottomSheet } from "./EycaInformationComponent";
 import EycaStatusDetailsComponent from "./EycaStatusDetailsComponent";
 

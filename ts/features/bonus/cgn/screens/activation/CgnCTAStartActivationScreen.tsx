@@ -4,7 +4,7 @@ import { FC, useEffect, useRef } from "react";
 import { Alert } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";

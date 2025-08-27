@@ -1,9 +1,9 @@
 import { Divider, IOToast, ListItemSwitch } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
+import I18n from "i18next";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";

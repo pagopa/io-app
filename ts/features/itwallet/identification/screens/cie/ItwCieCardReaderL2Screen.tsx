@@ -21,8 +21,8 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import I18n from "i18next";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
-import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import {
   setAccessibilityFocus,

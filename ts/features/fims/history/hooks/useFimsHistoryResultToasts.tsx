@@ -3,8 +3,8 @@ import { IOToast } from "@pagopa/io-app-design-system";
 import { constVoid } from "fp-ts/lib/function";
 import { useRef, useEffect } from "react";
 import { Alert } from "react-native";
+import I18n from "i18next";
 import * as RemoteValue from "../../../../common/model/RemoteValue";
-import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   fimsHistoryExport,

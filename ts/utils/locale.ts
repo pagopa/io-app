@@ -1,9 +1,10 @@
 import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { PreferredLanguageEnum } from "../../definitions/backend/PreferredLanguage";
 import { Locales } from "../../locales/locales";
-import I18n, {
+import {
   availableTranslations,
   localeFallback,
   localeToLocalizedMessageKey,
@@ -20,7 +21,7 @@ import { LanguageEnum } from "../../definitions/pagopa/ecommerce/RequestAuthoriz
  * If not italian, for all other languages italian is the default.
  */
 export const getFullLocale = (): LocalizedMessageKeys =>
-  localeToLocalizedMessageKey.get(I18n.currentLocale()) ??
+  localeToLocalizedMessageKey.get(I18n.language as Locales) ??
   localeFallback.localizedMessageKey;
 /**
  * Returns the primary component of a locale
@@ -39,7 +40,7 @@ export function getLocalePrimary(
 }
 
 // return the current locale set in the device (this could be different from the app supported languages)
-export const getCurrentLocale = (): Locales => I18n.currentLocale();
+export const getCurrentLocale = (): Locales => I18n.language as Locales;
 
 /**
  * return the primary component of the current locale (i.e: it-US -> it)
@@ -60,11 +61,6 @@ const preferredLanguageMappingToLocale = new Map<
   PreferredLanguageEnum,
   Locales
 >(Array.from(localeToPreferredLanguageMapping).map(item => [item[1], item[0]]));
-
-export const localeDateFormat = (date: Date, format: string): string =>
-  isNaN(date.getTime())
-    ? I18n.t("global.date.invalid")
-    : I18n.strftime(date, format);
 
 // from a given Locales return the relative PreferredLanguageEnum
 export const fromLocaleToPreferredLanguage = (
@@ -94,4 +90,6 @@ export const fallbackForLocalizedMessageKeys = (
   locale === "de-DE" ? "it-IT" : locale;
 
 export const getLanguageEnumFromPreferredLocale = (): LanguageEnum =>
-  LanguageEnum[I18n.currentLocale().toUpperCase() as keyof typeof LanguageEnum];
+  LanguageEnum[
+    (I18n.language as Locales).toUpperCase() as keyof typeof LanguageEnum
+  ];

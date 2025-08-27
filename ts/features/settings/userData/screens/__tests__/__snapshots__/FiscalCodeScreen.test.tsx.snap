@@ -239,7 +239,7 @@ exports[`WithLightModalContext should match snapshot 1`] = `
                             }
                           >
                             <Text
-                              accessibilityLabel="Fiscal code"
+                              accessibilityLabel="Codice fiscale"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -258,7 +258,7 @@ exports[`WithLightModalContext should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              Fiscal code
+                              Codice fiscale
                             </Text>
                           </View>
                           <View
@@ -293,7 +293,7 @@ exports[`WithLightModalContext should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              Use the barcode to communicate your fiscal code when asked.
+                              Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.
                             </Text>
                           </View>
                           <View
@@ -318,7 +318,7 @@ exports[`WithLightModalContext should match snapshot 1`] = `
                               }
                             />
                             <View
-                              accessibilityLabel="Image of barcode and fiscal code. Your fiscal code is: AAAAAA00A00A000A"
+                              accessibilityLabel="Immagine del codice a barre del tuo codice fiscale. Il tuo codice fiscale è: AAAAAA00A00A000A"
                               accessible={true}
                               style={
                                 [
@@ -1492,7 +1492,7 @@ exports[`WithLightModalContext should match snapshot 1`] = `
                           }
                         >
                           <View
-                            accessibilityLabel="Copy fiscal code"
+                            accessibilityLabel="Copia codice fiscale"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -1609,7 +1609,7 @@ exports[`WithLightModalContext should match snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  Copy fiscal code
+                                  Copia codice fiscale
                                 </Text>
                               </View>
                             </View>
@@ -1662,7 +1662,7 @@ exports[`WithLightModalContext should match snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1776,7 +1776,7 @@ exports[`WithLightModalContext should match snapshot 1`] = `
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Fiscal code"
+                              accessibilityLabel="Codice fiscale"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -1816,7 +1816,7 @@ exports[`WithLightModalContext should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Fiscal code
+                                Codice fiscale
                               </Text>
                             </View>
                             <View
@@ -1830,7 +1830,7 @@ exports[`WithLightModalContext should match snapshot 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

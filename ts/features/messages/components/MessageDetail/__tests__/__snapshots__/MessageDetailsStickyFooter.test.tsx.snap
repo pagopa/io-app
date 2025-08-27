@@ -1111,7 +1111,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                           }
                         >
                           <View
-                            accessibilityLabel="Pay"
+                            accessibilityLabel="Paga"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -1225,7 +1225,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     ]
                                   }
                                 >
-                                  Pay
+                                  Paga
                                 </Text>
                               </View>
                             </View>
@@ -2312,7 +2312,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                           }
                         >
                           <View
-                            accessibilityLabel="Pay"
+                            accessibilityLabel="Paga"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -2426,7 +2426,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                     ]
                                   }
                                 >
-                                  Pay
+                                  Paga
                                 </Text>
                               </View>
                             </View>
@@ -3240,7 +3240,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                           }
                         >
                           <View
-                            accessibilityLabel="Pay"
+                            accessibilityLabel="Paga"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -4484,7 +4484,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                           }
                         >
                           <View
-                            accessibilityLabel="Pay"
+                            accessibilityLabel="Paga"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -4598,7 +4598,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     ]
                                   }
                                 >
-                                  Pay
+                                  Paga
                                 </Text>
                               </View>
                             </View>

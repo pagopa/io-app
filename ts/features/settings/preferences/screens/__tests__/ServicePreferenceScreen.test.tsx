@@ -1,6 +1,7 @@
 import { fireEvent, waitFor } from "@testing-library/react-native";
 import { createStore } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
 import ServicesPreferenceScreen from "../ServicesPreferenceScreen";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { appReducer } from "../../../../../store/reducers";
@@ -10,7 +11,6 @@ import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backe
 import * as hooks from "../../../../../store/hooks";
 import * as selectors from "../../../common/store/selectors";
 import * as usePreviousHook from "../../../../../utils/hooks/usePrevious";
-import I18n from "../../../../../i18n";
 import { profileUpsert } from "../../../common/store/actions";
 
 jest.mock("../../../../../utils/analytics", () => ({

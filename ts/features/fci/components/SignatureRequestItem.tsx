@@ -6,10 +6,10 @@ import {
   HSpacer,
   BodySmall
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { SignatureRequestListView } from "../../../../definitions/fci/SignatureRequestListView";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
-import I18n from "../../../i18n";
 
 type Props = {
   item: SignatureRequestListView;

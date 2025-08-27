@@ -8,6 +8,7 @@ import {
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { useEffect } from "react";
 import { constNull } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
@@ -20,7 +21,6 @@ import {
   trialSystemActivationStatus,
   trialSystemActivationStatusUpsert
 } from "../../../trialSystem/store/actions";
-import I18n from "../../../../i18n";
 import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
 
 const styles = StyleSheet.create({

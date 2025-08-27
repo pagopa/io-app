@@ -10,7 +10,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   itwCredentialsEidSelector,

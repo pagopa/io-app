@@ -4,7 +4,7 @@ import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Fragment, useMemo } from "react";
 import { Image } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
   BoolClaim,

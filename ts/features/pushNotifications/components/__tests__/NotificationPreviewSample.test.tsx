@@ -1,6 +1,6 @@
 import { createStore } from "redux";
 import { render } from "@testing-library/react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { NotificationPreviewSample } from "../NotificationPreviewSample";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";

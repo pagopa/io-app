@@ -2,6 +2,7 @@ import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { IOButton } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import I18n from "i18next";
 import {
   useIODispatch,
   useIOSelector,
@@ -14,7 +15,6 @@ import {
 } from "../../store/reducers/archiving";
 import { useIOTabNavigation } from "../../../../navigation/params/AppParamsList";
 import { shownMessageCategorySelector } from "../../store/reducers/allPaginated";
-import I18n from "../../../../i18n";
 import {
   resetMessageArchivingAction,
   startProcessingMessageArchivingAction

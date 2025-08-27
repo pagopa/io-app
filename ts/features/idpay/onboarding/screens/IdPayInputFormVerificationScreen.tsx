@@ -1,10 +1,10 @@
 import { H6, IOToast, TextInput, VSpacer } from "@pagopa/io-app-design-system";
 import { useEffect, useRef, useState } from "react";
 import PagerView from "react-native-pager-view";
+import I18n from "i18next";
 import { SelfDeclarationTextDTO } from "../../../../../definitions/idpay/SelfDeclarationTextDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";

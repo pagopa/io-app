@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { IOToast } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import useNavigateToLoginMethod, {
   IdpCIE
 } from "../../hooks/useNavigateToLoginMethod";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import I18n from "../../../../../i18n";
 import { TranslationKeys } from "../../../../../../locales/locales";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton";
 import {

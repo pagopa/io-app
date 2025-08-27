@@ -1,6 +1,6 @@
 import { ListItemInfo, ListItemInfoCopy } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
-import I18n from "../../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 
 type CgnAddressListItemProps = {

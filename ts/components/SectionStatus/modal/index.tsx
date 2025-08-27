@@ -9,8 +9,8 @@ import {
 import { AccessibilityInfo, View } from "react-native";
 import { Alert, IOColors } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import I18n from "i18next";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
-import I18n from "../../../i18n";
 import {
   isSectionVisibleSelector,
   levelForSectionSelector,

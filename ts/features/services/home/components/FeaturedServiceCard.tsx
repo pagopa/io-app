@@ -10,7 +10,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { WithTestID } from "../../../../types/WithTestID";
 import { CardPressableBase } from "../../common/components/CardPressableBase";
 import { useServiceCardStyle } from "../hooks/useServiceCardStyle";

@@ -4,6 +4,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import I18n from "i18next";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -13,7 +14,6 @@ import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
 import { WalletHomeScreen } from "../features/wallet/screens/WalletHomeScreen";
 import { useBottomTabNavigatorStyle } from "../hooks/useBottomTabNavigatorStyle";
-import I18n from "../i18n";
 import { useIOSelector } from "../store/hooks";
 import { fontPreferenceSelector } from "../store/reducers/persistedPreferences";
 import { isStartupLoaded, StartupStatusEnum } from "../store/reducers/startup";

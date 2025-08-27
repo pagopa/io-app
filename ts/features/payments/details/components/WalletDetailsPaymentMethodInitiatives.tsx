@@ -3,8 +3,8 @@ import { useFocusEffect } from "@react-navigation/native";
 
 import { ComponentProps, ReactElement, useCallback } from "react";
 import { View } from "react-native";
+import I18n from "i18next";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { IdPayInstrumentInitiativesList } from "../../../idpay/wallet/components/IdPayInstrumentInitiativesList";

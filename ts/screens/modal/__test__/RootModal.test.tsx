@@ -2,13 +2,13 @@ import DeviceInfo from "react-native-device-info";
 
 import { createStore } from "redux";
 import { act } from "@testing-library/react-native";
+import I18n from "i18next";
 import {
   versionInfoLoadFailure,
   versionInfoLoadSuccess
 } from "../../../common/versionInfo/store/actions/versionInfo";
 import { mockIoVersionInfo } from "../../../common/versionInfo/store/reducers/__mock__/ioVersionInfo";
 import { minAppVersionAppVersionTestCases } from "../../../common/versionInfo/store/reducers/__mock__/testVersion";
-import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";

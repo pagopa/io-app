@@ -1,6 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import SecuritySuggestions from "../SecuritySuggestions";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";

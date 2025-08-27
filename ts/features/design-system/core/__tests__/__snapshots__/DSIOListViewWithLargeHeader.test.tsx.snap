@@ -216,12 +216,12 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                               onLayout={[Function]}
                             >
                               <ForwardRef
-                                accessibilityLabel="Enable NFC to continue"
+                                accessibilityLabel="Attiva l’NFC per continuare"
                                 accessibilityRole="header"
                                 color="black"
                                 ref={null}
                               >
-                                Enable NFC to continue
+                                Attiva l’NFC per continuare
                               </ForwardRef>
                             </View>
                             <React.Fragment>
@@ -229,7 +229,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                 size={8}
                               />
                               <ForwardRef>
-                                To enable IO to read your CIE, activate NFC from your device's settings.
+                                Per consentire a IO di leggere la tua CIE, attiva l’NFC dalle Impostazioni del tuo dispositivo.
                               </ForwardRef>
                             </React.Fragment>
                             <React.Fragment>
@@ -237,7 +237,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                 size={16}
                               />
                               <ListItemHeader
-                                label="How to do it::"
+                                label="Come fare:"
                               />
                             </React.Fragment>
                           </React.Fragment>
@@ -258,61 +258,61 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                               "icon": "systemSettingsAndroid",
                               "id": "1",
                               "label": "Step 1",
-                              "value": "Open 'Settings'",
+                              "value": "Apri “Impostazioni”",
                             },
                             {
                               "icon": "systemAppsAndroid",
                               "id": "2",
                               "label": "Step 2",
-                              "value": "Search for ‘NFC’ functionality",
+                              "value": "Cerca la funzionalità “NFC”",
                             },
                             {
                               "icon": "systemToggleInstructions",
                               "id": "3",
                               "label": "Step 3",
-                              "value": "Turn it on",
+                              "value": "Attiva la funzionalità",
                             },
                             {
                               "icon": "systemToggleInstructions",
                               "id": "4",
                               "label": "Step 3",
-                              "value": "Turn it on",
+                              "value": "Attiva la funzionalità",
                             },
                             {
                               "icon": "systemToggleInstructions",
                               "id": "5",
                               "label": "Step 3",
-                              "value": "Turn it on",
+                              "value": "Attiva la funzionalità",
                             },
                             {
                               "icon": "systemToggleInstructions",
                               "id": "6",
                               "label": "Step 3",
-                              "value": "Turn it on",
+                              "value": "Attiva la funzionalità",
                             },
                             {
                               "icon": "systemToggleInstructions",
                               "id": "7",
                               "label": "Step 3",
-                              "value": "Turn it on",
+                              "value": "Attiva la funzionalità",
                             },
                             {
                               "icon": "systemToggleInstructions",
                               "id": "8",
                               "label": "Step 3",
-                              "value": "Turn it on",
+                              "value": "Attiva la funzionalità",
                             },
                             {
                               "icon": "systemSettingsAndroid",
                               "id": "9",
                               "label": "Step 1",
-                              "value": "Open 'Settings'",
+                              "value": "Apri “Impostazioni”",
                             },
                             {
                               "icon": "systemAppsAndroid",
                               "id": "10",
                               "label": "Step 2",
-                              "value": "Search for ‘NFC’ functionality",
+                              "value": "Cerca la funzionalità “NFC”",
                             },
                           ]
                         }
@@ -351,7 +351,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                               onLayout={[Function]}
                             >
                               <Text
-                                accessibilityLabel="Enable NFC to continue"
+                                accessibilityLabel="Attiva l’NFC per continuare"
                                 accessibilityRole="header"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="title1"
@@ -370,7 +370,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                   ]
                                 }
                               >
-                                Enable NFC to continue
+                                Attiva l’NFC per continuare
                               </Text>
                             </View>
                             <View
@@ -398,7 +398,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                 ]
                               }
                             >
-                              To enable IO to read your CIE, activate NFC from your device's settings.
+                              Per consentire a IO di leggere la tua CIE, attiva l’NFC dalle Impostazioni del tuo dispositivo.
                             </Text>
                             <View
                               style={
@@ -433,7 +433,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                   }
                                 >
                                   <View
-                                    accessibilityLabel="How to do it::"
+                                    accessibilityLabel="Come fare:"
                                     accessibilityRole="header"
                                     accessible={true}
                                   >
@@ -456,7 +456,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                         ]
                                       }
                                     >
-                                      How to do it::
+                                      Come fare:
                                     </Text>
                                   </View>
                                 </View>
@@ -469,7 +469,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                             style={null}
                           >
                             <View
-                              accessibilityLabel="Step 1; Open 'Settings'"
+                              accessibilityLabel="Step 1; Apri “Impostazioni”"
                               accessible={true}
                               style={
                                 {
@@ -547,7 +547,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                         ]
                                       }
                                     >
-                                      Open 'Settings'
+                                      Apri “Impostazioni”
                                     </Text>
                                   </View>
                                 </View>
@@ -568,7 +568,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                             style={null}
                           >
                             <View
-                              accessibilityLabel="Step 2; Search for ‘NFC’ functionality"
+                              accessibilityLabel="Step 2; Cerca la funzionalità “NFC”"
                               accessible={true}
                               style={
                                 {
@@ -646,7 +646,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                         ]
                                       }
                                     >
-                                      Search for ‘NFC’ functionality
+                                      Cerca la funzionalità “NFC”
                                     </Text>
                                   </View>
                                 </View>
@@ -667,7 +667,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                             style={null}
                           >
                             <View
-                              accessibilityLabel="Step 3; Turn it on"
+                              accessibilityLabel="Step 3; Attiva la funzionalità"
                               accessible={true}
                               style={
                                 {
@@ -745,7 +745,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                         ]
                                       }
                                     >
-                                      Turn it on
+                                      Attiva la funzionalità
                                     </Text>
                                   </View>
                                 </View>
@@ -766,7 +766,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                             style={null}
                           >
                             <View
-                              accessibilityLabel="Step 3; Turn it on"
+                              accessibilityLabel="Step 3; Attiva la funzionalità"
                               accessible={true}
                               style={
                                 {
@@ -844,7 +844,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                         ]
                                       }
                                     >
-                                      Turn it on
+                                      Attiva la funzionalità
                                     </Text>
                                   </View>
                                 </View>
@@ -865,7 +865,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                             style={null}
                           >
                             <View
-                              accessibilityLabel="Step 3; Turn it on"
+                              accessibilityLabel="Step 3; Attiva la funzionalità"
                               accessible={true}
                               style={
                                 {
@@ -943,7 +943,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                         ]
                                       }
                                     >
-                                      Turn it on
+                                      Attiva la funzionalità
                                     </Text>
                                   </View>
                                 </View>
@@ -964,7 +964,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                             style={null}
                           >
                             <View
-                              accessibilityLabel="Step 3; Turn it on"
+                              accessibilityLabel="Step 3; Attiva la funzionalità"
                               accessible={true}
                               style={
                                 {
@@ -1042,7 +1042,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                         ]
                                       }
                                     >
-                                      Turn it on
+                                      Attiva la funzionalità
                                     </Text>
                                   </View>
                                 </View>
@@ -1063,7 +1063,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                             style={null}
                           >
                             <View
-                              accessibilityLabel="Step 3; Turn it on"
+                              accessibilityLabel="Step 3; Attiva la funzionalità"
                               accessible={true}
                               style={
                                 {
@@ -1141,7 +1141,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                         ]
                                       }
                                     >
-                                      Turn it on
+                                      Attiva la funzionalità
                                     </Text>
                                   </View>
                                 </View>
@@ -1162,7 +1162,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                             style={null}
                           >
                             <View
-                              accessibilityLabel="Step 3; Turn it on"
+                              accessibilityLabel="Step 3; Attiva la funzionalità"
                               accessible={true}
                               style={
                                 {
@@ -1240,7 +1240,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                         ]
                                       }
                                     >
-                                      Turn it on
+                                      Attiva la funzionalità
                                     </Text>
                                   </View>
                                 </View>
@@ -1261,7 +1261,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                             style={null}
                           >
                             <View
-                              accessibilityLabel="Step 1; Open 'Settings'"
+                              accessibilityLabel="Step 1; Apri “Impostazioni”"
                               accessible={true}
                               style={
                                 {
@@ -1339,7 +1339,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                         ]
                                       }
                                     >
-                                      Open 'Settings'
+                                      Apri “Impostazioni”
                                     </Text>
                                   </View>
                                 </View>
@@ -1360,7 +1360,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                             style={null}
                           >
                             <View
-                              accessibilityLabel="Step 2; Search for ‘NFC’ functionality"
+                              accessibilityLabel="Step 2; Cerca la funzionalità “NFC”"
                               accessible={true}
                               style={
                                 {
@@ -1438,7 +1438,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                         ]
                                       }
                                     >
-                                      Search for ‘NFC’ functionality
+                                      Cerca la funzionalità “NFC”
                                     </Text>
                                   </View>
                                 </View>
@@ -1496,7 +1496,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1610,7 +1610,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Enable NFC to continue"
+                              accessibilityLabel="Attiva l’NFC per continuare"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -1650,7 +1650,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                   ]
                                 }
                               >
-                                Enable NFC to continue
+                                Attiva l’NFC per continuare
                               </Text>
                             </View>
                             <View
@@ -1664,7 +1664,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

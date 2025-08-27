@@ -19,6 +19,7 @@ import {
   useState
 } from "react";
 import { ScrollView, SectionList, View } from "react-native";
+import I18n from "i18next";
 import {
   Clause,
   TypeEnum as ClausesTypeEnum
@@ -28,7 +29,6 @@ import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";

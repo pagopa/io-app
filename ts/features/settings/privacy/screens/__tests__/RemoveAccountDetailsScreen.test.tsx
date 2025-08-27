@@ -1,11 +1,11 @@
 import { fireEvent, waitFor } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { Alert } from "react-native";
+import I18n from "i18next";
 import * as selectors from "../../../../../store/hooks";
 import * as privacySelectors from "../../../common/store/selectors/userDataProcessing";
 import * as cgnSelectors from "../../../../bonus/cgn/store/reducers/details";
 import RemoveAccountDetails from "../RemoveAccountDetailsScreen";
-import I18n from "../../../../../i18n";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";

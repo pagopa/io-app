@@ -1,7 +1,7 @@
 import { ListItemAction } from "@pagopa/io-app-design-system";
 import { useEffect } from "react";
 import { Alert, Platform } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { IdPayUnsubscriptionRoutes } from "../../unsubscription/navigation/routes";

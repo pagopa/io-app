@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useIOToast } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { SendEngagementComponent } from "../components/SendEngagementComponent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { pnActivationUpsert } from "../../store/actions";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";

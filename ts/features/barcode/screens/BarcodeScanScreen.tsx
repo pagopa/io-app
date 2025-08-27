@@ -9,9 +9,9 @@ import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
+import I18n from "i18next";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
-import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
   AppParamsList,

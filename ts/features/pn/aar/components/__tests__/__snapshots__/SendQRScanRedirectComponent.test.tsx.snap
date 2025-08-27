@@ -748,7 +748,7 @@ exports[`SendQRScanRedirectComponent should match snapshot and track the screen 
                               }
                             >
                               <View
-                                accessibilityLabel="Close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

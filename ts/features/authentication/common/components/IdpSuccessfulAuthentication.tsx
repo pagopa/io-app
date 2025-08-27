@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { AccessibilityInfo } from "react-native";
+import I18n from "i18next";
 import { profileNameSelector } from "../../../settings/common/store/selectors";
-import I18n from "../../../../i18n";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackIdpAuthenticationSuccessScreen } from "../../../settings/common/analytics";
 import { useIOSelector } from "../../../../store/hooks";

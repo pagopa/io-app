@@ -621,7 +621,7 @@ exports[`CGNDiscountExpiredScreen should render correctly 1`] = `
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -738,7 +738,7 @@ exports[`CGNDiscountExpiredScreen should render correctly 1`] = `
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>

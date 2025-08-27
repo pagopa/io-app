@@ -1,9 +1,9 @@
 import { Body, FeatureInfo, H3, VSpacer } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useIOSelector } from "../../../../store/hooks";
 import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
-import I18n from "../../../../i18n";
 
 export type SendEngagementComponentProps = {
   isLoading: boolean;

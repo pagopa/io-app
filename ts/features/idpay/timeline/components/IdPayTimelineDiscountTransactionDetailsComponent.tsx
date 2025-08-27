@@ -9,11 +9,11 @@ import {
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { View } from "react-native";
+import I18n from "i18next";
 import {
   TransactionDetailDTO,
   StatusEnum as TransactionStatusEnum
 } from "../../../../../definitions/idpay/TransactionDetailDTO";
-import I18n from "../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";

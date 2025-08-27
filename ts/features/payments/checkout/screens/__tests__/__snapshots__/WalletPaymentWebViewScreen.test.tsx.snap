@@ -375,7 +375,7 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

@@ -1388,7 +1388,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'er
                             ]
                           }
                         >
-                          There is a temporary problem, please try again.
+                          C'è un problema temporaneo, riprova.
                         </Text>
                       </View>
                     </View>

@@ -1,6 +1,6 @@
 import { Alert, VSpacer } from "@pagopa/io-app-design-system";
 import Animated, { LinearTransition } from "react-native-reanimated";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { usePaymentsMethodPspDetailsBottomSheet } from "./PaymentsMethodPspDetailsBottomSheet";
 import { PaymentsMethodPspPayPalBanner } from "./PaymentsMethodPspPayPalBanner";
 

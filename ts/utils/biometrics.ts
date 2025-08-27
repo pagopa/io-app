@@ -6,8 +6,8 @@ import FingerprintScanner, {
   FingerprintScannerError,
   Errors
 } from "react-native-fingerprint-scanner";
+import I18n from "i18next";
 import { isDebugBiometricIdentificationEnabled } from "../config";
-import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 
 /**

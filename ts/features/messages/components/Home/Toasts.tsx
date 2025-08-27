@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { AccessibilityInfo } from "react-native";
 import { useIOToast } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import {
   archiveMessagesErrorReasonSelector,
   inboxMessagesErrorReasonSelector
 } from "../../store/reducers/allPaginated";
-import I18n from "../../../../i18n";
 import {
   processingResultReasonSelector,
   processingResultTypeSelector

@@ -1,6 +1,6 @@
 import { Body, FooterActions } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
   trackMixpanelConsentBottomsheet,

@@ -1,10 +1,10 @@
 import * as O from "fp-ts/lib/Option";
 import { useMemo } from "react";
+import I18n from "i18next";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import { IdPayPaymentMachineContext } from "../machine/provider";
 import { failureSelector, isCancelledSelector } from "../machine/selectors";
 import { PaymentFailureEnum } from "../types/PaymentFailure";

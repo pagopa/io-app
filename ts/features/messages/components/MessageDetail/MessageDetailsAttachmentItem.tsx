@@ -1,9 +1,9 @@
 import { ModuleAttachment, VSpacer } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { UIMessageId } from "../../types";
 import { useAttachmentDownload } from "../../hooks/useAttachmentDownload";
-import I18n from "../../../../i18n";
 
 type MessageDetailsAttachmentItemProps = {
   attachment: ThirdPartyAttachment;

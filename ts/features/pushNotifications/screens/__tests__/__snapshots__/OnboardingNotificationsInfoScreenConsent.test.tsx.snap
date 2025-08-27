@@ -378,7 +378,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                         }
                       >
                         <View
-                          accessibilityLabel="Close"
+                          accessibilityLabel="Chiudi"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -499,13 +499,13 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                             <ForwardRef
                               accessibilityRole="header"
                             >
-                              Enable push notifications not to miss important messages!
+                              Attiva le notifiche push per non perdere messaggi importanti!
                             </ForwardRef>
                             <VSpacer
                               size={16}
                             />
                             <ForwardRef>
-                              To do so, you'll have to edit the preferences in your device settings.
+                              Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
                             </ForwardRef>
                             <VSpacer
                               size={16}
@@ -513,7 +513,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                             <ForwardRef
                               color="grey-700"
                             >
-                              Here's how:
+                              Ecco come:
                             </ForwardRef>
                             <VSpacer
                               size={8}
@@ -528,22 +528,22 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                         data={
                           [
                             {
-                              "accessibilityLabel": "Go to "Settings"",
+                              "accessibilityLabel": "Vai su "Impostazioni"",
                               "icon": "systemSettingsiOS",
                               "label": "Step",
-                              "value": "Go to "Settings"",
+                              "value": "Vai su "Impostazioni"",
                             },
                             {
-                              "accessibilityLabel": "Select "Notifications"",
+                              "accessibilityLabel": "Seleziona "Notifiche"",
                               "icon": "systemNotificationsInstructions",
                               "label": "Step",
-                              "value": "Select "Notifications"",
+                              "value": "Seleziona "Notifiche"",
                             },
                             {
-                              "accessibilityLabel": "Enable "Allow Notifications"",
+                              "accessibilityLabel": "Attiva "Consenti notifiche"",
                               "icon": "systemToggleInstructions",
                               "label": "Step",
-                              "value": "Enable "Allow Notifications"",
+                              "value": "Attiva "Consenti notifiche"",
                             },
                           ]
                         }
@@ -588,7 +588,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Enable push notifications not to miss important messages!
+                                Attiva le notifiche push per non perdere messaggi importanti!
                               </Text>
                               <View
                                 style={
@@ -615,7 +615,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                To do so, you'll have to edit the preferences in your device settings.
+                                Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
                               </Text>
                               <View
                                 style={
@@ -642,7 +642,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Here's how:
+                                Ecco come:
                               </Text>
                               <View
                                 style={
@@ -659,7 +659,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                             style={null}
                           >
                             <View
-                              accessibilityLabel="Go to "Settings""
+                              accessibilityLabel="Vai su "Impostazioni""
                               accessible={true}
                               style={
                                 {
@@ -737,7 +737,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      Go to "Settings"
+                                      Vai su "Impostazioni"
                                     </Text>
                                   </View>
                                 </View>
@@ -758,7 +758,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                             style={null}
                           >
                             <View
-                              accessibilityLabel="Select "Notifications""
+                              accessibilityLabel="Seleziona "Notifiche""
                               accessible={true}
                               style={
                                 {
@@ -836,7 +836,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      Select "Notifications"
+                                      Seleziona "Notifiche"
                                     </Text>
                                   </View>
                                 </View>
@@ -857,7 +857,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                             style={null}
                           >
                             <View
-                              accessibilityLabel="Enable "Allow Notifications""
+                              accessibilityLabel="Attiva "Consenti notifiche""
                               accessible={true}
                               style={
                                 {
@@ -935,7 +935,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      Enable "Allow Notifications"
+                                      Attiva "Consenti notifiche"
                                     </Text>
                                   </View>
                                 </View>
@@ -994,7 +994,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                           }
                         >
                           <View
-                            accessibilityLabel="Go to Settings"
+                            accessibilityLabel="Apri Impostazioni"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -1111,7 +1111,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  Go to Settings
+                                  Apri Impostazioni
                                 </Text>
                               </View>
                             </View>

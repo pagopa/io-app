@@ -6,7 +6,7 @@ import {
   ListItemHeader,
   ListItemInfoCopy
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 

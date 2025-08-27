@@ -2,9 +2,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect } from "react";
 
+import I18n from "i18next";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp,

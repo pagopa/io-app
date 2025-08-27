@@ -40,8 +40,8 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
       }
     >
       <View
-        accessibilityHint="Wait for the content load"
-        accessibilityLabel="Loading"
+        accessibilityHint="Attendi il caricamento del contenuto"
+        accessibilityLabel="Caricamento in corso"
         accessibilityRole="progressbar"
         accessible={true}
         style={
@@ -257,7 +257,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
         }
       >
         <View
-          accessibilityLabel="Cancel"
+          accessibilityLabel="Annulla"
           accessibilityRole="button"
           accessibilityState={
             {
@@ -375,7 +375,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                   ]
                 }
               >
-                Cancel
+                Annulla
               </Text>
             </View>
           </View>
@@ -470,8 +470,8 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
       }
     >
       <View
-        accessibilityHint="Wait for the content load"
-        accessibilityLabel="Loading"
+        accessibilityHint="Attendi il caricamento del contenuto"
+        accessibilityLabel="Caricamento in corso"
         accessibilityRole="progressbar"
         accessible={true}
         style={
@@ -676,7 +676,7 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
             ]
           }
         >
-          Wait a few seconds..
+          Attendi qualche secondo...
         </Text>
       </View>
     </View>

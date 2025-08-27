@@ -1,8 +1,8 @@
 import { ContentWrapper, H1, VSpacer } from "@pagopa/io-app-design-system";
 import { StyleSheet } from "react-native";
+import I18n from "i18next";
 import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
-import I18n from "../../../../i18n.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
 import { trackItwIntroBack, trackOpenItwTos } from "../../analytics/index.ts";

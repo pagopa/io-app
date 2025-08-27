@@ -742,7 +742,7 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -864,7 +864,7 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>

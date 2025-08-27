@@ -21,6 +21,7 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import I18n from "i18next";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
@@ -28,7 +29,6 @@ import {
   PaymentCardComponentProps
 } from "../../common/components/PaymentCard";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import I18n from "../../../../i18n";
 
 type Props = {
   card: PaymentCardComponentProps;

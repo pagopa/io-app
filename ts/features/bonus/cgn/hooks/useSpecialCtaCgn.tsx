@@ -2,13 +2,13 @@ import { IOToast } from "@pagopa/io-app-design-system";
 import { constNull } from "fp-ts/lib/function";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Alert } from "react-native";
+import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   fold,
   isLoading as isRemoteLoading
 } from "../../../../common/model/RemoteValue";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
-import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isCGNEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import * as analytics from "../../../services/common/analytics";

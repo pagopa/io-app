@@ -9,10 +9,10 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { format } from "date-fns";
 import { ImageURISource, StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import WalletCardShape from "../../../../../img/features/idpay/wallet_card.svg";
 import DarkModeWalletCardShape from "../../../../../img/features/idpay/wallet_card_dark.svg";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { idPayWalletInitiativeListSelector } from "../store/reducers";

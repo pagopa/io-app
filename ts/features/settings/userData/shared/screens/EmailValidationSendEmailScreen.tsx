@@ -20,7 +20,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
 import _ from "lodash";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 
 import {
   acknowledgeOnEmailValidation,

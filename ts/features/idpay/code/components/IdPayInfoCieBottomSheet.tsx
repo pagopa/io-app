@@ -1,10 +1,10 @@
 import { View } from "react-native";
 import { FeatureInfo, H4, VSpacer } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import {
   IOBottomSheetModal,
   useIOBottomSheetModal
 } from "../../../../utils/hooks/bottomSheet";
-import I18n from "../../../../i18n";
 
 /**
  * This custom hook, useIdPayInfoCieBottomSheet, is designed to display a bottom sheet

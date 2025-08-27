@@ -8,8 +8,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback, useEffect } from "react";
 import { View } from "react-native";
+import I18n from "i18next";
 import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount";
-import I18n from "../../../../i18n";
 import {
   useIODispatch,
   useIOSelector,

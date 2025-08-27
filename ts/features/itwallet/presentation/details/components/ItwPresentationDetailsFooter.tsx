@@ -1,7 +1,7 @@
 import { ListItemAction, useIOToast } from "@pagopa/io-app-design-system";
 import { memo, ReactNode, useMemo } from "react";
 import { Alert, View } from "react-native";
-import I18n from "../../../../../i18n.ts";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import {
   useIODispatch,

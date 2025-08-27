@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { PNMessage } from "../store/types/types";
 import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
 import { CTAS } from "../../../types/LocalizedCTAs";

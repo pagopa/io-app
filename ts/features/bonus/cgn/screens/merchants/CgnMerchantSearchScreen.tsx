@@ -22,7 +22,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useDebouncedValue } from "../../../../../hooks/useDebouncedValue";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";

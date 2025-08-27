@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { ReactElement } from "react";
 import { connect } from "react-redux";
+import I18n from "i18next";
 import { Card } from "../../../../../definitions/cgn/Card";
 import {
   CardActivated,
@@ -25,7 +26,6 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
-import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { Dispatch } from "../../../../store/actions/types";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

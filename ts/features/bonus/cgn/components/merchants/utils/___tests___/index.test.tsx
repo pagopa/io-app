@@ -1,7 +1,7 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import I18n from "i18next";
 import { Discount } from "../../../../../../../../definitions/cgn/merchants/Discount";
 import { ProductCategoryEnum } from "../../../../../../../../definitions/cgn/merchants/ProductCategory";
-import I18n from "../../../../../../../i18n";
 import {
   isValidDiscount,
   moduleCGNaccessibilityLabel,
@@ -120,10 +120,10 @@ describe("moduleCGNaccessibilityLabel", () => {
     });
     expect(accessibilityLabel).toContain(mockDiscount.name);
     expect(accessibilityLabel).toContain(
-      I18n.t(categories[ProductCategoryEnum.bankingServices].nameKey)
+      I18n.t(categories[ProductCategoryEnum.bankingServices].nameKey as any)
     );
     expect(accessibilityLabel).toContain(
-      I18n.t(categories[ProductCategoryEnum.health].nameKey)
+      I18n.t(categories[ProductCategoryEnum.health].nameKey as any)
     );
   });
 });

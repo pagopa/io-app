@@ -5,12 +5,12 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useEffect, useRef } from "react";
 import { View } from "react-native";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOAnimatedPictograms,
   IOAnimatedPictogramsAssets
 } from "../../../../components/ui/AnimatedPictogram";
-import I18n from "../../../../i18n";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import {
   AppParamsList,

@@ -1,8 +1,8 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+import I18n from "i18next";
 import { openWebUrl } from "../../../../../../utils/url";
 import { ShareDataComponent } from "../ShareDataComponent";
-import I18n from "../../../../../../i18n";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { appReducer } from "../../../../../../store/reducers";

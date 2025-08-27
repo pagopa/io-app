@@ -14,8 +14,8 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
-import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";

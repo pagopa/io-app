@@ -6,7 +6,7 @@ import Animated, {
   FadeOut,
   LinearTransition
 } from "react-native-reanimated";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIOSelector } from "../../../../store/hooks";
 import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
 import {

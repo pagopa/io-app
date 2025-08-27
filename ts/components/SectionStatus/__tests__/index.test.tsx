@@ -2,13 +2,14 @@ import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";
 import { IOColors } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { Config } from "../../../../definitions/content/Config";
 import {
   LevelEnum,
   SectionStatus
 } from "../../../../definitions/content/SectionStatus";
-import I18n, { setLocale } from "../../../i18n";
+
 import { SectionStatusKey } from "../../../store/reducers/backendStatus/sectionStatus";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { openWebUrl } from "../../../utils/url";
@@ -19,6 +20,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { CredentialType } from "../../../features/itwallet/common/utils/itwMocksUtils";
 import { StoredCredential } from "../../../features/itwallet/common/utils/itwTypesUtils";
 import { ItwCredentialsState } from "../../../features/itwallet/credentials/store/reducers";
+import { setLocale } from "../../../i18n";
 
 jest.mock("../../../utils/url");
 

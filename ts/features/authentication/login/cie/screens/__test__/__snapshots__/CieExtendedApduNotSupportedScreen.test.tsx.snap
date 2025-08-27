@@ -541,7 +541,7 @@ exports[`CieExtendedApduNotSupportedScreen should match the snapshot 1`] = `
                                 ]
                               }
                             >
-                              We could not retrieve the data from the card
+                              Non siamo riusciti a recuperare i dati dalla carta
                             </Text>
                             <View
                               style={
@@ -571,7 +571,7 @@ exports[`CieExtendedApduNotSupportedScreen should match the snapshot 1`] = `
                                 ]
                               }
                             >
-                              The operating system doesn't support the reading of the Electronic Identity Card. Try using SPID to enter the app.
+                              Il sistema operativo non supporta la lettura della Carta di Identità Elettronica. Prova ad usare SPID per entrare in app.
                             </Text>
                             <View
                               style={
@@ -589,7 +589,7 @@ exports[`CieExtendedApduNotSupportedScreen should match the snapshot 1`] = `
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -705,7 +705,7 @@ exports[`CieExtendedApduNotSupportedScreen should match the snapshot 1`] = `
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>

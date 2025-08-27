@@ -1,5 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+import I18n from "i18next";
 import { LoginExpirationBanner } from "../LoginExpirationBanner";
 import * as analytics from "../../analytics";
 import * as urlUtils from "../../../../../utils/url";
@@ -9,7 +10,6 @@ import * as tracked from "../../../../../utils/analytics";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import I18n from "../../../../../i18n";
 
 describe("LoginExpirationBanner", () => {
   const mockDispatch = jest.fn();

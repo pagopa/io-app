@@ -1,10 +1,10 @@
 import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import { ListItemHeader } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { UIMessageId } from "../../types";
 import { useIOSelector } from "../../../../store/hooks";
 import { thirdPartyMessageAttachments } from "../../store/reducers/thirdPartyById";
-import I18n from "../../../../i18n";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
 import { MessageDetailsAttachmentItem } from "./MessageDetailsAttachmentItem";
 

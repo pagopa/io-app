@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { act, fireEvent } from "@testing-library/react-native";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { PreloadedState, createStore } from "redux";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import {

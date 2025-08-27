@@ -6,11 +6,11 @@ import {
   ListItemTransaction
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
 import { useEffect, useCallback, Fragment, useRef } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
-import { default as I18n } from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
 import { walletLatestReceiptListPotSelector } from "../../receipts/store/selectors";

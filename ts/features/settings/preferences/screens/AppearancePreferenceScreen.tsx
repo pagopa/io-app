@@ -8,8 +8,8 @@ import { ReactElement, useState } from "react";
 import { View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import {
   preferencesFontSet,

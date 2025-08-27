@@ -1,8 +1,8 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { constNull } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { ItwWalletId } from "../ItwWalletId";
 import { ItwJwtCredentialStatus } from "../../utils/itwTypesUtils";
-import I18n from "../../../../../i18n";
 
 describe("ItwWalletId", () => {
   test.each([true, false])(

@@ -524,7 +524,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                 ]
                               }
                             >
-                              You have a new message
+                              Hai un nuovo messaggio
                             </Text>
                             <Text
                               allowFontScaling={true}
@@ -544,7 +544,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                 ]
                               }
                             >
-                              Open the app to read the content
+                              Apri l'app per leggere il contenuto
                             </Text>
                           </View>
                         </View>
@@ -1086,7 +1086,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                 ]
                               }
                             >
-                              You have a notice due tomorrow
+                              Hai un avviso che scade domani
                             </Text>
                             <Text
                               allowFontScaling={true}
@@ -1106,7 +1106,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                 ]
                               }
                             >
-                              Log in to pay for it
+                              Entra nell'app per pagarlo
                             </Text>
                           </View>
                         </View>
@@ -1668,7 +1668,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                 ]
                               }
                             >
-                              Summer camp registration is now open
+                              Sono aperte le iscrizioni per il centro estivo
                             </Text>
                           </View>
                         </View>
@@ -2210,7 +2210,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                 ]
                               }
                             >
-                              You have a notice due soon
+                              Hai un avviso in scadenza
                             </Text>
                             <Text
                               allowFontScaling={true}
@@ -2230,7 +2230,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                 ]
                               }
                             >
-                              Log in to pay the notice issued by ACI
+                              Entra nell’app e paga l’avviso emesso da ACI
                             </Text>
                           </View>
                         </View>

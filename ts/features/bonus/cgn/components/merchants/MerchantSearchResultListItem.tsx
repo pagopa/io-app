@@ -7,7 +7,7 @@ import {
   ListItemNav
 } from "@pagopa/io-app-design-system";
 import { Keyboard, Text, View, StyleSheet } from "react-native";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import CGN_ROUTES from "../../navigation/routes";
 import { SearchItem } from "../../../../../../definitions/cgn/merchants/SearchItem";

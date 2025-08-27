@@ -14,12 +14,12 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
+import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import TosWebviewComponent from "../../settings/privacy/shared/components/TosWebviewComponent";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { tosConfigSelector } from "../../tos/store/selectors";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../i18n";
 import { abortOnboarding, tosAccepted } from "../store/actions";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {

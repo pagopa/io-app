@@ -2,9 +2,9 @@ import { Body, HSpacer, Icon, IOSkeleton } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import { useMemo } from "react";
 import { View } from "react-native";
+import I18n from "i18next";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import I18n from "../../../../i18n";
 import { ItwTrustmarkMachineContext } from "../machine/provider";
 import { selectExpirationSeconds, selectFailure } from "../machine/selectors";
 

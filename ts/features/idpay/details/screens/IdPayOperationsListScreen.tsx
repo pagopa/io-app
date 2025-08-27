@@ -12,12 +12,11 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useRef } from "react";
 import { ActivityIndicator } from "react-native";
+import I18n from "i18next";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
 import { IOListViewWithLargeHeader } from "../../../../components/ui/IOListViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { localeDateFormat } from "../../../../utils/locale";
 import { useIdPayTimelineDetailsBottomSheet } from "../../timeline/components/IdPayTimelineDetailsBottomSheet";
 import { IdPayTimelineOperationListItem } from "../components/IdPayTimelineOperationListItem";
 import { useInitiativeTimelineFetcher } from "../hooks/useInitiativeTimelineFetcher";
@@ -85,10 +84,11 @@ export const IdPayOperationsListScreen = () => {
     lastUpdate,
     O.fromNullable,
     O.map(date =>
-      localeDateFormat(
-        date,
-        I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
-      )
+      new Intl.DateTimeFormat("it", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+      }).format(date)
     ),
     O.fold(
       () => <IOSkeleton shape="rectangle" height={18} width={70} radius={4} />,

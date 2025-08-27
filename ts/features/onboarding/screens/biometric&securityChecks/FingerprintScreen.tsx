@@ -1,7 +1,7 @@
 import { Banner, Body, H2, VSpacer } from "@pagopa/io-app-design-system";
 import { ComponentProps, useMemo } from "react";
+import I18n from "i18next";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../i18n";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";

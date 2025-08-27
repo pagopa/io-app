@@ -2,7 +2,7 @@ import { ReactElement, useCallback, useEffect, useRef } from "react";
 import { View } from "react-native";
 import { StackActions } from "@react-navigation/native";
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import {
   IOStackNavigationRouteProps,
   useIONavigation

@@ -176,7 +176,7 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
           ]
         }
       >
-        We can't find the CieID app
+        Non riusciamo a trovare l'app CieID
       </Text>
       <View
         style={
@@ -206,7 +206,7 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
           ]
         }
       >
-        To login, you must have the app installed on your device.
+        Per accedere, devi avere l'app installata sul tuo dispositivo.
       </Text>
       <View
         style={
@@ -224,7 +224,7 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
         />
         <View>
           <View
-            accessibilityLabel="Get the app"
+            accessibilityLabel="Scarica CieID"
             accessibilityRole="button"
             accessibilityState={
               {
@@ -341,7 +341,7 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                     ]
                   }
                 >
-                  Get the app
+                  Scarica CieID
                 </Text>
               </View>
             </View>
@@ -364,7 +364,7 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
         />
         <View>
           <View
-            accessibilityLabel="Close"
+            accessibilityLabel="Chiudi"
             accessibilityRole="button"
             accessibilityState={
               {
@@ -486,7 +486,7 @@ exports[`CieIdNotInstalled Should match the snapshot 1`] = `
                     ]
                   }
                 >
-                  Close
+                  Chiudi
                 </Text>
               </View>
             </View>

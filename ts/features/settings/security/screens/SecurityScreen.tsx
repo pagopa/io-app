@@ -7,11 +7,11 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 
+import I18n from "i18next";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import { shufflePinPadOnPayment } from "../../../../config";
 import { IdPayCodeRoutes } from "../../../idpay/code/navigation/routes";
 import { isIdPayCodeOnboardedSelector } from "../../../idpay/code/store/selectors";
-import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../identification/store/actions";

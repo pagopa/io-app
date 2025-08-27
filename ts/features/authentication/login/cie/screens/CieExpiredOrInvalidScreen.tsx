@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";

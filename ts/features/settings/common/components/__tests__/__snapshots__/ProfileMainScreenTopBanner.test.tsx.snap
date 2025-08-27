@@ -72,7 +72,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
       }
     >
       <View
-        accessibilityLabel="Do you want to change the typeface used in the app? Edit typeface style"
+        accessibilityLabel="Vuoi modificare il carattere usato per i testi in app? Modifica stile carattere"
         accessibilityRole="button"
         accessible={true}
         style={
@@ -101,11 +101,11 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             ]
           }
         >
-          Do you want to change the typeface used in the app?
+          Vuoi modificare il carattere usato per i testi in app?
         </Text>
         <View
           accessibilityElementsHidden={true}
-          accessibilityLabel="Edit typeface style"
+          accessibilityLabel="Modifica stile carattere"
           accessibilityRole="button"
           accessibilityState={
             {
@@ -168,7 +168,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               ]
             }
           >
-            Edit typeface style
+            Modifica stile carattere
           </Text>
         </View>
       </View>
@@ -316,7 +316,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
         }
       >
         <View
-          accessibilityLabel="Close the banner and do not show it again"
+          accessibilityLabel="Chiudi il banner e non mostrarlo più"
           accessibilityRole="button"
           accessibilityState={
             {
@@ -609,7 +609,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 ]
               }
             >
-              Turn on push notifications to know when you get a message on IO.
+              Attiva le notifiche push per sapere quando ricevi un messaggio su IO.
             </Text>
             <Text
               allowFontScaling={true}
@@ -630,7 +630,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 ]
               }
             >
-              Turn on push notifications
+              Attiva notifiche push
             </Text>
           </View>
         </View>

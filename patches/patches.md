@@ -45,18 +45,6 @@ Created on **13/12/2019**
 #### Reason:
 - Change type export.
 
-### react-native-i18n+2.0.15
-Created on **05/08/2020**
-
-#### Reason:
-- Removed minSdkVersion from gradle to allow the compilation on Android. 
-
-Updated on **29/08/2022**
-
-#### Reason:
-
-- This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
-
 ### react-native-push-notification+7.3.1
 Created on **10/05/2021**
 

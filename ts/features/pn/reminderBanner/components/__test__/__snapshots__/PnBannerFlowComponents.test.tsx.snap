@@ -1697,7 +1697,7 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -1814,7 +1814,7 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -2214,8 +2214,8 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                         testID="loading-LOADING-ACTIVATION"
                       >
                         <View
-                          accessibilityHint="Wait for the content load"
-                          accessibilityLabel="Loading"
+                          accessibilityHint="Attendi il caricamento del contenuto"
+                          accessibilityLabel="Caricamento in corso"
                           accessibilityRole="progressbar"
                           accessible={true}
                           style={
@@ -2842,8 +2842,8 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                         testID="loading-LOADING-DATA"
                       >
                         <View
-                          accessibilityHint="Wait for the content load"
-                          accessibilityLabel="Loading"
+                          accessibilityHint="Attendi il caricamento del contenuto"
+                          accessibilityLabel="Caricamento in corso"
                           accessibilityRole="progressbar"
                           accessible={true}
                           style={
@@ -3697,7 +3697,7 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -3814,7 +3814,7 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>

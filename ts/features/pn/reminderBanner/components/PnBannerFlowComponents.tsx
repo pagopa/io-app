@@ -6,13 +6,13 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Dimensions, Image, View } from "react-native";
+import I18n from "i18next";
 import landingHeroImage from "../../../../../img/features/pn/activationLandingHero.png";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../../components/ui/IOScrollView";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";

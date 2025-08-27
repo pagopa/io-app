@@ -10,11 +10,11 @@ import {
   WebViewHttpErrorEvent,
   WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
+import I18n from "i18next";
 import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { useIOSelector } from "../../../../../store/hooks";
 import { getEnv } from "../../../common/utils/environment";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
-import I18n from "../../../../../i18n";
 import { ItwCieMachineContext } from "../machine/provider";
 import {
   selectAuthenticationUrl,

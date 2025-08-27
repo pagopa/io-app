@@ -31,11 +31,11 @@ import Animated, {
   withRepeat,
   withTiming
 } from "react-native-reanimated";
+import I18n from "i18next";
 import HighlightImage from "../../../../../img/features/itWallet/l3/highlight.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
-import I18n from "../../../../i18n";
 import { itwGradientColors } from "../utils/constants.ts";
 
 type Props = {

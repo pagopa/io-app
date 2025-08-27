@@ -1,6 +1,6 @@
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
-import I18n from "../../i18n";
 
 type OfflineFailureComponentProps = {
   onRetry?: () => void;

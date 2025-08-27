@@ -3,7 +3,7 @@ import { VSpacer, Banner } from "@pagopa/io-app-design-system";
 
 import Animated, { FadeOut } from "react-native-reanimated";
 import { View } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { paymentsPayPalBannerSetIsClosedAction } from "../store/actions";
 import { walletPayPalBannerClosedSelector } from "../store/selectors";

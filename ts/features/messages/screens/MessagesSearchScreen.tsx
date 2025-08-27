@@ -16,7 +16,7 @@ import {
   ViewStyle
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../store/hooks";
 import {

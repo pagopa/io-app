@@ -2,9 +2,9 @@ import { Badge, Body, H6, HSpacer } from "@pagopa/io-app-design-system";
 
 import { FunctionComponent } from "react";
 import { Image, Pressable, StyleSheet, View, ViewStyle } from "react-native";
+import I18n from "i18next";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
-import I18n from "../../../../i18n";
 import { getRemoteLocale } from "../../../messages/utils/ctas";
 
 export type AvailableBonusItemState = "incoming" | "active" | "completed";

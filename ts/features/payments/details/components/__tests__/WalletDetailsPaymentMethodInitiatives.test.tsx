@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
+import I18n from "i18next";
 import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
-import I18n from "../../../../../i18n";
 import WalletDetailsPaymentMethodInitiatives from "../WalletDetailsPaymentMethodInitiatives";
 
 const mockNavigate = jest.fn();

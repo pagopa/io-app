@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from "react";
 import { ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import I18n from "i18next";
 import { FeaturedService } from "../../../../../definitions/services/FeaturedService";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";

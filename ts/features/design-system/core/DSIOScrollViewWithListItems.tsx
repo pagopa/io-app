@@ -1,8 +1,8 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
+import I18n from "i18next";
 import { IOScrollViewWithListItems } from "../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 
 export const DSIOScrollViewWithListItems = () => {

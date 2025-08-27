@@ -9,12 +9,12 @@ import {
 } from "@pagopa/io-app-design-system";
 import { memo, PropsWithChildren, useState } from "react";
 import { Canvas, Rect, vec, LinearGradient } from "@shopify/react-native-skia";
+import I18n from "i18next";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import {
   IT_WALLET_ID_BG,
   IT_WALLET_ID_BG_LIGHT
 } from "../../../common/utils/constants";
-import I18n from "../../../../../i18n";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwPresentationDetailsScreenBase } from "./ItwPresentationDetailsScreenBase";
 

@@ -652,7 +652,7 @@ exports[`error screens should display an error screen in case of missing_sid err
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -769,7 +769,7 @@ exports[`error screens should display an error screen in case of missing_sid err
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -1444,7 +1444,7 @@ exports[`error screens should display an error screen in case of preferences err
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -1561,7 +1561,7 @@ exports[`error screens should display an error screen in case of preferences err
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -2236,7 +2236,7 @@ exports[`loading screens + error interop should render the correct loading scree
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -2353,7 +2353,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -2753,8 +2753,8 @@ exports[`loading screens + error interop should render the correct loading scree
                         testID="loading-LOADING-ACTIVATION"
                       >
                         <View
-                          accessibilityHint="Wait for the content load"
-                          accessibilityLabel="Loading"
+                          accessibilityHint="Attendi il caricamento del contenuto"
+                          accessibilityLabel="Caricamento in corso"
                           accessibilityRole="progressbar"
                           accessible={true}
                           style={
@@ -3381,8 +3381,8 @@ exports[`loading screens + error interop should render the correct loading scree
                         testID="loading-LOADING-DATA"
                       >
                         <View
-                          accessibilityHint="Wait for the content load"
-                          accessibilityLabel="Loading"
+                          accessibilityHint="Attendi il caricamento del contenuto"
+                          accessibilityLabel="Caricamento in corso"
                           accessibilityRole="progressbar"
                           accessible={true}
                           style={
@@ -4009,8 +4009,8 @@ exports[`loading screens + error interop should render the correct loading scree
                         testID="loading-LOADING-DATA"
                       >
                         <View
-                          accessibilityHint="Wait for the content load"
-                          accessibilityLabel="Loading"
+                          accessibilityHint="Attendi il caricamento del contenuto"
+                          accessibilityLabel="Caricamento in corso"
                           accessibilityRole="progressbar"
                           accessible={true}
                           style={
@@ -4637,8 +4637,8 @@ exports[`loading screens + error interop should render the correct loading scree
                         testID="loading-LOADING-DATA"
                       >
                         <View
-                          accessibilityHint="Wait for the content load"
-                          accessibilityLabel="Loading"
+                          accessibilityHint="Attendi il caricamento del contenuto"
+                          accessibilityLabel="Caricamento in corso"
                           accessibilityRole="progressbar"
                           accessible={true}
                           style={
@@ -5265,8 +5265,8 @@ exports[`loading screens + error interop should render the correct loading scree
                         testID="loading-LOADING-DATA"
                       >
                         <View
-                          accessibilityHint="Wait for the content load"
-                          accessibilityLabel="Loading"
+                          accessibilityHint="Attendi il caricamento del contenuto"
+                          accessibilityLabel="Caricamento in corso"
                           accessibilityRole="progressbar"
                           accessible={true}
                           style={

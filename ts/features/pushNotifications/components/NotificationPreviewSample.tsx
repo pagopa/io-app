@@ -8,8 +8,8 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { TranslationKeys } from "../../../../locales/locales";
-import I18n from "../../../i18n";
 
 const notificationMarginVertical: IOSpacingScale = 4;
 const notificationPaddingVertical: IOSpacingScale = 8;
@@ -85,8 +85,8 @@ export const NotificationPreviewSample = ({
       <Icon size={24} name="productIOAppBlueBg" />
       <HSpacer />
       <View style={{ flex: 1 }}>
-        <H6>{I18n.t(titleKey)}</H6>
-        <BodySmall weight="Regular">{I18n.t(messageKey)}</BodySmall>
+        <H6>{I18n.t(titleKey as any)}</H6>
+        <BodySmall weight="Regular">{I18n.t(messageKey as any)}</BodySmall>
       </View>
     </View>
   );

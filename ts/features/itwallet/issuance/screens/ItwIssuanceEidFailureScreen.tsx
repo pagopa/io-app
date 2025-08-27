@@ -2,12 +2,12 @@ import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { Linking } from "react-native";
+import I18n from "i18next";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import I18n from "../../../../i18n";
 import {
   IssuanceFailure,
   IssuanceFailureType

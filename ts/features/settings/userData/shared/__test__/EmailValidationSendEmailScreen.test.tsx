@@ -1,12 +1,12 @@
 import { PreloadedState, createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import EmailValidationSendEmailScreen from "../screens/EmailValidationSendEmailScreen";
-import I18n from "../../../../../i18n";
 
 jest.mock("react-native-background-timer", () => ({
   runBackgroundTimer: jest.fn(),

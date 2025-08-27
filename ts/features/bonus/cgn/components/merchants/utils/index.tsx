@@ -2,8 +2,8 @@ import { WithinRangeInteger } from "@pagopa/ts-commons/lib/numbers";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
-import I18n from "../../../../../../i18n";
 import { getCategorySpecs } from "../../../utils/filters";
 
 export const normalizedDiscountPercentage = (discount?: number) =>
@@ -30,7 +30,7 @@ export const moduleCGNaccessibilityLabel = (discountData: Discount) => {
     ${productCategories
       .map(categoryKey => {
         const category = getCategorySpecs(categoryKey);
-        return O.isSome(category) ? I18n.t(category.value.nameKey) : "";
+        return O.isSome(category) ? I18n.t(category.value.nameKey as any) : "";
       })
       .join(", ")}
       `;

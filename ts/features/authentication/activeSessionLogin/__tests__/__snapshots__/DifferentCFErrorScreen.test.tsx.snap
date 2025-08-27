@@ -604,7 +604,7 @@ exports[`DifferentCFErrorScreen should render correctly and match snapshot 1`] =
                                 ]
                               }
                             >
-                              Is that really you?
+                              Sei proprio tu?
                             </Text>
                             <View
                               style={
@@ -634,7 +634,7 @@ exports[`DifferentCFErrorScreen should render correctly and match snapshot 1`] =
                                 ]
                               }
                             >
-                              You have logged in with a different identity. To use the app, log in with your credentials.
+                              Hai fatto l’accesso con un’altra identità. Per usare l’app, accedi con le tue credenziali.
                             </Text>
                             <View
                               style={
@@ -652,7 +652,7 @@ exports[`DifferentCFErrorScreen should render correctly and match snapshot 1`] =
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Log in again"
+                                  accessibilityLabel="Accedi di nuovo"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -768,7 +768,7 @@ exports[`DifferentCFErrorScreen should render correctly and match snapshot 1`] =
                                           ]
                                         }
                                       >
-                                        Log in again
+                                        Accedi di nuovo
                                       </Text>
                                     </View>
                                   </View>

@@ -51,7 +51,7 @@ describe("IdentificationNumberPad", () => {
     }
 
     // Check for delete button
-    expect(getByLabelText("Delete")).toBeTruthy();
+    expect(getByLabelText("Elimina")).toBeTruthy();
   });
 
   it("should update successfully validate PIN if it's enter correctly", () => {

@@ -1172,7 +1172,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                           }
                         >
                           <View
-                            accessibilityLabel="Go to payment"
+                            accessibilityLabel="Vai al pagamento"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -1288,7 +1288,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                     ]
                                   }
                                 >
-                                  Go to payment
+                                  Vai al pagamento
                                 </Text>
                               </View>
                             </View>
@@ -1724,7 +1724,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                           }
                         >
                           <View
-                            accessibilityLabel="Go to payment"
+                            accessibilityLabel="Vai al pagamento"
                             accessibilityRole="button"
                             accessibilityState={
                               {

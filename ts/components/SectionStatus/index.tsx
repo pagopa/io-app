@@ -8,8 +8,8 @@ import {
 
 import { View } from "react-native";
 import { Alert } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
-import I18n from "../../i18n";
 import {
   isSectionVisibleSelector,
   levelForSectionSelector,

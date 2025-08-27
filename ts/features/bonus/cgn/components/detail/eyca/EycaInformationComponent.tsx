@@ -1,6 +1,6 @@
 import { IOButton, IOToast, VSpacer } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import IOMarkdown from "../../../../../../components/IOMarkdown";
-import I18n from "../../../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../../utils/url";
 import { EYCA_WEBSITE_BASE_URL } from "../../../utils/constants";

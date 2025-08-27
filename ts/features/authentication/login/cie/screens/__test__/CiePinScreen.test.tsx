@@ -2,12 +2,12 @@ import { fireEvent } from "@testing-library/react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import { createStore } from "redux";
+import I18n from "i18next";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import CiePinScreen from "../../screens/CiePinScreen";
 import * as hooks from "../../../../../../store/hooks";
-import I18n from "../../../../../../i18n";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as cieAnalytics from "../../../../common/analytics/cieAnalytics";
 import * as accessibilityUtils from "../../../../../../utils/accessibility";

@@ -7,7 +7,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Alert, View } from "react-native";
 import { useCallback } from "react";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwIsL3EnabledSelector } from "../../../../features/itwallet/common/store/selectors/preferences";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";

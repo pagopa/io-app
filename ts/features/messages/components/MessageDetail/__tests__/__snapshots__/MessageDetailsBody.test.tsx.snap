@@ -1335,7 +1335,7 @@ exports[`MessageDetailsBody should match snapshot for message with invalid CTA 1
                                     ]
                                   }
                                 >
-                                  Message content cannot be displayed.
+                                  Il contenuto del messaggio non può essere mostrato correttamente.
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -1356,7 +1356,7 @@ exports[`MessageDetailsBody should match snapshot for message with invalid CTA 1
                                     ]
                                   }
                                 >
-                                  Show anyway
+                                  Mostra comunque
                                 </Text>
                               </View>
                             </View>

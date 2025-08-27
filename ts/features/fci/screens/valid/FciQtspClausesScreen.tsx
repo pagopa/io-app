@@ -9,9 +9,9 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useState, useEffect, ComponentProps } from "react";
 import { FlatList, ScrollView, View } from "react-native";
+import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";

@@ -1,5 +1,5 @@
 import { createStore } from "redux";
-import I18n from "../../../../../../i18n";
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";

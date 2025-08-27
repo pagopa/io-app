@@ -1,7 +1,7 @@
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useState } from "react";
+import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

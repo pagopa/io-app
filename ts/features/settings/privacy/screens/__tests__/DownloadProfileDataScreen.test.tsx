@@ -1,6 +1,7 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -9,7 +10,6 @@ import DownloadProfileDataScreen from "../DownloadProfileDataScreen";
 import * as hooks from "../../../../../store/hooks";
 import * as selectors from "../../../common/store/selectors/userDataProcessing";
 import { upsertUserDataProcessing } from "../../../common/store/actions/userDataProcessing";
-import I18n from "../../../../../i18n";
 import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
 
 jest.mock("../../../../../store/hooks", () => ({

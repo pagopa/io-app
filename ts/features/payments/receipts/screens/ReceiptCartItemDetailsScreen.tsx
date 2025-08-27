@@ -1,9 +1,9 @@
 import { Divider, H6, ListItemInfoCopy } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import { UserDetail } from "../../../../../definitions/pagopa/biz-events/UserDetail";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import * as analytics from "../analytics";

@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react-native";
 import { format } from "date-fns";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { PaymentCard } from "../PaymentCard";
 
 describe("PaymentCard", () => {

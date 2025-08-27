@@ -1,6 +1,6 @@
+import I18n from "i18next";
 import { TypeEnum as ClausesTypeEnum } from "../../../../../definitions/fci/Clause";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
-import I18n from "../../../../i18n";
 import { mockDocuments } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import {
   clausesByType,

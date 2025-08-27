@@ -5,7 +5,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { loadBonusBeforeRemoveAccount } from "../../common/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";

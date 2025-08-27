@@ -7,8 +7,8 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import React, { useMemo } from "react";
+import I18n from "i18next";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
-import I18n from "../../../../../i18n.ts";
 import {
   IOStackNavigationRouteProps,
   useIONavigation

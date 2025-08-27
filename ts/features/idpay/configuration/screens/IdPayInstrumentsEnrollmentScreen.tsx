@@ -8,10 +8,10 @@ import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { ComponentProps, useCallback, useEffect, useState } from "react";
+import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { Wallet } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -117,8 +117,9 @@ export const IdPayInstrumentsEnrollmentScreen = () => {
       <Body>
         {I18n.t("idpay.configuration.instruments.enrollmentSheet.bodyFirst")}
         <Body weight="Semibold">
-          {I18n.t("idpay.configuration.instruments.enrollmentSheet.bodyBold") +
-            "\n"}
+          {(I18n.t(
+            "idpay.configuration.instruments.enrollmentSheet.bodyBold"
+          ) as string) + "\n"}
         </Body>
         {I18n.t("idpay.configuration.instruments.enrollmentSheet.bodyLast")}
       </Body>

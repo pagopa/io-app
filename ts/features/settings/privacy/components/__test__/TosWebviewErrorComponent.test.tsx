@@ -1,10 +1,10 @@
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import TosWebviewErrorComponent from "../TosWebviewErrorComponent";
-import I18n from "../../../../../i18n";
 
 describe("TosWebviewErrorComponent", () => {
   it("should render the error UI and call handleRetry on retry button press", () => {

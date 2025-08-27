@@ -5,8 +5,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
+import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
 import { serviceMetadataByIdSelector } from "../../../services/details/store/reducers";

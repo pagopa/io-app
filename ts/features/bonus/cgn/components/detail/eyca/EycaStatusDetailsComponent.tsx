@@ -3,14 +3,14 @@ import {
   ListItemInfoCopy,
   Divider
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { EycaCardActivated } from "../../../../../../../definitions/cgn/EycaCardActivated";
 import { EycaCardExpired } from "../../../../../../../definitions/cgn/EycaCardExpired";
 import { EycaCardRevoked } from "../../../../../../../definitions/cgn/EycaCardRevoked";
 
-import I18n from "../../../../../../i18n";
-import { localeDateFormat } from "../../../../../../utils/locale";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import { getAccessibleExpirationDate } from "../../../utils/dates";
+import { formatDateAsShortFormat } from "../../../../../../utils/dates";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;
@@ -31,10 +31,7 @@ const EycaStatusDetailsComponent = (props: Props) => (
     <ListItemInfo
       icon="calendar"
       label={I18n.t("bonus.cgn.detail.status.expiration.cgn")}
-      value={localeDateFormat(
-        props.eycaCard.expiration_date,
-        I18n.t("global.dateFormats.shortFormat")
-      )}
+      value={formatDateAsShortFormat(props.eycaCard.expiration_date)}
       accessibilityLabel={getAccessibleExpirationDate(
         props.eycaCard.expiration_date,
         "active"

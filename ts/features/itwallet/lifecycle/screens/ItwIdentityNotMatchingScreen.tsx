@@ -2,7 +2,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { Banner, ContentWrapper, VStack } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
 import { constNull } from "fp-ts/lib/function";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import {
   itwLifecycleIdentityCheckCompleted,
   itwLifecycleWalletReset

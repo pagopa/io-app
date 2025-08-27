@@ -658,7 +658,7 @@ exports[`CieCardReaderScreenWrapper Should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Hold your CIE on the back of your phone
+                                    Appoggia la CIE sul retro del dispositivo
                                   </Text>
                                 </View>
                                 <View
@@ -686,7 +686,7 @@ exports[`CieCardReaderScreenWrapper Should match the snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  If the reading doesn't start, move the card to different places and wait a few seconds until you feel a vibration.
+                                  Se la lettura non parte, sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
                                 </Text>
                                 <View
                                   style={
@@ -704,7 +704,7 @@ exports[`CieCardReaderScreenWrapper Should match the snapshot 1`] = `
                                 >
                                   <View>
                                     <View
-                                      accessibilityLabel="Close"
+                                      accessibilityLabel="Chiudi"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -822,7 +822,7 @@ exports[`CieCardReaderScreenWrapper Should match the snapshot 1`] = `
                                               ]
                                             }
                                           >
-                                            Close
+                                            Chiudi
                                           </Text>
                                         </View>
                                       </View>

@@ -13,10 +13,10 @@ import {
 import { format } from "date-fns";
 import { capitalize } from "lodash";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import BPayLogo from "../../../../../img/wallet/payment-methods/bpay_logo_full.svg";
 import PayPalLogo from "../../../../../img/wallet/payment-methods/paypal/paypal_logo_ext.svg";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
-import I18n from "../../../../i18n";
 
 export type PaymentCardProps = {
   brand?: string;

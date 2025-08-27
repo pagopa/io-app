@@ -1,12 +1,12 @@
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
 import { UpdateAppAlert } from "../UpdateAppAlert";
 import * as urlUtils from "../../utils/url";
 import * as otherHooks from "../../hooks/useStartSupportRequest";
-import I18n from "../../i18n";
 import { mockAccessibilityInfo } from "../../utils/testAccessibility";
 
 const mockGoBack = jest.fn();

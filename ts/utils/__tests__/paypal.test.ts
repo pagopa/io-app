@@ -1,7 +1,7 @@
+import I18n from "i18next";
 import { pspAccountList } from "../__mocks__/paypalAccountPsp";
 import { PayPalInfo } from "../../../definitions/pagopa/PayPalInfo";
 import { getPaypalAccountEmail } from "../paypal";
-import I18n from "../../i18n";
 
 const payPalInfo: PayPalInfo = { pspInfo: pspAccountList };
 const notAvailable = I18n.t("wallet.onboarding.paypal.emailNotAvailable");

@@ -1,8 +1,8 @@
 import { IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import I18n from "../../../../i18n";
 import { ItwTrustmarkMachineContext } from "../machine/provider";
 import { selectFailure, selectTrustmarkUrl } from "../machine/selectors";
 import { ItwRetryableQRCode } from "../../common/components/ItwRetryableQRCode";

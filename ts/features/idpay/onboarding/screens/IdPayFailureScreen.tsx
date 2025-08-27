@@ -2,11 +2,11 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { voidType } from "io-ts";
 import { useMemo } from "react";
+import I18n from "i18next";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectOnboardingFailure } from "../machine/selectors";
 import { OnboardingFailureEnum } from "../types/OnboardingFailure";

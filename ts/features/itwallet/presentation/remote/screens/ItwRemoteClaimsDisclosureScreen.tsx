@@ -5,9 +5,9 @@ import {
   H2,
   VStack
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import IOMarkdown from "../../../../../components/IOMarkdown/index.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
-import I18n from "../../../../../i18n";
 import { useIODispatch } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";

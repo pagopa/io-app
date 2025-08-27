@@ -4,11 +4,11 @@ import {
   RadioItem
 } from "@pagopa/io-app-design-system";
 import { Alert, View } from "react-native";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { EnvType, getEnv } from "../../common/utils/environment";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { itwSetEnv } from "../../common/store/actions/environment";
-import I18n from "../../../../i18n";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 
 export const ItwEnvironmentSection = () => {
