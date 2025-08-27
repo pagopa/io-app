@@ -42,7 +42,7 @@ export const itwCredentialIssuanceMachine = setup({
     trackCredentialIssuingDataShareAccepted: notImplemented
   },
   actors: {
-    verifyTrustFederation: fromPromise(notImplemented),
+    verifyTrustFederation: fromPromise<void>(notImplemented),
     getWalletAttestation:
       fromPromise<GetWalletAttestationActorOutput>(notImplemented),
     requestCredential: fromPromise<

@@ -108,7 +108,7 @@ export const itwEidIssuanceMachine = setup({
     }
   },
   actors: {
-    verifyTrustFederation: fromPromise(notImplemented),
+    verifyTrustFederation: fromPromise<void>(notImplemented),
     getCieStatus: fromPromise<CieContext>(notImplemented),
     createWalletInstance: fromPromise<string>(notImplemented),
     revokeWalletInstance: fromPromise<void>(notImplemented),

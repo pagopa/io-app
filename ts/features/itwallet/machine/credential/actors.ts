@@ -44,7 +44,7 @@ export const createCredentialIssuanceActorsImplementation = (
   env: Env,
   store: ReturnType<typeof useIOStore>
 ) => {
-  const verifyTrustFederation = fromPromise(async () => {
+  const verifyTrustFederation = fromPromise<void>(async () => {
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
       await Trust.Build.getTrustAnchorEntityConfiguration(
