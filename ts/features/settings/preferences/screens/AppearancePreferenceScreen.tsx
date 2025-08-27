@@ -21,8 +21,10 @@ import {
   trackAppearancePreferenceScreenView,
   trackAppearancePreferenceTypefaceUpdate
 } from "../../common/analytics";
-
-type ColorModeChoice = "system" | "dark" | "light";
+import {
+  ColorModeChoice,
+  useIOAppThemeContext
+} from "../../../../components/core/context/IOAppThemeContextProvider";
 
 /**
  * Display the appearance related settings
@@ -33,8 +35,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
   const store = useIOStore();
   const dispatch = useIODispatch();
   const { newTypefaceEnabled, setNewTypefaceEnabled } = useIONewTypeface();
-  const { setTheme } = useIOThemeContext();
-  const systemColorScheme = useColorScheme();
+  const { themeType, setTheme } = useIOAppThemeContext();
 
   useFocusEffect(() => {
     trackAppearancePreferenceScreenView();
@@ -51,9 +52,6 @@ const AppearancePreferenceScreen = (): ReactElement => {
       setNewTypefaceEnabled(choice === "comfortable");
     });
   };
-
-  const [selectedColorMode, setSelectedColorMode] =
-    useState<ColorModeChoice>("light");
 
   // Options for typeface
   const typefaceOptions = [
@@ -98,10 +96,6 @@ const AppearancePreferenceScreen = (): ReactElement => {
     }
   ];
 
-  useEffect(() => {
-    console.log("hook", systemColorScheme);
-  }, [systemColorScheme]);
-
   return (
     <IOScrollViewWithLargeHeader
       title={{
@@ -131,26 +125,13 @@ const AppearancePreferenceScreen = (): ReactElement => {
           <ListItemHeader
             iconName="theme"
             label={I18n.t("profile.preferences.list.appearance.theme.title")}
-            endElement={{
-              type: "badge",
-              componentProps: {
-                text: I18n.t(
-                  "profile.preferences.list.appearance.theme.comingSoon"
-                ),
-                variant: "highlight"
-              }
-            }}
           />
           <RadioGroup<ColorModeChoice>
             type="radioListItem"
             items={colorModeOptions}
-            selectedItem={selectedColorMode}
+            selectedItem={themeType}
             onPress={(mode: ColorModeChoice) => {
-              if (mode === "system") {
-                Appearance.setColorScheme(undefined);
-              }
-              setTheme(mode === "system" ? systemColorScheme : mode);
-              setSelectedColorMode(mode);
+              setTheme(mode);
             }}
           />
         </View>

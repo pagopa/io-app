@@ -19,6 +19,7 @@ import { sentryDsn } from "./config";
 import { isDevEnv } from "./utils/environment";
 import { StatusMessages } from "./components/StatusMessages";
 import { AppFeedbackProvider } from "./features/appReviews/components/AppFeedbackProvider";
+import { IOAppThemeContextProvider } from "./components/core/context/IOAppThemeContextProvider";
 
 export type ReactNavigationInstrumentation = ReturnType<
   typeof Sentry.reactNavigationIntegration
@@ -121,7 +122,7 @@ const App = (): JSX.Element => (
     <SafeAreaProvider>
       <IODSExperimentalContextProvider>
         <IONewTypefaceContextProvider>
-          <IOThemeContextProvider theme={"light"}>
+          <IOAppThemeContextProvider theme={"light"}>
             <ToastProvider>
               <Provider store={store}>
                 <PersistGate loading={undefined} persistor={persistor}>
@@ -137,7 +138,7 @@ const App = (): JSX.Element => (
                 </PersistGate>
               </Provider>
             </ToastProvider>
-          </IOThemeContextProvider>
+          </IOAppThemeContextProvider>
         </IONewTypefaceContextProvider>
       </IODSExperimentalContextProvider>
     </SafeAreaProvider>
