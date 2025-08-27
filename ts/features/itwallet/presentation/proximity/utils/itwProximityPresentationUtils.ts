@@ -51,7 +51,7 @@ export const getProximityDetails = (
 
       const credential = credentialsByType[docType];
 
-      assert(credential, "Credential not found in the wallet");
+      assert(credential, `Credential not found for docType: ${docType}`);
 
       // Extract required fields from the verifier request.
       // Each field is formatted as "namespace:field" to match the structure
@@ -97,7 +97,7 @@ export const getDocuments = (
     const credential = credentialsByType[docType];
 
     // This should be guaranteed by getProximityDetails having already validated credentials
-    assert(credential, "Credential not found in the wallet");
+    assert(credential, `Credential not found for docType: ${docType}`);
 
     return {
       alias: credential.keyTag,
