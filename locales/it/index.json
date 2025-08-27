@@ -5414,6 +5414,11 @@
         "title": "Hai bisogno d’aiuto?",
         "subtitle": "Dai un’occhiata alle FAQ: se non trovi la risposta che cerchi, apri una richiesta. Se hai già aperto una richiesta e vuoi verificarne lo stato o aggiungere dettagli, seleziona “Richieste in corso”.",
         "adviceMessage": "Se il tuo problema riguarda il contenuto di un messaggio o il servizio di un ente, contatta quest’ultimo: trovi i riferimenti nel messaggio o nella scheda del servizio."
+      },
+      "supportBanner": {
+        "content": "Abbiamo preparato una guida per aiutarti a risolvere velocemente il tuo problema.",
+        "action": "Vai al Centro assistenza",
+        "title": "Serve aiuto?"
       }
     },
     "panicMode": {

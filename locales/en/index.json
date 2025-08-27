@@ -5414,6 +5414,11 @@
         "title": "Need help?",
         "subtitle": "Take a look at the FAQs: if you don't find the answer you're looking for, submit a request. If you've already submitted a request and want to check its status or add details, select “Current requests“.",
         "adviceMessage": "If your problem concerns the content of a message or the service of an institution, contact the latter. You can find the contact details within the message or in the tab of the service concerned."
+      },
+      "supportBanner": {
+        "content": "Abbiamo preparato una guida per aiutarti a risolvere velocemente il tuo problema.",
+        "action": "Vai al Centro assistenza",
+        "title": "Serve aiuto?"
       }
     },
     "panicMode": {
