@@ -17,6 +17,7 @@ import { format } from "../../../../../utils/dates.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
+import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
 import { openWebUrl } from "../../../../../utils/url";
 import {
   CREDENTIALS_MAP,
@@ -111,6 +112,7 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     return (
       <IssuerDynamicErrorAlert
         message={message}
+        credential={credential}
         onTrack={trackCredentialAlertEvent}
       />
     );
@@ -223,18 +225,40 @@ const DocumentExpiringAlert = ({
 
 type IssuerDynamicErrorAlertProps = {
   message: Record<string, { title: string; description: string }>;
+  credential: StoredCredential;
   onTrack: TrackCredentialAlert;
 };
 
 const IssuerDynamicErrorAlert = ({
   message,
+  credential,
   onTrack
 }: IssuerDynamicErrorAlertProps) => {
   const localizedMessage = getLocalizedMessageOrFallback(message);
+  const showCta = credential.credentialType === CredentialType.DRIVING_LICENSE;
+
+  const { confirmAndRemoveCredential } =
+    useItwRemoveCredentialWithConfirm(credential);
 
   const bottomSheet = useIOBottomSheetModal({
     title: localizedMessage.title,
-    component: <IOMarkdown content={localizedMessage.description} />
+    component: (
+      <VStack space={24}>
+        <IOMarkdown content={localizedMessage.description} />
+        {showCta && (
+          <View style={{ marginBottom: 16 }}>
+            <IOButton
+              variant="solid"
+              fullWidth
+              label={I18n.t(
+                "features.itWallet.presentation.alerts.mdl.invalid.cta"
+              )}
+              onPress={confirmAndRemoveCredential}
+            />
+          </View>
+        )}
+      </VStack>
+    )
   });
 
   const handleAlertPress = useAlertPressHandler(onTrack, bottomSheet);
