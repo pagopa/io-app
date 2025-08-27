@@ -93,9 +93,6 @@ export const itwCredentialIssuanceMachine = setup({
         "Verification of the trust federation. This state verifies the trust chain of the wallet provider with the EAA provider.",
       tags: [ItwTags.Loading],
       invoke: {
-        input: ({ context }) => ({
-          isNewIssuanceFlowEnabled: context.isWhiteListed
-        }),
         src: "verifyTrustFederation",
         onDone: [
           {
@@ -141,9 +138,6 @@ export const itwCredentialIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "getWalletAttestation",
-        input: ({ context }) => ({
-          isNewIssuanceFlowEnabled: context.isWhiteListed
-        }),
         onDone: {
           target: "RequestingCredential",
           actions: [
@@ -172,8 +166,7 @@ export const itwCredentialIssuanceMachine = setup({
         src: "requestCredential",
         input: ({ context }) => ({
           credentialType: context.credentialType,
-          walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-          isNewIssuanceFlowEnabled: context.isWhiteListed
+          walletInstanceAttestation: context.walletInstanceAttestation?.jwt
         }),
         onDone: {
           target: "DisplayingTrustIssuer",
@@ -244,8 +237,7 @@ export const itwCredentialIssuanceMachine = setup({
           invoke: {
             src: "obtainStatusAttestation",
             input: ({ context }) => ({
-              credentials: context.credentials,
-              isNewIssuanceFlowEnabled: context.isWhiteListed
+              credentials: context.credentials
             }),
             onDone: {
               target: "Completed",
