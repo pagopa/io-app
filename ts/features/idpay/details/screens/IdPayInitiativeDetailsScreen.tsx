@@ -13,7 +13,7 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
@@ -254,7 +254,15 @@ const IdPayInitiativeDetailsScreenComponent = () => {
             case InitiativeRewardTypeEnum.REFUND:
               if (initiativeNeedsConfiguration) {
                 return (
-                  <View style={styles.newInitiativeMessageContainer}>
+                  <View
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: 32,
+                      flex: 1,
+                      flexGrow: 1
+                    }}
+                  >
                     <Pictogram name="empty" size={72} />
                     <VSpacer size={16} />
                     <H6>
@@ -375,15 +383,5 @@ const IdPayInitiativeDetailsScreen = withAppRequiredUpdate(
   IdPayInitiativeDetailsScreenComponent,
   "idpay.initiative_details"
 );
-
-const styles = StyleSheet.create({
-  newInitiativeMessageContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 32,
-    flex: 1,
-    flexGrow: 1
-  }
-});
 
 export { IdPayInitiativeDetailsScreen };

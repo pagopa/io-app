@@ -1,4 +1,8 @@
-import { LabelMini, Tag } from "@pagopa/io-app-design-system";
+import {
+  LabelMini,
+  Tag,
+  useIOThemeContext
+} from "@pagopa/io-app-design-system";
 import {
   InitiativeDTO,
   VoucherStatusEnum
