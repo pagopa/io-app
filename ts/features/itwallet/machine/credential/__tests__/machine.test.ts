@@ -1,5 +1,4 @@
 /* eslint-disable sonarjs/no-identical-functions */
-import { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import {
