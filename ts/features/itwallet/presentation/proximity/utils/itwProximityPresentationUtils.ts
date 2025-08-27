@@ -1,6 +1,8 @@
-import { parseClaims } from "../../../common/utils/itwClaimsUtils";
+import {
+  parseClaims,
+  WellKnownClaim
+} from "../../../common/utils/itwClaimsUtils";
 import { assert } from "../../../../../utils/assert";
-import { TimeoutError } from "../machine/failure";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
 import type {
@@ -9,6 +11,7 @@ import type {
   RequestedDocument,
   VerifierRequest
 } from "./itwProximityTypeUtils";
+import { TimeoutError, UntrustedRpError } from "./itwProximityErrors";
 
 const WIA_DOC_TYPE = "org.iso.18013.5.1.IT.WalletAttestation";
 
@@ -25,15 +28,27 @@ export const promiseWithTimeout = <T>(
   return Promise.race<T>([promise, timeout]);
 };
 
+/**
+ * Get the Presentation details based on the request from the Verifier.
+ *
+ * @param request The request from the Verifier, specifying which document types and claims are required
+ * @param credentialsByType The credentials object by doc type
+ * @returns The Presentation details
+ */
 export const getProximityDetails = (
   request: VerifierRequest["request"],
   credentialsByType: Record<string, StoredCredential | undefined>
 ): ProximityDetails => {
   // Exclude the WIA document type from the request
-  const { [WIA_DOC_TYPE]: _, ...otherDocuments } = request;
+  const { [WIA_DOC_TYPE]: _, ...rest } = request;
 
-  return Object.entries(otherDocuments).map(
+  return Object.entries(rest).map(
     ([docType, { isAuthenticated, ...namespaces }]) => {
+      // Stop the flow if the verifier (RP) is not trusted
+      if (!isAuthenticated) {
+        throw new UntrustedRpError("Untrusted RP");
+      }
+
       const credential = credentialsByType[docType];
 
       assert(credential, "Credential not found in the wallet");
@@ -54,12 +69,22 @@ export const getProximityDetails = (
 
       return {
         credentialType: credential.credentialType,
-        claimsToDisplay: parseClaims(parsedCredential)
+        claimsToDisplay: parseClaims(parsedCredential, {
+          exclude: [WellKnownClaim.unique_id]
+        })
       };
     }
   );
 };
 
+/**
+ * Get the requested documents based on the request from the Verifier.
+ *
+ * @param request The request from the Verifier, specifying which document types and claims are required
+ * @param credentialsByType The credentials object by doc type
+ * @param wiaMdoc The WIA in mdoc format
+ * @returns The requested documents
+ */
 export const getDocuments = (
   request: VerifierRequest["request"],
   credentialsByType: Record<string, StoredCredential | undefined>,
@@ -69,17 +94,15 @@ export const getDocuments = (
   const { [WIA_DOC_TYPE]: _, ...rest } = request;
 
   const documents = Object.entries(rest).map(([docType]) => {
-    const storedCredential = credentialsByType[docType];
+    const credential = credentialsByType[docType];
 
     // This should be guaranteed by getProximityDetails having already validated credentials
-    assert(storedCredential, "Credential not found in the wallet");
-
-    const { credential, keyTag } = storedCredential;
+    assert(credential, "Credential not found in the wallet");
 
     return {
-      alias: keyTag,
+      alias: credential.keyTag,
       docType,
-      issuerSignedContent: credential
+      issuerSignedContent: credential.credential
     };
   });
 
