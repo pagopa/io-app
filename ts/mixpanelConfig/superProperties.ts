@@ -33,6 +33,7 @@ import { itwAuthLevelSelector } from "../features/itwallet/common/store/selector
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
 import { isConnectedSelector } from "../features/connectivity/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../features/itwallet/lifecycle/store/selectors";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -58,7 +59,7 @@ type SuperProperties = {
   NOTIFICATION_PERMISSION: NotificationPermissionType;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   ITW_STATUS_V2: ItwStatus;
-  ITW_ID_V2: ItwPIDStatus;
+  ITW_ID_V2?: ItwPIDStatus;
   ITW_PID: ItwPIDStatus;
   ITW_PG_V2: ItwCredentialMixpanelStatus;
   ITW_TS_V2: ItwCredentialMixpanelStatus;
@@ -87,7 +88,6 @@ export const updateMixpanelSuperProperties = async (
     const notificationsEnabled = await checkNotificationPermissions();
     const SERVICE_CONFIGURATION = serviceConfigHandler(state);
     const ITW_STATUS_V2 = walletStatusHandler(state);
-    const ITW_ID_V2 = getPIDMixpanelStatus(state, false);
     const ITW_PID = getPIDMixpanelStatus(state, true);
     const ITW_PG_V2 = credentialStatusHandler("mDL", state);
     const ITW_TS_V2 = credentialStatusHandler(
@@ -100,6 +100,8 @@ export const updateMixpanelSuperProperties = async (
     const WELFARE_STATUS = welfareStatusHandler(state);
     const OFFLINE_ACCESS_REASON = offlineReasonHandler(state);
     const CONNECTION_STATUS = offlineStatusHandler(state);
+
+    const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
 
     const superPropertiesObject: SuperProperties = {
       isScreenReaderEnabled: screenReaderEnabled,
@@ -114,7 +116,7 @@ export const updateMixpanelSuperProperties = async (
         getNotificationPermissionType(notificationsEnabled),
       SERVICE_CONFIGURATION,
       ITW_STATUS_V2,
-      ITW_ID_V2,
+      ...(!isItwL3 && { ITW_ID_V2: getPIDMixpanelStatus(state, false) }),
       ITW_PID,
       ITW_PG_V2,
       ITW_TS_V2,

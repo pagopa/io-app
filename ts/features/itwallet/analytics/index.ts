@@ -14,10 +14,7 @@ import {
   StoredCredential,
   WalletInstanceRevocationReason
 } from "../common/utils/itwTypesUtils";
-import {
-  itwAuthLevelSelector,
-  itwLastEidStatusSelector
-} from "../common/store/selectors/preferences.ts";
+import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
 import { OfflineAccessReasonEnum } from "../../ingress/store/reducer";
 import { Action } from "../../../store/actions/types.ts";
 import {
@@ -1162,7 +1159,8 @@ export const updateITWStatusAndPIDProperties = (state: GlobalState) => {
     return;
   }
 
-  const eIDStatus = getPIDMixpanelStatus(state, false);
+  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+  const eIDStatus = !isItwL3 ? getPIDMixpanelStatus(state, false) : undefined;
   const pidStatus = getPIDMixpanelStatus(state, true);
 
   void updateMixpanelProfileProperties(state, {
@@ -1173,14 +1171,16 @@ export const updateITWStatusAndPIDProperties = (state: GlobalState) => {
     property: "ITW_STATUS_V2",
     value: authLevel
   });
-  void updateMixpanelProfileProperties(state, {
-    property: "ITW_ID_V2",
-    value: eIDStatus
-  });
-  void updateMixpanelSuperProperties(state, {
-    property: "ITW_ID_V2",
-    value: eIDStatus
-  });
+  if (eIDStatus) {
+    void updateMixpanelProfileProperties(state, {
+      property: "ITW_ID_V2",
+      value: eIDStatus
+    });
+    void updateMixpanelSuperProperties(state, {
+      property: "ITW_ID_V2",
+      value: eIDStatus
+    });
+  }
   void updateMixpanelProfileProperties(state, {
     property: "ITW_PID",
     value: pidStatus
@@ -1217,9 +1217,10 @@ export const updatePropertiesWalletRevoked = (state: GlobalState) => {
 };
 
 /**
- * Returns the PID status for Mixpanel analytics, depending on the context.
- * If `isL3` is true, we use the status from the current L3 PID (IT Wallet).
- * If `isL3` is false, we fall back to the last known L2 PID (or eID) status.
+ * Returns the PID status for Mixpanel analytics.
+ *
+ * - If `isL3` is true → we consider the status from the current L3 PID (IT Wallet).
+ * - If `isL3` is false → we use the current eID status.
  */
 export const getPIDMixpanelStatus = (
   state: GlobalState,
@@ -1232,7 +1233,7 @@ export const getPIDMixpanelStatus = (
           O.fromPredicate(Boolean),
           O.chain(() => O.fromNullable(itwCredentialsEidStatusSelector(state)))
         )
-      : O.fromNullable(itwLastEidStatusSelector(state)),
+      : O.fromNullable(itwCredentialsEidStatusSelector(state)),
     O.map<ItwJwtCredentialStatus, ItwPIDStatus>(mapPIDStatusToMixpanel),
     O.getOrElse((): ItwPIDStatus => "not_available")
   );

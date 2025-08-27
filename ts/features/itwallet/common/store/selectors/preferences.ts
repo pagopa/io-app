@@ -96,9 +96,3 @@ export const itwIsWalletUpgradeMDLDetailsBannerHiddenSelector = (
 ) =>
   state.features.itWallet.preferences.walletUpgradeMDLDetailsBannerHidden ??
   false;
-
-/**
- * Returns the last known status of the eID, if previously obtained.
- */
-export const itwLastEidStatusSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.lastEidStatus;

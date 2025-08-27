@@ -1,8 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import {
-  ItwAuthLevel,
-  ItwJwtCredentialStatus
-} from "../../utils/itwTypesUtils.ts";
+import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
 export const itwCloseFeedbackBanner = createStandardAction(
   "ITW_CLOSE_FEEDBACK_BANNER"
@@ -48,10 +45,6 @@ export const itwSetWalletUpgradeMDLDetailsBannerHidden = createStandardAction(
   "ITW_SET_WALLET_UPGRADE_MDL_DETAILS_BANNER_HIDDEN"
 )<boolean>();
 
-export const itwSetLastEidStatus = createStandardAction(
-  "ITW_SET_LAST_EID_STATUS"
-)<ItwJwtCredentialStatus>();
-
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
   | ActionType<typeof itwCloseDiscoveryBanner>
@@ -63,5 +56,4 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetWalletInstanceRemotelyActive>
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwSetOfflineBannerHidden>
-  | ActionType<typeof itwSetWalletUpgradeMDLDetailsBannerHidden>
-  | ActionType<typeof itwSetLastEidStatus>;
+  | ActionType<typeof itwSetWalletUpgradeMDLDetailsBannerHidden>;

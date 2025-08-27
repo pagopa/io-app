@@ -284,15 +284,11 @@ const generateMockedGlobalState = (
     },
     features: {
       itWallet: {
-        issuance: {
-          integrityKeyTag: O.none
-        },
         credentials: {
           credentials: {}
         },
         preferences: {
-          authLevel: "L2",
-          lastEidStatus: undefined
+          authLevel: "L2"
         }
       },
       loginFeatures: {

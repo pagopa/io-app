@@ -5,15 +5,11 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import {
   itwAuthLevelSelector,
-  itwLastEidStatusSelector,
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
   itwRequestedCredentialsSelector
 } from "../preferences";
-import {
-  ItwAuthLevel,
-  ItwJwtCredentialStatus
-} from "../../../utils/itwTypesUtils.ts";
+import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
 
 describe("itwIsFeedbackBannerHiddenSelector", () => {
   it.each([
@@ -119,42 +115,5 @@ describe("itwAuthLevelSelector", () => {
     };
 
     expect(itwAuthLevelSelector(updatedState)).toBeUndefined();
-  });
-
-  it("should return valid when lastEidStatus is valid", () => {
-    const state = appReducer(undefined, applicationChangeState("active"));
-    const updatedState = {
-      ...state,
-      features: {
-        ...state.features,
-        itWallet: {
-          ...state.features?.itWallet,
-          preferences: {
-            ...state.features?.itWallet?.preferences,
-            lastEidStatus: "valid" as ItwJwtCredentialStatus
-          }
-        }
-      }
-    };
-
-    expect(itwLastEidStatusSelector(updatedState)).toBe("valid");
-  });
-
-  it("should return undefined when lastEidStatus is undefined", () => {
-    const state = appReducer(undefined, applicationChangeState("active"));
-    const updatedState = {
-      ...state,
-      features: {
-        ...state.features,
-        itWallet: {
-          ...state.features?.itWallet,
-          preferences: {
-            ...state.features?.itWallet?.preferences
-          }
-        }
-      }
-    };
-
-    expect(itwLastEidStatusSelector(updatedState)).toBe(undefined);
   });
 });
