@@ -209,29 +209,6 @@ export const idPayOnboardingMachine = setup({
       }
     },
 
-    // AcceptingTos: {
-    //   tags: [IdPayTags.Loading],
-    //   invoke: {
-    //     src: "acceptTos",
-    //     input: ({ context }) => selectInitiativeId(context),
-    //     onDone: {
-    //       target: "LoadingCriteria"
-    //     },
-    //     onError: [
-    //       {
-    //         guard: "isSessionExpired",
-    //         target: "SessionExpired"
-    //       },
-    //       {
-    //         actions: assign(({ event }) => ({
-    //           failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
-    //         })),
-    //         target: "OnboardingFailure"
-    //       }
-    //     ]
-    //   }
-    // },
-
     LoadingCriteria: {
       tags: [IdPayTags.Loading],
       invoke: {
