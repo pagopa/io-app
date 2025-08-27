@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0-rc.4](https://github.com/pagopa/io-app/compare/3.12.0-rc.3...3.12.0-rc.4) (2025-08-26)
+
+
+### Features
+
+* [[IOCOM-2532](https://pagopa.atlassian.net/browse/IOCOM-2532)] Universal/App link for SEND dev environment ([#7283](https://github.com/pagopa/io-app/issues/7283)) ([b35226d](https://github.com/pagopa/io-app/commit/b35226d524918463f7b6cd5052b523a21a7ce3ce))
+* **IT Wallet:** [[SIW-2167](https://pagopa.atlassian.net/browse/SIW-2167),[SIW-2476](https://pagopa.atlassian.net/browse/SIW-2476)] Events tracking for credentials lifecycle ([#7222](https://github.com/pagopa/io-app/issues/7222)) ([fe7aaa1](https://github.com/pagopa/io-app/commit/fe7aaa18abe06cb469a3b1ddd1cb874a9096d863))
+* **IT Wallet:** [[SIW-2428](https://pagopa.atlassian.net/browse/SIW-2428)] Display failure screen when the verifier app is untrusted ([#7158](https://github.com/pagopa/io-app/issues/7158)) ([2c30255](https://github.com/pagopa/io-app/commit/2c30255a0a7c8b9fc2bbf02d9ff1ef88415a9fb6))
+
+## [3.12.0-rc.3](https://github.com/pagopa/io-app/compare/3.12.0-rc.2...3.12.0-rc.3) (2025-08-26)
+
+
+### Features
+
+* [[IOCOM-1834](https://pagopa.atlassian.net/browse/IOCOM-1834)] FimsClaims component automatic tests ([#7276](https://github.com/pagopa/io-app/issues/7276)) ([d4808d7](https://github.com/pagopa/io-app/commit/d4808d77ab7b021610ab305d4d69d1b627906820))
+* [[IOCOM-1836](https://pagopa.atlassian.net/browse/IOCOM-1836)] FimsPrivacyInfo component automatic tests ([#7274](https://github.com/pagopa/io-app/issues/7274)) ([61d2bee](https://github.com/pagopa/io-app/commit/61d2bee09dc05981de0efc559438f098f6fee0fb))
+* [[IOCOM-1838](https://pagopa.atlassian.net/browse/IOCOM-1838)] FIMS handleFimsAbortOrCancel saga automatic tests ([#7275](https://github.com/pagopa/io-app/issues/7275)) ([f494d4b](https://github.com/pagopa/io-app/commit/f494d4bb25f99a173be1f6fac7cc813beda63efa))
+* [[IOCOM-2515](https://pagopa.atlassian.net/browse/IOCOM-2515)] FIMS singleSignOn automatic tests reducers ([#7272](https://github.com/pagopa/io-app/issues/7272)) ([76ad764](https://github.com/pagopa/io-app/commit/76ad76431cfe1765e8c8af3c66ad3fad1bcf171f))
+* [[IOCOM-2516](https://pagopa.atlassian.net/browse/IOCOM-2516)] FIMS singleSignOn automatic tests selectors ([#7262](https://github.com/pagopa/io-app/issues/7262)) ([4e7b348](https://github.com/pagopa/io-app/commit/4e7b3486f2d91b7b52e4f85fb9183706a49de999))
+* [[IOPLT-1286](https://pagopa.atlassian.net/browse/IOPLT-1286)] Refactor `MessageDetailsStickyFooter` to adopt `FooterActions` (and add dark mode support) ([#7230](https://github.com/pagopa/io-app/issues/7230)) ([4e17de1](https://github.com/pagopa/io-app/commit/4e17de1a9fa53b09c3c10eb28fef82b2197faa39))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2865](https://pagopa.atlassian.net/browse/SIW-2865)] Claim labels not visible with dark theme on Android ([#7271](https://github.com/pagopa/io-app/issues/7271)) ([4732696](https://github.com/pagopa/io-app/commit/4732696a0a62dea8fd69543126a79bdb0c7d0c31))
+
+
+### Chores
+
+* [[IOBP-1886](https://pagopa.atlassian.net/browse/IOBP-1886)] IDPay update bonus flow copy ([#7265](https://github.com/pagopa/io-app/issues/7265)) ([c0408b5](https://github.com/pagopa/io-app/commit/c0408b5f7f42f8de8521a0b283b973c7fecc7637))
+
 ## [3.12.0-rc.2](https://github.com/pagopa/io-app/compare/3.12.0-rc.1...3.12.0-rc.2) (2025-08-07)
 
 ## [3.12.0-rc.1](https://github.com/pagopa/io-app/compare/3.12.0-rc.0...3.12.0-rc.1) (2025-08-07)
