@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0-rc.4](https://github.com/pagopa/io-app/compare/3.12.0-rc.3...3.12.0-rc.4) (2025-08-26)
+
+
+### Features
+
+* [[IOCOM-2532](https://pagopa.atlassian.net/browse/IOCOM-2532)] Universal/App link for SEND dev environment ([#7283](https://github.com/pagopa/io-app/issues/7283)) ([b35226d](https://github.com/pagopa/io-app/commit/b35226d524918463f7b6cd5052b523a21a7ce3ce))
+* **IT Wallet:** [[SIW-2167](https://pagopa.atlassian.net/browse/SIW-2167),[SIW-2476](https://pagopa.atlassian.net/browse/SIW-2476)] Events tracking for credentials lifecycle ([#7222](https://github.com/pagopa/io-app/issues/7222)) ([fe7aaa1](https://github.com/pagopa/io-app/commit/fe7aaa18abe06cb469a3b1ddd1cb874a9096d863))
+* **IT Wallet:** [[SIW-2428](https://pagopa.atlassian.net/browse/SIW-2428)] Display failure screen when the verifier app is untrusted ([#7158](https://github.com/pagopa/io-app/issues/7158)) ([2c30255](https://github.com/pagopa/io-app/commit/2c30255a0a7c8b9fc2bbf02d9ff1ef88415a9fb6))
+
 ## [3.12.0-rc.3](https://github.com/pagopa/io-app/compare/3.12.0-rc.2...3.12.0-rc.3) (2025-08-26)
 
 
