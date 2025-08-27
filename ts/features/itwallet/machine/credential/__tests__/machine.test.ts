@@ -152,7 +152,7 @@ describe("itwCredentialIssuanceMachine", () => {
       trackCredentialIssuingDataShareAccepted
     },
     actors: {
-      verifyTrustFederation: fromPromise(verifyTrustFederation),
+      verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
       getWalletAttestation:
         fromPromise<GetWalletAttestationActorOutput>(getWalletAttestation),
       requestCredential: fromPromise<

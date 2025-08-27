@@ -114,7 +114,7 @@ describe("itwEidIssuanceMachine", () => {
       })
     },
     actors: {
-      verifyTrustFederation: fromPromise(verifyTrustFederation),
+      verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
       createWalletInstance: fromPromise<string>(createWalletInstance),
       revokeWalletInstance: fromPromise<void>(revokeWalletInstance),
       getWalletAttestation: fromPromise<
