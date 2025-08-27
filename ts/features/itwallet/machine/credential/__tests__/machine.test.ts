@@ -80,10 +80,6 @@ const T_ISSUER_CONFIG: IssuerConfiguration = {
     }
   }
 };
-const T_CREDENTIAL_DEFINITION: AuthorizationDetail = {
-  credential_configuration_id: "",
-  type: "openid_credential"
-};
 const T_REQUESTED_CREDENTIAL: RequestObject = {
   client_id: T_CLIENT_ID,
   exp: 0,
@@ -198,7 +194,6 @@ describe("itwCredentialIssuanceMachine", () => {
       Promise.resolve({
         clientId: T_CLIENT_ID,
         codeVerifier: T_CODE_VERIFIER,
-        credentialDefinition: T_CREDENTIAL_DEFINITION,
         requestedCredential: T_REQUESTED_CREDENTIAL,
         issuerConf: T_ISSUER_CONFIG
       })
@@ -249,7 +244,6 @@ describe("itwCredentialIssuanceMachine", () => {
       walletInstanceAttestation: { jwt: T_WIA },
       clientId: T_CLIENT_ID,
       codeVerifier: T_CODE_VERIFIER,
-      credentialDefinition: T_CREDENTIAL_DEFINITION,
       requestedCredential: T_REQUESTED_CREDENTIAL,
       issuerConf: T_ISSUER_CONFIG
     });
@@ -347,7 +341,6 @@ describe("itwCredentialIssuanceMachine", () => {
       Promise.resolve({
         clientId: T_CLIENT_ID,
         codeVerifier: T_CODE_VERIFIER,
-        credentialDefinition: T_CREDENTIAL_DEFINITION,
         requestedCredential: T_REQUESTED_CREDENTIAL,
         issuerConf: T_ISSUER_CONFIG
       })
@@ -663,7 +656,6 @@ describe("itwCredentialIssuanceMachine", () => {
               resolve({
                 clientId: T_CLIENT_ID,
                 codeVerifier: T_CODE_VERIFIER,
-                credentialDefinition: T_CREDENTIAL_DEFINITION,
                 requestedCredential: T_REQUESTED_CREDENTIAL,
                 issuerConf: T_ISSUER_CONFIG
               }),

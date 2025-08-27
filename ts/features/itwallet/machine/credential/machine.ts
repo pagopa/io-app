@@ -214,7 +214,6 @@ export const itwCredentialIssuanceMachine = setup({
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
               clientId: context.clientId,
               codeVerifier: context.codeVerifier,
-              credentialDefinition: context.credentialDefinition,
               requestedCredential: context.requestedCredential,
               issuerConf: context.issuerConf,
               // if the user has access to the L3 features we need to pass the operationType
