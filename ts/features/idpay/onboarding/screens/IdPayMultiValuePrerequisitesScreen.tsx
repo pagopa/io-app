@@ -1,4 +1,4 @@
-import { H6, IOToast, RadioGroup } from "@pagopa/io-app-design-system";
+import { IOToast, RadioGroup, VSpacer } from "@pagopa/io-app-design-system";
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
@@ -15,6 +15,7 @@ import {
   SelfCriteriaMultiDTO,
   _typeEnum as SelfCriteriaMultiTypeEnum
 } from "../../../../../definitions/idpay/SelfCriteriaMultiDTO";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 const IdPayMultiValuePrerequisitesScreen = () => {
   const pagerRef = useRef<PagerView>(null);
@@ -85,12 +86,16 @@ const MultiValuePrerequisiteItemScreenContent = ({
 
   const handleGoBack = () => machine.send({ type: "back" });
 
+  const selfCriteriaMultiTitle =
+    selfDeclaration.description ||
+    I18n.t("idpay.onboarding.boolPrerequisites.header");
+
   return (
     <IOScrollViewWithLargeHeader
       topElement={<IdPayOnboardingStepper />}
       title={{
-        label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
-        section: I18n.t("idpay.onboarding.headerTitle")
+        label: selfCriteriaMultiTitle,
+        section: I18n.t("idpay.onboarding.navigation.header")
       }}
       contextualHelp={emptyContextualHelp}
       headerActionsProp={{ showHelp: true }}
@@ -104,13 +109,19 @@ const MultiValuePrerequisiteItemScreenContent = ({
         }
       }}
     >
-      <H6>{selfDeclaration.description}</H6>
+      {selfDeclaration.subDescription && (
+        <>
+          <IOMarkdown content={selfDeclaration.subDescription} />
+          <VSpacer size={16} />
+        </>
+      )}
       <RadioGroup<number>
         type="radioListItem"
         items={
           selfDeclaration?.value?.map((answer, index) => ({
             id: index,
-            value: answer.description
+            value: answer.description,
+            description: answer.subDescription
           })) || []
         }
         selectedItem={selectedValueIndex}

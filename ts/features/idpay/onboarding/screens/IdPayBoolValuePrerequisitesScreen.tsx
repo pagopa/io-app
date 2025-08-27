@@ -1,4 +1,9 @@
-import { Divider, IOToast, ListItemSwitch } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  IOToast,
+  ListItemSwitch,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { _typeEnum as SelfConsentBoolTypeEnum } from "../../../../../definitions/idpay/SelfConsentBoolDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -14,6 +19,7 @@ import {
   selectSelfDeclarationBoolAnswers
 } from "../machine/selectors";
 import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 const IdPayBoolValuePrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -58,6 +64,8 @@ const IdPayBoolValuePrerequisitesScreen = () => {
   const getSelfCriteriaBoolAnswer = (criteria: SelfCriteriaBoolDTO) =>
     criteria.code ? selfCriteriaBoolAnswers[criteria.code] ?? false : false;
 
+  const selfCriteriaBoolSubtitle = selfCriteriaBool[0].subDescription;
+
   return (
     <IOScrollViewWithLargeHeader
       topElement={<IdPayOnboardingStepper />}
@@ -78,6 +86,12 @@ const IdPayBoolValuePrerequisitesScreen = () => {
       includeContentMargins
     >
       <LoadingSpinnerOverlay isLoading={isLoading}>
+        {selfCriteriaBoolSubtitle && (
+          <>
+            <IOMarkdown content={selfCriteriaBoolSubtitle} />
+            <VSpacer size={16} />
+          </>
+        )}
         {selfCriteriaBool.map((criteria, index) => (
           <View key={criteria.code}>
             <ListItemSwitch
