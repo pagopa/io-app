@@ -31,7 +31,7 @@ export const getCredentialStatusAttestation = async (
   const rawStatusAssertion = await Credential.Status.statusAssertion(
     issuerConf,
     credential.credential,
-    credential.format,
+    credential.format as CredentialFormat,
     { credentialCryptoContext, wiaCryptoContext }
   );
 
@@ -40,7 +40,7 @@ export const getCredentialStatusAttestation = async (
       issuerConf,
       rawStatusAssertion,
       credential.credential,
-      credential.format
+      credential.format as CredentialFormat
     );
 
   return {
