@@ -4022,7 +4022,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:2.0.0-next.8":
+"@pagopa/io-react-native-wallet@npm:^2.0.0":
   version: 2.0.0
   resolution: "@pagopa/io-react-native-wallet@npm:2.0.0"
   dependencies:
@@ -12958,7 +12958,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": ^1.1.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
-    "@pagopa/io-react-native-wallet": 2.0.0
+    "@pagopa/io-react-native-wallet": ^2.0.0
     "@pagopa/io-react-native-wallet-legacy": "npm:@pagopa/io-react-native-wallet@0.30.0"
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.0.1
