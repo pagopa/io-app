@@ -90,7 +90,7 @@ export const updateMixpanelSuperProperties = async (
     const SERVICE_CONFIGURATION = serviceConfigHandler(state);
     const ITW_STATUS_V2 = walletStatusHandler(state);
     const ITW_ID_V2 = idStatusHandler(state);
-    const ITW_PG_V2 = credentialStatusHandler("MDL", state);
+    const ITW_PG_V2 = credentialStatusHandler("mDL", state);
     const ITW_TS_V2 = credentialStatusHandler(
       "EuropeanHealthInsuranceCard",
       state
