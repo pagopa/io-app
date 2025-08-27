@@ -8,6 +8,7 @@ import { ServicesState } from "../../features/services/common/store/reducers";
 import { ServicePreferenceResponse } from "../../features/services/details/types/ServicePreferenceResponse";
 import { GlobalState } from "../../store/reducers/types";
 import * as BIOMETRICS from "../../utils/biometrics";
+import * as lifecycleSelectors from "../../features/itwallet/lifecycle/store/selectors";
 import { updateMixpanelProfileProperties } from "../profileProperties";
 
 // eslint-disable-next-line functional/no-let
@@ -115,6 +116,9 @@ describe("profileProperties", () => {
               .mockImplementation(() =>
                 Promise.resolve(notificationPermissionTuple[0] as boolean)
               );
+            jest
+              .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+              .mockReturnValue(false);
 
             await updateMixpanelProfileProperties(state);
 
@@ -250,6 +254,9 @@ describe("profileProperties", () => {
         jest
           .spyOn(PUSHUTILS, "checkNotificationPermissions")
           .mockImplementation(() => Promise.resolve(false));
+        jest
+          .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+          .mockReturnValue(false);
 
         await updateMixpanelProfileProperties(testStatus);
 

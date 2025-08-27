@@ -8,6 +8,7 @@ import * as ACCESSIBILITY from "../../utils/accessibility";
 import * as APPVERSION from "../../utils/appVersion";
 import * as BIOMETRICS from "../../utils/biometrics";
 import * as DEVICE from "../../utils/device";
+import * as lifecycleSelectors from "../../features/itwallet/lifecycle/store/selectors";
 import { updateMixpanelSuperProperties } from "../superProperties";
 
 const mockColorScheme = "light";
@@ -96,6 +97,9 @@ describe("superProperties", () => {
           jest
             .spyOn(ACCESSIBILITY, "isScreenReaderEnabled")
             .mockImplementation(() => Promise.resolve(true));
+          jest
+            .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+            .mockReturnValue(false);
 
           await updateMixpanelSuperProperties(state);
 
