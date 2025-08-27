@@ -15,13 +15,15 @@ type InitiativeProps = {
 };
 
 export function IdPayCardStatus({ initiative }: InitiativeProps) {
+  const { themeType } = useIOThemeContext();
+  const isDark = themeType === "dark";
   switch (initiative.voucherStatus) {
     case VoucherStatusEnum.ACTIVE:
       return (
         initiative.voucherEndDate && (
           <LabelMini
             weight="Regular"
-            color="grey-650"
+            color={isDark ? "white" : "grey-650"}
             testID="idpay-card-status-active"
           >
             {I18n.t("bonusCard.validUntil", {
