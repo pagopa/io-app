@@ -61,12 +61,6 @@ export const getThemeColorByCredentialType = (
   }
 };
 
-export const isMultiLevelCredential = (credentialType: string): boolean =>
-  [
-    CredentialType.EDUCATION_DEGREE,
-    CredentialType.EDUCATION_ENROLLMENT
-  ].includes(credentialType as CredentialType);
-
 export const getHeaderPropsByCredentialType = (
   credentialType: string,
   withL3Design: boolean

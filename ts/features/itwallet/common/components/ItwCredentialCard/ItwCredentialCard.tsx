@@ -12,11 +12,12 @@ import {
   useBorderColorByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
+import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import {
-  getThemeColorByCredentialType,
-  isMultiLevelCredential
-} from "../../utils/itwStyleUtils";
-import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
+  isMultiLevelCredential,
+  ItwCredentialStatus
+} from "../../utils/itwTypesUtils";
+import { itwParsedCredentialSelector } from "../../../credentials/store/selectors";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { ItwCardValidityCheckMark } from "./ItwCardValidityCheckMark";
@@ -55,7 +56,13 @@ export const ItwCredentialCard = ({
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
   const needsItwUpgrade = isNewItwRenderable && isLegacyFormat;
-  const isMultiCredential = isMultiLevelCredential(credentialType);
+  const parsedCredential = useIOSelector(
+    itwParsedCredentialSelector(credentialType)
+  );
+  const isMultiCredential = isMultiLevelCredential(
+    credentialType,
+    parsedCredential
+  );
   const borderColorMap = useBorderColorByStatus();
 
   const statusTagProps = useMemo<Tag | undefined>(() => {
