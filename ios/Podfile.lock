@@ -34,7 +34,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - IoReactNativeIso18013 (0.3.0):
+  - IoReactNativeIso18013 (0.4.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2640,7 +2640,7 @@ SPEC CHECKSUMS:
   glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   hermes-engine: 2771b98fb813fdc6f92edd7c9c0035ecabf9fee7
   IoReactNativeCie: 091338a61e72448dfda28e4404a70276b80ad29f
-  IoReactNativeIso18013: 058e3d861323227681d5bfa6d0bbc4a93a3beffc
+  IoReactNativeIso18013: d4252d62254440257b3fbf3075fc96cb19ea417f
   IOWalletCBOR: 92742ef1cbd1b627ba153d0c7c11b81ad22f45cc
   IOWalletProximity: 1836d6b5df0a64a97e09f355d15d5155f086f830
   jail-monkey: 9298d04aa09f8c9cdcf04e7bf597ea423b52b5bf

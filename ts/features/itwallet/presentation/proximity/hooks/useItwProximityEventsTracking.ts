@@ -4,7 +4,8 @@ import { ProximityFailure, ProximityFailureType } from "../machine/failure";
 import {
   trackItwProximityRPGenericFailure,
   trackItwProximityTimeout,
-  trackItwProximityUnexpectedFailure
+  trackItwProximityUnexpectedFailure,
+  trackItwProximityUnofficialVerifier
 } from "../analytics";
 import { ItwProximityMachineContext } from "../machine/provider";
 import { hasGivenConsentSelector } from "../machine/selectors";
@@ -42,6 +43,8 @@ export const useItwProximityEventsTracking = ({ failure }: Params) => {
         return trackItwProximityUnexpectedFailure(
           shouldSerializeReason ? serializedFailure : failure
         );
+      case ProximityFailureType.UNTRUSTED_RP:
+        return trackItwProximityUnofficialVerifier(serializedFailure);
     }
   }, [failure, hasGivenConsent]);
 };
