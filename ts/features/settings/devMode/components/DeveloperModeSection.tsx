@@ -11,8 +11,7 @@ import {
   ListItemNav,
   ListItemSwitch,
   VSpacer,
-  useIOTheme,
-  useIOThemeContext
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as Sentry from "@sentry/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -303,7 +302,6 @@ const DeveloperDataSection = () => {
 
 const DesignSystemSection = () => {
   const navigation = useIONavigation();
-  const { themeType, setTheme } = useIOThemeContext();
 
   return (
     <ContentWrapper>
@@ -320,14 +318,6 @@ const DesignSystemSection = () => {
       />
       <Divider />
       <ExperimentalDesignEnableSwitch />
-      <Divider />
-      <ListItemSwitch
-        label="Abilita Dark Mode"
-        value={themeType === "dark"}
-        onSwitchValueChange={() =>
-          setTheme(themeType === "dark" ? "light" : "dark")
-        }
-      />
     </ContentWrapper>
   );
 };

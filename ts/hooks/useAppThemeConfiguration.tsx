@@ -18,6 +18,7 @@ export const useAppThemeConfiguration = () => {
         if (value === undefined || value === null) {
           Appearance.setColorScheme("light");
           setTheme("light");
+          return;
         }
         Appearance.setColorScheme(
           value === "system" ? undefined : (value as ColorSchemeName)
