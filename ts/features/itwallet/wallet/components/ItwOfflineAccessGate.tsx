@@ -1,4 +1,5 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -37,7 +38,7 @@ const LimitWarningScreenContent = ({
 }: {
   setWarningViewed: (viewed: boolean) => void;
 }) => {
-  useEffect(trackItwOfflineAccessExpiring, []);
+  useFocusEffect(trackItwOfflineAccessExpiring);
 
   return (
     <OperationResultScreenContent
@@ -64,7 +65,7 @@ const LimitReachedScreenContent = ({
 }: {
   handleAppRestart: () => void;
 }) => {
-  useEffect(trackItwOfflineAccessExpired, []);
+  useFocusEffect(trackItwOfflineAccessExpired);
 
   return (
     <OperationResultScreenContent
