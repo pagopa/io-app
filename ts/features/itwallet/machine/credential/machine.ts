@@ -235,7 +235,7 @@ export const itwCredentialIssuanceMachine = setup({
               issuerConf: context.issuerConf,
               isNewIssuanceFlowEnabled: context.isWhiteListed,
               // If we are upgrading the credential to the new format or the user has access to the
-              // L3 features we need to pass the operationType header witth the value "reissuing"
+              // L3 features we need to pass the operationType header with the value "reissuing"
               operationType:
                 context.mode === "upgrade" || context.isWhiteListed
                   ? "reissuing"
