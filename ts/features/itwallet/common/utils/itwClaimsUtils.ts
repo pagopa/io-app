@@ -65,7 +65,11 @@ export enum WellKnownClaim {
   /**
    * Claim that contains the portrait image
    */
-  portrait = "portrait"
+  portrait = "portrait",
+  /**
+   * Claim that contains the driving privilege within the new nested structure
+   */
+  driving_privileges = "driving_privileges"
 }
 
 /**

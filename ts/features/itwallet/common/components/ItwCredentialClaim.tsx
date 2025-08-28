@@ -25,7 +25,8 @@ import {
   SimpleDate,
   SimpleDateClaim,
   SimpleListClaim,
-  StringClaim
+  StringClaim,
+  WellKnownClaim
 } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
@@ -406,7 +407,7 @@ export const ItwCredentialClaim = ({
     ClaimValue.decode,
     E.fold(
       () => <UnknownClaimItem label={claim.label} />,
-      // eslint-disable-next-line sonarjs/cognitive-complexity
+      // eslint-disable-next-line complexity,sonarjs/cognitive-complexity
       _decoded => {
         const decoded = hidden ? HIDDEN_CLAIM_TEXT : _decoded;
         if (PlaceOfBirthClaim.is(decoded)) {
@@ -451,30 +452,18 @@ export const ItwCredentialClaim = ({
           );
           return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
         }
-
         if (ParsedNestedClaim.is(decoded)) {
-          // If there is exactly ONE nested item, display its claims directly
-          if (decoded.length === 1) {
-            const singleItemClaims = decoded[0];
-            return (
-              <>
-                {singleItemClaims.map(nestedClaim => (
-                  <ItwCredentialClaim
-                    key={nestedClaim.id}
-                    claim={nestedClaim}
-                    hidden={hidden}
-                    isPreview={isPreview}
-                    credentialStatus={credentialStatus}
-                    credentialType={credentialType}
-                  />
-                ))}
-              </>
-            );
-          }
+          // If the claim is a ParsedNestedClaim, we need to decide how to render it
+          // If it's driving_privileges or there are multiple items, we render a list
+          const shouldRenderAsList =
+            claim.id === WellKnownClaim.driving_privileges ||
+            decoded.length > 1;
 
-          // If there are MULTIPLE nested items, render each as a clickable ListItemInfo
-          // that opens a bottom sheet with all claims of the item
-          if (decoded.length > 1) {
+          // If there's a single item, we render it expanded
+          const shouldRenderAsExpanded =
+            !shouldRenderAsList && decoded.length === 1;
+
+          if (shouldRenderAsList) {
             return (
               <>
                 {decoded.map((singleItemClaims, index) => {
@@ -482,7 +471,6 @@ export const ItwCredentialClaim = ({
                     claim.id,
                     singleItemClaims
                   );
-
                   return (
                     <Fragment key={`${index}_${claim.id}_${claim.label}`}>
                       {index > 0 && <Divider />}
@@ -502,6 +490,26 @@ export const ItwCredentialClaim = ({
               </>
             );
           }
+
+          if (shouldRenderAsExpanded) {
+            const singleItemClaims = decoded[0];
+            return (
+              <>
+                {singleItemClaims.map(nestedClaim => (
+                  <ItwCredentialClaim
+                    key={nestedClaim.id}
+                    claim={nestedClaim}
+                    hidden={hidden}
+                    isPreview={isPreview}
+                    credentialStatus={credentialStatus}
+                    credentialType={credentialType}
+                  />
+                ))}
+              </>
+            );
+          }
+
+          // If neither strategy applies (empty array), return null
           return null;
         }
         if (BoolClaim.is(decoded)) {
