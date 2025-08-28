@@ -27,6 +27,7 @@ import {
   trackItwOfflineRicaricaAppIO
 } from "../../analytics";
 import { useAppRestartAction } from "../hooks/useAppRestartAction.ts";
+import { TranslationKeys } from "../../../../../locales/locales.ts";
 
 /**
  * A wrapper component that displays an alert to notify users when the
@@ -180,21 +181,27 @@ const useOfflineAlertDetailModal = (
     }
   }, [handleAppRestart, navigateOnAuthPage, offlineAccessReason]);
 
+  // We cast to TranslationKeys because TypeScript cannot infer that the
+  // dynamic keys built with offlineAccessReason exist in the i18n catalog.
+  // This is safe in our case because the only enum value without modal.* keys
+  // is TIMEOUT, and for TIMEOUT the bottom sheet is never rendered.
+  // Therefore at runtime we never try to resolve missing translation keys.
+
   return useIOBottomSheetModal({
     title: I18n.t(
-      `features.itWallet.offline.${offlineAccessReason}.modal.title`
+      `features.itWallet.offline.${offlineAccessReason}.modal.title` as TranslationKeys
     ),
     component: (
       <VStack space={24}>
         <IOMarkdown
           content={I18n.t(
-            `features.itWallet.offline.${offlineAccessReason}.modal.content`
+            `features.itWallet.offline.${offlineAccessReason}.modal.content` as TranslationKeys
           )}
         />
         <IOButton
           variant="solid"
           label={I18n.t(
-            `features.itWallet.offline.${offlineAccessReason}.modal.footerAction`
+            `features.itWallet.offline.${offlineAccessReason}.modal.footerAction` as TranslationKeys
           )}
           onPress={handlePressModalAction}
         />
