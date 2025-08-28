@@ -122,23 +122,25 @@ const App = (): JSX.Element => (
     <SafeAreaProvider>
       <IODSExperimentalContextProvider>
         <IONewTypefaceContextProvider>
-          <IOAppThemeContextProvider theme={"light"}>
-            <ToastProvider>
-              <Provider store={store}>
-                <PersistGate loading={undefined} persistor={persistor}>
-                  <BottomSheetModalProvider>
-                    <LightModalProvider>
-                      <AppFeedbackProvider>
-                        <StatusMessages>
-                          <RootContainer store={store} />
-                        </StatusMessages>
-                      </AppFeedbackProvider>
-                    </LightModalProvider>
-                  </BottomSheetModalProvider>
-                </PersistGate>
-              </Provider>
-            </ToastProvider>
-          </IOAppThemeContextProvider>
+          <IOThemeContextProvider theme={"light"}>
+            <IOAppThemeContextProvider theme={"light"}>
+              <ToastProvider>
+                <Provider store={store}>
+                  <PersistGate loading={undefined} persistor={persistor}>
+                    <BottomSheetModalProvider>
+                      <LightModalProvider>
+                        <AppFeedbackProvider>
+                          <StatusMessages>
+                            <RootContainer store={store} />
+                          </StatusMessages>
+                        </AppFeedbackProvider>
+                      </LightModalProvider>
+                    </BottomSheetModalProvider>
+                  </PersistGate>
+                </Provider>
+              </ToastProvider>
+            </IOAppThemeContextProvider>
+          </IOThemeContextProvider>
         </IONewTypefaceContextProvider>
       </IODSExperimentalContextProvider>
     </SafeAreaProvider>

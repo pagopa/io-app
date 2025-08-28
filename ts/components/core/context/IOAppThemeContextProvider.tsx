@@ -1,7 +1,4 @@
-import {
-  IOThemeContextProvider,
-  useIOThemeContext
-} from "@pagopa/io-app-design-system";
+import { useIOThemeContext } from "@pagopa/io-app-design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   createContext,
@@ -11,7 +8,8 @@ import {
   useEffect,
   useState
 } from "react";
-import { Appearance, useColorScheme } from "react-native";
+import { Appearance, ColorSchemeName, useColorScheme } from "react-native";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 export type ColorModeChoice = "system" | "dark" | "light";
 export const THEME_PERSISTENCE_KEY = "appThemeType";
@@ -43,20 +41,39 @@ export const IOAppThemeContextProvider = ({
   const { setTheme } = useIOThemeContext();
   const systemColorScheme = useColorScheme();
 
-  useEffect(() => {
-    AsyncStorage.getItem(THEME_PERSISTENCE_KEY)
-      .then(value => handleThemeChange((value as ColorModeChoice) ?? "light"))
-      .catch(() => {
-        handleThemeChange("light");
-      });
-  });
-  const handleThemeChange = (newTheme: ColorModeChoice) => {
+  const handleThemeChange = useCallback((newTheme: ColorModeChoice) => {
     AsyncStorage.setItem(THEME_PERSISTENCE_KEY, newTheme).finally(() => {
       Appearance.setColorScheme(newTheme === "system" ? undefined : newTheme);
       setCurrentTheme(newTheme);
-      setTheme(systemColorScheme);
     });
-  };
+  }, []);
+
+  useOnFirstRender(() => {
+    AsyncStorage.getItem(THEME_PERSISTENCE_KEY)
+      .then(value => {
+        if (value === null || value === undefined) {
+          Appearance.setColorScheme("light");
+          setCurrentTheme("light");
+          return;
+        }
+        Appearance.setColorScheme(
+          value === "system" ? undefined : (value as ColorSchemeName)
+        );
+        setCurrentTheme(value as ColorModeChoice);
+      })
+      .catch(() => {
+        Appearance.setColorScheme("light");
+        setCurrentTheme("light");
+      });
+  });
+
+  useEffect(() => {
+    if (currentTheme === "system") {
+      setTheme(systemColorScheme);
+      return;
+    }
+    setTheme(currentTheme);
+  }, [setTheme, systemColorScheme, currentTheme]);
 
   return (
     <IOAppThemeContext.Provider
@@ -65,7 +82,7 @@ export const IOAppThemeContextProvider = ({
         setTheme: handleThemeChange
       }}
     >
-      <IOThemeContextProvider>{children}</IOThemeContextProvider>
+      {children}
     </IOAppThemeContext.Provider>
   );
 };
