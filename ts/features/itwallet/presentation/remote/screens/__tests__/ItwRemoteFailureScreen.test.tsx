@@ -1,6 +1,6 @@
 import { createActor } from "xstate";
 import { createStore } from "redux";
-import { Credential, Errors } from "@pagopa/io-react-native-wallet";
+import { Credential, Errors, Trust } from "@pagopa/io-react-native-wallet";
 import { constTrue } from "fp-ts/lib/function";
 import { RemoteFailure, RemoteFailureType } from "../../machine/failure";
 import { itwRemoteMachine } from "../../machine/machine";
