@@ -10,7 +10,6 @@ import {
   PreviousPageMessagesSuccessPayload,
   ReloadMessagesPayload
 } from "../store/actions";
-import { UIMessageId } from "../types";
 
 export const defaultRequestPayload = {
   pageSize: 12,
@@ -25,9 +24,9 @@ export const defaultRequestError = {
 
 const timeToLive = 3600 as unknown as TimeToLiveSeconds;
 
-export const messageId_1 = "PMT00003" as UIMessageId;
-export const messageId_2 = "PMT00002" as UIMessageId;
-export const messageId_3 = "FAT00001" as UIMessageId;
+export const messageId_1 = "PMT00003";
+export const messageId_2 = "PMT00002";
+export const messageId_3 = "FAT00001";
 export const serviceId_1 = "service_one" as ServiceId;
 export const serviceId_2 = "service_two" as ServiceId;
 

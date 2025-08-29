@@ -1,7 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import { ListItemHeader } from "@pagopa/io-app-design-system";
-import { UIMessageId } from "../../types";
 import { useIOSelector } from "../../../../store/hooks";
 import { thirdPartyMessageAttachments } from "../../store/reducers/thirdPartyById";
 import I18n from "../../../../i18n";
@@ -11,7 +10,7 @@ import { MessageDetailsAttachmentItem } from "./MessageDetailsAttachmentItem";
 export type MessageDetailsAttachmentsProps = {
   disabled?: boolean;
   isPN?: boolean;
-  messageId: UIMessageId;
+  messageId: string;
 };
 
 export const MessageDetailsAttachments = ({

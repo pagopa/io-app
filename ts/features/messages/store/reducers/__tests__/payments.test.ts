@@ -10,11 +10,7 @@ import {
 } from "../../../../messages/store/actions";
 import { Action } from "../../../../../store/actions/types";
 import { appReducer } from "../../../../../store/reducers";
-import {
-  PaymentData,
-  UIMessageDetails,
-  UIMessageId
-} from "../../../../messages/types";
+import { PaymentData, UIMessageDetails } from "../../../../messages/types";
 import {
   remoteError,
   remoteLoading,
@@ -54,31 +50,31 @@ describe("Messages payments reducer's tests", () => {
   });
   it("Should have undefined value for an undefined Message Id", () => {
     const requestAction = updatePaymentForMessage.request({
-      messageId: "m1" as UIMessageId,
+      messageId: "m1",
       paymentId: "p1",
       serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const paymentsState = paymentsReducer(undefined, requestAction);
-    const unknownMessageId = "m2" as UIMessageId;
-    const messageState = paymentsState[unknownMessageId];
+    const unknownMessageId = "m2";
+    const messageState = paymentsState.paymentStatusListById[unknownMessageId];
     expect(messageState).toBeUndefined();
   });
   it("Should have undefined value for an unknown paymentId", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const requestAction = updatePaymentForMessage.request({
       messageId,
       paymentId: "p1",
       serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const paymentsState = paymentsReducer(undefined, requestAction);
-    const messageState = paymentsState[messageId];
+    const messageState = paymentsState.paymentStatusListById[messageId];
     expect(messageState).toBeTruthy();
     const unknownPaymentId = "p2";
     const paymentState = messageState?.[unknownPaymentId];
     expect(paymentState).toBeUndefined();
   });
   it("Should have remoteLoading value for a updatePaymentForMessage.request", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const paymentId = "p1";
     const requestAction = updatePaymentForMessage.request({
       messageId,
@@ -86,13 +82,13 @@ describe("Messages payments reducer's tests", () => {
       serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const paymentsState = paymentsReducer(undefined, requestAction);
-    const messageState = paymentsState[messageId];
+    const messageState = paymentsState.paymentStatusListById[messageId];
     expect(messageState).toBeTruthy();
     const paymentState = messageState?.[paymentId];
     expect(paymentState).toBe(remoteLoading);
   });
   it("Should have remoteReady value for a updatePaymentForMessage.success", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const paymentId = "p1";
     const serviceId = "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId;
     const requestAction = updatePaymentForMessage.request({
@@ -112,14 +108,14 @@ describe("Messages payments reducer's tests", () => {
       serviceId
     });
     const updatedPaymentsState = paymentsReducer(paymentsState, successAction);
-    const messageState = updatedPaymentsState[messageId];
+    const messageState = updatedPaymentsState.paymentStatusListById[messageId];
     expect(messageState).toBeTruthy();
     const paymentState = messageState?.[paymentId];
     const remoteSuccessPaymentData = remoteReady(paymentData);
     expect(paymentState).toStrictEqual(remoteSuccessPaymentData);
   });
   it("Should have remoteError value for a updatePaymentForMessage.failure", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const paymentId = "p1";
     const serviceId = "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId;
     const requestAction = updatePaymentForMessage.request({
@@ -136,14 +132,14 @@ describe("Messages payments reducer's tests", () => {
       serviceId
     });
     const updatedPaymentsState = paymentsReducer(paymentsState, failureAction);
-    const messageState = updatedPaymentsState[messageId];
+    const messageState = updatedPaymentsState.paymentStatusListById[messageId];
     expect(messageState).toBeTruthy();
     const paymentState = messageState?.[paymentId];
     const remoteSuccessPaymentData = remoteError(reason);
     expect(paymentState).toStrictEqual(remoteSuccessPaymentData);
   });
   it("Should handle multiple payments for a single message", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const paymentId1 = "p1";
     const serviceId = "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId;
     const requestAction = updatePaymentForMessage.request({
@@ -181,7 +177,7 @@ describe("Messages payments reducer's tests", () => {
       secondStateGeneration,
       failureAction
     );
-    const messageState = finalStateGeneration[messageId];
+    const messageState = finalStateGeneration.paymentStatusListById[messageId];
     expect(messageState).toBeTruthy();
     const firstPaymentState = messageState?.[paymentId1];
     expect(firstPaymentState).toBe(remoteLoading);
@@ -191,7 +187,7 @@ describe("Messages payments reducer's tests", () => {
     expect(thirdPaymentState).toStrictEqual(remoteError(thirdPaymentDetails));
   });
   it("Should handle multiple payments for multiple messages", () => {
-    const messageId1 = "m1" as UIMessageId;
+    const messageId1 = "m1";
     const paymentId1 = "p1";
     const serviceId = "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId;
     const requestAction = updatePaymentForMessage.request({
@@ -200,7 +196,7 @@ describe("Messages payments reducer's tests", () => {
       serviceId
     });
     const firstStateGeneration = paymentsReducer(undefined, requestAction);
-    const messageId2 = "m2" as UIMessageId;
+    const messageId2 = "m2";
     const successfulPaymentData = {
       amount: 100,
       rptId: "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
@@ -215,7 +211,7 @@ describe("Messages payments reducer's tests", () => {
       firstStateGeneration,
       successAction
     );
-    const messageId3 = "m3" as UIMessageId;
+    const messageId3 = "m3";
     const failedPaymentDetails = toSpecificError(
       Detail_v2Enum.CANALE_BUSTA_ERRATA
     );
@@ -229,17 +225,20 @@ describe("Messages payments reducer's tests", () => {
       secondStateGeneration,
       failureAction
     );
-    const message1State = finalStateGeneration[messageId1];
+    const message1State =
+      finalStateGeneration.paymentStatusListById[messageId1];
     expect(message1State).toBeTruthy();
     const firstPaymentState = message1State?.[paymentId1];
     expect(firstPaymentState).toBe(remoteLoading);
-    const message2State = finalStateGeneration[messageId2];
+    const message2State =
+      finalStateGeneration.paymentStatusListById[messageId2];
     expect(message2State).toBeTruthy();
     const secondPaymentState = message2State?.[paymentId1];
     expect(secondPaymentState).toStrictEqual(
       remoteReady(successfulPaymentData)
     );
-    const message3State = finalStateGeneration[messageId3];
+    const message3State =
+      finalStateGeneration.paymentStatusListById[messageId3];
     expect(message3State).toBeTruthy();
     const thirdPaymentState = message3State?.[paymentId1];
     expect(thirdPaymentState).toStrictEqual(remoteError(failedPaymentDetails));
@@ -265,7 +264,7 @@ describe("Messages payments reducer's tests", () => {
     const endingPaymentsState = paymentsReducer(
       startingPaymentsState,
       updatePaymentForMessage.request({
-        messageId: "01HR9GY9GHGH5BQEJAKPWXEKV3" as UIMessageId,
+        messageId: "01HR9GY9GHGH5BQEJAKPWXEKV3",
         paymentId,
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       })
@@ -301,31 +300,37 @@ describe("Messages payments reducer's tests", () => {
   });
   it("Should remove undefined, loading, generic and timeout errors when receiving a cancelQueuedPaymentUpdates action", () => {
     const inputState = {
-      "01JWX4BBJBQ1SY34F68X92QFW4": {
-        "01234567890012345678912345610": undefined,
-        "01234567890012345678912345620": remoteUndefined,
-        "01234567890012345678912345630": remoteLoading,
-        "01234567890012345678912345640": remoteReady({} as PaymentInfoResponse),
-        "01234567890012345678912345650": remoteError(
-          toGenericError("An error")
-        ),
-        "01234567890012345678912345660": remoteError(
-          toSpecificError(Detail_v2Enum.GENERIC_ERROR)
-        ),
-        "01234567890012345678912345670": remoteError(toTimeoutError())
-      },
-      "01JWX4BMJ7S372FHQEKCZKGN90": {
-        "01234567890012345678912345610": undefined,
-        "01234567890012345678912345620": remoteUndefined,
-        "01234567890012345678912345630": remoteLoading,
-        "01234567890012345678912345640": remoteReady({} as PaymentInfoResponse),
-        "01234567890012345678912345650": remoteError(
-          toGenericError("An error")
-        ),
-        "01234567890012345678912345660": remoteError(
-          toSpecificError(Detail_v2Enum.GENERIC_ERROR)
-        ),
-        "01234567890012345678912345670": remoteError(toTimeoutError())
+      paymentStatusListById: {
+        "01JWX4BBJBQ1SY34F68X92QFW4": {
+          "01234567890012345678912345610": undefined,
+          "01234567890012345678912345620": remoteUndefined,
+          "01234567890012345678912345630": remoteLoading,
+          "01234567890012345678912345640": remoteReady(
+            {} as PaymentInfoResponse
+          ),
+          "01234567890012345678912345650": remoteError(
+            toGenericError("An error")
+          ),
+          "01234567890012345678912345660": remoteError(
+            toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+          ),
+          "01234567890012345678912345670": remoteError(toTimeoutError())
+        },
+        "01JWX4BMJ7S372FHQEKCZKGN90": {
+          "01234567890012345678912345610": undefined,
+          "01234567890012345678912345620": remoteUndefined,
+          "01234567890012345678912345630": remoteLoading,
+          "01234567890012345678912345640": remoteReady(
+            {} as PaymentInfoResponse
+          ),
+          "01234567890012345678912345650": remoteError(
+            toGenericError("An error")
+          ),
+          "01234567890012345678912345660": remoteError(
+            toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+          ),
+          "01234567890012345678912345670": remoteError(toTimeoutError())
+        }
       },
       userSelectedPayments: new Set<string>([
         "01234567890012345678912345610",
@@ -336,33 +341,39 @@ describe("Messages payments reducer's tests", () => {
     const output = paymentsReducer(
       inputState,
       cancelQueuedPaymentUpdates({
-        messageId: "01JWX4BMJ7S372FHQEKCZKGN90" as UIMessageId
+        messageId: "01JWX4BMJ7S372FHQEKCZKGN90"
       })
     );
     expect(output).toEqual({
-      "01JWX4BBJBQ1SY34F68X92QFW4": {
-        "01234567890012345678912345610": undefined,
-        "01234567890012345678912345620": remoteUndefined,
-        "01234567890012345678912345630": remoteLoading,
-        "01234567890012345678912345640": remoteReady({} as PaymentInfoResponse),
-        "01234567890012345678912345650": remoteError(
-          toGenericError("An error")
-        ),
-        "01234567890012345678912345660": remoteError(
-          toSpecificError(Detail_v2Enum.GENERIC_ERROR)
-        ),
-        "01234567890012345678912345670": remoteError(toTimeoutError())
-      },
-      "01JWX4BMJ7S372FHQEKCZKGN90": {
-        "01234567890012345678912345610": undefined,
-        "01234567890012345678912345620": remoteUndefined,
-        "01234567890012345678912345630": undefined,
-        "01234567890012345678912345640": remoteReady({} as PaymentInfoResponse),
-        "01234567890012345678912345650": undefined,
-        "01234567890012345678912345660": remoteError(
-          toSpecificError(Detail_v2Enum.GENERIC_ERROR)
-        ),
-        "01234567890012345678912345670": undefined
+      paymentStatusListById: {
+        "01JWX4BBJBQ1SY34F68X92QFW4": {
+          "01234567890012345678912345610": undefined,
+          "01234567890012345678912345620": remoteUndefined,
+          "01234567890012345678912345630": remoteLoading,
+          "01234567890012345678912345640": remoteReady(
+            {} as PaymentInfoResponse
+          ),
+          "01234567890012345678912345650": remoteError(
+            toGenericError("An error")
+          ),
+          "01234567890012345678912345660": remoteError(
+            toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+          ),
+          "01234567890012345678912345670": remoteError(toTimeoutError())
+        },
+        "01JWX4BMJ7S372FHQEKCZKGN90": {
+          "01234567890012345678912345610": undefined,
+          "01234567890012345678912345620": remoteUndefined,
+          "01234567890012345678912345630": undefined,
+          "01234567890012345678912345640": remoteReady(
+            {} as PaymentInfoResponse
+          ),
+          "01234567890012345678912345650": undefined,
+          "01234567890012345678912345660": remoteError(
+            toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+          ),
+          "01234567890012345678912345670": undefined
+        }
       },
       userSelectedPayments: new Set<string>([
         "01234567890012345678912345610",
@@ -377,128 +388,96 @@ describe("PN Payments selectors' tests", () => {
   it("shouldUpdatePaymentSelector should return true for an unmatching message Id", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
-      messageId: "m1" as UIMessageId,
+      messageId: "m1",
       paymentId: "p1",
       serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
-    const shouldUpdatePayment = shouldUpdatePaymentSelector(
-      state,
-      "m2" as UIMessageId,
-      "p1"
-    );
+    const shouldUpdatePayment = shouldUpdatePaymentSelector(state, "m2", "p1");
     expect(shouldUpdatePayment).toBeTruthy();
   });
   it("shouldUpdatePaymentSelector should return true for a matching message Id with an unmatching payment Id", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
-      messageId: "m1" as UIMessageId,
+      messageId: "m1",
       paymentId: "p1",
       serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
-    const shouldUpdatePayment = shouldUpdatePaymentSelector(
-      state,
-      "m1" as UIMessageId,
-      "p2"
-    );
+    const shouldUpdatePayment = shouldUpdatePaymentSelector(state, "m1", "p2");
     expect(shouldUpdatePayment).toBeTruthy();
   });
   it("shouldUpdatePaymentSelector should return false for a matching <message Id, payment Id> pair", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
-      messageId: "m1" as UIMessageId,
+      messageId: "m1",
       paymentId: "p1",
       serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
-    const shouldUpdatePayment = shouldUpdatePaymentSelector(
-      state,
-      "m1" as UIMessageId,
-      "p1"
-    );
+    const shouldUpdatePayment = shouldUpdatePaymentSelector(state, "m1", "p1");
     expect(shouldUpdatePayment).toBeFalsy();
   });
   it("paymentStatusForUISelector should return remoteUndefined for an unmatching message Id", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
-      messageId: "m1" as UIMessageId,
+      messageId: "m1",
       paymentId: "p1",
       serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
-    const paymentStatus = paymentStatusForUISelector(
-      state,
-      "m2" as UIMessageId,
-      "p1"
-    );
+    const paymentStatus = paymentStatusForUISelector(state, "m2", "p1");
     expect(paymentStatus).toBe(remoteUndefined);
   });
   it("paymentStatusForUISelector should return remoteUndefined for a matching message Id with an unmatching payment Id", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
-      messageId: "m1" as UIMessageId,
+      messageId: "m1",
       paymentId: "p1",
       serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
-    const paymentStatus = paymentStatusForUISelector(
-      state,
-      "m1" as UIMessageId,
-      "p2"
-    );
+    const paymentStatus = paymentStatusForUISelector(state, "m1", "p2");
     expect(paymentStatus).toBe(remoteUndefined);
   });
   it("paymentStatusForUISelector should return remoteUndefined for a matching <message Id, payment Id> that is loading", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
-      messageId: "m1" as UIMessageId,
+      messageId: "m1",
       paymentId: "p1",
       serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
     const paymentStatusOnStore =
-      state.entities.messages.payments["m1" as UIMessageId]?.p1;
+      state.entities.messages.payments.paymentStatusListById.m1?.p1;
     expect(paymentStatusOnStore).toBe(remoteLoading);
-    const paymentStatus = paymentStatusForUISelector(
-      state,
-      "m1" as UIMessageId,
-      "p1"
-    );
+    const paymentStatus = paymentStatusForUISelector(state, "m1", "p1");
     expect(paymentStatus).toBe(remoteUndefined);
   });
   it("paymentStatusForUISelector should return remoteReady for a matching <message Id, payment Id> that is payable", () => {
     const paymentData = {} as PaymentInfoResponse;
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.success({
-      messageId: "m1" as UIMessageId,
+      messageId: "m1",
       paymentId: "p1",
       paymentData,
       serviceId: "01J5X5EM6RPT04PC8SFZREDDBP" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
-    const paymentStatus = paymentStatusForUISelector(
-      state,
-      "m1" as UIMessageId,
-      "p1"
-    );
+    const paymentStatus = paymentStatusForUISelector(state, "m1", "p1");
     expect(paymentStatus).toStrictEqual(remoteReady(paymentData));
   });
   it("paymentStatusForUISelector should return remoteError for a matching <message Id, payment Id> that is not payable anymore", () => {
     const reason = toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO);
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.failure({
-      messageId: "m1" as UIMessageId,
+      messageId: "m1",
       paymentId: "p1",
       reason,
       serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
-    const paymentStatus = paymentStatusForUISelector(
-      state,
-      "m1" as UIMessageId,
-      "p1"
-    );
+    const paymentStatus = paymentStatusForUISelector(state, "m1", "p1");
     expect(paymentStatus).toStrictEqual(remoteError(reason));
   });
 
@@ -520,7 +499,7 @@ describe("PN Payments selectors' tests", () => {
     const firstRemovedAppState = appReducer(
       finalAppState,
       updatePaymentForMessage.request({
-        messageId: "" as UIMessageId,
+        messageId: "",
         paymentId: paymentId1,
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       })
@@ -533,7 +512,7 @@ describe("PN Payments selectors' tests", () => {
     const secondRemovedAppState = appReducer(
       firstRemovedAppState,
       updatePaymentForMessage.request({
-        messageId: "" as UIMessageId,
+        messageId: "",
         paymentId: paymentId2,
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       })
@@ -546,7 +525,7 @@ describe("PN Payments selectors' tests", () => {
     const thirdRemovedAppState = appReducer(
       secondRemovedAppState,
       updatePaymentForMessage.request({
-        messageId: "" as UIMessageId,
+        messageId: "",
         paymentId: paymentId3,
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       })
@@ -766,7 +745,7 @@ describe("canNavigateToPaymentFromMessageSelector", () => {
 describe("paymentsButtonStateSelector", () => {
   it("should return hidden for a pot.none message details", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
-    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8";
     const paymentsButtonState = paymentsButtonStateSelector(
       appState,
       messageId
@@ -774,7 +753,7 @@ describe("paymentsButtonStateSelector", () => {
     expect(paymentsButtonState).toBe("hidden");
   });
   it("should return hidden for a message without payment data", () => {
-    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8";
     const messageDetailsPot = pot.some({
       id: messageId
     } as UIMessageDetails);
@@ -799,7 +778,7 @@ describe("paymentsButtonStateSelector", () => {
     expect(paymentsButtonState).toBe("hidden");
   });
   it("should return hidden for a payment with an error", () => {
-    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8";
     const paymentData = {
       noticeNumber: "012345678912345610",
       payee: {
@@ -823,10 +802,13 @@ describe("paymentsButtonStateSelector", () => {
           },
           payments: {
             ...appState.entities.messages.payments,
-            "01HRSSD1R29DA2HJQHGYJP19T8": {
-              "01234567890012345678912345610": remoteError(
-                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
-              )
+            paymentStatusListById: {
+              ...appState.entities.messages.payments.paymentStatusListById,
+              "01HRSSD1R29DA2HJQHGYJP19T8": {
+                "01234567890012345678912345610": remoteError(
+                  Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+                )
+              } as unknown as MultiplePaymentState["paymentStatusListById"]
             }
           }
         }
@@ -839,7 +821,7 @@ describe("paymentsButtonStateSelector", () => {
     expect(paymentsButtonState).toBe("hidden");
   });
   it("should return loading for a payment with no data (no message entry in the payment section of redux)", () => {
-    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8";
     const paymentData = {
       noticeNumber: "012345678912345610",
       payee: {
@@ -871,7 +853,7 @@ describe("paymentsButtonStateSelector", () => {
     expect(paymentsButtonState).toBe("loading");
   });
   it("should return loading for a payment with no data (no payment entry in the message's payment section of redux)", () => {
-    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8";
     const paymentData = {
       noticeNumber: "012345678912345610",
       payee: {
@@ -895,7 +877,10 @@ describe("paymentsButtonStateSelector", () => {
           },
           payments: {
             ...appState.entities.messages.payments,
-            "01HRSSD1R29DA2HJQHGYJP19T8": {}
+            paymentStatusListById: {
+              ...appState.entities.messages.payments.paymentStatusListById,
+              "01HRSSD1R29DA2HJQHGYJP19T8": {}
+            }
           }
         }
       }
@@ -907,7 +892,7 @@ describe("paymentsButtonStateSelector", () => {
     expect(paymentsButtonState).toBe("loading");
   });
   it("should return loading for a payment with remoteUndefined value", () => {
-    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8";
     const paymentData = {
       noticeNumber: "012345678912345610",
       payee: {
@@ -931,8 +916,11 @@ describe("paymentsButtonStateSelector", () => {
           },
           payments: {
             ...appState.entities.messages.payments,
-            "01HRSSD1R29DA2HJQHGYJP19T8": {
-              "01234567890012345678912345610": remoteUndefined
+            paymentStatusListById: {
+              ...appState.entities.messages.payments.paymentStatusListById,
+              "01HRSSD1R29DA2HJQHGYJP19T8": {
+                "01234567890012345678912345610": remoteUndefined
+              }
             }
           }
         }
@@ -945,7 +933,7 @@ describe("paymentsButtonStateSelector", () => {
     expect(paymentsButtonState).toBe("loading");
   });
   it("should return loading for a loading payment", () => {
-    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8";
     const paymentData = {
       noticeNumber: "012345678912345610",
       payee: {
@@ -969,8 +957,11 @@ describe("paymentsButtonStateSelector", () => {
           },
           payments: {
             ...appState.entities.messages.payments,
-            "01HRSSD1R29DA2HJQHGYJP19T8": {
-              "01234567890012345678912345610": remoteLoading
+            paymentStatusListById: {
+              ...appState.entities.messages.payments.paymentStatusListById,
+              "01HRSSD1R29DA2HJQHGYJP19T8": {
+                "01234567890012345678912345610": remoteLoading
+              }
             }
           }
         }
@@ -983,7 +974,7 @@ describe("paymentsButtonStateSelector", () => {
     expect(paymentsButtonState).toBe("loading");
   });
   it("should return enabled for a payable payment", () => {
-    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8";
     const paymentData = {
       noticeNumber: "012345678912345610",
       payee: {
@@ -1007,8 +998,11 @@ describe("paymentsButtonStateSelector", () => {
           },
           payments: {
             ...appState.entities.messages.payments,
-            "01HRSSD1R29DA2HJQHGYJP19T8": {
-              "01234567890012345678912345610": remoteReady({})
+            paymentStatusListById: {
+              ...appState.entities.messages.payments.paymentStatusListById,
+              "01HRSSD1R29DA2HJQHGYJP19T8": {
+                "01234567890012345678912345610": remoteReady({})
+              } as unknown as MultiplePaymentState["paymentStatusListById"]
             }
           }
         }
@@ -1024,7 +1018,7 @@ describe("paymentsButtonStateSelector", () => {
 
 describe("isPaymentsButtonVisibleSelector", () => {
   it("Should return false when the button is hidden", () => {
-    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8";
     const appState = appReducer(undefined, applicationChangeState("active"));
     const isPaymentButtonVisible = isPaymentsButtonVisibleSelector(
       appState,
@@ -1033,7 +1027,7 @@ describe("isPaymentsButtonVisibleSelector", () => {
     expect(isPaymentButtonVisible).toBe(false);
   });
   it("Should return true when the button is loading", () => {
-    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8";
     const appState = appReducer(undefined, applicationChangeState("active"));
     const finalState = {
       ...appState,
@@ -1062,7 +1056,7 @@ describe("isPaymentsButtonVisibleSelector", () => {
     expect(isPaymentButtonVisible).toBe(true);
   });
   it("Should return true when the button is enabled", () => {
-    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8";
     const appState = appReducer(undefined, applicationChangeState("active"));
     const finalState = {
       ...appState,
@@ -1083,8 +1077,11 @@ describe("isPaymentsButtonVisibleSelector", () => {
           },
           payments: {
             ...appState.entities.messages.payments,
-            "01HRSSD1R29DA2HJQHGYJP19T8": {
-              "01234567890012345678912345610": remoteReady({})
+            paymentStatusListById: {
+              ...appState.entities.messages.payments.paymentStatusListById,
+              "01HRSSD1R29DA2HJQHGYJP19T8": {
+                "01234567890012345678912345610": remoteReady({})
+              } as unknown as MultiplePaymentState["paymentStatusListById"]
             }
           }
         }
@@ -1099,8 +1096,8 @@ describe("isPaymentsButtonVisibleSelector", () => {
 });
 
 describe("paymentStateSelector", () => {
-  const message1Id = "01HR9GY9GHGH5BQEJAKPWXEKV3" as UIMessageId;
-  const message2Id = "01HR9GY9GHGH5BQEJAKPWXEKV4" as UIMessageId;
+  const message1Id = "01HR9GY9GHGH5BQEJAKPWXEKV3";
+  const message2Id = "01HR9GY9GHGH5BQEJAKPWXEKV4";
   const paymentId1 = "01234567890012345678912345610";
   const paymentId2 = "01234567890012345678912345620";
   it("should return remoteUndefined when there is no match on messageId", () => {
@@ -1108,8 +1105,10 @@ describe("paymentStateSelector", () => {
       entities: {
         messages: {
           payments: {
-            [message2Id]: {
-              [paymentId1]: remoteLoading
+            paymentStatusListById: {
+              [message2Id]: {
+                [paymentId1]: remoteLoading
+              }
             }
           }
         }
@@ -1127,8 +1126,10 @@ describe("paymentStateSelector", () => {
       entities: {
         messages: {
           payments: {
-            [message1Id]: {
-              [paymentId2]: remoteLoading
+            paymentStatusListById: {
+              [message1Id]: {
+                [paymentId2]: remoteLoading
+              }
             }
           }
         }
@@ -1154,11 +1155,13 @@ describe("paymentStateSelector", () => {
         entities: {
           messages: {
             payments: {
-              [message1Id]: {
-                [paymentId1]: remoteReady({} as PaymentInfoResponse)
-              },
-              [message2Id]: {
-                [paymentId2]: paymentStatus
+              paymentStatusListById: {
+                [message1Id]: {
+                  [paymentId1]: remoteReady({} as PaymentInfoResponse)
+                },
+                [message2Id]: {
+                  [paymentId2]: paymentStatus
+                }
               }
             }
           }
@@ -1254,7 +1257,7 @@ describe("paymentErrorToPaymentStatistics", () => {
 });
 
 describe("paymentStatisticsForMessageUncachedSelector", () => {
-  const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+  const messageId = "01HRSSD1R29DA2HJQHGYJP19T8";
   const paymentId1 = "01234567890012345678912345610";
   const paymentId2 = "01234567890012345678912345611";
   const payment1Data = { amount: 100 } as PaymentInfoResponse;
@@ -1263,14 +1266,16 @@ describe("paymentStatisticsForMessageUncachedSelector", () => {
       entities: {
         messages: {
           payments: {
-            [messageId]: {
-              [paymentId1]: remoteReady(payment1Data)
+            paymentStatusListById: {
+              [messageId]: {
+                [paymentId1]: remoteReady(payment1Data)
+              }
             }
           }
         }
       }
     } as unknown as GlobalState;
-    const messageId2 = "01HRSSD1R29DA2HJQHGYJP19T9" as UIMessageId;
+    const messageId2 = "01HRSSD1R29DA2HJQHGYJP19T9";
     const output = paymentStatisticsForMessageUncachedSelector(
       state,
       messageId2,
@@ -1285,8 +1290,10 @@ describe("paymentStatisticsForMessageUncachedSelector", () => {
         entities: {
           messages: {
             payments: {
-              [messageId]: {
-                [paymentId1]: remoteStatus
+              paymentStatusListById: {
+                [messageId]: {
+                  [paymentId1]: remoteStatus
+                }
               }
             }
           }
@@ -1316,8 +1323,10 @@ describe("paymentStatisticsForMessageUncachedSelector", () => {
         entities: {
           messages: {
             payments: {
-              [messageId]: {
-                [paymentId1]: input
+              paymentStatusListById: {
+                [messageId]: {
+                  [paymentId1]: input
+                }
               }
             }
           }
@@ -1338,9 +1347,11 @@ describe("paymentStatisticsForMessageUncachedSelector", () => {
         entities: {
           messages: {
             payments: {
-              [messageId]: {
-                [paymentId1]: remoteReady({ amount: 200 }),
-                [paymentId2]: remoteStatus
+              paymentStatusListById: {
+                [messageId]: {
+                  [paymentId1]: remoteReady({ amount: 200 }),
+                  [paymentId2]: remoteStatus
+                }
               }
             }
           }
@@ -1363,9 +1374,11 @@ describe("paymentStatisticsForMessageUncachedSelector", () => {
         entities: {
           messages: {
             payments: {
-              [messageId]: {
-                [paymentId1]: remoteReady({ amount: 200 }),
-                [paymentId2]: input
+              paymentStatusListById: {
+                [messageId]: {
+                  [paymentId1]: remoteReady({ amount: 200 }),
+                  [paymentId2]: input
+                }
               }
             }
           }
@@ -1404,37 +1417,39 @@ describe("paymentStatisticsForMessageUncachedSelector", () => {
         entities: {
           messages: {
             payments: {
-              [messageId]: {
-                [paymentId1]: remoteReady({ amount: 200 }),
-                [paymentId2]: remoteError(toGenericError("An error")),
-                [paymentId3]: remoteError(toTimeoutError()),
-                [paymentId4]: remoteError(
-                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
-                ),
-                [paymentId5]: remoteError(
-                  toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO)
-                ),
-                [paymentId6]: remoteError(
-                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
-                ),
-                [paymentId7]: remoteError(
-                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
-                ),
-                [paymentId8]: remoteError(
-                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
-                ),
-                [paymentId9]: remoteError(
-                  toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO)
-                ),
-                [paymentId10]: remoteError(
-                  toSpecificError(
-                    Detail_v2Enum.CANALE_CARRELLO_DUPLICATO_UNKNOWN
-                  )
-                ),
-                [paymentId11]: remoteError(
-                  toSpecificError(Detail_v2Enum.GENERIC_ERROR)
-                ),
-                [paymentId12]: remoteStatus
+              paymentStatusListById: {
+                [messageId]: {
+                  [paymentId1]: remoteReady({ amount: 200 }),
+                  [paymentId2]: remoteError(toGenericError("An error")),
+                  [paymentId3]: remoteError(toTimeoutError()),
+                  [paymentId4]: remoteError(
+                    toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
+                  ),
+                  [paymentId5]: remoteError(
+                    toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO)
+                  ),
+                  [paymentId6]: remoteError(
+                    toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
+                  ),
+                  [paymentId7]: remoteError(
+                    toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
+                  ),
+                  [paymentId8]: remoteError(
+                    toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
+                  ),
+                  [paymentId9]: remoteError(
+                    toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO)
+                  ),
+                  [paymentId10]: remoteError(
+                    toSpecificError(
+                      Detail_v2Enum.CANALE_CARRELLO_DUPLICATO_UNKNOWN
+                    )
+                  ),
+                  [paymentId11]: remoteError(
+                    toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+                  ),
+                  [paymentId12]: remoteStatus
+                }
               }
             }
           }
@@ -1470,37 +1485,39 @@ describe("paymentStatisticsForMessageUncachedSelector", () => {
         entities: {
           messages: {
             payments: {
-              [messageId]: {
-                [paymentId1]: remoteReady({ amount: 200 }),
-                [paymentId2]: remoteError(toGenericError("An error")),
-                [paymentId3]: remoteError(toTimeoutError()),
-                [paymentId4]: remoteError(
-                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
-                ),
-                [paymentId5]: remoteError(
-                  toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO)
-                ),
-                [paymentId6]: remoteError(
-                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
-                ),
-                [paymentId7]: remoteError(
-                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
-                ),
-                [paymentId8]: remoteError(
-                  toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
-                ),
-                [paymentId9]: remoteError(
-                  toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO)
-                ),
-                [paymentId10]: remoteError(
-                  toSpecificError(
-                    Detail_v2Enum.CANALE_CARRELLO_DUPLICATO_UNKNOWN
-                  )
-                ),
-                [paymentId11]: remoteError(
-                  toSpecificError(Detail_v2Enum.GENERIC_ERROR)
-                ),
-                [paymentId12]: input
+              paymentStatusListById: {
+                [messageId]: {
+                  [paymentId1]: remoteReady({ amount: 200 }),
+                  [paymentId2]: remoteError(toGenericError("An error")),
+                  [paymentId3]: remoteError(toTimeoutError()),
+                  [paymentId4]: remoteError(
+                    toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
+                  ),
+                  [paymentId5]: remoteError(
+                    toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO)
+                  ),
+                  [paymentId6]: remoteError(
+                    toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO)
+                  ),
+                  [paymentId7]: remoteError(
+                    toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)
+                  ),
+                  [paymentId8]: remoteError(
+                    toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO)
+                  ),
+                  [paymentId9]: remoteError(
+                    toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO)
+                  ),
+                  [paymentId10]: remoteError(
+                    toSpecificError(
+                      Detail_v2Enum.CANALE_CARRELLO_DUPLICATO_UNKNOWN
+                    )
+                  ),
+                  [paymentId11]: remoteError(
+                    toSpecificError(Detail_v2Enum.GENERIC_ERROR)
+                  ),
+                  [paymentId12]: input
+                }
               }
             }
           }
