@@ -107,6 +107,16 @@ export const ItwL3Section = () => {
         description="Navigate to the Disability Card detail screen"
         onPress={() => handleCredentialPress("dc")}
       />
+      <ListItemNav
+        value="Education Degree L3"
+        description="Navigate to the Education Degree detail screen"
+        onPress={() => handleCredentialPress("ed")}
+      />
+      <ListItemNav
+        value="Education Enrollment L3"
+        description="Navigate to the Education Enrollment detail screen"
+        onPress={() => handleCredentialPress("ee")}
+      />
     </View>
   );
 };

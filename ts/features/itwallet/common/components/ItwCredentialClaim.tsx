@@ -18,18 +18,87 @@ import {
   getSafeText,
   ImageClaim,
   isExpirationDateClaim,
+  ParsedNestedClaim,
   PdfClaim,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
   SimpleDate,
   SimpleDateClaim,
   SimpleListClaim,
-  StringClaim
+  StringClaim,
+  WellKnownClaim
 } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
 import { CREDENTIALS_MAP, trackCopyListItem } from "../../analytics";
+import { ItwNestedClaimsListItem } from "./ItwNestedClaimsListItem.tsx";
+
+/**
+ * Type for the configuration of nested credential summaries.
+ */
+type NestedCredentialSummaryConfig = {
+  summaryLabelId: string;
+  summaryValueId: string;
+};
+
+/**
+ * Map of nested credential summary configurations.
+ * This is used to define how to summarize nested credentials in the UI.
+ * Each key is the type of the nested credential, and the value is an object
+ * containing the IDs of the label and value to be displayed in the summary.
+ * Map more types here as needed.
+ */
+const itwNestedCredentialSummaryMap: Record<
+  string,
+  NestedCredentialSummaryConfig
+> = {
+  education_degrees: {
+    summaryLabelId: "programme_type_name",
+    summaryValueId: "degree_course_name"
+  },
+  education_enrollments: {
+    summaryLabelId: "programme_type_name",
+    summaryValueId: "degree_course_name"
+  }
+};
+
+/**
+ * Given a set of claims for a single nested item and its parent's claim ID,
+ * this function looks up the correct configuration and returns the
+ * appropriate summary fields. If no configuration is found, it falls back
+ * to searching for claims with the IDs "label" and "value".
+ *
+ * @param claimId The ID of the parent claim (e.g., "education_degrees").
+ * @param singleItemClaims The array of claims for the one nested item.
+ * @returns An object with the summaryLabel and summaryValue.
+ */
+const getNestedItemSummary = (
+  claimId: string,
+  singleItemClaims: Array<ClaimDisplayFormat>
+): { summaryLabel?: string; summaryValue?: string } => {
+  const summaryConfig = itwNestedCredentialSummaryMap[claimId];
+
+  if (summaryConfig) {
+    // custom configuration
+    const claimsMap = new Map<string, string>(
+      singleItemClaims.map(claim => [claim.id, claim.value as string])
+    );
+    const summaryLabel = claimsMap.get(summaryConfig.summaryLabelId);
+    const summaryValue = claimsMap.get(summaryConfig.summaryValueId);
+    return { summaryLabel, summaryValue };
+  } else {
+    // fallback: use the label and value from the first claim in the array.
+    if (singleItemClaims.length > 0) {
+      const firstClaim = singleItemClaims[0];
+      return {
+        summaryLabel: firstClaim.label,
+        summaryValue: firstClaim.value as string
+      };
+    }
+    return {};
+  }
+};
 
 /**
  * Component which renders a place of birth type claim.
@@ -315,6 +384,10 @@ const DrivingPrivilegesClaimItem = ({
  * Component which renders a claim.
  * It renders a different component based on the type of the claim.
  * @param claim - the claim to render
+ * @param hidden - a flag to hide the claim value
+ * @param isPreview - a flag to indicate if the claim is being rendered in preview mode
+ * @param credentialStatus - the status of the credential, used for expiration date claims
+ * @param credentialType - the type of the credential, used for analytics tracking
  */
 export const ItwCredentialClaim = ({
   claim,
@@ -334,7 +407,7 @@ export const ItwCredentialClaim = ({
     ClaimValue.decode,
     E.fold(
       () => <UnknownClaimItem label={claim.label} />,
-      // eslint-disable-next-line sonarjs/cognitive-complexity
+      // eslint-disable-next-line complexity,sonarjs/cognitive-complexity
       _decoded => {
         const decoded = hidden ? HIDDEN_CLAIM_TEXT : _decoded;
         if (PlaceOfBirthClaim.is(decoded)) {
@@ -378,6 +451,66 @@ export const ItwCredentialClaim = ({
             O.getOrElseW(() => decoded)
           );
           return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
+        }
+        if (ParsedNestedClaim.is(decoded)) {
+          // If the claim is a ParsedNestedClaim, we need to decide how to render it
+          // If it's driving_privileges or there are multiple items, we render a list
+          const shouldRenderAsList =
+            claim.id === WellKnownClaim.driving_privileges ||
+            decoded.length > 1;
+
+          // If there's a single item, we render it expanded
+          const shouldRenderAsExpanded =
+            !shouldRenderAsList && decoded.length === 1;
+
+          if (shouldRenderAsList) {
+            return (
+              <>
+                {decoded.map((singleItemClaims, index) => {
+                  const { summaryLabel, summaryValue } = getNestedItemSummary(
+                    claim.id,
+                    singleItemClaims
+                  );
+                  return (
+                    <Fragment key={`${index}_${claim.id}_${claim.label}`}>
+                      {index > 0 && <Divider />}
+                      <ItwNestedClaimsListItem
+                        itemTitle={summaryValue}
+                        itemClaims={singleItemClaims}
+                        summaryLabel={summaryLabel}
+                        summaryValue={summaryValue}
+                        hidden={hidden}
+                        isPreview={isPreview}
+                        credentialStatus={credentialStatus}
+                        credentialType={credentialType}
+                      />
+                    </Fragment>
+                  );
+                })}
+              </>
+            );
+          }
+
+          if (shouldRenderAsExpanded) {
+            const singleItemClaims = decoded[0];
+            return (
+              <>
+                {singleItemClaims.map(nestedClaim => (
+                  <ItwCredentialClaim
+                    key={nestedClaim.id}
+                    claim={nestedClaim}
+                    hidden={hidden}
+                    isPreview={isPreview}
+                    credentialStatus={credentialStatus}
+                    credentialType={credentialType}
+                  />
+                ))}
+              </>
+            );
+          }
+
+          // If neither strategy applies (empty array), return null
+          return null;
         }
         if (BoolClaim.is(decoded)) {
           return <BoolClaimItem label={claim.label} claim={decoded} />;
