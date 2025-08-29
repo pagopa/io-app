@@ -18,11 +18,14 @@ export type RequestCredentialParams = {
   env: Env;
   credentialType: string;
   walletInstanceAttestation: string;
+  isPidL3: boolean;
 };
 
 type IssuerConf = Awaited<
   ReturnType<Credential.Issuance.EvaluateIssuerTrust>
 >["issuerConf"];
+type CredentialConfigurationSupported =
+  IssuerConf["openid_credential_issuer"]["credential_configurations_supported"];
 
 /**
  * Requests a credential from the issuer.
@@ -34,7 +37,8 @@ type IssuerConf = Awaited<
 export const requestCredential = async ({
   env,
   credentialType,
-  walletInstanceAttestation
+  walletInstanceAttestation,
+  isPidL3
 }: RequestCredentialParams) => {
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
@@ -46,7 +50,8 @@ export const requestCredential = async ({
 
   const credentialIds = getCredentialConfigurationIds(
     issuerConf,
-    credentialType
+    credentialType,
+    isPidL3
   );
 
   // Start user authorization
@@ -204,16 +209,26 @@ export const obtainCredential = async ({
   };
 };
 
+/**
+ * Retrieves the list of credential configuration IDs for a given credential type,
+ * optionally filtered by PID level.
+ *
+ * @param issuerConf - The issuer configuration object
+ * @param credentialType - The credential type (or scope) to filter by
+ * @param isPidL3 - A boolean flag indicating whether the PID level is L3
+ * @returns An array of credential configuration IDs (strings) associated with the given credential type.
+ *   - If `isPidL3` is true, all configurations are considered.
+ *   - Otherwise, only configurations with `format === "dc+sd-jwt"` are considered.
+ *   - Returns an empty array if no configuration matches.
+ */
 const getCredentialConfigurationIds = (
-  issuerConfig: Awaited<
-    ReturnType<Credential.Issuance.EvaluateIssuerTrust>
-  >["issuerConf"],
-  credentialType: string
+  { openid_credential_issuer }: IssuerConf,
+  credentialType: string,
+  isPidL3: boolean
 ) => {
-  const { credential_configurations_supported } =
-    issuerConfig.openid_credential_issuer;
-  const supportedConfigurationsByScope = Object.entries(
-    credential_configurations_supported
+  const supportedConfigurationsByScope = getConfigByPIDLevel(
+    openid_credential_issuer.credential_configurations_supported,
+    isPidL3
   ).reduce<Record<string, Array<string>>>(
     (acc, [configId, config]) => ({
       ...acc,
@@ -223,6 +238,29 @@ const getCredentialConfigurationIds = (
   );
 
   return supportedConfigurationsByScope[credentialType] || [];
+};
+
+/**
+ * Filters the credential configurations based on the PID level.
+ *
+ * @param credentialConfigurationSupported - The `credential_configurations_supported` object of the credential issuer EC
+ * @param isPidL3 - A boolean flag indicating whether the PID level is L3
+ * @returns An array of `[key, value]` pairs where:
+ *   - `key` is the configuration name (string)
+ *   - `value` is the corresponding configuration object
+ *
+ * If `isPidL3` is true, all configurations are returned.
+ * Otherwise, only the configurations with `format === "dc+sd-jwt"` are returned.
+ */
+const getConfigByPIDLevel = (
+  credentialConfigurationSupported: CredentialConfigurationSupported,
+  isPidL3: boolean
+) => {
+  const config = Object.entries(credentialConfigurationSupported);
+
+  return isPidL3
+    ? config
+    : config.filter(([, { format }]) => format === "dc+sd-jwt");
 };
 
 // Extend `IssuerResponseError` with `credentialId`

@@ -11,6 +11,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { Env } from "../../common/utils/environment";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { type Context } from "./context";
 
 export type GetWalletAttestationActorInput = {
@@ -114,6 +115,7 @@ export const createCredentialIssuanceActorsImplementation = (
       walletInstanceAttestation,
       isNewIssuanceFlowEnabled
     } = input;
+    const isPidL3 = itwLifecycleIsITWalletValidSelector(store.getState());
 
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
@@ -122,7 +124,8 @@ export const createCredentialIssuanceActorsImplementation = (
       env,
       credentialType,
       walletInstanceAttestation,
-      isNewIssuanceFlowEnabled: !!isNewIssuanceFlowEnabled
+      isNewIssuanceFlowEnabled: !!isNewIssuanceFlowEnabled,
+      isPidL3
     });
   });
 
