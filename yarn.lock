@@ -4000,7 +4000,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:2.0.0"
+"@pagopa/io-react-native-wallet@npm:2.0.0":
   version: 2.0.0
   resolution: "@pagopa/io-react-native-wallet@npm:2.0.0"
   dependencies:
