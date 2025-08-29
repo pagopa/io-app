@@ -7,10 +7,14 @@ import { assert } from "../../../../utils/assert";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { getCredentialStatusAttestation } from "../../common/utils/itwCredentialStatusAttestationUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import {
+  CredentialFormat,
+  StoredCredential
+} from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { Env } from "../../common/utils/environment";
+import { enrichErrorWithMetadata } from "../../common/utils/itwFailureUtils";
 import { type Context } from "./context";
 
 export type GetWalletAttestationActorInput = {
@@ -39,7 +43,9 @@ export type ObtainCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.obtainCredential>
 >;
 
-export type ObtainStatusAttestationActorInput = Pick<Context, "credentials">;
+export type ObtainStatusAttestationActorInput = Pick<Context, "credentials"> & {
+  isNewIssuanceFlowEnabled?: boolean;
+};
 
 /**
  * Creates the actors for the eid issuance machine
@@ -178,20 +184,31 @@ export const createCredentialIssuanceActorsImplementation = (
   >(async ({ input }) => {
     assert(input.credentials, "credentials are undefined");
 
-    return await Promise.all(
-      input.credentials.map(async credential => {
-        const { statusAttestation, parsedStatusAttestation } =
-          await getCredentialStatusAttestation(credential);
+    const requestStatusAttestationOrSkip = async (
+      credential: StoredCredential
+    ): Promise<StoredCredential> => {
+      // Status assertions for mDoc credentials are not supported yet
+      if (credential.format === CredentialFormat.MDOC) {
+        return credential;
+      }
 
-        return {
-          ...credential,
-          storedStatusAttestation: {
-            credentialStatus: "valid",
-            statusAttestation,
-            parsedStatusAttestation: parsedStatusAttestation.payload
-          }
-        };
-      })
+      const { statusAttestation, parsedStatusAttestation } =
+        await getCredentialStatusAttestation(credential, env).catch(
+          enrichErrorWithMetadata({ credentialId: credential.credentialId })
+        );
+
+      return {
+        ...credential,
+        storedStatusAttestation: {
+          credentialStatus: "valid",
+          statusAttestation,
+          parsedStatusAttestation: parsedStatusAttestation.payload
+        }
+      };
+    };
+
+    return await Promise.all(
+      input.credentials.map(requestStatusAttestationOrSkip)
     );
   });
 
