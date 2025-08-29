@@ -10,8 +10,10 @@ import {
   isFailureSelector,
   isUnsubscriptionSuccessSelector
 } from "../../unsubscription/store/selectors";
-import { getInitiativeStatus } from "../utils";
-import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
+import {
+  InitiativeDTO,
+  VoucherStatusEnum
+} from "../../../../../definitions/idpay/InitiativeDTO";
 
 const IdPayRemoveFromWalletButton = (initiative: InitiativeDTO) => {
   const dispatch = useIODispatch();
@@ -57,9 +59,9 @@ const IdPayRemoveFromWalletButton = (initiative: InitiativeDTO) => {
   };
 
   const show =
-    getInitiativeStatus({ initiative, now: new Date() }) === "EXPIRED" ||
-    getInitiativeStatus({ initiative, now: new Date() }) === "EXPIRING" ||
-    getInitiativeStatus({ initiative, now: new Date() }) === "ACTIVE";
+    initiative.voucherStatus === VoucherStatusEnum.EXPIRED ||
+    initiative.voucherStatus === VoucherStatusEnum.EXPIRING ||
+    initiative.voucherStatus === VoucherStatusEnum.ACTIVE;
 
   return (
     show && (

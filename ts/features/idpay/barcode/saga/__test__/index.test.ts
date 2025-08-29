@@ -17,7 +17,7 @@ import { idPayGenerateBarcode } from "../../store/actions";
 
 describe("handleGenerateBarcode test", () => {
   const initiativeId = "abcdef";
-  const mock201: TransactionBarCodeResponse = {
+  const mock201 = {
     id: "123456",
     trxCode: "123456",
     initiativeId: "abcdef",
@@ -26,7 +26,7 @@ describe("handleGenerateBarcode test", () => {
     initiativeName: "initiativeName",
     residualBudgetCents: 1000,
     trxExpirationSeconds: 1000
-  };
+  } as TransactionBarCodeResponse;
 
   const mockError: TransactionErrorDTO = {
     code: CodeEnum.PAYMENT_GENERIC_ERROR,

@@ -7,6 +7,8 @@ import { PreferredLanguageEnum } from "../../../../../definitions/backend/Prefer
 import {
   idPayApiBaseUrl,
   idPayApiUatBaseUrl,
+  idPayApiUatVersion,
+  idPayApiVersion,
   idPayTestToken
 } from "../../../../config";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -37,6 +39,7 @@ export const IdPayOnboardingMachineProvider = ({ children }: Props) => {
   const bpdToken = useIOSelector(bpdTokenSelector);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const preferredLanguageOption = useIOSelector(preferredLanguageSelector);
+  const apiVersion = isPagoPATestEnabled ? idPayApiUatVersion : idPayApiVersion;
 
   const language = pipe(
     preferredLanguageOption,
@@ -50,7 +53,8 @@ export const IdPayOnboardingMachineProvider = ({ children }: Props) => {
 
   const token = idPayTestToken ?? bpdToken;
   const client = createIDPayClient(
-    isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
+    isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl,
+    apiVersion
   );
 
   const actors = createActorsImplementation(client, token, language);

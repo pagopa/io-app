@@ -1,7 +1,6 @@
 import { H6, IOToast, TextInput, VSpacer } from "@pagopa/io-app-design-system";
 import { useEffect, useRef, useState } from "react";
 import PagerView from "react-native-pager-view";
-import { SelfDeclarationTextDTO } from "../../../../../definitions/idpay/SelfDeclarationTextDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
@@ -13,6 +12,10 @@ import {
   selectCurrentInputTextNumber,
   textRequiredCriteriaSelector
 } from "../machine/selectors";
+import {
+  SelfCriteriaTextDTO,
+  _typeEnum as SelfCriteriaTextTypeEnum
+} from "../../../../../definitions/idpay/SelfCriteriaTextDTO";
 
 const IdPayInputFormVerificationScreen = () => {
   const { useSelector } = IdPayOnboardingMachineContext;
@@ -40,7 +43,7 @@ const IdPayInputFormVerificationScreen = () => {
 };
 
 type MultiValuePrerequisiteItemScreenContentProps = {
-  criteria: SelfDeclarationTextDTO;
+  criteria: SelfCriteriaTextDTO;
 };
 
 const InputFormVerificationContent = ({
@@ -59,9 +62,16 @@ const InputFormVerificationContent = ({
       );
       return;
     }
+    if (!criteria.code) {
+      return;
+    }
     machine.send({
       type: "input-text-criteria",
-      criteria: { ...criteria, value }
+      criteria: {
+        _type: SelfCriteriaTextTypeEnum.text,
+        code: criteria.code,
+        value
+      }
     });
   };
 
@@ -93,7 +103,7 @@ const InputFormVerificationContent = ({
           key={criteria.code}
           accessibilityLabel={criteria.description}
           accessibilityHint={criteria.description}
-          placeholder={criteria.value}
+          placeholder={criteria.value ?? ""}
           onChangeText={text => setValue(text)}
           value={value}
         />

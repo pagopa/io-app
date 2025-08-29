@@ -1,7 +1,10 @@
 import { waitFor } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { createActor, fromCallback, fromPromise } from "xstate";
-import { IbanDTO } from "../../../../../../definitions/idpay/IbanDTO";
+import {
+  CheckIbanStatusEnum,
+  IbanDTO
+} from "../../../../../../definitions/idpay/IbanDTO";
 import { IbanListDTO } from "../../../../../../definitions/idpay/IbanListDTO";
 import { IbanPutDTO } from "../../../../../../definitions/idpay/IbanPutDTO";
 import {
@@ -45,34 +48,34 @@ export const T_INSTRUMENT_DTO: InstrumentDTO = {
   instrumentType: InstrumentTypeEnum.CARD
 };
 
-export const T_NOT_REFUNDABLE_INITIATIVE_DTO: InitiativeDTO = {
+export const T_NOT_REFUNDABLE_INITIATIVE_DTO = {
   initiativeId: T_INITIATIVE_ID,
   status: StatusEnum.NOT_REFUNDABLE,
-  endDate: new Date("2023-01-25T13:00:25.477Z"),
+  voucherEndDate: new Date("2023-01-25T13:00:25.477Z"),
   nInstr: 1
-};
+} as InitiativeDTO;
 
-export const T_REFUNDABLE_INITIATIVE_DTO: InitiativeDTO = {
+export const T_REFUNDABLE_INITIATIVE_DTO = {
   initiativeId: T_INITIATIVE_ID,
   status: StatusEnum.REFUNDABLE,
-  endDate: new Date("2023-01-25T13:00:25.477Z"),
+  voucherEndDate: new Date("2023-01-25T13:00:25.477Z"),
   nInstr: 1
-};
+} as InitiativeDTO;
 
-export const T_IBAN_LIST: IbanListDTO["ibanList"] = [
+export const T_IBAN_LIST = [
   {
     channel: "IO",
-    checkIbanStatus: "",
+    checkIbanStatus: CheckIbanStatusEnum.OK,
     description: "Test",
     iban: T_IBAN
   }
-];
+] as IbanListDTO["ibanList"];
 
 export const T_PAGOPA_INSTRUMENTS = [T_WALLET];
 
 const T_IBAN_ENROLL: IbanDTO = {
   channel: "IO",
-  checkIbanStatus: "",
+  checkIbanStatus: CheckIbanStatusEnum.OK,
   description: "Test",
   iban: T_IBAN
 };
