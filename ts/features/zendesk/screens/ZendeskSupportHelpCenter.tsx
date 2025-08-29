@@ -1,5 +1,6 @@
 import {
   AccordionItem,
+  Banner,
   Body,
   ContentWrapper,
   FeatureInfo,
@@ -24,9 +25,10 @@ import {
   useState
 } from "react";
 
+import { VoidType } from "io-ts";
+import _ from "lodash";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import _ from "lodash";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import IOMarkdown from "../../../components/IOMarkdown";
 import { ContextualHelpProps } from "../../../components/screens/BaseScreenComponent";
@@ -49,18 +51,20 @@ import {
 import { loadContextualHelpData } from "../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
-import {
-  isProfileEmailValidatedSelector,
-  profileSelector
-} from "../../settings/common/store/selectors";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
+import { usePrevious } from "../../../utils/hooks/usePrevious";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 import {
   addTicketCustomField,
   zendeskFciId
 } from "../../../utils/supportAssistance";
 import { openWebUrl } from "../../../utils/url";
+import { isLoggedIn } from "../../authentication/common/store/utils/guards";
 import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
+import {
+  isProfileEmailValidatedSelector,
+  profileSelector
+} from "../../settings/common/store/selectors";
 import { ZendeskParamsList } from "../navigation/params";
 import ZENDESK_ROUTES from "../navigation/routes";
 import {
@@ -76,8 +80,6 @@ import {
   ZendeskTokenStatusEnum
 } from "../store/reducers";
 import { handleContactSupport } from "../utils";
-import { usePrevious } from "../../../utils/hooks/usePrevious";
-import { isLoggedIn } from "../../authentication/common/store/utils/guards";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -173,9 +175,18 @@ const FaqManager = (props: FaqManagerProps) => {
         <>
           <VSpacer size={16} />
           <IOMarkdown content={contextualHelpData.content} />
-          <VSpacer size={16} />
         </>
       )}
+      <VSpacer size={16} />
+      <Banner
+        pictogramName="help"
+        color="neutral"
+        title={I18n.t("support.helpCenter.supportBanner.title")}
+        content={I18n.t("support.helpCenter.supportBanner.content")}
+        action={I18n.t("support.helpCenter.supportBanner.action")}
+        onPress={() => VoidType}
+      />
+      <VSpacer size={16} />
       {contextualHelpData.faqs && (
         <FlatList
           ListHeaderComponent={<VSpacer size={8} />}
