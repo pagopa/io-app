@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0-rc.6](https://github.com/pagopa/io-app/compare/3.12.0-rc.5...3.12.0-rc.6) (2025-08-28)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-2891](https://pagopa.atlassian.net/browse/SIW-2891)] IT-Wallet activation button ([#7289](https://github.com/pagopa/io-app/issues/7289)) ([05bf109](https://github.com/pagopa/io-app/commit/05bf10995d31044d1aec471de776c75de2142867))
+
+## [3.12.0-rc.5](https://github.com/pagopa/io-app/compare/3.12.0-rc.4...3.12.0-rc.5) (2025-08-27)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2715](https://pagopa.atlassian.net/browse/SIW-2715)] Mixpanel events tracking for PID ([#7236](https://github.com/pagopa/io-app/issues/7236)) ([6f08cc3](https://github.com/pagopa/io-app/commit/6f08cc3b5358bbaf03924fb2cc6f0b1f49cb7233))
+* **IT Wallet:** [[SIW-2805](https://pagopa.atlassian.net/browse/SIW-2805)] Added remove credential CTA in invalid MDL bottom sheet ([#7246](https://github.com/pagopa/io-app/issues/7246)) ([2a7ff38](https://github.com/pagopa/io-app/commit/2a7ff38dc2e813cebbee60e8e3b8bb02e99ec77f))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2869](https://pagopa.atlassian.net/browse/SIW-2869)] Update copy for discovery info component ([#7287](https://github.com/pagopa/io-app/issues/7287)) ([e252e91](https://github.com/pagopa/io-app/commit/e252e91d8b9d456246a1ff7e2c7c8d604e704222))
+
 ## [3.12.0-rc.4](https://github.com/pagopa/io-app/compare/3.12.0-rc.3...3.12.0-rc.4) (2025-08-26)
 
 
