@@ -144,7 +144,8 @@ const VerificationExpiringAlert = ({
     onTrack("tap_banner");
     machineRef.send({
       type: "select-credential",
-      credentialType: credential.credentialType
+      credentialType: credential.credentialType,
+      mode: "reissuance"
     });
   };
 
