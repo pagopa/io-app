@@ -1,4 +1,3 @@
-import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { FiscalCode } from "../../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
@@ -43,8 +42,6 @@ export type UIMessageDetails = {
   euCovidCertificate?: EUCovidCertificate;
   hasThirdPartyData: boolean;
   hasRemoteContent: boolean;
-  // @deprecated please use it only for backward compatibility
-  raw: CreatedMessageWithContentAndAttachments;
 };
 
 export type EUCovidCertificate = { authCode: string };
