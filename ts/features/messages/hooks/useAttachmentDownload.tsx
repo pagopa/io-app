@@ -8,7 +8,6 @@ import {
   isDownloadingMessageAttachmentSelector,
   isRequestedAttachmentDownloadSelector
 } from "../store/reducers/downloads";
-import { UIMessageId } from "../types";
 import {
   cancelPreviousAttachmentDownload,
   clearRequestedAttachmentDownload,
@@ -28,7 +27,7 @@ import PN_ROUTES from "../../pn/navigation/routes";
 import NavigationService from "../../../navigation/NavigationService";
 
 export const useAttachmentDownload = (
-  messageId: UIMessageId,
+  messageId: string,
   attachment: ThirdPartyAttachment,
   isPN: boolean,
   serviceId?: ServiceId,
