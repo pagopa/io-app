@@ -4046,30 +4046,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@pagopa/io-react-native-wallet@npm:2.0.0"
-  dependencies:
-    dcql: ^0.2.21
-    js-base64: ^3.7.7
-    js-sha256: ^0.9.0
-    jsonpath-plus: ^10.2.0
-    jsrsasign: ^11.1.0
-    parse-url: ^9.2.0
-    react-native-url-polyfill: ^2.0.0
-    react-native-uuid: ^2.0.1
-    uuid: ^11.0.3
-    zod: ^3.21.4
-  peerDependencies:
-    "@pagopa/io-react-native-crypto": "*"
-    "@pagopa/io-react-native-iso18013": "*"
-    "@pagopa/io-react-native-jwt": "*"
-    react: "*"
-    react-native: "*"
-  checksum: b18800655c4040a8c0bd1bd874f98a567f740173b8681fc6aa9d2bab62086b3c54264dc6772c6eda6f80f2d7bc9ec11dd556bd87e1d9b702276ebdaf41509171
-  languageName: node
-  linkType: hard
-
 "@pagopa/io-react-native-zendesk@npm:^0.3.30":
   version: 0.3.30
   resolution: "@pagopa/io-react-native-zendesk@npm:0.3.30"
