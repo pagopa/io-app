@@ -1,7 +1,7 @@
 import {
   Credential,
   createCryptoContextFor
-} from "@pagopa/io-react-native-wallet-v2";
+} from "@pagopa/io-react-native-wallet";
 import { isAfter } from "date-fns";
 import * as t from "io-ts";
 import { CredentialFormat, StoredCredential } from "./itwTypesUtils";
@@ -100,7 +100,7 @@ function createIssuerConfSharedFetch(maxAge = 86400) {
   return function getIssuerConf(env: Env) {
     if (timestamp + maxAge * 1000 < Date.now() || !sharedPromise) {
       sharedPromise = Credential.Issuance.evaluateIssuerTrust(
-        new URL("1-0", env.WALLET_EAA_PROVIDER_BASE_URL).toString()
+        env.WALLET_EAA_PROVIDER_BASE_URL
       ).then(res => res.issuerConf);
       timestamp = Date.now();
     }

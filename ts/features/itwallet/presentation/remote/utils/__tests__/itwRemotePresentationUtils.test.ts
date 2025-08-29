@@ -1,4 +1,4 @@
-import { createCryptoContextFor } from "@pagopa/io-react-native-wallet-v2";
+import { createCryptoContextFor } from "@pagopa/io-react-native-wallet";
 import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
 import {
   enrichPresentationDetails,

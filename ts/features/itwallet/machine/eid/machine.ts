@@ -10,9 +10,7 @@ import { trackItWalletIntroScreen } from "../../analytics";
 import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
-  StartAuthFlowActorParams,
-  VerifyTrustFederationParams,
-  CreateWalletInstanceActorParams
+  StartAuthFlowActorParams
 } from "./actors";
 import {
   AuthenticationContext,
@@ -110,13 +108,9 @@ export const itwEidIssuanceMachine = setup({
     }
   },
   actors: {
-    verifyTrustFederation: fromPromise<void, VerifyTrustFederationParams>(
-      notImplemented
-    ),
+    verifyTrustFederation: fromPromise<void>(notImplemented),
     getCieStatus: fromPromise<CieContext>(notImplemented),
-    createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
-      notImplemented
-    ),
+    createWalletInstance: fromPromise<string>(notImplemented),
     revokeWalletInstance: fromPromise<void>(notImplemented),
     getWalletAttestation: fromPromise<
       WalletInstanceAttestations,
@@ -208,9 +202,6 @@ export const itwEidIssuanceMachine = setup({
         "Verification of the trust federation. This state verifies the trust chain of the wallet provider with the PID provider.",
       tags: [ItwTags.Loading],
       invoke: {
-        input: ({ context }) => ({
-          isL3IssuanceEnabled: context.isL3FeaturesEnabled
-        }),
         src: "verifyTrustFederation",
         onDone: [
           {
@@ -245,9 +236,6 @@ export const itwEidIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "createWalletInstance",
-        input: ({ context }) => ({
-          isL3IssuanceEnabled: context.isL3FeaturesEnabled
-        }),
         onDone: {
           actions: [
             assign(({ event }) => ({
@@ -307,8 +295,7 @@ export const itwEidIssuanceMachine = setup({
       invoke: {
         src: "getWalletAttestation",
         input: ({ context }) => ({
-          integrityKeyTag: context.integrityKeyTag,
-          isL3IssuanceEnabled: context.isL3FeaturesEnabled
+          integrityKeyTag: context.integrityKeyTag
         }),
         onDone: [
           {
@@ -480,7 +467,6 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  isL3IssuanceEnabled: context.isL3FeaturesEnabled,
                   identification: context.identification
                 }),
                 onDone: {
@@ -554,11 +540,11 @@ export const itwEidIssuanceMachine = setup({
               tags: [ItwTags.Loading],
               invoke: {
                 src: "startAuthFlow",
+                // eslint-disable-next-line sonarjs/no-identical-functions
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  identification: context.identification,
-                  isL3IssuanceEnabled: context.isL3FeaturesEnabled
+                  identification: context.identification
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -700,8 +686,7 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  identification: context.identification,
-                  isL3IssuanceEnabled: context.isL3FeaturesEnabled
+                  identification: context.identification
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -790,8 +775,7 @@ export const itwEidIssuanceMachine = setup({
             input: ({ context }) => ({
               identification: context.identification,
               authenticationContext: context.authenticationContext,
-              walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-              isL3IssuanceEnabled: context.isL3FeaturesEnabled
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),

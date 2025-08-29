@@ -1,5 +1,4 @@
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
-import { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
 import {
   IssuerConfiguration,
   RequestObject,
@@ -52,7 +51,6 @@ export type Context = {
   clientId: string | undefined;
   codeVerifier: string | undefined;
   requestedCredential: RequestObject | undefined;
-  credentialDefinition: AuthorizationDetail | undefined;
   /**
    * Obtained credentials from the issuer.
    */
@@ -73,7 +71,6 @@ export const InitialContext: Context = {
   issuerConf: undefined,
   clientId: undefined,
   codeVerifier: undefined,
-  credentialDefinition: undefined,
   requestedCredential: undefined,
   credentials: undefined,
   failure: undefined

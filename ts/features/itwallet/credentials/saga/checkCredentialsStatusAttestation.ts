@@ -1,8 +1,7 @@
 import { select, call, all, put } from "typed-redux-saga/macro";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Errors as LegacyErrors } from "@pagopa/io-react-native-wallet";
-import { Errors } from "@pagopa/io-react-native-wallet-v2";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import { itwCredentialsSelector } from "../store/selectors";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
@@ -44,10 +43,7 @@ export function* updateCredentialStatusAttestationSaga(
       }
     };
   } catch (e) {
-    if (
-      isIssuerResponseError(e, Codes.CredentialInvalidStatus) ||
-      LegacyErrors.isIssuerResponseError(e, Codes.CredentialInvalidStatus) // TODO: [SIW-2530] remove after full migration to API 1.0
-    ) {
+    if (isIssuerResponseError(e, Codes.CredentialInvalidStatus)) {
       const errorCode = pipe(
         StatusAttestationError.decode(e.reason),
         O.fromEither,
