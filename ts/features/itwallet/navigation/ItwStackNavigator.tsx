@@ -4,7 +4,6 @@ import {
 } from "@react-navigation/stack";
 import { ComponentType } from "react";
 import { Platform } from "react-native";
-import { useIOSelector } from "../../../store/hooks";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
@@ -82,7 +81,7 @@ export const ItwStackNavigator = () => (
   </ItwEidIssuanceMachineProvider>
 );
 
-const InnerNavigator = () => {
+const InnerNavigator = memo(() => {
   const eidIssuanceMachineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialIssuanceMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
@@ -330,7 +329,7 @@ const InnerNavigator = () => {
       </Stack.Group>
     </Stack.Navigator>
   );
-};
+});
 
 /**
  * A higher-order component which renders the screen only if IT Wallet is enabled.
