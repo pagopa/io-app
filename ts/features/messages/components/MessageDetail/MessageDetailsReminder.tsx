@@ -1,12 +1,11 @@
 import { Alert, VSpacer } from "@pagopa/io-app-design-system";
-import { UIMessageId } from "../../types";
 import { localeDateFormat } from "../../../../utils/locale";
 import I18n from "../../../../i18n";
 import { MessageDetailsReminderExpiring } from "./MessageDetailsReminderExpiring";
 
 export type MessageDetailsReminderProps = {
   dueDate?: Date;
-  messageId: UIMessageId;
+  messageId: string;
   title: string;
 };
 

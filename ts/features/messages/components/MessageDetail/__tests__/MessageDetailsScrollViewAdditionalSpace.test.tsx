@@ -3,7 +3,6 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessageDetailsScrollViewAdditionalSpace } from "../MessageDetailsScrollViewAdditionalSpace";
-import { UIMessageId } from "../../../types";
 import * as payments from "../../../store/reducers/payments";
 
 describe("MessageDetailsScrollViewAdditionalSpace", () => {
@@ -58,7 +57,7 @@ describe("MessageDetailsScrollViewAdditionalSpace", () => {
 const renderComponent = (
   hasCTA1: boolean,
   hasCTA2: boolean,
-  messageId: UIMessageId = "01HRW5J2QYMH3FWAA5CYGXSC84" as UIMessageId
+  messageId: string = "01HRW5J2QYMH3FWAA5CYGXSC84"
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);

@@ -17,7 +17,6 @@ import {
   toSome
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
-import { UIMessageId } from "../../types";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 
 export type Download = {
@@ -31,16 +30,17 @@ export type DownloadError = {
 };
 
 type RequestedDownload = {
-  messageId: UIMessageId;
+  messageId: string;
   attachmentId: string;
 };
 
-export type Downloads = Record<
-  UIMessageId,
-  IndexedById<pot.Pot<Download, Error>> | undefined
-> & { requestedDownload?: RequestedDownload };
+export type Downloads = {
+  statusById: Record<string, IndexedById<pot.Pot<Download, Error>> | undefined>;
+} & { requestedDownload?: RequestedDownload };
 
-export const INITIAL_STATE: Downloads = {};
+export const INITIAL_STATE: Downloads = {
+  statusById: {}
+};
 
 /**
  * A reducer to store all downloads
@@ -53,10 +53,13 @@ export const downloadsReducer = (
     case getType(downloadAttachment.request):
       return {
         ...state,
-        [action.payload.messageId]: toLoading(
-          action.payload.attachment.id,
-          state[action.payload.messageId] ?? {}
-        ),
+        statusById: {
+          ...state.statusById,
+          [action.payload.messageId]: toLoading(
+            action.payload.attachment.id,
+            state.statusById[action.payload.messageId] ?? {}
+          )
+        },
         requestedDownload: {
           messageId: action.payload.messageId,
           attachmentId: action.payload.attachment.id
@@ -65,32 +68,42 @@ export const downloadsReducer = (
     case getType(downloadAttachment.success):
       return {
         ...state,
-        [action.payload.messageId]: toSome(
-          action.payload.attachment.id,
-          state[action.payload.messageId] ?? {},
-          {
-            attachment: action.payload.attachment,
-            path: action.payload.path
-          }
-        )
+        statusById: {
+          ...state.statusById,
+          [action.payload.messageId]: toSome(
+            action.payload.attachment.id,
+            state.statusById[action.payload.messageId] ?? {},
+            {
+              attachment: action.payload.attachment,
+              path: action.payload.path
+            }
+          )
+        }
       };
     case getType(downloadAttachment.failure):
       return {
         ...state,
-        [action.payload.messageId]: toError(
-          action.payload.attachment.id,
-          state[action.payload.messageId] ?? {},
-          action.payload.error
-        )
+        statusById: {
+          ...state.statusById,
+          [action.payload.messageId]: toError(
+            action.payload.attachment.id,
+            state.statusById[action.payload.messageId] ?? {},
+            action.payload.error
+          )
+        }
       };
     case getType(downloadAttachment.cancel):
       // the download was cancelled, so it goes back to none
       return {
         ...state,
-        [action.payload.messageId]: toNone(
-          action.payload.attachment.id,
-          state[action.payload.messageId] ?? {}
-        ),
+        statusById: {
+          ...state.statusById,
+          [action.payload.messageId]: toNone(
+            action.payload.attachment.id,
+            state.statusById[action.payload.messageId] ?? {}
+          )
+        },
+
         requestedDownload: requestDownloadAfterCancelledAction(
           state,
           action.payload
@@ -99,10 +112,13 @@ export const downloadsReducer = (
     case getType(removeCachedAttachment):
       return {
         ...state,
-        [action.payload.messageId]: toNone(
-          action.payload.attachment.id,
-          state[action.payload.messageId] ?? {}
-        )
+        statusById: {
+          ...state.statusById,
+          [action.payload.messageId]: toNone(
+            action.payload.attachment.id,
+            state.statusById[action.payload.messageId] ?? {}
+          )
+        }
       };
     case getType(clearRequestedAttachmentDownload):
       return {
@@ -115,7 +131,7 @@ export const downloadsReducer = (
 
 export const isRequestedAttachmentDownloadSelector = (
   state: GlobalState,
-  messageId: UIMessageId,
+  messageId: string,
   attachmentId: string
 ) =>
   isRequestedDownloadMatch(
@@ -126,11 +142,11 @@ export const isRequestedAttachmentDownloadSelector = (
 
 export const isDownloadingMessageAttachmentSelector = (
   state: GlobalState,
-  messageId: UIMessageId,
+  messageId: string,
   attachmentId: string
 ) =>
   pipe(
-    state.entities.messages.downloads[messageId],
+    state.entities.messages.downloads.statusById[messageId],
     O.fromNullable,
     O.chainNullableK(messageDownloads => messageDownloads[attachmentId]),
     O.getOrElseW(() => pot.none),
@@ -139,11 +155,11 @@ export const isDownloadingMessageAttachmentSelector = (
 
 export const hasErrorOccourredOnRequestedDownloadSelector = (
   state: GlobalState,
-  messageId: UIMessageId,
+  messageId: string,
   attachmentId: string
 ) =>
   pipe(
-    state.entities.messages.downloads[messageId],
+    state.entities.messages.downloads.statusById[messageId],
     O.fromNullable,
     O.chainNullableK(messageDownloads => messageDownloads[attachmentId]),
     O.filter(() =>
@@ -155,11 +171,11 @@ export const hasErrorOccourredOnRequestedDownloadSelector = (
 
 export const downloadedMessageAttachmentSelector = (
   state: GlobalState,
-  messageId: UIMessageId,
+  messageId: string,
   attachmentId: string
 ) =>
   pipe(
-    state.entities.messages.downloads[messageId],
+    state.entities.messages.downloads.statusById[messageId],
     O.fromNullable,
     O.chainNullableK(messageDownloads => messageDownloads[attachmentId]),
     O.map(pot.toOption),
@@ -169,7 +185,7 @@ export const downloadedMessageAttachmentSelector = (
 
 const isRequestedDownloadMatch = (
   requestedDownload: RequestedDownload | undefined,
-  messageId: UIMessageId,
+  messageId: string,
   attachmentId: string
 ) =>
   !!requestedDownload &&
