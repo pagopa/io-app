@@ -213,21 +213,15 @@ export const itwEidIssuanceMachine = setup({
             target: "WalletInstanceCreation"
           },
           {
-            guard: and([
-              "isReissuing",
-              not("hasValidWalletInstanceAttestation")
-            ]),
-            target: "WalletInstanceAttestationObtainment"
-          },
-          {
-            guard: "isReissuing",
-            target: "UserIdentification.Identification.L2"
-          },
-          {
             // When an integrity key tag exists but the wallet instance attestation is invalid,
             // we proceed to obtain a valid wallet instance attestation
             guard: not("hasValidWalletInstanceAttestation"),
             target: "WalletInstanceAttestationObtainment"
+          },
+          {
+            // When reissuing, if both integrity key tag and wallet instance attestation are valid,
+            guard: "isReissuing",
+            target: "UserIdentification.Identification.L2"
           },
           {
             // If both integrity key tag and wallet instance attestation are valid,
