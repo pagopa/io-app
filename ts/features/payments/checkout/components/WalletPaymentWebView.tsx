@@ -9,7 +9,7 @@ import { PaymentStartWebViewPayload } from "../store/actions/orchestration";
 const originSchemasWhiteList = [
   "https://*",
   `${WALLET_WEBVIEW_OUTCOME_SCHEMA}://*`,
-  "intent://",
+  "intent://*",
   "about:*",
   ...(isDevEnv ? ["http://*"] : [])
 ];
