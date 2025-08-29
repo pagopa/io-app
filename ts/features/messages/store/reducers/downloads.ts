@@ -36,7 +36,8 @@ type RequestedDownload = {
 
 export type Downloads = {
   statusById: Record<string, IndexedById<pot.Pot<Download, Error>> | undefined>;
-} & { requestedDownload?: RequestedDownload };
+  requestedDownload?: RequestedDownload;
+};
 
 export const INITIAL_STATE: Downloads = {
   statusById: {}
