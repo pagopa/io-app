@@ -27,9 +27,6 @@ export const createCredentialIssuanceGuardsImplementation = (
   isStatusError: ({ context }: { context: Context }) =>
     context.failure?.type === CredentialIssuanceFailureType.INVALID_STATUS,
 
-  isSkipNavigation: ({ event }: { event: CredentialIssuanceEvents }) =>
-    event.type === "select-credential" && event.skipNavigation === true,
-
   isEidExpired: () => {
     const eidStatus = itwCredentialsEidStatusSelector(store.getState());
 

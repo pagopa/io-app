@@ -1,7 +1,7 @@
 import {
-  createCryptoContextFor,
-  Credential
-} from "@pagopa/io-react-native-wallet";
+  Credential,
+  createCryptoContextFor
+} from "@pagopa/io-react-native-wallet-v2";
 import { isAfter } from "date-fns";
 import * as t from "io-ts";
 import { CredentialFormat, StoredCredential } from "./itwTypesUtils";

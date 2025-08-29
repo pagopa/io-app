@@ -1,6 +1,7 @@
 import { createActor } from "xstate";
 import { createStore } from "redux";
-import { Credential, Errors, Trust } from "@pagopa/io-react-native-wallet";
+import { Credential, Errors } from "@pagopa/io-react-native-wallet";
+import { constTrue } from "fp-ts/lib/function";
 import { RemoteFailure, RemoteFailureType } from "../../machine/failure";
 import { itwRemoteMachine } from "../../machine/machine";
 import { ItwRemoteMachineContext } from "../../machine/provider";
@@ -10,6 +11,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { ITW_REMOTE_ROUTES } from "../../navigation/routes";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import * as preferencesSelectors from "../../../../common/store/selectors/preferences";
 
 describe("ItwRemoteFailureScreen", () => {
   test.each<RemoteFailure>([
@@ -49,6 +51,9 @@ describe("ItwRemoteFailureScreen", () => {
       reason: new Error() as Trust.Errors.FederationError
     }
   ])("should render failure screen for $type", failure => {
+    jest
+      .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+      .mockImplementation(constTrue);
     expect(renderComponent(failure)).toMatchSnapshot();
   });
 });

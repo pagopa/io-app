@@ -7,7 +7,10 @@ import { assert } from "../../../../utils/assert";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { getCredentialStatusAttestation } from "../../common/utils/itwCredentialStatusAttestationUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import {
+  CredentialFormat,
+  StoredCredential
+} from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { Env } from "../../common/utils/environment";
@@ -32,7 +35,9 @@ export type ObtainCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.obtainCredential>
 >;
 
-export type ObtainStatusAttestationActorInput = Pick<Context, "credentials">;
+export type ObtainStatusAttestationActorInput = Pick<Context, "credentials"> & {
+  isNewIssuanceFlowEnabled?: boolean;
+};
 
 /**
  * Creates the actors for the eid issuance machine
@@ -149,7 +154,7 @@ export const createCredentialIssuanceActorsImplementation = (
       credential: StoredCredential
     ): Promise<StoredCredential> => {
       // Status assertions for mDoc credentials are not supported yet
-      if (credential.format === "mso_mdoc") {
+      if (credential.format === CredentialFormat.MDOC) {
         return credential;
       }
 

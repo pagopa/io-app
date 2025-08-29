@@ -168,7 +168,6 @@ describe("itwCredentialIssuanceMachine", () => {
       isDeferredIssuance,
       hasValidWalletInstanceAttestation,
       isStatusError,
-      isSkipNavigation,
       isEidExpired
     }
   });
@@ -214,7 +213,7 @@ describe("itwCredentialIssuanceMachine", () => {
     actor.send({
       type: "select-credential",
       credentialType: "MDL",
-      skipNavigation: true
+      mode: "issuance"
     });
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
@@ -364,7 +363,7 @@ describe("itwCredentialIssuanceMachine", () => {
     actor.send({
       type: "select-credential",
       credentialType: "MDL",
-      skipNavigation: true
+      mode: "issuance"
     });
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
@@ -452,7 +451,7 @@ describe("itwCredentialIssuanceMachine", () => {
     actor.send({
       type: "select-credential",
       credentialType: "MDL",
-      skipNavigation: true
+      mode: "issuance"
     });
 
     await waitFor(() =>
@@ -526,7 +525,7 @@ describe("itwCredentialIssuanceMachine", () => {
     actor.send({
       type: "select-credential",
       credentialType: "MDL",
-      skipNavigation: true
+      mode: "issuance"
     });
 
     expect(actor.getSnapshot().value).toStrictEqual(
@@ -640,7 +639,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(closeIssuance).toHaveBeenCalledTimes(1);
   });
 
-  it("Should navigate to the next screen if skipNavigation is omitted", async () => {
+  it("Should navigate to the next screen if mode is 'reissaunce'", async () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -667,7 +666,8 @@ describe("itwCredentialIssuanceMachine", () => {
 
     actor.send({
       type: "select-credential",
-      credentialType: "MDL"
+      credentialType: "MDL",
+      mode: "reissuance"
     });
 
     await waitFor(() =>
