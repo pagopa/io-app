@@ -9,7 +9,11 @@ import {
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
-import { RequestObject, StoredCredential } from "./itwTypesUtils";
+import {
+  CredentialFormat,
+  RequestObject,
+  StoredCredential
+} from "./itwTypesUtils";
 import { Env } from "./environment";
 import { enrichErrorWithMetadata } from "./itwFailureUtils";
 
@@ -221,7 +225,7 @@ export const obtainCredential = async ({
  * @param isPidL3 - A boolean flag indicating whether the PID level is L3
  * @returns An array of credential configuration IDs (strings) associated with the given credential type.
  *   - If `isPidL3` is true, all configurations are considered.
- *   - Otherwise, only configurations with `format === "dc+sd-jwt"` are considered.
+ *   - Otherwise, only configurations with `format === CredentialFormat.SD_JWT` are considered.
  *   - Returns an empty array if no configuration matches.
  */
 const getCredentialConfigurationIds = (
@@ -253,7 +257,7 @@ const getCredentialConfigurationIds = (
  *   - `value` is the corresponding configuration object
  *
  * If `isPidL3` is true, all configurations are returned.
- * Otherwise, only the configurations with `format === "dc+sd-jwt"` are returned.
+ * Otherwise, only the configurations with `format === CredentialFormat.SD_JWT` are returned.
  */
 const getConfigByPIDLevel = (
   credentialConfigurationSupported: CredentialConfigurationSupported,
@@ -263,5 +267,5 @@ const getConfigByPIDLevel = (
 
   return isPidL3
     ? config
-    : config.filter(([, { format }]) => format === "dc+sd-jwt");
+    : config.filter(([, { format }]) => format === CredentialFormat.SD_JWT);
 };
