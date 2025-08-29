@@ -12,34 +12,34 @@ import { BonusStatus } from "../../../../components/BonusCard/type";
 import { format } from "../../../../utils/dates";
 
 type InitiativeProps = {
-  now: Date;
   initiative: InitiativeDTO;
 };
 
 export const getInitiativeStatus = ({
-  initiative,
-  now
+  initiative
 }: InitiativeProps): BonusStatus => {
   if (initiative.status === StatusEnum.UNSUBSCRIBED) {
     return "REMOVED";
   }
 
-  if (now > initiative.endDate) {
-    return "EXPIRED";
-  }
-
-  const next7Days = new Date(new Date(now).setDate(now.getDate() + 7));
-  if (next7Days > initiative.endDate) {
-    return "EXPIRING";
+  switch (initiative.voucherStatus) {
+    case "USED":
+      return "USED";
+    case "EXPIRED":
+      return "EXPIRED";
+    case "ACTIVE":
+      return "ACTIVE";
+    case "EXPIRING":
+      return "EXPIRING";
   }
 
   return "ACTIVE";
 };
 
-export function IdPayCardStatus({ now, initiative }: InitiativeProps) {
+export function IdPayCardStatus({ initiative }: InitiativeProps) {
   const { themeType } = useIOThemeContext();
   const isDark = themeType === "dark";
-  switch (getInitiativeStatus({ now, initiative })) {
+  switch (getInitiativeStatus({ initiative })) {
     case "ACTIVE":
       return (
         <LabelMini
@@ -48,7 +48,7 @@ export function IdPayCardStatus({ now, initiative }: InitiativeProps) {
           testID="idpay-card-status-active"
         >
           {I18n.t("bonusCard.validUntil", {
-            endDate: format(initiative.endDate, "DD/MM/YY")
+            endDate: format(initiative.voucherEndDate, "DD/MM/YY")
           })}
         </LabelMini>
       );
@@ -58,7 +58,7 @@ export function IdPayCardStatus({ now, initiative }: InitiativeProps) {
           testID="idpay-card-status-expiring"
           variant="warning"
           text={I18n.t("bonusCard.expiring", {
-            endDate: format(initiative.endDate, "DD/MM/YY")
+            endDate: format(initiative.voucherEndDate, "DD/MM/YY")
           })}
         />
       );
@@ -68,7 +68,7 @@ export function IdPayCardStatus({ now, initiative }: InitiativeProps) {
           testID="idpay-card-status-expired"
           variant="error"
           text={I18n.t("bonusCard.expired", {
-            endDate: format(initiative.endDate, "DD/MM/YY")
+            endDate: format(initiative.voucherEndDate, "DD/MM/YY")
           })}
         />
       );
@@ -86,6 +86,14 @@ export function IdPayCardStatus({ now, initiative }: InitiativeProps) {
           testID="idpay-card-status-removed"
           variant="error"
           text={I18n.t("bonusCard.removed")}
+        />
+      );
+    case "USED":
+      return (
+        <Tag
+          testID="idpay-card-status-used"
+          variant="success"
+          text={I18n.t("bonusCard.used")}
         />
       );
   }
