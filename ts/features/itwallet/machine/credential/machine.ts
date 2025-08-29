@@ -69,8 +69,7 @@ export const itwCredentialIssuanceMachine = setup({
     isDeferredIssuance: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
     isStatusError: notImplemented,
-    isEidExpired: notImplemented,
-    isSkipNavigation: notImplemented
+    isEidExpired: notImplemented
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
@@ -83,16 +82,33 @@ export const itwCredentialIssuanceMachine = setup({
         "Waits for a credential selection in order to proceed with the issuance",
       tags: [ItwTags.Loading],
       on: {
-        "select-credential": [
-          {
-            actions: assign(({ event }) => ({
-              credentialType: event.credentialType,
-              isAsyncContinuation: event.asyncContinuation
-            })),
-            target: "TrustFederationVerification"
-          }
-        ]
+        "select-credential": {
+          target: "EvaluateFlow",
+          actions: assign(({ event }) => ({
+            credentialType: event.credentialType,
+            mode: event.mode,
+            isAsyncContinuation: event.isAsyncContinuation ?? false // TODO to be removed in [SIW-2839]
+          }))
+        }
       }
+    },
+    EvaluateFlow: {
+      always: [
+        {
+          guard: "isEidExpired",
+          actions: "navigateToEidVerificationExpiredScreen",
+          target: "Idle"
+        },
+        {
+          guard: ({ context }) => context.mode === "issuance",
+          target: "TrustFederationVerification",
+          actions: ["trackStartAddCredential"]
+        },
+        {
+          target: "TrustFederationVerification",
+          actions: ["trackStartAddCredential", "navigateToTrustIssuerScreen"]
+        }
+      ]
     },
     TrustFederationVerification: {
       description:
@@ -103,28 +119,9 @@ export const itwCredentialIssuanceMachine = setup({
           isNewIssuanceFlowEnabled: context.isWhiteListed
         }),
         src: "verifyTrustFederation",
-        onDone: [
-          {
-            guard: "isEidExpired",
-            actions: "navigateToEidVerificationExpiredScreen",
-            target: "Idle"
-          },
-          {
-            guard: "isSkipNavigation",
-            target: "CheckingWalletInstanceAttestation",
-            actions: ["trackStartAddCredential"]
-          },
-          {
-            target: "CheckingWalletInstanceAttestation",
-            actions: ["navigateToTrustIssuerScreen", "trackStartAddCredential"]
-          }
-        ],
-        onError: [
-          {
-            actions: "setFailure",
-            target: "#itwCredentialIssuanceMachine.Failure"
-          }
-        ]
+        onDone: {
+          target: "CheckingWalletInstanceAttestation"
+        }
       }
     },
     CheckingWalletInstanceAttestation: {
@@ -206,6 +203,7 @@ export const itwCredentialIssuanceMachine = setup({
       always: {
         // If we are in the async continuation flow means we are already showing the trust issuer screen
         // but on a different route. We need to avoid a navigation to show a "double" navigation animation.
+        // TODO to be removed in [SIW-2839]
         guard: ({ context }) => !context.isAsyncContinuation,
         actions: "navigateToTrustIssuerScreen"
       },
@@ -236,9 +234,12 @@ export const itwCredentialIssuanceMachine = setup({
               requestedCredential: context.requestedCredential,
               issuerConf: context.issuerConf,
               isNewIssuanceFlowEnabled: context.isWhiteListed,
-              // if the user has access to the L3 features we need to pass the operationType
-              // header with the value "reissuing"
-              operationType: context.isWhiteListed ? "reissuing" : undefined
+              // If we are upgrading the credential to the new format or the user has access to the
+              // L3 features we need to pass the operationType header with the value "reissuing"
+              operationType:
+                context.mode === "upgrade" || context.isWhiteListed
+                  ? "reissuing"
+                  : undefined
             }),
             onDone: [
               {
