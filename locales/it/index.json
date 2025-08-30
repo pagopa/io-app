@@ -5360,7 +5360,7 @@
       },
       "upgrade": {
         "banner": {
-          "title": "IT-Wallet per\ni tuoi documenti",
+          "title": "IT-Wallet per i tuoi documenti",
           "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
           "action": "Ottieni IT-Wallet"
         }
@@ -6105,6 +6105,15 @@
         "input": "Codice sconto",
         "button": "Continua"
       }
+    },
+    "support": {
+      "errorCode": "Codice errore",
+      "serviceId": "ID servizio",
+      "initiativeId": "ID iniziativa",
+      "supportTitle": "Contatta l'assistenza",
+      "chat": "Chiedi aiuto in chat",
+      "additionalDataTitle": "Dati aggiuntivi",
+      "copyAll": "Copia tutti"
     }
   },
   "barcodeScan": {

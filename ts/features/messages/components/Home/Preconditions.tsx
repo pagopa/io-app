@@ -21,7 +21,6 @@ import {
 } from "../../store/actions/preconditions";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { trackDisclaimerOpened } from "../../analytics";
-import { UIMessageId } from "../../types";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PreconditionsTitle } from "./PreconditionsTitle";
 import { PreconditionsContent } from "./PreconditionsContent";
@@ -36,7 +35,7 @@ export const Preconditions = () => {
     dispatch(idlePreconditionStatusAction(toIdlePayload()));
   }, [dispatch]);
   const onNavigationCallback = useCallback(
-    (messageId: UIMessageId) => {
+    (messageId: string) => {
       navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
         params: {

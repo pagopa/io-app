@@ -2,7 +2,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
-import { UIMessageId } from "../../../messages/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   isError,
@@ -17,12 +16,12 @@ import { PaymentError } from "../../../messages/store/actions";
 
 export const paymentsButtonStateSelector = (
   state: GlobalState,
-  messageId: UIMessageId,
+  messageId: string,
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined,
   maxVisiblePaymentCount: number
 ) =>
   pipe(
-    state.entities.messages.payments[messageId],
+    state.entities.messages.payments.paymentStatusListById[messageId],
     O.fromNullable,
     computeUpdatedPaymentCount(payments, maxVisiblePaymentCount),
     buttonStateFromUpdatedPaymentCount(payments, maxVisiblePaymentCount)

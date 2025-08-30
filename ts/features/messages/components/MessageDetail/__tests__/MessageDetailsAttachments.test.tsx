@@ -1,7 +1,6 @@
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { UIMessageId } from "../../../types";
 import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { loadThirdPartyMessage } from "../../../store/actions";
@@ -12,54 +11,54 @@ import { ATTACHMENT_CATEGORY } from "../../../types/attachmentCategory";
 
 describe("MessageDetailsAttachments", () => {
   it("Should match snapshot with no attachments", () => {
-    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY" as UIMessageId;
+    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY";
     const component = renderScreen(messageId);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot with no attachments and disabled UI", () => {
-    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY" as UIMessageId;
+    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY";
     const component = renderScreen(messageId, 0, true);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot with no attachments, where F24 have been removed and disabled UI", () => {
-    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY" as UIMessageId;
+    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY";
     const component = renderScreen(messageId, 0, true, true);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot with 1 attachment", () => {
-    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY" as UIMessageId;
+    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY";
     const component = renderScreen(messageId, 1);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot with 1 attachment that is disabled", () => {
-    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY" as UIMessageId;
+    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY";
     const component = renderScreen(messageId, 1, true);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot with 1 attachment that is disabled and F24 have been removed", () => {
-    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY" as UIMessageId;
+    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY";
     const component = renderScreen(messageId, 1, true, true);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot with 10 attachments", () => {
-    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY" as UIMessageId;
+    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY";
     const component = renderScreen(messageId, 10);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot with 10 attachments that are disabled", () => {
-    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY" as UIMessageId;
+    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY";
     const component = renderScreen(messageId, 10, true);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot with 5 attachments that are disabled and F24 have been removed", () => {
-    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY" as UIMessageId;
+    const messageId = "01HNWYRT55GXGPXR16BW2MSBVY";
     const component = renderScreen(messageId, 10, true, true);
     expect(component.toJSON()).toMatchSnapshot();
   });
 });
 
 const renderScreen = (
-  messageId: UIMessageId,
+  messageId: string,
   attachmentCount: number = 0,
   disabled: boolean = false,
   isPN: boolean = false
