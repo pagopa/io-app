@@ -26,19 +26,40 @@ export const itwCredentialIssuanceMachine = setup({
   },
   actions: {
     onInit: notImplemented,
+    handleSessionExpired: notImplemented,
+
+    /**
+     * Context manipulation actions
+     */
+
+    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
+
+    /**
+     * Navigation actions
+     */
+
     navigateToTrustIssuerScreen: notImplemented,
     navigateToCredentialPreviewScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToEidVerificationExpiredScreen: notImplemented,
     closeIssuance: notImplemented,
+
+    /**
+     * Store actions
+     */
+
     storeWalletInstanceAttestation: notImplemented,
     storeCredential: notImplemented,
     flagCredentialAsRequested: notImplemented,
     unflagCredentialAsRequested: notImplemented,
-    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-    handleSessionExpired: notImplemented,
+
+    /**
+     * Analytics actions
+     */
+
     trackStartAddCredential: notImplemented,
+    trackStartCredentialReissuing: notImplemented,
     trackAddCredential: notImplemented,
     trackCredentialIssuingDataShare: notImplemented,
     trackCredentialIssuingDataShareAccepted: notImplemented
@@ -103,6 +124,14 @@ export const itwCredentialIssuanceMachine = setup({
           guard: ({ context }) => context.mode === "issuance",
           target: "TrustFederationVerification",
           actions: ["trackStartAddCredential"]
+        },
+        {
+          guard: ({ context }) => context.mode === "upgrade",
+          target: "TrustFederationVerification",
+          actions: [
+            "trackStartCredentialReissuing",
+            "navigateToTrustIssuerScreen"
+          ]
         },
         {
           target: "TrustFederationVerification",
