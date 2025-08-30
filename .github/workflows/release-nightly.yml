@@ -1,13 +1,68 @@
 name: Nightly release new app version
 on:
   schedule:
-    - cron: '59 21 * * 1-5'
+    - cron: '59 21 * * *'
   workflow_dispatch:
+concurrency:
+  group: nightly-release-master
+  cancel-in-progress: false
 jobs:
+  detect-changes:
+    name: Detect changes since last tag
+    runs-on: ubuntu-latest
+    outputs:
+      has_changes: ${{ steps.detect.outputs.HAS_CHANGES }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        with:
+          fetch-depth: 0
+      - name: Get changes since last tag
+        id: detect
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # If manually dispatched, force run
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
+            echo "Manual dispatch detected: forcing HAS_CHANGES=true"
+            echo "HAS_CHANGES=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          BASE_REF="origin/${BRANCH_NAME}"
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+
+          echo "Last tag: ${LAST_TAG}"
+
+          if [ -z "${LAST_TAG}" ]; then
+            RANGE="${BASE_REF}"
+          else
+            RANGE="${LAST_TAG}..${BASE_REF}"
+          fi
+
+          echo "Range for commits: ${RANGE}"
+
+          # Count commits count since last tag, excluding merges and commits by bots
+          COMMITS_COUNT=$(git log --no-merges --pretty=format:'%H%x09%ae%x09%an' ${RANGE} \
+            | grep -Ev 'github-actions\[bot\]|actions@github.com' \
+            | wc -l | tr -d ' ')
+
+          echo "Number of commits since last tag: ${COMMITS_COUNT}"
+
+          if [ "${COMMITS_COUNT}" -gt 0 ]; then
+            echo "HAS_CHANGES=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "HAS_CHANGES=false" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          BRANCH_NAME: ${{ github.ref_name }}
   run-static-checks:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has_changes == 'true'
     uses: ./.github/workflows/staticcheck.yaml
   bump-app-version:
-    needs: run-static-checks
+    needs: [detect-changes, run-static-checks]
     runs-on: ubuntu-latest
     environment: prod
     outputs:
@@ -104,7 +159,7 @@ jobs:
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
           ENCODED_IO_APP_RELEASE_KEYSTORE: ${{secrets.ENCODED_IO_APP_RELEASE_KEYSTORE}}
           ENCODED_IO_APP_SENTRY_PROPERTIES: ${{secrets.ENCODED_IO_APP_SENTRY_PROPERTIES}}
-          IO_APP_RELEASE_STORE_FILE : ${{secrets.IO_APP_RELEASE_STORE_FILE}}
+          IO_APP_RELEASE_STORE_FILE: ${{secrets.IO_APP_RELEASE_STORE_FILE}}
           IO_APP_RELEASE_STORE_PASSWORD: ${{secrets.IO_APP_RELEASE_STORE_PASSWORD}}
           IO_APP_RELEASE_KEY_ALIAS: ${{secrets.IO_APP_RELEASE_KEY_ALIAS}}
           IO_APP_RELEASE_KEY_PASSWORD: ${{secrets.IO_APP_RELEASE_KEY_PASSWORD}}
