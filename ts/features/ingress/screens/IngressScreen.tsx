@@ -2,7 +2,7 @@
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { AccessibilityInfo, View } from "react-native";
 import I18n from "../../../i18n";
@@ -43,6 +43,7 @@ export const IngressScreen = () => {
 
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [contentTitle, setContentTitle] = useState(I18n.t("startup.title"));
+  const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
     // Since the screen is shown for a very short time,
@@ -66,6 +67,7 @@ export const IngressScreen = () => {
     timeouts.push(
       setTimeout(() => {
         setContentTitle(I18n.t("startup.title2"));
+        setShowBanner(true);
         timeouts.shift();
       }, TIMEOUT_CHANGE_LABEL)
     );
@@ -83,14 +85,9 @@ export const IngressScreen = () => {
     };
   }, [dispatch]);
 
-  useEffect(() => {
-    const visualizeOfflineWallet =
-      isConnected === false && isOfflineAccessAvailable;
-
-    if (visualizeOfflineWallet) {
-      // This dispatch could be placed inside `onSuccess`,
-      // but executing it here ensures the startup saga stops immediately.
-      dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE));
+  const navgateOnOfflineMiniApp = useCallback(
+    (offlineReason: OfflineAccessReasonEnum) => {
+      dispatch(setOfflineAccessReason(offlineReason));
       dispatch(
         identificationRequest(false, false, undefined, undefined, {
           onSuccess: () => {
@@ -101,8 +98,23 @@ export const IngressScreen = () => {
           }
         })
       );
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    const visualizeOfflineWallet =
+      isConnected === false && isOfflineAccessAvailable;
+
+    if (visualizeOfflineWallet) {
+      navgateOnOfflineMiniApp(OfflineAccessReasonEnum.DEVICE_OFFLINE);
     }
-  }, [dispatch, isConnected, isOfflineAccessAvailable]);
+  }, [
+    dispatch,
+    isConnected,
+    isOfflineAccessAvailable,
+    navgateOnOfflineMiniApp
+  ]);
 
   if (isConnected === false && !isOfflineAccessAvailable) {
     return <IngressScreenNoInternetConnection />;
@@ -123,6 +135,11 @@ export const IngressScreen = () => {
         testID="ingress-screen-loader-id"
         contentTitle={contentTitle}
         animatedPictogramSource="waiting"
+        banner={{
+          showBanner: isOfflineAccessAvailable && showBanner,
+          onPress: () =>
+            navgateOnOfflineMiniApp(OfflineAccessReasonEnum.TIMEOUT)
+        }}
       />
     </>
   );

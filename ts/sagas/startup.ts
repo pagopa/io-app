@@ -51,7 +51,10 @@ import {
   isDeviceOfflineWithWalletSaga,
   watchSessionRefreshInOfflineSaga
 } from "../features/ingress/saga";
-import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
+import {
+  isBlockingScreenSelector,
+  offlineAccessReasonSelector
+} from "../features/ingress/store/selectors";
 import {
   watchItwOfflineSaga,
   watchItwSaga
@@ -133,6 +136,7 @@ import { getPin } from "../utils/keychain";
 import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
 import ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -251,6 +255,8 @@ export function* initializeApplicationSaga(
   }
   // #LOLLIPOP_CHECK_BLOCK1_END
 
+  // OFFLINE WALLET MINI-APP CHECKS
+
   // Start watching for ITW sagas that do not require internet connection or a valid session
   yield* fork(watchItwOfflineSaga);
 
@@ -265,6 +271,12 @@ export function* initializeApplicationSaga(
    */
   const isDeviceOfflineWithWallet = yield* call(isDeviceOfflineWithWalletSaga);
   if (isDeviceOfflineWithWallet) {
+    return;
+  }
+
+  const offlineAccessReason = yield* select(offlineAccessReasonSelector);
+
+  if (offlineAccessReason === OfflineAccessReasonEnum.TIMEOUT) {
     return;
   }
 
