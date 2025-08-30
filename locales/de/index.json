@@ -4124,6 +4124,15 @@
         "subtitle": "Attendi qualche secondo",
         "title": "Stiamo elaborando la tua richiesta"
       }
+    },
+    "support": {
+      "errorCode": "Fehlercode",
+      "serviceId": "Service ID",
+      "initiativeId": "ID Initiative",
+      "supportTitle": "Contatta l'assistenza",
+      "chat": "Chiedi aiuto in chat",
+      "additionalDataTitle": "Dati aggiuntivi",
+      "copyAll": "Copia tutti"
     }
   }
 }

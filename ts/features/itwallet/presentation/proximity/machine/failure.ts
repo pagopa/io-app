@@ -1,19 +1,14 @@
+import {
+  TimeoutError,
+  UntrustedRpError
+} from "../utils/itwProximityErrors.tsx";
 import { ProximityEvents } from "./events.ts";
-
-/**
- * Thrown when an operation times out
- */
-export class TimeoutError extends Error {
-  constructor(message?: string) {
-    super(message);
-    this.name = this.constructor.name;
-  }
-}
 
 export enum ProximityFailureType {
   RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
   TIMEOUT = "TIMEOUT",
-  UNEXPECTED = "UNEXPECTED"
+  UNEXPECTED = "UNEXPECTED",
+  UNTRUSTED_RP = "UNTRUSTED_RP"
 }
 
 /**
@@ -23,6 +18,7 @@ export type ReasonTypeByFailure = {
   [ProximityFailureType.RELYING_PARTY_GENERIC]: Error;
   [ProximityFailureType.TIMEOUT]: TimeoutError;
   [ProximityFailureType.UNEXPECTED]: unknown;
+  [ProximityFailureType.UNTRUSTED_RP]: UntrustedRpError;
 };
 
 type TypedProximityFailures = {
@@ -54,6 +50,13 @@ export const mapEventToFailure = (event: ProximityEvents): ProximityFailure => {
   if (error instanceof TimeoutError) {
     return {
       type: ProximityFailureType.TIMEOUT,
+      reason: error
+    };
+  }
+
+  if (error instanceof UntrustedRpError) {
+    return {
+      type: ProximityFailureType.UNTRUSTED_RP,
       reason: error
     };
   }

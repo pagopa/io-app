@@ -28,6 +28,8 @@ import {
   trackItwRemoteInvalidAuthResponseBottomSheet
 } from "../analytics";
 import { trackItwKoStateAction } from "../../../analytics";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
 
 const zendeskAssistanceErrors = [
   RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE,
@@ -50,6 +52,7 @@ export const ItwRemoteFailureScreen = () => {
 type ContentViewProps = { failure: RemoteFailure };
 
 const ContentView = ({ failure }: ContentViewProps) => {
+  const isWhitelisted = useIOSelector(itwIsL3EnabledSelector);
   const machineRef = ItwRemoteMachineContext.useActorRef();
   const navigation = useIONavigation();
   const i18nNs = "features.itWallet.presentation.remote"; // Common i18n namespace
@@ -117,17 +120,25 @@ const ContentView = ({ failure }: ContentViewProps) => {
             title: I18n.t(`${i18nNs}.walletInactiveScreen.title`),
             subtitle: I18n.t(`${i18nNs}.walletInactiveScreen.subtitle`),
             pictogram: "itWallet",
-            action: {
-              label: I18n.t(`${i18nNs}.walletInactiveScreen.primaryAction`),
-              onPress: () => {
-                trackItwKoStateAction({
-                  reason: failure,
-                  cta_category: "custom_1",
-                  cta_id: I18n.t(`${i18nNs}.walletInactiveScreen.primaryAction`)
-                });
-                machineRef.send({ type: "go-to-wallet-activation" });
-              }
-            },
+            action:
+              // Prevent non-whitelisted users from activating IT-Wallet
+              isWhitelisted
+                ? {
+                    label: I18n.t(
+                      `${i18nNs}.walletInactiveScreen.primaryAction`
+                    ),
+                    onPress: () => {
+                      trackItwKoStateAction({
+                        reason: failure,
+                        cta_category: "custom_1",
+                        cta_id: I18n.t(
+                          `${i18nNs}.walletInactiveScreen.primaryAction`
+                        )
+                      });
+                      machineRef.send({ type: "go-to-wallet-activation" });
+                    }
+                  }
+                : undefined,
             secondaryAction: {
               label: I18n.t(`${i18nNs}.walletInactiveScreen.secondaryAction`),
               onPress: () => {

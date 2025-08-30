@@ -58,7 +58,8 @@ describe("itwShouldDisplayOfflineAccessLimitWarning", () => {
         applicationChangeState("active")
       );
       const stateWithCounter = _.set(
-        globalState,
+        // TODO: [SIW-2892] Revise this test accordingly
+        _.set(globalState, "identification.progress", { kind: "identified" }),
         "features.itWallet.securePreferences",
         {
           offlineAccessCounter: counter

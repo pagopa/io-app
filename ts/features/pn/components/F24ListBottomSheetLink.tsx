@@ -3,14 +3,13 @@ import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdParty
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import I18n from "../../../i18n";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
-import { UIMessageId } from "../../messages/types";
 import { trackPNShowF24 } from "../analytics";
 import { useIODispatch } from "../../../store/hooks";
 import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
 
 type F24ListBottomSheetLinkProps = {
   f24List: ReadonlyArray<ThirdPartyAttachment>;
-  messageId: UIMessageId;
+  messageId: string;
 };
 
 export const F24ListBottomSheetLink = ({
