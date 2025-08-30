@@ -16,7 +16,7 @@ import itwCredentialsReducer, {
 } from "../../../credentials/store/reducers";
 import identificationReducer, {
   ItwIdentificationState
-} from "../../../identification/store/reducers";
+} from "../../../identification/common/store/reducers";
 import issuanceReducer, {
   ItwIssuanceState
 } from "../../../issuance/store/reducers";

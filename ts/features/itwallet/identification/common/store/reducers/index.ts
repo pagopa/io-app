@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../../store/actions/types";
+import { Action } from "../../../../../../store/actions/types";
 import { itwHasNfcFeature } from "../actions";
 
 export type ItwIdentificationState = {

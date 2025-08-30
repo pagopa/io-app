@@ -1,19 +1,19 @@
 import configureMockStore from "redux-mock-store";
 import { createActor } from "xstate";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as remoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
-import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { ITW_ROUTES } from "../../../navigation/routes";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import * as remoteConfigSelectors from "../../../../common/store/selectors/remoteConfig";
+import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
+import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
+import { ITW_ROUTES } from "../../../../navigation/routes";
 import {
   ItwL2IdentificationModeSelectionScreen,
   ItwL2IdentificationModeSelectionScreenProps
-} from "../ItwL2IdentificationModeSelectionScreen";
+} from "../../../common/screens/ItwL2IdentificationModeSelectionScreen";
 
-jest.mock("../../../../../config", () => ({
+jest.mock("../../../../../../config", () => ({
   itwEnabled: true
 }));
 

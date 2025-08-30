@@ -12,12 +12,12 @@ import {
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { useCallback } from "react";
 import { View } from "react-native";
-import IOMarkdown from "../../../../components/IOMarkdown";
-import { renderActionButtons } from "../../../../components/ui/IOScrollView";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import IOMarkdown from "../../../../../components/IOMarkdown";
+import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
+import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
+import I18n from "../../../../../i18n";
+import { useIOSelector } from "../../../../../store/hooks";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected,
@@ -26,11 +26,11 @@ import {
   trackItwGoToCieIDApp,
   trackItwUserWithoutL3Bottomsheet,
   trackItwUserWithoutL3Requirements
-} from "../../analytics";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
-import { useCieInfoBottomSheet } from "../cie/hooks/useCieInfoBottomSheet";
-import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
+} from "../../../analytics";
+import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { useCieInfoBottomSheet } from "../../cie/hooks/useCieInfoBottomSheet";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 
 export const ItwL3IdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
