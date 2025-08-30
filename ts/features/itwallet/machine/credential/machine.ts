@@ -264,30 +264,18 @@ export const itwCredentialIssuanceMachine = setup({
               issuerConf: context.issuerConf,
               isNewIssuanceFlowEnabled: context.isWhiteListed,
               // If we are upgrading the credential to the new format or the user has access to the
-              // L3 features we need to pass the operationType header witth the value "reissuing"
+              // L3 features we need to pass the operationType header with the value "reissuing"
               operationType:
                 context.mode === "upgrade" || context.isWhiteListed
                   ? "reissuing"
                   : undefined
             }),
-            onDone: [
-              {
-                // TODO: [SIW-2700]
-                // For now, the `ObtainingStatusAttestation` is skipped for L3 issuance
-                // until the status assertion flow is aligned with version 1.0
-                guard: ({ context }) => !!context.isWhiteListed,
-                target: "Completed",
-                actions: assign(({ event }) => ({
-                  credentials: event.output.credentials
-                }))
-              },
-              {
-                target: "ObtainingStatusAttestation",
-                actions: assign(({ event }) => ({
-                  credentials: event.output.credentials
-                }))
-              }
-            ],
+            onDone: {
+              target: "ObtainingStatusAttestation",
+              actions: assign(({ event }) => ({
+                credentials: event.output.credentials
+              }))
+            },
             onError: {
               target: "#itwCredentialIssuanceMachine.Failure",
               actions: "setFailure"
@@ -297,7 +285,10 @@ export const itwCredentialIssuanceMachine = setup({
         ObtainingStatusAttestation: {
           invoke: {
             src: "obtainStatusAttestation",
-            input: ({ context }) => ({ credentials: context.credentials }),
+            input: ({ context }) => ({
+              credentials: context.credentials,
+              isNewIssuanceFlowEnabled: context.isWhiteListed
+            }),
             onDone: {
               target: "Completed",
               actions: assign(({ event }) => ({

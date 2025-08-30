@@ -11,7 +11,7 @@ import { checkCurrentSession } from "../../../authentication/common/store/action
 import {
   trackItwDeactivated,
   trackSaveCredentialSuccess,
-  updateITWStatusAndIDProperties
+  updateITWStatusAndPIDProperties
 } from "../../analytics";
 import { itwSetAuthLevel } from "../../common/store/actions/preferences";
 import {
@@ -256,13 +256,18 @@ export const createEidIssuanceActionsImplementation = (
     toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
   },
 
-  trackWalletInstanceCreation: () => {
-    trackSaveCredentialSuccess("ITW_ID_V2");
-    updateITWStatusAndIDProperties(store.getState());
+  trackWalletInstanceCreation: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    const isL3 = context.identification?.level === "L3";
+    trackSaveCredentialSuccess(isL3 ? "ITW_PID" : "ITW_ID_V2");
+    updateITWStatusAndPIDProperties(store.getState());
   },
-
-  trackWalletInstanceRevocation: () => {
-    trackItwDeactivated(store.getState());
+  trackWalletInstanceRevocation: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    const isL3 = context.identification?.level === "L3";
+    trackItwDeactivated(store.getState(), isL3 ? "ITW_PID" : "ITW_ID_V2");
   },
 
   storeAuthLevel: ({
