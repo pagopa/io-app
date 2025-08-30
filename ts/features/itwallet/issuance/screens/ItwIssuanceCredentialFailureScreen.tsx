@@ -252,7 +252,7 @@ const getCredentialInvalidStatusDetails = (
         O.map(({ error }) => error)
       ),
       credentialConfigurationId: pipe(
-        O.fromNullable(reason?.credentialId),
+        O.fromNullable(reason?.metadata?.credentialId),
         O.alt(() => credentialType) // TODO: SIW-2530 Remove this line after fully migrating to the new APIs
       )
     })),

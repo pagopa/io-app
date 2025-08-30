@@ -3,7 +3,6 @@ import { ActionType } from "typesafe-actions";
 import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/backend/MessageCategoryPayment";
 import { TagEnum as SENDTagEnum } from "../../../../../../definitions/backend/MessageCategoryPN";
-import { UIMessageId } from "../../../types";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
@@ -45,7 +44,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
 
-const messageId = "01J1FJADCJ53SN4A11J3TBSKQE" as UIMessageId;
+const messageId = "01J1FJADCJ53SN4A11J3TBSKQE";
 const categoryTag = TagEnum.GENERIC;
 const errorReason = "An error reason";
 const content = {
