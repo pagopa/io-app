@@ -2,7 +2,7 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
-import { ComponentType } from "react";
+import { ComponentType, memo } from "react";
 import { Platform } from "react-native";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
@@ -65,6 +65,7 @@ import { ItwProximityFailureScreen } from "../presentation/proximity/screens/Itw
 import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximity/screens/ItwProximitySendDocumentsResponseScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
+import { useIOSelector } from "../../../store/hooks";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
