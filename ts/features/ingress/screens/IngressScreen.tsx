@@ -1,8 +1,7 @@
-/* eslint-disable functional/immutable-data */
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { AccessibilityInfo, View } from "react-native";
 import I18n from "../../../i18n";
@@ -44,6 +43,22 @@ export const IngressScreen = () => {
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [contentTitle, setContentTitle] = useState(I18n.t("startup.title"));
 
+  const showOfflineWallet = useCallback(() => {
+    // This dispatch could be placed inside `onSuccess`,
+    // but executing it here ensures the startup saga stops immediately.
+    dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE));
+    dispatch(
+      identificationRequest(false, false, undefined, undefined, {
+        onSuccess: () => {
+          // This dispatch mounts the new offline navigator.
+          // It must be initialized **after** the user completes
+          // biometric authentication to prevent graphical glitches.
+          dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
+        }
+      })
+    );
+  }, [dispatch]);
+
   useEffect(() => {
     // Since the screen is shown for a very short time,
     // we prefer to announce the content to the screen reader,
@@ -61,48 +76,34 @@ export const IngressScreen = () => {
   }, [isMixpanelInitialized, isMixpanelEnabled]);
 
   useEffect(() => {
-    const timeouts: Array<number> = [];
+    const timeoutChangeLabel = setTimeout(() => {
+      setContentTitle(I18n.t("startup.title2"));
+    }, TIMEOUT_CHANGE_LABEL);
 
-    timeouts.push(
-      setTimeout(() => {
-        setContentTitle(I18n.t("startup.title2"));
-        timeouts.shift();
-      }, TIMEOUT_CHANGE_LABEL)
-    );
-
-    timeouts.push(
-      setTimeout(() => {
+    const timeoutBlockingScreen = setTimeout(() => {
+      if (isOfflineAccessAvailable) {
+        // Avoid to show the blocking screen if offline access is available
+        showOfflineWallet();
+      } else {
         setShowBlockingScreen(true);
         dispatch(setIsBlockingScreen());
-        timeouts.shift();
-      }, TIMEOUT_BLOCKING_SCREEN)
-    );
+      }
+    }, TIMEOUT_BLOCKING_SCREEN);
 
     return () => {
-      timeouts?.forEach(clearTimeout);
+      clearTimeout(timeoutChangeLabel);
+      clearTimeout(timeoutBlockingScreen);
     };
-  }, [dispatch]);
+  }, [dispatch, showOfflineWallet, isOfflineAccessAvailable]);
 
   useEffect(() => {
     const visualizeOfflineWallet =
       isConnected === false && isOfflineAccessAvailable;
 
     if (visualizeOfflineWallet) {
-      // This dispatch could be placed inside `onSuccess`,
-      // but executing it here ensures the startup saga stops immediately.
-      dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE));
-      dispatch(
-        identificationRequest(false, false, undefined, undefined, {
-          onSuccess: () => {
-            // This dispatch mounts the new offline navigator.
-            // It must be initialized **after** the user completes
-            // biometric authentication to prevent graphical glitches.
-            dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
-          }
-        })
-      );
+      showOfflineWallet();
     }
-  }, [dispatch, isConnected, isOfflineAccessAvailable]);
+  }, [dispatch, isConnected, isOfflineAccessAvailable, showOfflineWallet]);
 
   if (isConnected === false && !isOfflineAccessAvailable) {
     return <IngressScreenNoInternetConnection />;
