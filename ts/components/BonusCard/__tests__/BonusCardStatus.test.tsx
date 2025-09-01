@@ -8,7 +8,8 @@ import { GlobalState } from "../../../store/reducers/types";
 import { format } from "../../../utils/dates";
 import {
   InitiativeDTO,
-  StatusEnum
+  StatusEnum,
+  VoucherStatusEnum
 } from "../../../../definitions/idpay/InitiativeDTO";
 import { IdPayCardStatus } from "../../../features/idpay/details/utils";
 
@@ -20,11 +21,11 @@ jest.mock("react-native-safe-area-context", () => {
 });
 
 describe("Test BonusCardStatus", () => {
-  const T_END_DATE = new Date(2025, 10, 12);
+  const T_END_DATE = new Date(2030, 10, 12);
   const MOCKED_INITIATIVE = {
     voucherEndDate: T_END_DATE,
     // unused in this test
-    status: StatusEnum.REFUNDABLE,
+    voucherStatus: VoucherStatusEnum.ACTIVE,
     nInstr: 1,
     initiativeId: "1"
   } as InitiativeDTO;
