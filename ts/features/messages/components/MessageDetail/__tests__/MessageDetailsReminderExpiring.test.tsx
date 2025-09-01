@@ -4,12 +4,11 @@ import { MessageDetailsReminderExpiring } from "../MessageDetailsReminderExpirin
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { UIMessageId } from "../../../types";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import * as accessibility from "../../../../../utils/accessibility";
 import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../utils/__tests__/testUtils.test";
 
-const messageId = "01HSG6GR1JT2E23AJ5RBTAMZZP" as UIMessageId;
+const messageId = "01HSG6GR1JT2E23AJ5RBTAMZZP";
 
 jest.mock("rn-qr-generator", () => ({}));
 jest.mock("react-native-screenshot-prevent", () => ({}));
