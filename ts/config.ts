@@ -125,6 +125,9 @@ export const helpCenterHowToLoginWithSpidUrl =
 export const helpCenterHowToLoginWithEicUrl =
   "https://assistenza.ioapp.it/hc/it/articles/30724124984593#h_01JF0DQRRPJWY61RAFNG2AKF3R" as NonEmptyString;
 
+export const helpCenterCaCLink =
+  "https://assistenza.ioapp.it/hc/it" as NonEmptyString;
+
 // #endregion
 
 export const fetchTimeout = pipe(

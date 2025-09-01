@@ -17,6 +17,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import _ from "lodash";
 import {
   useCallback,
   useEffect,
@@ -24,9 +25,6 @@ import {
   useMemo,
   useState
 } from "react";
-
-import { VoidType } from "io-ts";
-import _ from "lodash";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
@@ -41,7 +39,7 @@ import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../components/ui/IOScrollView";
-import { zendeskPrivacyUrl } from "../../../config";
+import { helpCenterCaCLink, zendeskPrivacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
@@ -184,7 +182,10 @@ const FaqManager = (props: FaqManagerProps) => {
         title={I18n.t("support.helpCenter.supportBanner.title")}
         content={I18n.t("support.helpCenter.supportBanner.content")}
         action={I18n.t("support.helpCenter.supportBanner.action")}
-        onPress={() => VoidType}
+        onPress={() => {
+          // TODO: add trackHelpCenterCtaTapped for tracking into Mixpanel
+          openWebUrl(helpCenterCaCLink);
+        }}
       />
       <VSpacer size={16} />
       {contextualHelpData.faqs && (
