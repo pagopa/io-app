@@ -1,10 +1,8 @@
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { FiscalCode } from "../../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
-import { PublicMessage } from "../../../../definitions/backend/PublicMessage";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
@@ -13,7 +11,6 @@ import { MessageCategory } from "../../../../definitions/backend/MessageCategory
  */
 export type UIMessage = {
   id: string;
-  fiscalCode: FiscalCode;
   category: MessageCategory;
   createdAt: Date;
   isRead: boolean;
@@ -25,9 +22,6 @@ export type UIMessage = {
   title: string;
   timeToLive?: TimeToLiveSeconds;
   hasPrecondition: boolean;
-
-  // @deprecated please use it only for backward compatibility
-  raw: PublicMessage;
 };
 
 /**
