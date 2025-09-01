@@ -259,14 +259,14 @@ describe("itwCredentialIssuanceMachine", () => {
 
     obtainCredential.mockImplementation(() =>
       Promise.resolve({
-        credentials: [ItwStoredCredentialsMocks.ts]
+        credentials: [ItwStoredCredentialsMocks.mdl]
       })
     );
 
     obtainStatusAttestation.mockImplementation(() =>
       Promise.resolve([
         {
-          ...ItwStoredCredentialsMocks.ts,
+          ...ItwStoredCredentialsMocks.mdl,
           storedStatusAttestation: T_STORED_STATUS_ATTESTATION
         }
       ])
@@ -303,7 +303,7 @@ describe("itwCredentialIssuanceMachine", () => {
       expect.objectContaining<Partial<Context>>({
         credentials: [
           {
-            ...ItwStoredCredentialsMocks.ts,
+            ...ItwStoredCredentialsMocks.mdl,
             storedStatusAttestation: T_STORED_STATUS_ATTESTATION
           }
         ]
@@ -396,10 +396,10 @@ describe("itwCredentialIssuanceMachine", () => {
       itwCredentialIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: "DisplayingCredentialPreview",
       context: {
-        credentials: [ItwStoredCredentialsMocks.ts]
+        credentials: [ItwStoredCredentialsMocks.mdl]
       }
     } as MachineSnapshot);
 
@@ -412,7 +412,7 @@ describe("itwCredentialIssuanceMachine", () => {
       "DisplayingCredentialPreview"
     );
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      credentials: [ItwStoredCredentialsMocks.ts]
+      credentials: [ItwStoredCredentialsMocks.mdl]
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
 
