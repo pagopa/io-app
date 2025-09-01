@@ -6,7 +6,6 @@ import {
   delay,
   put,
   race,
-  select,
   take
 } from "typed-redux-saga/macro";
 import RNFS from "react-native-fs";
@@ -24,7 +23,6 @@ import {
   downloadAttachment
 } from "../store/actions";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { getServiceByMessageId } from "../store/reducers/paginatedById";
 import {
   trackThirdPartyMessageAttachmentBadFormat,
   trackThirdPartyMessageAttachmentDownloadFailed,
@@ -88,9 +86,8 @@ export function* downloadAttachmentWorker(
   bearerToken: SessionToken,
   action: ActionType<typeof downloadAttachment.request>
 ): SagaIterator {
-  const { attachment, messageId, skipMixpanelTrackingOnFailure } =
+  const { attachment, messageId, skipMixpanelTrackingOnFailure, serviceId } =
     action.payload;
-  const serviceId = yield* select(getServiceByMessageId, messageId);
 
   const name = attachmentDisplayName(attachment);
 
