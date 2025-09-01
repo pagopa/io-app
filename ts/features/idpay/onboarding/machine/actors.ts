@@ -123,7 +123,7 @@ export const createActorsImplementation = (
             case 401:
               return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
             default:
-              return Promise.reject(OnboardingFailureEnum.GENERIC);
+              return Promise.reject(mapErrorCodeToFailure(value.code));
           }
         }
       )
@@ -224,12 +224,11 @@ const mapOnboardingStatusToFailure = (
 };
 
 /**
- * TODO: Use this function in a second iteration to map the IDPay onboarding error screens
  * Maps the backed error codes to UI failure states
  * @param code Error code from backend
  * @returns The associated failure state
  */
-export const mapErrorCodeToFailure = (
+const mapErrorCodeToFailure = (
   code: OnboardingErrorCodeEnum
 ): OnboardingFailure => {
   switch (code) {
