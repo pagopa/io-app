@@ -106,6 +106,7 @@ export const MessageDetails = ({
             disabled={message.isCancelled}
             messageId={messageId}
             isPN
+            serviceId={serviceId}
           />
           <VSpacer size={16} />
           <MessagePayments

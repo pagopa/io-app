@@ -195,6 +195,7 @@ export type DownloadAttachmentRequest = {
   attachment: ThirdPartyAttachment;
   messageId: string;
   skipMixpanelTrackingOnFailure: boolean;
+  serviceId: ServiceId;
 };
 
 export type DownloadAttachmentSuccess = {
