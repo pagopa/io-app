@@ -201,7 +201,10 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
               serviceId={serviceId}
             />
             <VSpacer size={16} />
-            <MessageDetailsAttachments messageId={messageId} />
+            <MessageDetailsAttachments
+              messageId={messageId}
+              serviceId={serviceId}
+            />
             {hasRemoteContent && <RemoteContentBanner />}
           </ContentWrapper>
         </View>

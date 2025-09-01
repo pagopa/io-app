@@ -30,7 +30,7 @@ export const useAttachmentDownload = (
   messageId: string,
   attachment: ThirdPartyAttachment,
   isPN: boolean,
-  serviceId?: ServiceId,
+  serviceId: ServiceId,
   onPreNavigate?: () => void
 ) => {
   const attachmentId = attachment.id;
@@ -109,11 +109,21 @@ export const useAttachmentDownload = (
         downloadAttachment.request({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: isPN
+          skipMixpanelTrackingOnFailure: isPN,
+          serviceId
         })
       );
     }
-  }, [attachment, dispatch, download, doNavigate, isFetching, isPN, messageId]);
+  }, [
+    attachment,
+    dispatch,
+    download,
+    doNavigate,
+    isFetching,
+    isPN,
+    messageId,
+    serviceId
+  ]);
 
   useEffect(() => {
     const state = store.getState();
