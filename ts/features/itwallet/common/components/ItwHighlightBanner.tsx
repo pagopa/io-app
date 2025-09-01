@@ -68,7 +68,7 @@ export const ItwHighlightBanner = (props: WithTestID<Props>) => {
     return {
       shadowRadius: scale * 10,
       elevation: scale * 5,
-      shadowOffset: { width: 0, height: scale * 4 }
+      shadowOpacity: scale * 0.15
     };
   });
 
@@ -79,7 +79,8 @@ export const ItwHighlightBanner = (props: WithTestID<Props>) => {
         onPress={onPress}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
-        accessible={false}
+        accessible={true}
+        accessibilityRole="button"
       >
         <Animated.View
           style={[styles.container, scaleAnimatedStyle, shadowAnimatedStyle]}
@@ -96,7 +97,9 @@ export const ItwHighlightBanner = (props: WithTestID<Props>) => {
       testID={testID}
       style={styles.container}
       // A11y related props
-      accessible={false}
+      accessible={true}
+      accessibilityRole="button"
+      onAccessibilityTap={onPress}
     >
       <BackgroundGradient />
       <StaticContent {...props} />
@@ -210,11 +213,12 @@ const StaticContent = (props: Props) => {
     accessibilityRole
   } = props;
 
-  /* Generates a complete fallbackAccessibilityLabel by concatenating the title, content, and action
-   if they are present. */
+  // Generates a complete fallbackAccessibilityLabel by concatenating the title, content, and action
+  // if they are present. Removes markdown formatting characters like asterisks.
   const fallbackAccessibilityLabel = [title, description, action]
     .filter(Boolean)
-    .join(" ");
+    .join("\n")
+    .replace(/\*/g, "");
 
   const markdownRules = useMemo(
     () => ({

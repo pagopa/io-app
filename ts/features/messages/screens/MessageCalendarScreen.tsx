@@ -20,10 +20,9 @@ import { findDeviceCalendarsTask } from "../../../utils/calendar";
 import { useMessageCalendar } from "../hooks/useMessageCalendar";
 import { MessagesParamsList } from "../navigation/params";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
-import { UIMessageId } from "../types";
 
 export type MessageCalendarScreenRouteParams = {
-  messageId: UIMessageId;
+  messageId: string;
 };
 
 type MessageCalendarRouteProps = RouteProp<

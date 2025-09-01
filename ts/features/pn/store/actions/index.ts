@@ -4,7 +4,6 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { UIMessageId } from "../../../messages/types";
 
 type TogglePnActivationPayload = {
   value: boolean;
@@ -20,7 +19,7 @@ export const pnActivationUpsert = createAsyncAction(
 
 export const startPNPaymentStatusTracking = createStandardAction(
   "PN_START_TRACKING_PAYMENT_STATUS"
-)<UIMessageId>();
+)<string>();
 export const cancelPNPaymentStatusTracking = createAction(
   "PN_CANCEL_PAYMENT_STATUS_TRACKING"
 );

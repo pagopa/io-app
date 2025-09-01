@@ -3576,22 +3576,11 @@
           }
         },
         "eidResult": {
-          "successL2": {
-            "title": "Alles ist bereit!",
-            "subtitle": "Du kannst nun das erste Dokument in das IO-Konto aufnehmen.",
-            "toast": "Erledigt!",
-            "actions": {
-              "continue": "Erstes Dokument hinzufügen",
-              "continueAlt": "Dokument hinzufügen",
-              "close": "Später fortfahren"
-            }
-          },
           "success": {
-            "title": "Il tuo IT-Wallet è pronto!",
-            "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale di Stato.",
-            "actions": {
-              "continue": "Esplora IT-Wallet"
-            }
+            "title": "È tutto pronto!",
+            "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
+            "primaryAction": "Aggiungi primo documento",
+            "secondaryAction": "Continua più tardi"
           }
         },
         "credentialResult": {
@@ -4136,6 +4125,15 @@
         "subtitle": "Attendi qualche secondo",
         "title": "Stiamo elaborando la tua richiesta"
       }
+    },
+    "support": {
+      "errorCode": "Fehlercode",
+      "serviceId": "Service ID",
+      "initiativeId": "ID Initiative",
+      "supportTitle": "Contatta l'assistenza",
+      "chat": "Chiedi aiuto in chat",
+      "additionalDataTitle": "Dati aggiuntivi",
+      "copyAll": "Copia tutti"
     }
   }
 }

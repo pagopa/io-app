@@ -37,7 +37,7 @@ describe("ItwL3IdentificationModeSelectionScreen", () => {
   });
 });
 
-const renderComponent = (isL3FeaturesEnabled = true) => {
+const renderComponent = (isL3 = true) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
@@ -57,7 +57,7 @@ const renderComponent = (isL3FeaturesEnabled = true) => {
       value: { UserIdentification: { Identification: "L3" } },
       context: {
         ...initialSnapshot.context,
-        isL3FeaturesEnabled,
+        isL3,
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true

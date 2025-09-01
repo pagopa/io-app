@@ -20,7 +20,7 @@ import {
 import { clearCache } from "../../../settings/common/store/actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { UIMessage, UIMessageId } from "../../types";
+import { UIMessage } from "../../types";
 import { foldK, isSomeLoadingOrSomeUpdating } from "../../../../utils/pot";
 import { emptyMessageArray } from "../../utils";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
@@ -756,7 +756,7 @@ export const archiveMessagesErrorReasonSelector = (state: GlobalState) =>
 
 export const paginatedMessageFromIdForCategorySelector = (
   state: GlobalState,
-  messageId: UIMessageId,
+  messageId: string,
   category: MessageListCategory
 ) =>
   pipe(

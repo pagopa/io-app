@@ -8,7 +8,6 @@ import {
   cancelPNPaymentStatusTracking,
   startPNPaymentStatusTracking
 } from "../../actions";
-import { UIMessageId } from "../../../../messages/types";
 import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
 import { paymentsFromPNMessagePot } from "../../../utils";
 import { pnMessageFromIdSelector } from "../../reducers";
@@ -22,7 +21,7 @@ describe("watchPaymentStatusSaga", () => {
     jest.clearAllMocks();
   });
 
-  const messageId = "01JWZGTJWM2SVHKW4WRPA0KQNQ" as UIMessageId;
+  const messageId = "01JWZGTJWM2SVHKW4WRPA0KQNQ";
   const paymentId1 = "0123456789012345678901234567890";
   const paymentId2 = "0123456789012345678901234567891";
   const paymentId3 = "0123456789012345678901234567892";
