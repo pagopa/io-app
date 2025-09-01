@@ -6,7 +6,6 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { preferredCalendarSelector } from "../../../../store/reducers/persistedPreferences";
-import { UIMessageId } from "../../types";
 import { useMessageReminder } from "../../hooks/useMessageReminder";
 import { localeDateFormat } from "../../../../utils/locale";
 import I18n from "../../../../i18n";
@@ -14,7 +13,7 @@ import { setAccessibilityFocus } from "../../../../utils/accessibility";
 
 type MessageDetailsReminderExpiringProps = {
   dueDate: Date;
-  messageId: UIMessageId;
+  messageId: string;
   title: string;
 };
 
