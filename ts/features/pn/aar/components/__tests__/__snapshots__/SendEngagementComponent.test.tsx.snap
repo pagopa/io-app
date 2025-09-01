@@ -1116,31 +1116,63 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                             >
                                dichiari di aver letto e compreso l’
                             </Text>
-                            <Text
+                            <View
                               accessibilityRole="link"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              onPress={[Function]}
-                              style={
-                                [
-                                  {
-                                    "textDecorationLine": "underline",
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 24,
-                                  },
-                                ]
+                              accessibilityState={
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": undefined,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
                               }
-                              testID="privacy-link"
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
                             >
-                              Informativa Privacy
-                            </Text>
+                              <Text
+                                accessibilityRole="link"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {
+                                      "textDecorationLine": "underline",
+                                    },
+                                    {
+                                      "color": "#0B3EE3",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                                testID="privacy-link"
+                              >
+                                Informativa Privacy
+                              </Text>
+                            </View>
                             <Text
                               allowFontScaling={true}
                               dynamicTypeRamp="body"
@@ -1161,31 +1193,63 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                             >
                                e i 
                             </Text>
-                            <Text
+                            <View
                               accessibilityRole="link"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              onPress={[Function]}
-                              style={
-                                [
-                                  {
-                                    "textDecorationLine": "underline",
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 24,
-                                  },
-                                ]
+                              accessibilityState={
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": undefined,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
                               }
-                              testID="tos-link"
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
                             >
-                              Termini e Condizioni d’uso
-                            </Text>
+                              <Text
+                                accessibilityRole="link"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {
+                                      "textDecorationLine": "underline",
+                                    },
+                                    {
+                                      "color": "#0B3EE3",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                                testID="tos-link"
+                              >
+                                Termini e Condizioni d’uso
+                              </Text>
+                            </View>
                             <Text
                               allowFontScaling={true}
                               dynamicTypeRamp="body"
@@ -1630,9 +1694,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
@@ -2986,31 +3047,63 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                             >
                                dichiari di aver letto e compreso l’
                             </Text>
-                            <Text
+                            <View
                               accessibilityRole="link"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              onPress={[Function]}
-                              style={
-                                [
-                                  {
-                                    "textDecorationLine": "underline",
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 24,
-                                  },
-                                ]
+                              accessibilityState={
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": undefined,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
                               }
-                              testID="privacy-link"
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
                             >
-                              Informativa Privacy
-                            </Text>
+                              <Text
+                                accessibilityRole="link"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {
+                                      "textDecorationLine": "underline",
+                                    },
+                                    {
+                                      "color": "#0B3EE3",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                                testID="privacy-link"
+                              >
+                                Informativa Privacy
+                              </Text>
+                            </View>
                             <Text
                               allowFontScaling={true}
                               dynamicTypeRamp="body"
@@ -3031,31 +3124,63 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                             >
                                e i 
                             </Text>
-                            <Text
+                            <View
                               accessibilityRole="link"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              onPress={[Function]}
-                              style={
-                                [
-                                  {
-                                    "textDecorationLine": "underline",
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 24,
-                                  },
-                                ]
+                              accessibilityState={
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": undefined,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
                               }
-                              testID="tos-link"
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
                             >
-                              Termini e Condizioni d’uso
-                            </Text>
+                              <Text
+                                accessibilityRole="link"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {
+                                      "textDecorationLine": "underline",
+                                    },
+                                    {
+                                      "color": "#0B3EE3",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                                testID="tos-link"
+                              >
+                                Termini e Condizioni d’uso
+                              </Text>
+                            </View>
                             <Text
                               allowFontScaling={true}
                               dynamicTypeRamp="body"
@@ -3360,9 +3485,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,

@@ -1,23 +1,25 @@
-import { pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
 import { ListItemHeader } from "@pagopa/io-app-design-system";
-import { UIMessageId } from "../../types";
+import * as B from "fp-ts/lib/boolean";
+import { pipe } from "fp-ts/lib/function";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { thirdPartyMessageAttachments } from "../../store/reducers/thirdPartyById";
-import I18n from "../../../../i18n";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
 import { MessageDetailsAttachmentItem } from "./MessageDetailsAttachmentItem";
 
 export type MessageDetailsAttachmentsProps = {
   disabled?: boolean;
   isPN?: boolean;
-  messageId: UIMessageId;
+  messageId: string;
+  serviceId: ServiceId;
 };
 
 export const MessageDetailsAttachments = ({
   disabled = false,
   isPN = false,
-  messageId
+  messageId,
+  serviceId
 }: MessageDetailsAttachmentsProps) => {
   const originalAttachments = useIOSelector(state =>
     thirdPartyMessageAttachments(state, messageId)
@@ -52,6 +54,7 @@ export const MessageDetailsAttachments = ({
           disabled={disabled}
           key={`MessageAttachment_${index}`}
           messageId={messageId}
+          serviceId={serviceId}
         />
       ))}
     </>
