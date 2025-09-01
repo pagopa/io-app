@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import { getType } from "typesafe-actions";
 import {
   loadMessageById,
@@ -116,8 +115,3 @@ export const getPaginatedMessageById = (
   state: GlobalState,
   messageId: string
 ) => state.entities.messages.paginatedById[messageId] ?? pot.none;
-
-export const getServiceByMessageId = (state: GlobalState, messageId: string) =>
-  pipe(getPaginatedMessageById(state, messageId), message =>
-    pot.isSome(message) ? message.value.serviceId : undefined
-  );

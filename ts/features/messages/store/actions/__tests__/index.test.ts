@@ -508,13 +508,15 @@ describe("index", () => {
         const action = downloadAttachment.request({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: skipTracking
+          skipMixpanelTrackingOnFailure: skipTracking,
+          serviceId
         });
         expect(action.type).toBe("DOWNLOAD_ATTACHMENT_REQUEST");
         expect(action.payload).toEqual({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: skipTracking
+          skipMixpanelTrackingOnFailure: skipTracking,
+          serviceId
         });
       });
     });
