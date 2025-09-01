@@ -42,12 +42,10 @@ export const IdPayBarcodeExpireProgressBar = ({
       <ProgressBar progressPercentage={seconds / secondsExpirationTotal} />
       <VSpacer size={8} />
       <View style={styles.centeredRow}>
-        <BodySmall weight="Regular" color="black">
+        <BodySmall weight="Regular">
           {I18n.t("idpay.barCode.resultScreen.success.expiresIn")}
         </BodySmall>
-        <BodySmall weight="Semibold" color="black">
-          {formattedSecondsToExpiration}
-        </BodySmall>
+        <BodySmall weight="Semibold">{formattedSecondsToExpiration}</BodySmall>
       </View>
     </View>
   );
