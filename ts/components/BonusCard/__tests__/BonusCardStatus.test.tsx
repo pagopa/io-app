@@ -8,7 +8,6 @@ import { GlobalState } from "../../../store/reducers/types";
 import { format } from "../../../utils/dates";
 import {
   InitiativeDTO,
-  StatusEnum,
   VoucherStatusEnum
 } from "../../../../definitions/idpay/InitiativeDTO";
 import { IdPayCardStatus } from "../../../features/idpay/details/utils";
@@ -22,49 +21,69 @@ jest.mock("react-native-safe-area-context", () => {
 
 describe("Test BonusCardStatus", () => {
   const T_END_DATE = new Date(2030, 10, 12);
-  const MOCKED_INITIATIVE = {
-    voucherEndDate: T_END_DATE,
-    // unused in this test
-    voucherStatus: VoucherStatusEnum.ACTIVE,
-    nInstr: 1,
-    initiativeId: "1"
-  } as InitiativeDTO;
 
   describe("when the status is ACTIVE", () => {
+    const MOCKED_ACTIVE_INITIATIVE = {
+      voucherEndDate: T_END_DATE,
+      // unused in this test
+      voucherStatus: VoucherStatusEnum.ACTIVE,
+      nInstr: 1,
+      initiativeId: "1"
+    } as InitiativeDTO;
     it("should display the correct content", () => {
       const T_VALIDITY_TEXT = I18n.t("bonusCard.validUntil", {
         endDate: format(T_END_DATE, "DD/MM/YY")
       });
-      const { queryByText } = renderComponent(MOCKED_INITIATIVE);
+      const { queryByText } = renderComponent(MOCKED_ACTIVE_INITIATIVE);
       expect(queryByText(T_VALIDITY_TEXT)).not.toBeNull();
     });
   });
   describe("when the status is EXPIRING", () => {
+    const MOCKED_EXPIRING_INITIATIVE = {
+      voucherEndDate: T_END_DATE,
+      // unused in this test
+      voucherStatus: VoucherStatusEnum.EXPIRING,
+      nInstr: 1,
+      initiativeId: "1"
+    } as InitiativeDTO;
     it("should display the correct content", () => {
       const T_VALIDITY_TEXT = I18n.t("bonusCard.expiring", {
         endDate: format(T_END_DATE, "DD/MM/YY")
       });
-      const { queryByText } = renderComponent(MOCKED_INITIATIVE);
+      const { queryByText } = renderComponent(MOCKED_EXPIRING_INITIATIVE);
       expect(queryByText(T_VALIDITY_TEXT)).not.toBeNull();
     });
   });
   describe("when the status is EXPIRED", () => {
+    const MOCKED_EXPIRED_INITIATIVE = {
+      voucherEndDate: T_END_DATE,
+      // unused in this test
+      voucherStatus: VoucherStatusEnum.EXPIRED,
+      nInstr: 1,
+      initiativeId: "1"
+    } as InitiativeDTO;
     it("should display the correct content", () => {
       const T_VALIDITY_TEXT = I18n.t("bonusCard.expired", {
         endDate: format(T_END_DATE, "DD/MM/YY")
       });
-      const { queryByText } = renderComponent(MOCKED_INITIATIVE);
+      const { queryByText } = renderComponent(MOCKED_EXPIRED_INITIATIVE);
       expect(queryByText(T_VALIDITY_TEXT)).not.toBeNull();
     });
   });
-  describe("when the status is REMOVED", () => {
+  describe("when the status is USED", () => {
+    const MOCKED_REMOVED_INITIATIVE = {
+      voucherEndDate: T_END_DATE,
+      // unused in this test
+      voucherStatus: VoucherStatusEnum.USED,
+      nInstr: 1,
+      initiativeId: "1"
+    } as InitiativeDTO;
     it("should display the correct content", () => {
-      const T_REMOVED_TEXT = I18n.t("bonusCard.removed");
+      const T_USED_TEXT = I18n.t("bonusCard.paused");
       const { queryByText } = renderComponent({
-        ...MOCKED_INITIATIVE,
-        status: StatusEnum.UNSUBSCRIBED
+        ...MOCKED_REMOVED_INITIATIVE
       });
-      expect(queryByText(T_REMOVED_TEXT)).not.toBeNull();
+      expect(queryByText(T_USED_TEXT)).not.toBeNull();
     });
   });
 });
