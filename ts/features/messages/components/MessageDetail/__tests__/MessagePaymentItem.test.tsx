@@ -3,7 +3,6 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessagePaymentItem } from "../MessagePaymentItem";
-import { UIMessageId } from "../../../types";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import {
@@ -15,7 +14,7 @@ import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 describe("MessagePaymentItem component", () => {
   it("Should match the snapshot for a loading item", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const notificationPaymentInfo = {
       creditorTaxId: "",
       noticeCode: ""
@@ -24,7 +23,7 @@ describe("MessagePaymentItem component", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match the snapshot for a payable item", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const notificationPaymentInfo = {
       creditorTaxId: "c1",
       noticeCode: "n1"
@@ -37,7 +36,7 @@ describe("MessagePaymentItem component", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match the snapshot for a processed item", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const notificationPaymentInfo = {
       creditorTaxId: "c1",
       noticeCode: "n1"
@@ -52,7 +51,7 @@ describe("MessagePaymentItem component", () => {
 });
 
 const renderComponent = (
-  messageId: UIMessageId,
+  messageId: string,
   payment: NotificationPaymentInfo,
   paymentStatus: "payable" | "processed" | undefined = undefined
 ) => {

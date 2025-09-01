@@ -1,7 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { UIMessageId } from "../../types";
 import {
   resetMessageArchivingAction,
   interruptMessageArchivingProcessingAction,
@@ -21,15 +20,15 @@ export type ProcessingResult = {
 };
 
 export type Archiving = {
-  fromArchiveToInbox: Set<UIMessageId>;
-  fromInboxToArchive: Set<UIMessageId>;
+  fromArchiveToInbox: Set<string>;
+  fromInboxToArchive: Set<string>;
   processingResult: ProcessingResult | undefined;
   status: ArchivingStatus;
 };
 
 export const INITIAL_STATE: Archiving = {
-  fromArchiveToInbox: new Set<UIMessageId>(),
-  fromInboxToArchive: new Set<UIMessageId>(),
+  fromArchiveToInbox: new Set<string>(),
+  fromInboxToArchive: new Set<string>(),
   processingResult: undefined,
   status: "disabled"
 };
@@ -112,7 +111,7 @@ export const isArchivingInProcessingModeSelector = (state: GlobalState) =>
   state.entities.messages.archiving.status === "processing";
 export const isMessageScheduledForArchivingSelector = (
   state: GlobalState,
-  messageId: UIMessageId
+  messageId: string
 ) =>
   pipe(
     state.entities.messages.archiving,

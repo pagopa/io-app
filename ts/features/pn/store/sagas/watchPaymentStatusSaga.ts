@@ -5,7 +5,6 @@ import {
   startPNPaymentStatusTracking
 } from "../actions";
 import { maxVisiblePaymentCount, paymentsFromPNMessagePot } from "../../utils";
-import { UIMessageId } from "../../../messages/types";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
 import { pnMessageFromIdSelector } from "../reducers";
 import { trackPNPaymentStatus } from "../../analytics";
@@ -48,7 +47,7 @@ export function* watchPaymentStatusForMixpanelTracking(
 }
 
 function* generateSENDMessagePaymentStatistics(
-  messageId: UIMessageId,
+  messageId: string,
   paymentCount: number,
   paymentsRpdIds: ReadonlyArray<string>
 ) {
