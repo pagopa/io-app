@@ -2,7 +2,8 @@ import { fireEvent, render } from "@testing-library/react-native";
 import { Alert } from "react-native";
 import {
   InitiativeDTO,
-  StatusEnum
+  StatusEnum,
+  VoucherStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import IdPayRemoveFromWalletButton from "../IdPayRemoveFromWalletButton";
 const mockNavigation = jest.fn();
@@ -24,6 +25,7 @@ const hideButtonProps = {
   initiativeName: "Test Initiative",
   organizationName: "Test Organization",
   voucherEndDate: new Date(),
+  voucherStatus: VoucherStatusEnum.ACTIVE,
   nInstr: 1,
   lastCounterUpdate: new Date(),
   status: StatusEnum.UNSUBSCRIBED
@@ -34,6 +36,7 @@ const mockedInitiative = {
   initiativeName: "Test Initiative",
   organizationName: "Test Organization",
   // end date tomorrow for testing purposes
+  voucherStatus: VoucherStatusEnum.EXPIRING,
   voucherEndDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
   nInstr: 1,
   lastCounterUpdate: new Date(),
@@ -55,7 +58,7 @@ describe("IdPayRemoveFromWalletButton", () => {
     expect(getByTestId("idpay-remove-from-wallet")).toBeDefined();
   });
 
-  it("should not render when hide prop is true", () => {
+  it("should not render when voucher is not expiring or is expired", () => {
     const { queryByTestId } = render(
       <IdPayRemoveFromWalletButton {...hideButtonProps} />
     );
