@@ -46,7 +46,11 @@ export const F24Section = ({
         />
       )}
       {f24Count > 1 && (
-        <F24ListBottomSheetLink f24List={f24s} messageId={messageId} />
+        <F24ListBottomSheetLink
+          f24List={f24s}
+          messageId={messageId}
+          serviceId={serviceId}
+        />
       )}
       <VSpacer size={16} />
     </>
