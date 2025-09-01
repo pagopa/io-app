@@ -41,7 +41,7 @@ export const ItwL2IdentificationModeSelectionScreen = (
   useFocusEffect(
     useCallback(() => {
       if (eidReissuing) {
-        machineRef.send({ type: "start-reissuing" });
+        machineRef.send({ type: "start", mode: "reissuance" });
       }
     }, [eidReissuing, machineRef])
   );
