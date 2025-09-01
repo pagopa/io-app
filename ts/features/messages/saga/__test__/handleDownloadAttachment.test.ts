@@ -15,9 +15,8 @@ import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../../../lollipop/store/reducers/lollipop";
-import { UIMessageId } from "../../types";
 
-const messageId = "01JTT75QYSHWBTNTFM3CZZ17SH" as UIMessageId;
+const messageId = "01JTT75QYSHWBTNTFM3CZZ17SH";
 const savePath = "/tmp/attachment.pdf";
 const serviceId = "service0000001" as ServiceId;
 const someKeyTag = O.some("a12e9221-c056-4bbc-8623-ca92df29361e");

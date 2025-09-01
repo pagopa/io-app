@@ -4,6 +4,7 @@ import {
   IntegrityErrorCodes
 } from "@pagopa/io-react-native-integrity";
 import { Trust } from "@pagopa/io-react-native-wallet-v2";
+import { WithCredentialMetadata } from "./ItwFailureTypes";
 
 /**
  * This file contains utility functions related to failures in the context of common xState flows
@@ -36,3 +37,23 @@ const localIntegrityErrors: Array<IntegrityErrorCodes | CryptoErrorCodes> = [
 export const isLocalIntegrityError = (e: unknown): e is IntegrityError =>
   e instanceof Error &&
   localIntegrityErrors.includes(e.message as IntegrityErrorCodes);
+
+/**
+ * Enrich instances of Error with `credentialId` so it is possible to retrieve the credential configuration
+ * from `credential_configurations_supported` in the Issuer's EC. This is needed during multi-credential issuance
+ * to get dynamic error messages, because the original error may not contain the credential configuration ID.
+ *
+ * This function **modifies the original error**.
+ *
+ * @param metadata.credentialId The credential configuration ID
+ * @return A function that enriches the error and rethrows it
+ * @throws The original error, with the new `metadata` property
+ */
+export const enrichErrorWithMetadata =
+  (metadata: { credentialId: string }) => (err: unknown) => {
+    if (err instanceof Error) {
+      // eslint-disable-next-line functional/immutable-data
+      (err as WithCredentialMetadata).metadata = metadata;
+    }
+    throw err;
+  };
