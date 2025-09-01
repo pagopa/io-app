@@ -11,7 +11,6 @@ import {
   trackBackToWallet,
   trackCredentialUpgradeFailed
 } from "../../analytics";
-
 import {
   selectIsLoading,
   selectIssuanceMode,
