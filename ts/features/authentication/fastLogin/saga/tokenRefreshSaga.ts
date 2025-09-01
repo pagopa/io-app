@@ -33,7 +33,7 @@ import {
   identificationSuccess
 } from "../../../identification/store/actions";
 import NavigationService from "../../../../navigation/NavigationService";
-import { FastLoginT } from "../../../../../definitions/fast_login/requestTypes";
+import { FastLoginT } from "../../../../../definitions/session_manager/requestTypes";
 import {
   askUserToRefreshSessionToken,
   showRefreshTokenLoader,

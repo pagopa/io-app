@@ -9,26 +9,26 @@ import {
   RESULTS
 } from "react-native-permissions";
 import BluetoothStateManager from "react-native-bluetooth-state-manager";
-import {
-  Proximity,
-  type VerifierRequest,
-  parseError,
-  parseVerifierRequest
-} from "@pagopa/io-react-native-proximity";
+import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import {
   generateAcceptedFields,
   getDocuments,
   getProximityDetails,
   promiseWithTimeout
 } from "../utils/itwProximityPresentationUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { assert } from "../../../../../utils/assert";
-import { getError } from "../../../../../utils/errors";
 import {
   trackItwProximityBluetoothBlock,
   trackItwProximityBluetoothBlockAction
 } from "../analytics";
+import type { EventsPayload } from "../utils/itwProximityTypeUtils";
+import { useIOStore } from "../../../../../store/hooks";
+import { itwCredentialsByTypeSelector } from "../store/selectors";
+import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
+import { CredentialFormat } from "../../../common/utils/itwTypesUtils";
+import { Env } from "../../../common/utils/environment";
 import { ProximityEvents } from "./events";
+import { Context } from "./context";
 
 const PERMISSIONS_TO_CHECK: Array<Permission> =
   Platform.OS === "android"
@@ -51,24 +51,26 @@ export type StartProximityFlowInput = {
   isRestarting?: boolean;
 } | void;
 
-export type SendErrorResponseActorOutput = Awaited<
-  ReturnType<typeof Proximity.sendErrorResponse>
+export type GetQrCodeStringActorOutput = Awaited<
+  ReturnType<typeof ISO18013_5.getQrCodeString>
 >;
 
-export type ProximityCommunicationLogicActorInput = {
-  credentialsByType: Record<string, StoredCredential>;
-};
+export type SendErrorResponseActorOutput = Awaited<
+  ReturnType<typeof ISO18013_5.sendErrorResponse>
+>;
 
-export type SendDocumentsActorInput = {
-  credentialsByType: Record<string, StoredCredential>;
-  verifiedRequest?: VerifierRequest;
-};
+export type CloseActorOutput = Awaited<ReturnType<typeof ISO18013_5.close>>;
+
+export type SendDocumentsActorInput = Pick<Context, "verifierRequest">;
 
 export type SendDocumentsActorOutput = Awaited<
-  ReturnType<typeof Proximity.sendResponse>
+  ReturnType<typeof ISO18013_5.sendResponse>
 >;
 
-export const createProximityActorsImplementation = () => {
+export const createProximityActorsImplementation = (
+  env: Env,
+  store: ReturnType<typeof useIOStore>
+) => {
   const checkPermissions = fromPromise<boolean, CheckPermissionsInput>(
     async ({ input }) => {
       const isSilent = input?.isSilent || false;
@@ -114,116 +116,135 @@ export const createProximityActorsImplementation = () => {
     async ({ input }) => {
       if (input?.isRestarting) {
         // The proximity flow must be closed before restarting
-        await Proximity.close().catch(constUndefined);
+        await ISO18013_5.close().catch(constUndefined);
       }
-      await Proximity.start();
+      await ISO18013_5.start({ certificates: [[env.X509_CERT_ROOT]] });
     }
   );
 
-  const generateQrCodeString = fromPromise<string, void>(
-    Proximity.getQrCodeString
+  const generateQrCodeString = fromPromise<GetQrCodeStringActorOutput, void>(
+    ISO18013_5.getQrCodeString
   );
 
-  const proximityCommunicationLogic = fromCallback<
-    ProximityEvents,
-    ProximityCommunicationLogicActorInput
-  >(({ input, sendBack }) => {
-    const handleDeviceConnecting = () => {
-      sendBack({ type: "device-connecting" });
-    };
+  const proximityCommunicationLogic = fromCallback<ProximityEvents>(
+    ({ sendBack }) => {
+      const handleDeviceConnecting = () => {
+        sendBack({ type: "device-connecting" });
+      };
 
-    const handleDeviceConnected = () => {
-      sendBack({ type: "device-connected" });
-    };
+      const handleDeviceConnected = () => {
+        sendBack({ type: "device-connected" });
+      };
 
-    const handleDeviceDisconnected = () => {
-      sendBack({
-        type: "device-error",
-        error: new Error("Device disconnected")
-      });
-    };
+      const handleDeviceDisconnected = () => {
+        sendBack({ type: "device-disconnected" });
+      };
 
-    const handleError = (eventPayload: Proximity.EventsPayload["onError"]) => {
-      const { error } = eventPayload ?? {};
-      sendBack({ type: "device-error", error: parseError(error) });
-    };
-
-    const handleDocumentRequestReceived = (
-      eventPayload: Proximity.EventsPayload["onDocumentRequestReceived"]
-    ) => {
-      const { data } = eventPayload ?? {};
-
-      try {
-        assert(data, "Missing required data");
-
-        const parsedRequest = parseVerifierRequest(JSON.parse(data));
-
-        const proximityDetails = getProximityDetails(
-          parsedRequest.request,
-          input.credentialsByType
-        );
-
-        sendBack({
-          type: "device-document-request-received",
-          proximityDetails,
-          verifierRequest: parsedRequest
-        });
-      } catch (e) {
+      const handleError = (eventPayload: EventsPayload["onError"]) => {
+        const { error } = eventPayload ?? {};
         sendBack({
           type: "device-error",
-          error: getError(e)
+          error
         });
-      }
-    };
+      };
 
-    Proximity.addListener("onDeviceConnecting", handleDeviceConnecting);
-    Proximity.addListener("onDeviceConnected", handleDeviceConnected);
-    Proximity.addListener(
-      "onDocumentRequestReceived",
-      handleDocumentRequestReceived
-    );
-    Proximity.addListener("onDeviceDisconnected", handleDeviceDisconnected);
-    Proximity.addListener("onError", handleError);
+      const handleDocumentRequestReceived = (
+        eventPayload: EventsPayload["onDocumentRequestReceived"]
+      ) => {
+        const { data } = eventPayload ?? {};
 
-    return () => {
-      // Cleanup function
-      Proximity.removeListener("onDeviceConnected");
-      Proximity.removeListener("onDeviceConnecting");
-      Proximity.removeListener("onDeviceDisconnected");
-      Proximity.removeListener("onDocumentRequestReceived");
-      Proximity.removeListener("onError");
-      void Proximity.close();
-    };
-  });
+        try {
+          assert(data, "Missing required data");
+
+          const parsedRequest = ISO18013_5.parseVerifierRequest(
+            JSON.parse(data)
+          );
+          const credentials = itwCredentialsByTypeSelector(store.getState());
+          const proximityDetails = getProximityDetails(
+            parsedRequest.request,
+            credentials
+          );
+
+          sendBack({
+            type: "device-document-request-received",
+            proximityDetails,
+            verifierRequest: parsedRequest
+          });
+        } catch (error) {
+          // Give some time to show the loading message
+          // and avoid glitches in the UI.
+          setTimeout(() => {
+            sendBack({
+              type: "device-error",
+              error
+            });
+          }, 500);
+        }
+      };
+
+      const listeners = [
+        ISO18013_5.addListener("onDeviceConnecting", handleDeviceConnecting),
+        ISO18013_5.addListener("onDeviceConnected", handleDeviceConnected),
+        ISO18013_5.addListener(
+          "onDocumentRequestReceived",
+          handleDocumentRequestReceived
+        ),
+        ISO18013_5.addListener(
+          "onDeviceDisconnected",
+          handleDeviceDisconnected
+        ),
+        ISO18013_5.addListener("onError", handleError)
+      ];
+
+      return () => {
+        // Remove event listeners
+        listeners.forEach(listener => listener.remove());
+        // Close the Bluetooth connection and clear all resources
+        void ISO18013_5.close().catch(constUndefined);
+      };
+    }
+  );
 
   const sendDocuments = fromPromise<
     SendDocumentsActorOutput,
     SendDocumentsActorInput
   >(async ({ input }) => {
-    const { credentialsByType, verifiedRequest } = input;
-    assert(verifiedRequest, "Missing required verifiedRequest");
+    const { verifierRequest } = input;
+    assert(verifierRequest, "Missing required verifierRequest");
 
-    const documents = getDocuments(verifiedRequest.request, credentialsByType);
+    const credentials = itwCredentialsByTypeSelector(store.getState());
+    const wiaMdoc = itwWalletInstanceAttestationSelector(store.getState())?.[
+      CredentialFormat.MDOC
+    ];
+    assert(wiaMdoc, "Missing Wallet Attestation in MDOC format");
+
+    const documents = getDocuments(
+      verifierRequest.request,
+      credentials,
+      wiaMdoc
+    );
     // We accept all the fields requested by the verifier app
-    const acceptedFields = generateAcceptedFields(verifiedRequest.request);
+    const acceptedFields = generateAcceptedFields(verifierRequest.request);
 
-    const generatedResponse = await Proximity.generateResponse(
+    const generatedResponse = await ISO18013_5.generateResponse(
       documents,
       acceptedFields
     );
 
     // If the timeout is exceeded, throw an exception
     return promiseWithTimeout(
-      Proximity.sendResponse(generatedResponse),
+      ISO18013_5.sendResponse(generatedResponse),
       SEND_RESPONSE_TIMEOUT_MS
     );
   });
 
   const terminateProximitySession = fromPromise<SendErrorResponseActorOutput>(
-    () => Proximity.sendErrorResponse(Proximity.ErrorCode.SESSION_TERMINATED)
+    () => ISO18013_5.sendErrorResponse(ISO18013_5.ErrorCode.SESSION_TERMINATED)
   );
 
-  const closeProximityFlow = fromPromise<boolean, void>(Proximity.close);
+  const closeProximityFlow = fromPromise<CloseActorOutput, void>(
+    ISO18013_5.close
+  );
 
   return {
     checkPermissions,

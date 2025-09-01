@@ -174,7 +174,7 @@ export const trackItwRemoteDeepLinkFailure = (reason: Error) => {
  * and joins them with " - ".
  *
  * Example:
- * Input: ["MDL", "EuropeanHealthInsuranceCard"]
+ * Input: ["mDL", "EuropeanHealthInsuranceCard"]
  * Output: "ITW_PG_V2 - ITW_TS_V2"
  */
 // TODO: this function should be updated when new L3 credentials are added

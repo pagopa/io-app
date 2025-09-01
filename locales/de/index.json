@@ -3694,7 +3694,7 @@
               }
             }
           },
-          "MDL": {
+          "mDL": {
             "expiring": {
               "title": "Führerschein in IO: ablaufendes Dokument",
               "content": "Verlängere deinen Führerschein in den Büros des Ministeriums für Infrastruktur und Verkehr - Generaldirektion für Motorisierung oder bei einer autorisierten Stelle in deiner Nähe.\n\nDu musst dich einer medizinischen Untersuchung bei einem qualifizierten Arzt unterziehen und die vorgeschriebenen Formulare ausfüllen.\n\n###### Welche Dokumente sollte ich bereithalten?\n\n - den ablaufenden oder abgelaufenen Führerschein\n - ein Ausweisdokument\n - die Steuernummer\n - ein aktuelles Foto in Passgröße"
@@ -3779,7 +3779,7 @@
           "action": "Bestätige und fortfahren"
         },
         "loadingScreen": {
-          "title": "Wir deaktivieren Dokumente in IO...",
+          "title": "Wir deaktivieren {{name}}...",
           "subtitle": "Warte ein paar Sekunden"
         },
         "failureScreen": {
@@ -4119,8 +4119,8 @@
     "onboarding": {
       "enableMessages": {
         "cancelAction": "Stornieren",
-        "subtitle": "Aktivieren Sie die Möglichkeit, Sie in der App zu kontaktieren, um Aktualisierungen auf dem {{initiativeName}} zu erhalten. Dieser Schritt ist erforderlich, um mit der Anfrage fortzufahren.",
-        "title": "Nachrichten aktivieren",
+        "subtitle": "Questo passaggio è necessario per procedere con la richiesta. Ti permetterà di ricevere gli aggiornamenti sul {{initiativeName}}.",
+        "title": "Aktivieren Sie die Möglichkeit, Sie in der App zu kontaktieren",
         "confirmAction": "OK, aktiv"
       },
       "enableNotification": {
@@ -4135,6 +4135,15 @@
         "subtitle": "Attendi qualche secondo",
         "title": "Stiamo elaborando la tua richiesta"
       }
+    },
+    "support": {
+      "errorCode": "Fehlercode",
+      "serviceId": "Service ID",
+      "initiativeId": "ID Initiative",
+      "supportTitle": "Contatta l'assistenza",
+      "chat": "Chiedi aiuto in chat",
+      "additionalDataTitle": "Dati aggiuntivi",
+      "copyAll": "Copia tutti"
     }
   }
 }

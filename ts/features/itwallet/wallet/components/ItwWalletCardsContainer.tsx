@@ -123,10 +123,12 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           topElement={
             <>
               <ItwWalletReadyBanner />
-              <ItwEidLifecycleAlert
-                lifecycleStatus={LIFECYCLE_STATUS}
-                navigation={navigation}
-              />
+              {!isNewItwRenderable && (
+                <ItwEidLifecycleAlert
+                  lifecycleStatus={LIFECYCLE_STATUS}
+                  navigation={navigation}
+                />
+              )}
             </>
           }
           bottomElement={<ItwFeedbackBanner />}

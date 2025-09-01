@@ -40,6 +40,7 @@ const IDPayPaymentResultScreen = () => {
       <OperationResultScreenContent
         pictogram="trash"
         title={I18n.t("idpay.payment.result.cancelled.title")}
+        subtitle={I18n.t("idpay.payment.result.cancelled.subtitle")}
         action={defaultCloseAction}
         testID="paymentCancelledScreenTestID"
       />
@@ -50,7 +51,6 @@ const IDPayPaymentResultScreen = () => {
     <OperationResultScreenContent
       pictogram="success"
       title={I18n.t("idpay.payment.result.success.title")}
-      subtitle={I18n.t("idpay.payment.result.success.body")}
       action={defaultCloseAction}
       testID="paymentSuccessScreenTestID"
       enableAnimatedPictogram
@@ -60,11 +60,9 @@ const IDPayPaymentResultScreen = () => {
 };
 
 const genericErrorProps: OperationResultScreenContentProps = {
-  pictogram: "umbrella",
+  pictogram: "accessDenied",
   title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
-  subtitle: I18n.t("idpay.payment.result.failure.GENERIC.subtitle"),
-  enableAnimatedPictogram: true,
-  loop: true
+  subtitle: I18n.t("idpay.payment.result.failure.GENERIC.subtitle")
 };
 
 const mapFailureToContentProps = (

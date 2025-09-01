@@ -2,7 +2,6 @@ import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { downloadAttachment } from "../../../store/actions";
-import { UIMessageId } from "../../../types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessageDetailsAttachmentItem } from "../MessageDetailsAttachmentItem";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
@@ -10,7 +9,7 @@ import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 describe("MessageDetailsAttachmentItem", () => {
   it("Should match snapshot with required parameters", () => {
-    const messageId = "01HNWXJG52YS359GWSYSRK2BWC" as UIMessageId;
+    const messageId = "01HNWXJG52YS359GWSYSRK2BWC";
     const thirdPartyAttachment = {
       id: "1",
       url: "https://invalid.url",
@@ -23,7 +22,7 @@ describe("MessageDetailsAttachmentItem", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot with all parameters", () => {
-    const messageId = "01HNWXJG52YS359GWSYSRK2BWC" as UIMessageId;
+    const messageId = "01HNWXJG52YS359GWSYSRK2BWC";
     const thirdPartyAttachment = {
       id: "1",
       url: "https://invalid.url",
@@ -44,7 +43,7 @@ describe("MessageDetailsAttachmentItem", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot when the attachment has no name", () => {
-    const messageId = "01HNWXJG52YS359GWSYSRK2BWC" as UIMessageId;
+    const messageId = "01HNWXJG52YS359GWSYSRK2BWC";
     const thirdPartyAttachment = {
       id: "1",
       url: "https://invalid.url",
@@ -56,7 +55,7 @@ describe("MessageDetailsAttachmentItem", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot when is fetching the attachment", () => {
-    const messageId = "01HNWXJG52YS359GWSYSRK2BWC" as UIMessageId;
+    const messageId = "01HNWXJG52YS359GWSYSRK2BWC";
     const thirdPartyAttachment = {
       id: "1",
       url: "https://invalid.url",
@@ -78,7 +77,7 @@ describe("MessageDetailsAttachmentItem", () => {
 
 const renderScreen = (
   attachment: ThirdPartyAttachment,
-  messageId: UIMessageId,
+  messageId: string,
   serviceId?: ServiceId,
   bottomSpacer?: boolean,
   isFetching?: boolean,

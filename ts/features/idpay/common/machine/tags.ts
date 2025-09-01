@@ -1,4 +1,5 @@
 export enum IdPayTags {
   Loading = "Loading",
-  Upserting = "Upserting"
+  Upserting = "Upserting",
+  DisableButtons = "DisableButtons"
 }

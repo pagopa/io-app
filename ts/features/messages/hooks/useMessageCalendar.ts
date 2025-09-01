@@ -21,9 +21,8 @@ import {
   removeCalendarEvent
 } from "../../../store/actions/calendarEvents";
 import { preferredCalendarSaveSuccess } from "../../../store/actions/persistedPreferences";
-import { UIMessageId } from "../types";
 
-export const useMessageCalendar = (messageId: UIMessageId) => {
+export const useMessageCalendar = (messageId: string) => {
   const dispatch = useIODispatch();
 
   const preferredCalendar = useIOSelector(preferredCalendarSelector);

@@ -1,14 +1,15 @@
-import { assign, fromCallback, fromPromise, setup } from "xstate";
+import { assign, fromCallback, fromPromise, setup, stateIn } from "xstate";
 import { InitialContext, Context } from "./context";
 import { ProximityEvents } from "./events";
 import { ItwPresentationTags } from "./tags";
 import {
   SendErrorResponseActorOutput,
-  ProximityCommunicationLogicActorInput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
   StartProximityFlowInput,
-  CheckPermissionsInput
+  CheckPermissionsInput,
+  CloseActorOutput,
+  GetQrCodeStringActorOutput
 } from "./actors";
 import { mapEventToFailure } from "./failure";
 
@@ -22,10 +23,18 @@ export const itwProximityMachine = setup({
     events: {} as ProximityEvents
   },
   actions: {
-    onInit: notImplemented,
+    /**
+     * Context manipulation
+     */
+
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     setQRCodeGenerationError: assign({ isQRCodeGenerationError: true }),
     setHasGivenConsent: assign({ hasGivenConsent: true }),
+
+    /**
+     * Navigation
+     */
+
     navigateToGrantPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
@@ -33,6 +42,11 @@ export const itwProximityMachine = setup({
     navigateToSendDocumentsResponseScreen: notImplemented,
     navigateToWallet: notImplemented,
     closeProximity: notImplemented,
+
+    /**
+     * Analytics
+     */
+
     trackQrCodeGenerationOutcome: notImplemented
   },
   actors: {
@@ -43,30 +57,32 @@ export const itwProximityMachine = setup({
     startProximityFlow: fromPromise<void, StartProximityFlowInput>(
       notImplemented
     ),
-    generateQrCodeString: fromPromise<string, void>(notImplemented),
-    closeProximityFlow: fromPromise<boolean, void>(notImplemented),
-    proximityCommunicationLogic: fromCallback<
-      ProximityEvents,
-      ProximityCommunicationLogicActorInput
-    >(notImplemented),
+    generateQrCodeString: fromPromise<GetQrCodeStringActorOutput, void>(
+      notImplemented
+    ),
+    closeProximityFlow: fromPromise<CloseActorOutput, void>(notImplemented),
+    proximityCommunicationLogic: fromCallback<ProximityEvents>(notImplemented),
     terminateProximitySession:
       fromPromise<SendErrorResponseActorOutput>(notImplemented),
     sendDocuments: fromPromise<
       SendDocumentsActorOutput,
       SendDocumentsActorInput
     >(notImplemented)
+  },
+  guards: {
+    hasFailure: notImplemented
   }
 }).createMachine({
   id: "itwProximityMachine",
   context: { ...InitialContext },
   initial: "Idle",
-  entry: "onInit",
   states: {
     Idle: {
       description:
         "The machine is in idle, ready to start the proximity presentation flow",
       on: {
         start: {
+          actions: assign({ ...InitialContext }),
           target: "Permissions"
         }
       }
@@ -258,7 +274,7 @@ export const itwProximityMachine = setup({
           tags: [ItwPresentationTags.Presenting],
           description: "Display the QR code generation error",
           on: {
-            close: {
+            dismiss: {
               target: "#itwProximityMachine.ClosePresentation"
             },
             retry: {
@@ -267,7 +283,7 @@ export const itwProximityMachine = setup({
           }
         },
         RestartingProximityFlow: {
-          tags: [ItwPresentationTags.Loading],
+          tags: [ItwPresentationTags.Presenting, ItwPresentationTags.Loading],
           description: "Restart the proximity flow",
           invoke: {
             src: "startProximityFlow",
@@ -304,10 +320,7 @@ export const itwProximityMachine = setup({
         "Manages the communication lifecycle between the device and the verifier",
       invoke: {
         id: "proximityCommunicationLogic",
-        src: "proximityCommunicationLogic",
-        input: ({ context }) => ({
-          credentialsByType: context.credentialsByType
-        })
+        src: "proximityCommunicationLogic"
       },
       on: {
         "device-connecting": {
@@ -323,9 +336,23 @@ export const itwProximityMachine = setup({
           })),
           target: "DeviceCommunication.ClaimsDisclosure"
         },
+        "device-disconnected": [
+          {
+            // This event is dispatched when the verifier sends the END (0x02) termination flag after sendDocuments.
+            // At this point, the verification process is complete and we can navigate to the success state.
+            guard: stateIn("DeviceCommunication.SendingDocuments"),
+            target: "#itwProximityMachine.Success"
+          },
+          {
+            // This event is dispatched when the verifier sends the END (0x02) termination flag before sendDocuments.
+            // At this point, the verification process is NOT complete and we can safely close the proximity session.
+            actions: "setFailure",
+            target: "DeviceCommunication.Closing"
+          }
+        ],
         "device-error": {
           actions: "setFailure",
-          target: "Failure"
+          target: "DeviceCommunication.Closing"
         }
       },
       states: {
@@ -368,11 +395,11 @@ export const itwProximityMachine = setup({
             id: "sendDocuments",
             src: "sendDocuments",
             input: ({ context }) => ({
-              credentialsByType: context.credentialsByType,
-              verifiedRequest: context.verifierRequest
+              verifierRequest: context.verifierRequest
             }),
             onDone: {
-              target: "#itwProximityMachine.Success"
+              // There's not evidence of the verifier responding to this request.
+              // We are waiting for the onDeviceDisconnected event.
             },
             onError: {
               actions: "setFailure",
@@ -409,14 +436,26 @@ export const itwProximityMachine = setup({
           invoke: {
             id: "terminateProximitySession",
             src: "terminateProximitySession",
-            onDone: {
-              actions: "closeProximity",
-              target: "#itwProximityMachine.Idle"
-            },
-            onError: {
-              actions: "closeProximity",
-              target: "#itwProximityMachine.Idle"
-            }
+            onDone: [
+              {
+                guard: "hasFailure",
+                target: "#itwProximityMachine.Failure"
+              },
+              {
+                actions: "closeProximity",
+                target: "#itwProximityMachine.Idle"
+              }
+            ],
+            onError: [
+              {
+                guard: "hasFailure",
+                target: "#itwProximityMachine.Failure"
+              },
+              {
+                actions: "closeProximity",
+                target: "#itwProximityMachine.Idle"
+              }
+            ]
           }
         }
       }

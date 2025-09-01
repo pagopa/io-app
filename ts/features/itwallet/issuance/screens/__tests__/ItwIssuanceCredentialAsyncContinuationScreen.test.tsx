@@ -15,7 +15,7 @@ import {
 } from "../ItwIssuanceCredentialAsyncContinuationScreen";
 
 const mockStoredCredential: StoredCredential = {
-  credentialType: "MDL",
+  credentialType: "mDL",
   credentialId: "dc_sd_jwt_mDL",
   jwt: { expiration: "2100-01-01T00:00:00Z" },
   parsedCredential: {

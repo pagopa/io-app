@@ -534,9 +534,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                               },
                               {},
                               {
-                                "backgroundColor": "#F4F5F8",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -1412,9 +1409,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                               },
                               {},
                               {
-                                "backgroundColor": "#F4F5F8",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -2030,9 +2024,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                               },
                               {},
                               {
-                                "backgroundColor": "#F4F5F8",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -2647,9 +2638,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                                 "borderColor": "rgba(244,245,248,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#F4F5F8",
-                              },
                               {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,

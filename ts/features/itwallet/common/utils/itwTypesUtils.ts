@@ -1,8 +1,6 @@
 import {
-  AuthorizationDetail as _legacy_AuthorizationDetail,
-  Credential as _legacy_Credential,
-  Trust as _legacy_Trust,
-  WalletInstance as _legacy_WalletInstance
+  AuthorizationDetail as LegacyAuthorizationDetail,
+  Credential as LegacyCredential
 } from "@pagopa/io-react-native-wallet";
 import {
   AuthorizationDetail,
@@ -38,7 +36,7 @@ export type RpEntityConfiguration =
  * TODO: [SIW-2530]: remove the legacy type
  */
 export type LegacyIssuerConfiguration = Awaited<
-  ReturnType<_legacy_Credential.Issuance.EvaluateIssuerTrust>
+  ReturnType<LegacyCredential.Issuance.EvaluateIssuerTrust>
 >["issuerConf"];
 
 /**
@@ -49,12 +47,20 @@ export type IssuerConfiguration =
   | LegacyIssuerConfiguration;
 
 /**
+ * Alias for the SupportedCredentialConfiguration type
+ */
+export type MdocSupportedCredentialConfiguration = Extract<
+  IssuerConfiguration["openid_credential_issuer"]["credential_configurations_supported"][string],
+  { format: "mso_mdoc" }
+>;
+
+/**
  * Alias for the AuthorizationDetail type
  * TODO: [SIW-2530]: remove the legacy type
  */
 export type CredentialAuthDetail =
   | AuthorizationDetail
-  | _legacy_AuthorizationDetail;
+  | LegacyAuthorizationDetail;
 
 /**
  * Alias for the AccessToken type
@@ -63,7 +69,7 @@ export type CredentialAuthDetail =
 export type CredentialAccessToken = Awaited<
   ReturnType<
     | Credential.Issuance.AuthorizeAccess
-    | _legacy_Credential.Issuance.AuthorizeAccess
+    | LegacyCredential.Issuance.AuthorizeAccess
   >
 >["accessToken"];
 
@@ -71,14 +77,24 @@ export type CredentialAccessToken = Awaited<
  * Alias for the ParseCredential type
  */
 export type ParsedCredential = Awaited<
-  ReturnType<typeof Credential.Issuance.verifyAndParseCredential>
+  ReturnType<Credential.Issuance.VerifyAndParseCredential>
 >["parsedCredential"];
 
 /**
  * Alias for the ParsedStatusAttestation type
  */
-export type ParsedStatusAttestation = Awaited<
-  ReturnType<typeof _legacy_Credential.Status.verifyAndParseStatusAttestation>
+export type ParsedStatusAttestation =
+  | Awaited<
+      ReturnType<Credential.Status.VerifyAndParseStatusAssertion>
+    >["parsedStatusAssertion"]["payload"]
+  | LegacyParsedStatusAttestation;
+
+/**
+ * Alias for the ParsedStatusAttestation type v0.7.1
+ * TODO: [SIW-2530]: remove the legacy type
+ */
+export type LegacyParsedStatusAttestation = Awaited<
+  ReturnType<LegacyCredential.Status.VerifyAndParseStatusAttestation>
 >["parsedStatusAttestation"]["payload"];
 
 /**
