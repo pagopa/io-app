@@ -35,9 +35,7 @@ export type ObtainCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.obtainCredential>
 >;
 
-export type ObtainStatusAttestationActorInput = Pick<Context, "credentials"> & {
-  isNewIssuanceFlowEnabled?: boolean;
-};
+export type ObtainStatusAttestationActorInput = Pick<Context, "credentials">;
 
 /**
  * Creates the actors for the eid issuance machine
