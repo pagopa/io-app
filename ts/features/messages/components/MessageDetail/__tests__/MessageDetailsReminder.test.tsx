@@ -3,7 +3,6 @@ import { MessageDetailsReminder } from "../MessageDetailsReminder";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { UIMessageId } from "../../../types";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
 describe("MessageDetailsReminder", () => {
@@ -34,7 +33,7 @@ const renderScreen = (dueDateOrUndefined?: Date) => {
     () => (
       <MessageDetailsReminder
         dueDate={dueDateOrUndefined}
-        messageId={"01HSG6H6M4KK36CV6QWP2VJW3S" as UIMessageId}
+        messageId={"01HSG6H6M4KK36CV6QWP2VJW3S"}
         title="The title"
       />
     ),

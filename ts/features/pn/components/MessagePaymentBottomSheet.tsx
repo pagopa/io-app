@@ -6,12 +6,11 @@ import { useIODispatch } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
 import { cancelQueuedPaymentUpdates } from "../../messages/store/actions";
-import { UIMessageId } from "../../messages/types";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 export type MessagePaymentBottomSheetProps = {
-  messageId: UIMessageId;
+  messageId: string;
   payments: ReadonlyArray<NotificationPaymentInfo>;
   presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
   serviceId: ServiceId;
