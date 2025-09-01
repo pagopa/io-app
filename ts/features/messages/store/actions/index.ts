@@ -6,7 +6,7 @@ import {
 } from "typesafe-actions";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { UIMessage, UIMessageDetails, UIMessageId } from "../../types";
+import { UIMessage, UIMessageDetails } from "../../types";
 import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
@@ -30,7 +30,7 @@ import {
 } from "./archiving";
 
 export type RequestGetMessageDataActionType = {
-  messageId: UIMessageId;
+  messageId: string;
   fromPushNotification: boolean;
 };
 
@@ -43,7 +43,7 @@ export type SuccessGetMessageDataActionType = {
   hasRemoteContent: boolean;
   isLegacyGreenPass?: boolean;
   isPNMessage: boolean;
-  messageId: UIMessageId;
+  messageId: string;
   organizationFiscalCode: string;
   organizationName: string;
   serviceId: ServiceId;
@@ -73,9 +73,9 @@ export const loadThirdPartyMessage = createAsyncAction(
   "THIRD_PARTY_MESSAGE_LOAD_SUCCESS",
   "THIRD_PARTY_MESSAGE_LOAD_FAILURE"
 )<
-  { id: UIMessageId; serviceId: ServiceId; tag: string },
-  { id: UIMessageId; content: ThirdPartyMessageWithContent },
-  { id: UIMessageId; error: Error }
+  { id: string; serviceId: ServiceId; tag: string },
+  { id: string; content: ThirdPartyMessageWithContent },
+  { id: string; error: Error }
 >();
 
 export const resetGetMessageDataAction = createAction(
@@ -93,7 +93,7 @@ export const loadMessageById = createAsyncAction(
   "MESSAGE_BY_ID_LOAD_REQUEST",
   "MESSAGE_BY_ID_LOAD_SUCCESS",
   "MESSAGE_BY_ID_LOAD_FAILURE"
-)<{ id: UIMessageId }, UIMessage, { id: UIMessageId; error: Error }>();
+)<{ id: string }, UIMessage, { id: string; error: Error }>();
 
 /**
  * Load a single message's details given its ID
@@ -102,7 +102,7 @@ export const loadMessageDetails = createAsyncAction(
   "MESSAGE_DETAILS_LOAD_REQUEST",
   "MESSAGE_DETAILS_LOAD_SUCCESS",
   "MESSAGE_DETAILS_LOAD_FAILURE"
-)<{ id: UIMessageId }, UIMessageDetails, { id: string; error: Error }>();
+)<{ id: string }, UIMessageDetails, { id: string; error: Error }>();
 
 type Filter = { getArchived?: boolean };
 
@@ -193,25 +193,25 @@ export const upsertMessageStatusAttributes = createAsyncAction(
 
 export type DownloadAttachmentRequest = {
   attachment: ThirdPartyAttachment;
-  messageId: UIMessageId;
+  messageId: string;
   skipMixpanelTrackingOnFailure: boolean;
 };
 
 export type DownloadAttachmentSuccess = {
   attachment: ThirdPartyAttachment;
-  messageId: UIMessageId;
+  messageId: string;
   path: string;
 };
 
 export type DownloadAttachmentError = {
   attachment: ThirdPartyAttachment;
   error: Error;
-  messageId: UIMessageId;
+  messageId: string;
 };
 
 export type DownloadAttachmentCancel = {
   attachment: ThirdPartyAttachment;
-  messageId: UIMessageId;
+  messageId: string;
 };
 
 /**
@@ -245,13 +245,13 @@ export const removeCachedAttachment = createStandardAction(
 )<DownloadAttachmentSuccess>();
 
 export type UpdatePaymentForMessageRequest = {
-  messageId: UIMessageId;
+  messageId: string;
   paymentId: string;
   serviceId: ServiceId;
 };
 
 export type UpdatePaymentForMessageSuccess = {
-  messageId: UIMessageId;
+  messageId: string;
   paymentId: string;
   paymentData: PaymentInfoResponse;
   serviceId: ServiceId;
@@ -280,7 +280,7 @@ export const toSpecificError = (details: Detail_v2Enum): PaymentError => ({
 export const toTimeoutError = (): PaymentError => ({ type: "timeout" });
 
 export type UpdatePaymentForMessageFailure = {
-  messageId: UIMessageId;
+  messageId: string;
   paymentId: string;
   reason: PaymentError;
   serviceId: ServiceId;
@@ -298,7 +298,7 @@ export const updatePaymentForMessage = createAsyncAction(
 
 export const cancelQueuedPaymentUpdates = createStandardAction(
   "CANCEL_QUEUED_PAYMENT_UPDATES"
-)<{ messageId: UIMessageId }>();
+)<{ messageId: string }>();
 
 export const startPaymentStatusTracking = createStandardAction(
   "MESSAGES_START_TRACKING_PAYMENT_STATUS"

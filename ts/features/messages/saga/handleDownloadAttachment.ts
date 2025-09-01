@@ -23,7 +23,6 @@ import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
 } from "../store/actions";
-import { UIMessageId } from "../types";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { getServiceByMessageId } from "../store/reducers/paginatedById";
 import {
@@ -43,7 +42,7 @@ export const AttachmentsDirectoryPath =
  * @param attachment
  */
 export const pdfSavePath = (
-  messageId: UIMessageId,
+  messageId: string,
   attachmentId: string,
   name: string
 ) => {
@@ -70,7 +69,7 @@ const getDelayMilliseconds = (headers: Record<string, string>) =>
 function trackFailureEvent(
   skipMixpanelTrackingOnFailure: boolean,
   httpStatusCode: number,
-  messageId: UIMessageId,
+  messageId: string,
   serviceId: ServiceId | undefined
 ) {
   if (skipMixpanelTrackingOnFailure) {
