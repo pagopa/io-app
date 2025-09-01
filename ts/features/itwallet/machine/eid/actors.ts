@@ -1,12 +1,13 @@
+import { Trust } from "@pagopa/io-react-native-wallet";
 import cieManager from "@pagopa/react-native-cie";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
-import { Trust } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import * as cieUtils from "../../../authentication/login/cie/utils/cie";
 import { trackItwRequest } from "../../analytics";
+import { Env } from "../../common/utils/environment";
 import {
   getAttestation,
   getIntegrityHardwareKeyTag,
@@ -24,7 +25,9 @@ import {
   itwIntegrityServiceStatusSelector
 } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { Env } from "../../common/utils/environment";
+import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
+import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
+import { itwCredentialUpgradeMachine } from "../upgrade/machine";
 import type {
   AuthenticationContext,
   CieContext,
@@ -193,5 +196,10 @@ export const createEidIssuanceActorsImplementation = (
     assert(sessionToken, "sessionToken is undefined");
 
     await revokeCurrentWalletInstance(env, sessionToken, integrityKeyTag.value);
+  }),
+
+  credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
+    actors: createCredentialUpgradeActorsImplementation(env),
+    actions: createCredentialUpgradeActionsImplementation(store)
   })
 });
