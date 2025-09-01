@@ -29,7 +29,6 @@ export const toUIMessage = (
   const { is_read, is_archived } = messageFromApi as MessageStatusAttributes;
   return {
     id: messageFromApi.id,
-    fiscalCode: messageFromApi.fiscal_code,
     category,
     createdAt: new Date(messageFromApi.created_at),
     isRead: Boolean(is_read),
@@ -40,8 +39,7 @@ export const toUIMessage = (
     organizationFiscalCode: enriched.organization_fiscal_code,
     title: enriched.message_title,
     timeToLive: messageFromApi.time_to_live,
-    hasPrecondition: enriched.has_precondition ?? false,
-    raw: messageFromApi
+    hasPrecondition: enriched.has_precondition ?? false
   };
 };
 
@@ -96,8 +94,7 @@ export const toUIMessageDetails = (
     subject: content.subject,
     serviceId: messageFromApi.sender_service_id,
     hasThirdPartyData: !!content.third_party_data,
-    hasRemoteContent: !!content.third_party_data?.has_remote_content,
-    raw: messageFromApi
+    hasRemoteContent: !!content.third_party_data?.has_remote_content
   };
 };
 
