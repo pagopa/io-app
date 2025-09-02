@@ -1611,62 +1611,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -3573,62 +3541,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -5516,62 +5452,30 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -7444,62 +7348,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -9386,62 +9258,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -11428,62 +11268,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -13442,62 +13250,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -15370,62 +15146,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -17248,62 +16992,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -19210,62 +18922,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -21152,62 +20832,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -23114,62 +22762,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -25156,62 +24772,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -27118,62 +26702,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -29080,62 +28632,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -31050,62 +30570,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -32992,62 +32480,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -35036,62 +34492,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -36978,62 +36402,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -39070,62 +38462,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -41269,62 +40629,30 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -43359,62 +42687,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -45404,62 +44700,30 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -47510,62 +46774,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -49438,62 +48670,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -51408,62 +50608,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -53350,62 +52518,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
@@ -55312,62 +54448,30 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 </Text>
                                 
 Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, 
-                                <View
+                                <Text
                                   accessibilityRole="link"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": undefined,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  <Text
-                                    accessibilityRole="link"
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    scopri gli altri canali abilitati a pagoPA
-                                  </Text>
-                                </View>
+                                  scopri gli altri canali abilitati a pagoPA
+                                </Text>
                               </Text>
                             </View>
                             <View
