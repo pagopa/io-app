@@ -79,17 +79,24 @@ const useNavigateToLoginMethod = () => {
   }, [withIsFastLoginOptInCheck, navigate]);
 
   const navigateToCiePinInsertion = useCallback(() => {
-    dispatch(idpSelected(IdpCIE));
+    if (isActiveSessionLogin) {
+      dispatch(setIdpSelectedActiveSessionLogin(IdpCIE));
+    } else {
+      dispatch(idpSelected(IdpCIE));
+    }
+    const ciePinScreen = isActiveSessionLogin
+      ? "CIE_PIN_ACTIVE_SESSION_LOGIN_SCREEN"
+      : "CIE_PIN_SCREEN";
 
     withIsFastLoginOptInCheck(
       () => {
         navigate(AUTHENTICATION_ROUTES.MAIN, {
-          screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
+          screen: AUTHENTICATION_ROUTES[ciePinScreen]
         });
       },
       { identifier: Identifier.CIE }
     );
-  }, [withIsFastLoginOptInCheck, navigate, dispatch]);
+  }, [dispatch, isActiveSessionLogin, withIsFastLoginOptInCheck, navigate]);
 
   const navigateToCieIdLoginScreen = useCallback(
     (spidLevel: SpidLevel = "SpidL2") => {

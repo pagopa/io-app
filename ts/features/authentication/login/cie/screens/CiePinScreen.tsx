@@ -68,6 +68,7 @@ import {
 } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
 import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -88,6 +89,8 @@ const CiePinScreen = () => {
 
   const dispatch = useIODispatch();
 
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+
   const requestNfcEnabledCheck = useCallback(
     () => dispatch(nfcIsEnabled.request()),
     [dispatch]
@@ -104,7 +107,8 @@ const CiePinScreen = () => {
     useNavigation<
       IOStackNavigationProp<
         AuthenticationParamsList,
-        typeof AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
+        | typeof AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
+        | typeof AUTHENTICATION_ROUTES.CIE_PIN_ACTIVE_SESSION_LOGIN_SCREEN
       >
     >();
   const [pin, setPin] = useState("");
@@ -151,9 +155,14 @@ const CiePinScreen = () => {
           3,
           remoteApiLoginUrlPrefix
         );
-        navigation.navigate(AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE, {
-          cieConsentUri: loginUri
-        });
+        navigation.navigate(
+          isActiveSessionLogin
+            ? AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN
+            : AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,
+          {
+            cieConsentUri: loginUri
+          }
+        );
       } else {
         if (isNfcEnabled) {
           navigation.navigate(AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN, {
@@ -173,6 +182,7 @@ const CiePinScreen = () => {
     authUrlGenerated,
     doLoginSuccess,
     handleAuthenticationOverlayOnClose,
+    isActiveSessionLogin,
     isNfcEnabled,
     navigation,
     pin,

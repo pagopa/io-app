@@ -41,7 +41,7 @@ export const activeSessionLoginReducer = (
     case getType(activeSessionLoginSuccess):
       return {
         ...state,
-        isActiveSessionLoginFailed: false,
+        isActiveSessionLoginFailed: false, // delete?
         isUserLoggedIn: true,
         loginInfo: {
           ...state.loginInfo,

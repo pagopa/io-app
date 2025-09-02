@@ -54,21 +54,18 @@ export const ActiveSessionLandingScreen = () => {
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const {
     // This code is commented because the CIE+PIN and SPID
-    // active session login flow will be implemented in this tasks:
-    // CIE + PIN -> https://pagopa.atlassian.net/browse/IOPID-2928
+    // active session login flow will be implemented in this task:
     // SPID -> https://pagopa.atlassian.net/browse/IOPID-2929
     // navigateToIdpSelection,
-    // navigateToCiePinInsertion,
+    navigateToCiePinInsertion,
     navigateToCieIdLoginScreen,
     isCieSupported
   } = useNavigateToLoginMethod();
-  // This code is commented because the CIE+PIN active
-  // sessionlogin flow will be implemented in this task:
-  // https://pagopa.atlassian.net/browse/IOPID-2928
-  // const handleNavigateToCiePinScreen = useCallback(() => {
-  //   void trackCiePinLoginSelected(store.getState());
-  //   navigateToCiePinInsertion();
-  // }, [store, navigateToCiePinInsertion]);
+
+  const handleNavigateToCiePinScreen = useCallback(() => {
+    // void trackCiePinLoginSelected(store.getState());
+    navigateToCiePinInsertion();
+  }, [navigateToCiePinInsertion]);
 
   const handleNavigateToCieIdLoginScreen = useCallback(() => {
     void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
@@ -89,10 +86,7 @@ export const ActiveSessionLandingScreen = () => {
     title: I18n.t("authentication.landing.cie_bottom_sheet.title"),
     component: (
       <View>
-        {/* This code is commented because the CIE+PIN active
-        session login flow will be implemented in this task:
-        https://pagopa.atlassian.net/browse/IOPID-2928 */}
-        {/* <ModuleNavigation
+        <ModuleNavigation
           title={I18n.t(
             "authentication.landing.cie_bottom_sheet.module_cie_pin.title"
           )}
@@ -102,7 +96,7 @@ export const ActiveSessionLandingScreen = () => {
           icon="fiscalCodeIndividual"
           testID="bottom-sheet-login-with-cie-pin"
           onPress={handleNavigateToCiePinScreen}
-        /> */}
+        />
         <VSpacer size={8} />
         <ModuleNavigation
           title={I18n.t(
