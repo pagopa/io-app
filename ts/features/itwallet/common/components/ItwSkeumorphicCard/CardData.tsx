@@ -7,7 +7,8 @@ import { StyleSheet, View } from "react-native";
 import { QrCodeImage } from "../../../../../components/QrCodeImage";
 import {
   DrivingPrivilegesClaim,
-  StringClaim
+  StringClaim,
+  TestDecoder
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential, StoredCredential } from "../../utils/itwTypesUtils";
 import { CardClaim, CardClaimContainer, CardClaimRenderer } from "./CardClaim";
@@ -126,14 +127,43 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
 
   return (
     <View testID="mdlBackDataTestID" style={styles.container}>
-      {/*      <CardClaimRenderer
+      <CardClaimRenderer
         claim={claims["driving_privileges"]}
-        is={ParsedNestedClaim.is}
-        component={data => {
-          console.log(data);
-          return <></>;
-        }}
-      /> */}
+        is={TestDecoder.is}
+        component={data =>
+          data.map(({ vehicle_category_code, issue_date, expiry_date }) => (
+            <Fragment
+              key={`driving_privilege_row_${vehicle_category_code.value}`}
+            >
+              <CardClaimContainer
+                position={{
+                  left: `41.5%`,
+                  top: `${
+                    privilegesTableRows[vehicle_category_code.value] || 0
+                  }%`
+                }}
+              >
+                <ClaimLabel fontSize={9} hidden={valuesHidden}>
+                  {issue_date.value.toString("DD/MM/YY")}
+                </ClaimLabel>
+              </CardClaimContainer>
+              <CardClaimContainer
+                key={`driving_privilege_${vehicle_category_code.value}`}
+                position={{
+                  left: `55%`,
+                  top: `${
+                    privilegesTableRows[vehicle_category_code.value] || 0
+                  }%`
+                }}
+              >
+                <ClaimLabel fontSize={9} hidden={valuesHidden}>
+                  {expiry_date.value.toString("DD/MM/YY")}
+                </ClaimLabel>
+              </CardClaimContainer>
+            </Fragment>
+          ))
+        }
+      />
       <CardClaimRenderer
         claim={claims["driving_privileges_details"]}
         is={DrivingPrivilegesClaim.is}

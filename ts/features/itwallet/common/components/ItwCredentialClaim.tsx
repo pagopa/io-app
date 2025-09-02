@@ -455,7 +455,6 @@ export const ItwCredentialClaim = ({
         }
         if (NestedArrayClaim.is(decoded)) {
           const nestedParsedClaims = decoded.map(item => parseClaims(item));
-
           // We render the nested claims as a list if there are multiple items
           // or if the claim is a DrivingPrivilegesValueRaw (to handle driving_privileges)
           const shouldRenderAsList =
@@ -532,6 +531,11 @@ export const ItwCredentialClaim = ({
               credentialType={credentialType}
             />
           ); // must be the last one to be checked due to overlap with IPatternStringTag
+        }
+
+        // We handle this case inside NestedArrayClaim section so we don't want to render anything here
+        if (DrivingPrivilegesValueRaw.is(decoded)) {
+          return null;
         }
 
         return <UnknownClaimItem label={claim.label} _claim={decoded} />;

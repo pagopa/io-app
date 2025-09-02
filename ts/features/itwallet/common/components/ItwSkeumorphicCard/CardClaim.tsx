@@ -13,7 +13,8 @@ import {
   NestedArrayClaim,
   PlaceOfBirthClaim,
   SimpleDateClaim,
-  SimpleDateFormat
+  SimpleDateFormat,
+  TestDecoder
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential } from "../../utils/itwTypesUtils";
 import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
@@ -73,6 +74,12 @@ const CardClaim = ({
         ClaimValue.decode,
         E.fold(constNull, decoded => {
           if (NestedArrayClaim.is(decoded)) {
+            // If the claim is a NestedArrayClaim, we don't render it directly
+            // but we return null to skip rendering
+            return null;
+          }
+
+          if (TestDecoder.is(decoded)) {
             // If the claim is a NestedArrayClaim, we don't render it directly
             // but we return null to skip rendering
             return null;

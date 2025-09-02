@@ -87,7 +87,6 @@ export type FlatClaimDisplayFormat = {
   id: string;
   label: string;
   value: unknown;
-  nested?: false;
 };
 
 /**
@@ -97,7 +96,6 @@ export type NestedArrayClaimDisplayFormat = {
   id: string;
   label: string;
   value: Array<ParsedCredential>;
-  nested: true;
 };
 
 /**
@@ -106,16 +104,6 @@ export type NestedArrayClaimDisplayFormat = {
 export type ClaimDisplayFormat =
   | FlatClaimDisplayFormat
   | NestedArrayClaimDisplayFormat;
-
-/**
- * Type guard to check if a value is an array of objects (and not an array of primitives or mixed)
- * @returns true if the value is an array of objects, false otherwise
- * @param v - the value to check
- */
-const isArrayOfObjects = (v: unknown): v is Array<Record<string, unknown>> =>
-  Array.isArray(v) &&
-  v.length > 0 &&
-  v.every(el => typeof el === "object" && el !== null && !Array.isArray(el));
 
 /**
  * Parses the claims from the credential, including nested claims.
@@ -144,24 +132,10 @@ export const parseClaims = (
           ? attribute.name
           : attribute.name?.[getClaimsFullLocale()] || key;
 
-      const v = attribute.value;
-
-      // If the value is an array of objects, we return it in the ParsedCredential format
-      if (isArrayOfObjects(v)) {
-        return {
-          id: key,
-          label: attributeName,
-          value: v as Array<ParsedCredential>,
-          nested: true
-        };
-      }
-
-      // If the value is not an array of objects, we return it as a flat claim
       return {
         id: key,
         label: attributeName,
-        value: v,
-        nested: false
+        value: attribute.value
       };
     });
 };
@@ -431,48 +405,36 @@ const ParsedAttribute = t.type({
   name: LocaleName
 });
 
+/**
+ * Array of records of string keys and ParsedAttribute values.
+ * This is used to parse nested claims.
+ */
 export const NestedArrayClaim = t.array(t.record(t.string, ParsedAttribute));
 
+/**
+ * Decoder for the raw driving privileges array, used to parse the new format of the mDL driving privileges.
+ * This is needed to support the new format of the mDL driving privileges, which is an array of objects with
+ * vehicle_category_code, issue_date and expiry_date fields.
+ */
 const DrivingPrivilegesItemRaw = t.type({
-  vehicle_category_code: ParsedAttribute,
-  issue_date: ParsedAttribute,
-  expiry_date: ParsedAttribute
+  vehicle_category_code: t.type({
+    name: LocaleName,
+    value: t.string
+  }),
+  issue_date: t.type({
+    name: LocaleName,
+    value: SimpleDateClaim
+  }),
+  expiry_date: t.type({
+    name: LocaleName,
+    value: SimpleDateClaim
+  })
 });
 
+/**
+ * Array of driving privileges in the raw format
+ */
 export const DrivingPrivilegesValueRaw = t.array(DrivingPrivilegesItemRaw);
-
-export const DrivingPrivilegesClaimRaw = t.type({
-  id: t.literal("driving_privileges"),
-  label: t.string,
-  nested: t.literal(true),
-  value: DrivingPrivilegesValueRaw
-});
-
-/* const NestedDrivingPrivilegesFormat = t.type({
-  id: t.string,
-  label: t.string,
-  value: t.union([SimpleDateClaim, StringClaim])
-});
-
-export const NewDrivingPrivileges = t.array(
-  t.tuple([
-    t.type({
-      id: t.string,
-      label: t.string,
-      value: StringClaim
-    }),
-    t.type({
-      id: t.string,
-      label: t.string,
-      value: SimpleDateClaim
-    }),
-    t.type({
-      id: t.string,
-      label: t.string,
-      value: SimpleDateClaim
-    })
-  ])
-); */
 
 /**
  * Decoder type for the claim field of the credential.
@@ -485,6 +447,8 @@ export const ClaimValue = t.union([
   PlaceOfBirthClaim,
   // Parse an object representing a mDL driving privileges
   DrivingPrivilegesClaim,
+  // Parse an array of objects representing driving privileges in the raw format
+  DrivingPrivilegesValueRaw,
   // Parse an array of nested claims (the nested claims needs to be re-parsed again)
   NestedArrayClaim,
   // Otherwise parse a date as string
