@@ -6,6 +6,8 @@ import { PreferredLanguageEnum } from "../../../../../definitions/backend/Prefer
 import {
   idPayApiBaseUrl,
   idPayApiUatBaseUrl,
+  idPayApiUatVersion,
+  idPayApiVersion,
   idPayTestToken
 } from "../../../../config";
 import {
@@ -26,6 +28,7 @@ export function* watchIDPaySaga(bpdToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
 
   const baseUrl = isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl;
+  const apiVersion = isPagoPATestEnabled ? idPayApiUatVersion : idPayApiVersion;
   const bearerToken = idPayTestToken ?? bpdToken;
 
   const language = yield* select(preferredLanguageSelector);
@@ -36,7 +39,7 @@ export function* watchIDPaySaga(bpdToken: string): SagaIterator {
     O.getOrElse(() => PreferredLanguageEnum.it_IT)
   );
 
-  const idPayClient = createIDPayClient(baseUrl);
+  const idPayClient = createIDPayClient(baseUrl, apiVersion);
 
   yield* fork(watchIdPayCodeSaga, idPayClient, bearerToken, preferredLanguage);
 
