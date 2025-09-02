@@ -351,7 +351,10 @@ describe("DrivingPrivilegesValueRaw", () => {
     const res = DrivingPrivilegesValueRaw.decode(input);
     expect(E.isRight(res)).toBe(true);
     if (E.isRight(res)) {
-      expect(res.right[0].issue_date.value).toBe("2013-10-19");
+      const date = res.right[0].issue_date.value;
+      expect(date.getFullYear()).toBe(2013);
+      expect(date.getMonth()).toBe(9);
+      expect(date.getDate()).toBe(19);
     }
   });
 
