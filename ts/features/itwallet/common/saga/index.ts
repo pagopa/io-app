@@ -1,7 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { call, fork } from "typed-redux-saga/macro";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
-import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAttestation";
+import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAssertion";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
 import { checkHasNfcFeatureSaga } from "../../identification/common/saga/index.ts";
 import { watchItwLifecycleSaga } from "../../lifecycle/saga";
