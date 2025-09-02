@@ -121,7 +121,7 @@ export function BackendClient(
 
   const getSessionT: GetSessionStateT = {
     method: "get",
-    url: () => "/api/v1/session",
+    url: () => "/api/auth/v1/session",
     query: ({ ["fields"]: fields }) =>
       withoutUndefinedValues({ ["fields"]: fields }),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
@@ -274,7 +274,7 @@ export function BackendClient(
 
   const logoutT: LogoutT = {
     method: "post",
-    url: () => "/logout",
+    url: () => "/api/auth/v1/logout",
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _q14 => ({}),
     body: _b3 => JSON.stringify({}),
