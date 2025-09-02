@@ -126,6 +126,14 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
 
   return (
     <View testID="mdlBackDataTestID" style={styles.container}>
+      {/*      <CardClaimRenderer
+        claim={claims["driving_privileges"]}
+        is={ParsedNestedClaim.is}
+        component={data => {
+          console.log(data);
+          return <></>;
+        }}
+      /> */}
       <CardClaimRenderer
         claim={claims["driving_privileges_details"]}
         is={DrivingPrivilegesClaim.is}

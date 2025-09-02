@@ -12,21 +12,22 @@ import {
   ClaimValue,
   DrivingPrivilegeClaimType,
   DrivingPrivilegesClaim,
+  DrivingPrivilegesValueRaw,
   EmptyStringClaim,
   extractFiscalCode,
   FiscalCodeClaim,
   getSafeText,
   ImageClaim,
   isExpirationDateClaim,
-  ParsedNestedClaim,
+  NestedArrayClaim,
+  parseClaims,
   PdfClaim,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
   SimpleDate,
   SimpleDateClaim,
   SimpleListClaim,
-  StringClaim,
-  WellKnownClaim
+  StringClaim
 } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
@@ -407,7 +408,7 @@ export const ItwCredentialClaim = ({
     ClaimValue.decode,
     E.fold(
       () => <UnknownClaimItem label={claim.label} />,
-      // eslint-disable-next-line complexity,sonarjs/cognitive-complexity
+      // eslint-disable-next-line sonarjs/cognitive-complexity
       _decoded => {
         const decoded = hidden ? HIDDEN_CLAIM_TEXT : _decoded;
         if (PlaceOfBirthClaim.is(decoded)) {
@@ -452,21 +453,18 @@ export const ItwCredentialClaim = ({
           );
           return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
         }
-        if (ParsedNestedClaim.is(decoded)) {
-          // If the claim is a ParsedNestedClaim, we need to decide how to render it
-          // If it's driving_privileges or there are multiple items, we render a list
+        if (NestedArrayClaim.is(decoded)) {
+          const nestedParsedClaims = decoded.map(item => parseClaims(item));
+
+          // We render the nested claims as a list if there are multiple items
+          // or if the claim is a DrivingPrivilegesValueRaw (to handle driving_privileges)
           const shouldRenderAsList =
-            claim.id === WellKnownClaim.driving_privileges ||
-            decoded.length > 1;
-
-          // If there's a single item, we render it expanded
-          const shouldRenderAsExpanded =
-            !shouldRenderAsList && decoded.length === 1;
-
+            nestedParsedClaims.length > 1 ||
+            DrivingPrivilegesValueRaw.is(decoded);
           if (shouldRenderAsList) {
             return (
               <>
-                {decoded.map((singleItemClaims, index) => {
+                {nestedParsedClaims.map((singleItemClaims, index) => {
                   const { summaryLabel, summaryValue } = getNestedItemSummary(
                     claim.id,
                     singleItemClaims
@@ -489,10 +487,8 @@ export const ItwCredentialClaim = ({
                 })}
               </>
             );
-          }
-
-          if (shouldRenderAsExpanded) {
-            const singleItemClaims = decoded[0];
+          } else {
+            const singleItemClaims = nestedParsedClaims[0];
             return (
               <>
                 {singleItemClaims.map(nestedClaim => (
@@ -508,9 +504,6 @@ export const ItwCredentialClaim = ({
               </>
             );
           }
-
-          // If neither strategy applies (empty array), return null
-          return null;
         }
         if (BoolClaim.is(decoded)) {
           return <BoolClaimItem label={claim.label} claim={decoded} />;

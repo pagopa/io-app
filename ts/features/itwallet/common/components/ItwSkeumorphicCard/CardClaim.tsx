@@ -10,7 +10,7 @@ import {
   ClaimValue,
   DrivingPrivilegesClaim,
   ImageClaim,
-  ParsedNestedClaim,
+  NestedArrayClaim,
   PlaceOfBirthClaim,
   SimpleDateClaim,
   SimpleDateFormat
@@ -55,7 +55,7 @@ export type CardClaimProps = Prettify<
 >;
 
 /**
- * Default claim component, it decoded the provided value and renders the corresponging component
+ * Default claim component, it decoded the provided value and renders the corresponding component
  * @returns The corresponding component if a value is correctly decoded, otherwise null
  */
 const CardClaim = ({
@@ -72,8 +72,8 @@ const CardClaim = ({
         claim?.value,
         ClaimValue.decode,
         E.fold(constNull, decoded => {
-          if (ParsedNestedClaim.is(decoded)) {
-            // If the claim is a ParsedNestedClaim, we don't render it directly
+          if (NestedArrayClaim.is(decoded)) {
+            // If the claim is a NestedArrayClaim, we don't render it directly
             // but we return null to skip rendering
             return null;
           }

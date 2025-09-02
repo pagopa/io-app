@@ -73,21 +73,49 @@ export enum WellKnownClaim {
 }
 
 /**
- * Type for each claim to be displayed.
- */
-export type ClaimDisplayFormat = {
-  id: string;
-  label: string;
-  value: unknown;
-};
-
-/**
  * Type for disclosable claims.
  */
 export type DisclosureClaim = {
   claim: ClaimDisplayFormat;
   source: string;
 };
+
+/**
+ * Flat claim that contains a primitive value or an array of primitives
+ */
+export type FlatClaimDisplayFormat = {
+  id: string;
+  label: string;
+  value: unknown;
+  nested?: false;
+};
+
+/**
+ * Nested claim that contains an array of objects (ParsedCredential)
+ */
+export type NestedArrayClaimDisplayFormat = {
+  id: string;
+  label: string;
+  value: Array<ParsedCredential>;
+  nested: true;
+};
+
+/**
+ * Union type for claim display format, either flat or nested
+ */
+export type ClaimDisplayFormat =
+  | FlatClaimDisplayFormat
+  | NestedArrayClaimDisplayFormat;
+
+/**
+ * Type guard to check if a value is an array of objects (and not an array of primitives or mixed)
+ * @returns true if the value is an array of objects, false otherwise
+ * @param v - the value to check
+ */
+const isArrayOfObjects = (v: unknown): v is Array<Record<string, unknown>> =>
+  Array.isArray(v) &&
+  v.length > 0 &&
+  v.every(el => typeof el === "object" && el !== null && !Array.isArray(el));
 
 /**
  * Parses the claims from the credential, including nested claims.
@@ -107,6 +135,7 @@ export const parseClaims = (
   options: { exclude?: Array<string> } = {}
 ): Array<ClaimDisplayFormat> => {
   const { exclude = [] } = options;
+
   return Object.entries(parsedCredential)
     .filter(([key]) => !exclude.includes(key))
     .map(([key, attribute]) => {
@@ -115,23 +144,25 @@ export const parseClaims = (
           ? attribute.name
           : attribute.name?.[getClaimsFullLocale()] || key;
 
-      // Check if the value is an array of objects that can be parsed as nested credentials
-      if (
-        Array.isArray(attribute.value) &&
-        attribute.value.length > 0 &&
-        typeof attribute.value[0] === "object" &&
-        attribute.value[0] !== null
-      ) {
-        // If it is, recursively call parseClaims for each item in the array.
-        // Each item is treated as a `ParsedCredential`.
-        const nestedParsedClaims = attribute.value.map(nestedCredential =>
-          parseClaims(nestedCredential as ParsedCredential)
-        );
-        return { label: attributeName, value: nestedParsedClaims, id: key };
+      const v = attribute.value;
+
+      // If the value is an array of objects, we return it in the ParsedCredential format
+      if (isArrayOfObjects(v)) {
+        return {
+          id: key,
+          label: attributeName,
+          value: v as Array<ParsedCredential>,
+          nested: true
+        };
       }
 
-      // For simple claims or arrays of simple values, return the value directly.
-      return { label: attributeName, value: attribute.value, id: key };
+      // If the value is not an array of objects, we return it as a flat claim
+      return {
+        id: key,
+        label: attributeName,
+        value: v,
+        nested: false
+      };
     });
 };
 
@@ -389,20 +420,59 @@ export const PdfClaim = PatternString(PDF_DATA_REGEX);
 export const SimpleListClaim = t.array(t.string);
 
 /**
- * Decoder for a single nested claim.
- * This is used to represent a claim that has a nested structure,
- * such as a claim with multiple values or a complex object.
+ * Decoder for a nested array of claims.
+ * Each object in the array is a record of string keys and ParsedAttribute values.
+ * The ParsedAttribute is an object with a value and a name, where the name can be either a string or a record of locale and string.
  */
-const NestedClaimDisplayFormat = t.type({
-  id: t.string,
-  label: t.string,
-  value: t.unknown
+const LocaleName = t.union([t.string, t.record(t.string, t.string)]);
+
+const ParsedAttribute = t.type({
+  value: t.string,
+  name: LocaleName
 });
 
-/**
- * Decoder for a nested claim array, which is an array of arrays of {@link NestedClaimDisplayFormat}.
- */
-export const ParsedNestedClaim = t.array(t.array(NestedClaimDisplayFormat));
+export const NestedArrayClaim = t.array(t.record(t.string, ParsedAttribute));
+
+const DrivingPrivilegesItemRaw = t.type({
+  vehicle_category_code: ParsedAttribute,
+  issue_date: ParsedAttribute,
+  expiry_date: ParsedAttribute
+});
+
+export const DrivingPrivilegesValueRaw = t.array(DrivingPrivilegesItemRaw);
+
+export const DrivingPrivilegesClaimRaw = t.type({
+  id: t.literal("driving_privileges"),
+  label: t.string,
+  nested: t.literal(true),
+  value: DrivingPrivilegesValueRaw
+});
+
+/* const NestedDrivingPrivilegesFormat = t.type({
+  id: t.string,
+  label: t.string,
+  value: t.union([SimpleDateClaim, StringClaim])
+});
+
+export const NewDrivingPrivileges = t.array(
+  t.tuple([
+    t.type({
+      id: t.string,
+      label: t.string,
+      value: StringClaim
+    }),
+    t.type({
+      id: t.string,
+      label: t.string,
+      value: SimpleDateClaim
+    }),
+    t.type({
+      id: t.string,
+      label: t.string,
+      value: SimpleDateClaim
+    })
+  ])
+); */
 
 /**
  * Decoder type for the claim field of the credential.
@@ -415,8 +485,8 @@ export const ClaimValue = t.union([
   PlaceOfBirthClaim,
   // Parse an object representing a mDL driving privileges
   DrivingPrivilegesClaim,
-  // Parse a nested credential claim
-  ParsedNestedClaim,
+  // Parse an array of nested claims (the nested claims needs to be re-parsed again)
+  NestedArrayClaim,
   // Otherwise parse a date as string
   SimpleDateClaim,
   // Otherwise parse an image
