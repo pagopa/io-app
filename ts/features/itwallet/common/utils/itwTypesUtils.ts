@@ -1,6 +1,6 @@
 import {
-  AuthorizationDetail as _legacy_AuthorizationDetail,
-  Credential as _legacy_Credential
+  AuthorizationDetail as LegacyAuthorizationDetail,
+  Credential as LegacyCredential
 } from "@pagopa/io-react-native-wallet";
 import {
   AuthorizationDetail,
@@ -37,7 +37,7 @@ export type RpEntityConfiguration =
  * TODO: [SIW-2530]: remove the legacy type
  */
 export type LegacyIssuerConfiguration = Awaited<
-  ReturnType<_legacy_Credential.Issuance.EvaluateIssuerTrust>
+  ReturnType<LegacyCredential.Issuance.EvaluateIssuerTrust>
 >["issuerConf"];
 
 /**
@@ -61,7 +61,7 @@ export type MdocSupportedCredentialConfiguration = Extract<
  */
 export type CredentialAuthDetail =
   | AuthorizationDetail
-  | _legacy_AuthorizationDetail;
+  | LegacyAuthorizationDetail;
 
 /**
  * Alias for the AccessToken type
@@ -70,7 +70,7 @@ export type CredentialAuthDetail =
 export type CredentialAccessToken = Awaited<
   ReturnType<
     | Credential.Issuance.AuthorizeAccess
-    | _legacy_Credential.Issuance.AuthorizeAccess
+    | LegacyCredential.Issuance.AuthorizeAccess
   >
 >["accessToken"];
 
@@ -84,8 +84,18 @@ export type ParsedCredential = Awaited<
 /**
  * Alias for the ParsedStatusAttestation type
  */
-export type ParsedStatusAttestation = Awaited<
-  ReturnType<typeof _legacy_Credential.Status.verifyAndParseStatusAttestation>
+export type ParsedStatusAttestation =
+  | Awaited<
+      ReturnType<Credential.Status.VerifyAndParseStatusAssertion>
+    >["parsedStatusAssertion"]["payload"]
+  | LegacyParsedStatusAttestation;
+
+/**
+ * Alias for the ParsedStatusAttestation type v0.7.1
+ * TODO: [SIW-2530]: remove the legacy type
+ */
+export type LegacyParsedStatusAttestation = Awaited<
+  ReturnType<LegacyCredential.Status.VerifyAndParseStatusAttestation>
 >["parsedStatusAttestation"]["payload"];
 
 /**

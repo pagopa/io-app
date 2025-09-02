@@ -4735,28 +4735,39 @@
             "secondary": "Annulla"
           }
         },
-        "eidResult": {
-          "successL2": {
-            "title": "È tutto pronto!",
-            "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
-            "toast": "Fatto!",
-            "actions": {
-              "continue": "Aggiungi primo documento",
-              "continueAlt": "Aggiungi documento",
-              "close": "Continua più tardi"
-            }
+        "upgrade": {
+          "loading": {
+            "title": "Stiamo aggiornando i tuoi documenti",
+            "subtitle": "Attendi qualche secondo"
           },
           "success": {
             "title": "Il tuo IT-Wallet è pronto!",
             "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale di Stato.",
-            "actions": {
-              "continue": "Esplora IT-Wallet"
-            }
+            "primaryAction": "Esplora IT-Wallet"
+          },
+          "failure": {
+            "title": "Non è stato possibile aggiornare {{credentialName}}",
+            "titleMany": "Non è stato possibile aggiornare i documenti",
+            "subtitle": "Il tuo IT-Wallet è pronto ma un errore tecnico sui sistemi dell’ente che emette la versione digitale dei documenti ne ha impedito l’aggiornamento. Prova ad aggiungere di nuovo i documenti.",
+            "primaryAction": "Esplora IT-Wallet"
+          }
+        },
+        "eidResult": {
+          "success": {
+            "title": "È tutto pronto!",
+            "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
+            "primaryAction": "Aggiungi primo documento",
+            "secondaryAction": "Continua più tardi"
           }
         },
         "emptyWallet": {
-          "itwReadyBanner": {
-            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO."
+          "readyBanner": {
+            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO.",
+            "action": "Aggiungi documento"
+          },
+          "readyBannerL2": {
+            "title": "È tutto pronto!",
+            "content": "Ora puoi aggiungere il primo documento al Portafoglio di IO."
           }
         },
         "credentialResult": {
@@ -5368,7 +5379,7 @@
       },
       "upgrade": {
         "banner": {
-          "title": "IT-Wallet per\ni tuoi documenti",
+          "title": "IT-Wallet per i tuoi documenti",
           "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
           "action": "Ottieni IT-Wallet"
         }
@@ -6113,6 +6124,15 @@
         "input": "Codice sconto",
         "button": "Continua"
       }
+    },
+    "support": {
+      "errorCode": "Codice errore",
+      "serviceId": "ID servizio",
+      "initiativeId": "ID iniziativa",
+      "supportTitle": "Contatta l'assistenza",
+      "chat": "Chiedi aiuto in chat",
+      "additionalDataTitle": "Dati aggiuntivi",
+      "copyAll": "Copia tutti"
     }
   },
   "barcodeScan": {

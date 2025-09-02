@@ -20,7 +20,6 @@ import {
 import { itwParsedCredentialSelector } from "../../../credentials/store/selectors";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
-import { ItwCardValidityCheckMark } from "./ItwCardValidityCheckMark";
 import { CardColorScheme } from "./types";
 import { ItwCardMultiCredentialBadge } from "./ItwCardMultiCredentialBadge.tsx";
 
@@ -140,13 +139,7 @@ export const ItwCredentialCard = ({
             {getCredentialNameFromType(credentialType, "").toUpperCase()}
           </IOText>
           {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
-          {!statusTagProps &&
-            isNewItwRenderable &&
-            (isMultiCredential ? (
-              <ItwCardMultiCredentialBadge />
-            ) : (
-              <ItwCardValidityCheckMark />
-            ))}
+          {isMultiCredential && <ItwCardMultiCredentialBadge />}
         </HStack>
       </View>
       <DigitalVersionBadge

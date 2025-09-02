@@ -1,5 +1,4 @@
 import { createStore } from "redux";
-import { UIMessageId } from "../../types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { appReducer } from "../../../../store/reducers";
@@ -11,14 +10,14 @@ import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPa
 
 describe("MessageAttachment", () => {
   it("Should match the snapshot when there is an error", () => {
-    const messageId = "01HMZWRG7549N76017YR8YBSG2" as UIMessageId;
+    const messageId = "01HMZWRG7549N76017YR8YBSG2";
     const attachmentId = "1";
     const serviceId = "01HMZXFS84T1Q1BN6GXRYT63VJ" as ServiceId;
     const screen = renderScreen(messageId, attachmentId, serviceId, "failure");
     expect(screen.toJSON()).toMatchSnapshot();
   });
   it("Should match the snapshot when everything went fine", () => {
-    const messageId = "01HMZWRG7549N76017YR8YBSG2" as UIMessageId;
+    const messageId = "01HMZWRG7549N76017YR8YBSG2";
     const attachmentId = "1";
     const serviceId = "01HMZXFS84T1Q1BN6GXRYT63VJ" as ServiceId;
     const screen = renderScreen(messageId, attachmentId, serviceId, "success");
@@ -27,7 +26,7 @@ describe("MessageAttachment", () => {
 });
 
 const renderScreen = (
-  messageId: UIMessageId,
+  messageId: string,
   attachmentId: string,
   serviceId: ServiceId,
   configuration: "failure" | "success"
