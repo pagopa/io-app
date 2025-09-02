@@ -1,12 +1,13 @@
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
-import { assign, createActor, fromPromise, StateFrom } from "xstate";
+import { createActor, fromPromise, StateFrom } from "xstate";
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
   StoredCredential,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
+import { CiePreparationType } from "../../../identification/cie/components/ItwCiePreparationBaseScreenContent";
 import { ItwTags } from "../../tags";
 import {
   CreateWalletInstanceActorParams,
@@ -22,7 +23,7 @@ import {
   InitialContext
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
-import { CiePreparationType } from "../../../identification/cie/components/ItwCiePreparationBaseScreenContent";
+import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -30,6 +31,7 @@ const T_INTEGRITY_KEY = "abc";
 const T_WIA: string = "abcdefg";
 
 describe("itwEidIssuanceMachine", () => {
+  const onInit = jest.fn();
   const navigateToTosScreen = jest.fn();
   const navigateToIpzsPrivacyScreen = jest.fn();
   const navigateToIdpSelectionScreen = jest.fn();
@@ -55,7 +57,6 @@ describe("itwEidIssuanceMachine", () => {
   const storeEidCredential = jest.fn();
   const closeIssuance = jest.fn();
   const handleSessionExpired = jest.fn();
-  const onInit = jest.fn();
 
   const verifyTrustFederation = jest.fn();
   const createWalletInstance = jest.fn();
@@ -79,6 +80,7 @@ describe("itwEidIssuanceMachine", () => {
 
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
+      onInit,
       navigateToTosScreen,
       navigateToIpzsPrivacyScreen,
       navigateToIdpSelectionScreen,
@@ -107,11 +109,7 @@ describe("itwEidIssuanceMachine", () => {
       resetWalletInstance,
       trackWalletInstanceCreation,
       trackWalletInstanceRevocation,
-      storeAuthLevel,
-      onInit: assign(onInit),
-      setIsReissuing: assign({
-        isReissuing: true
-      })
+      storeAuthLevel
     },
     actors: {
       verifyTrustFederation: fromPromise<void, VerifyTrustFederationParams>(
@@ -133,7 +131,8 @@ describe("itwEidIssuanceMachine", () => {
       startAuthFlow: fromPromise<
         AuthenticationContext,
         StartAuthFlowActorParams
-      >(startAuthFlow)
+      >(startAuthFlow),
+      credentialUpgradeMachine: itwCredentialUpgradeMachine
     },
     guards: {
       issuedEidMatchesAuthenticatedUser,
@@ -1223,7 +1222,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    actor.send({ type: "start-reissuing" });
+    actor.send({ type: "start", mode: "reissuance" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
@@ -1233,7 +1232,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,
-      isReissuing: true
+      mode: "reissuance"
     });
 
     expect(navigateToL2IdentificationScreen).toHaveBeenCalledTimes(1);
@@ -1276,7 +1275,7 @@ describe("itwEidIssuanceMachine", () => {
       ...initialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      isReissuing: true,
+      mode: "reissuance",
       identification: {
         mode: "spid",
         level: "L2",
@@ -1329,7 +1328,7 @@ describe("itwEidIssuanceMachine", () => {
       ...initialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      isReissuing: true,
+      mode: "reissuance",
       identification: {
         mode: "spid",
         level: "L2",
@@ -1342,7 +1341,7 @@ describe("itwEidIssuanceMachine", () => {
     });
   });
 
-  it("Should go back to Idle state if isReissuing is true", async () => {
+  it("Should go back to Idle state if mode is 'reissuing'", async () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
@@ -1350,7 +1349,7 @@ describe("itwEidIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { UserIdentification: { Identification: "L2" } },
       context: {
-        isReissuing: true
+        mode: "reissuance"
       }
     } as MachineSnapshot);
 
@@ -1364,17 +1363,14 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
   });
 
-  it("Should go back to IpzsPrivacyAcceptance state if isReissuing is false", async () => {
+  it("Should go back to IpzsPrivacyAcceptance state if mode is 'issuing'", async () => {
     isL3FeaturesEnabled.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: { Identification: "L3" } },
-      context: {
-        isReissuing: false
-      }
+      value: { UserIdentification: { Identification: "L3" } }
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
@@ -1390,8 +1386,6 @@ describe("itwEidIssuanceMachine", () => {
   it("should cleanup integrity key tag and fail when obtaining Wallet Instance Attestation fails", async () => {
     const actor = createActor(mockedMachine);
     actor.start();
-
-    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
@@ -1568,7 +1562,7 @@ describe("itwEidIssuanceMachine", () => {
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
-        isL3FeaturesEnabled: true,
+        isL3: true,
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true
@@ -1620,7 +1614,7 @@ describe("itwEidIssuanceMachine", () => {
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
-        isL3FeaturesEnabled: true,
+        isL3: true,
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true
@@ -1683,10 +1677,63 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "start", isL3: true });
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      isL3FeaturesEnabled: true
+      isL3: true
     });
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should handle credentials upgrade", (onDone: jest.DoneCallback) => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "DisplayingPreview" },
+      context: {
+        mode: "upgrade",
+        eid: ItwStoredCredentialsMocks.eid,
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        isL3: true,
+        legacyCredentials: [
+          ItwStoredCredentialsMocks.mdl
+        ] as ReadonlyArray<StoredCredential>
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.subscribe(snap => {
+      if (snap.matches("CredentialsUpgrade")) {
+        onDone();
+      }
+    });
+
+    actor.send({ type: "add-to-wallet" });
+  });
+
+  it("Should skip credentials upgrade if no credentials are present", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "DisplayingPreview" },
+      context: {
+        mode: "upgrade",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        isL3: true,
+        legacyCredentials: [] as ReadonlyArray<StoredCredential>
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "add-to-wallet" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Success");
   });
 });
