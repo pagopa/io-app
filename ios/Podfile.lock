@@ -1961,7 +1961,7 @@ PODS:
     - Yoga
   - RNI18n (2.0.15):
     - React
-  - RNKeychain (9.2.2):
+  - RNKeychain (10.0.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2745,7 +2745,7 @@ SPEC CHECKSUMS:
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 92e89a04cd0d1c77f383a55d14c15e7f423f4c00
   RNI18n: 11ec5086508673ef71b5b567da3e8bcca8a926e1
-  RNKeychain: e593cdad28fe4365dbfa703d25560d765a16bc52
+  RNKeychain: 8024819eb861575c8e1bdcfc6e02c2b947ed16f7
   RNPermissions: d26bad65a4dcb0a360a6a3c5c8f54bf43017e578
   RNQrGenerator: 60eab4f7c9e3f09db78029636fe356dca5cb585f
   RNReactNativeHapticFeedback: f9cfb40676f21a52e9e172648d033f539156a5ec
