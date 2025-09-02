@@ -48,7 +48,7 @@ import {
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import * as Cie from "../../components/cie";
+import * as Cie from "../../cie/components/WebView";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 
 // the timeout we sleep until move to consent form screen when authentication goes well

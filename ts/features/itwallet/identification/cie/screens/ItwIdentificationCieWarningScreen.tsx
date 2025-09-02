@@ -1,15 +1,15 @@
 import { Linking } from "react-native";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
-import { trackItwKoStateAction } from "../../analytics";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
-import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { CiePreparationType } from "../cie/components/ItwCiePreparationBaseScreenContent";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../../store/hooks";
+import { trackItwKoStateAction } from "../../../analytics";
+import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { CiePreparationType } from "../components/ItwCiePreparationBaseScreenContent";
 export type CieWarningType = "noPin" | "noCie";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {
