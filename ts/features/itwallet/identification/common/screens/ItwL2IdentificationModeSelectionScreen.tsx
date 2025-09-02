@@ -6,21 +6,21 @@ import {
   ModuleNavigation,
   VStack
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import I18n from "../../../../../i18n";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
-} from "../../analytics";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useIOSelector } from "../../../../store/hooks";
-import { itwDisabledIdentificationMethodsSelector } from "../../common/store/selectors/remoteConfig";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
+} from "../../../analytics";
+import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useIOSelector } from "../../../../../store/hooks";
+import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import {
   isCIEAuthenticationSupportedSelector,
   isL3FeaturesEnabledSelector
-} from "../../machine/eid/selectors";
+} from "../../../machine/eid/selectors";
 
 export type ItwL2IdentificationNavigationParams = {
   eidReissuing?: boolean;
