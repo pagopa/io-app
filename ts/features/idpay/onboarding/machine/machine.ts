@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import { and, assertEvent, assign, fromPromise, setup } from "xstate";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
-import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
+import { InitiativeBeneficiaryRuleDTO } from "../../../../../definitions/idpay/InitiativeBeneficiaryRuleDTO";
 import { IdPayTags } from "../../common/machine/tags";
 import { InitiativeFailureType } from "../../configuration/types/failure";
 import { OnboardingFailure } from "../types/OnboardingFailure";
@@ -50,9 +50,8 @@ export const idPayOnboardingMachine = setup({
       O.Option<OnboardingStatusEnum>,
       O.Option<string>
     >(notImplementedStub),
-    acceptTos: fromPromise<undefined, O.Option<string>>(notImplementedStub),
     getRequiredCriteria: fromPromise<
-      O.Option<RequiredCriteriaDTO>,
+      O.Option<InitiativeBeneficiaryRuleDTO>,
       O.Option<string>
     >(notImplementedStub),
     acceptRequiredCriteria: fromPromise<undefined, Context>(notImplementedStub)
@@ -65,13 +64,16 @@ export const idPayOnboardingMachine = setup({
     hasPdndCriteria: ({ context }) =>
       pipe(
         context.requiredCriteria,
-        O.map(({ pdndCriteria }) => pdndCriteria.length > 0),
+        O.map(({ automatedCriteria }) => (automatedCriteria?.length || 0) > 0),
         O.getOrElse(() => false)
       ),
     hasSelfDecalrationList: ({ context }) =>
       pipe(
         context.requiredCriteria,
-        O.map(({ selfDeclarationList }) => selfDeclarationList.length > 0),
+        O.map(
+          ({ selfDeclarationCriteria }) =>
+            (selfDeclarationCriteria?.length || 0) > 0
+        ),
         O.getOrElse(() => false)
       ),
     hasBooleanSelfDeclarationList: ({ context }) =>
@@ -197,7 +199,7 @@ export const idPayOnboardingMachine = setup({
             target: "EnableMessage"
           },
           {
-            target: "AcceptingTos"
+            target: "LoadingCriteria"
           }
         ]
       }
@@ -207,17 +209,6 @@ export const idPayOnboardingMachine = setup({
       entry: "navigateToEnableMessageScreen",
       on: {
         next: {
-          target: "AcceptingTos"
-        }
-      }
-    },
-
-    AcceptingTos: {
-      tags: [IdPayTags.Loading],
-      invoke: {
-        src: "acceptTos",
-        input: ({ context }) => selectInitiativeId(context),
-        onDone: {
           target: "LoadingCriteria"
         },
         onError: [
@@ -352,7 +343,7 @@ export const idPayOnboardingMachine = setup({
               actions: assign(({ context, event }) => ({
                 selfDeclarationsBoolAnswers: {
                   ...context.selfDeclarationsBoolAnswers,
-                  [event.criteria.code]: event.criteria.value
+                  [event.criteria.code]: event.criteria.accepted
                 }
               }))
             },

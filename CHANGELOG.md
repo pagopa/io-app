@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0-rc.7](https://github.com/pagopa/io-app/compare/3.12.0-rc.6...3.12.0-rc.7) (2025-09-02)
+
+
+### Bug Fixes
+
+* handle errors thrown in extractErrorMessageFromIssuerConf ([2e24f64](https://github.com/pagopa/io-app/commit/2e24f642c160c7dc443cf719381bd45490cce973))
+
 ## [3.12.0-rc.6](https://github.com/pagopa/io-app/compare/3.12.0-rc.5...3.12.0-rc.6) (2025-08-28)
 
 

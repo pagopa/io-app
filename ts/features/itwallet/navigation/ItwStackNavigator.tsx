@@ -2,23 +2,31 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
-import { Platform } from "react-native";
 import { ComponentType, memo } from "react";
+import { Platform } from "react-native";
 import { isGestureEnabled } from "../../../utils/navigation";
+import { isConnectedSelector } from "../../connectivity/store/selectors";
+import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
+import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
-import { ItwActivateNfcScreen } from "../identification/screens/ItwActivateNfcScreen.tsx";
-import { ItwCieCardReaderL2Screen } from "../identification/screens/cie/ItwCieCardReaderL2Screen";
+import { ItwActivateNfcScreen } from "../identification/cie/screens/ItwActivateNfcScreen.tsx";
 import { ItwCieCardReaderScreen as ItwCieCardReaderL3Screen } from "../identification/cie/screens/ItwCieCardReaderScreen";
-import { ItwCieExpiredOrInvalidScreen } from "../identification/screens/cie/ItwCieExpiredOrInvalidScreen.tsx";
 import { ItwCiePinScreen } from "../identification/cie/screens/ItwCiePinScreen.tsx";
-import { ItwCieUnexpectedErrorScreen } from "../identification/screens/cie/ItwCieUnexpectedErrorScreen.tsx";
-import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrongCardScreen.tsx";
-import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWrongCiePinScreen.tsx";
-import ItwCieIdLoginScreen from "../identification/screens/cieId/ItwCieIdLoginScreen";
-import { ItwIdentificationIdpSelectionScreen } from "../identification/screens/ItwIdentificationIdpSelectionScreen";
-import ItwSpidIdpLoginScreen from "../identification/screens/spid/ItwSpidIdpLoginScreen";
+import { ItwCiePreparationCardScreen } from "../identification/cie/screens/ItwCiePreparationCardScreen.tsx";
+import { ItwCiePreparationPinScreen } from "../identification/cie/screens/ItwCiePreparationPinScreen.tsx";
+import { ItwIdentificationCieWarningScreen } from "../identification/cie/screens/ItwIdentificationCieWarningScreen.tsx";
+import ItwCieIdLoginScreen from "../identification/cieId/screens/ItwCieIdLoginScreen.tsx";
+import { ItwCieCardReaderL2Screen } from "../identification/cie/screens/ItwCieCardReaderL2Screen.tsx";
+import { ItwCieExpiredOrInvalidScreen } from "../identification/cie/screens/ItwCieExpiredOrInvalidScreen.tsx";
+import { ItwCieUnexpectedErrorScreen } from "../identification/cie/screens/ItwCieUnexpectedErrorScreen.tsx";
+import { ItwCieWrongCardScreen } from "../identification/cie/screens/ItwCieWrongCardScreen.tsx";
+import { ItwCieWrongCiePinScreen } from "../identification/cie/screens/ItwCieWrongCiePinScreen.tsx";
+import { ItwL2IdentificationModeSelectionScreen } from "../identification/common/screens/ItwL2IdentificationModeSelectionScreen.tsx";
+import { ItwL3IdentificationModeSelectionScreen } from "../identification/common/screens/ItwL3IdentificationModeSelectionScreen.tsx";
+import { ItwIdentificationIdpSelectionScreen } from "../identification/spid/screens/ItwIdentificationIdpSelectionScreen.tsx";
+import ItwSpidIdpLoginScreen from "../identification/spid/screens/ItwSpidIdpLoginScreen.tsx";
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialFailureScreen } from "../issuance/screens/ItwIssuanceCredentialFailureScreen";
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
@@ -26,46 +34,38 @@ import { ItwIssuanceCredentialTrustIssuerScreen } from "../issuance/screens/ItwI
 import { ItwIssuanceEidFailureScreen } from "../issuance/screens/ItwIssuanceEidFailureScreen";
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
+import { ItwIssuanceUpcomingCredentialScreen } from "../issuance/screens/ItwIssuanceUpcomingCredentialScreen";
 import { ItwIdentityNotMatchingScreen } from "../lifecycle/screens/ItwIdentityNotMatchingScreen";
 import { ItwLifecycleWalletRevocationScreen } from "../lifecycle/screens/ItwLifecycleWalletRevocationScreen";
+import {
+  ItwCredentialIssuanceMachineContext,
+  ItwCredentialIssuanceMachineProvider
+} from "../machine/credential/provider";
+import {
+  ItwEidIssuanceMachineContext,
+  ItwEidIssuanceMachineProvider
+} from "../machine/eid/provider";
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
+import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
+import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModal } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailScreen } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/details/screens/ItwPresentationCredentialFiscalCodeModal";
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
-import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
-import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
-import { ItwCiePreparationCardScreen } from "../identification/cie/screens/ItwCiePreparationCardScreen.tsx";
-import { ItwCiePreparationPinScreen } from "../identification/cie/screens/ItwCiePreparationPinScreen.tsx";
-import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
-import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
-import { useIOSelector } from "../../../store/hooks";
-import { isConnectedSelector } from "../../connectivity/store/selectors";
-import { ItwIdentificationCieWarningScreen } from "../identification/screens/ItwIdentificationCieWarningScreen";
-import { ItwL3IdentificationModeSelectionScreen } from "../identification/screens/ItwL3IdentificationModeSelectionScreen";
-import { ItwL2IdentificationModeSelectionScreen } from "../identification/screens/ItwL2IdentificationModeSelectionScreen";
+import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/ItwPresentationPidDetailScreen.tsx";
 import {
   ItwProximityMachineContext,
   ItwProximityMachineProvider
 } from "../presentation/proximity/machine/provider.tsx";
-import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/ItwGrantPermissionsScreen.tsx";
 import { ItwActivateBluetoothScreen } from "../presentation/proximity/screens/ItwActivateBluetoothScreen.tsx";
+import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/ItwGrantPermissionsScreen.tsx";
 import { ItwProximityClaimsDisclosureScreen } from "../presentation/proximity/screens/ItwProximityClaimsDisclosureScreen.tsx";
-import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximity/screens/ItwProximitySendDocumentsResponseScreen.tsx";
 import { ItwProximityFailureScreen } from "../presentation/proximity/screens/ItwProximityFailureScreen.tsx";
-import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
-import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
-import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/ItwPresentationPidDetailScreen.tsx";
-import { ItwIssuanceUpcomingCredentialScreen } from "../issuance/screens/ItwIssuanceUpcomingCredentialScreen";
-import {
-  ItwEidIssuanceMachineContext,
-  ItwEidIssuanceMachineProvider
-} from "../machine/eid/provider";
-import {
-  ItwCredentialIssuanceMachineContext,
-  ItwCredentialIssuanceMachineProvider
-} from "../machine/credential/provider";
+import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximity/screens/ItwProximitySendDocumentsResponseScreen.tsx";
+import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
+import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
+import { useIOSelector } from "../../../store/hooks";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 

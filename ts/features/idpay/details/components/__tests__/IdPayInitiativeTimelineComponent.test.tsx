@@ -8,16 +8,18 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { IDPayDetailsRoutes } from "../../navigation";
 import { PaginatedTimelineDTO } from "../../store";
 import { IdPayInitiativeTimelineComponent } from "../IdPayInitiativeTimelineComponent";
+import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
+import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 
 const mockedTimeline: PaginatedTimelineDTO = {
   0: {
     lastUpdate: new Date(),
-    operationList: [],
+    operationList: [] as ReadonlyArray<OperationListDTO>,
     pageNo: 1,
     pageSize: 5,
     totalElements: 50,
     totalPages: 10
-  }
+  } as TimelineDTO
 };
 
 describe("Test IdPayInitiativeTimelineComponent screen", () => {
