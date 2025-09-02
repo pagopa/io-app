@@ -1,4 +1,10 @@
-import { Badge, IOVisualCostants, ListItemHeader, ModuleCredential, VStack } from "@pagopa/io-app-design-system";
+import {
+  Badge,
+  IOVisualCostants,
+  ListItemHeader,
+  ModuleCredential,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { useCallback, useMemo } from "react";
@@ -10,17 +16,35 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
-import { isCgnDetailsLoading, isCgnInformationAvailableSelector } from "../../../bonus/cgn/store/reducers/details";
+import {
+  isCgnDetailsLoading,
+  isCgnInformationAvailableSelector
+} from "../../../bonus/cgn/store/reducers/details";
 import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availableBonusesTypes";
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
-import { trackShowCredentialsList, trackStartAddNewCredential } from "../../analytics";
+import {
+  trackShowCredentialsList,
+  trackStartAddNewCredential
+} from "../../analytics";
 import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
-import { itwIsL3EnabledSelector, itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences";
-import { isItwEnabledSelector, itwDisabledCredentialsSelector } from "../../common/store/selectors/remoteConfig";
+import {
+  itwIsL3EnabledSelector,
+  itwRequestedCredentialsSelector
+} from "../../common/store/selectors/preferences";
+import {
+  isItwEnabledSelector,
+  itwDisabledCredentialsSelector
+} from "../../common/store/selectors/remoteConfig";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector, itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { selectCredentialTypeOption, selectIsLoading } from "../../machine/credential/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
+import {
+  selectCredentialTypeOption,
+  selectIsLoading
+} from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { ItwOnboardingModuleCredential } from "../components/ItwOnboardingModuleCredential";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard.ts";
