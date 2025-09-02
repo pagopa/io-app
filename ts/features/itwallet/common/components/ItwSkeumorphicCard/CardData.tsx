@@ -127,6 +127,9 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
 
   return (
     <View testID="mdlBackDataTestID" style={styles.container}>
+      {/*
+      This is the renderer of the new MDL back driving privileges data
+       */}
       <CardClaimRenderer
         claim={claims["driving_privileges"]}
         is={DrivingPrivilegesValueRaw.is}
@@ -164,6 +167,10 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
           ))
         }
       />
+      {/*
+      This is the renderer of the old MDL back driving privileges data
+      TODO: remove this when the old MDL will not be supported anymore
+       */}
       <CardClaimRenderer
         claim={claims["driving_privileges_details"]}
         is={DrivingPrivilegesClaim.is}
