@@ -262,11 +262,13 @@ const getCredentialInvalidStatusDetails = (
       credentialConfigurationId,
       issuerConf
     }),
-    O.map(params =>
-      Errors.extractErrorMessageFromIssuerConf(params.errorCode, {
-        credentialType: params.credentialConfigurationId,
-        issuerConf: params.issuerConf
-      })
+    O.chain(params =>
+      O.tryCatch(() =>
+        Errors.extractErrorMessageFromIssuerConf(params.errorCode, {
+          credentialType: params.credentialConfigurationId,
+          issuerConf: params.issuerConf
+        })
+      )
     ),
     O.map(message => message?.[getClaimsFullLocale()]),
     O.toUndefined
