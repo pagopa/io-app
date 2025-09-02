@@ -7,8 +7,8 @@ import { StyleSheet, View } from "react-native";
 import { QrCodeImage } from "../../../../../components/QrCodeImage";
 import {
   DrivingPrivilegesClaim,
-  StringClaim,
-  TestDecoder
+  DrivingPrivilegesValueRaw,
+  StringClaim
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential, StoredCredential } from "../../utils/itwTypesUtils";
 import { CardClaim, CardClaimContainer, CardClaimRenderer } from "./CardClaim";
@@ -129,7 +129,7 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
     <View testID="mdlBackDataTestID" style={styles.container}>
       <CardClaimRenderer
         claim={claims["driving_privileges"]}
-        is={TestDecoder.is}
+        is={DrivingPrivilegesValueRaw.is}
         component={data =>
           data.map(({ vehicle_category_code, issue_date, expiry_date }) => (
             <Fragment
