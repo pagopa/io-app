@@ -177,7 +177,7 @@ export const obtainCredential = async ({
             issuerConf,
             credential,
             credential_configuration_id,
-            { credentialCryptoContext, ignoreMissingAttributes: false },
+            { credentialCryptoContext, ignoreMissingAttributes: true },
             env.X509_CERT_ROOT
           );
 
