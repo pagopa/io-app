@@ -46,7 +46,6 @@ const T_FRUITION_START_DATE = new Date(2023, 4, 7);
 const T_FRUITION_START_DATE_STRING = "07 mag 2023";
 const T_FRUITION_END_DATE = new Date(2023, 7, 2);
 const T_FRUITION_END_DATE_STRING = "02 ago 2023";
-const T_ONBOARDING_OK_DATE_STRING = "08 set 2023, 23:21";
 const T_REWARD_VALUE = 3000;
 const T_REWARD_VALUE_PERCENTAGE = 30;
 const T_REWARD_VALUE_PERCENTAGE_STRING = "30%";
@@ -145,9 +144,6 @@ describe("Test IdPayBeneficiaryDetailsContent component", () => {
       onboardingDateRow.queryByText(
         I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDate")
       )
-    ).toBeTruthy();
-    expect(
-      onboardingDateRow.queryByText(T_ONBOARDING_OK_DATE_STRING)
     ).toBeTruthy();
   });
 

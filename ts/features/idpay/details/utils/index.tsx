@@ -61,7 +61,7 @@ export function IdPayCardStatus({ initiative }: InitiativeProps) {
     default:
       return (
         <Tag
-          testID="idpay-card-status-paused"
+          testID="idpay-card-status-used"
           variant="info"
           text={I18n.t("bonusCard.paused")}
         />

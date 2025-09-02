@@ -1,6 +1,9 @@
 import { render } from "@testing-library/react-native";
 import { IdPayCardStatus } from "..";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
+import {
+  InitiativeDTO,
+  VoucherStatusEnum
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 
 describe("IDPay screen details utils tests", () => {
   describe("IdPayCardStatus ", () => {
@@ -10,6 +13,7 @@ describe("IDPay screen details utils tests", () => {
         initiativeName: "Test Initiative",
         organizationName: "Test Organization",
         nInstr: 1,
+        voucherStatus: VoucherStatusEnum.ACTIVE,
         lastCounterUpdate: new Date(),
         status: "REFUNDABLE",
         voucherEndDate: new Date("2023-10-31T00:00:00Z")
@@ -28,6 +32,7 @@ describe("IDPay screen details utils tests", () => {
         initiativeName: "Test Initiative",
         organizationName: "Test Organization",
         voucherEndDate: new Date("2023-10-05T00:00:00Z"),
+        voucherStatus: VoucherStatusEnum.EXPIRING,
         nInstr: 1,
         lastCounterUpdate: new Date(),
         status: "REFUNDABLE"
@@ -46,6 +51,7 @@ describe("IDPay screen details utils tests", () => {
         initiativeName: "Test Initiative",
         organizationName: "Test Organization",
         voucherEndDate: new Date("2023-09-30T00:00:00Z"),
+        voucherStatus: VoucherStatusEnum.EXPIRED,
         nInstr: 1,
         lastCounterUpdate: new Date(),
         status: "REFUNDABLE"
@@ -58,12 +64,13 @@ describe("IDPay screen details utils tests", () => {
       expect(getByTestId("idpay-card-status-expired")).toBeDefined();
     });
 
-    it("should render REMOVED status correctly", () => {
+    it("should render USED status correctly", () => {
       const initiative: InitiativeDTO = {
         initiativeId: "4",
         initiativeName: "Test Initiative",
         organizationName: "Test Organization",
         voucherEndDate: new Date("2023-10-31T00:00:00Z"),
+        voucherStatus: VoucherStatusEnum.USED,
         nInstr: 1,
         lastCounterUpdate: new Date(),
         status: "UNSUBSCRIBED"
@@ -73,7 +80,7 @@ describe("IDPay screen details utils tests", () => {
         <IdPayCardStatus initiative={initiative} />
       );
 
-      expect(getByTestId("idpay-card-status-removed")).toBeDefined();
+      expect(getByTestId("idpay-card-status-used")).toBeDefined();
     });
   });
 });
