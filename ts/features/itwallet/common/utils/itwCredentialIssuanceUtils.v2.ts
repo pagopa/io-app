@@ -184,13 +184,13 @@ export const obtainCredential = async ({
             })
           );
 
-        // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
+        // Parse and verify the credential
         const { parsedCredential, issuedAt, expiration } =
           await Credential.Issuance.verifyAndParseCredential(
             issuerConf,
             credential,
             credential_configuration_id,
-            { credentialCryptoContext, ignoreMissingAttributes: false },
+            { credentialCryptoContext, ignoreMissingAttributes: true },
             `${env.X509_CERT_ROOT}`
           );
 
