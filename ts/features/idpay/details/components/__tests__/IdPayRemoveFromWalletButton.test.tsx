@@ -25,7 +25,7 @@ const hideButtonProps = {
   initiativeName: "Test Initiative",
   organizationName: "Test Organization",
   voucherEndDate: new Date(),
-  voucherStatus: VoucherStatusEnum.ACTIVE,
+  voucherStatus: VoucherStatusEnum.USED,
   nInstr: 1,
   lastCounterUpdate: new Date(),
   status: StatusEnum.UNSUBSCRIBED
