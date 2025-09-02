@@ -3,13 +3,15 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import {
   CodeEnum,
-  OperatorEnum,
-  PDNDCriteriaDTO
-} from "../../../../../definitions/idpay/PDNDCriteriaDTO";
+  AutomatedCriteriaDTO
+} from "../../../../../definitions/idpay/AutomatedCriteriaDTO";
 import I18n from "../../../../i18n";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 
-const getPDNDCriteriaValueString = (code: CodeEnum, value?: string): string => {
+const getPDNDCriteriaValueString = (
+  code?: CodeEnum,
+  value?: string
+): string => {
   switch (code) {
     case CodeEnum.ISEE:
       return pipe(
@@ -27,11 +29,10 @@ const getPDNDCriteriaValueString = (code: CodeEnum, value?: string): string => {
   }
 };
 
-const getPDNDCriteriaDescription = (criteria: PDNDCriteriaDTO) =>
+const getPDNDCriteriaDescription = (criteria: AutomatedCriteriaDTO) =>
   pipe(
     criteria.operator,
     O.fromNullable,
-    O.alt(() => O.some(OperatorEnum.EQ)),
     O.map(operator => ({
       operator,
       value: getPDNDCriteriaValueString(criteria.code, criteria.value),

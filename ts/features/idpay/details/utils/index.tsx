@@ -5,95 +5,65 @@ import {
 } from "@pagopa/io-app-design-system";
 import {
   InitiativeDTO,
-  StatusEnum
+  VoucherStatusEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
 import I18n from "../../../../i18n";
-import { BonusStatus } from "../../../../components/BonusCard/type";
 import { format } from "../../../../utils/dates";
 
 type InitiativeProps = {
   initiative: InitiativeDTO;
 };
 
-export const getInitiativeStatus = ({
-  initiative
-}: InitiativeProps): BonusStatus => {
-  if (initiative.status === StatusEnum.UNSUBSCRIBED) {
-    return "REMOVED";
-  }
-
-  switch (initiative.voucherStatus) {
-    case "USED":
-      return "USED";
-    case "EXPIRED":
-      return "EXPIRED";
-    case "ACTIVE":
-      return "ACTIVE";
-    case "EXPIRING":
-      return "EXPIRING";
-  }
-
-  return "ACTIVE";
-};
-
 export function IdPayCardStatus({ initiative }: InitiativeProps) {
   const { themeType } = useIOThemeContext();
   const isDark = themeType === "dark";
-  switch (getInitiativeStatus({ initiative })) {
-    case "ACTIVE":
+  switch (initiative.voucherStatus) {
+    case VoucherStatusEnum.ACTIVE:
       return (
-        <LabelMini
-          weight="Regular"
-          color={isDark ? "white" : "grey-650"}
-          testID="idpay-card-status-active"
-        >
-          {I18n.t("bonusCard.validUntil", {
-            endDate: format(initiative.voucherEndDate, "DD/MM/YY")
-          })}
-        </LabelMini>
+        initiative.voucherEndDate && (
+          <LabelMini
+            weight="Regular"
+            color={isDark ? "white" : "grey-650"}
+            testID="idpay-card-status-active"
+          >
+            {I18n.t("bonusCard.validUntil", {
+              endDate: format(initiative.voucherEndDate, "DD/MM/YY")
+            })}
+          </LabelMini>
+        )
       );
-    case "EXPIRING":
+    case VoucherStatusEnum.EXPIRING:
       return (
-        <Tag
-          testID="idpay-card-status-expiring"
-          variant="warning"
-          text={I18n.t("bonusCard.expiring", {
-            endDate: format(initiative.voucherEndDate, "DD/MM/YY")
-          })}
-        />
+        initiative.voucherEndDate && (
+          <Tag
+            testID="idpay-card-status-expiring"
+            variant="warning"
+            text={I18n.t("bonusCard.expiring", {
+              endDate: format(initiative.voucherEndDate, "DD/MM/YY")
+            })}
+          />
+        )
       );
-    case "EXPIRED":
+    case VoucherStatusEnum.EXPIRED:
       return (
-        <Tag
-          testID="idpay-card-status-expired"
-          variant="error"
-          text={I18n.t("bonusCard.expired", {
-            endDate: format(initiative.voucherEndDate, "DD/MM/YY")
-          })}
-        />
+        initiative.voucherEndDate && (
+          <Tag
+            testID="idpay-card-status-expired"
+            variant="error"
+            text={I18n.t("bonusCard.expired", {
+              endDate: format(initiative.voucherEndDate, "DD/MM/YY")
+            })}
+          />
+        )
       );
-    case "PAUSED":
-      return (
-        <Tag
-          testID="idpay-card-status-paused"
-          variant="info"
-          text={I18n.t("bonusCard.paused")}
-        />
-      );
-    case "REMOVED":
-      return (
-        <Tag
-          testID="idpay-card-status-removed"
-          variant="error"
-          text={I18n.t("bonusCard.removed")}
-        />
-      );
-    case "USED":
+    // TODO: Add the used tag
+    case VoucherStatusEnum.USED:
+    default:
       return (
         <Tag
           testID="idpay-card-status-used"
-          variant="success"
-          text={I18n.t("bonusCard.used")}
+          variant="info"
+          text={I18n.t("bonusCard.paused")}
         />
       );
   }

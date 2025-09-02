@@ -196,7 +196,7 @@ const getPid = async ({
       issuerConf,
       credential,
       credentialIdentifierDefinition.credential_configuration_id,
-      { credentialCryptoContext }
+      { credentialCryptoContext, ignoreMissingAttributes: true }
     );
 
   return {
