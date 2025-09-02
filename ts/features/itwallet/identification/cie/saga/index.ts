@@ -1,8 +1,11 @@
 import { call, put } from "typed-redux-saga/macro";
 import cieManager from "@pagopa/react-native-cie";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
-import { convertUnknownToError } from "../../../../utils/errors";
-import { itwHasNfcFeature } from "../store/actions";
+import {
+  ReduxSagaEffect,
+  SagaCallReturnType
+} from "../../../../../types/utils";
+import { convertUnknownToError } from "../../../../../utils/errors";
+import { itwHasNfcFeature } from "../../common/store/actions";
 
 export function* checkHasNfcFeatureSaga(): Generator<ReduxSagaEffect, void> {
   try {
