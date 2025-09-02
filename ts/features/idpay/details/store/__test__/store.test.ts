@@ -22,13 +22,14 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../actions";
+import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 
-const mockResponseSuccess: InitiativeDTO = {
+const mockResponseSuccess = {
   initiativeId: "123",
   status: InitativeStatusEnum.REFUNDABLE,
-  endDate: new Date(),
+  voucherEndDate: new Date(),
   nInstr: 123
-};
+} as InitiativeDTO;
 
 const mockFailure: NetworkError = {
   kind: "generic",
@@ -106,13 +107,13 @@ const mockTimelineResponseSuccess: TimelineDTO = {
       maskedPan: "1234567890",
       circuitType: "CREDIT_CARD",
       status: StatusEnum.AUTHORIZED
-    }
-  ],
+    } as OperationDTO
+  ] as ReadonlyArray<OperationDTO>,
   pageNo: 1,
   pageSize: 10,
   totalPages: 1,
   totalElements: 1
-};
+} as TimelineDTO;
 describe("test idpay timeline reducer and selectors", () => {
   it("should be pot.noneLoading after the first loading action dispatched, the selector will also return empty array on pot.none states", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -133,12 +134,12 @@ describe("test idpay timeline reducer and selectors", () => {
   it("should be pot.isUpdating when requesting new pages", () => {
     const timeline = {
       lastUpdate: new Date(),
-      operationList: [],
+      operationList: [] as ReadonlyArray<OperationDTO>,
       pageNo: 1,
       pageSize: 10,
       totalElements: 100,
       totalPages: 10
-    };
+    } as TimelineDTO;
     const paginatedTimeline: { [page: number]: TimelineDTO } = {
       0: timeline
     };
