@@ -27,10 +27,6 @@ const somePublicKey = O.some({
   y: "Tz0xNv++cOeLVapU/BhBS0FJydIcNcV25/ALb1HVu+s="
 });
 
-jest.mock("../../store/reducers/paginatedById", () => ({
-  getServiceByMessageId: jest.fn().mockReturnValue(serviceId)
-}));
-
 jest.mock("react-native-blob-util", () => ({
   config: jest.fn().mockImplementation(() => ({
     fetch: jest.fn()
@@ -54,7 +50,8 @@ describe("downloadAttachment given an attachment", () => {
         downloadAttachment.request({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: false
+          skipMixpanelTrackingOnFailure: false,
+          serviceId
         })
       )
         .provide([
@@ -88,7 +85,8 @@ describe("downloadAttachment given an attachment", () => {
         downloadAttachment.request({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: false
+          skipMixpanelTrackingOnFailure: false,
+          serviceId
         })
       )
         .provide([
@@ -123,7 +121,8 @@ describe("downloadAttachment given an attachment", () => {
         downloadAttachment.request({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: false
+          skipMixpanelTrackingOnFailure: false,
+          serviceId
         })
       )
         .provide([
