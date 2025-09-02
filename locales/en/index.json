@@ -3004,6 +3004,9 @@
         "messageReadStatus": "Receive read receipts"
       },
       "metadata": {
+        "a11y": {
+          "website": "Browse the institution's website"
+        },
         "title": "Contacts and info",
         "website": "Browse Website",
         "downloadApp": "Download app",

@@ -3004,6 +3004,9 @@
         "messageReadStatus": "Ricevere conferme di lettura"
       },
       "metadata": {
+        "a11y": {
+          "website": "Visita il sito dell'ente"
+        },
         "title": "Contatti ed informazioni",
         "website": "Visita il sito",
         "downloadApp": "Scarica l'app",
