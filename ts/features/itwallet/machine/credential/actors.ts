@@ -181,7 +181,12 @@ export const createCredentialIssuanceActorsImplementation = (
     return await Promise.all(
       input.credentials.map(async credential => {
         const { statusAttestation, parsedStatusAttestation } =
-          await getCredentialStatusAttestation(credential);
+          await getCredentialStatusAttestation(credential).catch(err => {
+            // This fix is already applied in the master branch, but not yet released
+            // eslint-disable-next-line functional/immutable-data
+            err.credentialId = credential.credentialId;
+            throw err;
+          });
 
         return {
           ...credential,
