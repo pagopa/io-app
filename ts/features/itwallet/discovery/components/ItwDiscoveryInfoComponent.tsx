@@ -1,5 +1,6 @@
 import { ContentWrapper, H1, VSpacer } from "@pagopa/io-app-design-system";
 import { StyleSheet } from "react-native";
+import { useCallback } from "react";
 import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
 import I18n from "../../../../i18n.ts";
@@ -15,6 +16,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp.tsx";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 
 export type ItwDiscoveryInfoComponentProps = {
   onContinuePress: () => void;
@@ -28,9 +30,20 @@ export type ItwDiscoveryInfoComponentProps = {
 export const ItwDiscoveryInfoComponent = ({
   onContinuePress
 }: ItwDiscoveryInfoComponentProps) => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const { tos_url } = useIOSelector(tosConfigSelector);
+
+  useOnFirstRender(
+    useCallback(() => {
+      machineRef.send({
+        type: "start",
+        isL3: false
+      });
+    }, [machineRef])
+  );
+
   const dismissalDialog = useItwDismissalDialog({
     customLabels: {
       title: I18n.t("features.itWallet.discovery.dismissalDialog.title"),
