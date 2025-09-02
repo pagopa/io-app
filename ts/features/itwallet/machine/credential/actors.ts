@@ -6,7 +6,7 @@ import { sessionTokenSelector } from "../../../authentication/common/store/selec
 import { assert } from "../../../../utils/assert";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
-import { getCredentialStatusAssertion } from "../../common/utils/itwCredentialStatusAttestationUtils";
+import { getCredentialStatusAssertion } from "../../common/utils/itwCredentialStatusAssertionUtils";
 import {
   CredentialFormat,
   StoredCredential

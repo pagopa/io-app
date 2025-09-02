@@ -9,7 +9,7 @@ import {
   shouldRequestStatusAssertion,
   getCredentialStatusAssertion,
   StatusAssertionError
-} from "../../common/utils/itwCredentialStatusAttestationUtils";
+} from "../../common/utils/itwCredentialStatusAssertionUtils";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { itwCredentialsStore } from "../store/actions";

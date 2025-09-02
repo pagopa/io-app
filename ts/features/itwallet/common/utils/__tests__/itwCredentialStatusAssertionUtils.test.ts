@@ -1,4 +1,4 @@
-import { shouldRequestStatusAssertion } from "../itwCredentialStatusAttestationUtils";
+import { shouldRequestStatusAssertion } from "../itwCredentialStatusAssertionUtils";
 import { CredentialType, ItwStatusAssertionMocks } from "../itwMocksUtils";
 import { StoredCredential } from "../itwTypesUtils";
 
@@ -17,11 +17,11 @@ describe("shouldRequestStatusAssertion", () => {
     }
   };
 
-  it("return true when the status attestation is missing", () => {
+  it("return true when the status assertion is missing", () => {
     expect(shouldRequestStatusAssertion(baseMockCredential)).toEqual(true);
   });
 
-  it("return true when the parsed status attestation is null", () => {
+  it("return true when the parsed status assertion is null", () => {
     const mockCredential: StoredCredential = {
       ...baseMockCredential,
       storedStatusAssertion: {
@@ -31,7 +31,7 @@ describe("shouldRequestStatusAssertion", () => {
     expect(shouldRequestStatusAssertion(mockCredential)).toEqual(true);
   });
 
-  it("return true when the status attestation is expired", () => {
+  it("return true when the status assertion is expired", () => {
     jest.useFakeTimers().setSystemTime(new Date("2024-08-27T10:30:00+00:00"));
 
     const mockCredential: StoredCredential = {
@@ -48,7 +48,7 @@ describe("shouldRequestStatusAssertion", () => {
     expect(shouldRequestStatusAssertion(mockCredential)).toEqual(true);
   });
 
-  it("return false when the status attestation is still valid", () => {
+  it("return false when the status assertion is still valid", () => {
     jest.useFakeTimers().setSystemTime(new Date("2024-08-27T10:30:00+00:00"));
 
     const mockCredential: StoredCredential = {

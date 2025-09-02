@@ -4,7 +4,7 @@ import mdl from "../../__mocks__/mdl.json";
 import mdlL3 from "../../__mocks__/L3/mdlL3.json";
 import tsL3 from "../../__mocks__/L3/tsL3.json";
 import dcL3 from "../../__mocks__/L3/dcL3.json";
-import statusAssertion from "../../__mocks__/statusAttestation.json";
+import statusAssertion from "../../__mocks__/statusAssertion.json";
 import ts from "../../__mocks__/ts.json";
 import { ParsedStatusAssertion, StoredCredential } from "./itwTypesUtils";
 

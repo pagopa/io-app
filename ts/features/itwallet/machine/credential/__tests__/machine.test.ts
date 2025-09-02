@@ -191,7 +191,7 @@ describe("itwCredentialIssuanceMachine", () => {
     jest.resetAllMocks();
   });
 
-  it("Should obtain a credential with a valid status attestation", async () => {
+  it("Should obtain a credential with a valid status assertion", async () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
     getWalletAttestation.mockImplementation(() =>
       Promise.resolve({ jwt: T_WIA })
@@ -297,7 +297,7 @@ describe("itwCredentialIssuanceMachine", () => {
     });
     expect(obtainCredential).toHaveBeenCalledTimes(1);
 
-    // Step 2: get the status attestation
+    // Step 2: get the status assertion
     const intermediateState2 = await waitForActor(actor, snapshot =>
       snapshot.matches({ Issuance: "ObtainingStatusAssertion" })
     );

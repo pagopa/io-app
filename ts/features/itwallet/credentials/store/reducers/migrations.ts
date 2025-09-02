@@ -115,4 +115,8 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
       ])
     )
   })
+
+  // Version 5
+  // Rename Status Attestation to Status Assertion
+  // TODO
 };

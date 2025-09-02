@@ -22,7 +22,7 @@ import {
 } from "../../common/hooks/useItwFailureSupportModal";
 import { itwDeferredIssuanceScreenContentSelector } from "../../common/store/selectors/remoteConfig";
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
-import { StatusAssertionError } from "../../common/utils/itwCredentialStatusAttestationUtils";
+import { StatusAssertionError } from "../../common/utils/itwCredentialStatusAssertionUtils.ts";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 import {
   IssuerConfiguration,
