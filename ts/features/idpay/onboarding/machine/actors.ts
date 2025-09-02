@@ -218,8 +218,6 @@ const mapOnboardingStatusToFailure = (
       return OnboardingFailureEnum.USER_UNSUBSCRIBED;
     case OnboardingStatusEnum.ONBOARDING_KO:
       return OnboardingFailureEnum.GENERIC;
-    case OnboardingStatusEnum.TOO_MANY_REQUESTS:
-      return OnboardingFailureEnum.TOO_MANY_REQUESTS;
     default:
       return undefined;
   }
