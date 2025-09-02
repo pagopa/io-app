@@ -81,9 +81,9 @@ export type ParsedCredential = Awaited<
 >["parsedCredential"];
 
 /**
- * Alias for the ParsedStatusAttestation type
+ * Alias for the ParsedStatusAssertion type
  */
-export type ParsedStatusAttestation =
+export type ParsedStatusAssertion =
   | Awaited<
       ReturnType<Credential.Status.VerifyAndParseStatusAssertion>
     >["parsedStatusAssertion"]["payload"]
@@ -110,11 +110,11 @@ export type WalletInstanceStatus = Awaited<
 export type WalletInstanceRevocationReason =
   WalletInstanceStatus["revocation_reason"];
 
-export type StoredStatusAttestation =
+export type StoredStatusAssertion =
   | {
       credentialStatus: "valid";
-      statusAttestation: string;
-      parsedStatusAttestation: ParsedStatusAttestation;
+      statusAssertion: string;
+      parsedStatusAssertion: ParsedStatusAssertion;
     }
   | {
       credentialStatus: "invalid" | "unknown";
@@ -133,7 +133,7 @@ export type StoredCredential = {
   credentialType: string;
   credentialId: string;
   issuerConf: IssuerConfiguration;
-  storedStatusAttestation?: StoredStatusAttestation;
+  storedStatusAssertion?: StoredStatusAssertion;
   /**
    * The SD-JWT issuance and expiration dates in ISO format.
    * These might be different from the underlying document's dates.
