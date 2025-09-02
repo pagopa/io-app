@@ -9,6 +9,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { IDPayDetailsRoutes } from "../../../details/navigation";
 import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import {
+  InitiativeDTO,
   InitiativeRewardTypeEnum,
   StatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
@@ -28,18 +29,18 @@ const idPayCardProps: IdPayCardProps = {
   expireDate: new Date(2023, 11, 2)
 };
 
-const baseInitiativeCardDetails: WalletDTO = {
+const baseInitiativeCardDetails = {
   initiativeList: [
     {
       initiativeId: IDPAY_INITIATIVE_ID_MOCK,
-      endDate: IDPAY_INITIATIVE_END_DATE_MOCK,
+      voucherEndDate: IDPAY_INITIATIVE_END_DATE_MOCK,
       nInstr: 1,
       status: StatusEnum.NOT_REFUNDABLE_ONLY_IBAN,
       initiativeName: IDPAY_INITIATIVE_NAME,
       amountCents: IDPAY_INITIATIVE_AMOUNT_CENTS_MOCK
-    }
+    } as InitiativeDTO
   ]
-};
+} as WalletDTO;
 
 describe("IdPayCard", () => {
   it("should match the snapshot", () => {
