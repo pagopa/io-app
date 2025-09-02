@@ -2945,6 +2945,9 @@
       },
       "featured": {
         "services": {
+          "a11y": {
+            "title": "Servizi in primo piano"
+          },
           "title": "In primo piano"
         },
         "institutions": {
