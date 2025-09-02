@@ -28,10 +28,10 @@ describe("ITW credentials reducer migrations", () => {
       }
     };
     const persistedStateAt1 = _.merge(undefined, basePersistedGlobalStateAt0, {
-      eid: { _tag: "Some", value: { storedStatusAttestation: undefined } },
+      eid: { _tag: "Some", value: { storedStatusAssertion: undefined } },
       credentials: [
-        { _tag: "Some", value: { storedStatusAttestation: undefined } },
-        { _tag: "Some", value: { storedStatusAttestation: undefined } },
+        { _tag: "Some", value: { storedStatusAssertion: undefined } },
+        { _tag: "Some", value: { storedStatusAssertion: undefined } },
         { _tag: "None" }
       ]
     });
@@ -54,10 +54,10 @@ describe("ITW credentials reducer migrations", () => {
     } as any);
 
     const basePersistedGlobalStateAt1 = {
-      eid: { _tag: "Some", value: { storedStatusAttestation: undefined } },
+      eid: { _tag: "Some", value: { storedStatusAssertion: undefined } },
       credentials: [
-        { _tag: "Some", value: { storedStatusAttestation: undefined } },
-        { _tag: "Some", value: { storedStatusAttestation: undefined } },
+        { _tag: "Some", value: { storedStatusAssertion: undefined } },
+        { _tag: "Some", value: { storedStatusAssertion: undefined } },
         { _tag: "None" }
       ],
       _persist: {
@@ -69,7 +69,7 @@ describe("ITW credentials reducer migrations", () => {
       eid: {
         _tag: "Some",
         value: {
-          storedStatusAttestation: undefined,
+          storedStatusAssertion: undefined,
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
@@ -80,7 +80,7 @@ describe("ITW credentials reducer migrations", () => {
         {
           _tag: "Some",
           value: {
-            storedStatusAttestation: undefined,
+            storedStatusAssertion: undefined,
             jwt: {
               expiration: "2024-06-12T11:33:20.000Z",
               issuedAt: "2024-06-11T18:53:20.000Z"
@@ -90,7 +90,7 @@ describe("ITW credentials reducer migrations", () => {
         {
           _tag: "Some",
           value: {
-            storedStatusAttestation: undefined,
+            storedStatusAssertion: undefined,
             jwt: {
               expiration: "2024-06-12T11:33:20.000Z",
               issuedAt: "2024-06-11T18:53:20.000Z"
@@ -114,7 +114,7 @@ describe("ITW credentials reducer migrations", () => {
         _tag: "Some",
         value: {
           credentialType: "PersonIdentificationData",
-          storedStatusAttestation: undefined,
+          storedStatusAssertion: undefined,
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
@@ -126,7 +126,7 @@ describe("ITW credentials reducer migrations", () => {
           _tag: "Some",
           value: {
             credentialType: "EuropeanHealthInsuranceCard",
-            storedStatusAttestation: undefined,
+            storedStatusAssertion: undefined,
             jwt: {
               expiration: "2024-06-12T11:33:20.000Z",
               issuedAt: "2024-06-11T18:53:20.000Z"
@@ -137,7 +137,7 @@ describe("ITW credentials reducer migrations", () => {
           _tag: "Some",
           value: {
             credentialType: "MDL",
-            storedStatusAttestation: undefined,
+            storedStatusAssertion: undefined,
             jwt: {
               expiration: "2024-06-12T11:33:20.000Z",
               issuedAt: "2024-06-11T18:53:20.000Z"
@@ -155,7 +155,7 @@ describe("ITW credentials reducer migrations", () => {
       credentials: {
         PersonIdentificationData: {
           credentialType: "PersonIdentificationData",
-          storedStatusAttestation: undefined,
+          storedStatusAssertion: undefined,
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
@@ -163,7 +163,7 @@ describe("ITW credentials reducer migrations", () => {
         },
         MDL: {
           credentialType: "MDL",
-          storedStatusAttestation: undefined,
+          storedStatusAssertion: undefined,
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
@@ -171,7 +171,7 @@ describe("ITW credentials reducer migrations", () => {
         },
         EuropeanHealthInsuranceCard: {
           credentialType: "EuropeanHealthInsuranceCard",
-          storedStatusAttestation: undefined,
+          storedStatusAssertion: undefined,
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
@@ -196,7 +196,7 @@ describe("ITW credentials reducer migrations", () => {
       credentials: {
         PersonIdentificationData: {
           credentialType: "PersonIdentificationData",
-          storedStatusAttestation: undefined,
+          storedStatusAssertion: undefined,
           credentialId: "dc_sd_jwt_PersonIdentificationData",
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
@@ -205,7 +205,7 @@ describe("ITW credentials reducer migrations", () => {
         },
         MDL: {
           credentialType: "MDL",
-          storedStatusAttestation: undefined,
+          storedStatusAssertion: undefined,
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
@@ -222,7 +222,7 @@ describe("ITW credentials reducer migrations", () => {
         dc_sd_jwt_PersonIdentificationData: {
           credentialType: "PersonIdentificationData",
           credentialId: "dc_sd_jwt_PersonIdentificationData",
-          storedStatusAttestation: undefined,
+          storedStatusAssertion: undefined,
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
@@ -231,7 +231,7 @@ describe("ITW credentials reducer migrations", () => {
         MDL: {
           credentialType: "MDL",
           credentialId: "MDL",
-          storedStatusAttestation: undefined,
+          storedStatusAssertion: undefined,
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
@@ -257,7 +257,7 @@ describe("ITW credentials reducer migrations", () => {
         PersonIdentificationData: {
           credentialId: "dc_sd_jwt_PersonIdentificationData",
           credentialType: "PersonIdentificationData",
-          storedStatusAttestation: undefined,
+          storedStatusAssertion: undefined,
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
@@ -266,7 +266,7 @@ describe("ITW credentials reducer migrations", () => {
         MDL: {
           credentialId: "MDL",
           credentialType: "MDL",
-          storedStatusAttestation: undefined,
+          storedStatusAssertion: undefined,
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
@@ -283,7 +283,7 @@ describe("ITW credentials reducer migrations", () => {
         dc_sd_jwt_PersonIdentificationData: {
           credentialId: "dc_sd_jwt_PersonIdentificationData",
           credentialType: "PersonIdentificationData",
-          storedStatusAttestation: undefined,
+          storedStatusAssertion: undefined,
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
@@ -292,7 +292,7 @@ describe("ITW credentials reducer migrations", () => {
         MDL: {
           credentialId: "MDL",
           credentialType: "mDL",
-          storedStatusAttestation: undefined,
+          storedStatusAssertion: undefined,
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
