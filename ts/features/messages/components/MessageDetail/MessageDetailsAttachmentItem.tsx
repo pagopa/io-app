@@ -11,7 +11,7 @@ type MessageDetailsAttachmentItemProps = {
   isPN?: boolean;
   messageId: string;
   onPreNavigate?: () => void;
-  serviceId?: ServiceId;
+  serviceId: ServiceId;
 };
 
 export const MessageDetailsAttachmentItem = ({
