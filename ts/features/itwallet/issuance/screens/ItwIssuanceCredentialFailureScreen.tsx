@@ -252,7 +252,7 @@ const getCredentialInvalidStatusDetails = (
         O.map(({ error }) => error)
       ),
       credentialConfigurationId: pipe(
-        O.fromNullable(reason?.credentialId),
+        O.fromNullable(reason?.metadata?.credentialId),
         O.alt(() => credentialType) // TODO: SIW-2530 Remove this line after fully migrating to the new APIs
       )
     })),
@@ -268,11 +268,13 @@ const getCredentialInvalidStatusDetails = (
       credentialConfigurationId,
       issuerConf
     }),
-    O.map(params =>
-      Errors.extractErrorMessageFromIssuerConf(params.errorCode, {
-        credentialType: params.credentialConfigurationId,
-        issuerConf: params.issuerConf as LegacyIssuerConfiguration
-      })
+    O.chain(params =>
+      O.tryCatch(() =>
+        Errors.extractErrorMessageFromIssuerConf(params.errorCode, {
+          credentialType: params.credentialConfigurationId,
+          issuerConf: params.issuerConf as LegacyIssuerConfiguration
+        })
+      )
     ),
     O.map(message => message?.[getClaimsFullLocale()]),
     O.toUndefined

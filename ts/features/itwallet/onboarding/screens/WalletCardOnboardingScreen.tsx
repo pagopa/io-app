@@ -132,7 +132,7 @@ const ItwCredentialOnboardingSection = () => {
           machineRef.send({
             type: "select-credential",
             credentialType: type,
-            skipNavigation: true
+            mode: "issuance"
           });
         }
       },

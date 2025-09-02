@@ -10,10 +10,9 @@ import {
 } from "../../store/reducers/messagePrecondition";
 import { openAppStoreUrl } from "../../../../utils/url";
 import { trackNotificationRejected, trackUxConversion } from "../../analytics";
-import { UIMessageId } from "../../types";
 
 export type PreconditionsFooterProps = {
-  onNavigation: (messageId: UIMessageId) => void;
+  onNavigation: (messageId: string) => void;
   onDismiss: () => void;
   onFooterHeightAvailable: (height: number) => void;
 };

@@ -17,7 +17,6 @@ import { NotificationPaymentInfo } from "../../../../definitions/pn/Notification
 import { useIOSelector } from "../../../store/hooks";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
-import { UIMessageId } from "../../messages/types";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { trackPNShowAllPayments } from "../analytics";
 import PN_ROUTES from "../navigation/routes";
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
 });
 
 type MessagePaymentsProps = {
-  messageId: UIMessageId;
+  messageId: string;
   isCancelled: boolean;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
   completedPaymentNoticeCodes: ReadonlyArray<string> | undefined;

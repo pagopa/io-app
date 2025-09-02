@@ -29,7 +29,6 @@ import {
   attachmentContentType,
   attachmentDisplayName
 } from "../../store/reducers/transformers";
-import { UIMessageId } from "../../types";
 import { PdfViewer } from "./PdfViewer";
 
 type MessageAttachmentFooterProps = {
@@ -107,7 +106,7 @@ const MessageAttachmentFooter = ({
   );
 
 const onPDFError = (
-  messageId: UIMessageId,
+  messageId: string,
   isPN: boolean,
   serviceId?: ServiceId,
   attachmentCategory?: string
@@ -158,7 +157,7 @@ const onDownload = (isPN: boolean, attachmentCategory?: string) =>
   );
 
 export type MessageAttachmentProps = {
-  messageId: UIMessageId;
+  messageId: string;
   attachmentId: string;
   isPN: boolean;
   serviceId?: ServiceId;

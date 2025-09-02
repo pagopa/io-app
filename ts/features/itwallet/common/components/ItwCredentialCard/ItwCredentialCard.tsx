@@ -16,7 +16,6 @@ import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
-import { ItwCardValidityCheckMark } from "./ItwCardValidityCheckMark";
 import { CardColorScheme } from "./types";
 
 export type ItwCredentialCard = {
@@ -129,9 +128,6 @@ export const ItwCredentialCard = ({
             {getCredentialNameFromType(credentialType, "").toUpperCase()}
           </IOText>
           {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
-          {!statusTagProps && isNewItwRenderable && (
-            <ItwCardValidityCheckMark />
-          )}
         </HStack>
       </View>
       <DigitalVersionBadge

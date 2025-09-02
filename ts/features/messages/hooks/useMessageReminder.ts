@@ -12,11 +12,10 @@ import {
 import { openAppSettings } from "../../../utils/appSettings";
 import { useIOSelector } from "../../../store/hooks";
 import { calendarEventByMessageIdSelector } from "../../../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
-import { UIMessageId } from "../types";
 import { useMessageCalendar } from "./useMessageCalendar";
 
 export const useMessageReminder = (
-  messageId: UIMessageId,
+  messageId: string,
   selectCalendar: () => void
 ) => {
   const [isEventInDeviceCalendar, setIsEventInDeviceCalendar] =

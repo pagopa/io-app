@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import I18n from "i18next";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIOSelector } from "../../../store/hooks";
-import { UIMessageId } from "../../messages/types";
 import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 import { trackPNPaymentStart, trackPNShowAllPayments } from "../analytics";
@@ -18,7 +17,7 @@ import { shouldUseBottomSheetForPayments } from "../utils";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 type MessageFooterProps = {
-  messageId: UIMessageId;
+  messageId: string;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
   maxVisiblePaymentCount: number;
   isCancelled: boolean;

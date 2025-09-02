@@ -21,7 +21,6 @@ import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
-  CREDENTIALS_MAP,
   trackCredentialPreview,
   trackItwExit,
   trackItwRequestSuccess,
@@ -77,8 +76,8 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const isL3 = isItwCredential(eid.credential);
 
   const mixPanelCredential = useMemo(
-    () => CREDENTIALS_MAP[eid.credentialType],
-    [eid.credentialType]
+    () => (isL3 ? "ITW_PID" : "ITW_ID_V2"),
+    [isL3]
   );
 
   const theme = useIOTheme();
@@ -104,7 +103,6 @@ const ContentView = ({ eid }: ContentViewProps) => {
   });
 
   const handleSaveToWallet = () => {
-    trackSaveCredentialToWallet(eid.credentialType);
     dispatch(
       identificationRequest(
         false,
@@ -148,7 +146,10 @@ const ContentView = ({ eid }: ContentViewProps) => {
             label: I18n.t(
               "features.itWallet.issuance.eidPreview.actions.primary"
             ),
-            onPress: handleSaveToWallet
+            onPress: () => {
+              trackSaveCredentialToWallet(mixPanelCredential);
+              handleSaveToWallet();
+            }
           },
           secondary: {
             label: I18n.t(

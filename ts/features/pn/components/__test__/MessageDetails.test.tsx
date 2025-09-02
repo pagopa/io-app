@@ -8,7 +8,6 @@ import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { serviceId_1 } from "../../../messages/__mocks__/messages";
-import { UIMessageId } from "../../../messages/types";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 import { toPNMessage } from "../../store/types/transformers";
 import { PNMessage } from "../../store/types/types";
@@ -54,7 +53,7 @@ describe("MessageDetails component", () => {
 });
 
 const generateComponentProperties = (message: PNMessage) => ({
-  messageId: "01HRYR6C761DGH3S84HBBXMMKT" as UIMessageId,
+  messageId: "01HRYR6C761DGH3S84HBBXMMKT",
   message,
   payments: undefined,
   serviceId: serviceId_1

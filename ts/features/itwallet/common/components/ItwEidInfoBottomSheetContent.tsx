@@ -23,7 +23,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import {
   CREDENTIALS_MAP,
-  mapEidStatusToMixpanel,
+  mapPIDStatusToMixpanel,
   trackCredentialDetail,
   trackWalletStartDeactivation
 } from "../../analytics";
@@ -65,7 +65,7 @@ const ItwEidInfoBottomSheetContent = ({
     });
 
     const navigateToWalletRevocationScreen = () => {
-      trackWalletStartDeactivation();
+      trackWalletStartDeactivation("ITW_ID_V2");
       navigation.navigate(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
       });
@@ -75,7 +75,7 @@ const ItwEidInfoBottomSheetContent = ({
       if (eidStatus) {
         trackCredentialDetail({
           credential: CREDENTIALS_MAP[credential.credentialType],
-          credential_status: mapEidStatusToMixpanel(eidStatus)
+          credential_status: mapPIDStatusToMixpanel(eidStatus)
         });
       }
     }, [credential.credentialType]);

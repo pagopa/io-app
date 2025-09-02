@@ -6,7 +6,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
-import { UIMessageId } from "../types";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessagesParamsList } from "../navigation/params";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
 });
 
 export type MessageDetailsScreenRouteParams = {
-  messageId: UIMessageId;
+  messageId: string;
   serviceId: ServiceId;
 };
 
@@ -202,7 +201,10 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
               serviceId={serviceId}
             />
             <VSpacer size={16} />
-            <MessageDetailsAttachments messageId={messageId} />
+            <MessageDetailsAttachments
+              messageId={messageId}
+              serviceId={serviceId}
+            />
             {hasRemoteContent && <RemoteContentBanner />}
           </ContentWrapper>
         </View>

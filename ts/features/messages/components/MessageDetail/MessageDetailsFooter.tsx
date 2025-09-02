@@ -10,7 +10,6 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
 import { serviceMetadataByIdSelector } from "../../../services/details/store/reducers";
-import { UIMessageId } from "../../types";
 import { ContactsListItem } from "./ContactsListItem";
 import {
   ShowMoreItems,
@@ -19,14 +18,14 @@ import {
 } from "./ShowMoreListItem";
 
 export type MessageDetailsFooterProps = {
-  messageId: UIMessageId;
+  messageId: string;
   noticeNumber?: string;
   payeeFiscalCode?: string;
   serviceId: ServiceId;
 };
 
 const generateMessageSectionData = (
-  messageId: UIMessageId,
+  messageId: string,
   noticeNumber?: string,
   payeeFiscalCode?: string
 ) => {

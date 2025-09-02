@@ -3,7 +3,6 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
 import { loadMessageDetails as action } from "../../store/actions";
-import { UIMessageId } from "../../types";
 import {
   apiPayload,
   paymentValidInvalidAfterDueDate,
@@ -13,7 +12,7 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { handleLoadMessageDetails } from "../handleLoadMessageDetails";
 import { BackendClient } from "../../../../api/__mocks__/backend";
 
-const id = paymentValidInvalidAfterDueDate.id as UIMessageId;
+const id = paymentValidInvalidAfterDueDate.id;
 
 describe("handleLoadMessageDetails", () => {
   const getMessagesPayload = { id };

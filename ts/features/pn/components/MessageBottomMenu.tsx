@@ -15,7 +15,6 @@ import {
   ShowMoreListItem,
   ShowMoreSection
 } from "../../messages/components/MessageDetail/ShowMoreListItem";
-import { UIMessageId } from "../../messages/types";
 import { formatPaymentNoticeNumber } from "../../payments/common/utils";
 import { serviceMetadataByIdSelector } from "../../services/details/store/reducers";
 import { TimelineListItem } from "./TimelineListItem";
@@ -33,7 +32,7 @@ export type MessageBottomMenuProps = {
   history: NotificationStatusHistory;
   isCancelled?: boolean;
   iun: string;
-  messageId: UIMessageId;
+  messageId: string;
   paidNoticeCodes?: ReadonlyArray<string>;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
   serviceId: ServiceId;
@@ -41,7 +40,7 @@ export type MessageBottomMenuProps = {
 
 const generateMessageSectionData = (
   iun: string,
-  messageId: UIMessageId,
+  messageId: string,
   isCancelled?: boolean,
   paidNoticeCodes?: ReadonlyArray<string>,
   payments?: ReadonlyArray<NotificationPaymentInfo>

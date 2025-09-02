@@ -15,7 +15,6 @@ import {
   cancelQueuedPaymentUpdates,
   updatePaymentForMessage
 } from "../../messages/store/actions";
-import { UIMessageId } from "../../messages/types";
 import { trackPNUxSuccess } from "../analytics";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
@@ -34,7 +33,7 @@ import {
 } from "../utils";
 
 export type MessageDetailsScreenRouteParams = {
-  messageId: UIMessageId;
+  messageId: string;
   serviceId: ServiceId;
   firstTimeOpening: boolean;
 };

@@ -7,14 +7,13 @@ import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { preferredCalendarSelector } from "../../../../store/reducers/persistedPreferences";
-import { UIMessageId } from "../../types";
 import { useMessageReminder } from "../../hooks/useMessageReminder";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { formatDateAsShortFormat } from "../../../../utils/dates";
 
 type MessageDetailsReminderExpiringProps = {
   dueDate: Date;
-  messageId: UIMessageId;
+  messageId: string;
   title: string;
 };
 

@@ -16,7 +16,7 @@ import {
   canNavigateToPaymentFromMessageSelector,
   paymentsButtonStateSelector
 } from "../../store/reducers/payments";
-import { PaymentData, UIMessageId } from "../../types";
+import { PaymentData } from "../../types";
 import {
   getRptIdStringFromPaymentData,
   initializeAndNavigateToWalletForPayment
@@ -30,7 +30,7 @@ import {
 type MessageDetailsPaymentButtonProps = {
   ctas?: CTAS;
   firstCTAIsPNOptInMessage: boolean;
-  messageId: UIMessageId;
+  messageId: string;
   secondCTAIsPNOptInMessage: boolean;
   serviceId: ServiceId;
 };

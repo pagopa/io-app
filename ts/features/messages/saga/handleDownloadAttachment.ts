@@ -6,7 +6,6 @@ import {
   delay,
   put,
   race,
-  select,
   take
 } from "typed-redux-saga/macro";
 import RNFS from "react-native-fs";
@@ -23,9 +22,7 @@ import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
 } from "../store/actions";
-import { UIMessageId } from "../types";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { getServiceByMessageId } from "../store/reducers/paginatedById";
 import {
   trackThirdPartyMessageAttachmentBadFormat,
   trackThirdPartyMessageAttachmentDownloadFailed,
@@ -43,7 +40,7 @@ export const AttachmentsDirectoryPath =
  * @param attachment
  */
 export const pdfSavePath = (
-  messageId: UIMessageId,
+  messageId: string,
   attachmentId: string,
   name: string
 ) => {
@@ -70,7 +67,7 @@ const getDelayMilliseconds = (headers: Record<string, string>) =>
 function trackFailureEvent(
   skipMixpanelTrackingOnFailure: boolean,
   httpStatusCode: number,
-  messageId: UIMessageId,
+  messageId: string,
   serviceId: ServiceId | undefined
 ) {
   if (skipMixpanelTrackingOnFailure) {
@@ -89,9 +86,8 @@ export function* downloadAttachmentWorker(
   bearerToken: SessionToken,
   action: ActionType<typeof downloadAttachment.request>
 ): SagaIterator {
-  const { attachment, messageId, skipMixpanelTrackingOnFailure } =
+  const { attachment, messageId, skipMixpanelTrackingOnFailure, serviceId } =
     action.payload;
-  const serviceId = yield* select(getServiceByMessageId, messageId);
 
   const name = attachmentDisplayName(attachment);
 

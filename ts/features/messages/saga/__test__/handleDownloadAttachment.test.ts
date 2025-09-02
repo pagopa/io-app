@@ -15,9 +15,8 @@ import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../../../lollipop/store/reducers/lollipop";
-import { UIMessageId } from "../../types";
 
-const messageId = "01JTT75QYSHWBTNTFM3CZZ17SH" as UIMessageId;
+const messageId = "01JTT75QYSHWBTNTFM3CZZ17SH";
 const savePath = "/tmp/attachment.pdf";
 const serviceId = "service0000001" as ServiceId;
 const someKeyTag = O.some("a12e9221-c056-4bbc-8623-ca92df29361e");
@@ -27,10 +26,6 @@ const somePublicKey = O.some({
   kty: "EC",
   y: "Tz0xNv++cOeLVapU/BhBS0FJydIcNcV25/ALb1HVu+s="
 });
-
-jest.mock("../../store/reducers/paginatedById", () => ({
-  getServiceByMessageId: jest.fn().mockReturnValue(serviceId)
-}));
 
 jest.mock("react-native-blob-util", () => ({
   config: jest.fn().mockImplementation(() => ({
@@ -55,7 +50,8 @@ describe("downloadAttachment given an attachment", () => {
         downloadAttachment.request({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: false
+          skipMixpanelTrackingOnFailure: false,
+          serviceId
         })
       )
         .provide([
@@ -89,7 +85,8 @@ describe("downloadAttachment given an attachment", () => {
         downloadAttachment.request({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: false
+          skipMixpanelTrackingOnFailure: false,
+          serviceId
         })
       )
         .provide([
@@ -124,7 +121,8 @@ describe("downloadAttachment given an attachment", () => {
         downloadAttachment.request({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: false
+          skipMixpanelTrackingOnFailure: false,
+          serviceId
         })
       )
         .provide([
