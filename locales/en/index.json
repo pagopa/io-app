@@ -2945,6 +2945,9 @@
       },
       "featured": {
         "services": {
+          "a11y": {
+            "title": "Featured Services"
+          },
           "title": "Featured"
         },
         "institutions": {
@@ -3004,6 +3007,9 @@
         "messageReadStatus": "Receive read receipts"
       },
       "metadata": {
+        "a11y": {
+          "website": "Browse the institution's website"
+        },
         "title": "Contacts and info",
         "website": "Browse Website",
         "downloadApp": "Download app",
@@ -5847,8 +5853,9 @@
         "subtitle": "Per accedere all’iniziativa {{service}}, verificheremo con alcuni enti se hai i requisiti.",
         "code": {
           "ISEE": "ISEE",
-          "BIRTHDATE": "Data di nascita",
-          "RESIDENCE": "Residenza"
+          "BIRTHDAY": "Data di nascita",
+          "RESIDENCE": "Residenza",
+          "FAMILY_UNIT": "Family Unit"
         },
         "operator": {
           "EQ": "{{value}}",
