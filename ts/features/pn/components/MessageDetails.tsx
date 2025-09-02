@@ -20,7 +20,6 @@ import { PNMessage } from "../store/types/types";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { MessageDetailsHeader } from "../../messages/components/MessageDetail/MessageDetailsHeader";
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
-import { UIMessageId } from "../../messages/types";
 import {
   maxVisiblePaymentCount,
   shouldUseBottomSheetForPayments
@@ -35,7 +34,7 @@ import { MessageCancelledContent } from "./MessageCancelledContent";
 
 export type MessageDetailsProps = {
   message: PNMessage;
-  messageId: UIMessageId;
+  messageId: string;
   serviceId: ServiceId;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
 };
@@ -107,6 +106,7 @@ export const MessageDetails = ({
             disabled={message.isCancelled}
             messageId={messageId}
             isPN
+            serviceId={serviceId}
           />
           <VSpacer size={16} />
           <MessagePayments

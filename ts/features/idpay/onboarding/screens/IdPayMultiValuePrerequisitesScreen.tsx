@@ -1,9 +1,7 @@
-/* eslint-disable no-underscore-dangle */
-import { H6, IOToast, RadioGroup } from "@pagopa/io-app-design-system";
+import { IOToast, RadioGroup, VSpacer } from "@pagopa/io-app-design-system";
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
-import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -13,6 +11,11 @@ import {
   multiRequiredCriteriaSelector,
   selectCurrentMultiSelfDeclarationPage
 } from "../machine/selectors";
+import {
+  SelfCriteriaMultiDTO,
+  _typeEnum as SelfCriteriaMultiTypeEnum
+} from "../../../../../definitions/idpay/SelfCriteriaMultiDTO";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 const IdPayMultiValuePrerequisitesScreen = () => {
   const pagerRef = useRef<PagerView>(null);
@@ -47,7 +50,7 @@ const IdPayMultiValuePrerequisitesScreen = () => {
 };
 
 type MultiValuePrerequisiteItemScreenContentProps = {
-  selfDeclaration: SelfDeclarationMultiDTO;
+  selfDeclaration: SelfCriteriaMultiDTO;
 };
 
 const MultiValuePrerequisiteItemScreenContent = ({
@@ -66,11 +69,16 @@ const MultiValuePrerequisiteItemScreenContent = ({
       );
       return;
     }
+    const value = selfDeclaration.value?.[selectedValueIndex].description;
+    if (!selfDeclaration.code || !value) {
+      IOToast.error(I18n.t("global.genericError"));
+      return;
+    }
     machine.send({
       type: "select-multi-consent",
       data: {
-        _type: selfDeclaration._type,
-        value: selfDeclaration.value[selectedValueIndex],
+        _type: SelfCriteriaMultiTypeEnum.multi,
+        value,
         code: selfDeclaration.code
       }
     });
@@ -78,12 +86,16 @@ const MultiValuePrerequisiteItemScreenContent = ({
 
   const handleGoBack = () => machine.send({ type: "back" });
 
+  const selfCriteriaMultiTitle =
+    selfDeclaration.description ||
+    I18n.t("idpay.onboarding.boolPrerequisites.header");
+
   return (
     <IOScrollViewWithLargeHeader
       topElement={<IdPayOnboardingStepper />}
       title={{
-        label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
-        section: I18n.t("idpay.onboarding.headerTitle")
+        label: selfCriteriaMultiTitle,
+        section: I18n.t("idpay.onboarding.navigation.header")
       }}
       contextualHelp={emptyContextualHelp}
       headerActionsProp={{ showHelp: true }}
@@ -97,13 +109,21 @@ const MultiValuePrerequisiteItemScreenContent = ({
         }
       }}
     >
-      <H6>{selfDeclaration.description}</H6>
+      {selfDeclaration.subDescription && (
+        <>
+          <IOMarkdown content={selfDeclaration.subDescription} />
+          <VSpacer size={16} />
+        </>
+      )}
       <RadioGroup<number>
         type="radioListItem"
-        items={selfDeclaration.value.map((answer, index) => ({
-          id: index,
-          value: answer
-        }))}
+        items={
+          selfDeclaration?.value?.map((answer, index) => ({
+            id: index,
+            value: answer.description,
+            description: answer.subDescription
+          })) || []
+        }
         selectedItem={selectedValueIndex}
         onPress={value => setSelectedValueIndex(value)}
       />

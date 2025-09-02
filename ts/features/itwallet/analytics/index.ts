@@ -22,6 +22,8 @@ import {
   setOfflineAccessReason
 } from "../../ingress/store/actions";
 import { getCredentialStatus } from "../common/utils/itwCredentialStatusUtils";
+import { itwCredentialsEidStatusSelector } from "../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../lifecycle/store/selectors";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -39,16 +41,18 @@ export type KoState = {
 
 /**
  * This is the list of credentials that are tracked in MixPanel
- * ITW_ID_V2: PersonIdentificationData
+ * ITW_ID_V2: PersonIdentificationData (obtained with Documenti su IO)
  * ITW_PG_V2: mDL
  * ITW_CED_V2: EuropeanDisabilityCard
  * ITW_TS_V2: EuropeanHealthInsuranceCard
+ * ITW_PID: PID (obtained with IT Wallet)
  */
 const mixPanelCredentials = [
   "ITW_ID_V2",
   "ITW_PG_V2",
   "ITW_CED_V2",
-  "ITW_TS_V2"
+  "ITW_TS_V2",
+  "ITW_PID"
 ] as const;
 
 type MixPanelCredential = (typeof mixPanelCredentials)[number];
@@ -65,16 +69,18 @@ type ItwFailureCause = "CredentialIssuer" | "WalletProvider";
 
 /**
  * This map is used to map the credential type to the MixPanel credential
- * ITW_ID_V2: PersonIdentificationData
+ * ITW_ID_V2: PersonIdentificationData (obtained with Documenti su IO)
  * ITW_PG_V2: mDL
  * ITW_CED_V2: EuropeanDisabilityCard
- * ITW_TS_V2: EuropeanHealthInsuranceCard
+ * ITW_TS_V2: EuropeanHealthInsuranceCard,
+ * ITW_PID: PID (obtained with IT Wallet)
  */
 export const CREDENTIALS_MAP: Record<string, MixPanelCredential> = {
   PersonIdentificationData: "ITW_ID_V2",
   mDL: "ITW_PG_V2",
   EuropeanDisabilityCard: "ITW_CED_V2",
-  EuropeanHealthInsuranceCard: "ITW_TS_V2"
+  EuropeanHealthInsuranceCard: "ITW_TS_V2",
+  PID: "ITW_PID"
 };
 
 type BackToWallet = {
@@ -151,7 +157,8 @@ export type ItwCredentialMixpanelStatus =
   | "unknown";
 
 export type ItwStatus = "not_active" | "L2" | "L3";
-export type ItwId = Extract<
+// Assuming that the eID status is the same as the PID status
+export type ItwPIDStatus = Extract<
   ItwCredentialMixpanelStatus,
   "not_available" | "valid" | "expiring" | "expired"
 >;
@@ -429,6 +436,20 @@ export const trackItwCredentialNeedsVerification = (
   );
 };
 
+export const trackItwOfflineAccessExpiring = () => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_ACCESS_EXPIRING,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
+export const trackItwOfflineAccessExpired = () => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_ACCESS_EXPIRED,
+    buildEventProperties("KO", "screen_view")
+  );
+};
+
 // #endregion SCREEN VIEW EVENTS
 
 // #region ACTIONS
@@ -488,8 +509,7 @@ export const trackAddFirstCredential = () => {
   );
 };
 
-export const trackSaveCredentialToWallet = (currentCredential: string) => {
-  const credential = CREDENTIALS_MAP[currentCredential];
+export const trackSaveCredentialToWallet = (credential: MixPanelCredential) => {
   if (credential) {
     void mixpanelTrack(
       ITW_ACTIONS_EVENTS.ITW_UX_CONVERSION,
@@ -638,10 +658,10 @@ export function trackWalletCredentialShowTrustmark(
   );
 }
 
-export function trackWalletStartDeactivation() {
+export function trackWalletStartDeactivation(credential: MixPanelCredential) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_START_DEACTIVATION,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { credential })
   );
 }
 
@@ -1062,10 +1082,13 @@ export const trackSaveCredentialSuccess = (credential: MixPanelCredential) => {
   );
 };
 
-export const trackItwDeactivated = (state: GlobalState) => {
+export const trackItwDeactivated = (
+  state: GlobalState,
+  credential: MixPanelCredential
+) => {
   void mixpanelTrack(
     ITW_CONFIRM_EVENTS.ITW_DEACTIVATED,
-    buildEventProperties("UX", "confirm")
+    buildEventProperties("UX", "confirm", { credential })
   );
   updatePropertiesWalletRevoked(state);
 };
@@ -1144,11 +1167,15 @@ export const trackItwOfflineBanner = ({
 
 // #region PROFILE AND SUPER PROPERTIES UPDATE
 
-export const updateITWStatusAndIDProperties = (state: GlobalState) => {
+export const updateITWStatusAndPIDProperties = (state: GlobalState) => {
   const authLevel = itwAuthLevelSelector(state);
   if (!authLevel) {
     return;
   }
+
+  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+  const eIDStatus = !isItwL3 ? getPIDMixpanelStatus(state, false) : undefined;
+  const pidStatus = getPIDMixpanelStatus(state, true);
 
   void updateMixpanelProfileProperties(state, {
     property: "ITW_STATUS_V2",
@@ -1158,13 +1185,23 @@ export const updateITWStatusAndIDProperties = (state: GlobalState) => {
     property: "ITW_STATUS_V2",
     value: authLevel
   });
+  if (eIDStatus) {
+    void updateMixpanelProfileProperties(state, {
+      property: "ITW_ID_V2",
+      value: eIDStatus
+    });
+    void updateMixpanelSuperProperties(state, {
+      property: "ITW_ID_V2",
+      value: eIDStatus
+    });
+  }
   void updateMixpanelProfileProperties(state, {
-    property: "ITW_ID_V2",
-    value: "valid"
+    property: "ITW_PID",
+    value: pidStatus
   });
   void updateMixpanelSuperProperties(state, {
-    property: "ITW_ID_V2",
-    value: "valid"
+    property: "ITW_PID",
+    value: pidStatus
   });
 };
 
@@ -1194,6 +1231,28 @@ export const updatePropertiesWalletRevoked = (state: GlobalState) => {
 };
 
 /**
+ * Returns the PID status for Mixpanel analytics.
+ *
+ * - If `isL3` is true → we consider the status from the current L3 PID (IT Wallet).
+ * - If `isL3` is false → we use the current eID status.
+ */
+export const getPIDMixpanelStatus = (
+  state: GlobalState,
+  isL3: boolean
+): ItwPIDStatus =>
+  pipe(
+    isL3
+      ? pipe(
+          itwLifecycleIsITWalletValidSelector(state),
+          O.fromPredicate(Boolean),
+          O.chain(() => O.fromNullable(itwCredentialsEidStatusSelector(state)))
+        )
+      : O.fromNullable(itwCredentialsEidStatusSelector(state)),
+    O.map<ItwJwtCredentialStatus, ItwPIDStatus>(mapPIDStatusToMixpanel),
+    O.getOrElse((): ItwPIDStatus => "not_available")
+  );
+
+/**
  * Maps a given StoredCredential or undefined to the corresponding Mixpanel tracking status.
  * Returns "not_available" if the credential is missing or its status cannot be determined.
  */
@@ -1209,11 +1268,11 @@ export const getCredentialMixpanelStatus = (
   );
 
 /**
- * Maps an eID status to its corresponding Mixpanel tracking status.
+ * Maps an PID status to its corresponding Mixpanel tracking status.
  */
-export const mapEidStatusToMixpanel = (
+export const mapPIDStatusToMixpanel = (
   status: ItwJwtCredentialStatus
-): ItwId => {
+): ItwPIDStatus => {
   switch (status) {
     case "valid":
       return "valid";
@@ -1249,4 +1308,18 @@ export const trackOfflineAccessReason = (
         value: "not_available"
       });
   }
+};
+
+export const trackStartCredentialUpgrade = (credential: MixPanelCredential) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_START_REISSUING,
+    buildEventProperties("UX", "action", { credential })
+  );
+};
+
+export const trackCredentialUpgradeFailed = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_CREDENTIAL_REISSUING_FAILED,
+    buildEventProperties("KO", "screen_view")
+  );
 };

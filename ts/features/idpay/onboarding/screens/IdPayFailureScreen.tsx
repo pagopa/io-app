@@ -1,7 +1,6 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { voidType } from "io-ts";
 import { useMemo } from "react";
 import {
   OperationResultScreenContent,
@@ -9,8 +8,13 @@ import {
 } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { openWebUrl } from "../../../../utils/url";
+import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
-import { selectOnboardingFailure } from "../machine/selectors";
+import {
+  selectInitiative,
+  selectOnboardingFailure,
+  selectServiceId
+} from "../machine/selectors";
 import { OnboardingFailureEnum } from "../types/OnboardingFailure";
 
 const IdPayFailureScreen = () => {
@@ -18,6 +22,19 @@ const IdPayFailureScreen = () => {
   const machine = useActorRef();
 
   const failureOption = useSelector(selectOnboardingFailure);
+  const serviceId = useSelector(selectServiceId);
+  const initiative = useSelector(selectInitiative);
+
+  const initiativeId = pipe(
+    initiative,
+    O.map(i => i.initiativeId),
+    O.toUndefined
+  );
+
+  const { bottomSheet, present } = useIDPayFailureSupportModal(
+    serviceId,
+    initiativeId
+  );
 
   const CAC_URL =
     "https://assistenza.ioapp.it/hc/it/articles/35337442750225-Non-riesco-ad-aggiungere-un-metodo-di-pagamento";
@@ -66,13 +83,12 @@ const IdPayFailureScreen = () => {
         accessibilityLabel: I18n.t(
           `wallet.onboarding.outcome.BE_KO.secondaryAction`
         ),
-        // TODO: implement this in IOBP-1943
-        onPress: () => voidType
+        onPress: () => present(OnboardingFailureEnum.GENERIC)
       },
       enableAnimatedPictogram: true,
       loop: true
     }),
-    [machine]
+    [machine, present]
   );
 
   const mapFailureToContentProps = (
@@ -236,7 +252,12 @@ const IdPayFailureScreen = () => {
     O.getOrElse(() => genericErrorProps)
   );
 
-  return <OperationResultScreenContent {...contentProps} />;
+  return (
+    <>
+      <OperationResultScreenContent {...contentProps} />
+      {bottomSheet}
+    </>
+  );
 };
 
 export default IdPayFailureScreen;

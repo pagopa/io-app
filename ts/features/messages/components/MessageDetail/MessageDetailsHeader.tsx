@@ -7,7 +7,6 @@ import { useIOSelector } from "../../../../store/hooks";
 import { localeDateFormat } from "../../../../utils/locale";
 import { logosForService } from "../../../services/common/utils";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
-import { UIMessageId } from "../../types";
 import { OrganizationHeader } from "./OrganizationHeader";
 
 const styles = StyleSheet.create({
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
 
 export type MessageDetailsHeaderProps = PropsWithChildren<{
   createdAt: Date;
-  messageId: UIMessageId;
+  messageId: string;
   serviceId: ServiceId;
   subject: string;
 }>;
