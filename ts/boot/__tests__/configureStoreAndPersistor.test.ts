@@ -83,7 +83,8 @@ describe("configureStoreAndPersistor", () => {
               isPnTestEnabled: false,
               isIdPayTestEnabled: false,
               isItwOfflineAccessEnabled: false,
-              fontPreference: "comfortable"
+              fontPreference: "comfortable",
+              isAarFeatureEnabled: false
             },
             profile: pot.none,
             _persist: {
@@ -224,7 +225,8 @@ describe("configureStoreAndPersistor", () => {
             isIdPayTestEnabled: false,
             isItwOfflineAccessEnabled: false,
             fontPreference: "comfortable",
-            isExperimentalDesignEnabled: false
+            isExperimentalDesignEnabled: false,
+            isAarFeatureEnabled: false
           },
           profile: pot.none,
           _persist: {
@@ -296,7 +298,8 @@ describe("configureStoreAndPersistor", () => {
           isPnTestEnabled: false,
           isIdPayTestEnabled: false,
           fontPreference: "comfortable",
-          isExperimentalDesignEnabled: false
+          isExperimentalDesignEnabled: false,
+          isAarFeatureEnabled: false
         },
         profile: pot.none,
         _persist: {
@@ -363,7 +366,8 @@ describe("configureStoreAndPersistor", () => {
           isPnTestEnabled: false,
           isIdPayTestEnabled: false,
           fontPreference: "comfortable",
-          isExperimentalDesignEnabled: false
+          isExperimentalDesignEnabled: false,
+          isAarFeatureEnabled: false
         },
         profile: pot.none,
         _persist: {
@@ -428,7 +432,8 @@ describe("configureStoreAndPersistor", () => {
             isPnTestEnabled: false,
             isIdPayTestEnabled: false,
             fontPreference: "comfortable",
-            isExperimentalDesignEnabled: false
+            isExperimentalDesignEnabled: false,
+            isAarFeatureEnabled: false
           },
           profile: pot.none,
           _persist: {

@@ -21,7 +21,8 @@ import {
   preferencesIdPayTestSetEnabled,
   preferencesExperimentalDesignEnabled,
   preferencesFontSet,
-  TypefaceChoice
+  TypefaceChoice,
+  preferencesAarFeatureSetEnabled
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
@@ -48,6 +49,7 @@ export type PersistedPreferencesState = Readonly<{
   // be sure to handle such case when reading and using this value
   isExperimentalDesignEnabled: boolean;
   fontPreference: TypefaceChoice;
+  isAarFeatureEnabled: boolean;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -62,7 +64,8 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isPnTestEnabled: false,
   isIdPayTestEnabled: false,
   isExperimentalDesignEnabled: false,
-  fontPreference: "comfortable"
+  fontPreference: "comfortable",
+  isAarFeatureEnabled: false
 };
 
 export default function preferencesReducer(
@@ -164,6 +167,13 @@ export default function preferencesReducer(
     };
   }
 
+  if (isActionOf(preferencesAarFeatureSetEnabled, action)) {
+    return {
+      ...state,
+      isAarFeatureEnabled: action.payload.isAarFeatureEnabled
+    };
+  }
+
   return state;
 }
 
@@ -208,6 +218,9 @@ export const isExperimentalDesignEnabledSelector = (state: GlobalState) =>
 
 export const fontPreferenceSelector = (state: GlobalState): TypefaceChoice =>
   state.persistedPreferences.fontPreference ?? "comfortable";
+
+export const isAarFeatureLocallyEnabledSelector = (state: GlobalState) =>
+  state.persistedPreferences.isAarFeatureEnabled;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<

@@ -14,7 +14,8 @@ import {
   pnMessagingServiceIdSelector,
   pnPrivacyUrlsSelector,
   fimsServiceIdInCookieDisabledListSelector,
-  pnAARQRCodeRegexSelector
+  pnAARQRCodeRegexSelector,
+  isAarFeatureEnabled
 } from "../remoteConfig";
 import * as appVersion from "../../../../utils/appVersion";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -695,5 +696,66 @@ describe("pnAARQRCodeRegexSelector", () => {
     } as GlobalState;
     const aarQRCodeRegex = pnAARQRCodeRegexSelector(state);
     expect(aarQRCodeRegex).toBe("some-regex");
+  });
+});
+
+describe("isAarFeatureEnabled", () => {
+  it("should return true, when 'backendStatus' is O.none", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+    const isSupported = isAarFeatureEnabled(state);
+    expect(isSupported).toBe(true);
+  });
+  it("should return false, when min_app_version is greater than `getAppVersion`", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          aar: {
+            min_app_version: {
+              android: "2.0.0.0",
+              ios: "2.0.0.0"
+            }
+          }
+        }
+      })
+    } as GlobalState;
+    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "1.0.0.0");
+    const isSupported = isAarFeatureEnabled(state);
+    expect(isSupported).toBe(false);
+  });
+  it("should return true, when min_app_version is equal to `getAppVersion`", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          aar: {
+            min_app_version: {
+              android: "2.0.0.0",
+              ios: "2.0.0.0"
+            }
+          }
+        }
+      })
+    } as GlobalState;
+    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "2.0.0.0");
+    const isSupported = isAarFeatureEnabled(state);
+    expect(isSupported).toBe(true);
+  });
+  it("should return true, when min_app_version is less than `getAppVersion`", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          aar: {
+            min_app_version: {
+              android: "2.0.0.0",
+              ios: "2.0.0.0"
+            }
+          }
+        }
+      })
+    } as GlobalState;
+    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "3.0.0.0");
+    const isSupported = isAarFeatureEnabled(state);
+    expect(isSupported).toBe(true);
   });
 });

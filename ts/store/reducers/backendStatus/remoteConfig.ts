@@ -664,3 +664,26 @@ export const pnPrivacyUrlsSelector = createSelector(
       O.getOrElse(() => fallbackSendPrivacyUrls)
     )
 );
+
+/**
+ * Return true if the app supports the AAR feature (based on remote config).
+ * If the remote value is missing, consider the feature as enabled.
+ */
+export const isAarFeatureEnabled = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.map(config => {
+      const minVersion =
+        Platform.OS === "ios"
+          ? config.pn.aar?.min_app_version?.ios
+          : config.pn.aar?.min_app_version?.android;
+
+      if (!minVersion) {
+        return true;
+      }
+
+      return isVersionSupported(minVersion, getAppVersion());
+    }),
+    O.getOrElse(() => true)
+  );
