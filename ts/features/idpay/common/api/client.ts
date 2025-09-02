@@ -1,10 +1,18 @@
 import { createClient } from "../../../../../definitions/idpay/client";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
-const createIDPayClient = (baseUrl: string) =>
-  createClient({
+const createIDPayClient = (baseUrl: string, apiVersion: string) =>
+  createClient<"x-Api-Version">({
     baseUrl,
-    fetchApi: defaultRetryingFetch()
+    fetchApi: defaultRetryingFetch(),
+    withDefaults: op => params => {
+      const paramsWithDefaults = {
+        ...params,
+        "x-Api-Version": apiVersion
+      } as Parameters<typeof op>[0];
+
+      return op(paramsWithDefaults);
+    }
   });
 
 export type IDPayClient = ReturnType<typeof createIDPayClient>;
