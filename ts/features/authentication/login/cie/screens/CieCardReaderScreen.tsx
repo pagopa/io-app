@@ -536,11 +536,16 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
     this.setState({ isScreenReaderEnabled: srEnabled });
   }
 
-  private handleCancel = () =>
-    this.props.navigation.reset({
-      index: 0,
-      routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
-    });
+  private handleCancel = () => {
+    if (this.props.isActiveSessionLogin) {
+      this.props.navigation.popToTop();
+    } else {
+      this.props.navigation.reset({
+        index: 0,
+        routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
+      });
+    }
+  };
 
   private getFooter = () =>
     Platform.select({

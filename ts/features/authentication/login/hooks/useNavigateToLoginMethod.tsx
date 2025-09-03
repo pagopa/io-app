@@ -84,14 +84,11 @@ const useNavigateToLoginMethod = () => {
     } else {
       dispatch(idpSelected(IdpCIE));
     }
-    const ciePinScreen = isActiveSessionLogin
-      ? "CIE_PIN_ACTIVE_SESSION_LOGIN_SCREEN"
-      : "CIE_PIN_SCREEN";
 
     withIsFastLoginOptInCheck(
       () => {
         navigate(AUTHENTICATION_ROUTES.MAIN, {
-          screen: AUTHENTICATION_ROUTES[ciePinScreen]
+          screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
         });
       },
       { identifier: Identifier.CIE }

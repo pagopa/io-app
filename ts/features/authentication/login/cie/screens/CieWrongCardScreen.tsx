@@ -6,6 +6,7 @@ import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 
 const CieWrongCardScreen = () => {
   const navigation = useIONavigation();
@@ -16,12 +17,7 @@ const CieWrongCardScreen = () => {
     });
   }, [navigation]);
 
-  const navigateToAuthenticationScreen = useCallback(() => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
-    });
-  }, [navigation]);
+  const { navigateToAuthenticationScreen } = useActiveSessionLoginNavigation();
 
   const action = {
     label: I18n.t("global.buttons.retry"),

@@ -107,8 +107,7 @@ const CiePinScreen = () => {
     useNavigation<
       IOStackNavigationProp<
         AuthenticationParamsList,
-        | typeof AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
-        | typeof AUTHENTICATION_ROUTES.CIE_PIN_ACTIVE_SESSION_LOGIN_SCREEN
+        typeof AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
       >
     >();
   const [pin, setPin] = useState("");
