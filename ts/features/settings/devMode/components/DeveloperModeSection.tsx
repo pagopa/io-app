@@ -540,6 +540,11 @@ const DeveloperTestEnvironmentSection = ({
       onSwitchValueChange: onPnEnvironmentToggle
     },
     {
+      label: I18n.t("profile.main.pnEnvironment.aarEnv"),
+      value: isAarFeatureEnabled,
+      onSwitchValueChange: onAarFeatureToggle
+    },
+    {
       label: I18n.t("profile.main.idpay.idpayTest"),
       description: I18n.t("profile.main.idpay.idpayTestAlert"),
       value: isIdPayTestEnabled,
@@ -549,11 +554,6 @@ const DeveloperTestEnvironmentSection = ({
       label: I18n.t("profile.main.loginEnvironment.activeSession.switchTitle"),
       value: isActiveSessionLoginLocallyEnabled,
       onSwitchValueChange: onActiveSessionLoginToggle
-    },
-    {
-      label: I18n.t("profile.main.pnEnvironment.aarEnv"),
-      value: isAarFeatureEnabled,
-      onSwitchValueChange: onAarFeatureToggle
     }
   ];
 
