@@ -716,7 +716,7 @@ describe("isAARRemoteEnabled", () => {
       ],
       [
         {
-          remoteConfig: O.some({ pr: {} })
+          remoteConfig: O.some({ pn: {} })
         },
         true
       ],
