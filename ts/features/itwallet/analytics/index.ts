@@ -11,7 +11,6 @@ import { IssuanceFailure } from "../machine/eid/failure";
 import {
   ItwCredentialStatus,
   ItwJwtCredentialStatus,
-  StoredCredential,
   WalletInstanceRevocationReason
 } from "../common/utils/itwTypesUtils";
 import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
@@ -22,7 +21,10 @@ import {
   setOfflineAccessReason
 } from "../../ingress/store/actions";
 import { getCredentialStatus } from "../common/utils/itwCredentialStatusUtils";
-import { itwCredentialsEidStatusSelector } from "../credentials/store/selectors";
+import {
+  itwCredentialsEidStatusSelector,
+  itwCredentialsSelector
+} from "../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../lifecycle/store/selectors";
 import {
   ITW_ACTIONS_EVENTS,
@@ -32,6 +34,7 @@ import {
   ITW_SCREENVIEW_EVENTS,
   ITW_TECH_EVENTS
 } from "./enum";
+import { CredentialType } from "../common/utils/itwMocksUtils";
 
 export type KoState = {
   reason: unknown;
@@ -1264,19 +1267,24 @@ export const getPIDMixpanelStatus = (
   );
 
 /**
- * Maps a given StoredCredential or undefined to the corresponding Mixpanel tracking status.
- * Returns "not_available" if the credential is missing or its status cannot be determined.
+ * Returns the Mixpanel status for a credential type, considering IT Wallet.
+ *
+ * - If `isItwL3` is explicitly false, returns `"not_available"`.
+ * - Otherwise, retrieves the credential from the store and maps it to Mixpanel status.
+ * - Returns `"not_available"` if the credential is missing.
  */
-export const getCredentialMixpanelStatus = (
-  credential: StoredCredential | undefined
+export const getMixpanelCredentialStatus = (
+  type: CredentialType,
+  state: GlobalState,
+  isItwL3?: boolean
 ): ItwCredentialMixpanelStatus =>
-  pipe(
-    O.fromNullable(credential),
-    O.fold(
-      () => "not_available" as const,
-      cred => CREDENTIAL_STATUS_MAP[getCredentialStatus(cred)]
-    )
-  );
+  isItwL3 === false
+    ? "not_available"
+    : pipe(
+        O.fromNullable(itwCredentialsSelector(state)[type]),
+        O.map(cred => CREDENTIAL_STATUS_MAP[getCredentialStatus(cred)]),
+        O.getOrElse(() => "not_available" as ItwCredentialMixpanelStatus)
+      );
 
 /**
  * Maps an PID status to its corresponding Mixpanel tracking status.

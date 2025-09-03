@@ -279,9 +279,9 @@ export const itwEidIssuanceMachine = setup({
         src: "revokeWalletInstance",
         onDone: {
           actions: [
-            "trackWalletInstanceRevocation",
             "resetWalletInstance",
-            "closeIssuance"
+            "closeIssuance",
+            "trackWalletInstanceRevocation"
           ]
         },
         onError: [
