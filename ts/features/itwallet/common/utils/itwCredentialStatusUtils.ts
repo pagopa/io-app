@@ -100,13 +100,21 @@ export const getCredentialStatusObject = (credential: StoredCredential) => {
       ? storedStatusAttestation.errorCode
       : undefined;
 
-  return {
-    status: getCredentialStatus(credential),
-    message: errorCode
-      ? Errors.extractErrorMessageFromIssuerConf(errorCode, {
+  const message = pipe(
+    O.fromNullable(errorCode),
+    O.chain(code =>
+      O.tryCatch(() =>
+        Errors.extractErrorMessageFromIssuerConf(code, {
           issuerConf: issuerConf as LegacyIssuerConfiguration,
           credentialType: credentialId
         })
-      : undefined
+      )
+    ),
+    O.toUndefined
+  );
+
+  return {
+    status: getCredentialStatus(credential),
+    message
   };
 };

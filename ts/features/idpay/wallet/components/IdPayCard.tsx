@@ -1,13 +1,21 @@
+import {
+  Avatar,
+  Body,
+  H3,
+  H6,
+  useIOThemeContext,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Avatar, Body, H3, H6, VSpacer } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import { ImageURISource, StyleSheet, View } from "react-native";
-import WalletCardShape from "../../../../../img/features/idpay/wallet_card.svg";
-import I18n from "../../../../i18n";
-import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
-import { useIOSelector } from "../../../../store/hooks";
-import { idPayWalletInitiativeListSelector } from "../store/reducers";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
+import WalletCardShape from "../../../../../img/features/idpay/wallet_card.svg";
+import DarkModeWalletCardShape from "../../../../../img/features/idpay/wallet_card_dark.svg";
+import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { idPayWalletInitiativeListSelector } from "../store/reducers";
 
 export type IdPayCardProps = {
   name: string;
@@ -30,16 +38,52 @@ export const IdPayCard = (props: IdPayCardProps) => {
     undefined
   );
 
+  const useIDPayCardStyles = () => {
+    const { themeType } = useIOThemeContext();
+
+    const isDarkMode = themeType === "dark";
+
+    const initiativeTitle = isDarkMode
+      ? ("blueIO-50" as const)
+      : ("blueIO-850" as const);
+
+    const available = isDarkMode ? ("white" as const) : ("blueIO-850" as const);
+
+    const amountColor = isDarkMode
+      ? ("blueIO-300" as const)
+      : ("blueIO-500" as const);
+
+    const validationColor = isDarkMode
+      ? ("blueIO-100" as const)
+      : ("blueIO-850" as const);
+
+    return {
+      isDarkMode,
+      initiativeTitle,
+      available,
+      amountColor,
+      validationColor
+    };
+  };
+
+  const {
+    isDarkMode,
+    initiativeTitle,
+    available,
+    amountColor,
+    validationColor
+  } = useIDPayCardStyles();
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <WalletCardShape />
+        {isDarkMode ? <DarkModeWalletCardShape /> : <WalletCardShape />}
       </View>
       <View style={styles.content}>
         <View>
           <View style={styles.header}>
             <H6
-              color="blueItalia-850"
+              color={initiativeTitle}
               ellipsizeMode="tail"
               numberOfLines={1}
               style={{
@@ -54,16 +98,16 @@ export const IdPayCard = (props: IdPayCardProps) => {
             InitiativeRewardTypeEnum.EXPENSE && (
             <>
               <VSpacer size={16} />
-              <Body weight="Semibold" color="black">
+              <Body weight="Regular" color={available}>
                 Disponibile
               </Body>
-              <H3 testID="idpay-card-amount" color="blueItalia-500">
+              <H3 testID="idpay-card-amount" color={amountColor}>
                 {formatNumberCentsToAmount(props.amount, true, "right")}
               </H3>
             </>
           )}
         </View>
-        <Body weight="Semibold" color="blueItalia-850">
+        <Body weight="Regular" color={validationColor}>
           {I18n.t("bonusCard.validUntil", {
             endDate: format(props.expireDate, "MM/YY")
           })}
