@@ -11,10 +11,10 @@ export type ItwCredentialWalletCardProps = ItwCredentialCard & {
 };
 
 const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
-  const { isLegacyFormat, credentialType } = props;
+  const { isItwCredential, credentialType } = props;
   const navigation = useIONavigation();
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
-  const needsItwUpgrade = isNewItwRenderable && isLegacyFormat;
+  const needsItwUpgrade = isNewItwRenderable && !isItwCredential;
 
   const handleOnPress = () => {
     if (needsItwUpgrade) {
