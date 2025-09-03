@@ -26,6 +26,7 @@ import { idPayBarcodeByInitiativeIdSelector } from "../store";
 import { idPayGenerateBarcode } from "../store/actions";
 import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 // -------------------- types --------------------
 
@@ -52,6 +53,12 @@ const IdPayBarcodeResultScreen = () => {
   const barcodePot = useIOSelector(state =>
     idPayBarcodeByInitiativeIdSelector(state)(initiativeId)
   );
+
+  useHeaderSecondLevel({
+    title: "",
+    canGoBack: true,
+    supportRequest: true
+  });
 
   const navigateToInitiativeDetails = () =>
     navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {

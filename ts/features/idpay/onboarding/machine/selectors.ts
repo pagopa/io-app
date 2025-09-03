@@ -2,11 +2,10 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
-import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
-import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
-import { SelfDeclarationDTO } from "../../../../../definitions/idpay/SelfDeclarationDTO";
-import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
-import { SelfDeclarationTextDTO } from "../../../../../definitions/idpay/SelfDeclarationTextDTO";
+import { InitiativeBeneficiaryRuleDTO } from "../../../../../definitions/idpay/InitiativeBeneficiaryRuleDTO";
+import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
+import { SelfCriteriaMultiDTO } from "../../../../../definitions/idpay/SelfCriteriaMultiDTO";
+import { SelfCriteriaTextDTO } from "../../../../../definitions/idpay/SelfCriteriaTextDTO";
 import * as Context from "./context";
 import { IdPayOnboardingMachine } from "./machine";
 
@@ -34,37 +33,31 @@ export const selectInitiative = (snapshot: MachineSnapshot) =>
 export const selectServiceId = (snapshot: MachineSnapshot) =>
   snapshot.context.serviceId;
 
-const filterCriteria = <T extends SelfDeclarationDTO>(
-  criteria: O.Option<RequiredCriteriaDTO>,
+const filterCriteria = <T>(
+  criteria: O.Option<InitiativeBeneficiaryRuleDTO>,
   filterFunc:
-    | typeof SelfDeclarationMultiDTO
-    | typeof SelfDeclarationBoolDTO
-    | typeof SelfDeclarationTextDTO
+    | typeof SelfCriteriaMultiDTO
+    | typeof SelfCriteriaBoolDTO
+    | typeof SelfCriteriaTextDTO
 ) =>
   pipe(
     criteria,
     O.fold(
       () => [],
-      some => some.selfDeclarationList.filter(filterFunc.is)
+      some => some.selfDeclarationCriteria?.filter(filterFunc.is)
     )
   ) as Array<T>;
 
 export const multiRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
-    filterCriteria<SelfDeclarationMultiDTO>(
-      requiredCriteria,
-      SelfDeclarationMultiDTO
-    )
+    filterCriteria<SelfCriteriaMultiDTO>(requiredCriteria, SelfCriteriaMultiDTO)
 );
 
 export const boolRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
-    filterCriteria<SelfDeclarationBoolDTO>(
-      requiredCriteria,
-      SelfDeclarationBoolDTO
-    )
+    filterCriteria<SelfCriteriaBoolDTO>(requiredCriteria, SelfCriteriaBoolDTO)
 );
 
 export const pdndCriteriaSelector = createSelector(
@@ -74,7 +67,7 @@ export const pdndCriteriaSelector = createSelector(
       requiredCriteria,
       O.fold(
         () => [],
-        some => some.pdndCriteria
+        some => some.automatedCriteria
       )
     )
 );
@@ -82,10 +75,7 @@ export const pdndCriteriaSelector = createSelector(
 export const textRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
-    filterCriteria<SelfDeclarationTextDTO>(
-      requiredCriteria,
-      SelfDeclarationTextDTO
-    )
+    filterCriteria<SelfCriteriaTextDTO>(requiredCriteria, SelfCriteriaTextDTO)
 );
 
 export const stepperCountSelector = createSelector(
@@ -103,25 +93,25 @@ export const stepperCountSelector = createSelector(
 export const getMultiSelfDeclarationListFromContext = (
   context: Context.Context
 ) =>
-  filterCriteria<SelfDeclarationMultiDTO>(
+  filterCriteria<SelfCriteriaMultiDTO>(
     context.requiredCriteria,
-    SelfDeclarationMultiDTO
+    SelfCriteriaMultiDTO
   );
 
 export const getBooleanSelfDeclarationListFromContext = (
   context: Context.Context
 ) =>
-  filterCriteria<SelfDeclarationBoolDTO>(
+  filterCriteria<SelfCriteriaBoolDTO>(
     context.requiredCriteria,
-    SelfDeclarationBoolDTO
+    SelfCriteriaBoolDTO
   );
 
 export const getInputFormSelfDeclarationFromContext = (
   context: Context.Context
 ) =>
-  filterCriteria<SelfDeclarationTextDTO>(
+  filterCriteria<SelfCriteriaTextDTO>(
     context.requiredCriteria,
-    SelfDeclarationTextDTO
+    SelfCriteriaTextDTO
   );
 
 export const areAllSelfDeclarationsToggledSelector = createSelector(
