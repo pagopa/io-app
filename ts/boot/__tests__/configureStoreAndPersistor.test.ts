@@ -367,7 +367,7 @@ describe("configureStoreAndPersistor", () => {
         },
         profile: pot.none,
         _persist: {
-          version: 42,
+          version: 44,
           rehydrated: false
         }
       };
@@ -432,7 +432,7 @@ describe("configureStoreAndPersistor", () => {
           },
           profile: pot.none,
           _persist: {
-            version: 42,
+            version: 45,
             rehydrated: false
           }
         };
@@ -467,16 +467,16 @@ describe("configureStoreAndPersistor", () => {
         installation: {
           isFirstRunAfterInstall: false,
           appVersionHistory: [
-            "2.82.0.7",
-            "2.83.0.7",
-            "3.0.0.8",
-            "3.0.1.0",
-            "3.1.0.2",
-            "3.2.0.8",
             "3.3.0.8",
             "3.4.0.5",
             "3.5.0.8",
-            "3.6.0.9"
+            "3.6.0.9",
+            "3.7.0.7",
+            "3.8.0.9",
+            "3.9.0.6",
+            "3.10.0.6",
+            "3.11.0.4",
+            "3.12.0.7"
           ]
         },
         onboarding: {
@@ -494,8 +494,7 @@ describe("configureStoreAndPersistor", () => {
           isPnTestEnabled: false,
           isIdPayTestEnabled: false,
           fontPreference: "comfortable",
-          isExperimentalDesignEnabled: false,
-          useMessagePaymentInfoV2: false
+          isExperimentalDesignEnabled: false
         },
         profile: pot.none,
         _persist: {

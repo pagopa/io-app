@@ -2,6 +2,7 @@ import { GlobalState } from "../types";
 import { appReducer } from "../index";
 import preferencesReducer, {
   initialPreferencesState,
+  isAARLocalEnabled,
   isExperimentalDesignEnabledSelector,
   isMixpanelEnabled
 } from "../persistedPreferences";
@@ -105,6 +106,19 @@ describe("persistedPreferences", () => {
           })
         );
         expect(state.isAarFeatureEnabled).toBe(value);
+      })
+    );
+  });
+  describe("isAARLocalEnabled", () => {
+    [false, true].forEach(value =>
+      it(`should return '${value}' when 'persistedPreferences.isAarFeatureEnabled' is '${value}'`, () => {
+        const state = {
+          persistedPreferences: {
+            isAarFeatureEnabled: value
+          }
+        } as GlobalState;
+        const isAarFeatureEnabled = isAARLocalEnabled(state);
+        expect(isAarFeatureEnabled).toBe(value);
       })
     );
   });

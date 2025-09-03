@@ -716,6 +716,12 @@ describe("isAARRemoteEnabled", () => {
       ],
       [
         {
+          remoteConfig: O.some({ pr: {} })
+        },
+        true
+      ],
+      [
+        {
           remoteConfig: O.some({
             pn: { aar: {} }
           })
@@ -732,7 +738,7 @@ describe("isAARRemoteEnabled", () => {
             }
           })
         },
-        true
+        false
       ],
       [
         {
@@ -803,7 +809,6 @@ describe("isAARRemoteEnabled", () => {
         .spyOn(appVersion, "getAppVersion")
         .mockImplementation(() => "2.0.0.0");
       const output = isAARRemoteEnabled(testData[0]);
-      // console.log(JSON.stringify(testData[0]), testData[1], "output ", output);
       expect(output).toBe(testData[1]);
     })
   );

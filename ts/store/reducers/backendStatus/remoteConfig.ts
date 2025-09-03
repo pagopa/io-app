@@ -1,6 +1,5 @@
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
-import * as R from "fp-ts/lib/Record";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
@@ -681,7 +680,7 @@ export const isAARRemoteEnabled = (state: GlobalState) => {
   }
 
   const aarMinAppVersion = remoteConfigOption.value.pn?.aar?.min_app_version;
-  if (aarMinAppVersion == null || R.isEmpty(aarMinAppVersion)) {
+  if (aarMinAppVersion == null) {
     // Either AAR configuration missing or min_app_version missing in AAR configuration. AAR is enabled
     return true;
   }
