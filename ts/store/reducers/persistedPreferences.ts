@@ -219,7 +219,7 @@ export const isExperimentalDesignEnabledSelector = (state: GlobalState) =>
 export const fontPreferenceSelector = (state: GlobalState): TypefaceChoice =>
   state.persistedPreferences.fontPreference ?? "comfortable";
 
-export const isAarFeatureLocallyEnabledSelector = (state: GlobalState) =>
+export const isAARLocalEnabled = (state: GlobalState) =>
   state.persistedPreferences.isAarFeatureEnabled;
 
 // returns the preferred language as an Option from the persisted store

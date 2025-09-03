@@ -1,5 +1,6 @@
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
+import * as R from "fp-ts/lib/Record";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
@@ -20,7 +21,10 @@ import {
 import { getAppVersion, isVersionSupported } from "../../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../../actions/backendStatus";
 import { Action } from "../../actions/types";
-import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVersionStatus";
+import {
+  isMinAppVersionSupported,
+  isPropertyWithMinAppVersionEnabled
+} from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
 import { FimsServiceConfiguration } from "../../../../definitions/content/FimsServiceConfiguration";
@@ -669,21 +673,20 @@ export const pnPrivacyUrlsSelector = createSelector(
  * Return true if the app supports the AAR feature (based on remote config).
  * If the remote value is missing, consider the feature as enabled.
  */
-export const isAarFeatureEnabled = (state: GlobalState) =>
-  pipe(
-    state,
-    remoteConfigSelector,
-    O.map(config => {
-      const minVersion =
-        Platform.OS === "ios"
-          ? config.pn.aar?.min_app_version?.ios
-          : config.pn.aar?.min_app_version?.android;
+export const isAARRemoteEnabled = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    // CDN data not available, AAR is disabled
+    return false;
+  }
 
-      if (!minVersion) {
-        return true;
-      }
+  const aarMinAppVersion = remoteConfigOption.value.pn?.aar?.min_app_version;
+  if (aarMinAppVersion == null || R.isEmpty(aarMinAppVersion)) {
+    // Either AAR configuration missing or min_app_version missing in AAR configuration. AAR is enabled
+    return true;
+  }
 
-      return isVersionSupported(minVersion, getAppVersion());
-    }),
-    O.getOrElse(() => true)
+  return isMinAppVersionSupported(
+    O.some({ min_app_version: aarMinAppVersion })
   );
+};

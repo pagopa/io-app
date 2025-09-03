@@ -26,7 +26,7 @@ describe("configureStoreAndPersistor", () => {
   describe("CURRENT_REDUX_STORE_VERSION", () => {
     it("should match expected value", () => {
       const version = testable!.CURRENT_REDUX_STORE_VERSION;
-      expect(version).toBe(46);
+      expect(version).toBe(47);
     });
   });
   describe("migrations", () => {
@@ -83,8 +83,7 @@ describe("configureStoreAndPersistor", () => {
               isPnTestEnabled: false,
               isIdPayTestEnabled: false,
               isItwOfflineAccessEnabled: false,
-              fontPreference: "comfortable",
-              isAarFeatureEnabled: false
+              fontPreference: "comfortable"
             },
             profile: pot.none,
             _persist: {
@@ -225,8 +224,7 @@ describe("configureStoreAndPersistor", () => {
             isIdPayTestEnabled: false,
             isItwOfflineAccessEnabled: false,
             fontPreference: "comfortable",
-            isExperimentalDesignEnabled: false,
-            isAarFeatureEnabled: false
+            isExperimentalDesignEnabled: false
           },
           profile: pot.none,
           _persist: {
@@ -298,8 +296,7 @@ describe("configureStoreAndPersistor", () => {
           isPnTestEnabled: false,
           isIdPayTestEnabled: false,
           fontPreference: "comfortable",
-          isExperimentalDesignEnabled: false,
-          isAarFeatureEnabled: false
+          isExperimentalDesignEnabled: false
         },
         profile: pot.none,
         _persist: {
@@ -366,8 +363,7 @@ describe("configureStoreAndPersistor", () => {
           isPnTestEnabled: false,
           isIdPayTestEnabled: false,
           fontPreference: "comfortable",
-          isExperimentalDesignEnabled: false,
-          isAarFeatureEnabled: false
+          isExperimentalDesignEnabled: false
         },
         profile: pot.none,
         _persist: {
@@ -432,8 +428,7 @@ describe("configureStoreAndPersistor", () => {
             isPnTestEnabled: false,
             isIdPayTestEnabled: false,
             fontPreference: "comfortable",
-            isExperimentalDesignEnabled: false,
-            isAarFeatureEnabled: false
+            isExperimentalDesignEnabled: false
           },
           profile: pot.none,
           _persist: {
@@ -454,5 +449,70 @@ describe("configureStoreAndPersistor", () => {
         expect(globalStateAt46).toEqual(basePersistedGlobalStateAt45);
       })
     );
+    // Test for 46 to 47
+    it("should migrate from 46 to 47", () => {
+      const persistedStateAt46 = {
+        content: {
+          idps: remoteUndefined,
+          municipality: {
+            codiceCatastale: pot.none,
+            data: pot.none
+          },
+          contextualHelp: pot.none
+        },
+        crossSessions: {
+          hashedFiscalCode:
+            "6494e783ad296f016b2105f8fe7dc2979551a37d3a5c40624e2ee8eee64e8017"
+        },
+        installation: {
+          isFirstRunAfterInstall: false,
+          appVersionHistory: [
+            "2.82.0.7",
+            "2.83.0.7",
+            "3.0.0.8",
+            "3.0.1.0",
+            "3.1.0.2",
+            "3.2.0.8",
+            "3.3.0.8",
+            "3.4.0.5",
+            "3.5.0.8",
+            "3.6.0.9"
+          ]
+        },
+        onboarding: {
+          isFingerprintAcknowledged: false
+        },
+        persistedPreferences: {
+          isFingerprintEnabled: undefined,
+          preferredCalendar: undefined,
+          preferredLanguage: undefined,
+          wasServiceAlertDisplayedOnce: false,
+          isPagoPATestEnabled: false,
+          isCustomEmailChannelEnabled: pot.none,
+          continueWithRootOrJailbreak: false,
+          isMixpanelEnabled: null,
+          isPnTestEnabled: false,
+          isIdPayTestEnabled: false,
+          fontPreference: "comfortable",
+          isExperimentalDesignEnabled: false,
+          useMessagePaymentInfoV2: false
+        },
+        profile: pot.none,
+        _persist: {
+          version: 46,
+          rehydrated: false
+        }
+      };
+      const from46To47Migration = testable!.migrations[47];
+      expect(from46To47Migration).toBeDefined();
+      const globalStateAt47 = from46To47Migration(persistedStateAt46);
+      expect(globalStateAt47).toEqual({
+        ...persistedStateAt46,
+        persistedPreferences: {
+          ...persistedStateAt46.persistedPreferences,
+          isAarFeatureEnabled: false
+        }
+      });
+    });
   });
 });

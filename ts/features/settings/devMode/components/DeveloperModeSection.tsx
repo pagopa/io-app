@@ -43,7 +43,7 @@ import {
 } from "../../../authentication/common/store/selectors";
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
-  isAarFeatureLocallyEnabledSelector,
+  isAARLocalEnabled,
   isIdPayLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
@@ -468,7 +468,7 @@ const DeveloperTestEnvironmentSection = ({
   const isActiveSessionLoginLocallyEnabled = useIOSelector(
     isActiveSessionLoginLocallyEnabledSelector
   );
-  const isAarFeatureEnabled = useIOSelector(isAarFeatureLocallyEnabledSelector);
+  const isAarFeatureEnabled = useIOSelector(isAARLocalEnabled);
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {

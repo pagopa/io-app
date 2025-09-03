@@ -15,7 +15,10 @@ import {
 } from "../../../features/authentication/common/store/actions";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
 import { clearCache } from "../../../features/settings/common/store/actions";
-import { preferencesExperimentalDesignEnabled } from "../../actions/persistedPreferences";
+import {
+  preferencesAarFeatureSetEnabled,
+  preferencesExperimentalDesignEnabled
+} from "../../actions/persistedPreferences";
 
 describe("persistedPreferences", () => {
   describe("isExperimentalDesignEnabledSelector", () => {
@@ -91,6 +94,17 @@ describe("persistedPreferences", () => {
           })
         );
         expect(state.isExperimentalDesignEnabled).toBe(value);
+      })
+    );
+    [false, true].forEach(value =>
+      it(`should set 'isAarFeatureEnabled' to '${value}' upon receiving action 'preferencesAarFeatureSetEnabled' set to '${value}'`, () => {
+        const state = preferencesReducer(
+          undefined,
+          preferencesAarFeatureSetEnabled({
+            isAarFeatureEnabled: value
+          })
+        );
+        expect(state.isAarFeatureEnabled).toBe(value);
       })
     );
   });
