@@ -38,7 +38,7 @@ const LoaderComponent = () => (
   </LoadingSpinnerOverlay>
 );
 
-const CieConsentDataUsageActiveSessionLoginScreen = () => {
+const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const route =
     useRoute<
       Route<
@@ -178,4 +178,4 @@ const CieConsentDataUsageActiveSessionLoginScreen = () => {
   return null;
 };
 
-export default CieConsentDataUsageActiveSessionLoginScreen;
+export default ActiveSessionLoginCieConsentDataUsageScreen;

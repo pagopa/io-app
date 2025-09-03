@@ -164,7 +164,11 @@ const CiePinScreen = () => {
         );
       } else {
         if (isNfcEnabled) {
-          navigation.navigate(AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN, {
+          const route = isActiveSessionLogin
+            ? AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN_ACTIVE_SESSION_LOGIN
+            : AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN;
+
+          navigation.navigate(AUTHENTICATION_ROUTES[route], {
             ciePin: pin,
             authorizationUri: authUrlGenerated
           });

@@ -34,7 +34,8 @@ import CieIdAuthUrlError from "../../login/cie/screens/CieIdAuthUrlError";
 import CloseButton from "../../../../navigation/components/CloseButton";
 import { ActiveSessionLandingScreen } from "../../activeSessionLogin/screens/ActiveSessionLandingScreen";
 import ActiveSessionCieIdLoginScreen from "../../activeSessionLogin/screens/cieId/ActiveSessionCieIdLoginScreen";
-import CieConsentDataUsageActiveSessionLoginScreen from "../../activeSessionLogin/screens/cie/CieConsentDataUsageActiveSessionLoginScreen";
+import ActiveSessionLoginCieCardReaderScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieCardReaderScreen";
+import ActiveSessionLoginCieConsentDataUsageScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieConsentDataUsageScreen";
 import { AUTHENTICATION_ROUTES } from "./routes";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 
@@ -143,6 +144,11 @@ const AuthenticationStackNavigator = () => (
     />
 
     <Stack.Screen
+      name={AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN_ACTIVE_SESSION_LOGIN}
+      component={ActiveSessionLoginCieCardReaderScreen}
+    />
+
+    <Stack.Screen
       name={AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE}
       component={CieConsentDataUsageScreen}
       options={{ headerShown: true }}
@@ -150,7 +156,7 @@ const AuthenticationStackNavigator = () => (
 
     <Stack.Screen
       name={AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN}
-      component={CieConsentDataUsageActiveSessionLoginScreen}
+      component={ActiveSessionLoginCieConsentDataUsageScreen}
       options={{ headerShown: true }}
     />
 

@@ -707,6 +707,204 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                             <View>
                               <View>
                                 <View
+                                  accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
+                                  testID="bottom-sheet-login-with-cie-pin"
+                                >
+                                  <View
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
+                                          "borderWidth": 1,
+                                          "flexDirection": "row",
+                                          "justifyContent": "space-between",
+                                          "paddingHorizontal": 16,
+                                          "paddingVertical": 16,
+                                        },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
+                                        {
+                                          "transform": [
+                                            {
+                                              "scale": undefined,
+                                            },
+                                          ],
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <View
+                                      style={
+                                        {
+                                          "alignItems": "center",
+                                          "display": "flex",
+                                          "flexDirection": "row",
+                                          "gap": 8,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          {
+                                            "alignItems": "center",
+                                            "display": "flex",
+                                            "flexDirection": "row",
+                                            "flexGrow": 1,
+                                            "flexShrink": 1,
+                                            "gap": 12,
+                                          }
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            {
+                                              "flexShrink": 1,
+                                            }
+                                          }
+                                        >
+                                          <Text
+                                            allowFontScaling={true}
+                                            dynamicTypeRamp="footnote"
+                                            lineBreakMode="middle"
+                                            maxFontSizeMultiplier={1.5}
+                                            numberOfLines={2}
+                                            style={
+                                              [
+                                                {},
+                                                {
+                                                  "color": "#0B3EE3",
+                                                  "fontFamily": "Titillio",
+                                                  "fontSize": 14,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": 21,
+                                                },
+                                                {
+                                                  "flexShrink": 1,
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            Login with CIE + PIN
+                                          </Text>
+                                          <Text
+                                            allowFontScaling={true}
+                                            dynamicTypeRamp="footnote"
+                                            maxFontSizeMultiplier={1.5}
+                                            style={
+                                              [
+                                                {},
+                                                {
+                                                  "color": "#555C70",
+                                                  "fontFamily": "Titillio",
+                                                  "fontSize": 12,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "400",
+                                                  "lineHeight": 18,
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            Use Electronic Identity Card and PIN
+                                          </Text>
+                                        </View>
+                                      </View>
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={24}
+                                        bbWidth={24}
+                                        color="#0B3EE3"
+                                        focusable={false}
+                                        height={24}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 24,
+                                              "width": 24,
+                                            },
+                                          ]
+                                        }
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={24}
+                                      >
+                                        <RNSVGGroup
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
+                                  </View>
+                                </View>
+                                <View
                                   style={
                                     {
                                       "height": 8,
