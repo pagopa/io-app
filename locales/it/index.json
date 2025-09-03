@@ -620,7 +620,8 @@
         "alertMessage": "È necessario il riavvio dell'applicazione affinché le modifiche abbiano effetto."
       },
       "pnEnvironment": {
-        "pnEnv": "SEND (PN)"
+        "pnEnv": "SEND (PN)",
+        "aarEnv": "Avviso Avvenuta Ricezione (AAR)"
       },
       "idpay": {
         "idpayTest": "IDPay",
