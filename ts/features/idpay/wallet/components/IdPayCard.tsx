@@ -50,7 +50,7 @@ export const IdPayCard = (props: IdPayCardProps) => {
     const available = isDarkMode ? ("white" as const) : ("blueIO-850" as const);
 
     const amountColor = isDarkMode
-      ? ("blueIO-200" as const)
+      ? ("blueIO-300" as const)
       : ("blueIO-500" as const);
 
     const validationColor = isDarkMode
