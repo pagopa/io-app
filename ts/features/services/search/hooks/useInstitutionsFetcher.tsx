@@ -45,11 +45,7 @@ export const useInstitutionsFetcher = () => {
 
   const fetchNextPage = useCallback(
     (page: number, search: string) => {
-      if (isLastPage) {
-        return;
-      }
-
-      if (isLoading || isUpdating) {
+      if (isLastPage || isLoading || isUpdating) {
         return;
       }
 

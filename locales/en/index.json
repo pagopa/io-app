@@ -2945,6 +2945,9 @@
       },
       "featured": {
         "services": {
+          "a11y": {
+            "title": "Featured Services"
+          },
           "title": "Featured"
         },
         "institutions": {
