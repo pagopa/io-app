@@ -1344,3 +1344,17 @@ export function getMixPanelCredential(
 
   return isItwL3 ? credential.V3 : credential.V2;
 }
+
+export const trackStartCredentialUpgrade = (credential: MixPanelCredential) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_START_REISSUING,
+    buildEventProperties("UX", "action", { credential })
+  );
+};
+
+export const trackCredentialUpgradeFailed = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_CREDENTIAL_REISSUING_FAILED,
+    buildEventProperties("KO", "screen_view")
+  );
+};

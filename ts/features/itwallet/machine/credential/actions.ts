@@ -13,6 +13,7 @@ import {
   trackAddCredentialProfileAndSuperProperties,
   trackSaveCredentialSuccess,
   trackStartAddNewCredential,
+  trackStartCredentialUpgrade,
   trackWalletDataShare,
   trackWalletDataShareAccepted
 } from "../../analytics";
@@ -192,7 +193,18 @@ export const createCredentialIssuanceActionsImplementation = (
   trackCredentialIssuingDataShareAccepted: ({
     context
   }: ActionArgs<Context, CredentialIssuanceEvents, CredentialIssuanceEvents>) =>
-    trackDataShareEvent(context, store, true)
+    trackDataShareEvent(context, store, true),
+
+  trackStartCredentialReissuing: ({
+    context
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
+    assert(context.credentialType, "credentialType is undefined");
+    trackStartCredentialUpgrade(CREDENTIALS_MAP[context.credentialType]);
+  }
 });
 
 const trackDataShareEvent = (
