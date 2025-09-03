@@ -221,7 +221,8 @@
       "choose": "Scegli",
       "copy": "Copia",
       "selectAll": "Seleziona tutto",
-      "deselectAll": "Deseleziona tutto"
+      "deselectAll": "Deseleziona tutto",
+      "whatCanYouDo": "Cosa puoi fare?"
     },
     "navigator": {
       "messages": "Messaggi",
@@ -5827,8 +5828,7 @@
           },
           "FAMILY_UNIT_ALREADY_JOINED": {
             "title": "Un'altra persona del tuo nucleo familiare ha inviato la richiesta",
-            "subtitle": "È possibile inviare una sola richiesta per ogni nucleo familiare.",
-            "secondaryAction": "Cosa puoi fare?"
+            "subtitle": "È possibile inviare una sola richiesta per ogni nucleo familiare."
           },
           "ONBOARDING_WAITING_LIST": {
             "title": "Sei in lista d’attesa",
