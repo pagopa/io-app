@@ -40,6 +40,7 @@ import {
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
 // Errors that allow a user to send a support request to Zendesk
 const zendeskAssistanceErrors = [
@@ -85,6 +86,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const deferredIssuanceScreenContent = useIOSelector(
     itwDeferredIssuanceScreenContentSelector
   );
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const invalidStatusDetails = getCredentialInvalidStatusDetails(failure, {
     credentialType,
@@ -214,6 +216,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   useCredentialEventsTracking({
     failure,
+    isItwL3,
     credentialType: O.toUndefined(credentialType),
     invalidErrorCode: invalidStatusDetails.errorCode
   });

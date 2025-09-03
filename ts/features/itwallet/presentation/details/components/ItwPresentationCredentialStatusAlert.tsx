@@ -20,12 +20,13 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
 import { openWebUrl } from "../../../../../utils/url";
 import {
-  CREDENTIALS_MAP,
   CREDENTIAL_STATUS_MAP,
+  getMixPanelCredential,
   trackItwCredentialBottomSheet,
   trackItwCredentialBottomSheetAction,
   trackItwCredentialTapBanner
 } from "../../../analytics";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 type Props = {
   credential: StoredCredential;
@@ -66,14 +67,19 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   const { status, message } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const trackCredentialAlertEvent = (action: CredentialAlertEvents): void => {
     if (!status) {
       return;
     }
+    const mixPanelCredential = getMixPanelCredential(
+      credential.credentialType,
+      isItwL3
+    );
 
     const trackingData = {
-      credential: CREDENTIALS_MAP[credential.credentialType],
+      credential: mixPanelCredential,
       credential_status: CREDENTIAL_STATUS_MAP[status]
     };
 

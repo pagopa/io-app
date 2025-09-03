@@ -4,7 +4,7 @@ import {
   IOColors,
   useIOToast
 } from "@pagopa/io-app-design-system";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
 import Share from "react-native-share";
@@ -21,6 +21,8 @@ import { ParsedCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { trackWalletCredentialFAC_SIMILE } from "../../../analytics";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { useIOSelector } from "../../../../../store/hooks";
 
 // We currently only support PDF files, extend this if needed
 type SupportedAttachmentType = "application/pdf";
@@ -44,6 +46,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
   route
 }: ScreenProps) => {
   const toast = useIOToast();
+  const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const [footerActionsMeasurements, setfooterActionsMeasurements] =
     useState<FooterActionsMeasurements>({
@@ -52,7 +55,15 @@ export const ItwPresentationCredentialAttachmentScreen = ({
     });
 
   usePreventScreenCapture();
-  useFocusEffect(trackWalletCredentialFAC_SIMILE);
+  useFocusEffect(
+    useCallback(
+      () =>
+        trackWalletCredentialFAC_SIMILE(
+          isL3Credential ? "ITW_TS_V3" : "ITW_TS_V2"
+        ),
+      [isL3Credential]
+    )
+  );
 
   useHeaderSecondLevel({
     title: "",

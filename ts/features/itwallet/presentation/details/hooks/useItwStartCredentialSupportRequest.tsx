@@ -1,12 +1,14 @@
 import { useCallback } from "react";
 import {
-  CREDENTIALS_MAP,
+  getMixPanelCredential,
   trackWalletCredentialSupport
 } from "../../../analytics/index.ts";
 import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import { useStartSupportRequest } from "../../../../../hooks/useStartSupportRequest.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { FAQsCategoriesType } from "../../../../../utils/faq.ts";
+import { useIOSelector } from "../../../../../store/hooks";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 /**
  *
  * @param {StoredCredential} credential A valid wallet credential
@@ -22,9 +24,12 @@ export const useItwStartCredentialSupportRequest = (
       faqCategories
     })
   );
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   return useCallback(() => {
-    trackWalletCredentialSupport(CREDENTIALS_MAP[credential.credentialType]);
+    trackWalletCredentialSupport(
+      getMixPanelCredential(credential.credentialType, isItwL3)
+    );
     startSupportRequest();
-  }, [credential.credentialType, startSupportRequest]);
+  }, [credential.credentialType, startSupportRequest, isItwL3]);
 };

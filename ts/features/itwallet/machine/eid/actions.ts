@@ -30,6 +30,7 @@ import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/ac
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -263,11 +264,9 @@ export const createEidIssuanceActionsImplementation = (
     trackSaveCredentialSuccess(isL3 ? "ITW_PID" : "ITW_ID_V2");
     updateITWStatusAndPIDProperties(store.getState());
   },
-  trackWalletInstanceRevocation: ({
-    context
-  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    const isL3 = context.identification?.level === "L3";
-    trackItwDeactivated(store.getState(), isL3 ? "ITW_PID" : "ITW_ID_V2");
+  trackWalletInstanceRevocation: () => {
+    const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
+    trackItwDeactivated(store.getState(), isItwL3 ? "ITW_PID" : "ITW_ID_V2");
   },
 
   storeAuthLevel: ({
