@@ -67,6 +67,7 @@ import {
 } from "../store/actions";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { getCieUatEndpoint } from "../utils/endpoints";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
@@ -437,13 +438,23 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       this.updateContent();
       setTimeout(
         async () => {
-          trackLoginCieCardReadingSuccess();
-          this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-            screen: AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,
-            params: {
-              cieConsentUri
-            }
-          });
+          if (this.props.isActiveSessionLogin) {
+            this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+              screen:
+                AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,
+              params: {
+                cieConsentUri
+              }
+            });
+          } else {
+            trackLoginCieCardReadingSuccess();
+            this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+              screen: AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,
+              params: {
+                cieConsentUri
+              }
+            });
+          }
           // if screen reader is enabled, give more time to read the success message
         },
         this.state.isScreenReaderEnabled
@@ -605,7 +616,8 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   assistanceToolConfig: assistanceToolConfigSelector(state),
-  isCieUatEnabled: isCieLoginUatEnabledSelector(state)
+  isCieUatEnabled: isCieLoginUatEnabledSelector(state),
+  isActiveSessionLogin: isActiveSessionLoginSelector(state)
 });
 
 const ReaderScreen = (props: Props) => (
