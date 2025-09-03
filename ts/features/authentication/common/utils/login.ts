@@ -95,7 +95,7 @@ export const getIdpLoginUri = (
   level: number,
   apiLoginUrlPrefix: string
 ) =>
-  `${apiLoginUrlPrefix}/login?authLevel=SpidL${level}&entityID=${idpId}&RelayState=${spidRelayState}`;
+  `${apiLoginUrlPrefix}/api/auth/v1/login?authLevel=SpidL${level}&entityID=${idpId}&RelayState=${spidRelayState}`;
 
 /**
  * Extract the login result from the given url.
