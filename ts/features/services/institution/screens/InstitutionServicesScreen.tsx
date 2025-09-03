@@ -30,6 +30,7 @@ import { getLogoForInstitution } from "../../common/utils";
 import { InstitutionServicesFailure } from "../components/InstitutionServicesFailure";
 import { useServicesFetcher } from "../hooks/useServicesFetcher";
 import { paginatedServicesGet } from "../store/actions";
+import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibility";
 import * as analytics from "../../common/analytics";
 
 export type InstitutionServicesScreenRouteParams = {
@@ -140,14 +141,20 @@ export const InstitutionServicesScreen = ({
   }, [currentPage, fetchNextPage]);
 
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<ServiceMinified>) => (
-      <ListItemNav
-        value={item.name}
-        onPress={() => navigateToServiceDetails(item)}
-        accessibilityLabel={item.name}
-      />
-    ),
-    [navigateToServiceDetails]
+    ({ item, index }: ListRenderItemInfo<ServiceMinified>) => {
+      const accessibilityLabel = `${
+        item.name
+      }${getListItemAccessibilityLabelCount(data?.count ?? 0, index)}`;
+
+      return (
+        <ListItemNav
+          accessibilityLabel={accessibilityLabel}
+          onPress={() => navigateToServiceDetails(item)}
+          value={item.name}
+        />
+      );
+    },
+    [data?.count, navigateToServiceDetails]
   );
 
   const renderListEmptyComponent = useCallback(() => {
@@ -217,7 +224,7 @@ export const InstitutionServicesScreen = ({
 
   return (
     <Animated.FlatList
-      ItemSeparatorComponent={() => <Divider />}
+      ItemSeparatorComponent={Divider}
       ListEmptyComponent={renderListEmptyComponent}
       ListHeaderComponent={renderListHeaderComponent}
       ListHeaderComponentStyle={{

@@ -25,7 +25,6 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import * as analytics from "../../common/analytics";
 import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
@@ -36,6 +35,8 @@ import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { useServicesHomeBottomSheet } from "../hooks/useServicesHomeBottomSheet";
 import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
 import { EmailNotificationBanner } from "../components/EmailNotificationBanner";
+import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibility";
+import * as analytics from "../../common/analytics";
 
 export const ServicesHomeScreen = () => {
   const dispatch = useIODispatch();
@@ -174,18 +175,24 @@ export const ServicesHomeScreen = () => {
   );
 
   const renderInstitutionItem = useCallback(
-    ({ item }: ListRenderItemInfo<Institution>) => (
-      <ListItemNav
-        accessibilityLabel={item.name}
-        avatarProps={{
-          logoUri: getLogoForInstitution(item.fiscal_code)
-        }}
-        numberOfLines={2}
-        onPress={() => navigateToInstitution(item)}
-        value={item.name}
-      />
-    ),
-    [navigateToInstitution]
+    ({ item, index }: ListRenderItemInfo<Institution>) => {
+      const accessibilityLabel = `${
+        item.name
+      }${getListItemAccessibilityLabelCount(data?.count ?? 0, index)}`;
+
+      return (
+        <ListItemNav
+          accessibilityLabel={accessibilityLabel}
+          avatarProps={{
+            logoUri: getLogoForInstitution(item.fiscal_code)
+          }}
+          numberOfLines={2}
+          onPress={() => navigateToInstitution(item)}
+          value={item.name}
+        />
+      );
+    },
+    [data?.count, navigateToInstitution]
   );
 
   /* CODE RELATED TO THE HEADER -- START */
@@ -247,7 +254,7 @@ export const ServicesHomeScreen = () => {
   return (
     <>
       <Animated.FlatList
-        ItemSeparatorComponent={() => <Divider />}
+        ItemSeparatorComponent={Divider}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
         ListHeaderComponent={renderListHeaderComponent}

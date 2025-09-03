@@ -25,6 +25,7 @@ import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { EmptyState } from "../../common/components/EmptyState";
 import { ListItemSearchInstitution } from "../../common/components/ListItemSearchInstitution";
 import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
+import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibility";
 import * as analytics from "../../common/analytics";
 
 const INPUT_PADDING: IOSpacingScale = 16;
@@ -118,18 +119,24 @@ export const SearchScreen = () => {
   );
 
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<Institution>) => (
-      <ListItemSearchInstitution
-        value={item.name}
-        numberOfLines={2}
-        onPress={() => navigateToInstitution(item)}
-        accessibilityLabel={item.name}
-        avatarProps={{
-          source: getLogoForInstitution(item.fiscal_code)
-        }}
-      />
-    ),
-    [navigateToInstitution]
+    ({ item, index }: ListRenderItemInfo<Institution>) => {
+      const accessibilityLabel = `${
+        item.name
+      }${getListItemAccessibilityLabelCount(data?.count ?? 0, index)}`;
+
+      return (
+        <ListItemSearchInstitution
+          accessibilityLabel={accessibilityLabel}
+          avatarProps={{
+            source: getLogoForInstitution(item.fiscal_code)
+          }}
+          numberOfLines={2}
+          onPress={() => navigateToInstitution(item)}
+          value={item.name}
+        />
+      );
+    },
+    [data?.count, navigateToInstitution]
   );
 
   const renderListFooterComponent = useCallback(() => {
