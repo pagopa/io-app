@@ -5,7 +5,7 @@ import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
-import { getWhatCanYouDoButtonConfig } from "../../../../components/ui/utils/buttons";
+import { getInstructionsButtonConfig } from "../../../../components/ui/utils/buttons";
 import I18n from "../../../../i18n";
 import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
@@ -219,7 +219,7 @@ const IdPayFailureScreen = () => {
             "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.subtitle"
           ),
           action: defaultBackAction,
-          secondaryAction: getWhatCanYouDoButtonConfig(CAC_URL)
+          secondaryAction: getInstructionsButtonConfig(CAC_URL)
         };
       case OnboardingFailureEnum.ONBOARDING_WAITING_LIST:
         return {
