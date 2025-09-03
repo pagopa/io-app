@@ -1,4 +1,3 @@
-import { IOToast } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useMemo } from "react";
@@ -6,8 +5,8 @@ import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
+import { getWhatCanYouDoButtonConfig } from "../../../../components/ui/utils/buttons";
 import I18n from "../../../../i18n";
-import { openWebUrl } from "../../../../utils/url";
 import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
@@ -220,14 +219,7 @@ const IdPayFailureScreen = () => {
             "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.subtitle"
           ),
           action: defaultBackAction,
-          secondaryAction: {
-            icon: "instruction" as const,
-            label: I18n.t(
-              "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.secondaryAction"
-            ),
-            onPress: () =>
-              openWebUrl(CAC_URL, () => IOToast.error(I18n.t("genericError")))
-          }
+          secondaryAction: getWhatCanYouDoButtonConfig(CAC_URL)
         };
       case OnboardingFailureEnum.ONBOARDING_WAITING_LIST:
         return {
