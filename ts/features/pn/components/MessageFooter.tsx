@@ -5,7 +5,7 @@ import {
   useIOToast
 } from "@pagopa/io-app-design-system";
 import { useDispatch } from "react-redux";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";

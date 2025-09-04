@@ -3,9 +3,9 @@ import {
   useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { Alert } from "react-native";
 import IOMarkdown from "../../../components/IOMarkdown";
-import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { trackFciUserExit } from "../analytics";

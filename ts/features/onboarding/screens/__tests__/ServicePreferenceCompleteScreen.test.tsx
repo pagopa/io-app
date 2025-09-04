@@ -21,7 +21,7 @@ describe("ServicePreferenceCompleteScreen", () => {
     const { toJSON, getByText } = renderComponent();
 
     expect(toJSON()).toMatchSnapshot();
-    expect(getByText("Continue")).toBeTruthy();
+    expect(getByText("Continua")).toBeTruthy();
   });
 
   it("dispatches servicesOptinCompleted on button press", () => {
@@ -29,7 +29,7 @@ describe("ServicePreferenceCompleteScreen", () => {
 
     const { getByText } = renderComponent();
 
-    fireEvent.press(getByText("Continue"));
+    fireEvent.press(getByText("Continua"));
 
     expect(dispatchSpy).toHaveBeenCalledWith({
       type: "MOCK_SERVICES_OPTIN_COMPLETED"

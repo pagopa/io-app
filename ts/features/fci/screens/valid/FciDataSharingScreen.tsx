@@ -8,10 +8,10 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 
+import I18n from "i18next";
 import { ComponentProps, ReactElement } from "react";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";

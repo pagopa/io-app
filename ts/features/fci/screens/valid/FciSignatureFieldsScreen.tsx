@@ -11,6 +11,7 @@ import { Route, StackActions, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { constFalse, increment, pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import {
   ComponentProps,
   useContext,
@@ -28,7 +29,6 @@ import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
