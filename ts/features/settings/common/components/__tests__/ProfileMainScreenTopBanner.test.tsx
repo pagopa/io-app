@@ -1,4 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
+import I18n from "i18next";
 import { PropsWithChildren, ReactElement } from "react";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
@@ -6,7 +7,6 @@ import { setShowAppearanceSettingsBanner } from "../../../../appearanceSettings/
 import * as profileBannerImport from "../../../../appearanceSettings/store/selectors";
 import * as analytics from "../../../../pushNotifications/analytics";
 import * as settingsNavigate from "../../../../pushNotifications/utils";
-import TypedI18n from "../../../../../i18n";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -112,9 +112,7 @@ describe("ProfileMainScreenTopBanner", () => {
       .mockImplementation((_: GlobalState) => "APPEARANCE_SETTINGS_BANNER");
 
     const root = renderComponent(<ProfileMainScreenTopBanner />);
-    const component = root.getByLabelText(
-      TypedI18n.t("profile.main.banner.close")
-    );
+    const component = root.getByLabelText(I18n.t("profile.main.banner.close"));
 
     expect(component).toBeDefined();
 

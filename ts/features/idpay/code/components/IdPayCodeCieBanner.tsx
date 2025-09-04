@@ -3,7 +3,7 @@ import { VSpacer, Banner } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 
 import { View } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idpayInitiativeInstrumentsGet } from "../../configuration/store/actions";
 import { showIdPayCodeBannerSelector } from "../store/selectors";

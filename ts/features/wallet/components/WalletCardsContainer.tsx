@@ -7,8 +7,8 @@ import {
 import { memo, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import I18n from "i18next";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
-import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";

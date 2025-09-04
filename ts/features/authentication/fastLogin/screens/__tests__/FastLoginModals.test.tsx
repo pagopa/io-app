@@ -1,11 +1,11 @@
 import { fireEvent, render } from "@testing-library/react-native";
+import I18n from "i18next";
 import FastLoginModals from "../FastLoginModals";
 import * as hooks from "../../../../../store/hooks";
 import { TokenRefreshState } from "../../store/reducers/tokenRefreshReducer";
 import * as actions from "../../store/actions/tokenRefreshActions";
 import * as commonActions from "../../../common/store/actions";
 import * as refreshTokenLoadingScreen from "../../screens/RefreshTokenLoadingScreen";
-import I18n from "../../../../../i18n";
 
 const dispatchMock = jest.fn();
 

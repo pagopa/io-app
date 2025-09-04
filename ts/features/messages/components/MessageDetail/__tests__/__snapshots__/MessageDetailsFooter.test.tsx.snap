@@ -384,7 +384,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                           }
                         />
                         <View
-                          accessibilityLabel="Show more data"
+                          accessibilityLabel="Mostra altri dati"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -537,7 +537,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                     ]
                                   }
                                 >
-                                  Show more data
+                                  Mostra altri dati
                                 </Text>
                               </View>
                             </View>
@@ -941,7 +941,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                           }
                         />
                         <View
-                          accessibilityLabel="Show more data"
+                          accessibilityLabel="Mostra altri dati"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1094,7 +1094,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                     ]
                                   }
                                 >
-                                  Show more data
+                                  Mostra altri dati
                                 </Text>
                               </View>
                             </View>
@@ -1498,7 +1498,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                           }
                         />
                         <View
-                          accessibilityLabel="Show more data"
+                          accessibilityLabel="Mostra altri dati"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1651,7 +1651,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                     ]
                                   }
                                 >
-                                  Show more data
+                                  Mostra altri dati
                                 </Text>
                               </View>
                             </View>
@@ -2055,7 +2055,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                           }
                         />
                         <View
-                          accessibilityLabel="Show more data"
+                          accessibilityLabel="Mostra altri dati"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -2208,7 +2208,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                     ]
                                   }
                                 >
-                                  Show more data
+                                  Mostra altri dati
                                 </Text>
                               </View>
                             </View>
@@ -2612,7 +2612,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                           }
                         />
                         <View
-                          accessibilityLabel="Contact the sender"
+                          accessibilityLabel="Contatta il mittente"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -2765,14 +2765,14 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                     ]
                                   }
                                 >
-                                  Contact the sender
+                                  Contatta il mittente
                                 </Text>
                               </View>
                             </View>
                           </View>
                         </View>
                         <View
-                          accessibilityLabel="Show more data"
+                          accessibilityLabel="Mostra altri dati"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -2925,7 +2925,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                     ]
                                   }
                                 >
-                                  Show more data
+                                  Mostra altri dati
                                 </Text>
                               </View>
                             </View>
@@ -3329,7 +3329,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                           }
                         />
                         <View
-                          accessibilityLabel="Contact the sender"
+                          accessibilityLabel="Contatta il mittente"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -3482,14 +3482,14 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                     ]
                                   }
                                 >
-                                  Contact the sender
+                                  Contatta il mittente
                                 </Text>
                               </View>
                             </View>
                           </View>
                         </View>
                         <View
-                          accessibilityLabel="Show more data"
+                          accessibilityLabel="Mostra altri dati"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -3642,7 +3642,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                     ]
                                   }
                                 >
-                                  Show more data
+                                  Mostra altri dati
                                 </Text>
                               </View>
                             </View>
@@ -4046,7 +4046,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                           }
                         />
                         <View
-                          accessibilityLabel="Contact the sender"
+                          accessibilityLabel="Contatta il mittente"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -4199,14 +4199,14 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                     ]
                                   }
                                 >
-                                  Contact the sender
+                                  Contatta il mittente
                                 </Text>
                               </View>
                             </View>
                           </View>
                         </View>
                         <View
-                          accessibilityLabel="Show more data"
+                          accessibilityLabel="Mostra altri dati"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -4359,7 +4359,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                     ]
                                   }
                                 >
-                                  Show more data
+                                  Mostra altri dati
                                 </Text>
                               </View>
                             </View>
@@ -4763,7 +4763,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                           }
                         />
                         <View
-                          accessibilityLabel="Contact the sender"
+                          accessibilityLabel="Contatta il mittente"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -4916,14 +4916,14 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                     ]
                                   }
                                 >
-                                  Contact the sender
+                                  Contatta il mittente
                                 </Text>
                               </View>
                             </View>
                           </View>
                         </View>
                         <View
-                          accessibilityLabel="Show more data"
+                          accessibilityLabel="Mostra altri dati"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -5076,7 +5076,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                     ]
                                   }
                                 >
-                                  Show more data
+                                  Mostra altri dati
                                 </Text>
                               </View>
                             </View>

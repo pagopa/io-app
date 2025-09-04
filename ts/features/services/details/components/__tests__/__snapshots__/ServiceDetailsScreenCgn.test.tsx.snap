@@ -388,7 +388,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                           }
                         >
                           <View
-                            accessibilityLabel="Remove from Wallet"
+                            accessibilityLabel="Rimuovi dal Portafoglio"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -505,7 +505,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                     ]
                                   }
                                 >
-                                  Remove from Wallet
+                                  Rimuovi dal Portafoglio
                                 </Text>
                               </View>
                             </View>
@@ -558,7 +558,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -724,7 +724,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1263,7 +1263,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                           }
                         >
                           <View
-                            accessibilityLabel="Activate Carta Giovani Nazionale"
+                            accessibilityLabel="Attiva Carta Giovani Nazionale"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -1380,7 +1380,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                     ]
                                   }
                                 >
-                                  Activate Carta Giovani Nazionale
+                                  Attiva Carta Giovani Nazionale
                                 </Text>
                               </View>
                             </View>
@@ -1433,7 +1433,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1599,7 +1599,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -2048,7 +2048,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -2214,7 +2214,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -2663,7 +2663,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -2829,7 +2829,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

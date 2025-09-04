@@ -265,8 +265,8 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       onStartShouldSetResponder={[Function]}
     >
       <Text
-        accessibilityHint="Go to the page that displays the signature field"
-        accessibilityLabel="See on document"
+        accessibilityHint="Visualizza sul documento dove metterai la firma"
+        accessibilityLabel="Vedi sul documento"
         accessibilityRole="link"
         allowFontScaling={true}
         dynamicTypeRamp="body"
@@ -288,7 +288,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         }
         testID="SignatureFieldItemDetailTestID"
       >
-        See on document
+        Vedi sul documento
       </Text>
     </View>
   </View>

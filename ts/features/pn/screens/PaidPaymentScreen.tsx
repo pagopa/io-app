@@ -1,3 +1,4 @@
+import I18n from "i18next";
 import { PnParamsList } from "../navigation/params";
 import {
   IOStackNavigationRouteProps,
@@ -5,7 +6,6 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../i18n";
 
 export type PaidPaymentScreenRouteParams = {
   noticeCode: string;

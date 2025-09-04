@@ -1,11 +1,11 @@
 import { createStore } from "redux";
 import { waitFor } from "@testing-library/react-native";
 import { act } from "react-test-renderer";
+import I18n from "i18next";
 import { IngressScreen } from "../screens/IngressScreen";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
-import I18n from "../../../i18n";
 import * as backendStatusSelectors from "../../../store/reducers/backendStatus/remoteConfig";
 import * as selectors from "../../connectivity/store/selectors";
 import * as itwSelectors from "../../itwallet/common/store/selectors";

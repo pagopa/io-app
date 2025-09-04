@@ -20,8 +20,8 @@ describe("useOnboardingAbortAlert", () => {
     renderHook();
 
     expect(Alert.alert).toHaveBeenCalledWith(
-      "Do you really want to log out?",
-      "You will have to log in again to use the app",
+      "Vuoi davvero uscire da IO?",
+      "Dovrai fare nuovamente il login per continuare ad usare l'app",
       expect.any(Array)
     );
   });
@@ -31,9 +31,9 @@ describe("useOnboardingAbortAlert", () => {
 
     const buttons = (Alert.alert as jest.Mock).mock.calls[0][2];
     expect(buttons).toHaveLength(2);
-    expect(buttons[0].text).toBe("Cancel");
+    expect(buttons[0].text).toBe("Annulla");
     expect(buttons[0].style).toBe("cancel");
-    expect(buttons[1].text).toBe("Exit");
+    expect(buttons[1].text).toBe("Esci");
     expect(buttons[1].style).toBe("default");
   });
 

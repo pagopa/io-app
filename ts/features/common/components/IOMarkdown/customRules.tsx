@@ -12,6 +12,7 @@ import {
   TxtLinkNode,
   TxtStrNode
 } from "@textlint/ast-node-types";
+import I18n from "i18next";
 import {
   headerNodeToReactNative,
   htmlNodeToReactNative,
@@ -27,7 +28,6 @@ import {
   isHttpsLink,
   isIoInternalLink
 } from "../../../../components/ui/Markdown/handlers/link";
-import I18n from "../../../../i18n";
 import { isTestEnv } from "../../../../utils/environment";
 import { handleInternalLink } from "../../../../utils/internalLink";
 import { openWebUrl } from "../../../../utils/url";
