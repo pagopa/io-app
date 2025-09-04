@@ -16,6 +16,7 @@ import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import { trackIngressServicesSlowDown } from "../../../ingress/analytics";
 import { setIsBlockingScreen } from "../../../ingress/store/actions";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
@@ -97,6 +98,8 @@ const IngressScreenNoInternetConnection = memo(() => (
 const IngressScreenBlockingError = memo(() => {
   const operationRef = useRef<View>(null);
   const isBackendStatusLoaded = useIOSelector(isBackendStatusLoadedSelector);
+  const { useActorRef } = IdPayOnboardingMachineContext;
+  const machine = useActorRef();
 
   useEffect(() => {
     setAccessibilityFocus(operationRef);
@@ -112,11 +115,11 @@ const IngressScreenBlockingError = memo(() => {
             title: I18n.t("startup.slowdowns_results_screen.title"),
             subtitle: I18n.t("startup.slowdowns_results_screen.subtitle"),
             action: {
-              label: "Chiudi",
-              onPress: () => voidType
+              label: I18n.t("global.buttons.close"),
+              onPress: () => machine.send({ type: "close" })
             },
             secondaryAction: {
-              label: "Vai al sito",
+              label: I18n.t("global.buttons.visitWebsite"),
               onPress: () => voidType
             }
           }
