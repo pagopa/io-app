@@ -8,8 +8,8 @@ import {
   useState
 } from "react";
 import { Alert } from "react-native";
+import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import I18n from "../../../i18n";
 import {
   appReviewNegativeFeedback,
   appReviewPositiveFeedback,

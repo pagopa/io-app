@@ -136,7 +136,7 @@ describe("Toast", () => {
     expect(mockToastError.mock.calls.length).toBe(1);
     expect(mockToastError.mock.calls[0].length).toBe(1);
     expect(mockToastError.mock.calls[0][0]).toBe(
-      "There is a temporary problem, please try again."
+      "C'è un problema temporaneo, riprova."
     );
 
     expect(mockToastSuccess.mock.calls.length).toBe(0);
@@ -160,7 +160,7 @@ describe("Toast", () => {
     expect(mockToastError.mock.calls.length).toBe(1);
     expect(mockToastError.mock.calls[0].length).toBe(1);
     expect(mockToastError.mock.calls[0][0]).toBe(
-      "There is a temporary problem, please try again."
+      "C'è un problema temporaneo, riprova."
     );
 
     expect(mockToastSuccess.mock.calls.length).toBe(0);
@@ -189,10 +189,10 @@ describe("Toast", () => {
     expect(mockToastError.mock.calls.length).toBe(2);
     expect(mockToastError.mock.calls[0].length).toBe(1);
     expect(mockToastError.mock.calls[0][0]).toBe(
-      "There is a temporary problem, please try again."
+      "C'è un problema temporaneo, riprova."
     );
     expect(mockToastError.mock.calls[1][0]).toBe(
-      "There is a temporary problem, please try again."
+      "C'è un problema temporaneo, riprova."
     );
 
     expect(mockedAnnounceForAccessibility.mock.calls.length).toBe(0);

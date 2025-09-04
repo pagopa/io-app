@@ -239,7 +239,7 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                             }
                           >
                             <Text
-                              accessibilityLabel="About IO"
+                              accessibilityLabel="Informazioni su IO"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -258,7 +258,7 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                 ]
                               }
                             >
-                              About IO
+                              Informazioni su IO
                             </Text>
                           </View>
                           <View
@@ -293,7 +293,7 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                 ]
                               }
                             >
-                              Here you can find more details about the IO app and learn more about its use.
+                              Qui puoi trovare ulteriori dettagli sull'app IO e scoprire di più sul suo utilizzo.
                             </Text>
                           </View>
                           <View
@@ -335,7 +335,7 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                 ]
                               }
                             >
-                              About IO
+                              Cos’è IO?
                             </Text>
                             <View
                               style={
@@ -383,7 +383,7 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                IO, the public services app, 
+                                IO, l’app dei servizi pubblici, 
                               </Text>
                               <Text
                                 allowFontScaling={true}
@@ -403,7 +403,7 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                provides an efficient and convenient way for citizens to interact with institutions at the local and national level (municipalities, regions, central agencies) directly from your device. IO allows administrations to contact you in a timely and personalised manner, enabling you to manage operations related to a specific service, such as notices, payments, deadlines and notifications, in a simple and secure manner.
+                                ti offre un unico canale per interagire facilmente con gli Enti, locali e nazionali (Comuni, Regioni, agenzie centrali), direttamente dal tuo dispositivo. Grazie a IO, sono le singole amministrazioni a contattarti in modo puntuale e personalizzato, consentendoti di gestire operazioni legate a uno specifico servizio - come avvisi, pagamenti, scadenze e notifiche - in tutta semplicità e sicurezza.
                               </Text>
                             </Text>
                             <View
@@ -469,7 +469,7 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Want to know more? Go to IO website"
+                                  accessibilityLabel="Vuoi saperne di più? Vai al sito di IO"
                                   accessibilityRole="button"
                                   accessible={true}
                                   style={
@@ -498,11 +498,11 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Want to know more?
+                                    Vuoi saperne di più?
                                   </Text>
                                   <View
                                     accessibilityElementsHidden={true}
-                                    accessibilityLabel="Go to IO website"
+                                    accessibilityLabel="Vai al sito di IO"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -565,7 +565,7 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      Go to IO website
+                                      Vai al sito di IO
                                     </Text>
                                   </View>
                                 </View>
@@ -753,7 +753,7 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -867,7 +867,7 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="About IO"
+                              accessibilityLabel="Informazioni su IO"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -907,7 +907,7 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                About IO
+                                Informazioni su IO
                               </Text>
                             </View>
                             <View

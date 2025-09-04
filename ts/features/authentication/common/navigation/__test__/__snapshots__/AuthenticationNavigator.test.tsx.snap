@@ -235,8 +235,8 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                             >
                               <View>
                                 <View
-                                  accessibilityHint="Carousel that contains an introduction guide to IO functionalities. Select to know the content."
-                                  accessibilityLabel="IO presentation. Welcome to IO!. Select the previous item to open a chat with the IO team if something is not working as it should."
+                                  accessibilityHint="Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto"
+                                  accessibilityLabel="Presentazione di IO. Ti diamo il benvenuto su IO!. Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe."
                                   accessible={true}
                                   style={
                                     {
@@ -409,7 +409,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         ]
                                       }
                                     >
-                                      Welcome to IO!
+                                      Ti diamo il benvenuto su IO!
                                     </Text>
                                     <Text
                                       allowFontScaling={true}
@@ -433,7 +433,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         ]
                                       }
                                     >
-                                      Swipe left to see what you can do in the app
+                                      Scorri per sapere cosa puoi fare in app.
                                     </Text>
                                   </View>
                                 </View>
@@ -450,7 +450,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                             >
                               <View>
                                 <View
-                                  accessibilityLabel="Keep your personal documents safe. With Documenti su IO you always have the digital version of your documents, such as driving licence and health card, at your fingertips"
+                                  accessibilityLabel="Conserva al sicuro i tuoi documenti personali. Con Documenti su IO hai sempre a portata di mano la versione digitale dei tuoi documenti, come Patente e Tessera Sanitaria"
                                   accessible={true}
                                   style={
                                     {
@@ -676,7 +676,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         ]
                                       }
                                     >
-                                      Keep your personal documents safe
+                                      Conserva al sicuro i tuoi documenti personali
                                     </Text>
                                     <Text
                                       allowFontScaling={true}
@@ -700,7 +700,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         ]
                                       }
                                     >
-                                      With Documenti su IO you always have the digital version of your documents, such as driving licence and health card, at your fingertips
+                                      Con Documenti su IO hai sempre a portata di mano la versione digitale dei tuoi documenti, come Patente e Tessera Sanitaria
                                     </Text>
                                   </View>
                                 </View>
@@ -717,7 +717,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                             >
                               <View>
                                 <View
-                                  accessibilityLabel="Receive communications, also with legal value. Read incoming communications from organisations: by activating the SEND service, you will also receive communications with legal value and save on notification costs."
+                                  accessibilityLabel="Ricevi comunicazioni, anche a valore legale. Leggi le comunicazioni in arrivo dagli enti: se attivi il servizio SEND, ricevi anche quelle a valore legale e risparmi sui costi di notifica"
                                   accessible={true}
                                   style={
                                     {
@@ -934,7 +934,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         ]
                                       }
                                     >
-                                      Receive communications, also with legal value
+                                      Ricevi comunicazioni, anche a valore legale
                                     </Text>
                                     <Text
                                       allowFontScaling={true}
@@ -958,7 +958,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         ]
                                       }
                                     >
-                                      Read incoming communications from organisations: by activating the SEND service, you will also receive communications with legal value and save on notification costs.
+                                      Leggi le comunicazioni in arrivo dagli enti: se attivi il servizio SEND, ricevi anche quelle a valore legale e risparmi sui costi di notifica
                                     </Text>
                                   </View>
                                 </View>
@@ -975,7 +975,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                             >
                               <View>
                                 <View
-                                  accessibilityLabel="Pay pagoPA notice by the method you prefer. On IO, you can view and download receipts for your pagoPA payments, even if you have not paid in the app"
+                                  accessibilityLabel="Paga gli avvisi pagoPA con il metodo che preferisci. Su IO consulti e scarichi le ricevute dei tuoi pagamenti pagoPA, anche se non hai pagato in app"
                                   accessible={true}
                                   style={
                                     {
@@ -1097,7 +1097,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         ]
                                       }
                                     >
-                                      Pay pagoPA notice by the method you prefer
+                                      Paga gli avvisi pagoPA con il metodo che preferisci
                                     </Text>
                                     <Text
                                       allowFontScaling={true}
@@ -1121,7 +1121,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         ]
                                       }
                                     >
-                                      On IO, you can view and download receipts for your pagoPA payments, even if you have not paid in the app
+                                      Su IO consulti e scarichi le ricevute dei tuoi pagamenti pagoPA, anche se non hai pagato in app
                                     </Text>
                                   </View>
                                 </View>
@@ -1138,7 +1138,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                             >
                               <View>
                                 <View
-                                  accessibilityLabel="Access to the services you are most interested in. Direct access to government services related to health, education, mobility, work and more"
+                                  accessibilityLabel="Accedi ai servizi che più ti interessano. Accedi direttamente a servizi della Pubblica Amministrazone dedicati a salute, educazione, mobilità, lavoro e molto altro"
                                   accessible={true}
                                   style={
                                     {
@@ -1257,7 +1257,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         ]
                                       }
                                     >
-                                      Access to the services you are most interested in
+                                      Accedi ai servizi che più ti interessano
                                     </Text>
                                     <Text
                                       allowFontScaling={true}
@@ -1281,7 +1281,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         ]
                                       }
                                     >
-                                      Direct access to government services related to health, education, mobility, work and more
+                                      Accedi direttamente a servizi della Pubblica Amministrazone dedicati a salute, educazione, mobilità, lavoro e molto altro
                                     </Text>
                                   </View>
                                 </View>
@@ -1391,7 +1391,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                             collapsable={false}
                           >
                             <View
-                              accessibilityLabel="Login with CIE"
+                              accessibilityLabel="Entra con CIE"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1570,7 +1570,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                       ]
                                     }
                                   >
-                                    Login with CIE
+                                    Entra con CIE
                                   </Text>
                                 </View>
                               </View>
@@ -1584,7 +1584,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                             }
                           />
                           <View
-                            accessibilityLabel="Login with SPID"
+                            accessibilityLabel="Entra con SPID"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -1763,7 +1763,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     ]
                                   }
                                 >
-                                  Login with SPID
+                                  Entra con SPID
                                 </Text>
                               </View>
                             </View>
@@ -1930,7 +1930,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                                 ]
                                               }
                                             >
-                                              Login with CIE + PIN
+                                              Entra con CIE + PIN
                                             </Text>
                                             <Text
                                               allowFontScaling={true}
@@ -1950,7 +1950,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                                 ]
                                               }
                                             >
-                                              Use Electronic Identity Card and PIN
+                                              Usa Carta di Identità Elettronica e PIN
                                             </Text>
                                           </View>
                                         </View>
@@ -2135,7 +2135,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                                 ]
                                               }
                                             >
-                                              Login with CieID
+                                              Entra con CieID
                                             </Text>
                                             <Text
                                               allowFontScaling={true}
@@ -2155,7 +2155,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                                 ]
                                               }
                                             >
-                                              Use the CieID app
+                                              Usa l'app CieID
                                             </Text>
                                           </View>
                                         </View>
@@ -2205,7 +2205,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                               ]
                                             }
                                           >
-                                            New
+                                            Novità
                                           </Text>
                                         </View>
                                       </View>
@@ -2275,7 +2275,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                       }
                                     >
                                       <View
-                                        accessibilityLabel="Not sure what to choose? We give you a hand"
+                                        accessibilityLabel="Non sai cosa scegliere? Ti diamo una mano"
                                         accessibilityRole="button"
                                         accessible={true}
                                         style={
@@ -2304,11 +2304,11 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                             ]
                                           }
                                         >
-                                          Not sure what to choose?
+                                          Non sai cosa scegliere?
                                         </Text>
                                         <View
                                           accessibilityElementsHidden={true}
-                                          accessibilityLabel="We give you a hand"
+                                          accessibilityLabel="Ti diamo una mano"
                                           accessibilityRole="button"
                                           accessibilityState={
                                             {
@@ -2371,7 +2371,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                               ]
                                             }
                                           >
-                                            We give you a hand
+                                            Ti diamo una mano
                                           </Text>
                                         </View>
                                       </View>
@@ -2570,7 +2570,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                               <View>
                                 <View>
                                   <View
-                                    accessibilityLabel="Privacy policy"
+                                    accessibilityLabel="Informativa Privacy"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -2722,7 +2722,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                               ]
                                             }
                                           >
-                                            Privacy policy
+                                            Informativa Privacy
                                           </Text>
                                         </View>
                                       </View>
@@ -2737,7 +2737,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     }
                                   />
                                   <View
-                                    accessibilityLabel="Manage access"
+                                    accessibilityLabel="Gestisci i tuoi accessi"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -2889,7 +2889,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                               ]
                                             }
                                           >
-                                            Manage access
+                                            Gestisci i tuoi accessi
                                           </Text>
                                         </View>
                                       </View>
@@ -2904,7 +2904,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     }
                                   />
                                   <View
-                                    accessibilityLabel="What you can do with the IO app"
+                                    accessibilityLabel="Cosa puoi fare con l’app IO"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -3056,7 +3056,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                               ]
                                             }
                                           >
-                                            What you can do with the IO app
+                                            Cosa puoi fare con l’app IO
                                           </Text>
                                         </View>
                                       </View>
@@ -3071,7 +3071,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     }
                                   />
                                   <View
-                                    accessibilityLabel="Version unknown"
+                                    accessibilityLabel="Versione unknown"
                                     accessibilityState={
                                       {
                                         "busy": undefined,
@@ -3132,7 +3132,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           ]
                                         }
                                       >
-                                        Version unknown
+                                        Versione unknown
                                       </Text>
                                     </View>
                                   </View>
@@ -3255,7 +3255,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Useful resources"
+                                accessibilityLabel="Risorse utili"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -3368,7 +3368,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                 </View>
                               </View>
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

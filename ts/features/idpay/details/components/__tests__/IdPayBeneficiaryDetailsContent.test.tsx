@@ -1,11 +1,12 @@
 import { within } from "@testing-library/react-native";
+import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
-import I18n, { setLocale } from "../../../../../i18n";
+import { setLocale } from "../../../../../i18n";
 import {
   IdPayBeneficiaryDetailsContent,
   BeneficiaryDetailsProps

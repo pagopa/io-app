@@ -2,8 +2,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { useCallback, useEffect } from "react";
 import { SafeAreaView } from "react-native";
+import I18n from "i18next";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
-import I18n from "../../../../../i18n";
 import { trackItWalletCieCardReading } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {

@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
+import I18n from "i18next";
 import SignatureFieldItem from "../SignatureFieldItem";
-import I18n from "../../../../i18n";
 
 type Props = {
   title: string;

@@ -1,6 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import RemoveAccountSuccess from "../RemoveAccountSuccessScreen";
 import { logoutRequest } from "../../../../authentication/common/store/actions";
 import { applicationChangeState } from "../../../../../store/actions/application";

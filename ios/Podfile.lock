@@ -1959,8 +1959,6 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNI18n (2.0.15):
-    - React
   - RNKeychain (9.2.2):
     - DoubleConversion
     - glog
@@ -2344,7 +2342,6 @@ DEPENDENCIES:
   - "RNFlashList (from `../node_modules/@shopify/flash-list`)"
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
-  - RNI18n (from `../node_modules/react-native-i18n`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNQrGenerator (from `../node_modules/rn-qr-generator`)
@@ -2601,8 +2598,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
-  RNI18n:
-    :path: "../node_modules/react-native-i18n"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
   RNPermissions:
@@ -2744,7 +2739,6 @@ SPEC CHECKSUMS:
   RNFlashList: ff5a0b3113c4cda0eaf4b94df8572ccad3c40fd5
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 92e89a04cd0d1c77f383a55d14c15e7f423f4c00
-  RNI18n: 11ec5086508673ef71b5b567da3e8bcca8a926e1
   RNKeychain: e593cdad28fe4365dbfa703d25560d765a16bc52
   RNPermissions: d26bad65a4dcb0a360a6a3c5c8f54bf43017e578
   RNQrGenerator: 60eab4f7c9e3f09db78029636fe356dca5cb585f
