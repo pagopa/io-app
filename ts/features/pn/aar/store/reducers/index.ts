@@ -1,7 +1,6 @@
 import { getType } from "typesafe-actions";
 import { ThirdPartyMessage } from "../../../../../../definitions/pn/ThirdPartyMessage";
 import { Action } from "../../../../../store/actions/types";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { setAarFlowState, terminateAarFlow } from "../actions";
 
 export const sendAARFlowStates = {
@@ -128,10 +127,3 @@ export const aarFlowReducer = (
   }
   return state;
 };
-
-export const currentAARFlowStateType = (
-  state: GlobalState
-): FlowStates[keyof FlowStates] => state.features.pn.aarFlow.type;
-
-export const currentAARFlowStateData = (state: GlobalState): AARFlowState =>
-  state.features.pn.aarFlow;

@@ -1,8 +1,6 @@
 import {
   aarFlowReducer,
   AARFlowState,
-  currentAARFlowStateData,
-  currentAARFlowStateType,
   INITIAL_AAR_FLOW_STATE,
   isValidAARStateTransition,
   sendAARFlowStates
@@ -49,27 +47,9 @@ describe("aarFlowReducer and related functions", () => {
     const mockStates = allStateTypes.map(t => stateFactories[t]());
 
     mockStates.forEach(payload => {
-      const globalState = {
-        features: {
-          pn: {
-            aarFlow: payload
-          }
-        }
-      } as any;
-
       it(`state '${payload.type}' should reset upon receiving terminateAarFlow`, () => {
         const state = aarFlowReducer(payload, terminateAarFlow());
         expect(state).toEqual(INITIAL_AAR_FLOW_STATE);
-      });
-
-      it(`currentAARFlowStateType should return '${payload.type}'`, () => {
-        const currentAARType = currentAARFlowStateType(globalState);
-        expect(currentAARType).toBe(payload.type);
-      });
-
-      it(`currentAARFlowStateData should return the full state`, () => {
-        const currentAARData = currentAARFlowStateData(globalState);
-        expect(currentAARData).toBe(payload);
       });
     });
   });
