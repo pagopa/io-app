@@ -40,6 +40,7 @@ export const itwCredentialIssuanceMachine = setup({
 
     navigateToTrustIssuerScreen: notImplemented,
     navigateToCredentialPreviewScreen: notImplemented,
+    navigateToExtendedLoadingScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToEidVerificationExpiredScreen: notImplemented,
@@ -150,6 +151,11 @@ export const itwCredentialIssuanceMachine = setup({
         src: "verifyTrustFederation",
         onDone: {
           target: "CheckingWalletInstanceAttestation"
+        }
+      },
+      after: {
+        5000: {
+          actions: "navigateToExtendedLoadingScreen"
         }
       }
     },

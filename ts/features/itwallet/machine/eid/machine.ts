@@ -60,6 +60,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
     navigateToCieWarningScreen: notImplemented,
+    navigateToExtendedLoadingScreen: notImplemented,
     closeIssuance: notImplemented,
 
     /**
@@ -239,6 +240,11 @@ export const itwEidIssuanceMachine = setup({
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
+      },
+      after: {
+        5000: {
+          actions: "navigateToExtendedLoadingScreen"
+        }
       }
     },
     WalletInstanceCreation: {
