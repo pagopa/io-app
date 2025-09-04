@@ -39,6 +39,16 @@ const mockStates: ReadonlyArray<AARFlowState> = [
     fullNameDestinatario: "Mario Rossi",
     iun: "000000000001",
     qrCode: "https://www.duckduckgo.com"
+  },
+  {
+    type: "ko",
+    previousState: {
+      type: "fetchingNotificationData",
+      fullNameDestinatario: "Mario Rossi",
+      iun: "000000000001",
+      mandateId: "11110000000"
+    },
+    errorKind: "CIE REJECTED"
   }
 ];
 

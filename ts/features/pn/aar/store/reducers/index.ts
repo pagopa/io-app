@@ -10,7 +10,8 @@ export const sendAARFlowStates = {
   fetchingQRData: "fetchingQRData",
   fetchingNotificationData: "fetchingNotificationData",
   displayingNotificationData: "displayingNotificationData",
-  notAddresseeFinal: "notAddresseeFinal"
+  notAddresseeFinal: "notAddresseeFinal",
+  ko: "ko"
 } as const;
 
 type FlowStates = typeof sendAARFlowStates;
@@ -50,13 +51,20 @@ type FinalNotAddressee = {
   iun: string;
 };
 
+type ErrorState = {
+  type: FlowStates["ko"];
+  errorKind?: string;
+  previousState: AARFlowState;
+};
+
 export type AARFlowState =
   | NotInitialized
   | DisplayingTos
   | FetchQR
   | FetchNotification
   | DisplayingNotification
-  | FinalNotAddressee;
+  | FinalNotAddressee
+  | ErrorState;
 
 export const INITIAL_AAR_FLOW_STATE: AARFlowState = {
   type: "none"
