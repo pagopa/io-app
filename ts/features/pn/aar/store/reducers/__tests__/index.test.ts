@@ -3,88 +3,111 @@ import {
   AARFlowState,
   currentAARFlowStateData,
   currentAARFlowStateType,
-  INITIAL_AAR_FLOW_STATE
+  INITIAL_AAR_FLOW_STATE,
+  isValidAARStateTransition,
+  sendAARFlowStates
 } from "..";
-import { GlobalState } from "../../../../../../store/reducers/types";
 import { setAarFlowState, terminateAarFlow } from "../../actions";
 
-const mockStates: ReadonlyArray<AARFlowState> = [
-  { type: "none" },
-  { type: "displayingAARToS", qrCode: "https://www.google.com" },
-  { type: "fetchingQRData", qrCode: "https://www.bing.com" },
-  {
+const stateFactories: Record<AARFlowState["type"], () => AARFlowState> = {
+  none: () => ({ type: "none" }),
+  displayingAARToS: () => ({
+    type: "displayingAARToS",
+    qrCode: "https://www.google.com"
+  }),
+  fetchingQRData: () => ({
+    type: "fetchingQRData",
+    qrCode: "https://www.google.com"
+  }),
+  fetchingNotificationData: () => ({
     type: "fetchingNotificationData",
-    fullNameDestinatario: "Mario Rossi",
-    iun: "000000000001"
-  },
-  {
-    type: "fetchingNotificationData",
-    fullNameDestinatario: "Mario Rossi",
     iun: "000000000001",
-    mandateId: "11110000000"
-  },
-  {
+    fullNameDestinatario: "Mario Rossi"
+  }),
+  displayingNotificationData: () => ({
     type: "displayingNotificationData",
     fullNameDestinatario: "Mario Rossi",
     notification: {}
-  },
-  {
-    type: "displayingNotificationData",
-    fullNameDestinatario: "Mario Rossi",
-    notification: {},
-    mandateId: "11110000000"
-  },
-  {
+  }),
+  notAddresseeFinal: () => ({
     type: "notAddresseeFinal",
     fullNameDestinatario: "Mario Rossi",
-    iun: "000000000001",
-    qrCode: "https://www.duckduckgo.com"
-  },
-  {
+    qrCode: "https://www.google.com",
+    iun: "000000000001"
+  }),
+  ko: () => ({
     type: "ko",
-    previousState: {
-      type: "fetchingNotificationData",
-      fullNameDestinatario: "Mario Rossi",
-      iun: "000000000001",
-      mandateId: "11110000000"
-    },
-    errorKind: "CIE REJECTED"
-  }
-];
+    errorKind: "CIE REJECTED",
+    previousState: { type: "none" }
+  })
+};
 
-describe("aarFlowReducer", () => {
-  mockStates.forEach(payload => {
-    const globalState = {
-      features: {
-        pn: {
-          aarFlow: payload
+const allStateTypes = Object.values(sendAARFlowStates);
+
+describe("aarFlowReducer and related functions", () => {
+  describe("Basic reducer behavior and selectors", () => {
+    const mockStates = allStateTypes.map(t => stateFactories[t]());
+
+    mockStates.forEach(payload => {
+      const globalState = {
+        features: {
+          pn: {
+            aarFlow: payload
+          }
         }
-      }
-    } as GlobalState;
-    it(`setAarFlowState should set state with value='${JSON.stringify(
-      payload
-    )}'`, () => {
-      const state = aarFlowReducer(undefined, setAarFlowState(payload));
-      expect(state).toBe(payload);
+      } as any;
+
+      it(`state '${payload.type}' should reset upon receiving terminateAarFlow`, () => {
+        const state = aarFlowReducer(payload, terminateAarFlow());
+        expect(state).toEqual(INITIAL_AAR_FLOW_STATE);
+      });
+
+      it(`currentAARFlowStateType should return '${payload.type}'`, () => {
+        const currentAARType = currentAARFlowStateType(globalState);
+        expect(currentAARType).toBe(payload.type);
+      });
+
+      it(`currentAARFlowStateData should return the full state`, () => {
+        const currentAARData = currentAARFlowStateData(globalState);
+        expect(currentAARData).toBe(payload);
+      });
     });
-    it(`a ${JSON.stringify(
-      payload
-    )} state should reset upon receiving a terminateAarFlow action`, () => {
-      const state = aarFlowReducer(payload, terminateAarFlow());
-      expect(state).toBe(INITIAL_AAR_FLOW_STATE);
+  });
+
+  describe("Transition validation in reducer", () => {
+    allStateTypes.forEach(currentType => {
+      allStateTypes.forEach(nextType => {
+        const currentState = stateFactories[currentType]();
+        const nextState = stateFactories[nextType]();
+        const action = setAarFlowState(nextState);
+
+        const shouldAllow = isValidAARStateTransition(currentState, nextState);
+
+        it(`should ${
+          shouldAllow ? "allow" : "reject"
+        } transition from '${currentType}' to '${nextType}'`, () => {
+          const result = aarFlowReducer(currentState, action);
+          if (shouldAllow) {
+            expect(result).toEqual(nextState);
+          } else {
+            expect(result).toEqual(currentState);
+          }
+        });
+      });
     });
-    it(`currentAARFlowStateType should return ${
-      payload.type
-    } when the state is '${JSON.stringify(payload)}'`, () => {
-      const currentAARType = currentAARFlowStateType(globalState);
-      expect(currentAARType).toBe(payload.type);
+  });
+
+  describe("isValidAARStateTransition function", () => {
+    it("should allow a valid transition", () => {
+      const from = stateFactories.none();
+      const to = stateFactories.displayingAARToS();
+      expect(isValidAARStateTransition(from, to)).toBe(true);
     });
 
-    it(`currentAARFlowStateData should return the full state when it is '${JSON.stringify(
-      payload
-    )}'`, () => {
-      const currentAARData = currentAARFlowStateData(globalState);
-      expect(currentAARData).toBe(payload);
+    it("should reject an invalid transition", () => {
+      const from = stateFactories.none();
+      const to = stateFactories.ko();
+      expect(isValidAARStateTransition(from, to)).toBe(false);
     });
   });
 });

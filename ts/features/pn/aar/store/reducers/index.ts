@@ -14,6 +14,43 @@ export const sendAARFlowStates = {
   ko: "ko"
 } as const;
 
+export const validAARStatusTransitions = new Map<
+  AARFlowState["type"],
+  Set<AARFlowState["type"]>
+>([
+  [sendAARFlowStates.none, new Set([sendAARFlowStates.displayingAARToS])],
+  [
+    sendAARFlowStates.displayingAARToS,
+    new Set([sendAARFlowStates.fetchingQRData])
+  ],
+  [
+    sendAARFlowStates.fetchingQRData,
+    new Set([sendAARFlowStates.fetchingNotificationData, sendAARFlowStates.ko])
+  ],
+  [
+    sendAARFlowStates.fetchingNotificationData,
+    new Set([
+      sendAARFlowStates.displayingNotificationData,
+      sendAARFlowStates.notAddresseeFinal,
+      sendAARFlowStates.ko
+    ])
+  ],
+  [
+    sendAARFlowStates.displayingNotificationData,
+    new Set([sendAARFlowStates.ko])
+  ],
+  [sendAARFlowStates.notAddresseeFinal, new Set([sendAARFlowStates.ko])],
+  [
+    sendAARFlowStates.ko,
+    new Set([
+      sendAARFlowStates.fetchingQRData,
+      sendAARFlowStates.fetchingNotificationData,
+      sendAARFlowStates.displayingNotificationData,
+      sendAARFlowStates.none
+    ])
+  ]
+]);
+
 type FlowStates = typeof sendAARFlowStates;
 
 type NotInitialized = {
@@ -70,6 +107,17 @@ export const INITIAL_AAR_FLOW_STATE: AARFlowState = {
   type: "none"
 };
 
+export const isValidAARStateTransition = (
+  currentState: AARFlowState,
+  nextState: AARFlowState
+): boolean => {
+  const currentType = currentState.type;
+  const nextType = nextState.type;
+
+  const allowedNextStates = validAARStatusTransitions.get(currentType);
+  return allowedNextStates?.has(nextType) ?? false;
+};
+
 /**
  * A reducer to store the AAR flow state
  */
@@ -79,7 +127,9 @@ export const aarFlowReducer = (
 ): AARFlowState => {
   switch (action.type) {
     case getType(setAarFlowState):
-      return action.payload;
+      return isValidAARStateTransition(state, action.payload)
+        ? action.payload
+        : state;
 
     case getType(terminateAarFlow):
       return INITIAL_AAR_FLOW_STATE;
