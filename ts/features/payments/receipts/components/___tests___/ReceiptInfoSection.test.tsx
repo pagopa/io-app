@@ -1,11 +1,11 @@
 import Clipboard from "@react-native-clipboard/clipboard";
 import { fireEvent, render } from "@testing-library/react-native";
+import I18n from "i18next";
 import {
   OriginEnum,
   PaymentMethodEnum
 } from "../../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
-import I18n from "../../../../../i18n";
 import ReceiptInfoSection from "../ReceiptInfoSection";
 
 const mockTransaction: NoticeDetailResponse = {

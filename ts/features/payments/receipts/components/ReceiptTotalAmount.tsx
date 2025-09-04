@@ -1,6 +1,6 @@
 import { H3, H6, IOSkeleton, useIOTheme } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { formatAmountText } from "../utils";
 
 type Props = {

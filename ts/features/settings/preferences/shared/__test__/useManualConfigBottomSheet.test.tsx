@@ -1,8 +1,8 @@
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { useManualConfigBottomSheet } from "../hooks/useManualConfigBottomSheet";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import I18n from "../../../../../i18n";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -28,7 +28,6 @@ describe("useManualConfigBottomSheet", () => {
         )
       })
     );
-    (I18n.t as jest.Mock).mockImplementation((key: string) => key);
   });
 
   it("should match snapshot", () => {
@@ -40,7 +39,9 @@ describe("useManualConfigBottomSheet", () => {
     const { getByText } = renderComponent();
 
     expect(
-      getByText("services.optIn.preferences.manualConfig.bottomSheet.body")
+      getByText(
+        I18n.t("services.optIn.preferences.manualConfig.bottomSheet.body")
+      )
     ).toBeTruthy();
     expect(getByText(I18n.t("global.buttons.cancel"))).toBeTruthy();
     expect(getByText(I18n.t("global.buttons.confirm"))).toBeTruthy();

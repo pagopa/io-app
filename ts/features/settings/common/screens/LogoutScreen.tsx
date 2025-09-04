@@ -1,6 +1,6 @@
 import { useEffect } from "react";
+import I18n from "i18next";
 import { logoutRequest } from "../../../authentication/common/store/actions";
-import I18n from "../../../../i18n";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useIODispatch } from "../../../../store/hooks";
 

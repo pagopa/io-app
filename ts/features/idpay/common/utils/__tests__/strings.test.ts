@@ -8,6 +8,6 @@ describe("test formatNumberCurrencyOrDefault", () => {
   });
   it("returns the formatted currenct if input is a valid number", () => {
     const result = formatNumberCurrencyOrDefault(99.56);
-    expect(result).toStrictEqual("99.56 €");
+    expect(result).toStrictEqual("99,56 €");
   });
 });

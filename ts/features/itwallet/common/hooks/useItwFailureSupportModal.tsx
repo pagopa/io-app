@@ -2,8 +2,7 @@ import { Fragment, JSX } from "react";
 import { Linking, View } from "react-native";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-import { Errors as LegacyErrors } from "@pagopa/io-react-native-wallet";
-import { Errors } from "@pagopa/io-react-native-wallet-v2";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import {
   Body,
   Divider,
@@ -14,8 +13,8 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
-import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -78,10 +77,7 @@ const extractErrorCode = (failure: Props["failure"]) => {
   const rawError = failure.reason;
   if (
     isWalletProviderResponseError(rawError) ||
-    isIssuerResponseError(rawError) ||
-    // TODO: [SIW-2530]: remove after full migration to API 1.0
-    LegacyErrors.isWalletProviderResponseError(rawError) ||
-    LegacyErrors.isIssuerResponseError(rawError)
+    isIssuerResponseError(rawError)
   ) {
     return rawError.code ?? failure.type;
   }

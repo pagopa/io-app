@@ -259,7 +259,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                 }
                               >
                                 <Text
-                                  accessibilityLabel="Favourite language"
+                                  accessibilityLabel="Lingua preferita"
                                   accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title1"
@@ -278,7 +278,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                     ]
                                   }
                                 >
-                                  Favourite language
+                                  Lingua preferita
                                 </Text>
                               </View>
                               <View
@@ -313,7 +313,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                     ]
                                   }
                                 >
-                                  In which language do you want to use the application?
+                                  In quale lingua vuoi usare l'applicazione?
                                 </Text>
                               </View>
                               <View
@@ -439,7 +439,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                               ]
                                             }
                                           >
-                                            Italian
+                                            Italiano
                                           </Text>
                                         </View>
                                         <View
@@ -655,7 +655,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                               ]
                                             }
                                           >
-                                            English
+                                            Inglese
                                           </Text>
                                         </View>
                                         <View
@@ -871,7 +871,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                               ]
                                             }
                                           >
-                                            German
+                                            Tedesco
                                           </Text>
                                         </View>
                                         <View
@@ -1035,7 +1035,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1149,7 +1149,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Favourite language"
+                              accessibilityLabel="Lingua preferita"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -1189,7 +1189,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   ]
                                 }
                               >
-                                Favourite language
+                                Lingua preferita
                               </Text>
                             </View>
                             <View
@@ -1203,7 +1203,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

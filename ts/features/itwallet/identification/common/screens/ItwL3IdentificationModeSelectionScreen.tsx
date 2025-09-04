@@ -12,10 +12,10 @@ import {
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { useCallback } from "react";
 import { View } from "react-native";
+import I18n from "i18next";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
@@ -265,7 +265,7 @@ export const useNoCieBottomSheet = () => {
             <View style={{ flex: 1 }}>
               <IOMarkdown
                 content={I18n.t(
-                  `features.itWallet.identification.mode.l3.bottomSheet.noCie.warnings.${index}`
+                  `features.itWallet.identification.mode.l3.bottomSheet.noCie.warnings.${index}` as any
                 )}
               />
             </View>

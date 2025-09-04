@@ -7,6 +7,7 @@ import {
   select
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
+import I18n from "i18next";
 import { MessageStatusArchivingChange } from "../../../../definitions/backend/MessageStatusArchivingChange";
 import { MessageStatusBulkChange } from "../../../../definitions/backend/MessageStatusBulkChange";
 import { MessageStatusChange } from "../../../../definitions/backend/MessageStatusChange";
@@ -34,7 +35,6 @@ import {
 import { nextQueuedMessageDataUncachedSelector } from "../store/reducers/archiving";
 import { paginatedMessageFromIdForCategorySelector } from "../store/reducers/allPaginated";
 import { MessageListCategory } from "../types/messageListCategory";
-import I18n from "../../../i18n";
 
 /**
  * @throws invalid payload

@@ -20,7 +20,7 @@ import * as RNFS from "react-native-fs";
 import { WebView } from "react-native-webview";
 import { connect } from "react-redux";
 import { filterXSS } from "xss";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
 import { WithTestID } from "../../../types/WithTestID";
