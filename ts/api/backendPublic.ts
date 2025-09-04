@@ -68,7 +68,7 @@ export function BackendPublicClient(
     idpId?: string
   ): PostTestLoginT => ({
     method: "post",
-    url: () => `/test-login`,
+    url: () => `/api/auth/v1/test-login`,
     query: _ => ({}),
     headers:
       publicKey && hashAlgorithm

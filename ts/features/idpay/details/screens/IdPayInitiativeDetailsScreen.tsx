@@ -19,7 +19,8 @@ import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
   InitiativeDTO,
-  InitiativeRewardTypeEnum
+  InitiativeRewardTypeEnum,
+  VoucherStatusEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
@@ -50,7 +51,7 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import { getInitiativeStatus, IdPayCardStatus } from "../utils";
+import { IdPayCardStatus } from "../utils";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -320,8 +321,8 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     switch (rewardType) {
       case InitiativeRewardTypeEnum.DISCOUNT: {
         if (
-          getInitiativeStatus({ initiative, now: new Date() }) === "EXPIRED" ||
-          getInitiativeStatus({ initiative, now: new Date() }) === "REMOVED"
+          initiative.voucherStatus === VoucherStatusEnum.EXPIRED ||
+          initiative.voucherStatus === VoucherStatusEnum.USED
         ) {
           return;
         }
@@ -367,7 +368,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
       logoUris={[{ uri: logoURL }]}
       name={initiativeName || ""}
       organizationName={organizationName || ""}
-      status={<IdPayCardStatus now={new Date()} initiative={initiative} />}
+      status={<IdPayCardStatus initiative={initiative} />}
       counters={getInitiativeCounters(initiative)}
       actions={getInitiativeFooterProps(initiativeRewardType)}
     >

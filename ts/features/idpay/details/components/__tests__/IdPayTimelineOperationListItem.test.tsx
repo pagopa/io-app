@@ -27,7 +27,10 @@ import {
   RejectedInstrumentOperationDTO,
   OperationTypeEnum as RejectedInstrumentOperationTypeEnum
 } from "../../../../../../definitions/idpay/RejectedInstrumentOperationDTO";
-import { TransactionOperationDTO } from "../../../../../../definitions/idpay/TransactionOperationDTO";
+import {
+  ChannelEnum,
+  TransactionOperationDTO
+} from "../../../../../../definitions/idpay/TransactionOperationDTO";
 import {
   StatusEnum,
   OperationTypeEnum as TransactionOperationTypeEnum
@@ -73,7 +76,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
         operationDate: T_DATE,
         operationId: "ABC",
         operationType: IbanOperationTypeEnum.ADD_IBAN,
-        channel: "",
+        channel: ChannelEnum.QRCODE,
         iban: "IT60X0542811101000000123456"
       };
 
@@ -98,13 +101,13 @@ describe("Test IdPayTimelineOperationListItem", () => {
 
         const mockOnPress = jest.fn();
 
-        const T_OPERATION: RefundOperationDTO = {
+        const T_OPERATION = {
           operationDate: T_DATE,
           operationId: "",
           operationType: RefundOperationTypeEnum.PAID_REFUND,
           amountCents: T_AMOUNT,
           eventId: ""
-        };
+        } as RefundOperationDTO;
 
         const component = render(
           <IdPayTimelineOperationListItem
@@ -143,13 +146,13 @@ describe("Test IdPayTimelineOperationListItem", () => {
 
         const mockOnPress = jest.fn();
 
-        const T_OPERATION: RefundOperationDTO = {
+        const T_OPERATION = {
           operationDate: T_DATE,
           operationId: "",
           operationType: RefundOperationTypeEnum.REJECTED_REFUND,
           amountCents: T_AMOUNT,
           eventId: ""
-        };
+        } as RefundOperationDTO;
 
         const component = render(
           <IdPayTimelineOperationListItem
@@ -201,15 +204,15 @@ describe("Test IdPayTimelineOperationListItem", () => {
           }
         );
 
-        const T_OPERATION: InstrumentOperationDTO = {
+        const T_OPERATION = {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType,
-          channel: "",
+          channel: ChannelEnum.QRCODE,
           instrumentType: InstrumentTypeEnum.CARD,
           brand: "VISA",
           maskedPan: T_MASKED_PAN
-        };
+        } as InstrumentOperationDTO;
 
         const component = render(
           <IdPayTimelineOperationListItem operation={T_OPERATION} />
@@ -238,7 +241,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType,
-          channel: "",
+          channel: ChannelEnum.QRCODE,
           instrumentType: InstrumentTypeEnum.CARD,
           maskedPan: T_MASKED_PAN
         };
@@ -269,7 +272,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType,
-          channel: "",
+          channel: ChannelEnum.QRCODE,
           instrumentType: InstrumentTypeEnum.CARD,
           brand: "VISA"
         };
@@ -297,7 +300,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: InstrumentOperationTypeEnum.ADD_INSTRUMENT,
-          channel: "",
+          channel: ChannelEnum.QRCODE,
           instrumentType: InstrumentTypeEnum.IDPAYCODE
         };
 
@@ -335,7 +338,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType,
-          channel: "",
+          channel: ChannelEnum.QRCODE,
           instrumentType: InstrumentTypeEnum.CARD,
           brand: "VISA",
           maskedPan: T_MASKED_PAN
@@ -368,7 +371,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType,
-          channel: "",
+          channel: ChannelEnum.QRCODE,
           instrumentType: InstrumentTypeEnum.CARD,
           maskedPan: T_MASKED_PAN
         };
@@ -399,7 +402,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType,
-          channel: "",
+          channel: ChannelEnum.QRCODE,
           instrumentType: InstrumentTypeEnum.CARD,
           brand: "VISA"
         };
@@ -430,7 +433,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
           `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.TRANSACTION`
         );
 
-        const T_OPERATION: TransactionOperationDTO = {
+        const T_OPERATION = {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.TRANSACTION,
@@ -438,7 +441,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
           status: StatusEnum.AUTHORIZED,
           amountCents: T_AMOUNT,
           brand: "VISA"
-        };
+        } as TransactionOperationDTO;
 
         const component = render(
           <IdPayTimelineOperationListItem operation={T_OPERATION} />
@@ -461,7 +464,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
           `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.TRANSACTION`
         );
 
-        const T_OPERATION: TransactionOperationDTO = {
+        const T_OPERATION = {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.TRANSACTION,
@@ -470,7 +473,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
           amountCents: T_AMOUNT,
           brand: "VISA",
           businessName: T_BUSINESS_NAME
-        };
+        } as TransactionOperationDTO;
 
         const component = render(
           <IdPayTimelineOperationListItem operation={T_OPERATION} />
@@ -497,14 +500,14 @@ describe("Test IdPayTimelineOperationListItem", () => {
           `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.TRANSACTION`
         );
 
-        const T_OPERATION: TransactionOperationDTO = {
+        const T_OPERATION = {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.TRANSACTION,
           accruedCents: T_ACCRUED,
           status: StatusEnum.CANCELLED,
           amountCents: T_AMOUNT
-        };
+        } as TransactionOperationDTO;
 
         const component = render(
           <IdPayTimelineOperationListItem operation={T_OPERATION} />
@@ -535,7 +538,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
           `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.TRANSACTION`
         );
 
-        const T_OPERATION: TransactionOperationDTO = {
+        const T_OPERATION = {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.REVERSAL,
@@ -543,7 +546,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
           status: StatusEnum.AUTHORIZED,
           amountCents: T_AMOUNT,
           brand: "VISA"
-        };
+        } as TransactionOperationDTO;
 
         const component = render(
           <IdPayTimelineOperationListItem operation={T_OPERATION} />
@@ -573,7 +576,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
           `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.TRANSACTION`
         );
 
-        const T_OPERATION: TransactionOperationDTO = {
+        const T_OPERATION = {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.REVERSAL,
@@ -582,7 +585,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
           amountCents: T_AMOUNT,
           brand: "VISA",
           businessName: T_BUSINESS_NAME
-        };
+        } as TransactionOperationDTO;
 
         const component = render(
           <IdPayTimelineOperationListItem operation={T_OPERATION} />
@@ -612,14 +615,14 @@ describe("Test IdPayTimelineOperationListItem", () => {
           `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.TRANSACTION`
         );
 
-        const T_OPERATION: TransactionOperationDTO = {
+        const T_OPERATION = {
           operationDate: T_DATE,
           operationId: "ABC",
           operationType: TransactionOperationTypeEnum.REVERSAL,
           accruedCents: T_ACCRUED,
           status: StatusEnum.CANCELLED,
           amountCents: T_AMOUNT
-        };
+        } as TransactionOperationDTO;
 
         const component = render(
           <IdPayTimelineOperationListItem operation={T_OPERATION} />

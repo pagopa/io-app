@@ -5,7 +5,6 @@ import { StyleSheet, View } from "react-native";
 import I18n from "i18next";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
-import { itwShouldRenderNewItWalletSelector } from "../../store/selectors";
 import {
   getCredentialNameFromType,
   tagPropsByStatus,
@@ -14,6 +13,7 @@ import {
 } from "../../utils/itwCredentialUtils";
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
+import { itwShouldRenderNewItWalletSelector } from "../../store/selectors";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
@@ -32,8 +32,10 @@ export type ItwCredentialCard = {
   /**
    * Used to determine if the card should be displayed with a
    * badge for the upgrade pending status.
+   * If its false but the user has an L3 PID, the card will
+   * be displayed with a badge.
    */
-  isLegacyFormat?: boolean;
+  isItwCredential?: boolean;
 };
 
 type StyleProps = {
@@ -45,11 +47,11 @@ type StyleProps = {
 export const ItwCredentialCard = ({
   credentialType,
   credentialStatus = "valid",
-  isLegacyFormat = false
+  isItwCredential
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
-  const needsItwUpgrade = isNewItwRenderable && isLegacyFormat;
+  const needsItwUpgrade = isNewItwRenderable && !isItwCredential;
 
   const borderColorMap = useBorderColorByStatus();
 

@@ -77,6 +77,7 @@ export const ServiceDetailsMetadata = ({
   const metadataListItems: ReadonlyArray<MetadataListItem> = [
     {
       kind: "ListItemAction",
+      accessibilityLabel: I18n.t("services.details.metadata.a11y.website"),
       condition: !!web_url,
       icon: "website",
       label: I18n.t("services.details.metadata.website"),
