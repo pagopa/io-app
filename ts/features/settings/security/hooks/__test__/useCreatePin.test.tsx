@@ -1,11 +1,11 @@
 import { render, fireEvent } from "@testing-library/react-native";
 import { Text, Button } from "react-native";
+import I18n from "i18next";
 import { useCreatePin } from "../useCreatePin";
 import * as keychain from "../../../../../utils/keychain";
 import * as analytics from "../../../common/analytics";
 import * as hooks from "../../../../../store/hooks";
 import * as navigationHooks from "../../../../../navigation/params/AppParamsList";
-import I18n from "../../../../../i18n";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import { createPinSuccess } from "../../store/actions/pinset";
 import { PinString } from "../../../../../types/PinString";

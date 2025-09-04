@@ -1,8 +1,8 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import I18n from "../../../../../i18n";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import OptInScreen from "../screens/OptInScreen";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";

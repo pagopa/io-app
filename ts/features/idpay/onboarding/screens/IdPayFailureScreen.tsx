@@ -1,12 +1,12 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useMemo } from "react";
+import I18n from "i18next";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { getInstructionsButtonConfig } from "../../../../components/ui/utils/buttons";
-import I18n from "../../../../i18n";
 import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {

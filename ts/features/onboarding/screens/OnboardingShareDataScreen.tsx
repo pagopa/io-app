@@ -1,7 +1,7 @@
 import { Banner, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import { ReactElement, useCallback, useMemo } from "react";
 import { SafeAreaView } from "react-native";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { setMixpanelEnabled } from "../../../store/actions/mixpanel";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../settings/common/store/selectors";

@@ -5008,10 +5008,10 @@
           "claimUnavailable": "Non disponibile",
           "optionalClaimsAlert": "I dati facoltativi ti offrono servizi più completi.",
           "missingClaimsAlert": "Alcuni dati facoltativi non sono disponibili nel tuo Portafoglio.",
-          "disclaimer": [
-            "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
-            "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
-          ],
+          "disclaimer": {
+            "0": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
+            "1": "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
+          },
           "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}})."
         },
         "remote": {
@@ -5207,10 +5207,10 @@
             "subtitle": "Saranno mostrati a **{{relyingParty}}** per completare la verifica dei documenti richiesti.",
             "requiredClaims": "Dati necessari",
             "purpose": "Finalità: Identificazione",
-            "disclaimer": [
-              "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
-              "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
-            ],
+            "disclaimer": {
+              "0": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
+              "1": "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
+            },
             "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
             "alert": {
               "message": "Non potrai completare la verifica del documento."
@@ -6238,7 +6238,8 @@
     "expiring": "Scade il {{endDate}}",
     "expired": "Scaduta il {{endDate}}",
     "paused": "In pausa",
-    "removed": "Rimossa"
+    "removed": "Rimossa",
+    "used": "Utilizzato"
   },
   "transaction": {
     "details": {

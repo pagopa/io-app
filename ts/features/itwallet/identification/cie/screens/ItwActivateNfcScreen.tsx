@@ -7,8 +7,8 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { Alert } from "react-native";
+import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../../i18n";
 import * as cieUtils from "../../../../authentication/login/cie/utils/cie";
 import {
   trackItWalletCieNfcActivation,

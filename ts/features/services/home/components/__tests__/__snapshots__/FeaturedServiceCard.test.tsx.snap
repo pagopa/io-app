@@ -1127,7 +1127,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                     ]
                                   }
                                 >
-                                  New
+                                  Nuovo
                                 </Text>
                               </View>
                             </View>

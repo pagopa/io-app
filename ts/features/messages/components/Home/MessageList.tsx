@@ -5,7 +5,7 @@ import {
   useSafeAreaFrame,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import {
   useIODispatch,
   useIOSelector,
