@@ -1,8 +1,8 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
+import I18n from "i18next";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";

@@ -557,7 +557,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -723,7 +723,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1431,7 +1431,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1597,7 +1597,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -2046,7 +2046,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -2212,7 +2212,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -2751,7 +2751,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                           }
                         >
                           <View
-                            accessibilityLabel="Update the IO app"
+                            accessibilityLabel="Aggiorna l'app"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -2867,7 +2867,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                     ]
                                   }
                                 >
-                                  Update the IO app
+                                  Aggiorna l'app
                                 </Text>
                               </View>
                             </View>
@@ -2920,7 +2920,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -3086,7 +3086,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -3535,7 +3535,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -3701,7 +3701,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

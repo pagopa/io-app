@@ -5,7 +5,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useEffect } from "react";
-import I18n from "../../../../../../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
 import { IOScrollViewActions } from "../../../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../../../components/ui/IOScrollViewWithLargeHeader";

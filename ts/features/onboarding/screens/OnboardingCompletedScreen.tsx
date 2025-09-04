@@ -1,6 +1,6 @@
 import { useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
-import I18n from "../../../i18n";
 import { completeOnboarding } from "../store/actions";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { loggedInIdpSelector } from "../../authentication/common/store/selectors";

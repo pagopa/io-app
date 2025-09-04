@@ -29,10 +29,10 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import validator from "validator";
+import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
 import { abortOnboarding } from "../../../../onboarding/store/actions";

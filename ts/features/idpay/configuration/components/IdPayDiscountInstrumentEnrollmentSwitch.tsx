@@ -4,11 +4,11 @@ import {
   ListItemSwitch,
   SwitchAction
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import {
   InstrumentTypeEnum,
   StatusEnum
 } from "../../../../../definitions/idpay/InstrumentDTO";
-import I18n from "../../../../i18n";
 
 type ValidInstrumentType =
   | InstrumentTypeEnum.IDPAYCODE

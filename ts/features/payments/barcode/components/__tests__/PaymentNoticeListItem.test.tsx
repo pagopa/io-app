@@ -25,6 +25,6 @@ describe("PaymentNoticeListItem", () => {
         paymentNoticeNumber="1234567890"
       />
     );
-    expect(getByText("0.00 €")).toBeDefined(); // empty string fallback
+    expect(getByText("0,00 €")).toBeDefined(); // empty string fallback
   });
 });

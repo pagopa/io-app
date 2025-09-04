@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
 import { ComponentType } from "react";
+import I18n from "i18next";
 import { IDPayDetailsRoutes } from "../../navigation";
 import { IdPayInitiativeDetailsScreen } from "../IdPayInitiativeDetailsScreen";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -13,7 +14,6 @@ import {
   StatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { NetworkError } from "../../../../../utils/errors";
-import I18n from "../../../../../i18n";
 
 jest.mock("../../../../../components/helpers/withAppRequiredUpdate", () => ({
   withAppRequiredUpdate: (

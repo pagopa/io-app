@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
 import { Calendar } from "react-native-calendar-events";
+import I18n from "i18next";
 import CalendarsListContainer from "../../../../components/CalendarsListContainer";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../i18n";
 import {
   preferredCalendarRemoveSuccess,
   preferredCalendarSaveSuccess
