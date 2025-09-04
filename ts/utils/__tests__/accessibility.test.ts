@@ -49,7 +49,7 @@ describe("getAccessibleAmountText", () => {
   it("should replace '-' with the localized minus symbol", () => {
     const result = getAccessibleAmountText("-123");
 
-    expect(result).toBe("minus123");
+    expect(result).toBe("meno123");
   });
 
   it("should return undefined if amount is undefined", () => {
@@ -63,12 +63,12 @@ describe("getListItemAccessibilityLabelCount", () => {
   it("should return the correct accessibility label with comma", () => {
     const result = getListItemAccessibilityLabelCount(10, 2);
 
-    expect(result).toBe(", Element 3 of 10");
+    expect(result).toBe(", Elemento 3 di 10");
   });
 
   it("should return the correct accessibility label without comma", () => {
     const result = getListItemAccessibilityLabelCount(10, 2, true);
 
-    expect(result).toBe("Element 3 of 10");
+    expect(result).toBe("Elemento 3 di 10");
   });
 });

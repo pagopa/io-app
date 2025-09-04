@@ -10,9 +10,9 @@ import { FunctionComponent, memo, useCallback, useState } from "react";
 import { View, ViewProps } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
+import I18n from "i18next";
 import { NOTIFY_LINK_CLICK_SCRIPT } from "../../../../../components/ui/Markdown/script";
 import { WebViewMessage } from "../../../../../components/ui/Markdown/types";
-import I18n from "../../../../../i18n";
 import { FlowType } from "../../../../../utils/analytics";
 import { openWebUrl } from "../../../../../utils/url";
 import {

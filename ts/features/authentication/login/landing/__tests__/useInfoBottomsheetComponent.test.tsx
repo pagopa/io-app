@@ -1,7 +1,7 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+import I18n from "i18next";
 import * as urlUtils from "../../../../../utils/url";
-import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
 import { appReducer } from "../../../../../store/reducers";
