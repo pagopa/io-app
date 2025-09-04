@@ -2,9 +2,9 @@ import { Banner, H3, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, createRef } from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp

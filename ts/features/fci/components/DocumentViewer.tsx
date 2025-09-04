@@ -11,7 +11,7 @@ import { ComponentProps, ReactElement, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isIos } from "../../../utils/platform";
 import { share } from "../../../utils/share";

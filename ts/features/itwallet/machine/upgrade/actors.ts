@@ -25,8 +25,7 @@ export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
       await credentialIssuanceUtils.requestCredential({
         env,
         credentialType: credential.credentialType,
-        walletInstanceAttestation,
-        isNewIssuanceFlowEnabled: true
+        walletInstanceAttestation
       });
 
     const result = await credentialIssuanceUtils.obtainCredential({
@@ -38,7 +37,6 @@ export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
       clientId,
       codeVerifier,
       pid,
-      isNewIssuanceFlowEnabled: true,
       operationType: "reissuing"
     });
 

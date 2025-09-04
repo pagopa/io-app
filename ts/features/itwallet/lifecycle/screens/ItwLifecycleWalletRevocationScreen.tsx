@@ -1,6 +1,6 @@
 import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { selectIsLoading } from "../../machine/eid/selectors";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";

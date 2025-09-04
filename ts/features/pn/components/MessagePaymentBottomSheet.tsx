@@ -1,6 +1,6 @@
 import { MutableRefObject } from "react";
 import { Dimensions } from "react-native";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIODispatch } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";

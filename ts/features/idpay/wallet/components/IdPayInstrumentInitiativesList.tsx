@@ -3,11 +3,11 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback, Fragment } from "react";
+import I18n from "i18next";
 import {
   InitiativesStatusDTO,
   StatusEnum
 } from "../../../../../definitions/idpay/InitiativesStatusDTO";
-import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   idpayInitiativesInstrumentDelete,

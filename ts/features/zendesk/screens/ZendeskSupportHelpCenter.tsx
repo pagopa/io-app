@@ -17,6 +17,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import _ from "lodash";
 import {
   useCallback,
@@ -40,7 +41,6 @@ import {
   IOScrollViewActions
 } from "../../../components/ui/IOScrollView";
 import { helpCenterCaCLink, zendeskPrivacyUrl } from "../../../config";
-import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
   AppParamsList,

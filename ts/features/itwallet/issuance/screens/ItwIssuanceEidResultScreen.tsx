@@ -1,8 +1,8 @@
 import { useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { Body } from "@pagopa/io-app-design-system";
 import { useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";

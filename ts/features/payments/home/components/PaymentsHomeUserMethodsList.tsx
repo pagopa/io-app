@@ -8,9 +8,9 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createRef, useMemo, useEffect, useCallback } from "react";
 import { View } from "react-native";
+import I18n from "i18next";
 import * as analytics from "../analytics";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PaymentCardSmallProps } from "../../common/components/PaymentCardSmall";
