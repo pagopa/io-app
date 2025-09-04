@@ -35,17 +35,13 @@ export const validAARStatusTransitions = new Map<
       sendAARFlowStates.ko
     ])
   ],
-  [
-    sendAARFlowStates.displayingNotificationData,
-    new Set([sendAARFlowStates.ko])
-  ],
-  [sendAARFlowStates.notAddresseeFinal, new Set([sendAARFlowStates.ko])],
+  [sendAARFlowStates.displayingNotificationData, new Set([])],
+  [sendAARFlowStates.notAddresseeFinal, new Set([])],
   [
     sendAARFlowStates.ko,
     new Set([
       sendAARFlowStates.fetchingQRData,
       sendAARFlowStates.fetchingNotificationData,
-      sendAARFlowStates.displayingNotificationData,
       sendAARFlowStates.none
     ])
   ]
