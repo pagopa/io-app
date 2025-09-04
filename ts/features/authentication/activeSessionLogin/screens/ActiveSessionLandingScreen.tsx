@@ -61,11 +61,6 @@ export const ActiveSessionLandingScreen = () => {
     isCieSupported
   } = useNavigateToLoginMethod();
 
-  const handleNavigateToCiePinScreen = useCallback(() => {
-    // void trackCiePinLoginSelected(store.getState());
-    navigateToCiePinInsertion();
-  }, [navigateToCiePinInsertion]);
-
   // const handleNavigateToCieIdLoginScreen = useCallback(() => {
   //   void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
   //   navigateToCieIdLoginScreen(SPID_LEVEL);
@@ -94,7 +89,7 @@ export const ActiveSessionLandingScreen = () => {
           )}
           icon="fiscalCodeIndividual"
           testID="bottom-sheet-login-with-cie-pin"
-          onPress={handleNavigateToCiePinScreen}
+          onPress={navigateToCiePinInsertion}
         />
         <VSpacer size={8} />
         <ModuleNavigation

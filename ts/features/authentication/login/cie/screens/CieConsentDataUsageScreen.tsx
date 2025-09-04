@@ -28,7 +28,7 @@ export type CieConsentDataUsageScreenNavigationParams = {
   errorCodeDebugMode?: string;
 };
 
-const LoaderComponent = () => (
+export const LoaderComponent = () => (
   <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
     <VSpacer size={16} />
   </LoadingSpinnerOverlay>

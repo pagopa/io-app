@@ -17,6 +17,7 @@ import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 
 import {
   RouteProp,
@@ -43,7 +44,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
@@ -63,7 +63,6 @@ import {
 // } from "../../../common/analytics/cieAnalytics";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { isActiveSessionLoginSelector } from "../../store/selectors";
 import CieCardReadingAnimation, {
   ReadingState
 } from "../../../login/cie/components/CieCardReadingAnimation";
@@ -209,7 +208,6 @@ const getTextForState = (
  * This screen shown while reading the card
  */
 const ActiveSessionLoginCieCardReaderScreen = () => {
-  // --- START: Hooks to get navigation, route, theme and redux state ---
   const navigation =
     useNavigation<
       IOStackNavigationProp<
@@ -232,8 +230,6 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
 
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
-  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
-  // --- END: Hooks ---
 
   const [readingState, setReadingState] = useState<ReadingState>(
     ReadingState.waiting_card
@@ -342,26 +338,18 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
 
       setTimeout(
         () => {
-          if (isActiveSessionLogin) {
-            navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen:
-                AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,
-              params: { cieConsentUri }
-            });
-          } else {
-            // trackLoginCieCardReadingSuccess();
-            navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen: AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,
-              params: { cieConsentUri }
-            });
-          }
+          navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+            screen:
+              AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,
+            params: { cieConsentUri }
+          });
         },
         isScreenReaderEnabledState
           ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
           : Platform.select({ ios: 0, default: WAIT_TIMEOUT_NAVIGATION })
       );
     },
-    [choosenTool, isActiveSessionLogin, navigation, isScreenReaderEnabledState]
+    [choosenTool, navigation, isScreenReaderEnabledState]
   );
 
   const handleCieEvent = useCallback(
@@ -524,17 +512,6 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
     };
   }, [isCieUatEnabled, startCie]);
 
-  const handleCancel = useCallback(() => {
-    if (isActiveSessionLogin) {
-      navigation.popToTop();
-    } else {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
-      });
-    }
-  }, [isActiveSessionLogin, navigation]);
-
   const getFooter = useCallback(
     (): ReactNode =>
       Platform.select({
@@ -544,7 +521,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
               <IOButton
                 variant="link"
                 label={I18n.t("global.buttons.close")}
-                onPress={handleCancel}
+                onPress={navigation.popToTop}
               />
             </View>
           </View>
@@ -563,13 +540,13 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
               <IOButton
                 variant="link"
                 label={I18n.t("global.buttons.close")}
-                onPress={handleCancel}
+                onPress={navigation.popToTop}
               />
             </View>
           </View>
         )
       }),
-    [handleCancel, startCie, isCieUatEnabled]
+    [navigation.popToTop, startCie, isCieUatEnabled]
   );
 
   return (

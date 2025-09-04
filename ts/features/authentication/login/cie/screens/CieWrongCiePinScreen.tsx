@@ -160,11 +160,8 @@ const CieWrongCiePinScreen = () => {
     ]
   );
 
-  const getMessage = useCallback(
-    (key: number) =>
-      key in messages ? messages[key] : defaultMessageThatShouldNeverHappen,
-    [defaultMessageThatShouldNeverHappen, messages]
-  );
+  const getMessage = (key: number) =>
+    key in messages ? messages[key] : defaultMessageThatShouldNeverHappen;
 
   return <OperationResultScreenContent {...getMessage(remainingCount)} />;
 };
