@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import ShareDataScreen from "../ShareDataScreen";
-import I18n from "../../../../../i18n";
 import * as hooks from "../../../../../store/hooks";
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
 import { tosConfigSelector } from "../../../../tos/store/selectors";

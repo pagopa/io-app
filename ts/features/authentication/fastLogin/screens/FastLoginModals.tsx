@@ -1,4 +1,4 @@
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { TokenRefreshState } from "../store/reducers/tokenRefreshReducer";
 import { logoutRequest } from "../../common/store/actions";
 import {

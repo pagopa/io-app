@@ -14,11 +14,11 @@ import {
   useState
 } from "react";
 import { Alert, AlertButton, FlatList, ListRenderItemInfo } from "react-native";
+import I18n from "i18next";
 import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../../../definitions/backend/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { SettingsParamsList } from "../../common/navigation/params/SettingsParamsList";
 import {

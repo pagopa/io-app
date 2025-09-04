@@ -26,11 +26,11 @@ import {
   ScrollView
 } from "react-native";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import I18n from "i18next";
 import AppVersion from "../../../../components/AppVersion";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

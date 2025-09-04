@@ -532,7 +532,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
                               }
                               testID="idpay-card-amount"
                             >
-                              99.99 €
+                              99,99 €
                             </Text>
                           </View>
                           <Text
