@@ -108,12 +108,9 @@ export const INITIAL_AAR_FLOW_STATE: AARFlowState = {
 };
 
 export const isValidAARStateTransition = (
-  currentState: AARFlowState,
-  nextState: AARFlowState
+  currentType: FlowStates[keyof FlowStates],
+  nextType: FlowStates[keyof FlowStates]
 ): boolean => {
-  const currentType = currentState.type;
-  const nextType = nextState.type;
-
   const allowedNextStates = validAARStatusTransitions.get(currentType);
   return allowedNextStates?.has(nextType) ?? false;
 };
@@ -127,7 +124,7 @@ export const aarFlowReducer = (
 ): AARFlowState => {
   switch (action.type) {
     case getType(setAarFlowState):
-      return isValidAARStateTransition(state, action.payload)
+      return isValidAARStateTransition(state.type, action.payload.type)
         ? action.payload
         : state;
 

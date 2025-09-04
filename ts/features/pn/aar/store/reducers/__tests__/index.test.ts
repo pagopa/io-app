@@ -81,7 +81,10 @@ describe("aarFlowReducer and related functions", () => {
         const nextState = stateFactories[nextType]();
         const action = setAarFlowState(nextState);
 
-        const shouldAllow = isValidAARStateTransition(currentState, nextState);
+        const shouldAllow = isValidAARStateTransition(
+          currentState.type,
+          nextState.type
+        );
 
         it(`should ${
           shouldAllow ? "allow" : "reject"
@@ -101,13 +104,13 @@ describe("aarFlowReducer and related functions", () => {
     it("should allow a valid transition", () => {
       const from = stateFactories.none();
       const to = stateFactories.displayingAARToS();
-      expect(isValidAARStateTransition(from, to)).toBe(true);
+      expect(isValidAARStateTransition(from.type, to.type)).toBe(true);
     });
 
     it("should reject an invalid transition", () => {
       const from = stateFactories.none();
       const to = stateFactories.ko();
-      expect(isValidAARStateTransition(from, to)).toBe(false);
+      expect(isValidAARStateTransition(from.type, to.type)).toBe(false);
     });
   });
 });
