@@ -26,6 +26,7 @@ import {
   itwCredentialsSelector
 } from "../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../lifecycle/store/selectors";
+import { CredentialType } from "../common/utils/itwMocksUtils";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -34,7 +35,6 @@ import {
   ITW_SCREENVIEW_EVENTS,
   ITW_TECH_EVENTS
 } from "./enum";
-import { CredentialType } from "../common/utils/itwMocksUtils";
 
 export type KoState = {
   reason: unknown;
