@@ -7,11 +7,11 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { memo, MutableRefObject, useMemo } from "react";
 import { Alert } from "react-native";
+import I18n from "i18next";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import ListItemSwipeAction, {
   SwipeControls
 } from "../../../../components/ListItemSwipeAction";
-import I18n from "../../../../i18n";
 import { useIODispatch } from "../../../../store/hooks";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import { format } from "../../../../utils/dates";

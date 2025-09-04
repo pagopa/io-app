@@ -246,8 +246,8 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                             }
                           >
                             <View
-                              accessibilityHint="Wait for the content load"
-                              accessibilityLabel="Loading"
+                              accessibilityHint="Attendi il caricamento del contenuto"
+                              accessibilityLabel="Caricamento in corso"
                               accessibilityRole="progressbar"
                               accessible={true}
                               style={
@@ -452,7 +452,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   ]
                                 }
                               >
-                                Wait a few seconds..
+                                Attendi qualche secondo...
                               </Text>
                             </View>
                           </View>
@@ -945,7 +945,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1111,7 +1111,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1508,8 +1508,8 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                             }
                           >
                             <View
-                              accessibilityHint="Wait for the content load"
-                              accessibilityLabel="Loading"
+                              accessibilityHint="Attendi il caricamento del contenuto"
+                              accessibilityLabel="Caricamento in corso"
                               accessibilityRole="progressbar"
                               accessible={true}
                               style={
@@ -1714,7 +1714,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   ]
                                 }
                               >
-                                Wait a few seconds..
+                                Attendi qualche secondo...
                               </Text>
                             </View>
                           </View>
@@ -2207,7 +2207,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -2373,7 +2373,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

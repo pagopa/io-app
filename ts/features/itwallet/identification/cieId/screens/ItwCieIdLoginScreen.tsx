@@ -1,12 +1,12 @@
 import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { originSchemasWhiteList } from "../../../../authentication/common/utils/originSchemasWhiteList";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";

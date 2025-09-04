@@ -1,5 +1,6 @@
 import configureMockStore from "redux-mock-store";
 import { fireEvent, waitFor } from "@testing-library/react-native";
+import I18n from "i18next";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -8,8 +9,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import * as selectors from "../../store/selectors";
 import { ItwUpgradeBanner } from "../ItwUpgradeBanner";
 import { ITW_ROUTES } from "../../../navigation/routes";
-
-import I18n from "../../../../../i18n";
 
 const mockNavigate = jest.fn();
 

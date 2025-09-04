@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
+import I18n from "i18next";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isCdcAppVersionSupportedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
