@@ -59,7 +59,7 @@ type AlertProps = {
   bottomSheet?: JSX.Element;
 };
 export const useStatusAlertProps = (): AlertProps | undefined => {
-  const { setAlertVisible } = useIOAlertVisible();
+  const { isAlertVisible, setAlertVisible } = useIOAlertVisible();
   const [connectivityAlert, setConnectivityAlert] = useState<
     AlertEdgeToEdgeProps | undefined
   >(undefined);
@@ -70,6 +70,9 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
   const startupStatus = useIOSelector(isStartupLoaded);
   const prevIsConnected = usePrevious(isConnected);
+
+  const locale = getFullLocale();
+  const localeFallback = fallbackForLocalizedMessageKeys(locale);
 
   // Bottom sheets
   const itwOfflineModal = useOfflineAlertDetailModal(
@@ -91,6 +94,7 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
       })
     );
   }, [commonOfflineModal, currentRoute]);
+
   const openItwOfflineBottomSheet = useCallback(() => {
     itwOfflineModal?.present();
     trackItwOfflineBottomSheet();
@@ -98,23 +102,42 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
 
   const handleAppRestart = useAppRestartAction("banner");
 
-  const locale = getFullLocale();
-  const localeFallback = fallbackForLocalizedMessageKeys(locale);
+  const isBlacklisted = useMemo(
+    () => blackListOfflineAlertRoutes.has(currentRoute),
+    [currentRoute]
+  );
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
+    /**
+     * Makes sure that the alert is not shown during the app startup
+     * if we have connectivity and not in the offline mini app
+     */
     if (
-      blackListOfflineAlertRoutes.has(currentRoute) &&
+      isAlertVisible &&
+      isConnected &&
+      offlineAccessReason === undefined &&
       startupStatus === StartupStatusEnum.INITIAL
     ) {
-      /**
-       * In case we are in the mini-app for offline usage or the current route is in the blacklist,
-       * we don't need to show the alert.
-       */
       setConnectivityAlert(undefined);
       setAlertVisible(false);
       return;
     }
-    if (isConnected === false) {
+
+    /**
+     * Screens in the blacklist should not display the alert
+     */
+    if (isBlacklisted && isAlertVisible) {
+      setConnectivityAlert(undefined);
+      setAlertVisible(false);
+      return;
+    }
+
+    /**
+     * Show the offline alert only if the device is offline and the current route
+     * is not in the blacklist
+     */
+    if (!isBlacklisted && isConnected === false && !isAlertVisible) {
       setConnectivityAlert({
         variant: "info",
         ...(offlineAccessReason
@@ -133,7 +156,9 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
               onPress: openCommonOfflineBottomSheet
             })
       });
+
       setAlertVisible(true);
+
       if (offlineAccessReason) {
         trackItwOfflineBanner({
           screen: currentRoute,
@@ -150,7 +175,12 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
       }
       return;
     }
-    if (prevIsConnected === false && isConnected === true) {
+
+    /**
+     * If the device was offline and returns online, show a "back online" alert
+     * which disappears after 3 seconds
+     */
+    if (prevIsConnected === false && isConnected === true && isAlertVisible) {
       setConnectivityAlert(
         offlineAccessReason === OfflineAccessReasonEnum.DEVICE_OFFLINE
           ? {
@@ -168,28 +198,39 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
               content: I18n.t("global.offline.connectionRestored")
             }
       );
+
       setAlertVisible(true);
+
       void mixpanelTrack(
         "ONLINE_BANNER",
         buildEventProperties("TECH", undefined, {
           screen: currentRoute
         })
       );
-      setTimeout(() => {
-        setConnectivityAlert(undefined);
-        setAlertVisible(false);
-      }, 3000);
+
+      if (offlineAccessReason !== OfflineAccessReasonEnum.DEVICE_OFFLINE) {
+        /**
+         * Removes the "back online" alert after 3 seconds only if the app is not
+         * in the offline mode
+         */
+        setTimeout(() => {
+          setConnectivityAlert(undefined);
+          setAlertVisible(false);
+        }, 3000);
+      }
     }
   }, [
-    isConnected,
-    prevIsConnected,
+    isBlacklisted,
     currentRoute,
-    offlineAccessReason,
-    openItwOfflineBottomSheet,
-    handleAppRestart,
     setAlertVisible,
+    startupStatus,
+    handleAppRestart,
+    isAlertVisible,
+    isConnected,
+    offlineAccessReason,
     openCommonOfflineBottomSheet,
-    startupStatus
+    openItwOfflineBottomSheet,
+    prevIsConnected
   ]);
 
   return useMemo(() => {
@@ -221,7 +262,9 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
         })
       )
     );
+
     setAlertVisible(currentStatusMessage.length > 0);
+
     return {
       alertProps: {
         content: firstAlert.message[localeFallback],
