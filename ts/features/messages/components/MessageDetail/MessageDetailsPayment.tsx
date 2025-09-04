@@ -1,14 +1,13 @@
 import { ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
-import { UIMessageId } from "../../types";
+import I18n from "i18next";
 import { useIOSelector } from "../../../../store/hooks";
 import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
-import I18n from "../../../../i18n";
 import { getRptIdStringFromPaymentData } from "../../utils";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { MessagePaymentItem } from "./MessagePaymentItem";
 
 type MessageDetailsPaymentProps = {
-  messageId: UIMessageId;
+  messageId: string;
   serviceId: ServiceId;
 };
 

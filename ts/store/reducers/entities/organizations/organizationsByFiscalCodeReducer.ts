@@ -6,6 +6,7 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 import {
   logoutSuccess,
+  sessionCorrupted,
   sessionExpired
 } from "../../../../features/authentication/common/store/actions";
 
@@ -36,6 +37,7 @@ const reducer = (
 
     case getType(logoutSuccess):
     case getType(sessionExpired):
+    case getType(sessionCorrupted):
       return INITIAL_STATE;
 
     default:

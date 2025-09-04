@@ -1,13 +1,15 @@
-import { createCryptoContextFor } from "@pagopa/io-react-native-wallet-v2";
+import { createCryptoContextFor } from "@pagopa/io-react-native-wallet";
 import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
 import {
   enrichPresentationDetails,
+  getCredentialTypeByVct,
   groupCredentialsByPurpose
 } from "../itwRemotePresentationUtils";
 import {
   PresentationDetails,
   type EnrichedPresentationDetails
 } from "../itwRemoteTypeUtils";
+import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 
 type Expected = ReturnType<typeof groupCredentialsByPurpose>;
 
@@ -16,7 +18,7 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
-        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json",
+        vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata",
         credential: "",
         cryptoContext: createCryptoContextFor("keytag"),
         purposes: [{ required: true }],
@@ -37,7 +39,7 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
-        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json",
+        vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata",
         credential: "",
         cryptoContext: createCryptoContextFor("keytag"),
         purposes: [{ required: true }],
@@ -46,7 +48,7 @@ describe("groupCredentialsByPurpose", () => {
       },
       {
         id: "cred_2",
-        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/mdl.json",
+        vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/mdl",
         credential: "",
         cryptoContext: createCryptoContextFor("keytag"),
         purposes: [{ required: false }],
@@ -67,7 +69,7 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
-        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json",
+        vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata",
         credential: "",
         cryptoContext: createCryptoContextFor("keytag"),
         purposes: [{ description: "Identification", required: true }],
@@ -90,7 +92,7 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
-        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json",
+        vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata",
         credential: "",
         cryptoContext: createCryptoContextFor("keytag"),
         purposes: [{ description: "Identification", required: true }],
@@ -99,7 +101,7 @@ describe("groupCredentialsByPurpose", () => {
       },
       {
         id: "cred_2",
-        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/mdl.json",
+        vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/mdl",
         credential: "",
         cryptoContext: createCryptoContextFor("keytag"),
         purposes: [{ description: "Extra services", required: false }],
@@ -124,7 +126,7 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
-        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json",
+        vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata",
         credential: "",
         cryptoContext: createCryptoContextFor("keytag"),
         purposes: [
@@ -136,7 +138,7 @@ describe("groupCredentialsByPurpose", () => {
       },
       {
         id: "cred_2",
-        vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/mdl.json",
+        vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/mdl",
         credential: "",
         cryptoContext: createCryptoContextFor("keytag"),
         purposes: [
@@ -184,7 +186,7 @@ describe("enrichPresentationDetails", () => {
           id: "one",
           credential: "",
           cryptoContext: createCryptoContextFor("one-keytag"),
-          vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json",
+          vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata",
           requiredDisclosures: [
             ["salt1", "name", "Mario"],
             ["salt2", "surname", "Rossi"]
@@ -196,8 +198,8 @@ describe("enrichPresentationDetails", () => {
     );
 
     expect(result.claimsToDisplay).toEqual([
-      { id: "name", label: "Name", value: "Mario" },
-      { id: "surname", label: "Surname", value: "Rossi" }
+      { id: "name", label: "Nome", value: "Mario" },
+      { id: "surname", label: "Cognome", value: "Rossi" }
     ]);
   });
 
@@ -208,7 +210,7 @@ describe("enrichPresentationDetails", () => {
           id: "one",
           credential: "",
           cryptoContext: createCryptoContextFor("one-keytag"),
-          vct: "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json",
+          vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata",
           requiredDisclosures: [
             ["salt1", "name", "Mario"],
             ["salt2", "surname", "Rossi"],
@@ -221,8 +223,8 @@ describe("enrichPresentationDetails", () => {
     );
 
     expect(result.claimsToDisplay).toEqual([
-      { id: "name", label: "Name", value: "Mario" },
-      { id: "surname", label: "Surname", value: "Rossi" }
+      { id: "name", label: "Nome", value: "Mario" },
+      { id: "surname", label: "Cognome", value: "Rossi" }
     ]);
   });
 
@@ -249,5 +251,41 @@ describe("enrichPresentationDetails", () => {
         claimsToDisplay: []
       }
     ]);
+  });
+});
+
+describe("getCredentialTypeByVct", () => {
+  test.each([
+    [
+      CredentialType.PID,
+      "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata"
+    ],
+    [
+      CredentialType.PID,
+      "https://pre.ta.wallet.ipzs.it/vct/personidentificationdata"
+    ],
+    [
+      CredentialType.PID,
+      "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/path1/path2/personidentificationdata"
+    ],
+    [
+      CredentialType.DRIVING_LICENSE,
+      "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/mdl"
+    ],
+    [
+      CredentialType.EUROPEAN_DISABILITY_CARD,
+      "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/europeandisabilitycard"
+    ],
+    [
+      CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+      "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/europeanhealthinsurancecard"
+    ],
+    [undefined, "https://pre.ta.wallet.ipzs.it/novct/mdl"],
+    [
+      undefined,
+      "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json"
+    ]
+  ])("extracts %s from %s", (expected, vct) => {
+    expect(getCredentialTypeByVct(vct)).toEqual(expected);
   });
 });

@@ -240,7 +240,7 @@ exports[`OnboardingNavigator renders all routes (snapshot) 1`] = `
                             }
                           >
                             <Text
-                              accessibilityLabel="Your usage data"
+                              accessibilityLabel="I tuoi dati di utilizzo"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -260,7 +260,7 @@ exports[`OnboardingNavigator renders all routes (snapshot) 1`] = `
                               }
                               testID="share-data-component-title"
                             >
-                              Your usage data
+                              I tuoi dati di utilizzo
                             </Text>
                           </View>
                           <View
@@ -295,7 +295,7 @@ exports[`OnboardingNavigator renders all routes (snapshot) 1`] = `
                                 ]
                               }
                             >
-                              Sharing your data helps us improve your experience and provide you with targeted assistance.
+                              Se condividi i tuoi dati, ci aiuti a migliorare la tua esperienza su IO e a fornirti assistenza mirata.
                             </Text>
                           </View>
                           <View
@@ -422,7 +422,7 @@ exports[`OnboardingNavigator renders all routes (snapshot) 1`] = `
                                       ]
                                     }
                                   >
-                                    We only collect 
+                                    Usiamo 
                                     <Text
                                       allowFontScaling={true}
                                       dynamicTypeRamp="body"
@@ -441,37 +441,69 @@ exports[`OnboardingNavigator renders all routes (snapshot) 1`] = `
                                         ]
                                       }
                                     >
-                                      the data we need 
+                                      solo i dati necessari 
                                     </Text>
-                                    to monitor how the app is working and to make the services we offer better.
+                                    a monitorare il funzionamento dell’app e a migliorare i servizi offerti.
                                   </Text>
-                                  <Text
-                                    accessibilityElementsHidden={false}
+                                  <View
                                     accessibilityRole="link"
-                                    accessible={true}
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    importantForAccessibility="yes"
-                                    maxFontSizeMultiplier={1.5}
-                                    onPress={[Function]}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": undefined,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
                                     }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                   >
-                                    Why we collect data
-                                  </Text>
+                                    <Text
+                                      accessibilityElementsHidden={false}
+                                      accessibilityRole="link"
+                                      accessible={true}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      importantForAccessibility="yes"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {
+                                            "textDecorationLine": "underline",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Perché raccogliamo i dati
+                                    </Text>
+                                  </View>
                                 </View>
                               </View>
                               <Modal
@@ -510,9 +542,9 @@ exports[`OnboardingNavigator renders all routes (snapshot) 1`] = `
                                 >
                                   <View>
                                     <View
-                                      accessibilityLabel="We do not collect data for marketing purposes. 
+                                      accessibilityLabel="Non raccogliamo dati per finalità di marketing.  
 
-We use tools that allow us to record data on how you use the app, to provide you with a better service and assist you if needed."
+Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per fornirti un servizio migliore e assisterti in caso di necessità."
                                       accessible={true}
                                     >
                                       <View
@@ -546,7 +578,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                                               ]
                                             }
                                           >
-                                            We do not collect data for marketing purposes.
+                                            Non raccogliamo dati per finalità di marketing.
                                           </Text>
                                           <View
                                             style={
@@ -573,7 +605,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                                               ]
                                             }
                                           >
-                                            We use tools that allow us to record data on how you use the app, to 
+                                            Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per 
                                             <Text
                                               style={
                                                 {
@@ -581,9 +613,9 @@ We use tools that allow us to record data on how you use the app, to provide you
                                                 }
                                               }
                                             >
-                                              provide you with a better service
+                                              fornirti un servizio migliore
                                             </Text>
-                                             and 
+                                             e 
                                             <Text
                                               style={
                                                 {
@@ -591,9 +623,8 @@ We use tools that allow us to record data on how you use the app, to provide you
                                                 }
                                               }
                                             >
-                                              assist you if needed
+                                              assisterti in caso di necessità.
                                             </Text>
-                                            .
                                           </Text>
                                         </View>
                                       </View>
@@ -724,7 +755,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                                       ]
                                     }
                                   >
-                                    We take data security seriously 
+                                    Adottiamo misure di sicurezza per 
                                     <Text
                                       allowFontScaling={true}
                                       dynamicTypeRamp="body"
@@ -743,37 +774,69 @@ We use tools that allow us to record data on how you use the app, to provide you
                                         ]
                                       }
                                     >
-                                      and have measures in place to protect 
+                                      proteggere 
                                     </Text>
-                                    your data.
+                                    i tuoi dati.
                                   </Text>
-                                  <Text
-                                    accessibilityElementsHidden={false}
+                                  <View
                                     accessibilityRole="link"
-                                    accessible={true}
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    importantForAccessibility="yes"
-                                    maxFontSizeMultiplier={1.5}
-                                    onPress={[Function]}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": undefined,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
                                     }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                   >
-                                    How we keep data safe
-                                  </Text>
+                                    <Text
+                                      accessibilityElementsHidden={false}
+                                      accessibilityRole="link"
+                                      accessible={true}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      importantForAccessibility="yes"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {
+                                            "textDecorationLine": "underline",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Come proteggiamo i dati
+                                    </Text>
+                                  </View>
                                 </View>
                               </View>
                               <View
@@ -878,7 +941,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                                       ]
                                     }
                                   >
-                                    We only work with suppliers who process data 
+                                    Collaboriamo solo con fornitori che trattano i dati in modo 
                                     <Text
                                       allowFontScaling={true}
                                       dynamicTypeRamp="body"
@@ -897,36 +960,68 @@ We use tools that allow us to record data on how you use the app, to provide you
                                         ]
                                       }
                                     >
-                                      in a transparent and secure way.
+                                      trasparente e sicuro.
                                     </Text>
                                   </Text>
-                                  <Text
-                                    accessibilityElementsHidden={false}
+                                  <View
                                     accessibilityRole="link"
-                                    accessible={true}
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    importantForAccessibility="yes"
-                                    maxFontSizeMultiplier={1.5}
-                                    onPress={[Function]}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": undefined,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
                                     }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                   >
-                                    Who are the suppliers
-                                  </Text>
+                                    <Text
+                                      accessibilityElementsHidden={false}
+                                      accessibilityRole="link"
+                                      accessible={true}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      importantForAccessibility="yes"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {
+                                            "textDecorationLine": "underline",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Chi sono i fornitori
+                                    </Text>
+                                  </View>
                                 </View>
                               </View>
                               <View
@@ -937,7 +1032,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                                 }
                               />
                               <Text
-                                accessibilityLabel="For more information, please read the Privacy Policy and Terms and Conditions"
+                                accessibilityLabel="Per maggiori informazioni, leggi l'Informativa Privacy e i Termini e Condizioni d’uso"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
@@ -955,32 +1050,64 @@ We use tools that allow us to record data on how you use the app, to provide you
                                   ]
                                 }
                               >
-                                For more information, please read 
-                                <Text
+                                Per maggiori informazioni, leggi l'
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
-                                  testID="additionalInformation"
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  the Privacy Policy and Terms and Conditions
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                    testID="additionalInformation"
+                                  >
+                                    Informativa Privacy e i Termini e Condizioni d’uso
+                                  </Text>
+                                </View>
                               </Text>
                               <View
                                 style={
@@ -1008,7 +1135,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                                 }
                               >
                                 <View
-                                  accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                  accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
                                   accessibilityRole="text"
                                   accessible={true}
                                   style={
@@ -1037,7 +1164,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                                       ]
                                     }
                                   >
-                                    You can change this choice anytime in Settings &gt; Privacy Policy and Terms of Service
+                                    Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
                                   </Text>
                                 </View>
                                 <View
@@ -1206,7 +1333,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                                           ]
                                         }
                                       >
-                                        If you confirm, we won't be able to give you the targeted help you need because we might not have the data we need to solve the problem.
+                                        Se confermi,  non saremo in grado di fornirti assistenza mirata perché potrebbero mancarci i dati necessari per risolvere il problema.
                                       </Text>
                                     </View>
                                   </View>
@@ -1367,7 +1494,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                           }
                         >
                           <View
-                            accessibilityLabel="Share"
+                            accessibilityLabel="Condividi"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -1484,7 +1611,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                                     ]
                                   }
                                 >
-                                  Share
+                                  Condividi
                                 </Text>
                               </View>
                             </View>
@@ -1505,7 +1632,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                               }
                             />
                             <View
-                              accessibilityLabel="Please don't share data"
+                              accessibilityLabel="Non condividere"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1626,7 +1753,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                                       ]
                                     }
                                   >
-                                    Please don't share data
+                                    Non condividere
                                   </Text>
                                 </View>
                               </View>
@@ -1656,9 +1783,6 @@ We use tools that allow us to record data on how you use the app, to provide you
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -1683,7 +1807,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1797,7 +1921,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Your usage data"
+                              accessibilityLabel="I tuoi dati di utilizzo"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -1837,7 +1961,7 @@ We use tools that allow us to record data on how you use the app, to provide you
                                   ]
                                 }
                               >
-                                Your usage data
+                                I tuoi dati di utilizzo
                               </Text>
                             </View>
                             <View

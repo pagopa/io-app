@@ -6,12 +6,12 @@ import Animated, {
   LinearTransition,
   useAnimatedRef
 } from "react-native-reanimated";
+import I18n from "i18next";
 import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

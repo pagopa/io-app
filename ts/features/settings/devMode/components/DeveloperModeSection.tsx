@@ -18,7 +18,7 @@ import * as Sentry from "@sentry/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useContext, ComponentProps } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { AlertModal } from "../../../../components/ui/AlertModal";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../../../config";
@@ -30,6 +30,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { sessionExpired } from "../../../authentication/common/store/actions";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import {
+  preferencesAarFeatureSetEnabled,
   preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
@@ -42,6 +43,7 @@ import {
 } from "../../../authentication/common/store/selectors";
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
+  isAARLocalEnabled,
   isIdPayLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
@@ -53,6 +55,8 @@ import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { isActiveSessionLoginLocallyEnabledSelector } from "../../../authentication/loginPreferences/store/selectors/index.ts";
 import { setActiveSessionLoginLocalFlag } from "../../../authentication/loginPreferences/store/actions/index.ts";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes.ts";
+import { setStartActiveSessionLogin } from "../../../authentication/activeSessionLogin/store/actions/index.ts";
+import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -332,6 +336,7 @@ const DesignSystemSection = () => {
 
 const PlaygroundsSection = () => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
   const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
 
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
@@ -399,6 +404,15 @@ const PlaygroundsSection = () => {
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
           screen: SETTINGS_ROUTES.CIE_PLAYGROUND
         })
+    },
+    {
+      value: "Active session login playground",
+      onPress: () => {
+        dispatch(setStartActiveSessionLogin());
+        navigation.navigate(SETTINGS_ROUTES.AUTHENTICATION, {
+          screen: AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
+        });
+      }
     }
   ];
 
@@ -454,6 +468,7 @@ const DeveloperTestEnvironmentSection = ({
   const isActiveSessionLoginLocallyEnabled = useIOSelector(
     isActiveSessionLoginLocallyEnabledSelector
   );
+  const isAarFeatureEnabled = useIOSelector(isAARLocalEnabled);
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -505,6 +520,10 @@ const DeveloperTestEnvironmentSection = ({
     dispatch(setActiveSessionLoginLocalFlag(enabled));
   };
 
+  const onAarFeatureToggle = (enabled: boolean) => {
+    dispatch(preferencesAarFeatureSetEnabled({ isAarFeatureEnabled: enabled }));
+  };
+
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
       label: I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
@@ -519,6 +538,11 @@ const DeveloperTestEnvironmentSection = ({
       label: I18n.t("profile.main.pnEnvironment.pnEnv"),
       value: isPnTestEnabled,
       onSwitchValueChange: onPnEnvironmentToggle
+    },
+    {
+      label: I18n.t("profile.main.pnEnvironment.aarEnv"),
+      value: isAarFeatureEnabled,
+      onSwitchValueChange: onAarFeatureToggle
     },
     {
       label: I18n.t("profile.main.idpay.idpayTest"),

@@ -22,13 +22,13 @@ import {
   WebViewNavigationEvent,
   WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
+import I18n from "i18next";
 import { withLoadingSpinner } from "../../../../../components/helpers/withLoadingSpinner";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { selectedIdentityProviderSelector } from "../../../../../features/authentication/common/store/selectors";
 import { ephemeralKeyTagSelector } from "../../../../../features/lollipop/store/reducers/lollipop";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../../../../features/lollipop/utils/login";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
-import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
 import { trackSpidLoginError } from "../../../../../utils/analytics";
@@ -206,7 +206,10 @@ const CieWebView = (props: Props) => {
       return false;
     }
 
-    if (cieFlowForDevServerEnabled && url.indexOf("token=") !== -1) {
+    // On the dev-server, the ACS endpoint is /idp-login.
+    // Intercepting it allows us to extract the authentication result
+    // (token or error) after a successful CIE login.
+    if (cieFlowForDevServerEnabled && url.indexOf("idp-login") !== -1) {
       setInternalState(state => generateFoundAuthUrlState(url, state));
       return false;
     }

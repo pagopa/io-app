@@ -251,8 +251,8 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -430,7 +430,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               </View>
                             </View>
                             <Text
-                              accessibilityLabel="Loading message details"
+                              accessibilityLabel="Stiamo caricando il messaggio"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -451,7 +451,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                 ]
                               }
                             >
-                              Loading message details
+                              Stiamo caricando il messaggio
                             </Text>
                           </View>
                         </View>
@@ -487,7 +487,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               ]
                             }
                           >
-                            Wait a few moments
+                            Attendi qualche secondo
                           </Text>
                         </View>
                       </RNCSafeAreaView>
@@ -514,9 +514,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -540,7 +537,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -706,7 +703,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1108,8 +1105,8 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -1287,7 +1284,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               </View>
                             </View>
                             <Text
-                              accessibilityLabel="Loading message details"
+                              accessibilityLabel="Stiamo caricando il messaggio"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -1308,7 +1305,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                 ]
                               }
                             >
-                              Loading message details
+                              Stiamo caricando il messaggio
                             </Text>
                           </View>
                         </View>
@@ -1344,7 +1341,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               ]
                             }
                           >
-                            Wait a few moments
+                            Attendi qualche secondo
                           </Text>
                         </View>
                       </RNCSafeAreaView>
@@ -1371,9 +1368,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -1397,7 +1391,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1563,7 +1557,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -2158,7 +2152,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                 ]
                               }
                             >
-                              There is a temporary problem, please try again.
+                              C'è un problema temporaneo, riprova.
                             </Text>
                             <View
                               style={
@@ -2176,7 +2170,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Retry"
+                                  accessibilityLabel="Riprova"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -2292,7 +2286,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           ]
                                         }
                                       >
-                                        Retry
+                                        Riprova
                                       </Text>
                                     </View>
                                   </View>
@@ -2315,7 +2309,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Cancel"
+                                  accessibilityLabel="Annulla"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -2436,7 +2430,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           ]
                                         }
                                       >
-                                        Cancel
+                                        Annulla
                                       </Text>
                                     </View>
                                   </View>
@@ -2469,9 +2463,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -2495,7 +2486,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -2661,7 +2652,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -3063,8 +3054,8 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -3242,7 +3233,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               </View>
                             </View>
                             <Text
-                              accessibilityLabel="Loading message details"
+                              accessibilityLabel="Stiamo caricando il messaggio"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -3263,7 +3254,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                 ]
                               }
                             >
-                              Loading message details
+                              Stiamo caricando il messaggio
                             </Text>
                           </View>
                         </View>
@@ -3299,7 +3290,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               ]
                             }
                           >
-                            Wait a few moments
+                            Attendi qualche secondo
                           </Text>
                         </View>
                       </RNCSafeAreaView>
@@ -3326,9 +3317,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -3352,7 +3340,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -3518,7 +3506,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -3920,8 +3908,8 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -4099,7 +4087,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               </View>
                             </View>
                             <Text
-                              accessibilityLabel="Loading message details"
+                              accessibilityLabel="Stiamo caricando il messaggio"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -4120,7 +4108,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                 ]
                               }
                             >
-                              Loading message details
+                              Stiamo caricando il messaggio
                             </Text>
                           </View>
                         </View>
@@ -4156,7 +4144,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               ]
                             }
                           >
-                            Wait a few moments
+                            Attendi qualche secondo
                           </Text>
                         </View>
                       </RNCSafeAreaView>
@@ -4183,9 +4171,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -4209,7 +4194,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -4375,7 +4360,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

@@ -239,7 +239,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                             }
                           >
                             <Text
-                              accessibilityLabel="Why delete your IO profile?"
+                              accessibilityLabel="Perché vuoi eliminare il tuo profilo su IO?"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -258,7 +258,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              Why delete your IO profile?
+                              Perché vuoi eliminare il tuo profilo su IO?
                             </Text>
                           </View>
                           <View
@@ -293,7 +293,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              Please tell us why you're deleting your profile so we can improve. If you don't want to share why, just click 'Delete your profile'”.
+                              Ci piacerebbe sapere perché stai eliminando il tuo profilo, così da poter migliorare in futuro. Se preferisci non condividere il motivo, salta questo passaggio e premi su “Elimina il tuo profilo”.
                             </Text>
                           </View>
                           <View
@@ -342,7 +342,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                What is the reason?
+                                Qual è il motivo?
                               </Text>
                               <View
                                 style={
@@ -453,7 +453,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          I no longer consider "IO" useful
+                                          Non ritengo più utile IO
                                         </Text>
                                       </View>
                                       <View
@@ -669,7 +669,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          I don't feel safe on IO
+                                          Non mi sento al sicuro su IO
                                         </Text>
                                       </View>
                                       <View
@@ -885,7 +885,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          I've never used the app
+                                          Non ho mai usato l'app
                                         </Text>
                                       </View>
                                       <View
@@ -1101,7 +1101,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          None of the above
+                                          Nessuno dei precedenti
                                         </Text>
                                       </View>
                                       <View
@@ -1241,7 +1241,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                               }
                             />
                             <View
-                              accessibilityLabel="Delete your profile"
+                              accessibilityLabel="Elimina il tuo profilo"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1358,7 +1358,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Delete your profile
+                                    Elimina il tuo profilo
                                   </Text>
                                 </View>
                               </View>
@@ -1388,9 +1388,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -1415,7 +1412,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1529,7 +1526,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Why delete your IO profile?"
+                              accessibilityLabel="Perché vuoi eliminare il tuo profilo su IO?"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -1569,7 +1566,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Why delete your IO profile?
+                                Perché vuoi eliminare il tuo profilo su IO?
                               </Text>
                             </View>
                             <View

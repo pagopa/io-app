@@ -498,7 +498,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     }
                                     testID="infoScreenBody"
                                   >
-                                    Do not share your unlock code or biometric recognition with anyone.
+                                    Non condividere il tuo codice di sblocco o riconoscimento biometrico con nessuno
                                   </Text>
                                 </View>
                               </View>
@@ -605,35 +605,67 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     }
                                     testID="infoScreenBody"
                                   >
-                                    If you lose your device, log out from the web.
+                                    Se perdi il dispositivo, esci dall’app da web
                                   </Text>
-                                  <Text
-                                    accessibilityElementsHidden={false}
+                                  <View
                                     accessibilityRole="link"
-                                    accessible={true}
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    importantForAccessibility="yes"
-                                    maxFontSizeMultiplier={1.5}
-                                    onPress={[Function]}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": undefined,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
                                     }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                   >
-                                    Go to website
-                                  </Text>
+                                    <Text
+                                      accessibilityElementsHidden={false}
+                                      accessibilityRole="link"
+                                      accessible={true}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      importantForAccessibility="yes"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {
+                                            "textDecorationLine": "underline",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Vai al sito
+                                    </Text>
+                                  </View>
                                 </View>
                               </View>
                               <View
@@ -739,35 +771,67 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     }
                                     testID="infoScreenBody"
                                   >
-                                    If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.
+                                    Se temi che qualcuno possa usare il tuo SPID o CIE, puoi bloccare l’accesso all’app entrando dal web
                                   </Text>
-                                  <Text
-                                    accessibilityElementsHidden={false}
+                                  <View
                                     accessibilityRole="link"
-                                    accessible={true}
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    importantForAccessibility="yes"
-                                    maxFontSizeMultiplier={1.5}
-                                    onPress={[Function]}
-                                    style={
-                                      [
-                                        {
-                                          "textDecorationLine": "underline",
-                                        },
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": undefined,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
                                     }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                   >
-                                    Go to website
-                                  </Text>
+                                    <Text
+                                      accessibilityElementsHidden={false}
+                                      accessibilityRole="link"
+                                      accessible={true}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      importantForAccessibility="yes"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {
+                                            "textDecorationLine": "underline",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Vai al sito
+                                    </Text>
+                                  </View>
                                 </View>
                               </View>
                               <View
@@ -873,7 +937,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     }
                                     testID="infoScreenBody"
                                   >
-                                    If you access IO with someone else's device, remember to log out when you are finished.
+                                    Se accedi a IO con un dispositivo di altri, ricordati di uscire dall’app quando hai finito
                                   </Text>
                                 </View>
                               </View>

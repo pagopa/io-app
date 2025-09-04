@@ -292,9 +292,6 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -378,7 +375,7 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

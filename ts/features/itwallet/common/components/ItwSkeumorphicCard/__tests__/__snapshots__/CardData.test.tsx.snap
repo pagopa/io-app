@@ -198,6 +198,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 22.916666666666668,
           "fontStyle": "normal",
@@ -231,6 +232,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 22.916666666666668,
           "fontStyle": "normal",
@@ -264,6 +266,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 22.916666666666668,
           "fontStyle": "normal",
@@ -297,6 +300,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 22.916666666666668,
           "fontStyle": "normal",
@@ -330,6 +334,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 22.916666666666668,
           "fontStyle": "normal",
@@ -377,6 +382,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 18.75,
           "fontStyle": "normal",
@@ -410,6 +416,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 18.75,
           "fontStyle": "normal",
@@ -443,6 +450,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 18.75,
           "fontStyle": "normal",
@@ -476,6 +484,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 18.75,
           "fontStyle": "normal",
@@ -509,6 +518,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 18.75,
           "fontStyle": "normal",
@@ -542,6 +552,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 18.75,
           "fontStyle": "normal",
@@ -606,6 +617,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 22.916666666666668,
           "fontStyle": "normal",
@@ -639,6 +651,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 22.916666666666668,
           "fontStyle": "normal",
@@ -672,6 +685,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 22.916666666666668,
           "fontStyle": "normal",
@@ -705,6 +719,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 22.916666666666668,
           "fontStyle": "normal",
@@ -738,6 +753,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 22.916666666666668,
           "fontStyle": "normal",
@@ -771,6 +787,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 22.916666666666668,
           "fontStyle": "normal",
@@ -804,6 +821,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 22.916666666666668,
           "fontStyle": "normal",
@@ -837,6 +855,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 22.916666666666668,
           "fontStyle": "normal",
@@ -870,6 +889,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       numberOfLines={1}
       style={
         {
+          "color": "#1D1F26",
           "fontFamily": "Titillium Sans Pro",
           "fontSize": 22.916666666666668,
           "fontStyle": "normal",

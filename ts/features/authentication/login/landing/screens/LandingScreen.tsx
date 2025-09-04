@@ -24,13 +24,13 @@ import {
 } from "react";
 import { Alert, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import I18n from "i18next";
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../../i18n";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { sessionExpired } from "../../../common/store/actions";
@@ -57,7 +57,10 @@ import {
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
-import { isSessionExpiredSelector } from "../../../common/store/selectors";
+import {
+  isSessionCorruptedSelector,
+  isSessionExpiredSelector
+} from "../../../common/store/selectors";
 import { cieIDDisableTourGuide } from "../../cie/store/actions";
 import {
   isCieIDTourGuideEnabledSelector,
@@ -188,11 +191,7 @@ export const LandingScreen = () => {
   const navigation = useIONavigation();
 
   const isSessionExpired = useIOSelector(isSessionExpiredSelector);
-  // Since the page is rendered more than once
-  // and if the session is expired
-  // we dispatch the resetAuthenticationState action,
-  // we need to keep track of the session expiration.
-  const isSessionExpiredRef = useRef(false);
+  const isSessionCorrupted = useIOSelector(isSessionCorruptedSelector);
 
   const isContinueWithRootOrJailbreak = useIOSelector(
     continueWithRootOrJailbreakSelector
@@ -211,21 +210,7 @@ export const LandingScreen = () => {
   useOnFirstRender(() => {
     const isRootedOrJailbrokenFromJailMonkey = JailMonkey.isJailBroken();
     setIsRootedOrJailbroken(O.some(isRootedOrJailbrokenFromJailMonkey));
-    if (isSessionExpired) {
-      // eslint-disable-next-line functional/immutable-data
-      isSessionExpiredRef.current = isSessionExpired;
-    }
   });
-
-  // We reset the session expiration flag
-  // when the component is unmounted
-  useEffect(
-    () => () => {
-      // eslint-disable-next-line functional/immutable-data
-      isSessionExpiredRef.current = false;
-    },
-    []
-  );
 
   const displayTabletAlert = useCallback(() => {
     if (!hasTabletCompatibilityAlertAlreadyShown) {
@@ -352,26 +337,42 @@ export const LandingScreen = () => {
       );
     };
 
+    const sessionIssueLocalizationKey = isSessionExpired
+      ? "session_expired"
+      : "session_corrupted";
+
     return (
       <View style={{ flex: 1 }} testID="LandingScreen">
-        {isSessionExpiredRef.current ? (
+        {isSessionExpired || isSessionCorrupted ? (
           <LandingSessionExpiredComponent
             ref={accessibilityFirstFocuseViewRef}
             pictogramName={"identityCheck"}
-            title={I18n.t("authentication.landing.session_expired.title")}
-            content={I18n.t("authentication.landing.session_expired.body")}
+            title={I18n.t(
+              `authentication.landing.${sessionIssueLocalizationKey}.title`
+            )}
+            content={I18n.t(
+              `authentication.landing.${sessionIssueLocalizationKey}.body`
+            )}
             buttonLink={{
               label: I18n.t(
-                "authentication.landing.session_expired.linkButtonLabel"
+                `authentication.landing.${sessionIssueLocalizationKey}.linkButtonLabel`
               ),
               color: "primary",
               icon: "instruction",
               onPress: () => {
-                trackHelpCenterCtaTapped(
-                  sessionExpired.toString(),
-                  helpCenterHowToDoWhenSessionIsExpiredUrl,
-                  routeName
-                );
+                // TODO: this logic will need to be uncommented
+                // (and moved outside the if block, since it will become common logic)
+                // once the tracking strategy for active session login is implemented.
+                // For now, we only track the sessionExpired case because the tracking strategy
+                // is defined for it, while it's still missing for active session login.
+                // Related task: https://pagopa.atlassian.net/browse/IOPID-3343
+                if (isSessionExpired) {
+                  trackHelpCenterCtaTapped(
+                    sessionExpired.toString(),
+                    helpCenterHowToDoWhenSessionIsExpiredUrl,
+                    routeName
+                  );
+                }
                 openWebUrl(helpCenterHowToDoWhenSessionIsExpiredUrl, () => {
                   error(I18n.t("global.jserror.title"));
                 });

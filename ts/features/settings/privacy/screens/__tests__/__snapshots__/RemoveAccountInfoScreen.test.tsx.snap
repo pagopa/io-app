@@ -239,7 +239,7 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                             }
                           >
                             <Text
-                              accessibilityLabel="Delete your profile"
+                              accessibilityLabel="Elimina il tuo profilo"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -258,7 +258,7 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              Delete your profile
+                              Elimina il tuo profilo
                             </Text>
                           </View>
                           <View
@@ -293,7 +293,7 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              You can delete your IO profile at any time.
+                              Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento.
                             </Text>
                           </View>
                           <View
@@ -336,7 +336,7 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Your profile will be deleted within 30 days of your request."
+                                accessibilityLabel="Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta."
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
@@ -365,7 +365,7 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  Your profile will be deleted within 30 days of your request.
+                                  Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta.
                                 </Text>
                               </View>
                               <View
@@ -569,7 +569,7 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              If you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.
+                              Se decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.
                             </Text>
                             <View
                               style={
@@ -614,7 +614,7 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Any bonuses or discounts you get via the IO app 
+                                Eventuali bonus o sconti ottenuti tramite l'app IO 
                               </Text>
                               <Text
                                 allowFontScaling={true}
@@ -634,7 +634,7 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                won't be available anymore.
+                                non saranno più accessibili.
                               </Text>
                             </Text>
                             <View
@@ -662,7 +662,7 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              You can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE.
+                              Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE.
                             </Text>
                           </View>
                         </View>
@@ -803,7 +803,7 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                           }
                         >
                           <View
-                            accessibilityLabel="Delete"
+                            accessibilityLabel="Procedi con l’eliminazione"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -919,7 +919,7 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  Delete
+                                  Procedi con l’eliminazione
                                 </Text>
                               </View>
                             </View>
@@ -948,9 +948,6 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -975,7 +972,7 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1089,7 +1086,7 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Delete your profile"
+                              accessibilityLabel="Elimina il tuo profilo"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -1129,7 +1126,7 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Delete your profile
+                                Elimina il tuo profilo
                               </Text>
                             </View>
                             <View

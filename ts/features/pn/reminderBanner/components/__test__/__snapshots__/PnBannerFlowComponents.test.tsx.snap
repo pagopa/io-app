@@ -651,57 +651,121 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                                   Attiva il servizio 
                                 </Text>
                                 dichiari di aver letto e compreso l’
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
-                                  testID="privacy-url"
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  Informativa Privacy
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                    testID="privacy-url"
+                                  >
+                                    Informativa Privacy
+                                  </Text>
+                                </View>
                                  e i 
-                                <Text
+                                <View
                                   accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
-                                  testID="tos-url"
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                 >
-                                  Termini e Condizioni d’uso
-                                </Text>
+                                  <Text
+                                    accessibilityRole="link"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                    testID="tos-url"
+                                  >
+                                    Termini e Condizioni d’uso
+                                  </Text>
+                                </View>
                               </Text>
                             </View>
                           </View>
@@ -1633,7 +1697,7 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -1750,7 +1814,7 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -2150,8 +2214,8 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                         testID="loading-LOADING-ACTIVATION"
                       >
                         <View
-                          accessibilityHint="Wait for the content load"
-                          accessibilityLabel="Loading"
+                          accessibilityHint="Attendi il caricamento del contenuto"
+                          accessibilityLabel="Caricamento in corso"
                           accessibilityRole="progressbar"
                           accessible={true}
                           style={
@@ -2778,8 +2842,8 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                         testID="loading-LOADING-DATA"
                       >
                         <View
-                          accessibilityHint="Wait for the content load"
-                          accessibilityLabel="Loading"
+                          accessibilityHint="Attendi il caricamento del contenuto"
+                          accessibilityLabel="Caricamento in corso"
                           accessibilityRole="progressbar"
                           accessible={true}
                           style={
@@ -3633,7 +3697,7 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -3750,7 +3814,7 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>

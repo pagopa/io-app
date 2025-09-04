@@ -5,17 +5,16 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
-import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { ContactsListItem } from "../../messages/components/MessageDetail/ContactsListItem";
 import {
   ShowMoreListItem,
   ShowMoreSection
 } from "../../messages/components/MessageDetail/ShowMoreListItem";
-import { UIMessageId } from "../../messages/types";
 import { formatPaymentNoticeNumber } from "../../payments/common/utils";
 import { serviceMetadataByIdSelector } from "../../services/details/store/reducers";
 import { TimelineListItem } from "./TimelineListItem";
@@ -33,7 +32,7 @@ export type MessageBottomMenuProps = {
   history: NotificationStatusHistory;
   isCancelled?: boolean;
   iun: string;
-  messageId: UIMessageId;
+  messageId: string;
   paidNoticeCodes?: ReadonlyArray<string>;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
   serviceId: ServiceId;
@@ -41,7 +40,7 @@ export type MessageBottomMenuProps = {
 
 const generateMessageSectionData = (
   iun: string,
-  messageId: UIMessageId,
+  messageId: string,
   isCancelled?: boolean,
   paidNoticeCodes?: ReadonlyArray<string>,
   payments?: ReadonlyArray<NotificationPaymentInfo>

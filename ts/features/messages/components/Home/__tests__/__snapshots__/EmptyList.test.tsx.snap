@@ -555,7 +555,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                                 ]
                               }
                             >
-                              Your archive is empty.
+                              Il tuo archivio è vuoto
                             </Text>
                             <View
                               style={
@@ -585,7 +585,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                                 ]
                               }
                             >
-                              Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
+                              Tieni premuto su un messaggio per spostarlo in archivio. I messaggi archiviati verranno conservati e saranno disponibili nei risultati di ricerca.
                             </Text>
                           </View>
                         </RCTScrollView>
@@ -1158,7 +1158,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                 ]
                               }
                             >
-                              Loading messages has failed
+                              Non è stato possibile caricare i messaggi
                             </Text>
                             <View
                               style={
@@ -1176,7 +1176,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Retry"
+                                  accessibilityLabel="Riprova"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -1293,7 +1293,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                           ]
                                         }
                                       >
-                                        Retry
+                                        Riprova
                                       </Text>
                                     </View>
                                   </View>
@@ -2627,7 +2627,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                                 ]
                               }
                             >
-                              Your archive is empty.
+                              Il tuo archivio è vuoto
                             </Text>
                             <View
                               style={
@@ -2657,7 +2657,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                                 ]
                               }
                             >
-                              Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
+                              Tieni premuto su un messaggio per spostarlo in archivio. I messaggi archiviati verranno conservati e saranno disponibili nei risultati di ricerca.
                             </Text>
                           </View>
                         </RCTScrollView>
@@ -3608,7 +3608,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                                 ]
                               }
                             >
-                              Your archive is empty.
+                              Il tuo archivio è vuoto
                             </Text>
                             <View
                               style={
@@ -3638,7 +3638,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                                 ]
                               }
                             >
-                              Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
+                              Tieni premuto su un messaggio per spostarlo in archivio. I messaggi archiviati verranno conservati e saranno disponibili nei risultati di ricerca.
                             </Text>
                           </View>
                         </RCTScrollView>
@@ -4589,7 +4589,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                                 ]
                               }
                             >
-                              Your archive is empty.
+                              Il tuo archivio è vuoto
                             </Text>
                             <View
                               style={
@@ -4619,7 +4619,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                                 ]
                               }
                             >
-                              Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
+                              Tieni premuto su un messaggio per spostarlo in archivio. I messaggi archiviati verranno conservati e saranno disponibili nei risultati di ricerca.
                             </Text>
                           </View>
                         </RCTScrollView>
@@ -5570,7 +5570,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                                 ]
                               }
                             >
-                              Your archive is empty.
+                              Il tuo archivio è vuoto
                             </Text>
                             <View
                               style={
@@ -5600,7 +5600,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                                 ]
                               }
                             >
-                              Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
+                              Tieni premuto su un messaggio per spostarlo in archivio. I messaggi archiviati verranno conservati e saranno disponibili nei risultati di ricerca.
                             </Text>
                           </View>
                         </RCTScrollView>
@@ -6551,7 +6551,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                                 ]
                               }
                             >
-                              Your message list is empty.
+                              Non hai ancora ricevuto alcun messaggio
                             </Text>
                             <View
                               style={
@@ -6581,7 +6581,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                                 ]
                               }
                             >
-                              Refresh to check for any new messages.
+                              Quando un ente ti invierà una comunicazione la visualizzerai qui.
                             </Text>
                           </View>
                         </RCTScrollView>
@@ -7154,7 +7154,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                 ]
                               }
                             >
-                              Loading messages has failed
+                              Non è stato possibile caricare i messaggi
                             </Text>
                             <View
                               style={
@@ -7172,7 +7172,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Retry"
+                                  accessibilityLabel="Riprova"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -7289,7 +7289,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                           ]
                                         }
                                       >
-                                        Retry
+                                        Riprova
                                       </Text>
                                     </View>
                                   </View>
@@ -8623,7 +8623,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                                 ]
                               }
                             >
-                              Your message list is empty.
+                              Non hai ancora ricevuto alcun messaggio
                             </Text>
                             <View
                               style={
@@ -8653,7 +8653,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                                 ]
                               }
                             >
-                              Refresh to check for any new messages.
+                              Quando un ente ti invierà una comunicazione la visualizzerai qui.
                             </Text>
                           </View>
                         </RCTScrollView>
@@ -9604,7 +9604,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                                 ]
                               }
                             >
-                              Your message list is empty.
+                              Non hai ancora ricevuto alcun messaggio
                             </Text>
                             <View
                               style={
@@ -9634,7 +9634,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                                 ]
                               }
                             >
-                              Refresh to check for any new messages.
+                              Quando un ente ti invierà una comunicazione la visualizzerai qui.
                             </Text>
                           </View>
                         </RCTScrollView>
@@ -10585,7 +10585,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                                 ]
                               }
                             >
-                              Your message list is empty.
+                              Non hai ancora ricevuto alcun messaggio
                             </Text>
                             <View
                               style={
@@ -10615,7 +10615,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                                 ]
                               }
                             >
-                              Refresh to check for any new messages.
+                              Quando un ente ti invierà una comunicazione la visualizzerai qui.
                             </Text>
                           </View>
                         </RCTScrollView>
@@ -11566,7 +11566,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                                 ]
                               }
                             >
-                              Your message list is empty.
+                              Non hai ancora ricevuto alcun messaggio
                             </Text>
                             <View
                               style={
@@ -11596,7 +11596,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                                 ]
                               }
                             >
-                              Refresh to check for any new messages.
+                              Quando un ente ti invierà una comunicazione la visualizzerai qui.
                             </Text>
                           </View>
                         </RCTScrollView>

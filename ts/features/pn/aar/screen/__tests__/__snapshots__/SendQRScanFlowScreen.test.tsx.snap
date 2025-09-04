@@ -444,7 +444,7 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Update the IO app"
+                                  accessibilityLabel="Aggiorna l'app"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -561,7 +561,7 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                           ]
                                         }
                                       >
-                                        Update the IO app
+                                        Aggiorna l'app
                                       </Text>
                                     </View>
                                   </View>
@@ -584,7 +584,7 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -706,7 +706,7 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -737,9 +737,6 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -825,7 +822,7 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
