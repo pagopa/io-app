@@ -56,15 +56,15 @@ export function IdPayCardStatus({ initiative }: InitiativeProps) {
           />
         )
       );
-    // TODO: Add the used tag
     case VoucherStatusEnum.USED:
-    default:
       return (
         <Tag
           testID="idpay-card-status-used"
-          variant="info"
-          text={I18n.t("bonusCard.paused")}
+          variant="success"
+          text={I18n.t("bonusCard.used")}
         />
       );
+    default:
+      return null;
   }
 }

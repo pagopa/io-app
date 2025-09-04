@@ -3262,7 +3262,7 @@
           "cgn": "Nationale Jugendkarte",
           "itw": "Dokumente",
           "payment": "Zahlungsmethoden",
-          "other": "Mehr"
+          "other": "Bonus und mehr"
         }
       },
       "onboarding": {
@@ -3968,7 +3968,8 @@
     "expiring": "Verfällt am {{endDate}}",
     "expired": "Abgelaufen am {{endDate}}",
     "paused": "In Pause",
-    "removed": "Entfernt"
+    "removed": "Entfernt",
+    "used": "Utilizzato"
   },
   "transaction": {
     "details": {

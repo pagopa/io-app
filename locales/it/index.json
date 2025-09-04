@@ -619,7 +619,8 @@
         "alertMessage": "È necessario il riavvio dell'applicazione affinché le modifiche abbiano effetto."
       },
       "pnEnvironment": {
-        "pnEnv": "SEND (PN)"
+        "pnEnv": "SEND (PN)",
+        "aarEnv": "Avviso Avvenuta Ricezione (AAR)"
       },
       "idpay": {
         "idpayTest": "IDPay",
@@ -4155,7 +4156,7 @@
           "cgn": "Carta Giovani Nazionale",
           "itw": "Documenti",
           "payment": "Metodi di pagamento",
-          "other": "Altro"
+          "other": "Bonus e altro"
         }
       },
       "onboarding": {
@@ -6233,7 +6234,8 @@
     "expiring": "Scade il {{endDate}}",
     "expired": "Scaduta il {{endDate}}",
     "paused": "In pausa",
-    "removed": "Rimossa"
+    "removed": "Rimossa",
+    "used": "Utilizzato"
   },
   "transaction": {
     "details": {
