@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0-rc.1](https://github.com/pagopa/io-app/compare/3.13.0-rc.0...3.13.0-rc.1) (2025-09-04)
+
+
+### Features
+
+* [[IOCOM-2565](https://pagopa.atlassian.net/browse/IOCOM-2565)] Added AAR selector from local and remote value ([#7319](https://github.com/pagopa/io-app/issues/7319)) ([4f23303](https://github.com/pagopa/io-app/commit/4f23303ab6c94429ac593580440601a7c2836160))
+
 ## [3.13.0-rc.0](https://github.com/pagopa/io-app/compare/3.12.0-rc.6...3.13.0-rc.0) (2025-09-04)
 
 
