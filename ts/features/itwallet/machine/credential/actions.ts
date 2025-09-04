@@ -203,7 +203,9 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents
   >) => {
     assert(context.credentialType, "credentialType is undefined");
-    trackStartCredentialUpgrade(CREDENTIALS_MAP[context.credentialType]);
+    trackStartCredentialUpgrade(
+      getMixPanelCredential(context.credentialType, true)
+    );
   }
 });
 
