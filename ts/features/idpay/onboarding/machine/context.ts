@@ -1,22 +1,22 @@
 import * as O from "fp-ts/lib/Option";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 import { StatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
-import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
+import { InitiativeBeneficiaryRuleDTO } from "../../../../../definitions/idpay/InitiativeBeneficiaryRuleDTO";
 import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
 import { OnboardingFailure } from "../types/OnboardingFailure";
-import { SelfDeclarationTextDTO } from "../../../../../definitions/idpay/SelfDeclarationTextDTO";
+import { SelfConsentTextDTO } from "../../../../../definitions/idpay/SelfConsentTextDTO";
 
 export type Context = {
   readonly serviceId: string;
   readonly initiative: O.Option<InitiativeDataDTO>;
   readonly onboardingStatus: O.Option<StatusEnum>;
-  readonly requiredCriteria: O.Option<RequiredCriteriaDTO>;
+  readonly requiredCriteria: O.Option<InitiativeBeneficiaryRuleDTO>;
   readonly selfDeclarationsMultiPage: number;
   readonly selfDeclarationsMultiAnwsers: Record<number, SelfConsentMultiDTO>;
   readonly selfDeclarationsBoolAnswers: Record<string, boolean>;
   readonly failure: O.Option<OnboardingFailure>;
   readonly activeTextConsentPage: number;
-  readonly selfDeclarationsTextAnswers: Record<string, SelfDeclarationTextDTO>;
+  readonly selfDeclarationsTextAnswers: Record<string, SelfConsentTextDTO>;
   readonly isPushNotificationsEnabled: boolean;
   readonly hasInbox: boolean;
   readonly currentStep: number;

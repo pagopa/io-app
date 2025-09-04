@@ -1,6 +1,6 @@
 import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
-import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
-import { SelfDeclarationTextDTO } from "../../../../../definitions/idpay/SelfDeclarationTextDTO";
+import { SelfConsentBoolDTO } from "../../../../../definitions/idpay/SelfConsentBoolDTO";
+import { SelfConsentTextDTO } from "../../../../../definitions/idpay/SelfConsentTextDTO";
 
 export type StartOnboarding = {
   readonly type: "start-onboarding";
@@ -10,7 +10,7 @@ export type StartOnboarding = {
 
 export type ToggleBoolCriteria = {
   readonly type: "toggle-bool-criteria";
-  readonly criteria: SelfDeclarationBoolDTO;
+  readonly criteria: SelfConsentBoolDTO;
 };
 
 export type SelectMultiConsent = {
@@ -20,7 +20,7 @@ export type SelectMultiConsent = {
 
 export type InputTextCriteria = {
   readonly type: "input-text-criteria";
-  readonly criteria: SelfDeclarationTextDTO;
+  readonly criteria: SelfConsentTextDTO;
 };
 
 export type Next = {
