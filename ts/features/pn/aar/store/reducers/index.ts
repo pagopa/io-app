@@ -2,5 +2,5 @@ import { isAARRemoteEnabled } from "../../../../../store/reducers/backendStatus/
 import { isAARLocalEnabled } from "../../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../../store/reducers/types";
 
-export const isAAREnabled = (state: GlobalState): boolean | null =>
+export const isAAREnabled = (state: GlobalState): boolean =>
   isAARLocalEnabled(state) && isAARRemoteEnabled(state);
