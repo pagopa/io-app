@@ -48,8 +48,8 @@ type MixPanelCredentialVersion = "V2" | "V3";
  * This is the list of credentials that are tracked in MixPanel
  * ITW_ID_V2: PersonIdentificationData (obtained with Documenti su IO)
  * ITW_PG_V2: mDL
- * ITW_CED_V2: EuropeanDisabilityCard
  * ITW_TS_V2: EuropeanHealthInsuranceCard
+ * ITW_CED_V2: EuropeanDisabilityCard
  * ITW_PID: PID (obtained with IT Wallet)
  * ITW_PG_V3: mDL (obtained with IT Wallet)
  * ITW_TS_V3: EuropeanHealthInsuranceCard (obtained with IT Wallet)
@@ -57,12 +57,12 @@ type MixPanelCredentialVersion = "V2" | "V3";
  */
 export const mixPanelCredentials = [
   "ITW_ID_V2",
-  "ITW_PID",
   "ITW_PG_V2",
-  "ITW_PG_V3",
   "ITW_TS_V2",
-  "ITW_TS_V3",
   "ITW_CED_V2",
+  "ITW_PID",
+  "ITW_PG_V3",
+  "ITW_TS_V3",
   "ITW_CED_V3"
 ] as const;
 
