@@ -5,6 +5,7 @@ import { ActionType, isActionOf } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import { call, takeLatest, put, select, take } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
+import I18n from "i18next";
 import NavigationService from "../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../navigation/routes";
 import ROUTES from "../../../navigation/routes";
@@ -15,7 +16,6 @@ import {
   identificationRequest,
   identificationSuccess
 } from "../../identification/store/actions";
-import I18n from "../../../i18n";
 import {
   fciSignatureRequestSelector,
   FciSignatureRequestState

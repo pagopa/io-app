@@ -13,9 +13,9 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { ComponentProps } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
+import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { zendeskPrivacyUrl } from "../../../config";
-import I18n from "../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp,

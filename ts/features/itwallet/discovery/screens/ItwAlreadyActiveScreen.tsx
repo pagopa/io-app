@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import ROUTES from "../../../../navigation/routes";

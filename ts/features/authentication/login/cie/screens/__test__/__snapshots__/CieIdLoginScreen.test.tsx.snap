@@ -66,8 +66,8 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
           }
         >
           <View
-            accessibilityHint="Wait for the content load"
-            accessibilityLabel="Loading"
+            accessibilityHint="Attendi il caricamento del contenuto"
+            accessibilityLabel="Caricamento in corso"
             accessibilityRole="progressbar"
             accessible={true}
             style={
@@ -272,7 +272,7 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
                 ]
               }
             >
-              Wait a few seconds..
+              Attendi qualche secondo...
             </Text>
           </View>
           <View
@@ -283,7 +283,7 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
             }
           >
             <View
-              accessibilityLabel="Cancel"
+              accessibilityLabel="Annulla"
               accessibilityRole="button"
               accessibilityState={
                 {
@@ -401,7 +401,7 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
                       ]
                     }
                   >
-                    Cancel
+                    Annulla
                   </Text>
                 </View>
               </View>

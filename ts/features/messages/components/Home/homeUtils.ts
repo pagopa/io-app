@@ -4,6 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { StyleSheet } from "react-native";
 import { ActionType } from "typesafe-actions";
+import I18n from "i18next";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   loadNextPageMessages,
@@ -13,7 +14,6 @@ import {
 import { maximumItemsFromAPI, pageSize } from "../../../../config";
 import { MessageListCategory } from "../../types/messageListCategory";
 import { UIMessage } from "../../types";
-import I18n from "../../../../i18n";
 import { convertReceivedDateToAccessible } from "../../utils/convertDateToWordDistance";
 import {
   isPaymentMessageWithPaidNoticeSelector,

@@ -6,10 +6,10 @@ import {
   ListItemNav
 } from "@pagopa/io-app-design-system";
 import { ListRenderItem, View } from "react-native";
+import I18n from "i18next";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
-import I18n from "../../../../../i18n";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 
 type Props = {

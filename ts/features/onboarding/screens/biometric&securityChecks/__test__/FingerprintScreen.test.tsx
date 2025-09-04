@@ -1,5 +1,6 @@
 import { fireEvent, waitFor } from "@testing-library/react-native";
 import { createStore } from "redux";
+import I18n from "i18next";
 import FingerprintScreen from "../FingerprintScreen";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../../store/actions/persistedPreferences";
 import * as biometrics from "../../../../../utils/biometrics";
@@ -9,7 +10,6 @@ import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import I18n from "../../../../../i18n";
 
 jest.mock("../../../../../store/hooks", () => {
   const original = jest.requireActual("../../../../../store/hooks");

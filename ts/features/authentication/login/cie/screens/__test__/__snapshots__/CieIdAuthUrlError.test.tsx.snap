@@ -176,7 +176,7 @@ exports[`CieIdAuthUrlError Should match the snapshot 1`] = `
           ]
         }
       >
-        We can't authenticate you with the CieID app
+        Non riusciamo ad autenticarti con l’app CieID
       </Text>
       <View
         style={
@@ -206,7 +206,7 @@ exports[`CieIdAuthUrlError Should match the snapshot 1`] = `
           ]
         }
       >
-        Log in to the app using a different method
+        Usa un altro metodo per entrare in app
       </Text>
       <View
         style={
@@ -224,7 +224,7 @@ exports[`CieIdAuthUrlError Should match the snapshot 1`] = `
         />
         <View>
           <View
-            accessibilityLabel="Close"
+            accessibilityLabel="Chiudi"
             accessibilityRole="button"
             accessibilityState={
               {
@@ -340,7 +340,7 @@ exports[`CieIdAuthUrlError Should match the snapshot 1`] = `
                     ]
                   }
                 >
-                  Close
+                  Chiudi
                 </Text>
               </View>
             </View>
