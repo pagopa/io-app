@@ -221,7 +221,8 @@
       "choose": "Scegli",
       "copy": "Copia",
       "selectAll": "Seleziona tutto",
-      "deselectAll": "Deseleziona tutto"
+      "deselectAll": "Deseleziona tutto",
+      "visitWebsite": "Vai al sito"
     },
     "navigator": {
       "messages": "Messaggi",
