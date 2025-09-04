@@ -777,7 +777,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                             }
                           >
                             <View
-                              accessibilityLabel="pagoPA notices"
+                              accessibilityLabel="Avvisi pagoPA"
                               accessibilityRole="header"
                               accessible={true}
                             >
@@ -800,7 +800,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                   ]
                                 }
                               >
-                                pagoPA notices
+                                Avvisi pagoPA
                               </Text>
                             </View>
                           </View>

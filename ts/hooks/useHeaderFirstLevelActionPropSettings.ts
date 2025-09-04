@@ -1,6 +1,6 @@
 import { HeaderActionProps } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
-import I18n from "../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
 

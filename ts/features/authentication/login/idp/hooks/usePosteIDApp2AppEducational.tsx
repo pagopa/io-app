@@ -2,9 +2,9 @@ import { Body, FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { View } from "react-native";
+import I18n from "i18next";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import I18n from "../../../../../i18n";
 import { SpidIdp } from "../../../../../utils/idps";
 import { StandardLoginRequestInfo } from "../store/types";
 

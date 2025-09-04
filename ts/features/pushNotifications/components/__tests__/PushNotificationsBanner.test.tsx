@@ -5,7 +5,7 @@ import { createStore } from "redux";
 import { constUndefined } from "fp-ts/lib/function";
 import { FooterActions } from "@pagopa/io-app-design-system";
 import { GestureResponderEvent } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../store/actions/application";
 import * as IOHOOKS from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";

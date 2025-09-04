@@ -8,8 +8,8 @@ import {
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useEffect, useRef } from "react";
 import { View } from "react-native";
+import I18n from "i18next";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
-import I18n from "../../../../../../i18n";
 import { setAccessibilityFocus } from "../../../../../../utils/accessibility";
 import { useCgnStyle } from "../../../hooks/useCgnStyle";
 import { CategoryTag } from "../ModuleCgnDiscount";

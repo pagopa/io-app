@@ -1,6 +1,6 @@
 import { useCallback } from "react";
+import I18n from "i18next";
 import { cgnActivationComplete } from "../../store/actions/activation";
-import I18n from "../../../../../i18n";
 import { useIODispatch } from "../../../../../store/hooks";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 

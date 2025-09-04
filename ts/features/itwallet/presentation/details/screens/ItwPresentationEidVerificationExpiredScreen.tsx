@@ -1,6 +1,6 @@
 import { BodyProps } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
-import I18n from "../../../../../i18n.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 

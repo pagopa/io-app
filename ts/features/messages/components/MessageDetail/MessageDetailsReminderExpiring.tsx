@@ -3,13 +3,13 @@ import { View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { Alert } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { preferredCalendarSelector } from "../../../../store/reducers/persistedPreferences";
 import { useMessageReminder } from "../../hooks/useMessageReminder";
-import { localeDateFormat } from "../../../../utils/locale";
-import I18n from "../../../../i18n";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { formatDateAsShortFormat } from "../../../../utils/dates";
 
 type MessageDetailsReminderExpiringProps = {
   dueDate: Date;
@@ -70,11 +70,11 @@ export const MessageDetailsReminderExpiring = ({
       }
       onPress={() => upsertReminder(dueDate, title, preferredCalendar)}
       content={I18n.t("features.messages.alert.content", {
-        date: localeDateFormat(
-          dueDate,
-          I18n.t("global.dateFormats.shortFormat")
-        ),
-        time: localeDateFormat(dueDate, I18n.t("global.dateFormats.timeFormat"))
+        date: formatDateAsShortFormat(dueDate),
+        time: new Intl.DateTimeFormat("it", {
+          hour: "2-digit",
+          minute: "2-digit"
+        }).format(dueDate)
       })}
     />
   );

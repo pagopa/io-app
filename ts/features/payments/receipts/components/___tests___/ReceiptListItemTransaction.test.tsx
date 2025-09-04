@@ -1,8 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { fireEvent, render } from "@testing-library/react-native";
 import { JSX } from "react";
+import I18n from "i18next";
 import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
-import I18n from "../../../../../i18n";
 import { ReceiptListItemTransaction } from "../ReceiptListItemTransaction";
 
 jest.mock("../../../../../store/hooks", () => ({
@@ -42,7 +42,7 @@ describe("ReceiptListItemTransaction", () => {
     );
 
     expect(getByText("Test Payee")).toBeTruthy();
-    expect(getByText("01 Jan 2023, 10:00")).toBeTruthy();
+    expect(getByText("01 gen 2023, 10:00")).toBeTruthy();
   });
 
   it("renders correctly with a cart transaction", () => {
@@ -53,7 +53,7 @@ describe("ReceiptListItemTransaction", () => {
     expect(
       getByText(I18n.t("features.payments.transactions.multiplePayment"))
     ).toBeTruthy();
-    expect(getByText("02 Jan 2023, 12:00")).toBeTruthy();
+    expect(getByText("02 gen 2023, 12:00")).toBeTruthy();
   });
 
   it("calls onPress when the item is pressed", () => {
