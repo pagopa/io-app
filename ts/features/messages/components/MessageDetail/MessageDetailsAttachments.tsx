@@ -1,8 +1,8 @@
 import { ListItemHeader } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import * as B from "fp-ts/lib/boolean";
 import { pipe } from "fp-ts/lib/function";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { thirdPartyMessageAttachments } from "../../store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";

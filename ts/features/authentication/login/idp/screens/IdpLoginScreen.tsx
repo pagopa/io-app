@@ -10,6 +10,7 @@ import {
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 import _isEqual from "lodash/isEqual";
+import I18n from "i18next";
 import { IdpData } from "../../../../../../definitions/content/IdpData";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
@@ -20,7 +21,6 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../../i18n";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import {

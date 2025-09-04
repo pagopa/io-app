@@ -1,5 +1,5 @@
 import { Alert, AlertButton, AlertOptions } from "react-native";
-import I18n from "../i18n";
+import I18n from "i18next";
 
 /**
  * The result of the Alert.

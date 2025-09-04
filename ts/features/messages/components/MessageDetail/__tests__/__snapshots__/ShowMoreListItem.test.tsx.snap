@@ -367,7 +367,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                       }
                     >
                       <View
-                        accessibilityLabel="Show more data"
+                        accessibilityLabel="Mostra altri dati"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -520,7 +520,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                                   ]
                                 }
                               >
-                                Show more data
+                                Mostra altri dati
                               </Text>
                             </View>
                           </View>
@@ -951,7 +951,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                       }
                     >
                       <View
-                        accessibilityLabel="Show more data"
+                        accessibilityLabel="Mostra altri dati"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -1104,7 +1104,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                   ]
                                 }
                               >
-                                Show more data
+                                Mostra altri dati
                               </Text>
                             </View>
                           </View>
@@ -1590,7 +1590,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                       }
                     >
                       <View
-                        accessibilityLabel="Show more data"
+                        accessibilityLabel="Mostra altri dati"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -1743,7 +1743,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                   ]
                                 }
                               >
-                                Show more data
+                                Mostra altri dati
                               </Text>
                             </View>
                           </View>
@@ -2409,7 +2409,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                       }
                     >
                       <View
-                        accessibilityLabel="Show more data"
+                        accessibilityLabel="Mostra altri dati"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -2562,7 +2562,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                   ]
                                 }
                               >
-                                Show more data
+                                Mostra altri dati
                               </Text>
                             </View>
                           </View>
@@ -3228,7 +3228,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                       }
                     >
                       <View
-                        accessibilityLabel="Show more data"
+                        accessibilityLabel="Mostra altri dati"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -3381,7 +3381,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                   ]
                                 }
                               >
-                                Show more data
+                                Mostra altri dati
                               </Text>
                             </View>
                           </View>
@@ -4235,7 +4235,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                       }
                     >
                       <View
-                        accessibilityLabel="Show more data"
+                        accessibilityLabel="Mostra altri dati"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -4388,7 +4388,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                   ]
                                 }
                               >
-                                Show more data
+                                Mostra altri dati
                               </Text>
                             </View>
                           </View>
@@ -5242,7 +5242,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                       }
                     >
                       <View
-                        accessibilityLabel="Show more data"
+                        accessibilityLabel="Mostra altri dati"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -5395,7 +5395,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                   ]
                                 }
                               >
-                                Show more data
+                                Mostra altri dati
                               </Text>
                             </View>
                           </View>
@@ -7095,7 +7095,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                       }
                     >
                       <View
-                        accessibilityLabel="Show more data"
+                        accessibilityLabel="Mostra altri dati"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -7248,7 +7248,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                   ]
                                 }
                               >
-                                Show more data
+                                Mostra altri dati
                               </Text>
                             </View>
                           </View>

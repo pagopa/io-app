@@ -1,6 +1,9 @@
 import { getType } from "typesafe-actions";
 import { ThirdPartyMessage } from "../../../../../../definitions/pn/ThirdPartyMessage";
 import { Action } from "../../../../../store/actions/types";
+import { isAARRemoteEnabled } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { isAARLocalEnabled } from "../../../../../store/reducers/persistedPreferences";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { setAarFlowState, terminateAarFlow } from "../actions";
 
 export const sendAARFlowStates = {
@@ -127,3 +130,6 @@ export const aarFlowReducer = (
   }
   return state;
 };
+
+export const isAAREnabled = (state: GlobalState): boolean =>
+  isAARLocalEnabled(state) && isAARRemoteEnabled(state);
