@@ -79,7 +79,7 @@ describe("Test BonusCardStatus", () => {
       initiativeId: "1"
     } as InitiativeDTO;
     it("should display the correct content", () => {
-      const T_USED_TEXT = I18n.t("bonusCard.paused");
+      const T_USED_TEXT = I18n.t("bonusCard.used");
       const { queryByText } = renderComponent({
         ...MOCKED_REMOVED_INITIATIVE
       });
