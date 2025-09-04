@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { VStack, IOButton } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useIODispatch } from "../../../../store/hooks";
 import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
 import { trackItwOfflineRicaricaAppIO } from "../../analytics";
@@ -8,7 +9,6 @@ import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import I18n from "../../../../i18n";
 import { useAppRestartAction } from "../../wallet/hooks/useAppRestartAction";
 
 /**
