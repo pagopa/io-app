@@ -24,10 +24,7 @@ import { itwDeferredIssuanceScreenContentSelector } from "../../common/store/sel
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
-import {
-  IssuerConfiguration,
-  LegacyIssuerConfiguration
-} from "../../common/utils/itwTypesUtils";
+import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType
@@ -241,7 +238,7 @@ type GetCredentialInvalidStatusDetailsParams = {
  */
 const getCredentialInvalidStatusDetails = (
   failure: CredentialIssuanceFailure,
-  { credentialType, issuerConf }: GetCredentialInvalidStatusDetailsParams
+  { issuerConf }: GetCredentialInvalidStatusDetailsParams
 ) => {
   const { errorCodeOption, credentialConfigurationId } = pipe(
     failure,
@@ -251,10 +248,7 @@ const getCredentialInvalidStatusDetails = (
         O.fromEither(StatusAttestationError.decode(reason?.reason)),
         O.map(({ error }) => error)
       ),
-      credentialConfigurationId: pipe(
-        O.fromNullable(reason?.metadata?.credentialId),
-        O.alt(() => credentialType) // TODO: SIW-2530 Remove this line after fully migrating to the new APIs
-      )
+      credentialConfigurationId: O.fromNullable(reason?.metadata?.credentialId)
     })),
     O.getOrElse(() => ({
       errorCodeOption: O.none as O.Option<string>,
@@ -272,7 +266,7 @@ const getCredentialInvalidStatusDetails = (
       O.tryCatch(() =>
         Errors.extractErrorMessageFromIssuerConf(params.errorCode, {
           credentialType: params.credentialConfigurationId,
-          issuerConf: params.issuerConf as LegacyIssuerConfiguration
+          issuerConf: params.issuerConf
         })
       )
     ),

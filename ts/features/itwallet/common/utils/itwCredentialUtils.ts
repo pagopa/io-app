@@ -1,7 +1,7 @@
 import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { SdJwt } from "@pagopa/io-react-native-wallet-v2";
+import { SdJwt } from "@pagopa/io-react-native-wallet";
 import I18n from "../../../../i18n";
 import { CredentialType } from "./itwMocksUtils";
 import { ItwCredentialStatus } from "./itwTypesUtils";
@@ -96,9 +96,6 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
  * Extracts the verification claim from the SD-JWT,
  * checks whether the `assurance_level` field is equal to `"high"`,
  * and returns `true` only in that case.
- *
- * This must be used **only for eID**, since credentials obtained
- * with the old eID always have `assurance_level` set to `"high"`.
  *
  * @param sdJwt - The SD-JWT string to check
  * @returns boolean indicating if the credential is an ITW credential (L3)
