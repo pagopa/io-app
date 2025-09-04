@@ -35,7 +35,7 @@ import {
 } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
-import { useIsItwCredential } from "../../common/hooks/useIsItwCredential";
+import { isItwCredential } from "../../common/utils/itwCredentialUtils";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
@@ -73,7 +73,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const navigation = useIONavigation();
   const route = useRoute();
 
-  const isL3 = useIsItwCredential(eid);
+  const isL3 = isItwCredential(eid.credential);
 
   const mixPanelCredential = isL3 ? "ITW_PID" : "ITW_ID_V2";
 

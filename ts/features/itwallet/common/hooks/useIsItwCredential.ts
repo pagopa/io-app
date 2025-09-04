@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import { isItwCredential } from "../utils/itwCredentialUtils";
 import { StoredCredential } from "../utils/itwTypesUtils";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
 /**
  * Simple hook that returns whether a given credential belongs to IT-Wallet.
@@ -10,8 +12,11 @@ import { StoredCredential } from "../utils/itwTypesUtils";
  * @param credential The stored credential
  * @returns Boolean indicating whether the credential was obtained with L3
  */
-export const useIsItwCredential = (credential: StoredCredential) =>
-  useMemo(
-    () => isItwCredential(credential.credential),
-    [credential.credential]
+export const useIsItwCredential = (credential: StoredCredential) => {
+  const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+
+  return useMemo(
+    () => isItWalletValid && isItwCredential(credential.credential),
+    [isItWalletValid, credential.credential]
   );
+};
