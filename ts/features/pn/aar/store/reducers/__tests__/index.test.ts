@@ -3,7 +3,8 @@ import {
   AARFlowState,
   INITIAL_AAR_FLOW_STATE,
   isValidAARStateTransition,
-  sendAARFlowStates
+  sendAARFlowStates,
+  validAARStatusTransitions
 } from "..";
 import { setAarFlowState, terminateAarFlow } from "../../actions";
 
@@ -81,16 +82,21 @@ describe("aarFlowReducer and related functions", () => {
   });
 
   describe("isValidAARStateTransition function", () => {
-    it("should allow a valid transition", () => {
-      const from = stateFactories.none();
-      const to = stateFactories.displayingAARToS();
-      expect(isValidAARStateTransition(from.type, to.type)).toBe(true);
-    });
-
-    it("should reject an invalid transition", () => {
-      const from = stateFactories.none();
-      const to = stateFactories.ko();
-      expect(isValidAARStateTransition(from.type, to.type)).toBe(false);
+    allStateTypes.forEach(currentType => {
+      allStateTypes.forEach(nextType => {
+        const allowedNextStates = validAARStatusTransitions.get(currentType);
+        const isAllow = allowedNextStates?.has(nextType) ?? false;
+        it(
+          isAllow
+            ? `Should allow a valid from '${currentType}' to '${nextType}'`
+            : `Should reject an invalid from '${currentType}' to '${nextType}'`,
+          () => {
+            expect(isValidAARStateTransition(currentType, nextType)).toBe(
+              isAllow
+            );
+          }
+        );
+      });
     });
   });
 });
