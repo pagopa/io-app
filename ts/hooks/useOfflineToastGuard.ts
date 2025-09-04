@@ -1,8 +1,8 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
 import { useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
-import I18n from "../i18n";
 import { useIOSelector } from "../store/hooks";
 import { trackOfflineActionNotAllowed } from "../utils/analytics.ts";
 import { isConnectedSelector } from "../features/connectivity/store/selectors";

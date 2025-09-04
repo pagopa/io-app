@@ -28,6 +28,7 @@ import Animated, {
   useScrollViewOffset,
   useSharedValue
 } from "react-native-reanimated";
+import I18n from "i18next";
 import ItwHero from "../../../../../img/features/itWallet/l3/itw_hero.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import {
@@ -38,7 +39,6 @@ import { Renderer } from "../../../../components/IOMarkdown/types";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { IOScrollViewWithReveal } from "../../../../components/ui/IOScrollViewWithReveal";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";

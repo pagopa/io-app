@@ -9,7 +9,7 @@ import { memo } from "react";
 import { Dimensions, Pressable, StyleSheet } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import Animated from "react-native-reanimated";
-import I18n from "../../../../../i18n.ts";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { selectFiscalCodeFromEid } from "../../../credentials/store/selectors";

@@ -1,10 +1,8 @@
 import { format, subDays, subYears } from "date-fns";
 import MockDate from "mockdate";
+import I18n from "i18next";
 import { convertDateToWordDistance } from "../convertDateToWordDistance";
 import { formatDateAsLocal } from "../../../../utils/dates";
-
-import I18n from "../../../../i18n";
-import { localeDateFormat } from "../../../../utils/locale";
 
 describe("convertDateToWordDistance", () => {
   it("should be in H:mm format", () => {
@@ -45,10 +43,10 @@ describe("convertDateToWordDistance", () => {
     twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
 
     expect(convertDateToWordDistance(twoDaysAgo, "")).toBe(
-      localeDateFormat(
-        twoDaysAgo,
-        I18n.t("global.dateFormats.dayMonthWithoutTime")
-      )
+      new Intl.DateTimeFormat("it", {
+        day: "2-digit",
+        month: "short"
+      }).format(twoDaysAgo)
     );
   });
 

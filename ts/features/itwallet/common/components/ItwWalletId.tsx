@@ -15,7 +15,7 @@ import {
 } from "@shopify/react-native-skia";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { IT_WALLET_ID_GRADIENT, IT_WALLET_ID_LOGO } from "../utils/constants";
 import { ItwJwtCredentialStatus } from "../utils/itwTypesUtils";
 

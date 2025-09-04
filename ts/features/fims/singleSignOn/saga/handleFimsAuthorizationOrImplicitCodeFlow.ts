@@ -17,6 +17,7 @@ import {
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { IOToast } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { LollipopConfig } from "../../../lollipop";
 import { generateKeyInfo } from "../../../lollipop/saga";
@@ -32,7 +33,6 @@ import {
   relyingPartyServiceIdSelector
 } from "../store/selectors";
 import { trackInAppBrowserOpening } from "../../common/analytics";
-import I18n from "../../../../i18n";
 import { fimsSignAndRetrieveInAppBrowserUrlAction } from "../store/actions";
 import {
   computeAndTrackAuthenticationError,

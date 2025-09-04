@@ -14,7 +14,7 @@ import {
   SearchInputRef,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { Institution } from "../../../../../definitions/services/Institution";
 import { searchPaginatedInstitutionsGet } from "../store/actions";

@@ -1,4 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
+import I18n from "i18next";
 import {
   IbanOperationDTO,
   OperationTypeEnum as IbanOperationTypeEnum
@@ -11,7 +12,7 @@ import {
   RefundOperationDTO,
   OperationTypeEnum as RefundOperationTypeEnum
 } from "../../../../../../definitions/idpay/RefundOperationDTO";
-import I18n, { setLocale } from "../../../../../i18n";
+import { setLocale } from "../../../../../i18n";
 import {
   IdPayTimelineOperationListItem,
   getOperationSubtitle,
