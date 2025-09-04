@@ -52,7 +52,7 @@ import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx
 import { selectIsLoading } from "../../proximity/machine/selectors.ts";
 import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
 import { trackItwProximityShowQrCode } from "../../proximity/analytics";
-import { useIsItwCredential } from "../../../common/hooks/useIsItwCredential.ts";
+import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -120,7 +120,7 @@ export const ItwPresentationCredentialDetail = ({
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
-  const isItwCredential = useIsItwCredential(credential);
+  const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
 
   useDebugInfo(credential);
   usePreventScreenCapture();
@@ -169,7 +169,10 @@ export const ItwPresentationCredentialDetail = ({
     const credentialType = credential.credentialType;
     const contentClaim = parsedCredential[WellKnownClaim.content];
 
-    if (credentialType === CredentialType.DRIVING_LICENSE && isItwCredential) {
+    if (
+      credentialType === CredentialType.DRIVING_LICENSE &&
+      itwFeaturesEnabled
+    ) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
         icon: "qrCode",
@@ -205,7 +208,7 @@ export const ItwPresentationCredentialDetail = ({
     return undefined;
   }, [
     credential,
-    isItwCredential,
+    itwFeaturesEnabled,
     navigation,
     isCheckingPermissions,
     itwProximityMachineRef
@@ -234,7 +237,7 @@ export const ItwPresentationCredentialDetail = ({
           <ItwPresentationCredentialStatusAlert credential={credential} />
           <ItwPresentationCredentialInfoAlert credential={credential} />
           <ItwPresentationClaimsSection credential={credential} />
-          {!isItwCredential && (
+          {!itwFeaturesEnabled && (
             <ItwCredentialTrustmark
               credential={credential}
               onPress={handleTrustmarkPress}

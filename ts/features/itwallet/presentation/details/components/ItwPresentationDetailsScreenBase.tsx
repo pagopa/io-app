@@ -19,7 +19,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { getHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { useIsItwCredential } from "../../../common/hooks/useIsItwCredential.ts";
+import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 
 export type CredentialCtaProps = Omit<ButtonSolidProps, "fullWidth">;
 
@@ -42,7 +42,7 @@ const ItwPresentationDetailsScreenBase = ({
 }: ItwPresentationDetailsScreenBaseProps) => {
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const safeAreaInsets = useSafeAreaInsets();
-  const isItwCredential = useIsItwCredential(credential);
+  const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
 
   const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);
@@ -67,7 +67,7 @@ const ItwPresentationDetailsScreenBase = ({
 
   const headerProps = getHeaderPropsByCredentialType(
     credential.credentialType,
-    isItwCredential
+    itwFeaturesEnabled
   );
 
   useHeaderSecondLevel({

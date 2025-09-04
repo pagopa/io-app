@@ -10,7 +10,7 @@ import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUt
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { useIsItwCredential } from "../../../common/hooks/useIsItwCredential.ts";
+import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
 type ItwPresentationDetailsHeaderProps = {
@@ -33,12 +33,12 @@ const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
   const { isExperimental } = useIOExperimentalDesign();
-  const isItwCredential = useIsItwCredential(credential);
+  const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
 
   const { backgroundColor, textColor, statusBarStyle } =
     getThemeColorByCredentialType(
       credential.credentialType as CredentialType,
-      isItwCredential
+      itwFeaturesEnabled
     );
 
   const headerContent = useMemo(() => {

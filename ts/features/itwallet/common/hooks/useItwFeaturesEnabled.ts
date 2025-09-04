@@ -5,14 +5,15 @@ import { useIOSelector } from "../../../../store/hooks";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
 /**
- * Simple hook that returns whether a given credential belongs to IT-Wallet.
+ * Simple hook that returns whether a given credential uses IT-Wallet features
+ * (for example the design and the proximity presentation).
  *
  * The hook is optimized to skip the check if the credential has not changed.
  *
  * @param credential The stored credential
- * @returns Boolean indicating whether the credential was obtained with L3
+ * @returns Boolean indicating whether the credential is compatible with IT-Wallet features
  */
-export const useIsItwCredential = (credential: StoredCredential) => {
+export const useItwFeaturesEnabled = (credential: StoredCredential) => {
   const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   return useMemo(
