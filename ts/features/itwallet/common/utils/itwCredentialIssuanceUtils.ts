@@ -16,6 +16,7 @@ export type RequestCredentialParams = {
   credentialType: string;
   walletInstanceAttestation: string;
   isNewIssuanceFlowEnabled: boolean;
+  isPidL3: boolean;
 };
 
 /**
