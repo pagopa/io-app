@@ -17,21 +17,17 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import {
-  useIODispatch,
-  useIOSelector,
-  useIOStore
-} from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import {
-  loginCieWizardSelected,
-  trackCieBottomSheetScreenView,
-  trackCieIDLoginSelected,
-  trackCieLoginSelected
-  // trackCiePinLoginSelected,
-  // trackSpidLoginSelected
-} from "../../common/analytics";
+// import {
+//   loginCieWizardSelected,
+//   trackCieBottomSheetScreenView,
+//   trackCieIDLoginSelected,
+//   trackCieLoginSelected,
+//   trackCiePinLoginSelected,
+//    trackSpidLoginSelected
+// } from "../../common/analytics";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 
 import { isCieLoginUatEnabledSelector } from "../../login/cie/store/selectors";
@@ -45,17 +41,20 @@ const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
 const SPID_LEVEL: SpidLevel = "SpidL2";
 
+// The MP events related to this page have been commented on,
+// pending their correct integration into the flow.
+// Task: https://pagopa.atlassian.net/browse/IOPID-3343
+
 export const ActiveSessionLandingScreen = () => {
-  const store = useIOStore();
   const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const {
-    // This code is commented because the CIE+PIN and SPID
+    // This code is commented because the SPID
     // active session login flow will be implemented in this task:
-    // SPID -> https://pagopa.atlassian.net/browse/IOPID-2929
+    // https://pagopa.atlassian.net/browse/IOPID-2929
     // navigateToIdpSelection,
     navigateToCiePinInsertion,
     navigateToCieIdLoginScreen,
@@ -67,10 +66,10 @@ export const ActiveSessionLandingScreen = () => {
     navigateToCiePinInsertion();
   }, [navigateToCiePinInsertion]);
 
-  const handleNavigateToCieIdLoginScreen = useCallback(() => {
-    void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
-    navigateToCieIdLoginScreen(SPID_LEVEL);
-  }, [store, navigateToCieIdLoginScreen]);
+  // const handleNavigateToCieIdLoginScreen = useCallback(() => {
+  //   void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
+  //   navigateToCieIdLoginScreen(SPID_LEVEL);
+  // }, [navigateToCieIdLoginScreen]);
 
   useEffect(() => {
     if (!isActiveSessionLogin) {
@@ -113,12 +112,12 @@ export const ActiveSessionLandingScreen = () => {
               "authentication.landing.cie_bottom_sheet.module_cie_id.badge"
             )
           }}
-          onPress={handleNavigateToCieIdLoginScreen}
+          onPress={() => navigateToCieIdLoginScreen(SPID_LEVEL)}
         />
         <VSpacer size={24} />
         <Banner
           onPress={() => {
-            void loginCieWizardSelected();
+            // void loginCieWizardSelected();
 
             navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
               screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
@@ -153,14 +152,14 @@ export const ActiveSessionLandingScreen = () => {
   );
 
   const navigateToCiePinScreen = useCallback(() => {
-    void trackCieLoginSelected();
+    // void trackCieLoginSelected();
     if (isCieSupported) {
-      void trackCieBottomSheetScreenView();
+      // void trackCieBottomSheetScreenView();
       present();
     } else {
-      handleNavigateToCieIdLoginScreen();
+      navigateToCieIdLoginScreen(SPID_LEVEL);
     }
-  }, [present, isCieSupported, handleNavigateToCieIdLoginScreen]);
+  }, [isCieSupported, present, navigateToCieIdLoginScreen]);
 
   useLayoutEffect(() => {
     navigation.setOptions({

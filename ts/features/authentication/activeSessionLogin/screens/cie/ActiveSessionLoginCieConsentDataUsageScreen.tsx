@@ -19,18 +19,17 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import { useIODispatch } from "../../../../../store/hooks";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { loginFailure } from "../../../common/store/actions";
 import { onLoginUriChanged } from "../../../common/utils/login";
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
 } from "../../store/actions";
+import { CieConsentDataUsageScreenNavigationParams } from "../../../login/cie/screens/CieConsentDataUsageScreen";
 
-export type CieConsentDataUsageScreenNavigationParams = {
-  cieConsentUri: string;
-  errorCodeDebugMode?: string;
-};
+// The MP events related to this page have been commented on,
+// pending their correct integration into the flow.
+// Task: https://pagopa.atlassian.net/browse/IOPID-3343
 
 const LoaderComponent = () => (
   <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
@@ -60,10 +59,10 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   //     [dispatch]
   //   );
 
-  const loginFailureDispatch = useCallback(
-    (error: Error) => dispatch(loginFailure({ error, idp: "cie" })),
-    [dispatch]
-  );
+  // const loginFailureDispatch = useCallback(
+  //   (error: Error) => dispatch(loginFailure({ error, idp: "cie" })),
+  //   [dispatch]
+  // );
 
   const navigateToLandingScreen = useCallback(() => {
     navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
@@ -86,14 +85,15 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const handleWebViewError = useCallback(() => setHasError(true), []);
 
   const handleHttpError = useCallback(
-    (event: WebViewHttpErrorEvent) => {
-      loginFailureDispatch(
-        new Error(
-          `HTTP error ${event.nativeEvent.description} with Authorization uri`
-        )
-      );
+    (_: WebViewHttpErrorEvent) => {
+      // loginFailureDispatch(
+      //   new Error(
+      //     `HTTP error ${event.nativeEvent.description} with Authorization uri`
+      //   )
+      // );
+      dispatch(activeSessionLoginFailure());
     },
-    [loginFailureDispatch]
+    [dispatch]
   );
 
   const handleLoginSuccess = useCallback(

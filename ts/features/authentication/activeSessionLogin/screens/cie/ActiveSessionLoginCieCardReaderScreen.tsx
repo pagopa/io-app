@@ -56,11 +56,11 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
-import {
-  trackLoginCieCardReaderScreen,
-  trackLoginCieCardReadingError,
-  trackLoginCieCardReadingSuccess
-} from "../../../common/analytics/cieAnalytics";
+// import {
+//   trackLoginCieCardReaderScreen,
+//   trackLoginCieCardReadingError,
+//   trackLoginCieCardReadingSuccess
+// } from "../../../common/analytics/cieAnalytics";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { isActiveSessionLoginSelector } from "../../store/selectors";
@@ -75,7 +75,9 @@ import {
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
 import { getCieUatEndpoint } from "../../../login/cie/utils/endpoints";
 
-// --- START: Definitions and constants (unchanged) ---
+// The MP events related to this page have been commented on,
+// pending their correct integration into the flow.
+// Task: https://pagopa.atlassian.net/browse/IOPID-3343
 
 const styles = StyleSheet.create({
   container: {
@@ -278,7 +280,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
         });
         break;
       case ReadingState.error:
-        trackLoginCieCardReadingError();
+        // trackLoginCieCardReadingError();
         setTextState(getTextForState(ReadingState.error, errorMessage));
         break;
       case ReadingState.completed:
@@ -347,7 +349,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
               params: { cieConsentUri }
             });
           } else {
-            trackLoginCieCardReadingSuccess();
+            // trackLoginCieCardReadingSuccess();
             navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
               screen: AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,
               params: { cieConsentUri }
@@ -448,7 +450,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
 
   const handleCieError = useCallback(
     (error: Error) => {
-      trackLoginCieCardReadingError();
+      // trackLoginCieCardReadingError();
       handleSendAssistanceLog(choosenTool, error.message);
       setError({ eventReason: "GENERIC", errorDescription: error.message });
     },
@@ -505,7 +507,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
   );
 
   useEffect(() => {
-    trackLoginCieCardReaderScreen();
+    // trackLoginCieCardReaderScreen();
 
     const checkScreenReader = async () => {
       const srEnabled = await isScreenReaderEnabled();
@@ -517,9 +519,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
 
     // Cleanup on unmount
     return () => {
-      cieManager.stopListeningNFC().catch(() => {
-        /* ignore */
-      });
+      void cieManager.stopListeningNFC();
       cieManager.removeAllListeners();
     };
   }, [isCieUatEnabled, startCie]);
