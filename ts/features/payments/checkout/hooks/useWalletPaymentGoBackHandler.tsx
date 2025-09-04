@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import {
   AppParamsList,
   IOStackNavigationProp

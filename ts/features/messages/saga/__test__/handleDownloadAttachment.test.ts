@@ -2,7 +2,7 @@ import ReactNativeBlobUtil from "react-native-blob-util";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import * as O from "fp-ts/lib/Option";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import {
   downloadAttachmentWorker,
   pdfSavePath

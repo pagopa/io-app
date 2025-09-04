@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
+import I18n from "i18next";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
   ItwScreenFlowContext,

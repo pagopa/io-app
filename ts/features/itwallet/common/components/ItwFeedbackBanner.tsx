@@ -1,7 +1,7 @@
 import { Banner } from "@pagopa/io-app-design-system";
 import { memo } from "react";
 import { View } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import { itwCloseFeedbackBanner } from "../store/actions/preferences";

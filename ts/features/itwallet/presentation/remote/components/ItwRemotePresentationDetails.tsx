@@ -10,7 +10,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
 import {
   ClaimDisplayFormat,

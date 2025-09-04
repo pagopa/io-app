@@ -1,8 +1,8 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { paymentsBackoffRetrySelector } from "../store/selectors";
 import { PaymentsBackoffRetry } from "../types/PaymentsBackoffRetry";
-import I18n from "../../../../i18n";
 import {
   getTimeRemainingText,
   isBackoffRetryTimeElapsed

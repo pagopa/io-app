@@ -429,7 +429,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                           }
                         >
                           <View
-                            accessibilityLabel="This is a dynamic message: its content may change over time to give you up-to-date information. Learn more"
+                            accessibilityLabel="Questo è un messaggio dinamico: il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate. Scopri di più"
                             accessibilityRole="button"
                             accessible={true}
                             style={
@@ -458,11 +458,11 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              This is a dynamic message: its content may change over time to give you up-to-date information.
+                              Questo è un messaggio dinamico: il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate.
                             </Text>
                             <View
                               accessibilityElementsHidden={true}
-                              accessibilityLabel="Learn more"
+                              accessibilityLabel="Scopri di più"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -525,7 +525,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Learn more
+                                Scopri di più
                               </Text>
                             </View>
                           </View>
@@ -794,7 +794,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                It's a message that the sender can edit 
+                                È un messaggio che l'ente può modificare 
                               </Text>
                               <Text
                                 allowFontScaling={true}
@@ -814,7 +814,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                after you've received it
+                                dopo averlo inviato
                               </Text>
                               <Text
                                 allowFontScaling={true}
@@ -834,9 +834,9 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                . This way, the information it includes will always be up-to-date.
+                                . In questo modo, le informazioni che contiene saranno sempre corrette.
 
-The sender can edit the information in a dynamic message only 
+Un ente può modificare le informazioni di un messaggio dinamico solo 
                               </Text>
                               <Text
                                 allowFontScaling={true}
@@ -856,7 +856,7 @@ The sender can edit the information in a dynamic message only
                                   ]
                                 }
                               >
-                                specific cases
+                                in casi specifici
                               </Text>
                               <Text
                                 allowFontScaling={true}
@@ -876,9 +876,9 @@ The sender can edit the information in a dynamic message only
                                   ]
                                 }
                               >
-                                . For example, to change outdated information or replace an attachment that is no longer valid.
+                                , per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.
 
-If the sender needs to share new information or important updates with you, you'll receive a new message.
+Se deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio.
                               </Text>
                             </Text>
                             <View

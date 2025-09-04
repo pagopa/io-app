@@ -366,7 +366,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                   ]
                                 }
                               >
-                                Messages
+                                Messaggi
                               </Text>
                             </View>
                             <View
@@ -380,7 +380,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                               }
                             >
                               <View
-                                accessibilityLabel="Search"
+                                accessibilityLabel="Cerca"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -493,7 +493,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                 </View>
                               </View>
                               <View
-                                accessibilityLabel="Settings"
+                                accessibilityLabel="Impostazioni"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -606,7 +606,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                 </View>
                               </View>
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

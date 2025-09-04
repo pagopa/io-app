@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import { selectFailureOption } from "../machine/selectors.ts";
@@ -12,7 +13,6 @@ import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../../components/screens/OperationResultScreenContent.tsx";
-import I18n from "../../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
 import { trackItwProximityUnofficialVerifierBottomSheet } from "../analytics/index.ts";
