@@ -3,11 +3,11 @@ import {
   Tag,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import {
   InitiativeDTO,
   VoucherStatusEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
-import I18n from "../../../../i18n";
 import { format } from "../../../../utils/dates";
 
 type InitiativeProps = {

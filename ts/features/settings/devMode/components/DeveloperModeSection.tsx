@@ -17,7 +17,7 @@ import * as Sentry from "@sentry/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useContext, ComponentProps } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { AlertModal } from "../../../../components/ui/AlertModal";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../../../config";

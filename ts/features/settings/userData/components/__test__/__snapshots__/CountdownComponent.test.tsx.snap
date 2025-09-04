@@ -444,7 +444,7 @@ exports[`CountdownComponent should render correctly when visible is true 1`] = `
                             ]
                           }
                         >
-                          Request new email in
+                          Richiedi una nuova email tra
                            
                           <Text
                             allowFontScaling={true}

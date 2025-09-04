@@ -5,27 +5,27 @@ import {
   useIOThemeContext,
   VStack
 } from "@pagopa/io-app-design-system";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+import { constVoid } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { ReactElement, useState } from "react";
 import { Appearance, useColorScheme, View } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { constVoid } from "fp-ts/lib/function";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
-import { useIODispatch, useIOStore } from "../../../../store/hooks";
-import {
-  preferencesFontSet,
-  TypefaceChoice
-} from "../../../../store/actions/persistedPreferences";
 import { FONT_PERSISTENCE_KEY } from "../../../../common/context/DSTypefaceContext";
-import {
-  trackAppearancePreferenceScreenView,
-  trackAppearancePreferenceTypefaceUpdate
-} from "../../common/analytics";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
   ColorModeChoice,
   THEME_PERSISTENCE_KEY
 } from "../../../../hooks/useAppThemeConfiguration";
+import {
+  preferencesFontSet,
+  TypefaceChoice
+} from "../../../../store/actions/persistedPreferences";
+import { useIODispatch, useIOStore } from "../../../../store/hooks";
+import {
+  trackAppearancePreferenceScreenView,
+  trackAppearancePreferenceTypefaceUpdate
+} from "../../common/analytics";
 
 /**
  * Display the appearance related settings

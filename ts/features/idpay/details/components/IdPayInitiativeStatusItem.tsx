@@ -6,8 +6,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ComponentProps } from "react";
 import { View } from "react-native";
+import I18n from "i18next";
 import { StatusEnum } from "../../../../../definitions/idpay/InitiativeDTO";
-import I18n from "../../../../i18n";
 
 const getStatusBadgeVariant = (
   status: StatusEnum

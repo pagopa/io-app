@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useRef } from "react";
 import { AccessibilityInfo } from "react-native";
+import I18n from "i18next";
 import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 import {
   useIODispatch,
@@ -7,7 +8,6 @@ import {
   useIOStore
 } from "../../../../store/hooks";
 import { UIMessage } from "../../types";
-import I18n from "../../../../i18n";
 import { TagEnum as PaymentTagEnum } from "../../../../../definitions/backend/MessageCategoryPayment";
 import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";

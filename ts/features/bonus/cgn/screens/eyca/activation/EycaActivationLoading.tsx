@@ -1,8 +1,8 @@
 import { FunctionComponent } from "react";
 import { connect } from "react-redux";
+import I18n from "i18next";
 import { isError, isLoading } from "../../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../../../i18n";
 import { Dispatch } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import LoadingComponent from "../../../../../fci/components/LoadingComponent";

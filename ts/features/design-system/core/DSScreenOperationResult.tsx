@@ -1,7 +1,7 @@
 import { BodyProps } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../i18n";
 
 const DSScreenOperationResult = () => {
   const navigation = useNavigation();
