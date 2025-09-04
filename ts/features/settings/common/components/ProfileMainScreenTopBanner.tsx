@@ -5,6 +5,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useCallback, useEffect } from "react";
+import I18n from "i18next";
 import { setShowAppearanceSettingsBanner } from "../../../appearanceSettings/store/actions";
 import { settingsBannerToShowSelector } from "../../../appearanceSettings/store/selectors";
 import {
@@ -12,7 +13,6 @@ import {
   trackPushNotificationsBannerVisualized
 } from "../../../pushNotifications/analytics";
 import { openSystemNotificationSettingsScreen } from "../../../pushNotifications/utils";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { SETTINGS_ROUTES } from "../navigation/routes";

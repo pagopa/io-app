@@ -1,6 +1,6 @@
 import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
-import I18n from "../../../../../i18n";
 
 type Props = {
   title: string;

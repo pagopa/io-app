@@ -6,8 +6,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useEffect } from "react";
+import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../../../i18n";
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
 import { openWebUrl } from "../../../../../../utils/url";
 import { trackIdpActivationWizardScreen } from "../../analytics";

@@ -4,8 +4,8 @@ import { Alert } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
+import I18n from "i18next";
 import { useOpenDeepLink } from "../../../../hooks/useOpenDeepLink";
-import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp

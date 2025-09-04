@@ -1,9 +1,9 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
-import TypedI18n from "../../../../i18n";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
@@ -36,7 +36,7 @@ export function* handleInitiativeInstrumentDelete(
         updateInstrumentStatusResult,
         E.fold(
           error => {
-            TypedI18n.t("idpay.wallet.initiativePairing.errorToasts.removal");
+            I18n.t("idpay.wallet.initiativePairing.errorToasts.removal");
             return idpayInitiativesInstrumentDelete.failure({
               initiativeId: action.payload.initiativeId,
               error: {
@@ -52,7 +52,7 @@ export function* handleInitiativeInstrumentDelete(
               });
             }
             // not handled error codes
-            TypedI18n.t("idpay.wallet.initiativePairing.errorToasts.removal");
+            I18n.t("idpay.wallet.initiativePairing.errorToasts.removal");
             return idpayInitiativesInstrumentDelete.failure({
               initiativeId: action.payload.initiativeId,
               error: {
@@ -64,7 +64,7 @@ export function* handleInitiativeInstrumentDelete(
       )
     );
   } catch (e) {
-    TypedI18n.t("idpay.wallet.initiativePairing.errorToasts.removal");
+    I18n.t("idpay.wallet.initiativePairing.errorToasts.removal");
     yield* put(
       idpayInitiativesInstrumentDelete.failure({
         initiativeId: action.payload.initiativeId,

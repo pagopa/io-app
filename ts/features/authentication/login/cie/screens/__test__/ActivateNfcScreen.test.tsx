@@ -2,7 +2,7 @@ import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Alert } from "react-native";
-import I18n from "../../../../../../i18n";
+import I18n from "i18next";
 import { openNFCSettings } from "../../utils/cie";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";

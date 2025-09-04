@@ -2,7 +2,7 @@
  * A screen to alert the user about the number of attempts remains
  */
 import { useCallback } from "react";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useItwPreventNavigationEvent } from "../../../common/hooks/useItwPreventNavigationEvent";

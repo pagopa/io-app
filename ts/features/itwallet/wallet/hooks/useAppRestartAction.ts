@@ -1,6 +1,6 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

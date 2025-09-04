@@ -48,7 +48,7 @@ describe("IdentificationModal", () => {
     const { getByText, getByTestId } = renderComponent(store);
 
     expect(getByTestId("identification-modal")).toBeTruthy();
-    expect(getByText("Hi!")).toBeTruthy();
+    expect(getByText("Ciao!")).toBeTruthy();
   });
 
   it("should not render the modal when identification is not started", () => {
@@ -63,7 +63,7 @@ describe("IdentificationModal", () => {
     const { queryByText, queryByTestId } = renderComponent(newStore);
 
     expect(queryByTestId("identification-modal")).toBeNull();
-    expect(queryByText("Hi!")).toBeNull();
+    expect(queryByText("Ciao!")).toBeNull();
   });
 
   // test IdentificationLockModal
@@ -104,7 +104,7 @@ describe("IdentificationModal", () => {
 
     const { getByText } = renderComponent(newStore);
 
-    expect(getByText(/You have 2 attempts left/i)).toBeTruthy();
+    expect(getByText(/Hai a disposizione ancora 2 tentativi/i)).toBeTruthy();
   });
 
   it("should show forgot code button", () => {
@@ -119,7 +119,7 @@ describe("IdentificationModal", () => {
 
     const { getByText } = renderComponent(newStore);
 
-    const forgotCodeButton = getByText(/Did you forget the/i);
+    const forgotCodeButton = getByText(/Hai dimenticato il/i);
     expect(forgotCodeButton).toBeTruthy();
   });
 
@@ -135,7 +135,7 @@ describe("IdentificationModal", () => {
 
     const { getByLabelText } = renderComponent(newStore);
 
-    const closeButton = getByLabelText(/Close/i);
+    const closeButton = getByLabelText(/Chiudi/i);
     expect(closeButton).toBeTruthy();
   });
 

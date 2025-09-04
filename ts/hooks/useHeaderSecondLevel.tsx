@@ -5,11 +5,11 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 import { ComponentProps, useLayoutEffect, useMemo } from "react";
+import I18n from "i18next";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "../components/screens/BaseScreenComponent";
-import I18n from "../i18n";
 import { FAQsCategoriesType } from "../utils/faq";
 import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
 import { useStartSupportRequest } from "./useStartSupportRequest";

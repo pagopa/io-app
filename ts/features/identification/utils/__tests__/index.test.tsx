@@ -1,9 +1,9 @@
 import { BiometricsValidType } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import {
   getBiometryIconName,
   getAccessibiliyIdentificationInstructions
 } from "../../utils";
-import I18n from "../../../../i18n";
 
 describe("getBiometryIconName", () => {
   it("should return fingerprint accessibility label for BIOMETRICS", () => {

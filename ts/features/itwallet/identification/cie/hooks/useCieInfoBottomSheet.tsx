@@ -2,10 +2,10 @@ import { VStack } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { AnimatedImage } from "../../../../../components/AnimatedImage";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
-import I18n from "../../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
   ItwFlow,

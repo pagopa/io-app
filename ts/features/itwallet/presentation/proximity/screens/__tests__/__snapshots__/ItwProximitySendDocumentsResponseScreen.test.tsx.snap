@@ -603,7 +603,7 @@ exports[`ItwProximitySendDocumentsResponseScreen should match snapshot 1`] = `
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -719,7 +719,7 @@ exports[`ItwProximitySendDocumentsResponseScreen should match snapshot 1`] = `
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>

@@ -576,7 +576,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Pagata
                               </View>
                               <View>
-                                Nov
+                                nov
                               </View>
                               <View>
                                 default
@@ -596,7 +596,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Consegnata
                               </View>
                               <View>
-                                Oct
+                                ott
                               </View>
                               <View>
                                 default
@@ -616,7 +616,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Invio in corso
                               </View>
                               <View>
-                                Sep
+                                set
                               </View>
                               <View>
                                 default
@@ -636,7 +636,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 REFUSED
                               </View>
                               <View>
-                                Aug
+                                ago
                               </View>
                               <View>
                                 default
@@ -656,7 +656,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Depositata
                               </View>
                               <View>
-                                Jul
+                                lug
                               </View>
                               <View>
                                 default
@@ -676,7 +676,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 IN VALIDATION
                               </View>
                               <View>
-                                Jun
+                                giu
                               </View>
                               <View>
                                 default
@@ -696,7 +696,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Annullata
                               </View>
                               <View>
-                                May
+                                mag
                               </View>
                               <View>
                                 cancelled
@@ -716,7 +716,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Destinatario irreperibile
                               </View>
                               <View>
-                                Apr
+                                apr
                               </View>
                               <View>
                                 unreachable
@@ -736,7 +736,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Perfezionata per decorrenza termini
                               </View>
                               <View>
-                                Mar
+                                mar
                               </View>
                               <View>
                                 effective
@@ -756,7 +756,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Avvenuto accesso
                               </View>
                               <View>
-                                Feb
+                                feb
                               </View>
                               <View>
                                 viewed
@@ -1371,7 +1371,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Pagata
                               </View>
                               <View>
-                                Nov
+                                nov
                               </View>
                               <View>
                                 default
@@ -1391,7 +1391,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Consegnata
                               </View>
                               <View>
-                                Oct
+                                ott
                               </View>
                               <View>
                                 default
@@ -1411,7 +1411,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Invio in corso
                               </View>
                               <View>
-                                Sep
+                                set
                               </View>
                               <View>
                                 default
@@ -1431,7 +1431,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 REFUSED
                               </View>
                               <View>
-                                Aug
+                                ago
                               </View>
                               <View>
                                 default
@@ -1451,7 +1451,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Depositata
                               </View>
                               <View>
-                                Jul
+                                lug
                               </View>
                               <View>
                                 default
@@ -1471,7 +1471,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 IN VALIDATION
                               </View>
                               <View>
-                                Jun
+                                giu
                               </View>
                               <View>
                                 default
@@ -1491,7 +1491,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Annullata
                               </View>
                               <View>
-                                May
+                                mag
                               </View>
                               <View>
                                 cancelled
@@ -1511,7 +1511,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Destinatario irreperibile
                               </View>
                               <View>
-                                Apr
+                                apr
                               </View>
                               <View>
                                 unreachable
@@ -1531,7 +1531,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Perfezionata per decorrenza termini
                               </View>
                               <View>
-                                Mar
+                                mar
                               </View>
                               <View>
                                 effective
@@ -1551,7 +1551,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 Avvenuto accesso
                               </View>
                               <View>
-                                Feb
+                                feb
                               </View>
                               <View>
                                 viewed

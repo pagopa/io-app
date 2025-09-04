@@ -4,7 +4,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { fireEvent } from "@testing-library/react-native";
 import { Store, createStore } from "redux";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
