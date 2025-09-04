@@ -24,7 +24,6 @@ import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
@@ -44,10 +43,8 @@ export const ServicesHomeScreen = () => {
   const isFirstRender = useFirstRender();
 
   const {
-    currentPage,
     data,
     fetchNextPage,
-    fetchPage,
     isError,
     isLastPage,
     isLoading,
@@ -55,8 +52,6 @@ export const ServicesHomeScreen = () => {
     isUpdating,
     refresh
   } = useInstitutionsFetcher();
-
-  useOnFirstRender(() => fetchPage(0));
 
   useFocusEffect(
     useCallback(() => {
@@ -152,8 +147,8 @@ export const ServicesHomeScreen = () => {
 
   const handleEndReached = useCallback(() => {
     analytics.trackInstitutionsScroll();
-    fetchNextPage(currentPage + 1);
-  }, [currentPage, fetchNextPage]);
+    fetchNextPage();
+  }, [fetchNextPage]);
 
   const navigateToInstitution = useCallback(
     ({ fiscal_code, id, name }: Institution) => {

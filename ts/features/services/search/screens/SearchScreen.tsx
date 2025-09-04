@@ -48,15 +48,8 @@ export const SearchScreen = () => {
     [insets.top]
   );
 
-  const {
-    currentPage,
-    data,
-    fetchNextPage,
-    fetchPage,
-    isError,
-    isLoading,
-    isUpdating
-  } = useInstitutionsFetcher();
+  const { data, fetchNextPage, isError, isLoading, isUpdating, refresh } =
+    useInstitutionsFetcher();
 
   useFocusEffect(
     useCallback(() => {
@@ -86,7 +79,7 @@ export const SearchScreen = () => {
 
     if (text.length >= MIN_QUERY_LENGTH) {
       analytics.trackSearchInput();
-      fetchPage(0, text);
+      refresh(text);
     } else {
       dispatch(searchPaginatedInstitutionsGet.cancel());
     }
@@ -94,10 +87,10 @@ export const SearchScreen = () => {
 
   const handleEndReached = useCallback(() => {
     if (!!data && query.length >= MIN_QUERY_LENGTH) {
-      fetchNextPage(currentPage + 1, query);
+      fetchNextPage(query);
       analytics.trackSearchResultScroll();
     }
-  }, [currentPage, data, fetchNextPage, query]);
+  }, [data, fetchNextPage, query]);
 
   const navigateToInstitution = useCallback(
     ({ fiscal_code, id, name }: Institution) => {

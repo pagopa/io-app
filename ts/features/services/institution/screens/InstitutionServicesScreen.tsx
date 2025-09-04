@@ -20,7 +20,6 @@ import { ServiceMinified } from "../../../../../definitions/services/ServiceMini
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
 import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
@@ -64,18 +63,14 @@ export const InstitutionServicesScreen = ({
   const scrollTranslationY = useSharedValue(0);
 
   const {
-    currentPage,
     data,
     fetchNextPage,
-    fetchPage,
     isError,
     isLoading,
     isUpdating,
     isRefreshing,
     refresh
   } = useServicesFetcher(institutionId);
-
-  useOnFirstRender(() => fetchPage(0));
 
   useFocusEffect(
     useCallback(() => {
@@ -137,8 +132,8 @@ export const InstitutionServicesScreen = ({
   );
 
   const handleEndReached = useCallback(() => {
-    fetchNextPage(currentPage + 1);
-  }, [currentPage, fetchNextPage]);
+    fetchNextPage();
+  }, [fetchNextPage]);
 
   const renderItem = useCallback(
     ({ item, index }: ListRenderItemInfo<ServiceMinified>) => {
@@ -211,7 +206,7 @@ export const InstitutionServicesScreen = ({
   }, [isUpdating, isRefreshing]);
 
   if (!data && isError) {
-    return <InstitutionServicesFailure onRetry={() => fetchPage(0)} />;
+    return <InstitutionServicesFailure onRetry={() => refresh()} />;
   }
 
   const refreshControlComponent = (
