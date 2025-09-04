@@ -29,7 +29,7 @@ import {
   View
 } from "react-native";
 import { connect } from "react-redux";
-import I18n from "../../i18n";
+import I18n from "i18next";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";

@@ -1,7 +1,7 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+import I18n from "i18next";
 import RemoveAccountInfo from "../RemoveAccountInfoScreen";
-import I18n from "../../../../../i18n";
 import { loadBonusBeforeRemoveAccount } from "../../../common/store/actions";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";

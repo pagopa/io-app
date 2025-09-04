@@ -27,6 +27,7 @@ import {
 import { FlatList, ListRenderItemInfo } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import _ from "lodash";
+import I18n from "i18next";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import IOMarkdown from "../../../components/IOMarkdown";
 import { ContextualHelpProps } from "../../../components/screens/BaseScreenComponent";
@@ -40,7 +41,6 @@ import {
   IOScrollViewActions
 } from "../../../components/ui/IOScrollView";
 import { zendeskPrivacyUrl } from "../../../config";
-import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
   AppParamsList,

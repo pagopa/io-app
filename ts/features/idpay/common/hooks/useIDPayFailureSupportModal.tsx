@@ -10,7 +10,7 @@ import {
   resetCustomFields
 } from "@pagopa/io-react-native-zendesk";
 import { JSX, useState } from "react";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIODispatch } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";

@@ -1,9 +1,9 @@
 import { useCallback, useLayoutEffect } from "react";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { loadServiceDetail } from "../store/actions/details";
-import I18n from "../../../../i18n";
 
 export type ServiceDetailsFailureProps = {
   serviceId: string;

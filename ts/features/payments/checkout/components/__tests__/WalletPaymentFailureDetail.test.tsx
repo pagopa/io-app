@@ -1,6 +1,7 @@
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import { usePaymentFailureSupportModal } from "../../hooks/usePaymentFailureSupportModal";
 import {
@@ -8,7 +9,6 @@ import {
   WalletPaymentFailureDetail
 } from "../WalletPaymentFailureDetail";
 import * as analytics from "../../analytics";
-import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PaymentsCheckoutRoutes } from "../../navigation/routes";

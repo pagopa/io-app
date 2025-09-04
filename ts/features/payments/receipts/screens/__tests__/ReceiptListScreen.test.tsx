@@ -83,7 +83,7 @@ describe("ReceiptListScreen", () => {
 
     // The header label is the section header title.
     // Alternatively, get ReceiptSectionListHeader by testID or text.
-    const header = getByText(/All/i) || getByText(/some section title/i);
+    const header = getByText(/Tutte/i) || getByText(/some section title/i);
 
     fireEvent(header, "layout", {
       nativeEvent: { layout: { height: 100, width: 300, x: 0, y: 0 } }

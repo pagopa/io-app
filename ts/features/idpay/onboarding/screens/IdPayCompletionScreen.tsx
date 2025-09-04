@@ -1,8 +1,8 @@
 import { SafeAreaView } from "react-native";
+import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";

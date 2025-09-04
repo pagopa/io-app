@@ -8,7 +8,7 @@ import { useState, useLayoutEffect, memo, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
-import I18n from "../../../../../i18n.ts";
+import I18n from "i18next";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import {
