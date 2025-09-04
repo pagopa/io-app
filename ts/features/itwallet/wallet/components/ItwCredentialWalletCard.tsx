@@ -1,10 +1,10 @@
-import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
-import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
-import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { itwShouldRenderNewItWalletSelector } from "../../common/store/selectors";
 import { useIOSelector } from "../../../../store/hooks";
+import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
+import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
+import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 export type ItwCredentialWalletCardProps = ItwCredentialCard & {
   isPreview?: false; // Cards in wallet cannot be in preview mode
@@ -13,8 +13,8 @@ export type ItwCredentialWalletCardProps = ItwCredentialCard & {
 const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
   const { isItwCredential, credentialType } = props;
   const navigation = useIONavigation();
-  const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
-  const needsItwUpgrade = isNewItwRenderable && !isItwCredential;
+  const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const needsItwUpgrade = isItwPid && !isItwCredential;
 
   const handleOnPress = () => {
     if (needsItwUpgrade) {
