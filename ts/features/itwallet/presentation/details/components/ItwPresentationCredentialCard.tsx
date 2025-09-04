@@ -12,15 +12,12 @@ import { CREDENTIALS_MAP, trackWalletShowBack } from "../../../analytics";
 import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
-import {
-  CredentialFormat,
-  StoredCredential
-} from "../../../common/utils/itwTypesUtils.ts";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { useIsItwCredential } from "../../../common/hooks/useIsItwCredential.ts";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
 type Props = {
@@ -45,9 +42,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   }, [credential.credentialType]);
 
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
-  const isPidL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const isL3Credential =
-    isPidL3 && credential.format !== CredentialFormat.LEGACY_SD_JWT;
+  const isItwCredential = useIsItwCredential(credential);
 
   const handleCardPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -61,7 +56,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
 
   const { backgroundColor } = getThemeColorByCredentialType(
     credential.credentialType,
-    isL3Credential
+    isItwCredential
   );
 
   return (
@@ -78,9 +73,11 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
         </FlipGestureDetector>
       </CardContainer>
       <ContentWrapper
-        style={isL3Credential ? styles.horizontalLayout : styles.centeredLayout}
+        style={
+          isItwCredential ? styles.horizontalLayout : styles.centeredLayout
+        }
       >
-        {isL3Credential && <ItwBadge />}
+        {isItwCredential && <ItwBadge />}
         <ItwPresentationCredentialCardFlipButton
           isFlipped={isFlipped}
           handleOnPress={handleFlipButtonPress}

@@ -9,12 +9,8 @@ import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBa
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
-import {
-  CredentialFormat,
-  StoredCredential
-} from "../../../common/utils/itwTypesUtils.ts";
-import { useIOSelector } from "../../../../../store/hooks";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { useIsItwCredential } from "../../../common/hooks/useIsItwCredential.ts";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
 type ItwPresentationDetailsHeaderProps = {
@@ -37,14 +33,12 @@ const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
   const { isExperimental } = useIOExperimentalDesign();
-  const isPidL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const isL3Credential =
-    isPidL3 && credential.format !== CredentialFormat.LEGACY_SD_JWT;
+  const isItwCredential = useIsItwCredential(credential);
 
   const { backgroundColor, textColor, statusBarStyle } =
     getThemeColorByCredentialType(
       credential.credentialType as CredentialType,
-      isL3Credential
+      isItwCredential
     );
 
   const headerContent = useMemo(() => {

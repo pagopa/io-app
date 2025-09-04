@@ -22,10 +22,7 @@ import {
   trackWalletCredentialShowTrustmark
 } from "../../../analytics";
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
-import {
-  CredentialFormat,
-  StoredCredential
-} from "../../../common/utils/itwTypesUtils.ts";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialSelector,
   itwCredentialStatusSelector
@@ -51,11 +48,11 @@ import { itwSetReviewPending } from "../../../common/store/actions/preferences.t
 import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
 import { selectIsLoading } from "../../proximity/machine/selectors.ts";
 import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
 import { trackItwProximityShowQrCode } from "../../proximity/analytics";
+import { useIsItwCredential } from "../../../common/hooks/useIsItwCredential.ts";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -119,12 +116,11 @@ export const ItwPresentationCredentialDetail = ({
     ItwProximityMachineContext.useSelector(selectIsLoading);
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const isPidL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
-  const isL3Credential =
-    isPidL3 && credential.format !== CredentialFormat.LEGACY_SD_JWT;
+  const isItwCredential = useIsItwCredential(credential);
 
   useDebugInfo(credential);
   usePreventScreenCapture();
@@ -173,7 +169,7 @@ export const ItwPresentationCredentialDetail = ({
     const credentialType = credential.credentialType;
     const contentClaim = parsedCredential[WellKnownClaim.content];
 
-    if (credentialType === CredentialType.DRIVING_LICENSE && isL3Credential) {
+    if (credentialType === CredentialType.DRIVING_LICENSE && isItwCredential) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
         icon: "qrCode",
@@ -209,7 +205,7 @@ export const ItwPresentationCredentialDetail = ({
     return undefined;
   }, [
     credential,
-    isL3Credential,
+    isItwCredential,
     navigation,
     isCheckingPermissions,
     itwProximityMachineRef
@@ -238,7 +234,7 @@ export const ItwPresentationCredentialDetail = ({
           <ItwPresentationCredentialStatusAlert credential={credential} />
           <ItwPresentationCredentialInfoAlert credential={credential} />
           <ItwPresentationClaimsSection credential={credential} />
-          {!isL3Credential && (
+          {!isItwCredential && (
             <ItwCredentialTrustmark
               credential={credential}
               onPress={handleTrustmarkPress}

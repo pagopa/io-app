@@ -11,7 +11,7 @@ import {
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback, useLayoutEffect, useMemo } from "react";
+import { useCallback, useLayoutEffect } from "react";
 import I18n from "i18next";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
@@ -35,7 +35,7 @@ import {
 } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
-import { isItwCredential } from "../../common/utils/itwCredentialUtils";
+import { useIsItwCredential } from "../../common/hooks/useIsItwCredential";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
@@ -73,12 +73,9 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const navigation = useIONavigation();
   const route = useRoute();
 
-  const isL3 = isItwCredential(eid.credential);
+  const isL3 = useIsItwCredential(eid);
 
-  const mixPanelCredential = useMemo(
-    () => (isL3 ? "ITW_PID" : "ITW_ID_V2"),
-    [isL3]
-  );
+  const mixPanelCredential = isL3 ? "ITW_PID" : "ITW_ID_V2";
 
   const theme = useIOTheme();
 

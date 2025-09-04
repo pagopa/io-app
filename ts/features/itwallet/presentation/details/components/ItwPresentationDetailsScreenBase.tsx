@@ -18,12 +18,8 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { getHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
-import {
-  CredentialFormat,
-  StoredCredential
-} from "../../../common/utils/itwTypesUtils.ts";
-import { useIOSelector } from "../../../../../store/hooks";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { useIsItwCredential } from "../../../common/hooks/useIsItwCredential.ts";
 
 export type CredentialCtaProps = Omit<ButtonSolidProps, "fullWidth">;
 
@@ -46,9 +42,7 @@ const ItwPresentationDetailsScreenBase = ({
 }: ItwPresentationDetailsScreenBaseProps) => {
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const safeAreaInsets = useSafeAreaInsets();
-  const isPidL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const isL3Credential =
-    isPidL3 && credential.format !== CredentialFormat.LEGACY_SD_JWT;
+  const isItwCredential = useIsItwCredential(credential);
 
   const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);
@@ -73,7 +67,7 @@ const ItwPresentationDetailsScreenBase = ({
 
   const headerProps = getHeaderPropsByCredentialType(
     credential.credentialType,
-    isL3Credential
+    isItwCredential
   );
 
   useHeaderSecondLevel({
