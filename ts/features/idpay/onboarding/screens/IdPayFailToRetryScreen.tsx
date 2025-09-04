@@ -10,20 +10,12 @@ import { AccessibilityInfo, View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import ModalSectionStatusComponent from "../../../../components/SectionStatus/modal";
-import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isBackendStatusLoadedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { isConnectedSelector } from "../../../connectivity/store/selectors";
-import { identificationRequest } from "../../../identification/store/actions";
 import { trackIngressServicesSlowDown } from "../../../ingress/analytics";
-import {
-  setIsBlockingScreen,
-  setOfflineAccessReason
-} from "../../../ingress/store/actions";
-import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
-import { itwOfflineAccessAvailableSelector } from "../../../itwallet/common/store/selectors";
+import { setIsBlockingScreen } from "../../../ingress/store/actions";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
@@ -31,13 +23,10 @@ const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
 export const IdPayFailToRetryScreen = () => {
   const dispatch = useIODispatch();
   const isConnected = useIOSelector(isConnectedSelector);
-  const isOfflineAccessAvailable = useIOSelector(
-    itwOfflineAccessAvailableSelector
-  );
 
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [contentTitle, setContentTitle] = useState(
-    "Stiamo per collegarti.\n Attendi qualche secondo..."
+    I18n.t("idpay.onboarding.failToRetry.contentTitle")
   );
 
   useEffect(() => {
@@ -72,28 +61,7 @@ export const IdPayFailToRetryScreen = () => {
     };
   }, [dispatch]);
 
-  useEffect(() => {
-    const visualizeOfflineWallet =
-      isConnected === false && isOfflineAccessAvailable;
-
-    if (visualizeOfflineWallet) {
-      // This dispatch could be placed inside `onSuccess`,
-      // but executing it here ensures the startup saga stops immediately.
-      dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE));
-      dispatch(
-        identificationRequest(false, false, undefined, undefined, {
-          onSuccess: () => {
-            // This dispatch mounts the new offline navigator.
-            // It must be initialized **after** the user completes
-            // biometric authentication to prevent graphical glitches.
-            dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
-          }
-        })
-      );
-    }
-  }, [dispatch, isConnected, isOfflineAccessAvailable]);
-
-  if (isConnected === false && !isOfflineAccessAvailable) {
+  if (isConnected === false) {
     return <IngressScreenNoInternetConnection />;
   }
 
