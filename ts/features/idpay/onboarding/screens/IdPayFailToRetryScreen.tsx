@@ -3,14 +3,13 @@
  * An ingress screen to choose the real first screen the user must navigate to.
  */
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import I18n from "i18next";
 import { voidType } from "io-ts";
 import { memo, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
-import waiting from "../../../../../assets/animated-pictograms/Waiting.json";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import ModalSectionStatusComponent from "../../../../components/SectionStatus/modal";
-import I18n from "../../../../i18n";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isBackendStatusLoadedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
@@ -112,7 +111,7 @@ export const IdPayFailToRetryScreen = () => {
       <LoadingScreenContent
         testID="ingress-screen-loader-id"
         contentTitle={contentTitle}
-        animatedPictogramSource={waiting}
+        animatedPictogramSource="waiting"
       />
     </>
   );
