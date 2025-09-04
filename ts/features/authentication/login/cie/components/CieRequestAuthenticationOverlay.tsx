@@ -22,13 +22,13 @@ import {
   WebViewNavigationEvent,
   WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
+import I18n from "i18next";
 import { withLoadingSpinner } from "../../../../../components/helpers/withLoadingSpinner";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { selectedIdentityProviderSelector } from "../../../../../features/authentication/common/store/selectors";
 import { ephemeralKeyTagSelector } from "../../../../../features/lollipop/store/reducers/lollipop";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../../../../features/lollipop/utils/login";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
-import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
 import { trackSpidLoginError } from "../../../../../utils/analytics";

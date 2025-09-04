@@ -1,5 +1,5 @@
 import { Body, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { useIOSelector } from "../../../store/hooks";
 import { thirdPartyMessageAttachments } from "../../messages/store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";

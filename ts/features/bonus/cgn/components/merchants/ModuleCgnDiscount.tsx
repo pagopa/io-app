@@ -12,9 +12,9 @@ import {
 import * as O from "fp-ts/lib/Option";
 import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
+import I18n from "i18next";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
-import I18n from "../../../../../i18n";
 import { useCgnStyle } from "../../hooks/useCgnStyle";
 import { getCategorySpecs } from "../../utils/filters";
 import {
@@ -37,7 +37,7 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
 
   return O.isSome(categorySpecs) ? (
     <Tag
-      text={I18n.t(categorySpecs.value.nameKey)}
+      text={I18n.t(categorySpecs.value.nameKey as any)}
       variant="custom"
       icon={{
         name: categorySpecs.value.icon,

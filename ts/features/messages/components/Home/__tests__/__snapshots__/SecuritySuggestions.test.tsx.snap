@@ -498,7 +498,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     }
                                     testID="infoScreenBody"
                                   >
-                                    Do not share your unlock code or biometric recognition with anyone.
+                                    Non condividere il tuo codice di sblocco o riconoscimento biometrico con nessuno
                                   </Text>
                                 </View>
                               </View>
@@ -605,7 +605,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     }
                                     testID="infoScreenBody"
                                   >
-                                    If you lose your device, log out from the web.
+                                    Se perdi il dispositivo, esci dall’app da web
                                   </Text>
                                   <View
                                     accessibilityRole="link"
@@ -663,7 +663,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      Go to website
+                                      Vai al sito
                                     </Text>
                                   </View>
                                 </View>
@@ -771,7 +771,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     }
                                     testID="infoScreenBody"
                                   >
-                                    If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.
+                                    Se temi che qualcuno possa usare il tuo SPID o CIE, puoi bloccare l’accesso all’app entrando dal web
                                   </Text>
                                   <View
                                     accessibilityRole="link"
@@ -829,7 +829,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      Go to website
+                                      Vai al sito
                                     </Text>
                                   </View>
                                 </View>
@@ -937,7 +937,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     }
                                     testID="infoScreenBody"
                                   >
-                                    If you access IO with someone else's device, remember to log out when you are finished.
+                                    Se accedi a IO con un dispositivo di altri, ricordati di uscire dall’app quando hai finito
                                   </Text>
                                 </View>
                               </View>

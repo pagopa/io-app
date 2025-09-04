@@ -2,7 +2,7 @@ import { Alert, Platform } from "react-native";
 import { ListItemInfo } from "@pagopa/io-app-design-system";
 import { useCallback, useEffect, useMemo } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { ItwProximityMachineContext } from "../machine/provider";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
