@@ -1,7 +1,7 @@
 import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { SdJwt } from "@pagopa/io-react-native-wallet-v2";
+import { SdJwt } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
 import { CredentialType } from "./itwMocksUtils";
 import { ItwCredentialStatus } from "./itwTypesUtils";
