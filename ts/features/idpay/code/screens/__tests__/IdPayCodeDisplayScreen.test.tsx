@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent, within } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

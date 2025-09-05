@@ -12,7 +12,7 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
-import I18n from "../../../../../i18n.ts";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";

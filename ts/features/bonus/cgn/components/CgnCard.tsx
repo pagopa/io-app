@@ -1,9 +1,9 @@
 import { H6, IOColors, BodySmall, Tag } from "@pagopa/io-app-design-system";
 import { Image, StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
 import CgnCardShape from "../../../../../img/features/cgn/cgn_card.svg";
-import I18n from "../../../../i18n";
 import { format } from "../../../../utils/dates";
 
 export type CgnCardProps = {

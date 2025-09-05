@@ -5,7 +5,7 @@ import { MigrationManifest, PersistedState } from "redux-persist";
 
 type MigrationState = PersistedState & Record<string, any>;
 
-export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 4;
+export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 5;
 
 export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 0
@@ -112,6 +112,18 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
           ...credential,
           credentialType: credential.credentialType.replace("MDL", "mDL")
         }
+      ])
+    )
+  }),
+
+  // Version 5
+  // Invalidate all status assertions so they can be fetched again from the new API 1.0
+  "5": (state: MigrationState) => ({
+    ...state,
+    credentials: Object.fromEntries(
+      Object.values<Record<string, any>>(state.credentials).map(credential => [
+        credential.credentialId,
+        { ...credential, storedStatusAttestation: undefined }
       ])
     )
   })

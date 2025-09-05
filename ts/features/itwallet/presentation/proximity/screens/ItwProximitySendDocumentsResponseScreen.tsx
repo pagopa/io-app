@@ -1,10 +1,10 @@
 import { useEffect } from "react";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { ItwProximityLoadingStepScreen } from "../components/ItwProximityLoadingStepScreen.tsx";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
-import I18n from "../../../../../i18n.ts";
 import { selectIsSuccess } from "../machine/selectors.ts";
 import { trackItwProximityPresentationCompleted } from "../analytics";
 

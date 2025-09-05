@@ -153,6 +153,16 @@
         <data android:scheme="https" />
         <data android:host="continua.io.pagopa.it" />
       </intent-filter>
+
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="https" />
+        <data android:host="cittadini.dev.notifichedigitali.it" />
+        <data android:pathPrefix="/io" />
+      </intent-filter>
+
     </activity>
 
     <!-- Trigger Google Play services to install the backported photo picker module. -->

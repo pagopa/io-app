@@ -1,6 +1,6 @@
 import { Body, ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";

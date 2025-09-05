@@ -1,5 +1,6 @@
 import { createStore } from "redux";
 import { act, fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -7,7 +8,6 @@ import { SendEngagementScreen } from "../SendEngagementScreen";
 import PN_ROUTES from "../../../navigation/routes";
 import * as navigation from "../../../../../navigation/params/AppParamsList";
 import { pnActivationUpsert } from "../../../store/actions";
-import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import * as analytics from "../../analytics";

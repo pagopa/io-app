@@ -10,10 +10,10 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
+import I18n from "i18next";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   profileFiscalCodeSelector,

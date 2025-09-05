@@ -1,9 +1,9 @@
 import { useMemo, useCallback } from "react";
+import I18n from "i18next";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   fimsAuthenticationErrorTagSelector,

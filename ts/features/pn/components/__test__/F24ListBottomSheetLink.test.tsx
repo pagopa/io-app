@@ -3,8 +3,8 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { F24ListBottomSheetLink } from "../F24ListBottomSheetLink";
-import { UIMessageId } from "../../../messages/types";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 const numberToThirdPartyAttachment = (index: number) =>
   ({
@@ -38,7 +38,8 @@ const renderComponent = (f24List: ReadonlyArray<ThirdPartyAttachment>) => {
     () => (
       <F24ListBottomSheetLink
         f24List={f24List}
-        messageId={"01HS94671EXDWDESDJB3NCBYPM" as UIMessageId}
+        messageId={"01HS94671EXDWDESDJB3NCBYPM"}
+        serviceId={"01JKAGWVQRFE1P8QAHZS743M90" as ServiceId}
       />
     ),
     "DUMMY",

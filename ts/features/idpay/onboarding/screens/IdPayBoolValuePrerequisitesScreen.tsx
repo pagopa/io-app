@@ -1,9 +1,14 @@
-import { Divider, IOToast, ListItemSwitch } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  IOToast,
+  ListItemSwitch,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
+import I18n from "i18next";
+import { _typeEnum as SelfConsentBoolTypeEnum } from "../../../../../definitions/idpay/SelfConsentBoolDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
@@ -13,6 +18,8 @@ import {
   boolRequiredCriteriaSelector,
   selectSelfDeclarationBoolAnswers
 } from "../machine/selectors";
+import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 const IdPayBoolValuePrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -39,14 +46,25 @@ const IdPayBoolValuePrerequisitesScreen = () => {
   const goBackOnPress = () => machine.send({ type: "back" });
 
   const toggleCriteria =
-    (criteria: SelfDeclarationBoolDTO) => (value: boolean) =>
+    (criteria: SelfCriteriaBoolDTO) => (value: boolean) => {
+      if (!criteria.code) {
+        return;
+      }
+
       machine.send({
         type: "toggle-bool-criteria",
-        criteria: { ...criteria, value }
+        criteria: {
+          _type: SelfConsentBoolTypeEnum.boolean,
+          code: criteria.code,
+          accepted: value
+        }
       });
+    };
 
-  const getSelfCriteriaBoolAnswer = (criteria: SelfDeclarationBoolDTO) =>
-    selfCriteriaBoolAnswers[criteria.code] ?? false;
+  const getSelfCriteriaBoolAnswer = (criteria: SelfCriteriaBoolDTO) =>
+    criteria.code ? selfCriteriaBoolAnswers[criteria.code] ?? false : false;
+
+  const selfCriteriaBoolSubtitle = selfCriteriaBool[0].subDescription;
 
   return (
     <IOScrollViewWithLargeHeader
@@ -68,10 +86,16 @@ const IdPayBoolValuePrerequisitesScreen = () => {
       includeContentMargins
     >
       <LoadingSpinnerOverlay isLoading={isLoading}>
+        {selfCriteriaBoolSubtitle && (
+          <>
+            <IOMarkdown content={selfCriteriaBoolSubtitle} />
+            <VSpacer size={16} />
+          </>
+        )}
         {selfCriteriaBool.map((criteria, index) => (
           <View key={criteria.code}>
             <ListItemSwitch
-              label={criteria.description}
+              label={criteria.description ?? ""}
               onSwitchValueChange={toggleCriteria(criteria)}
               value={getSelfCriteriaBoolAnswer(criteria)}
             />

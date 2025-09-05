@@ -10,6 +10,11 @@ import nodeFetch from "node-fetch";
 import { NativeModules, AccessibilityInfo } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
+import { initI18n } from "./ts/i18n.ts";
+
+
+void initI18n();
+
 const mockRNQRGenerator = {
   default: {
     detect: jest.fn().mockResolvedValue(null),
@@ -56,7 +61,6 @@ global.CanvasKit = {
   }))
 };
 
-jest.mock("react-native-i18n");
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("@react-native-community/push-notification-ios", () => jest.fn());

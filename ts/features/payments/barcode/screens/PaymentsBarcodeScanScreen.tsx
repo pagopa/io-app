@@ -5,8 +5,8 @@ import { pipe } from "fp-ts/lib/function";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
+import I18n from "i18next";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import {
   AppParamsList,

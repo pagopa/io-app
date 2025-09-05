@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from "react";
-import { ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { ListItemHeader } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
+import { View } from "react-native";
 import { FeaturedService } from "../../../../../definitions/services/FeaturedService";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -41,7 +41,7 @@ export const FeaturedServiceList = () => {
       navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
         screen: SERVICES_ROUTES.SERVICE_DETAIL,
         params: {
-          serviceId: id as NonEmptyString
+          serviceId: id
         }
       });
     },
@@ -68,14 +68,18 @@ export const FeaturedServiceList = () => {
   }
 
   return (
-    <>
-      <ListItemHeader label={I18n.t("services.home.featured.services.title")} />
+    <View>
+      <ListItemHeader
+        accessibilityLabel={I18n.t(
+          "services.home.featured.services.a11y.title"
+        )}
+        label={I18n.t("services.home.featured.services.title")}
+      />
       {isLoading ? (
         <FeaturedServicesCarouselSkeleton />
       ) : (
         <FeaturedServicesCarousel services={mappedFeaturedServices} />
       )}
-      <VSpacer size={16} />
-    </>
+    </View>
   );
 };
