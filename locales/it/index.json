@@ -624,7 +624,8 @@
         "alertMessage": "È necessario il riavvio dell'applicazione affinché le modifiche abbiano effetto."
       },
       "pnEnvironment": {
-        "pnEnv": "SEND (PN)"
+        "pnEnv": "SEND (PN)",
+        "aarEnv": "Avviso Avvenuta Ricezione (AAR)"
       },
       "idpay": {
         "idpayTest": "IDPay",
@@ -2950,6 +2951,9 @@
       },
       "featured": {
         "services": {
+          "a11y": {
+            "title": "Servizi in primo piano"
+          },
           "title": "In primo piano"
         },
         "institutions": {
@@ -3009,6 +3013,9 @@
         "messageReadStatus": "Ricevere conferme di lettura"
       },
       "metadata": {
+        "a11y": {
+          "website": "Visita il sito dell'ente"
+        },
         "title": "Contatti ed informazioni",
         "website": "Visita il sito",
         "downloadApp": "Scarica l'app",
@@ -4154,7 +4161,7 @@
           "cgn": "Carta Giovani Nazionale",
           "itw": "Documenti",
           "payment": "Metodi di pagamento",
-          "other": "Altro"
+          "other": "Bonus e altro"
         }
       },
       "onboarding": {
@@ -4738,28 +4745,39 @@
             "secondary": "Annulla"
           }
         },
-        "eidResult": {
-          "successL2": {
-            "title": "È tutto pronto!",
-            "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
-            "toast": "Fatto!",
-            "actions": {
-              "continue": "Aggiungi primo documento",
-              "continueAlt": "Aggiungi documento",
-              "close": "Continua più tardi"
-            }
+        "upgrade": {
+          "loading": {
+            "title": "Stiamo aggiornando i tuoi documenti",
+            "subtitle": "Attendi qualche secondo"
           },
           "success": {
             "title": "Il tuo IT-Wallet è pronto!",
             "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale di Stato.",
-            "actions": {
-              "continue": "Esplora IT-Wallet"
-            }
+            "primaryAction": "Esplora IT-Wallet"
+          },
+          "failure": {
+            "title": "Non è stato possibile aggiornare {{credentialName}}",
+            "titleMany": "Non è stato possibile aggiornare i documenti",
+            "subtitle": "Il tuo IT-Wallet è pronto ma un errore tecnico sui sistemi dell’ente che emette la versione digitale dei documenti ne ha impedito l’aggiornamento. Prova ad aggiungere di nuovo i documenti.",
+            "primaryAction": "Esplora IT-Wallet"
+          }
+        },
+        "eidResult": {
+          "success": {
+            "title": "È tutto pronto!",
+            "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
+            "primaryAction": "Aggiungi primo documento",
+            "secondaryAction": "Continua più tardi"
           }
         },
         "emptyWallet": {
-          "itwReadyBanner": {
-            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO."
+          "readyBanner": {
+            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO.",
+            "action": "Aggiungi documento"
+          },
+          "readyBannerL2": {
+            "title": "È tutto pronto!",
+            "content": "Ora puoi aggiungere il primo documento al Portafoglio di IO."
           }
         },
         "credentialResult": {
@@ -4994,10 +5012,10 @@
           "claimUnavailable": "Non disponibile",
           "optionalClaimsAlert": "I dati facoltativi ti offrono servizi più completi.",
           "missingClaimsAlert": "Alcuni dati facoltativi non sono disponibili nel tuo Portafoglio.",
-          "disclaimer": [
-            "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
-            "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
-          ],
+          "disclaimer": {
+            "0": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
+            "1": "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
+          },
           "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}})."
         },
         "remote": {
@@ -5193,10 +5211,10 @@
             "subtitle": "Saranno mostrati a **{{relyingParty}}** per completare la verifica dei documenti richiesti.",
             "requiredClaims": "Dati necessari",
             "purpose": "Finalità: Identificazione",
-            "disclaimer": [
-              "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
-              "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
-            ],
+            "disclaimer": {
+              "0": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
+              "1": "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
+            },
             "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
             "alert": {
               "message": "Non potrai completare la verifica del documento."
@@ -5371,7 +5389,7 @@
       },
       "upgrade": {
         "banner": {
-          "title": "IT-Wallet per\ni tuoi documenti",
+          "title": "IT-Wallet per i tuoi documenti",
           "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
           "action": "Ottieni IT-Wallet"
         }
@@ -5842,8 +5860,9 @@
         "subtitle": "Per accedere all’iniziativa {{service}}, verificheremo con alcuni enti se hai i requisiti.",
         "code": {
           "ISEE": "ISEE",
-          "BIRTHDATE": "Data di nascita",
-          "RESIDENCE": "Residenza"
+          "BIRTHDAY": "Data di nascita",
+          "RESIDENCE": "Residenza",
+          "FAMILY_UNIT": "Nucleo Familiare"
         },
         "operator": {
           "EQ": "{{value}}",
@@ -6116,6 +6135,15 @@
         "input": "Codice sconto",
         "button": "Continua"
       }
+    },
+    "support": {
+      "errorCode": "Codice errore",
+      "serviceId": "ID servizio",
+      "initiativeId": "ID iniziativa",
+      "supportTitle": "Contatta l'assistenza",
+      "chat": "Chiedi aiuto in chat",
+      "additionalDataTitle": "Dati aggiuntivi",
+      "copyAll": "Copia tutti"
     }
   },
   "barcodeScan": {
@@ -6212,7 +6240,8 @@
     "expiring": "Scade il {{endDate}}",
     "expired": "Scaduta il {{endDate}}",
     "paused": "In pausa",
-    "removed": "Rimossa"
+    "removed": "Rimossa",
+    "used": "Utilizzato"
   },
   "transaction": {
     "details": {

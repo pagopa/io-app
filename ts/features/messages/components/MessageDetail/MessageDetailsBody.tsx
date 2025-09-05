@@ -4,7 +4,7 @@ import { ScrollView } from "react-native";
 import { useLinkTo } from "@react-navigation/native";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import { Alert, Body, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIOSelector } from "../../../../store/hooks";
 import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import IOMarkdown from "../../../../components/IOMarkdown";

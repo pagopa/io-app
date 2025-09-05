@@ -5,7 +5,7 @@
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { AccessibilityInfo, View } from "react-native";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { trackIngressScreen } from "../../settings/common/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
@@ -42,8 +42,11 @@ export const IngressScreen = () => {
   );
 
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
-  const [contentTitle, setContentTitle] = useState(I18n.t("startup.title"));
   const [showBanner, setShowBanner] = useState(false);
+  const [contentTitle, setContentTitle] = useState<string>(
+    I18n.t("startup.title")
+  );
+
 
   useEffect(() => {
     // Since the screen is shown for a very short time,

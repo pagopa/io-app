@@ -15,7 +15,7 @@ const mockFailure: NetworkError = {
   kind: "generic",
   value: new Error("401")
 };
-const mockTransactionDetail: TransactionDetailDTO = {
+const mockTransactionDetail = {
   brand: "VISA",
   operationType: TransactionOperationType.TRANSACTION,
   operationDate: new Date(),
@@ -29,7 +29,7 @@ const mockTransactionDetail: TransactionDetailDTO = {
   idTrxAcquirer: "1",
   idTrxIssuer: "1",
   status: StatusEnum.AUTHORIZED
-};
+} as TransactionDetailDTO;
 
 describe("Test timeline operation details reducer", () => {
   it("should be pot.none before the first loading action", () => {

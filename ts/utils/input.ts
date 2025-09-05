@@ -4,7 +4,7 @@ import * as t from "io-ts";
 import * as _ from "lodash";
 import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { pipe } from "fp-ts/lib/function";
-import I18n from "../i18n";
+import I18n from "i18next";
 import { CreditCard } from "../types/pagopa";
 import { CreditCardDetector, SupportedBrand } from "./creditCard";
 import { isStringNullyOrEmpty } from "./strings";

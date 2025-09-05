@@ -3,6 +3,7 @@ import { JSX, useEffect, useMemo, useState } from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { GestureResponderEvent } from "react-native";
+import I18n from "i18next";
 import { useIOSelector } from "../store/hooks";
 import { statusMessageByRouteSelector } from "../store/reducers/backendStatus/statusMessages";
 import {
@@ -10,7 +11,6 @@ import {
   getFullLocale
 } from "../utils/locale";
 import { LevelEnum } from "../../definitions/content/StatusMessage";
-import I18n from "../i18n";
 import { openWebUrl } from "../utils/url";
 import { isConnectedSelector } from "../features/connectivity/store/selectors";
 import IOMarkdown from "../components/IOMarkdown";

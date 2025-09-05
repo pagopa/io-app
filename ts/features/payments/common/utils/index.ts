@@ -6,7 +6,7 @@ import {
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";

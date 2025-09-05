@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { Body, IOVisualCostants, VStack } from "@pagopa/io-app-design-system";
 import { Dimensions, View } from "react-native";
+import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { ItwProximityMachineContext } from "../machine/provider";
 import {
@@ -10,9 +11,9 @@ import {
   selectQRCodeString,
   selectShouldPresentQRCodeBottomSheet
 } from "../machine/selectors";
-import I18n from "../../../../../i18n";
 import { ItwRetryableQRCode } from "../../../common/components/ItwRetryableQRCode";
 import { trackItwProximityQrCodeLoadingRetry } from "../analytics";
+import { MaxBrightness } from "../../../../../utils/brightness";
 
 const QR_WIDTH =
   Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
@@ -40,6 +41,7 @@ export const useItwPresentQRCode = () => {
     ),
     component: (
       <VStack space={24}>
+        <MaxBrightness useSmoothTransition={true} />
         <Body>
           {I18n.t(
             "features.itWallet.presentation.proximity.mdl.bottomSheet.body"

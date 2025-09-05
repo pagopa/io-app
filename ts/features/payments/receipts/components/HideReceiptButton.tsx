@@ -1,7 +1,7 @@
 import { ContentWrapper, ListItemAction } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";

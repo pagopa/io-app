@@ -2,7 +2,6 @@ import { createStore } from "redux";
 import { F24Section } from "../F24Section";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { UIMessageId } from "../../../messages/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import * as thirdPartyById from "../../../messages/store/reducers/thirdPartyById";
@@ -117,7 +116,7 @@ const renderComponent = (isCancelled: boolean = false) => {
   return renderScreenWithNavigationStoreContext(
     () => (
       <F24Section
-        messageId={"01HS1ANR1SDPN3BP51X3G74T64" as UIMessageId}
+        messageId={"01HS1ANR1SDPN3BP51X3G74T64"}
         serviceId={"01HS1ANWT4N83QGATCXYMXDP8M" as ServiceId}
         isCancelled={isCancelled}
       />

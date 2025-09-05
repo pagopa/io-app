@@ -436,6 +436,20 @@ export const trackItwCredentialNeedsVerification = (
   );
 };
 
+export const trackItwOfflineAccessExpiring = () => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_ACCESS_EXPIRING,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
+export const trackItwOfflineAccessExpired = () => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_ACCESS_EXPIRED,
+    buildEventProperties("KO", "screen_view")
+  );
+};
+
 // #endregion SCREEN VIEW EVENTS
 
 // #region ACTIONS
@@ -1294,4 +1308,18 @@ export const trackOfflineAccessReason = (
         value: "not_available"
       });
   }
+};
+
+export const trackStartCredentialUpgrade = (credential: MixPanelCredential) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_START_REISSUING,
+    buildEventProperties("UX", "action", { credential })
+  );
+};
+
+export const trackCredentialUpgradeFailed = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_CREDENTIAL_REISSUING_FAILED,
+    buildEventProperties("KO", "screen_view")
+  );
 };

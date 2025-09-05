@@ -413,8 +413,8 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -1055,8 +1055,8 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -1697,8 +1697,8 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -2336,8 +2336,8 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={

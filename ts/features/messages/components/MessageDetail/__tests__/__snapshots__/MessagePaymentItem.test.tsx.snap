@@ -957,7 +957,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                     ]
                                   }
                                 >
-                                  Due date 23/11/2023
+                                  Entro il 23/11/2023
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -991,7 +991,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 }
                               >
                                 <Text
-                                  accessibilityLabel="0.99 €"
+                                  accessibilityLabel="0,99 €"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
@@ -1010,7 +1010,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                     ]
                                   }
                                 >
-                                  0.99 €
+                                  0,99 €
                                 </Text>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
@@ -1558,7 +1558,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -1637,7 +1637,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                       ]
                                     }
                                   >
-                                    Revoked
+                                    Revocato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView

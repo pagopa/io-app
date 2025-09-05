@@ -9,7 +9,6 @@ import {
   mixpanelTrack
 } from "../../../mixpanel";
 import { readablePrivacyReport } from "../../../utils/reporters";
-import { UIMessageId } from "../types";
 import {
   booleanToYesNo,
   buildEventProperties,
@@ -135,7 +134,7 @@ export const trackThirdPartyMessageAttachmentCount = (
 };
 
 export const trackThirdPartyMessageAttachmentUnavailable = (
-  messageId: UIMessageId,
+  messageId: string,
   serviceId: ServiceId | undefined
 ) => {
   const eventName = "THIRD_PARTY_MESSAGE_ATTACHMENT_UNAVAILABLE";
@@ -147,7 +146,7 @@ export const trackThirdPartyMessageAttachmentUnavailable = (
 };
 
 export const trackThirdPartyMessageAttachmentDownloadFailed = (
-  messageId: UIMessageId,
+  messageId: string,
   serviceId: ServiceId | undefined
 ) => {
   const eventName = "THIRD_PARTY_MESSAGE_ATTACHMENT_DOWNLOAD_FAILED";
@@ -159,7 +158,7 @@ export const trackThirdPartyMessageAttachmentDownloadFailed = (
 };
 
 export const trackThirdPartyMessageAttachmentBadFormat = (
-  messageId: UIMessageId,
+  messageId: string,
   serviceId: ServiceId | undefined
 ) => {
   const eventName = "THIRD_PARTY_MESSAGE_ATTACHMENT_BAD_FORMAT";
@@ -171,7 +170,7 @@ export const trackThirdPartyMessageAttachmentBadFormat = (
 };
 
 export const trackThirdPartyMessageAttachmentCorruptedFile = (
-  messageId: UIMessageId,
+  messageId: string,
   serviceId?: ServiceId
 ) => {
   const eventName = "THIRD_PARTY_MESSAGE_ATTACHMENT_CORRUPTED_FILE";

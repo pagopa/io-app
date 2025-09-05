@@ -6,9 +6,9 @@ import {
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Fragment, useState } from "react";
+import I18n from "i18next";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
@@ -86,18 +86,20 @@ export const IdPayPDNDPrerequisitesScreen = () => {
       contextualHelp={emptyContextualHelp}
       headerActionsProp={{ showHelp: true }}
     >
-      {pdndCriteria.map((criteria, index) => (
+      {pdndCriteria?.map((criteria, index) => (
         <Fragment key={index}>
-          <ModuleSummary
-            label={I18n.t(
-              `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
-            )}
-            description={getPDNDCriteriaDescription(criteria)}
-            onPress={() => {
-              setAuthority(criteria.authority);
-              present();
-            }}
-          />
+          {criteria.code && (
+            <ModuleSummary
+              label={I18n.t(
+                `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
+              )}
+              description={getPDNDCriteriaDescription(criteria)}
+              onPress={() => {
+                setAuthority(criteria.authority);
+                present();
+              }}
+            />
+          )}
           <VSpacer size={16} />
         </Fragment>
       ))}

@@ -9,10 +9,10 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { format } from "date-fns";
 import { ImageURISource, StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import WalletCardShape from "../../../../../img/features/idpay/wallet_card.svg";
 import DarkModeWalletCardShape from "../../../../../img/features/idpay/wallet_card_dark.svg";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { idPayWalletInitiativeListSelector } from "../store/reducers";
@@ -50,7 +50,7 @@ export const IdPayCard = (props: IdPayCardProps) => {
     const available = isDarkMode ? ("white" as const) : ("blueIO-850" as const);
 
     const amountColor = isDarkMode
-      ? ("blueIO-200" as const)
+      ? ("blueIO-300" as const)
       : ("blueIO-500" as const);
 
     const validationColor = isDarkMode

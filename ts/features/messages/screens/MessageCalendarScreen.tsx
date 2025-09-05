@@ -11,19 +11,18 @@ import * as TE from "fp-ts/lib/TaskEither";
 import { useCallback, useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { Calendar } from "react-native-calendar-events";
+import I18n from "i18next";
 import { CalendarList } from "../../../components/CalendarList";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { findDeviceCalendarsTask } from "../../../utils/calendar";
 import { useMessageCalendar } from "../hooks/useMessageCalendar";
 import { MessagesParamsList } from "../navigation/params";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
-import { UIMessageId } from "../types";
 
 export type MessageCalendarScreenRouteParams = {
-  messageId: UIMessageId;
+  messageId: string;
 };
 
 type MessageCalendarRouteProps = RouteProp<

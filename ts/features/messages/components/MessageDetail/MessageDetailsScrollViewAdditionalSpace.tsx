@@ -1,13 +1,12 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOStyles, buttonSolidHeight } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import { UIMessageId } from "../../types";
 import { useIOSelector } from "../../../../store/hooks";
 import { isPaymentsButtonVisibleSelector } from "../../store/reducers/payments";
 import { gapBetweenItemsInAGrid } from "../../utils";
 
 type ScrollViewAdditionalSpaceProps = {
-  messageId: UIMessageId;
+  messageId: string;
   hasCTA1: boolean;
   hasCTA2: boolean;
 };

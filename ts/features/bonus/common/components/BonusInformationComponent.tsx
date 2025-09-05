@@ -14,6 +14,7 @@ import Animated, {
   useAnimatedRef,
   useSharedValue
 } from "react-native-reanimated";
+import I18n from "i18next";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -24,7 +25,6 @@ import {
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import { getRemoteLocale } from "../../../messages/utils/ctas";
 import TosBonusComponent from "./TosBonusComponent";

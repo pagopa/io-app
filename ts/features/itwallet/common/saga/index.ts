@@ -3,7 +3,7 @@ import { call, fork } from "typed-redux-saga/macro";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
 import { checkCredentialsStatusAttestation } from "../../credentials/saga/checkCredentialsStatusAttestation";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
-import { checkHasNfcFeatureSaga } from "../../identification/saga";
+import { checkHasNfcFeatureSaga } from "../../identification/common/saga/index.ts";
 import { watchItwLifecycleSaga } from "../../lifecycle/saga";
 import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
 import { warmUpIntegrityServiceSaga } from "../../lifecycle/saga/checkIntegrityServiceReadySaga";

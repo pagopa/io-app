@@ -22,11 +22,11 @@ const IdPayOnboardingServiceHeader = (props: Props) => {
     O.map(initiativeDetails => ({
       organizationName: initiativeDetails.organizationName,
       initiativeName: initiativeDetails.initiativeName,
-      logoURL: initiativeDetails.logoURL
+      thumbnailUrl: initiativeDetails.thumbnailUrl
     })),
     O.fold(
       () => <Skeleton />,
-      ({ initiativeName, logoURL }) => (
+      ({ initiativeName, thumbnailUrl }) => (
         <VStack>
           <Image
             accessibilityIgnoresInvertColors
@@ -35,7 +35,7 @@ const IdPayOnboardingServiceHeader = (props: Props) => {
               height: 270,
               flex: 1
             }}
-            source={{ uri: logoURL }}
+            source={{ uri: thumbnailUrl }}
           />
           <ContentWrapper>
             <VSpacer size={24} />

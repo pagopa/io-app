@@ -2978,6 +2978,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.27.6":
+  version: 7.28.3
+  resolution: "@babel/runtime@npm:7.28.3"
+  checksum: dd22662b9e02b6e66cfb061d6f9730eb0aa3b3a390a7bd70fe9a64116d86a3704df6d54ab978cb4acc13b58dbf63a3d7dd4616b0b87030eb14a22835e0aa602d
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.0.0, @babel/template@npm:^7.24.7, @babel/template@npm:^7.3.3, @babel/template@npm:^7.8.6":
   version: 7.24.7
   resolution: "@babel/template@npm:7.24.7"
@@ -4000,31 +4007,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet-v2@npm:@pagopa/io-react-native-wallet@2.0.0-next.8":
-  version: 2.0.0-next.8
-  resolution: "@pagopa/io-react-native-wallet@npm:2.0.0-next.8"
-  dependencies:
-    dcql: ^0.2.21
-    js-base64: ^3.7.7
-    js-sha256: ^0.9.0
-    jsonpath-plus: ^10.2.0
-    jsrsasign: ^11.1.0
-    parse-url: ^9.2.0
-    react-native-url-polyfill: ^2.0.0
-    react-native-uuid: ^2.0.1
-    uuid: ^11.0.3
-    zod: ^3.21.4
-  peerDependencies:
-    "@pagopa/io-react-native-crypto": "*"
-    "@pagopa/io-react-native-iso18013": "*"
-    "@pagopa/io-react-native-jwt": "*"
-    react: "*"
-    react-native: "*"
-  checksum: 945a59330f8bd3606846d3894d56b47b011cbe38e4e1e125361963560693d6dd4354fbb55a582d0ee5d16bd747b2f4d541e3b5cfe8b3664a99c28713b6920975
-  languageName: node
-  linkType: hard
-
-"@pagopa/io-react-native-wallet@npm:^0.30.0":
+"@pagopa/io-react-native-wallet-legacy@npm:@pagopa/io-react-native-wallet@0.30.0":
   version: 0.30.0
   resolution: "@pagopa/io-react-native-wallet@npm:0.30.0"
   dependencies:
@@ -4043,6 +4026,30 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 4ffbb017900c41267ea896d4a6ac754452a2e81bde52c35b096a283908198606ad18843e11201a51e9699c7f6e02297f5a6c67869e93888038c20b0e4c17c075
+  languageName: node
+  linkType: hard
+
+"@pagopa/io-react-native-wallet@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@pagopa/io-react-native-wallet@npm:2.0.0"
+  dependencies:
+    dcql: ^0.2.21
+    js-base64: ^3.7.7
+    js-sha256: ^0.9.0
+    jsonpath-plus: ^10.2.0
+    jsrsasign: ^11.1.0
+    parse-url: ^9.2.0
+    react-native-url-polyfill: ^2.0.0
+    react-native-uuid: ^2.0.1
+    uuid: ^11.0.3
+    zod: ^3.21.4
+  peerDependencies:
+    "@pagopa/io-react-native-crypto": "*"
+    "@pagopa/io-react-native-iso18013": "*"
+    "@pagopa/io-react-native-jwt": "*"
+    react: "*"
+    react-native: "*"
+  checksum: b18800655c4040a8c0bd1bd874f98a567f740173b8681fc6aa9d2bab62086b3c54264dc6772c6eda6f80f2d7bc9ec11dd556bd87e1d9b702276ebdaf41509171
   languageName: node
   linkType: hard
 
@@ -5502,13 +5509,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/i18n-js@npm:*":
-  version: 3.0.3
-  resolution: "@types/i18n-js@npm:3.0.3"
-  checksum: 0df787af45bae42dd6c27ad9b0993200f1e4ebfcadfd9b65a8e812e0953f7b3b2553cb15daade614756e149e62878f555f2b6fbb23989e429a8c1db917109781
-  languageName: node
-  linkType: hard
-
 "@types/istanbul-lib-coverage@npm:*, @types/istanbul-lib-coverage@npm:^2.0.0, @types/istanbul-lib-coverage@npm:^2.0.1":
   version: 2.0.3
   resolution: "@types/istanbul-lib-coverage@npm:2.0.3"
@@ -5707,15 +5707,6 @@ __metadata:
   version: 2.0.0
   resolution: "@types/react-native-background-timer@npm:2.0.0"
   checksum: 74c365e60362b9eedfbbe88436aa5f2ed9c63d04e59958cd1de63d3c2a6c1209b746aa28f6f11c1bc9b855c16740f93341003111841d981edccdbd524d99c920
-  languageName: node
-  linkType: hard
-
-"@types/react-native-i18n@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@types/react-native-i18n@npm:2.0.0"
-  dependencies:
-    "@types/i18n-js": "*"
-  checksum: e941637971717e5a74c0af2e6862926d51e6b98a6f55225b24b7c5656990108f4da9376d535fc9cdd0bc826e49254c4365fda6943d1169a87b36bd7fc384f97f
   languageName: node
   linkType: hard
 
@@ -11953,6 +11944,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"html-parse-stringify@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "html-parse-stringify@npm:3.0.1"
+  dependencies:
+    void-elements: 3.1.0
+  checksum: 334fdebd4b5c355dba8e95284cead6f62bf865a2359da2759b039db58c805646350016d2017875718bc3c4b9bf81a0d11be5ee0cf4774a3a5a7b97cde21cfd67
+  languageName: node
+  linkType: hard
+
 "html-void-elements@npm:^2.0.0":
   version: 2.0.0
   resolution: "html-void-elements@npm:2.0.0"
@@ -12112,10 +12112,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18n-js@npm:3.0.11":
-  version: 3.0.11
-  resolution: "i18n-js@npm:3.0.11"
-  checksum: 2fe94bf00f507068a3e9ac632a93d10d9aa7d254bbec33108311f0ee992a9d262fc68b4e48fd14d5fcffc539f6e58d78bfff24252266ebfd493df09618b440f4
+"i18next@npm:^25.4.2":
+  version: 25.4.2
+  resolution: "i18next@npm:25.4.2"
+  dependencies:
+    "@babel/runtime": ^7.27.6
+  peerDependencies:
+    typescript: ^5
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: c00853eb874f2b9a536d2cc4a3f41d10aed304c2025f787d8c0119154c8b145e7411d39edbfffc84d6666588b764b829d309cc7316dfd9fe60d5d6098438f768
   languageName: node
   linkType: hard
 
@@ -12958,8 +12965,8 @@ __metadata:
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": ^1.1.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
-    "@pagopa/io-react-native-wallet": ^0.30.0
-    "@pagopa/io-react-native-wallet-v2": "npm:@pagopa/io-react-native-wallet@2.0.0-next.8"
+    "@pagopa/io-react-native-wallet": ^2.0.0
+    "@pagopa/io-react-native-wallet-legacy": "npm:@pagopa/io-react-native-wallet@0.30.0"
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.0.1
     "@pagopa/react-native-cie": ^1.4.2
@@ -13005,7 +13012,6 @@ __metadata:
     "@types/prettier": ^2.7.3
     "@types/react": ^19.0.0
     "@types/react-native-background-timer": ^2.0.0
-    "@types/react-native-i18n": ^2.0.0
     "@types/react-native-push-notification": ^8.1.1
     "@types/react-test-renderer": ^19.0.0
     "@types/redux-logger": ^3.0.6
@@ -13045,6 +13051,7 @@ __metadata:
     hastscript: ^7.0.2
     hoist-non-react-statics: ^3.0.1
     husky: ^8.0.0
+    i18next: ^25.4.2
     io-ts: ^2.2.16
     jail-monkey: ^2.8.3
     jest: ^29.7.0
@@ -13065,6 +13072,7 @@ __metadata:
     postinstall-postinstall: ^1.0.0
     prettier: 2.8.8
     react: 19.0.0
+    react-i18next: ^15.7.2
     react-native: 0.78.2
     react-native-android-open-settings: ^1.3.0
     react-native-background-timer: 2.1.1
@@ -13083,7 +13091,6 @@ __metadata:
     react-native-gesture-handler: ^2.25.0
     react-native-get-random-values: ^1.11.0
     react-native-haptic-feedback: ^2.3.3
-    react-native-i18n: ^2.0.15
     react-native-image-pan-zoom: ^2.1.11
     react-native-image-picker: 7.2.3
     react-native-keychain: ^9.2.2
@@ -17395,6 +17402,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-i18next@npm:^15.7.2":
+  version: 15.7.2
+  resolution: "react-i18next@npm:15.7.2"
+  dependencies:
+    "@babel/runtime": ^7.27.6
+    html-parse-stringify: ^3.0.1
+  peerDependencies:
+    i18next: ">= 25.4.1"
+    react: ">= 16.8.0"
+    typescript: ^5
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+    typescript:
+      optional: true
+  checksum: 0babf948cf657958d5d04dae67c7990598e4eb09804b7c621b88414ec5b39917105b4dfa7138d7bb0641e63b47abe8b2fb486d9bd00f924402bdf2d3b4c6246c
+  languageName: node
+  linkType: hard
+
 "react-is@npm:19.0.0":
   version: 19.0.0
   resolution: "react-is@npm:19.0.0"
@@ -17620,15 +17648,6 @@ __metadata:
   peerDependencies:
     react-native: ">=0.60.0"
   checksum: 5ff12aaf44fa1cad8ab3d9c58046a11c631c6622955120294060efc51c625203ee4cd7ccb565663c12b27552ebbb7034a386000d9da738b9eea5ff62d58b14c0
-  languageName: node
-  linkType: hard
-
-"react-native-i18n@npm:^2.0.15":
-  version: 2.0.15
-  resolution: "react-native-i18n@npm:2.0.15"
-  dependencies:
-    i18n-js: 3.0.11
-  checksum: 8ea3500556c6a55a8e3a0fc838217a9d27bf541e2d6d9cefe5293889859af8fb494d1b8b25de7e80f6086023128814af9b22b6636aa2733443ae1c7118338420
   languageName: node
   linkType: hard
 
@@ -21196,6 +21215,13 @@ __metadata:
   bin:
     vm2: bin/vm2
   checksum: fc6cf553134145cd7bb5246985bf242b056e3fb5ea71e2eef6710b2a5d6c6119cc6bc960435ff62480ee82efb43369be8f4db07b6690916ae7d3b2e714f395d8
+  languageName: node
+  linkType: hard
+
+"void-elements@npm:3.1.0":
+  version: 3.1.0
+  resolution: "void-elements@npm:3.1.0"
+  checksum: 0390f818107fa8fce55bb0a5c3f661056001c1d5a2a48c28d582d4d847347c2ab5b7f8272314cac58acf62345126b6b09bea623a185935f6b1c3bbce0dfd7f7f
   languageName: node
   linkType: hard
 

@@ -1,7 +1,6 @@
 import { AnyAction, Dispatch, createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { UIMessageId } from "../../types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MessageRouterScreen } from "../MessageRouterScreen";
 import { getMessageDataAction } from "../../store/actions";
@@ -12,7 +11,7 @@ import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 describe("MessageRouterScreen", () => {
   it("should match snapshot before starting to retrieve message data", () => {
-    const messageId = "01HGRNT85KP8TC5APFQWAA3HJK" as UIMessageId;
+    const messageId = "01HGRNT85KP8TC5APFQWAA3HJK";
     const fromPushNotification = false;
     const { renderedMessageRouterScreen, mockedDispatch } = renderScreen(
       messageId,
@@ -28,7 +27,7 @@ describe("MessageRouterScreen", () => {
     );
   });
   it("should match snapshot while retrieving message data", () => {
-    const messageId = "01HGRNT85KP8TC5APFQWAA3HJK" as UIMessageId;
+    const messageId = "01HGRNT85KP8TC5APFQWAA3HJK";
     const fromPushNotification = false;
     const { renderedMessageRouterScreen, mockedDispatch } = renderScreen(
       messageId,
@@ -44,7 +43,7 @@ describe("MessageRouterScreen", () => {
     );
   });
   it("should match snapshot if message data retrieval was blocked", () => {
-    const messageId = "01HGRNT85KP8TC5APFQWAA3HJK" as UIMessageId;
+    const messageId = "01HGRNT85KP8TC5APFQWAA3HJK";
     const fromPushNotification = true;
     const { renderedMessageRouterScreen, mockedDispatch } = renderScreen(
       messageId,
@@ -60,7 +59,7 @@ describe("MessageRouterScreen", () => {
     );
   });
   it("should match snapshot on message data retrieval failure", () => {
-    const messageId = "01HGRNT85KP8TC5APFQWAA3HJK" as UIMessageId;
+    const messageId = "01HGRNT85KP8TC5APFQWAA3HJK";
     const fromPushNotification = false;
     const { renderedMessageRouterScreen, mockedDispatch } = renderScreen(
       messageId,
@@ -76,7 +75,7 @@ describe("MessageRouterScreen", () => {
     );
   });
   it("should match snapshot on message data retrieval success", () => {
-    const messageId = "01HGRNT85KP8TC5APFQWAA3HJK" as UIMessageId;
+    const messageId = "01HGRNT85KP8TC5APFQWAA3HJK";
     const fromPushNotification = false;
     const { renderedMessageRouterScreen, mockedDispatch } = renderScreen(
       messageId,
@@ -94,7 +93,7 @@ describe("MessageRouterScreen", () => {
 });
 
 const renderScreen = (
-  messageId: UIMessageId,
+  messageId: string,
   fromPushNotification: boolean,
   status: MessageGetStatus["status"]
 ) => {
@@ -121,7 +120,7 @@ const renderScreen = (
 
 const globalStateFromStatus = (
   status: MessageGetStatus["status"],
-  messageId: UIMessageId,
+  messageId: string,
   fromPushNotification: boolean
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));

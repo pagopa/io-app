@@ -7,9 +7,9 @@ import * as B from "fp-ts/lib/boolean";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback, useState } from "react";
 import ReactNativeBlobUtil from "react-native-blob-util";
+import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { isIos } from "../../../../utils/platform";
 import { share } from "../../../../utils/share";
@@ -29,7 +29,6 @@ import {
   attachmentContentType,
   attachmentDisplayName
 } from "../../store/reducers/transformers";
-import { UIMessageId } from "../../types";
 import { PdfViewer } from "./PdfViewer";
 
 type MessageAttachmentFooterProps = {
@@ -107,7 +106,7 @@ const MessageAttachmentFooter = ({
   );
 
 const onPDFError = (
-  messageId: UIMessageId,
+  messageId: string,
   isPN: boolean,
   serviceId?: ServiceId,
   attachmentCategory?: string
@@ -158,7 +157,7 @@ const onDownload = (isPN: boolean, attachmentCategory?: string) =>
   );
 
 export type MessageAttachmentProps = {
-  messageId: UIMessageId;
+  messageId: string;
   attachmentId: string;
   isPN: boolean;
   serviceId?: ServiceId;
