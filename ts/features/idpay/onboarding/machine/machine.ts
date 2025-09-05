@@ -582,9 +582,8 @@ export const idPayOnboardingMachine = setup({
     TooManyRequests: {
       entry: "navigateToFailureToRetryScreen",
       on: {
-        retry: {
-          target: "LoadingInitiative",
-          actions: assign(() => InitialContext)
+        retryConnection: {
+          target: "LoadingCriteria"
         },
         back: {
           actions: "closeOnboarding",

@@ -29,6 +29,8 @@ export const IdPayFailToRetryScreen = () => {
   const [contentTitle, setContentTitle] = useState(
     I18n.t("idpay.onboarding.failToRetry.contentTitle")
   );
+  const { useActorRef } = IdPayOnboardingMachineContext;
+  const machine = useActorRef();
 
   useEffect(() => {
     // Since the screen is shown for a very short time,
@@ -41,9 +43,9 @@ export const IdPayFailToRetryScreen = () => {
 
   useEffect(() => {
     const timeouts: Array<number> = [];
-
     timeouts.push(
       setTimeout(() => {
+        machine.send({ type: "retryConnection" });
         setContentTitle(I18n.t("startup.title2"));
         timeouts.shift();
       }, TIMEOUT_CHANGE_LABEL)
@@ -51,6 +53,7 @@ export const IdPayFailToRetryScreen = () => {
 
     timeouts.push(
       setTimeout(() => {
+        machine.send({ type: "retryConnection" });
         setShowBlockingScreen(true);
         dispatch(setIsBlockingScreen());
         timeouts.shift();
@@ -60,7 +63,7 @@ export const IdPayFailToRetryScreen = () => {
     return () => {
       timeouts?.forEach(clearTimeout);
     };
-  }, [dispatch]);
+  }, [dispatch, machine]);
 
   if (isConnected === false) {
     return <IngressScreenNoInternetConnection />;
