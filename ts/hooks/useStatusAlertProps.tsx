@@ -1,5 +1,5 @@
 import { AlertEdgeToEdgeProps } from "@pagopa/io-app-design-system";
-import { JSX, useEffect, useMemo, useState } from "react";
+import { JSX, useCallback, useEffect, useMemo, useState } from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { GestureResponderEvent } from "react-native";
@@ -21,13 +21,21 @@ import { currentRouteSelector } from "../store/reducers/navigation";
 import { buildEventProperties } from "../utils/analytics";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
+import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
+import {
+  trackItwOfflineBanner,
+  trackItwOfflineBottomSheet
+} from "../features/itwallet/analytics";
+import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
+import { useOfflineAlertDetailModal } from "../features/itwallet/common/hooks/useOfflineAlertDetailModal";
+import { useAppRestartAction } from "../features/itwallet/wallet/hooks/useAppRestartAction";
+import { isStartupLoaded, StartupStatusEnum } from "../store/reducers/startup";
 
 // This is a list of routes where the offline alert should not be shown
 const blackListOfflineAlertRoutes = new Set<string>([
   ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
   ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL,
-  ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
-  ITW_ROUTES.OFFLINE.WALLET
+  ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT
 ]);
 
 const statusVariantMap: Record<LevelEnum, AlertEdgeToEdgeProps["variant"]> = {
@@ -50,72 +58,148 @@ type AlertProps = {
   alertProps?: AlertEdgeToEdgeProps;
   bottomSheet?: JSX.Element;
 };
-export const useStatusAlertProps = (
-  routeName?: string
-): AlertProps | undefined => {
+export const useStatusAlertProps = (): AlertProps | undefined => {
+  const { isAlertVisible, setAlertVisible } = useIOAlertVisible();
   const [connectivityAlert, setConnectivityAlert] = useState<
     AlertEdgeToEdgeProps | undefined
   >(undefined);
-  const { present, bottomSheet } = useIOBottomSheetModal({
+
+  const currentStatusMessage = useIOSelector(statusMessageByRouteSelector);
+  const currentRoute = useIOSelector(currentRouteSelector);
+  const isConnected = useIOSelector(isConnectedSelector);
+  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+  const startupStatus = useIOSelector(isStartupLoaded);
+  const prevIsConnected = usePrevious(isConnected);
+
+  const locale = getFullLocale();
+  const localeFallback = fallbackForLocalizedMessageKeys(locale);
+
+  // Bottom sheets
+  const itwOfflineModal = useOfflineAlertDetailModal(
+    offlineAccessReason ?? OfflineAccessReasonEnum.DEVICE_OFFLINE
+  );
+  const commonOfflineModal = useIOBottomSheetModal({
     title: I18n.t("global.offline.bottomSheet.title"),
     component: (
       <IOMarkdown content={I18n.t("global.offline.bottomSheet.content")} />
     )
   });
 
-  const currentStatusMessage = useIOSelector(
-    statusMessageByRouteSelector(routeName)
+  const openCommonOfflineBottomSheet = useCallback(() => {
+    commonOfflineModal?.present();
+    void mixpanelTrack(
+      "APP_OFFLINE_BOTTOM_SHEET",
+      buildEventProperties("UX", "screen_view", {
+        screen: currentRoute
+      })
+    );
+  }, [commonOfflineModal, currentRoute]);
+
+  const openItwOfflineBottomSheet = useCallback(() => {
+    itwOfflineModal?.present();
+    trackItwOfflineBottomSheet();
+  }, [itwOfflineModal]);
+
+  const handleAppRestart = useAppRestartAction("banner");
+
+  const isBlacklisted = useMemo(
+    () => blackListOfflineAlertRoutes.has(currentRoute),
+    [currentRoute]
   );
 
-  const currentRoute = useIOSelector(currentRouteSelector);
-  const isConnected = useIOSelector(isConnectedSelector);
-  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
-
-  const prevIsConnected = usePrevious(isConnected);
-
-  const locale = getFullLocale();
-  const localeFallback = fallbackForLocalizedMessageKeys(locale);
-
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
+    /**
+     * Makes sure that the alert is not shown during the app startup
+     * if we have connectivity and not in the offline mini app
+     */
     if (
-      blackListOfflineAlertRoutes.has(currentRoute) ||
-      offlineAccessReason !== undefined
+      isAlertVisible &&
+      isConnected &&
+      offlineAccessReason === undefined &&
+      startupStatus === StartupStatusEnum.INITIAL
     ) {
-      /**
-       * In case we are in the mini-app for offline usage or the current route is in the blacklist,
-       * we don't need to show the alert.
-       */
       setConnectivityAlert(undefined);
+      setAlertVisible(false);
       return;
     }
-    if (isConnected === false) {
+
+    /**
+     * Screens in the blacklist should not display the alert
+     */
+    if (isBlacklisted && isAlertVisible) {
+      setConnectivityAlert(undefined);
+      setAlertVisible(false);
+      return;
+    }
+
+    /**
+     * Show the offline alert only if the device is offline and the current route
+     * is not in the blacklist
+     */
+    if (!isBlacklisted && isConnected === false && !isAlertVisible) {
       setConnectivityAlert({
         variant: "info",
-        content: I18n.t("global.offline.statusMessage.message"),
-        action: I18n.t("global.offline.statusMessage.action"),
-        onPress: () => {
-          present();
-          void mixpanelTrack(
-            "APP_OFFLINE_BOTTOM_SHEET",
-            buildEventProperties("UX", "screen_view", {
-              screen: currentRoute
+        ...(offlineAccessReason
+          ? {
+              content: I18n.t(
+                `features.itWallet.offline.${offlineAccessReason}.alert.content`
+              ),
+              action: I18n.t(
+                `features.itWallet.offline.${offlineAccessReason}.alert.action`
+              ),
+              onPress: openItwOfflineBottomSheet
+            }
+          : {
+              content: I18n.t("global.offline.statusMessage.message"),
+              action: I18n.t("global.offline.statusMessage.action"),
+              onPress: openCommonOfflineBottomSheet
             })
-          );
-        }
       });
 
-      void mixpanelTrack(
-        "OFFLINE_BANNER",
-        buildEventProperties("TECH", undefined, {
-          screen: currentRoute
-        })
-      );
+      setAlertVisible(true);
+
+      if (offlineAccessReason) {
+        trackItwOfflineBanner({
+          screen: currentRoute,
+          error_message_type: offlineAccessReason,
+          use_case: "starting_app"
+        });
+      } else {
+        void mixpanelTrack(
+          "OFFLINE_BANNER",
+          buildEventProperties("TECH", undefined, {
+            screen: currentRoute
+          })
+        );
+      }
+      return;
     }
-    if (prevIsConnected === false && isConnected === true) {
-      setConnectivityAlert({
-        variant: "success",
-        content: I18n.t("global.offline.connectionRestored")
-      });
+
+    /**
+     * If the device was offline and returns online, show a "back online" alert
+     * which disappears after 3 seconds
+     */
+    if (prevIsConnected === false && isConnected === true && isAlertVisible) {
+      setConnectivityAlert(
+        offlineAccessReason === OfflineAccessReasonEnum.DEVICE_OFFLINE
+          ? {
+              content: I18n.t(
+                `features.itWallet.offline.back_online.alert.content`
+              ),
+              action: I18n.t(
+                `features.itWallet.offline.back_online.alert.action`
+              ),
+              variant: "success",
+              onPress: handleAppRestart
+            }
+          : {
+              variant: "success",
+              content: I18n.t("global.offline.connectionRestored")
+            }
+      );
+
+      setAlertVisible(true);
 
       void mixpanelTrack(
         "ONLINE_BANNER",
@@ -124,23 +208,39 @@ export const useStatusAlertProps = (
         })
       );
 
-      setTimeout(() => {
-        setConnectivityAlert(undefined);
-      }, 3000);
+      if (offlineAccessReason !== OfflineAccessReasonEnum.DEVICE_OFFLINE) {
+        /**
+         * Removes the "back online" alert after 3 seconds only if the app is not
+         * in the offline mode
+         */
+        setTimeout(() => {
+          setConnectivityAlert(undefined);
+          setAlertVisible(false);
+        }, 3000);
+      }
     }
   }, [
-    isConnected,
-    present,
-    prevIsConnected,
+    isBlacklisted,
     currentRoute,
-    offlineAccessReason
+    setAlertVisible,
+    startupStatus,
+    handleAppRestart,
+    isAlertVisible,
+    isConnected,
+    offlineAccessReason,
+    openCommonOfflineBottomSheet,
+    openItwOfflineBottomSheet,
+    prevIsConnected
   ]);
 
   return useMemo(() => {
-    if (isConnected === false && connectivityAlert) {
+    if (connectivityAlert) {
       return {
         alertProps: connectivityAlert,
-        bottomSheet
+        bottomSheet:
+          offlineAccessReason !== undefined
+            ? itwOfflineModal.bottomSheet
+            : commonOfflineModal.bottomSheet
       };
     }
     if (!currentStatusMessage || currentStatusMessage.length === 0) {
@@ -163,6 +263,8 @@ export const useStatusAlertProps = (
       )
     );
 
+    setAlertVisible(currentStatusMessage.length > 0);
+
     return {
       alertProps: {
         content: firstAlert.message[localeFallback],
@@ -171,10 +273,12 @@ export const useStatusAlertProps = (
       }
     };
   }, [
+    connectivityAlert,
     currentStatusMessage,
+    setAlertVisible,
     localeFallback,
-    isConnected,
-    bottomSheet,
-    connectivityAlert
+    offlineAccessReason,
+    itwOfflineModal.bottomSheet,
+    commonOfflineModal.bottomSheet
   ]);
 };
