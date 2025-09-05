@@ -15,7 +15,6 @@ import {
   updatePaymentForMessage,
   UpdatePaymentForMessageSuccess
 } from "../../store/actions";
-import { UIMessageId } from "../../types";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
@@ -26,7 +25,7 @@ describe("handlePaymentUpdateRequests", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-  const messageId = "01JWXM7Q90CX4S57P855JZ63PC" as UIMessageId;
+  const messageId = "01JWXM7Q90CX4S57P855JZ63PC";
   const paymentId = "0123456789012345678901234567890";
   const serviceId = "01JWXM8C2NJT15SC930ZKGCRDB" as ServiceId;
   describe("handlePaymentUpdateRequests", () => {

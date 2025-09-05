@@ -24,3 +24,11 @@ type TypedRemoteFailures = {
  * Union type of failures with the reason properly typed.
  */
 export type ItwFailure = TypedRemoteFailures[keyof TypedRemoteFailures];
+
+/**
+ * Enriched error with credential metadata. Used to augment errors
+ * thrown by `io-react-native-wallet` with the credential configuration ID.
+ */
+export type WithCredentialMetadata<E = Error> = E & {
+  metadata?: { credentialId: string };
+};

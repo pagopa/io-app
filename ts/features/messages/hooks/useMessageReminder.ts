@@ -4,7 +4,7 @@ import { Calendar } from "react-native-calendar-events";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import {
   isEventInCalendar,
   requestCalendarPermission
@@ -12,11 +12,10 @@ import {
 import { openAppSettings } from "../../../utils/appSettings";
 import { useIOSelector } from "../../../store/hooks";
 import { calendarEventByMessageIdSelector } from "../../../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
-import { UIMessageId } from "../types";
 import { useMessageCalendar } from "./useMessageCalendar";
 
 export const useMessageReminder = (
-  messageId: UIMessageId,
+  messageId: string,
   selectCalendar: () => void
 ) => {
   const [isEventInDeviceCalendar, setIsEventInDeviceCalendar] =

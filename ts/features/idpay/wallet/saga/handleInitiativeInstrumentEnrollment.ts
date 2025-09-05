@@ -1,10 +1,10 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
-import TypedI18n from "../../../../i18n";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
@@ -38,9 +38,7 @@ export function* handleInitiativeInstrumentEnrollment(
         E.fold(
           error => {
             IOToast.error(
-              TypedI18n.t(
-                "idpay.wallet.initiativePairing.errorToasts.enrollment"
-              )
+              I18n.t("idpay.wallet.initiativePairing.errorToasts.enrollment")
             );
             return idpayInitiativesInstrumentEnroll.failure({
               initiativeId: action.payload.initiativeId,
@@ -58,9 +56,7 @@ export function* handleInitiativeInstrumentEnrollment(
             }
             // not handled error codes
             IOToast.show(
-              TypedI18n.t(
-                "idpay.wallet.initiativePairing.errorToasts.enrollment"
-              )
+              I18n.t("idpay.wallet.initiativePairing.errorToasts.enrollment")
             );
             return idpayInitiativesInstrumentEnroll.failure({
               initiativeId: action.payload.initiativeId,
@@ -74,7 +70,7 @@ export function* handleInitiativeInstrumentEnrollment(
     );
   } catch (e) {
     IOToast.error(
-      TypedI18n.t("idpay.wallet.initiativePairing.errorToasts.enrollment")
+      I18n.t("idpay.wallet.initiativePairing.errorToasts.enrollment")
     );
     yield* put(
       idpayInitiativesInstrumentEnroll.failure({

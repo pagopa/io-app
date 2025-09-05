@@ -2,7 +2,7 @@ import { ReactElement, useCallback, useEffect, useRef } from "react";
 import { View } from "react-native";
 import { StackActions } from "@react-navigation/native";
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
@@ -10,7 +10,6 @@ import {
 import { MessagesParamsList } from "../navigation/params";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { UIMessageId } from "../types";
 import { trackOpenMessage } from "../analytics";
 import {
   blockedFromPushNotificationSelector,
@@ -30,7 +29,7 @@ import { OperationResultScreenContent } from "../../../components/screens/Operat
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 
 export type MessageRouterScreenRouteParams = {
-  messageId: UIMessageId;
+  messageId: string;
   fromNotification: boolean;
 };
 

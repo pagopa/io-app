@@ -1,5 +1,5 @@
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
-import I18n from "../../../../../i18n.ts";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider.tsx";
@@ -35,7 +35,8 @@ export const ItwPresentationCredentialVerificationExpired = ({
   const beginCredentialIssuance = () => {
     machineRef.send({
       type: "select-credential",
-      credentialType: credential.credentialType
+      credentialType: credential.credentialType,
+      mode: "reissuance"
     });
   };
 

@@ -1,22 +1,30 @@
 import {
   Body,
+  BodyProps,
+  BodySmall,
   ComposedBodyFromArray,
+  Divider,
   H2,
   HeaderSecondLevel,
-  BodySmall,
-  VSpacer,
   useIOTheme,
-  Divider,
-  BodyProps
+  VSpacer
 } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
-import { ComponentProps, useState, forwardRef, JSX } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import {
+  ComponentProps,
+  createRef,
+  forwardRef,
+  JSX,
+  useCallback,
+  useState
+} from "react";
 
 import { LayoutChangeEvent, View } from "react-native";
+import I18n from "i18next";
 import { useHeaderProps } from "../../hooks/useHeaderProps";
-import I18n from "../../i18n";
-import { IOScrollViewWithLargeHeader } from "./IOScrollViewWithLargeHeader";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 import { IOListView } from "./IOListView";
+import { IOScrollViewWithLargeHeader } from "./IOScrollViewWithLargeHeader";
 
 type Props<T> = ComponentProps<typeof IOListView<T>> &
   ComponentProps<typeof IOScrollViewWithLargeHeader> & {
@@ -90,6 +98,12 @@ export const IOListViewWithLargeHeader = forwardRef(
       )
     };
 
+    const titleRef = createRef<View>();
+
+    useFocusEffect(
+      useCallback(() => setAccessibilityFocus(titleRef), [titleRef])
+    );
+
     return (
       <IOListView<T>
         ListHeaderComponent={
@@ -103,7 +117,7 @@ export const IOListViewWithLargeHeader = forwardRef(
               <H2
                 color={theme["textHeading-default"]}
                 testID={title?.testID}
-                ref={ref}
+                ref={ref ?? titleRef}
                 accessibilityLabel={title.accessibilityLabel ?? title.label}
                 accessibilityRole="header"
               >

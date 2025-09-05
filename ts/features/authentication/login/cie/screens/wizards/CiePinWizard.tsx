@@ -7,8 +7,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { View } from "react-native";
+import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../../../i18n";
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import IOMarkdown from "../../../../../../components/IOMarkdown";

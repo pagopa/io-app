@@ -2,12 +2,9 @@ import { BodySmall, H3, VStack } from "@pagopa/io-app-design-system";
 import { PropsWithChildren } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { localeDateFormat } from "../../../../utils/locale";
 import { logosForService } from "../../../services/common/utils";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
-import { UIMessageId } from "../../types";
 import { OrganizationHeader } from "./OrganizationHeader";
 
 const styles = StyleSheet.create({
@@ -22,7 +19,7 @@ const styles = StyleSheet.create({
 
 export type MessageDetailsHeaderProps = PropsWithChildren<{
   createdAt: Date;
-  messageId: UIMessageId;
+  messageId: string;
   serviceId: ServiceId;
   subject: string;
 }>;
@@ -36,10 +33,14 @@ const MessageDetailsHeaderContent = ({
       {subject}
     </H3>
     <BodySmall weight="Regular">
-      {localeDateFormat(
-        createdAt,
-        I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")
-      )}
+      {`${new Intl.DateTimeFormat("it", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      }).format(createdAt)}, ${new Intl.DateTimeFormat("it", {
+        hour: "2-digit",
+        minute: "2-digit"
+      }).format(createdAt)}`}
     </BodySmall>
   </VStack>
 );

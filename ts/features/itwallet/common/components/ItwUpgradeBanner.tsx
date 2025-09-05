@@ -1,6 +1,6 @@
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { useCallback } from "react";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import {
