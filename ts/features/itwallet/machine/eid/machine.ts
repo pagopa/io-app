@@ -9,7 +9,6 @@ import {
 import { ItwTags } from "../tags";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
 import {
-  CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
   StartAuthFlowActorParams
