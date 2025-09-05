@@ -9,6 +9,7 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isUserSelectedPaymentSelector } from "../../../messages/store/reducers/payments";
 import { thirdPartyFromIdSelector } from "../../../messages/store/reducers/thirdPartyById";
+import { aarFlowReducer, AARFlowState } from "../../aar/store/reducers";
 import {
   persistedPnBannerDismissReducer,
   PnBannerDismissState
@@ -21,11 +22,13 @@ import { pnActivationReducer, PnActivationState } from "./activation";
 export type PnState = {
   activation: PnActivationState;
   bannerDismiss: PnBannerDismissState & PersistPartial;
+  aarFlow: AARFlowState;
 };
 
 export const pnReducer = combineReducers<PnState, Action>({
   activation: pnActivationReducer,
-  bannerDismiss: persistedPnBannerDismissReducer
+  bannerDismiss: persistedPnBannerDismissReducer,
+  aarFlow: aarFlowReducer
 });
 
 export const pnMessageFromIdSelector = createSelector(
