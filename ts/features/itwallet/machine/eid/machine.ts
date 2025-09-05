@@ -178,8 +178,8 @@ export const itwEidIssuanceMachine = setup({
     EvaluatingIssuanceMode: {
       always: [
         {
-          guard: and(["isReissuance", "hasValidWalletInstanceAttestation"]),
-          target: "UserIdentification.Identification.L2"
+          guard: "isReissuance",
+          target: "TrustFederationVerification"
         },
         {
           target: "TosAcceptance"
@@ -217,6 +217,11 @@ export const itwEidIssuanceMachine = setup({
             // we proceed to obtain a valid wallet instance attestation
             guard: not("hasValidWalletInstanceAttestation"),
             target: "WalletInstanceAttestationObtainment"
+          },
+          {
+            // When reissuing, if both integrity key tag and wallet instance attestation are valid,
+            guard: "isReissuance",
+            target: "UserIdentification.Identification.L2"
           },
           {
             // If both integrity key tag and wallet instance attestation are valid,
