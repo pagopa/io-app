@@ -9,7 +9,7 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
   const expirationClaim = { value: "2100-09-04", name: "exp" };
-  const educationClaim = { value: Array(2).fill({}), name: "education claims" };
+  const educationClaim = { value: [{}, {}], name: "education claims" };
   const jwtExpiration = "2100-09-04T00:00:00.000Z";
   const mockedEid: StoredCredential = {
     credential: "",
