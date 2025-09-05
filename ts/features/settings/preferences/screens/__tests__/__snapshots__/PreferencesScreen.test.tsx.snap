@@ -239,7 +239,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                             }
                           >
                             <Text
-                              accessibilityLabel="Preferences"
+                              accessibilityLabel="Preferenze"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -258,7 +258,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              Preferences
+                              Preferenze
                             </Text>
                           </View>
                           <View
@@ -293,7 +293,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              These settings allow you to customise your IO experience
+                              Queste impostazioni ti permettono di personalizzare la tua esperienza su IO.
                             </Text>
                           </View>
                           <View
@@ -313,34 +313,34 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                             data={
                               [
                                 {
-                                  "description": "Allow previews and reminders",
+                                  "description": "Consenti anteprime e promemoria",
                                   "onPress": [Function],
-                                  "value": "Push notifications",
+                                  "value": "Notifiche push",
                                 },
                                 {
-                                  "description": "Customize the app to your needs",
+                                  "description": "Personalizza l'app in base alle tue esigenze",
                                   "onPress": [Function],
-                                  "value": "Appearance",
+                                  "value": "Aspetto dell'app",
                                 },
                                 {
-                                  "description": "Select calendar",
+                                  "description": "Seleziona un calendario",
                                   "onPress": [Function],
-                                  "value": "Favourite calendar",
+                                  "value": "Calendario preferito",
                                 },
                                 {
-                                  "description": "Choose who can contact you",
+                                  "description": "Scegli chi può contattarti",
                                   "onPress": [Function],
-                                  "value": "Use of services",
+                                  "value": "Gestione servizi",
                                 },
                                 {
-                                  "description": "Receive message previews",
+                                  "description": "Ricevi un’anteprima dei messaggi",
                                   "onPress": [Function],
-                                  "value": "Forwarding messages by email",
+                                  "value": "Inoltro dei messaggi via email",
                                 },
                                 {
-                                  "description": "Choose language",
+                                  "description": "Scegli la lingua",
                                   "onPress": [Function],
-                                  "value": "Language",
+                                  "value": "Lingua",
                                 },
                               ]
                             }
@@ -368,7 +368,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Push notifications Allow previews and reminders"
+                                  accessibilityLabel="Notifiche push Consenti anteprime e promemoria"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -459,7 +459,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Push notifications
+                                          Notifiche push
                                         </Text>
                                         <Text
                                           allowFontScaling={true}
@@ -479,7 +479,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Allow previews and reminders
+                                          Consenti anteprime e promemoria
                                         </Text>
                                       </View>
                                       <RNSVGSvgView
@@ -557,7 +557,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Appearance Customize the app to your needs"
+                                  accessibilityLabel="Aspetto dell'app Personalizza l'app in base alle tue esigenze"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -648,7 +648,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Appearance
+                                          Aspetto dell'app
                                         </Text>
                                         <Text
                                           allowFontScaling={true}
@@ -668,7 +668,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Customize the app to your needs
+                                          Personalizza l'app in base alle tue esigenze
                                         </Text>
                                       </View>
                                       <RNSVGSvgView
@@ -746,7 +746,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Favourite calendar Select calendar"
+                                  accessibilityLabel="Calendario preferito Seleziona un calendario"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -837,7 +837,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Favourite calendar
+                                          Calendario preferito
                                         </Text>
                                         <Text
                                           allowFontScaling={true}
@@ -857,7 +857,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Select calendar
+                                          Seleziona un calendario
                                         </Text>
                                       </View>
                                       <RNSVGSvgView
@@ -935,7 +935,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Use of services Choose who can contact you"
+                                  accessibilityLabel="Gestione servizi Scegli chi può contattarti"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -1026,7 +1026,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Use of services
+                                          Gestione servizi
                                         </Text>
                                         <Text
                                           allowFontScaling={true}
@@ -1046,7 +1046,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Choose who can contact you
+                                          Scegli chi può contattarti
                                         </Text>
                                       </View>
                                       <RNSVGSvgView
@@ -1124,7 +1124,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Forwarding messages by email Receive message previews"
+                                  accessibilityLabel="Inoltro dei messaggi via email Ricevi un’anteprima dei messaggi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -1215,7 +1215,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Forwarding messages by email
+                                          Inoltro dei messaggi via email
                                         </Text>
                                         <Text
                                           allowFontScaling={true}
@@ -1235,7 +1235,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Receive message previews
+                                          Ricevi un’anteprima dei messaggi
                                         </Text>
                                       </View>
                                       <RNSVGSvgView
@@ -1313,7 +1313,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Language Choose language"
+                                  accessibilityLabel="Lingua Scegli la lingua"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -1404,7 +1404,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Language
+                                          Lingua
                                         </Text>
                                         <Text
                                           allowFontScaling={true}
@@ -1424,7 +1424,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Choose language
+                                          Scegli la lingua
                                         </Text>
                                       </View>
                                       <RNSVGSvgView
@@ -1538,7 +1538,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1652,7 +1652,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Preferences"
+                              accessibilityLabel="Preferenze"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -1692,7 +1692,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Preferences
+                                Preferenze
                               </Text>
                             </View>
                             <View
@@ -1706,7 +1706,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

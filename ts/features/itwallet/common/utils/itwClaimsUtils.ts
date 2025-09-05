@@ -9,8 +9,8 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { truncate } from "lodash";
+import I18n from "i18next";
 import { Locales } from "../../../../../locales/locales";
-import I18n from "../../../../i18n";
 import { JsonFromString } from "./ItwCodecUtils";
 import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
@@ -249,7 +249,7 @@ const localeToClaimsLocales = new Map<Locales, ClaimsLocales>([
  * @returns a enum value for the claims locale.
  */
 export const getClaimsFullLocale = (): ClaimsLocales =>
-  localeToClaimsLocales.get(I18n.currentLocale()) ?? ClaimsLocales.it;
+  localeToClaimsLocales.get(I18n.language as Locales) ?? ClaimsLocales.it;
 
 /**
  *

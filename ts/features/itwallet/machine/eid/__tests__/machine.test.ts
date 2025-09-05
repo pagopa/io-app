@@ -10,11 +10,9 @@ import {
 import { CiePreparationType } from "../../../identification/cie/components/ItwCiePreparationBaseScreenContent";
 import { ItwTags } from "../../tags";
 import {
-  CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   RequestEidActorParams,
-  StartAuthFlowActorParams,
-  VerifyTrustFederationParams
+  StartAuthFlowActorParams
 } from "../actors";
 import {
   AuthenticationContext,
@@ -114,13 +112,8 @@ describe("itwEidIssuanceMachine", () => {
       storeAuthLevel
     },
     actors: {
-      verifyTrustFederation: fromPromise<void, VerifyTrustFederationParams>(
-        verifyTrustFederation
-      ),
-      createWalletInstance: fromPromise<
-        string,
-        CreateWalletInstanceActorParams
-      >(createWalletInstance),
+      verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
+      createWalletInstance: fromPromise<string>(createWalletInstance),
       revokeWalletInstance: fromPromise<void>(revokeWalletInstance),
       getWalletAttestation: fromPromise<
         WalletInstanceAttestations,

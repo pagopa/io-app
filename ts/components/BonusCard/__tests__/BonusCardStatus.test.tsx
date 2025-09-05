@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { Store, createStore } from "redux";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
@@ -79,7 +79,7 @@ describe("Test BonusCardStatus", () => {
       initiativeId: "1"
     } as InitiativeDTO;
     it("should display the correct content", () => {
-      const T_USED_TEXT = I18n.t("bonusCard.paused");
+      const T_USED_TEXT = I18n.t("bonusCard.used");
       const { queryByText } = renderComponent({
         ...MOCKED_REMOVED_INITIATIVE
       });

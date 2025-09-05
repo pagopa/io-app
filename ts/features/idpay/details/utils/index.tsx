@@ -3,11 +3,11 @@ import {
   Tag,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import {
   InitiativeDTO,
   VoucherStatusEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
-import I18n from "../../../../i18n";
 import { format } from "../../../../utils/dates";
 
 type InitiativeProps = {
@@ -56,15 +56,15 @@ export function IdPayCardStatus({ initiative }: InitiativeProps) {
           />
         )
       );
-    // TODO: Add the used tag
     case VoucherStatusEnum.USED:
-    default:
       return (
         <Tag
           testID="idpay-card-status-used"
-          variant="info"
-          text={I18n.t("bonusCard.paused")}
+          variant="success"
+          text={I18n.t("bonusCard.used")}
         />
       );
+    default:
+      return null;
   }
 }

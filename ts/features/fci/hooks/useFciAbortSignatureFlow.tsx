@@ -4,7 +4,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import { Alert } from "react-native";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import IOMarkdown from "../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";

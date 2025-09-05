@@ -1,5 +1,4 @@
 /* eslint-disable sonarjs/no-identical-functions */
-import { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import {
@@ -20,14 +19,12 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
-  GetWalletAttestationActorInput,
   GetWalletAttestationActorOutput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput,
-  VerifyTrustFederationActorInput
+  RequestCredentialActorOutput
 } from "../actors";
 import { Context, InitialContext } from "../context";
 import { CredentialIssuanceFailureType } from "../failure";
@@ -67,6 +64,9 @@ const T_ISSUER_CONFIG: IssuerConfiguration = {
     credential_endpoint: "",
     credential_issuer: "",
     status_attestation_endpoint: "",
+    trust_frameworks_supported: [],
+    evidence_supported: [],
+    nonce_endpoint: "",
     revocation_endpoint: "",
     display: [],
     jwks: {
@@ -78,11 +78,6 @@ const T_ISSUER_CONFIG: IssuerConfiguration = {
       keys: []
     }
   }
-};
-const T_CREDENTIAL_DEFINITION: AuthorizationDetail = {
-  credential_configuration_id: "",
-  format: "vc+sd-jwt",
-  type: "openid_credential"
 };
 const T_REQUESTED_CREDENTIAL: RequestObject = {
   client_id: T_CLIENT_ID,
@@ -152,13 +147,9 @@ describe("itwCredentialIssuanceMachine", () => {
       trackCredentialIssuingDataShareAccepted
     },
     actors: {
-      verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
-        verifyTrustFederation
-      ),
-      getWalletAttestation: fromPromise<
-        GetWalletAttestationActorOutput,
-        GetWalletAttestationActorInput
-      >(getWalletAttestation),
+      verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
+      getWalletAttestation:
+        fromPromise<GetWalletAttestationActorOutput>(getWalletAttestation),
       requestCredential: fromPromise<
         RequestCredentialActorOutput,
         RequestCredentialActorInput
@@ -201,7 +192,6 @@ describe("itwCredentialIssuanceMachine", () => {
       Promise.resolve({
         clientId: T_CLIENT_ID,
         codeVerifier: T_CODE_VERIFIER,
-        credentialDefinition: T_CREDENTIAL_DEFINITION,
         requestedCredential: T_REQUESTED_CREDENTIAL,
         issuerConf: T_ISSUER_CONFIG
       })
@@ -252,7 +242,6 @@ describe("itwCredentialIssuanceMachine", () => {
       walletInstanceAttestation: { jwt: T_WIA },
       clientId: T_CLIENT_ID,
       codeVerifier: T_CODE_VERIFIER,
-      credentialDefinition: T_CREDENTIAL_DEFINITION,
       requestedCredential: T_REQUESTED_CREDENTIAL,
       issuerConf: T_ISSUER_CONFIG
     });
@@ -270,14 +259,14 @@ describe("itwCredentialIssuanceMachine", () => {
 
     obtainCredential.mockImplementation(() =>
       Promise.resolve({
-        credentials: [ItwStoredCredentialsMocks.ts]
+        credentials: [ItwStoredCredentialsMocks.mdl]
       })
     );
 
     obtainStatusAttestation.mockImplementation(() =>
       Promise.resolve([
         {
-          ...ItwStoredCredentialsMocks.ts,
+          ...ItwStoredCredentialsMocks.mdl,
           storedStatusAttestation: T_STORED_STATUS_ATTESTATION
         }
       ])
@@ -314,7 +303,7 @@ describe("itwCredentialIssuanceMachine", () => {
       expect.objectContaining<Partial<Context>>({
         credentials: [
           {
-            ...ItwStoredCredentialsMocks.ts,
+            ...ItwStoredCredentialsMocks.mdl,
             storedStatusAttestation: T_STORED_STATUS_ATTESTATION
           }
         ]
@@ -350,7 +339,6 @@ describe("itwCredentialIssuanceMachine", () => {
       Promise.resolve({
         clientId: T_CLIENT_ID,
         codeVerifier: T_CODE_VERIFIER,
-        credentialDefinition: T_CREDENTIAL_DEFINITION,
         requestedCredential: T_REQUESTED_CREDENTIAL,
         issuerConf: T_ISSUER_CONFIG
       })
@@ -408,10 +396,10 @@ describe("itwCredentialIssuanceMachine", () => {
       itwCredentialIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: "DisplayingCredentialPreview",
       context: {
-        credentials: [ItwStoredCredentialsMocks.ts]
+        credentials: [ItwStoredCredentialsMocks.mdl]
       }
     } as MachineSnapshot);
 
@@ -424,7 +412,7 @@ describe("itwCredentialIssuanceMachine", () => {
       "DisplayingCredentialPreview"
     );
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      credentials: [ItwStoredCredentialsMocks.ts]
+      credentials: [ItwStoredCredentialsMocks.mdl]
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
 
@@ -665,7 +653,6 @@ describe("itwCredentialIssuanceMachine", () => {
               resolve({
                 clientId: T_CLIENT_ID,
                 codeVerifier: T_CODE_VERIFIER,
-                credentialDefinition: T_CREDENTIAL_DEFINITION,
                 requestedCredential: T_REQUESTED_CREDENTIAL,
                 issuerConf: T_ISSUER_CONFIG
               }),

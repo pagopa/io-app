@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { StatusEnum } from "../../../../definitions/idpay/InstrumentDTO";
-import I18n from "../../../i18n";
 
 type InstrumentStatusLabels = {
   [key in StatusEnum]: string;

@@ -1,7 +1,7 @@
+import I18n from "i18next";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../i18n";
 
 export const MessageGreenPassScreen = () => {
   const navigation = useIONavigation();

@@ -20,7 +20,7 @@ import {
   Text,
   View
 } from "react-native";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
 import { CardColorScheme } from "./types";

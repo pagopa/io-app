@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { connect } from "react-redux";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../i18n";
 import { servicesOptinCompleted } from "../store/actions";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";

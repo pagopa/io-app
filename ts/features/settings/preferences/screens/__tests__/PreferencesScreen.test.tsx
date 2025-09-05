@@ -1,11 +1,11 @@
 import { fireEvent, waitFor } from "@testing-library/react-native";
 import { Alert } from "react-native";
 import { createStore } from "redux";
+import I18n from "i18next";
 import PreferencesScreen from "../PreferencesScreen";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { checkAndRequestPermission } from "../../../../../utils/calendar";
 import { openAppSettings } from "../../../../../utils/appSettings";
-import I18n from "../../../../../i18n";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";

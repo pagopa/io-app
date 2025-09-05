@@ -788,7 +788,7 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

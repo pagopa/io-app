@@ -246,8 +246,8 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                             }
                           >
                             <View
-                              accessibilityHint="Wait for the content load"
-                              accessibilityLabel="Loading"
+                              accessibilityHint="Attendi il caricamento del contenuto"
+                              accessibilityLabel="Caricamento in corso"
                               accessibilityRole="progressbar"
                               accessible={true}
                               style={
@@ -452,7 +452,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                   ]
                                 }
                               >
-                                Loading document...
+                                Caricamento del documento...
                               </Text>
                             </View>
                           </View>
@@ -470,7 +470,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                           }
                         >
                           <View
-                            accessibilityLabel="Preview of the PDF document"
+                            accessibilityLabel="Anteprima documento PDF"
                             accessible={true}
                             style={
                               {
@@ -530,7 +530,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                           }
                         >
                           <View
-                            accessibilityLabel="Save or share document"
+                            accessibilityLabel="Salva o condividi documento"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -646,7 +646,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     ]
                                   }
                                 >
-                                  Save or share
+                                  Salva o condividi
                                 </Text>
                               </View>
                             </View>
@@ -699,7 +699,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -865,7 +865,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1460,7 +1460,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                 ]
                               }
                             >
-                              There is a temporary problem, please try again.
+                              C'è un problema temporaneo, riprova.
                             </Text>
                             <View
                               style={
@@ -1490,7 +1490,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                 ]
                               }
                             >
-                              If the problem is not resolved, report it with the '?' icon at the top right, thank you!
+                              Se il problema non si risolve segnalacelo con l'icona '?' in alto a destra, grazie!
                             </Text>
                           </View>
                         </RCTScrollView>
@@ -1541,7 +1541,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1707,7 +1707,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

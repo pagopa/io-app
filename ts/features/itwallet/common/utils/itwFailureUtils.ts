@@ -3,7 +3,7 @@ import {
   IntegrityError,
   IntegrityErrorCodes
 } from "@pagopa/io-react-native-integrity";
-import { Trust } from "@pagopa/io-react-native-wallet-v2";
+import { Trust } from "@pagopa/io-react-native-wallet";
 import { WithCredentialMetadata } from "./ItwFailureTypes";
 
 /**

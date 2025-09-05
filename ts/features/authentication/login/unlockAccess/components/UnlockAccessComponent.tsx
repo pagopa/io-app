@@ -6,7 +6,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Text, View } from "react-native";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../utils/url";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";

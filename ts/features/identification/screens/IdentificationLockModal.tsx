@@ -10,12 +10,12 @@ import {
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useCallback, useEffect } from "react";
 import { Modal, SafeAreaView, View } from "react-native";
+import I18n from "i18next";
 import {
   CountdownProvider,
   useCountdown
 } from "../../../components/countdown/CountdownProvider";
 import { ProgressIndicator } from "../../../components/ui/ProgressIndicator";
-import I18n from "../../../i18n";
 import { useIODispatch } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { identificationHideLockModal } from "../store/actions";

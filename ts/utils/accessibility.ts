@@ -5,7 +5,7 @@ import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import { Component, RefObject, useEffect, useState } from "react";
 import { AccessibilityInfo, findNodeHandle } from "react-native";
-import I18n from "../i18n";
+import I18n from "i18next";
 import { format } from "./dates";
 
 /**

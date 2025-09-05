@@ -1,12 +1,12 @@
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 
 import AuthErrorScreen from "../screens/AuthErrorScreen";
-import I18n from "../../../../../i18n";
 import {
   incrementNativeLoginNativeAttempts,
   resetSpidLoginState,
