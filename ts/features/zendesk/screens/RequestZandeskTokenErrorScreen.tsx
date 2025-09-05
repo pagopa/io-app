@@ -1,6 +1,6 @@
 import { useCallback } from "react";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../i18n";
 import { useIODispatch } from "../../../store/hooks";
 import { zendeskSupportCancel } from "../store/actions";
 

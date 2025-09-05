@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
 import { useCallback } from "react";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { WalletInstanceRevocationReason } from "../../common/utils/itwTypesUtils";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwWalletInstanceStatusSelector } from "../store/selectors";

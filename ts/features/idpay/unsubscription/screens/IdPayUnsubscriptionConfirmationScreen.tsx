@@ -7,11 +7,11 @@ import {
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useEffect } from "react";
 import { View } from "react-native";
+import I18n from "i18next";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";

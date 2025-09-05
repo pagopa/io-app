@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
-import { Trust } from "@pagopa/io-react-native-wallet-v2";
+import { Trust } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
@@ -16,14 +16,6 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { Env } from "../../common/utils/environment";
 import { enrichErrorWithMetadata } from "../../common/utils/itwFailureUtils";
 import { type Context } from "./context";
-
-export type GetWalletAttestationActorInput = {
-  isNewIssuanceFlowEnabled?: boolean;
-};
-
-export type VerifyTrustFederationActorInput = {
-  isNewIssuanceFlowEnabled?: boolean;
-};
 
 export type GetWalletAttestationActorOutput = Awaited<
   ReturnType<typeof itwAttestationUtils.getAttestation>
@@ -43,9 +35,7 @@ export type ObtainCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.obtainCredential>
 >;
 
-export type ObtainStatusAssertionActorInput = Pick<Context, "credentials"> & {
-  isNewIssuanceFlowEnabled?: boolean;
-};
+export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
 
 /**
  * Creates the actors for the eid issuance machine
@@ -57,15 +47,7 @@ export const createCredentialIssuanceActorsImplementation = (
   env: Env,
   store: ReturnType<typeof useIOStore>
 ) => {
-  const verifyTrustFederation = fromPromise<
-    void,
-    VerifyTrustFederationActorInput
-  >(async ({ input }) => {
-    // If the L3 issuance is not enabled, we don't need to verify the trust federation
-    if (!input.isNewIssuanceFlowEnabled) {
-      return;
-    }
-
+  const verifyTrustFederation = fromPromise<void>(async () => {
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
       await Trust.Build.getTrustAnchorEntityConfiguration(
@@ -74,9 +56,8 @@ export const createCredentialIssuanceActorsImplementation = (
     const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
 
     // Create the trust chain for the PID provider
-    // TODO: [SIW-2530] Move "1-0" to WALLET_EAA_PROVIDER_BASE_URL after migrating to the new API
     const builtChainJwts = await Trust.Build.buildTrustChain(
-      new URL("1-0", env.WALLET_EAA_PROVIDER_BASE_URL).toString(),
+      env.WALLET_EAA_PROVIDER_BASE_URL,
       trustAnchorKey
     );
 
@@ -92,34 +73,27 @@ export const createCredentialIssuanceActorsImplementation = (
     );
   });
 
-  const getWalletAttestation = fromPromise<
-    GetWalletAttestationActorOutput,
-    GetWalletAttestationActorInput
-  >(async ({ input }) => {
-    const { isNewIssuanceFlowEnabled } = input;
-    const sessionToken = sessionTokenSelector(store.getState());
-    const integrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
+  const getWalletAttestation = fromPromise<GetWalletAttestationActorOutput>(
+    async () => {
+      const sessionToken = sessionTokenSelector(store.getState());
+      const integrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
 
-    assert(sessionToken, "sessionToken is undefined");
-    assert(O.isSome(integrityKeyTag), "integriyKeyTag is not present");
+      assert(sessionToken, "sessionToken is undefined");
+      assert(O.isSome(integrityKeyTag), "integriyKeyTag is not present");
 
-    return await itwAttestationUtils.getAttestation(
-      env,
-      integrityKeyTag.value,
-      sessionToken,
-      isNewIssuanceFlowEnabled
-    );
-  });
+      return await itwAttestationUtils.getAttestation(
+        env,
+        integrityKeyTag.value,
+        sessionToken
+      );
+    }
+  );
 
   const requestCredential = fromPromise<
     RequestCredentialActorOutput,
     RequestCredentialActorInput
   >(async ({ input }) => {
-    const {
-      credentialType,
-      walletInstanceAttestation,
-      isNewIssuanceFlowEnabled
-    } = input;
+    const { credentialType, walletInstanceAttestation } = input;
 
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
@@ -127,8 +101,7 @@ export const createCredentialIssuanceActorsImplementation = (
     return await credentialIssuanceUtils.requestCredential({
       env,
       credentialType,
-      walletInstanceAttestation,
-      isNewIssuanceFlowEnabled: !!isNewIssuanceFlowEnabled
+      walletInstanceAttestation
     });
   });
 
@@ -143,8 +116,6 @@ export const createCredentialIssuanceActorsImplementation = (
       walletInstanceAttestation,
       clientId,
       codeVerifier,
-      credentialDefinition,
-      isNewIssuanceFlowEnabled,
       operationType
     } = input;
 
@@ -156,11 +127,6 @@ export const createCredentialIssuanceActorsImplementation = (
     assert(issuerConf, "issuerConf is undefined");
     assert(clientId, "clientId is undefined");
     assert(codeVerifier, "codeVerifier is undefined");
-    // TODO: [SIW-2530] After fully migrating to the new API, the assertion below can be removed.
-    assert(
-      isNewIssuanceFlowEnabled || credentialDefinition,
-      "credentialDefinition must be present in the old credential issuance flow"
-    );
     assert(O.isSome(eid), "eID is undefined");
 
     return await credentialIssuanceUtils.obtainCredential({
@@ -171,9 +137,7 @@ export const createCredentialIssuanceActorsImplementation = (
       issuerConf,
       clientId,
       codeVerifier,
-      credentialDefinition,
       pid: eid.value,
-      isNewIssuanceFlowEnabled: !!isNewIssuanceFlowEnabled,
       operationType
     });
   });

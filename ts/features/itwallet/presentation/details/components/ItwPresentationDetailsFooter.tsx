@@ -1,7 +1,7 @@
 import { ListItemAction } from "@pagopa/io-app-design-system";
 import { memo, ReactNode, useMemo } from "react";
 import { View } from "react-native";
-import I18n from "../../../../../i18n.ts";
+import I18n from "i18next";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";

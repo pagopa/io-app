@@ -453,7 +453,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Log in now
+                                Accedi subito
                               </Text>
                               <View
                                 style={
@@ -484,7 +484,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Log in now to use the app without interruption. That way, it will always be ready when you need it.
+                                Autenticati ora per usare l’app senza interruzioni. Così sarà sempre pronta quando ti serve.
                               </Text>
                             </View>
                           </View>
@@ -497,7 +497,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                           }
                         >
                           <View
-                            accessibilityLabel="Login with CIE"
+                            accessibilityLabel="Entra con CIE"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -677,7 +677,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  Login with CIE
+                                  Entra con CIE
                                 </Text>
                               </View>
                             </View>
@@ -827,7 +827,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                               ]
                                             }
                                           >
-                                            Login with CieID
+                                            Entra con CieID
                                           </Text>
                                           <Text
                                             allowFontScaling={true}
@@ -847,7 +847,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                               ]
                                             }
                                           >
-                                            Use the CieID app
+                                            Usa l'app CieID
                                           </Text>
                                         </View>
                                       </View>
@@ -897,7 +897,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          New
+                                          Novità
                                         </Text>
                                       </View>
                                     </View>
@@ -967,7 +967,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Not sure what to choose? We give you a hand"
+                                      accessibilityLabel="Non sai cosa scegliere? Ti diamo una mano"
                                       accessibilityRole="button"
                                       accessible={true}
                                       style={
@@ -996,11 +996,11 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                           ]
                                         }
                                       >
-                                        Not sure what to choose?
+                                        Non sai cosa scegliere?
                                       </Text>
                                       <View
                                         accessibilityElementsHidden={true}
-                                        accessibilityLabel="We give you a hand"
+                                        accessibilityLabel="Ti diamo una mano"
                                         accessibilityRole="button"
                                         accessibilityState={
                                           {
@@ -1063,7 +1063,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          We give you a hand
+                                          Ti diamo una mano
                                         </Text>
                                       </View>
                                     </View>
@@ -1327,7 +1327,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

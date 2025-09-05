@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
