@@ -7,6 +7,7 @@ import { StyleSheet, View } from "react-native";
 import { QrCodeImage } from "../../../../../components/QrCodeImage";
 import {
   DrivingPrivilegesClaim,
+  DrivingPrivilegesValueRaw,
   StringClaim
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential, StoredCredential } from "../../utils/itwTypesUtils";
@@ -126,6 +127,50 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
 
   return (
     <View testID="mdlBackDataTestID" style={styles.container}>
+      {/*
+      This is the renderer of the new MDL back driving privileges data
+       */}
+      <CardClaimRenderer
+        claim={claims["driving_privileges"]}
+        is={DrivingPrivilegesValueRaw.is}
+        component={data =>
+          data.map(({ vehicle_category_code, issue_date, expiry_date }) => (
+            <Fragment
+              key={`driving_privilege_row_${vehicle_category_code.value}`}
+            >
+              <CardClaimContainer
+                position={{
+                  left: `41.5%`,
+                  top: `${
+                    privilegesTableRows[vehicle_category_code.value] || 0
+                  }%`
+                }}
+              >
+                <ClaimLabel fontSize={9} hidden={valuesHidden}>
+                  {issue_date.value.toString("DD/MM/YY")}
+                </ClaimLabel>
+              </CardClaimContainer>
+              <CardClaimContainer
+                key={`driving_privilege_${vehicle_category_code.value}`}
+                position={{
+                  left: `55%`,
+                  top: `${
+                    privilegesTableRows[vehicle_category_code.value] || 0
+                  }%`
+                }}
+              >
+                <ClaimLabel fontSize={9} hidden={valuesHidden}>
+                  {expiry_date.value.toString("DD/MM/YY")}
+                </ClaimLabel>
+              </CardClaimContainer>
+            </Fragment>
+          ))
+        }
+      />
+      {/*
+      This is the renderer of the old MDL back driving privileges data
+      TODO: remove this when the old MDL will not be supported anymore
+       */}
       <CardClaimRenderer
         claim={claims["driving_privileges_details"]}
         is={DrivingPrivilegesClaim.is}

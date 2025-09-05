@@ -3,7 +3,10 @@ import {
   BlendColor,
   Canvas,
   Image,
-  useImage
+  LinearGradient,
+  RoundedRect,
+  useImage,
+  vec
 } from "@shopify/react-native-skia";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -57,19 +60,6 @@ export const CardBackground = ({
         });
       }}
     >
-      <Canvas style={{ flex: 1 }}>
-        <Image
-          image={image}
-          fit="fill"
-          width={size.width}
-          height={size.height}
-          opacity={colorScheme === "default" ? 1 : 0.4}
-        >
-          {colorScheme === "greyscale" && (
-            <BlendColor color="white" mode="color" />
-          )}
-        </Image>
-      </Canvas>
       <Animated.View
         style={[
           loadingOverlayOpacityTransition,
@@ -77,6 +67,35 @@ export const CardBackground = ({
           { backgroundColor: IOColors["grey-100"] }
         ]}
       />
+      <Canvas style={{ flex: 1 }}>
+        {image ? (
+          <Image
+            image={image}
+            fit="fill"
+            width={size.width}
+            height={size.height}
+            opacity={colorScheme === "default" ? 1 : 0.4}
+          >
+            {colorScheme === "greyscale" && (
+              <BlendColor color="white" mode="color" />
+            )}
+          </Image>
+        ) : (
+          <RoundedRect
+            x={0}
+            y={0}
+            width={size.width}
+            height={size.height}
+            r={16}
+          >
+            <LinearGradient
+              start={vec(0, 0)}
+              end={vec(size.width, size.height)}
+              colors={credentialGradientColors[credentialType]}
+            />
+          </RoundedRect>
+        )}
+      </Canvas>
     </View>
   );
 };
@@ -87,4 +106,11 @@ const credentialCardBackgrounds: {
   [CredentialType.EUROPEAN_DISABILITY_CARD]: require("../../../../../../img/features/itWallet/cards/dc.png"),
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: require("../../../../../../img/features/itWallet/cards/ts.png"),
   [CredentialType.DRIVING_LICENSE]: require("../../../../../../img/features/itWallet/cards/mdl.png")
+};
+
+export const credentialGradientColors: {
+  [type: string]: Array<string>;
+} = {
+  [CredentialType.EDUCATION_DEGREE]: ["#F2F1CE", "#ECECEC"],
+  [CredentialType.EDUCATION_ENROLLMENT]: ["#E0F2CE", "#ECECEC"]
 };

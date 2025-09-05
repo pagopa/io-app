@@ -17,6 +17,7 @@ import { itwShouldRenderNewItWalletSelector } from "../../store/selectors";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
+import { ItwCardMultiCredentialBadge } from "./ItwCardMultiCredentialBadge.tsx";
 
 export type ItwCredentialCard = {
   /**
@@ -36,6 +37,11 @@ export type ItwCredentialCard = {
    * be displayed with a badge.
    */
   isItwCredential?: boolean;
+  /**
+   * Indicates if the credential is a multi-level credential,
+   * which affects the display of a specific badge on the card.
+   */
+  isMultiCredential?: boolean;
 };
 
 type StyleProps = {
@@ -47,12 +53,12 @@ type StyleProps = {
 export const ItwCredentialCard = ({
   credentialType,
   credentialStatus = "valid",
-  isItwCredential
+  isItwCredential,
+  isMultiCredential
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
   const needsItwUpgrade = isNewItwRenderable && !isItwCredential;
-
   const borderColorMap = useBorderColorByStatus();
 
   const statusTagProps = useMemo<Tag | undefined>(() => {
@@ -130,6 +136,7 @@ export const ItwCredentialCard = ({
             {getCredentialNameFromType(credentialType, "").toUpperCase()}
           </IOText>
           {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
+          {isMultiCredential && <ItwCardMultiCredentialBadge />}
         </HStack>
       </View>
       <DigitalVersionBadge
