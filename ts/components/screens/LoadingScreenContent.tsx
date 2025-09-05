@@ -10,7 +10,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 
-import { ReactNode, useEffect } from "react";
+import { ComponentProps, ReactNode, useEffect } from "react";
 import { AccessibilityInfo, Platform, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
@@ -19,7 +19,6 @@ import {
   AnimatedPictogram,
   IOAnimatedPictograms
 } from "../ui/AnimatedPictogram";
-import I18n from "../../i18n";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +34,9 @@ type LoadingScreenContentProps = WithTestID<{
   children?: ReactNode;
   headerVisible?: boolean;
   animatedPictogramSource?: IOAnimatedPictograms;
-  banner?: { showBanner?: boolean; onPress: () => void };
+  banner?:
+    | { showBanner: true; props: ComponentProps<typeof Banner> }
+    | { showBanner?: false };
 }>;
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
@@ -101,16 +102,7 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
         </VStack>
       </ContentWrapper>
       <ContentWrapper style={{ marginBottom: 16 }}>
-        {banner.showBanner && (
-          <Banner
-            pictogramName="identityCheck"
-            color="neutral"
-            title={I18n.t("startup.offline_access_banner.title")}
-            content={I18n.t("startup.offline_access_banner.content")}
-            action={I18n.t("startup.offline_access_banner.action")}
-            onPress={banner.onPress}
-          />
-        )}
+        {banner.showBanner && <Banner {...banner.props} />}
       </ContentWrapper>
     </SafeAreaView>
   );

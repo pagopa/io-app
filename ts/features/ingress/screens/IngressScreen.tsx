@@ -47,7 +47,6 @@ export const IngressScreen = () => {
     I18n.t("startup.title")
   );
 
-
   useEffect(() => {
     // Since the screen is shown for a very short time,
     // we prefer to announce the content to the screen reader,
@@ -140,8 +139,15 @@ export const IngressScreen = () => {
         animatedPictogramSource="waiting"
         banner={{
           showBanner: isOfflineAccessAvailable && showBanner,
-          onPress: () =>
-            navgateOnOfflineMiniApp(OfflineAccessReasonEnum.TIMEOUT)
+          props: {
+            pictogramName: "identityCheck",
+            color: "neutral",
+            title: I18n.t("startup.offline_access_banner.title"),
+            content: I18n.t("startup.offline_access_banner.content"),
+            action: I18n.t("startup.offline_access_banner.action"),
+            onPress: () =>
+              navgateOnOfflineMiniApp(OfflineAccessReasonEnum.TIMEOUT)
+          }
         }}
       />
     </>

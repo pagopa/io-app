@@ -27,7 +27,6 @@ import {
   trackItwOfflineRicaricaAppIO
 } from "../../analytics";
 import { useAppRestartAction } from "../hooks/useAppRestartAction.ts";
-import { TranslationKeys } from "../../../../../locales/locales.ts";
 
 /**
  * A wrapper component that displays an alert to notify users when the
@@ -189,19 +188,19 @@ const useOfflineAlertDetailModal = (
 
   return useIOBottomSheetModal({
     title: I18n.t(
-      `features.itWallet.offline.${offlineAccessReason}.modal.title` as TranslationKeys
+      `features.itWallet.offline.${offlineAccessReason}.modal.title`
     ),
     component: (
       <VStack space={24}>
         <IOMarkdown
           content={I18n.t(
-            `features.itWallet.offline.${offlineAccessReason}.modal.content` as TranslationKeys
+            `features.itWallet.offline.${offlineAccessReason}.modal.content`
           )}
         />
         <IOButton
           variant="solid"
           label={I18n.t(
-            `features.itWallet.offline.${offlineAccessReason}.modal.footerAction` as TranslationKeys
+            `features.itWallet.offline.${offlineAccessReason}.modal.footerAction`
           )}
           onPress={handlePressModalAction}
         />

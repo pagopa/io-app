@@ -5362,8 +5362,13 @@
         },
         "timeout": {
           "alert": {
-            "content": " Hai bisogno di tornare alla versione completa di IO?",
+            "content": "Hai bisogno di tornare alla versione completa di IO?",
             "action": "Ricarica l’app IO"
+          },
+          "modal": {
+            "title": "",
+            "content": "",
+            "footerAction": ""
           }
         },
         "back_online": {
