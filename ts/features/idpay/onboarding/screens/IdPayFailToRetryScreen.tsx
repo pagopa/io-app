@@ -7,10 +7,8 @@ import { AccessibilityInfo, View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import ModalSectionStatusComponent from "../../../../components/SectionStatus/modal";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isBackendStatusLoadedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { useIODispatch } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
-import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import { trackIngressServicesSlowDown } from "../../../ingress/analytics";
 import { setIsBlockingScreen } from "../../../ingress/store/actions";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
@@ -20,7 +18,6 @@ const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
 
 export const IdPayFailToRetryScreen = () => {
   const dispatch = useIODispatch();
-  const isConnected = useIOSelector(isConnectedSelector);
 
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [contentTitle, setContentTitle] = useState(
@@ -62,10 +59,6 @@ export const IdPayFailToRetryScreen = () => {
     };
   }, [dispatch, machine]);
 
-  if (isConnected === false) {
-    return <IngressScreenNoInternetConnection />;
-  }
-
   if (showBlockingScreen) {
     return <IngressScreenBlockingError />;
   }
@@ -86,18 +79,8 @@ export const IdPayFailToRetryScreen = () => {
   );
 };
 
-const IngressScreenNoInternetConnection = memo(() => (
-  <OperationResultScreenContent
-    testID="device-connection-lost-id"
-    pictogram="lostConnection"
-    title={I18n.t("startup.connection_lost.title")}
-    subtitle={I18n.t("startup.connection_lost.description")}
-  />
-));
-
 const IngressScreenBlockingError = memo(() => {
   const operationRef = useRef<View>(null);
-  const isBackendStatusLoaded = useIOSelector(isBackendStatusLoadedSelector);
   const { useActorRef } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
@@ -109,25 +92,17 @@ const IngressScreenBlockingError = memo(() => {
     <OperationResultScreenContent
       ref={operationRef}
       testID="device-blocking-screen-id"
-      {...(isBackendStatusLoaded
-        ? {
-            pictogram: "time",
-            title: I18n.t("startup.slowdowns_results_screen.title"),
-            subtitle: I18n.t("startup.slowdowns_results_screen.subtitle"),
-            action: {
-              label: I18n.t("global.buttons.close"),
-              onPress: () => machine.send({ type: "close" })
-            },
-            secondaryAction: {
-              label: I18n.t("global.buttons.visitWebsite"),
-              onPress: () => voidType
-            }
-          }
-        : {
-            pictogram: "umbrella",
-            title: I18n.t("startup.cdn_unreachable_results_screen.title"),
-            subtitle: I18n.t("startup.cdn_unreachable_results_screen.subtitle")
-          })}
+      pictogram="time"
+      title={I18n.t("startup.slowdowns_results_screen.title")}
+      subtitle={I18n.t("startup.slowdowns_results_screen.subtitle")}
+      action={{
+        label: I18n.t("global.buttons.close"),
+        onPress: () => machine.send({ type: "close" })
+      }}
+      secondaryAction={{
+        label: I18n.t("global.buttons.visitWebsite"),
+        onPress: () => voidType
+      }}
     />
   );
 });
