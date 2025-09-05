@@ -75,7 +75,6 @@ export const createItwTrustmarkActionsImplementation = (
     const timeUnit = timeDiffInSeconds > 60 ? "minutes" : "seconds";
 
     const timeString = I18n.t(`date.time.${timeUnit}`, {
-      defaultValue: I18n.t(`date.time.${timeUnit}.other`, { count: time }),
       count: time
     });
 
