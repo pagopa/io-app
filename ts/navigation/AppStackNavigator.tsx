@@ -21,12 +21,15 @@ import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import { IngressScreen } from "../features/ingress/screens/IngressScreen";
+import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
+import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
 import { processUtmLink } from "../features/utmLink";
 import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
+import { storeLinkingUrl } from "../store/actions/linking";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
@@ -41,18 +44,16 @@ import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
-import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
-import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
-import { linkingSubscription } from "./linkingSubscription";
 import NavigationService, {
   navigationRef,
   setMainNavigatorReady
 } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
+import OfflineStackNavigator from "./OfflineStackNavigator";
+import { linkingSubscription } from "./linkingSubscription";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
-import OfflineStackNavigator from "./OfflineStackNavigator";
 
 type OnStateChangeStateType = Parameters<
   NonNullable<NavigationContainerProps["onStateChange"]>
@@ -162,6 +163,12 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
     void Linking.getInitialURL().then(initialUrl => {
       if (initialUrl) {
         processUtmLink(initialUrl, dispatch);
+        /**
+         *  We store the initialUrl in the redux store so that
+         *  it can be processed in case we need any kind of data
+         *  that would be accessible after the app's startup for that
+         */
+        dispatch(storeLinkingUrl(initialUrl));
       }
     });
   });

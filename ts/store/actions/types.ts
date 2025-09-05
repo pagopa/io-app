@@ -64,6 +64,7 @@ import { PersistedPreferencesActions } from "./persistedPreferences";
 import { PreferencesActions } from "./preferences";
 import { SearchActions } from "./search";
 import { StartupActions } from "./startup";
+import { LinkingActions } from "./linking";
 
 export type Action =
   | AnalyticsActions
@@ -119,7 +120,8 @@ export type Action =
   | AppFeedbackActions
   | UtmLinkActions
   | ConnectivityActions
-  | LoginPreferencesActions;
+  | LoginPreferencesActions
+  | LinkingActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

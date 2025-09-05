@@ -75,6 +75,7 @@ import remoteConfigReducer from "./backendStatus/remoteConfig";
 import statusMessagesReducer from "./backendStatus/statusMessages";
 import sectionStatusReducer from "./backendStatus/sectionStatus";
 import { backendInfoReducer } from "./backendStatus/backendInfo";
+import { linkingReducer } from "./linking";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -138,6 +139,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   bonus: bonusReducer,
   assistanceTools: assistanceToolsReducer,
   startup: startupReducer,
+  linking: linkingReducer,
   //
   // persisted state
   //
