@@ -47,9 +47,9 @@ const WalletPaymentWebView = ({
         if (event.url === "about:blank" && event.isTopFrame) {
           onCancel?.(WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER);
         }
-        const idpIntent = getIntentFallbackUrl(event.url);
-        if (O.isSome(idpIntent)) {
-          void Linking.openURL(idpIntent.value);
+        const intent = getIntentFallbackUrl(event.url);
+        if (O.isSome(intent)) {
+          void Linking.openURL(intent.value);
           return false;
         }
         return !event.url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA);
