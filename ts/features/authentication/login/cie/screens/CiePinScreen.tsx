@@ -68,6 +68,13 @@ import {
 } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
 import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
+
+// The MP events related to this page have been commented on
+// (or disabled for active session login),
+// pending their correct integration into the flow.
+// Task: https://pagopa.atlassian.net/browse/IOPID-3343
 
 const CIE_PIN_LENGTH = 8;
 
@@ -79,14 +86,22 @@ const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
 
 const CiePinScreen = () => {
   usePreventScreenCapture();
-  useOnFirstRender(() => {
-    trackLoginCiePinScreen();
-  });
+
+  const { navigateToCieCardReaderScreen, navigateToCieConsentDataUsage } =
+    useActiveSessionLoginNavigation();
 
   const { error } = useIOToast();
   const { name: routeName } = useRoute();
 
   const dispatch = useIODispatch();
+
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+
+  useOnFirstRender(() => {
+    if (!isActiveSessionLogin) {
+      trackLoginCiePinScreen();
+    }
+  });
 
   const requestNfcEnabledCheck = useCallback(
     () => dispatch(nfcIsEnabled.request()),
@@ -151,12 +166,10 @@ const CiePinScreen = () => {
           3,
           remoteApiLoginUrlPrefix
         );
-        navigation.navigate(AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE, {
-          cieConsentUri: loginUri
-        });
+        navigateToCieConsentDataUsage({ cieConsentUri: loginUri });
       } else {
         if (isNfcEnabled) {
-          navigation.navigate(AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN, {
+          navigateToCieCardReaderScreen({
             ciePin: pin,
             authorizationUri: authUrlGenerated
           });
@@ -173,7 +186,10 @@ const CiePinScreen = () => {
     authUrlGenerated,
     doLoginSuccess,
     handleAuthenticationOverlayOnClose,
+    isActiveSessionLogin,
     isNfcEnabled,
+    navigateToCieCardReaderScreen,
+    navigateToCieConsentDataUsage,
     navigation,
     pin,
     remoteApiLoginUrlPrefix
@@ -239,7 +255,9 @@ const CiePinScreen = () => {
               asLink
               accessibilityRole="button"
               onPress={() => {
-                trackLoginCiePinInfo();
+                if (!isActiveSessionLogin) {
+                  trackLoginCiePinInfo();
+                }
                 present();
               }}
             >
@@ -275,11 +293,13 @@ const CiePinScreen = () => {
                 accessibilityRole="link"
                 action={I18n.t("login.help_banner_action")}
                 onPress={() => {
-                  trackHelpCenterCtaTapped(
-                    "LOGIN_CIE_PIN",
-                    helpCenterHowToLoginWithEicUrl,
-                    routeName
-                  );
+                  if (!isActiveSessionLogin) {
+                    trackHelpCenterCtaTapped(
+                      "LOGIN_CIE_PIN",
+                      helpCenterHowToLoginWithEicUrl,
+                      routeName
+                    );
+                  }
                   openWebUrl(helpCenterHowToLoginWithEicUrl, () => {
                     error(I18n.t("global.jserror.title"));
                   });
