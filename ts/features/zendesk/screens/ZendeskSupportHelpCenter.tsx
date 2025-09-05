@@ -40,7 +40,7 @@ import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../components/ui/IOScrollView";
-import { helpCenterCaCLink, zendeskPrivacyUrl } from "../../../config";
+import { zendeskPrivacyUrl } from "../../../config";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
   AppParamsList,
@@ -48,9 +48,17 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { loadContextualHelpData } from "../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import {
+  caCBannerConfigSelector,
+  isCaCBannerEnabledSelector
+} from "../../../store/reducers/backendStatus/remoteConfig";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
+import {
+  fallbackForLocalizedMessageKeys,
+  getFullLocale
+} from "../../../utils/locale";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 import {
   addTicketCustomField,
@@ -160,6 +168,21 @@ const FaqManager = (props: FaqManagerProps) => {
     />
   );
 
+  const isCacBannerEnabled = useIOSelector(isCaCBannerEnabledSelector);
+  const bannerCaCConfig = useIOSelector(caCBannerConfigSelector);
+  const locale = getFullLocale();
+  const localeFallback = fallbackForLocalizedMessageKeys(locale);
+
+  const handleBannerPress = () => {
+    if (!bannerCaCConfig?.action) {
+      return;
+    }
+    // TODO: add trackHelpCenterCtaTapped for tracking into Mixpanel
+    return openWebUrl(bannerCaCConfig.action.url?.[localeFallback], () =>
+      IOToast.error(I18n.t("global.jserror.title"))
+    );
+  };
+
   return (
     <>
       {!isStringNullyOrEmpty(contextualHelpData.title) && (
@@ -176,17 +199,16 @@ const FaqManager = (props: FaqManagerProps) => {
         </>
       )}
       <VSpacer size={16} />
-      <Banner
-        pictogramName="help"
-        color="neutral"
-        title={I18n.t("support.helpCenter.supportBanner.title")}
-        content={I18n.t("support.helpCenter.supportBanner.content")}
-        action={I18n.t("support.helpCenter.supportBanner.action")}
-        onPress={() => {
-          // TODO: add trackHelpCenterCtaTapped for tracking into Mixpanel
-          openWebUrl(helpCenterCaCLink);
-        }}
-      />
+      {isCacBannerEnabled && (
+        <Banner
+          pictogramName="help"
+          color="neutral"
+          title={bannerCaCConfig?.title?.[localeFallback]}
+          content={bannerCaCConfig?.description?.[localeFallback]}
+          action={bannerCaCConfig?.action?.label?.[localeFallback] ?? ""}
+          onPress={handleBannerPress}
+        />
+      )}
       <VSpacer size={16} />
       {contextualHelpData.faqs && (
         <FlatList
