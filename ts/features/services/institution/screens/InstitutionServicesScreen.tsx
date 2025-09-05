@@ -206,7 +206,7 @@ export const InstitutionServicesScreen = ({
   }, [isUpdating, isRefreshing]);
 
   if (!data && isError) {
-    return <InstitutionServicesFailure onRetry={() => refresh()} />;
+    return <InstitutionServicesFailure onRetry={refresh} />;
   }
 
   const refreshControlComponent = (
