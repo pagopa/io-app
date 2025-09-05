@@ -231,7 +231,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                         <View
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -241,10 +240,8 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               {
                                 "alignItems": "center",
                                 "display": "flex",
-                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
-                                "justifyContent": "center",
                               }
                             }
                           >
@@ -456,48 +453,12 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                             >
                               Stiamo caricando il messaggio
                             </Text>
-                            <View
-                              style={
-                                {
-                                  "alignItems": "center",
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                Wait a few moments
-                              </Text>
-                            </View>
                           </View>
                         </View>
                         <View
                           style={
                             {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
+                              "alignItems": "center",
                             }
                           }
                         >
@@ -1124,7 +1085,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                         <View
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -1134,10 +1094,8 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               {
                                 "alignItems": "center",
                                 "display": "flex",
-                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
-                                "justifyContent": "center",
                               }
                             }
                           >
@@ -1349,48 +1307,12 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                             >
                               Stiamo caricando il messaggio
                             </Text>
-                            <View
-                              style={
-                                {
-                                  "alignItems": "center",
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                Wait a few moments
-                              </Text>
-                            </View>
                           </View>
                         </View>
                         <View
                           style={
                             {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
+                              "alignItems": "center",
                             }
                           }
                         >
@@ -3112,7 +3034,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                         <View
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -3122,10 +3043,8 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               {
                                 "alignItems": "center",
                                 "display": "flex",
-                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
-                                "justifyContent": "center",
                               }
                             }
                           >
@@ -3337,48 +3256,12 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                             >
                               Stiamo caricando il messaggio
                             </Text>
-                            <View
-                              style={
-                                {
-                                  "alignItems": "center",
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                Wait a few moments
-                              </Text>
-                            </View>
                           </View>
                         </View>
                         <View
                           style={
                             {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
+                              "alignItems": "center",
                             }
                           }
                         >
@@ -4005,7 +3888,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                         <View
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -4015,10 +3897,8 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               {
                                 "alignItems": "center",
                                 "display": "flex",
-                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
-                                "justifyContent": "center",
                               }
                             }
                           >
@@ -4230,48 +4110,12 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                             >
                               Stiamo caricando il messaggio
                             </Text>
-                            <View
-                              style={
-                                {
-                                  "alignItems": "center",
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                Wait a few moments
-                              </Text>
-                            </View>
                           </View>
                         </View>
                         <View
                           style={
                             {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
+                              "alignItems": "center",
                             }
                           }
                         >
