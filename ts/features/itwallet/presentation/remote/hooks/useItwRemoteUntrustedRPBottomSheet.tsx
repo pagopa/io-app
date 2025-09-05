@@ -1,7 +1,7 @@
 import { Body, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { memo } from "react";
-import I18n from "../../../../../i18n.ts";
+import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
 import { trackItwRemoteUntrustedRPBottomSheet } from "../analytics";
 

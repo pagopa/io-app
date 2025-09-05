@@ -393,10 +393,10 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               ]
                             }
                           >
-                            Document data
+                            Dati del documento
                           </Text>
                           <View
-                            accessibilityLabel="Hide claim values"
+                            accessibilityLabel="Nascondi gli attributi del documento"
                             accessibilityRole="switch"
                             accessibilityState={
                               {
@@ -406,7 +406,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             accessible={true}
                           >
                             <View
-                              accessibilityLabel="Hide claim values"
+                              accessibilityLabel="Nascondi gli attributi del documento"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -522,7 +522,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           </View>
                         </View>
                         <View
-                          accessibilityLabel="Place of Birth Hidden"
+                          accessibilityLabel="Luogo di Nascita Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -623,7 +623,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Place of Birth
+                                    Luogo di Nascita
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -660,7 +660,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Institution Number (TEAM) Hidden"
+                          accessibilityLabel="Numero identificativo dell'istituzione (TEAM) Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -761,7 +761,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Institution Number (TEAM)
+                                    Numero identificativo dell'istituzione (TEAM)
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -798,7 +798,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Date of Birth Hidden"
+                          accessibilityLabel="Data di Nascita Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -899,7 +899,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Date of Birth
+                                    Data di Nascita
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -936,7 +936,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Province Hidden"
+                          accessibilityLabel="Provincia Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1037,7 +1037,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Province
+                                    Provincia
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -1074,7 +1074,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Nation Hidden"
+                          accessibilityLabel="Nazione Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1175,7 +1175,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Nation
+                                    Nazione
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -1212,7 +1212,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Sex Hidden"
+                          accessibilityLabel="Sesso Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1313,7 +1313,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Sex
+                                    Sesso
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -1350,7 +1350,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Expiry Date Hidden"
+                          accessibilityLabel="Data di Scadenza Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1451,7 +1451,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Expiry Date
+                                    Data di Scadenza
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -1488,7 +1488,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Document Number (TEAM) Hidden"
+                          accessibilityLabel="Numero identificativo della tessera (TEAM) Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1589,7 +1589,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Document Number (TEAM)
+                                    Numero identificativo della tessera (TEAM)
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -1626,7 +1626,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="First Name Hidden"
+                          accessibilityLabel="Nome Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1727,7 +1727,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    First Name
+                                    Nome
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -1764,7 +1764,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Fiscal Code Hidden"
+                          accessibilityLabel="Codice Fiscale Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1865,7 +1865,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Fiscal Code
+                                    Codice Fiscale
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -1902,7 +1902,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Family Name Hidden"
+                          accessibilityLabel="Cognome Nascosto"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -2003,7 +2003,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Family Name
+                                    Cognome
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -2810,10 +2810,10 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               ]
                             }
                           >
-                            Document data
+                            Dati del documento
                           </Text>
                           <View
-                            accessibilityLabel="Hide claim values"
+                            accessibilityLabel="Nascondi gli attributi del documento"
                             accessibilityRole="switch"
                             accessibilityState={
                               {
@@ -2823,7 +2823,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             accessible={true}
                           >
                             <View
-                              accessibilityLabel="Hide claim values"
+                              accessibilityLabel="Nascondi gli attributi del documento"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -2996,7 +2996,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     ]
                                   }
                                 >
-                                  Place of Birth
+                                  Luogo di Nascita
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -3032,7 +3032,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Institution Number (TEAM) 500001"
+                          accessibilityLabel="Numero identificativo dell'istituzione (TEAM) 500001"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -3133,7 +3133,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Institution Number (TEAM)
+                                    Numero identificativo dell'istituzione (TEAM)
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -3170,7 +3170,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Date of Birth 06/01/1991"
+                          accessibilityLabel="Data di Nascita 06/01/1991"
                           accessible={true}
                           style={
                             {
@@ -3227,7 +3227,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     ]
                                   }
                                 >
-                                  Date of Birth
+                                  Data di Nascita
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -3263,7 +3263,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Province Rome"
+                          accessibilityLabel="Provincia Rome"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -3364,7 +3364,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Province
+                                    Provincia
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -3401,7 +3401,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Nation IT"
+                          accessibilityLabel="Nazione IT"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -3502,7 +3502,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Nation
+                                    Nazione
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -3539,7 +3539,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Sex M"
+                          accessibilityLabel="Sesso M"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -3640,7 +3640,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Sex
+                                    Sesso
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -3677,7 +3677,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Expiry Date 22/02/2025"
+                          accessibilityLabel="Data di Scadenza 22/02/2025"
                           accessible={false}
                           style={
                             {
@@ -3734,7 +3734,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     ]
                                   }
                                 >
-                                  Expiry Date
+                                  Data di Scadenza
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -3806,7 +3806,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     ]
                                   }
                                 >
-                                  Expired
+                                  Scaduta
                                 </Text>
                               </View>
                             </View>
@@ -3821,7 +3821,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Document Number (TEAM) 80380000000000000001"
+                          accessibilityLabel="Numero identificativo della tessera (TEAM) 80380000000000000001"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -3922,7 +3922,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Document Number (TEAM)
+                                    Numero identificativo della tessera (TEAM)
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -3959,7 +3959,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="First Name Casimira"
+                          accessibilityLabel="Nome Casimira"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -4060,7 +4060,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    First Name
+                                    Nome
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -4097,7 +4097,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Fiscal Code RSSMRA80A10H501A"
+                          accessibilityLabel="Codice Fiscale RSSMRA80A10H501A"
                           accessible={true}
                           style={
                             {
@@ -4154,7 +4154,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     ]
                                   }
                                 >
-                                  Fiscal Code
+                                  Codice Fiscale
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -4190,7 +4190,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Family Name Savoia"
+                          accessibilityLabel="Cognome Savoia"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -4291,7 +4291,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       ]
                                     }
                                   >
-                                    Family Name
+                                    Cognome
                                   </Text>
                                   <Text
                                     allowFontScaling={true}

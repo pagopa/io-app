@@ -426,7 +426,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 ]
                               }
                             >
-                              The receipt is in the Payments section.
+                              La ricevuta è nella sezione Pagamenti.
                             </Text>
                             <View
                               style={
@@ -2375,7 +2375,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -2491,7 +2491,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -4286,7 +4286,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -4402,7 +4402,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -6182,7 +6182,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -6298,7 +6298,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -8092,7 +8092,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -8208,7 +8208,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -10097,7 +10097,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -10218,7 +10218,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -12079,7 +12079,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -12200,7 +12200,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -13980,7 +13980,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -14096,7 +14096,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -15826,7 +15826,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -15942,7 +15942,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -17756,7 +17756,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -17872,7 +17872,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -19666,7 +19666,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -19782,7 +19782,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -21596,7 +21596,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -21712,7 +21712,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -23601,7 +23601,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -23722,7 +23722,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -25536,7 +25536,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -25652,7 +25652,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -27466,7 +27466,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -27582,7 +27582,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -29404,7 +29404,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -29520,7 +29520,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -31314,7 +31314,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -31430,7 +31430,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -33321,7 +33321,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -33442,7 +33442,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -35236,7 +35236,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -35352,7 +35352,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -38629,7 +38629,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -39270,7 +39270,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 ]
                               }
                             >
-                              Your card is expired!
+                              La tua carta è scaduta!
                             </Text>
                             <View
                               style={
@@ -39300,8 +39300,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 ]
                               }
                             >
-                              Remove the card and add a new one.
-It will be saved in your Wallet, making it easier for you to pay next time.
+                              Rimuovi la carta e aggiungine una nuova.
+Verrà salvata nel Portafoglio, così la prossima volta potrai pagare più facilmente.
                             </Text>
                             <View
                               style={
@@ -40796,7 +40796,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -41521,7 +41521,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -41637,7 +41637,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -43390,7 +43390,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -43506,7 +43506,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -45464,7 +45464,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -45580,7 +45580,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -47504,7 +47504,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -47620,7 +47620,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -49442,7 +49442,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -49558,7 +49558,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -51352,7 +51352,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -51468,7 +51468,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
@@ -53282,7 +53282,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -53398,7 +53398,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>

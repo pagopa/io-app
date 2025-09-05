@@ -1,8 +1,8 @@
 import configureMockStore from "redux-mock-store";
 import { act, fireEvent } from "@testing-library/react-native";
 import { ActionType } from "typesafe-actions";
+import I18n from "i18next";
 import SecurityScreen from "../SecurityScreen";
-import I18n from "../../../../../i18n";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";

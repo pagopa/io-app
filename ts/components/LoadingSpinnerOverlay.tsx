@@ -8,7 +8,7 @@ import {
 
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "../i18n";
+import I18n from "i18next";
 import BoxedRefreshIndicator from "./ui/BoxedRefreshIndicator";
 import { Overlay } from "./ui/Overlay";
 

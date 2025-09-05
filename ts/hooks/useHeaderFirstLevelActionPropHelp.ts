@@ -1,7 +1,7 @@
 import { HeaderActionProps } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
+import I18n from "i18next";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import I18n from "../i18n";
 import { MainTabParamsList } from "../navigation/params/MainTabParamsList";
 import ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";

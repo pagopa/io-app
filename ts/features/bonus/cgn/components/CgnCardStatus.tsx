@@ -1,10 +1,10 @@
 import { LabelMini, Tag } from "@pagopa/io-app-design-system";
 import { Fragment } from "react";
+import I18n from "i18next";
 import { Card } from "../../../../../definitions/cgn/Card";
 import { CardActivated } from "../../../../../definitions/cgn/CardActivated";
 import { CardExpired } from "../../../../../definitions/cgn/CardExpired";
 import { CardRevoked } from "../../../../../definitions/cgn/CardRevoked";
-import I18n from "../../../../i18n";
 import { formatDateAsShortFormat } from "../../../../utils/dates";
 
 export function CgnCardStatus({ card }: { card: Card }) {

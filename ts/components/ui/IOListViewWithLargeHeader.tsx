@@ -20,8 +20,8 @@ import {
 } from "react";
 
 import { LayoutChangeEvent, View } from "react-native";
+import I18n from "i18next";
 import { useHeaderProps } from "../../hooks/useHeaderProps";
-import I18n from "../../i18n";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { IOListView } from "./IOListView";
 import { IOScrollViewWithLargeHeader } from "./IOScrollViewWithLargeHeader";

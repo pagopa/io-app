@@ -40,8 +40,8 @@ exports[`PdfViewer should match the snapshot 1`] = `
       }
     >
       <View
-        accessibilityHint="Wait for the content load"
-        accessibilityLabel="Loading"
+        accessibilityHint="Attendi il caricamento del contenuto"
+        accessibilityLabel="Caricamento in corso"
         accessibilityRole="progressbar"
         accessible={true}
         style={
@@ -246,7 +246,7 @@ exports[`PdfViewer should match the snapshot 1`] = `
             ]
           }
         >
-          Loading document...
+          Caricamento del documento...
         </Text>
       </View>
     </View>
@@ -264,7 +264,7 @@ exports[`PdfViewer should match the snapshot 1`] = `
     }
   >
     <View
-      accessibilityLabel="Preview of the PDF document"
+      accessibilityLabel="Anteprima documento PDF"
       accessible={true}
       style={
         {

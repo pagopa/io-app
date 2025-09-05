@@ -1,8 +1,8 @@
 import { Body, IOToast } from "@pagopa/io-app-design-system";
 import { TxtLinkNode } from "@textlint/ast-node-types";
+import I18n from "i18next";
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
-import I18n from "../../../../i18n";
 import { openWebUrl } from "../../../../utils/url";
 
 /**

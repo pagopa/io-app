@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
-import { getLanguages } from "react-native-i18n";
-import { call, put, select } from "typed-redux-saga/macro";
+import i18next from "i18next";
+import { put, select } from "typed-redux-saga/macro";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { preferencesLanguagesLoadSuccess } from "../store/actions/preferences";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
@@ -15,9 +15,9 @@ import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferen
 export function* loadSystemPreferencesSaga(): Generator<
   ReduxSagaEffect,
   void,
-  SagaCallReturnType<typeof getLanguages>
+  SagaCallReturnType<any>
 > {
-  const languages = yield* call(getLanguages);
+  const languages = i18next.languages;
   yield* put(preferencesLanguagesLoadSuccess(languages));
 }
 

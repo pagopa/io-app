@@ -5,7 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { trackWalletCategoryFilter } from "../../itwallet/analytics";
 import { walletSetCategoryFilter } from "../store/actions/preferences";

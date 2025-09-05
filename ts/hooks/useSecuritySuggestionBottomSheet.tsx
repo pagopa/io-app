@@ -1,10 +1,10 @@
 import { useCallback, useEffect } from "react";
+import I18n from "i18next";
 import {
   isFastLoginFFEnabledSelector,
   isSecurityAdviceAcknowledgedEnabled,
   isSecurityAdviceReadyToShow
 } from "../features/authentication/fastLogin/store/selectors";
-import I18n from "../i18n";
 import { useIOSelector } from "../store/hooks";
 import { useIOBottomSheetModal } from "../utils/hooks/bottomSheet";
 import SecuritySuggestions from "../features/authentication/fastLogin/components/SecuritySuggestions";

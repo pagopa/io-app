@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { SectionList, ScrollView } from "react-native";
 import { H2, IOVisualCostants } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import SignatureRequestItem from "../../components/SignatureRequestItem";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciSignaturesListSelector } from "../../store/reducers/fciSignaturesList";
 import { fciSignaturesListRequest } from "../../store/actions";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import I18n from "../../../../i18n";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   addTicketCustomField,

@@ -4,6 +4,7 @@ import _ from "lodash";
 import { ComponentType } from "react";
 import configureMockStore from "redux-mock-store";
 import { Alert, Pressable } from "react-native";
+import I18n from "i18next";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -27,7 +28,6 @@ import {
   OtherWalletCardsContainer,
   WalletCardsContainer
 } from "../WalletCardsContainer";
-import I18n from "../../../../i18n";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import { AppFeedbackContext } from "../../../appReviews/components/AppFeedbackProvider";
 

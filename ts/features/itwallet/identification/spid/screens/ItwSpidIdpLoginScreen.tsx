@@ -3,12 +3,12 @@ import { pipe } from "fp-ts/lib/function";
 import { memo, useCallback, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
+import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../../i18n";
 import { originSchemasWhiteList } from "../../../../authentication/common/utils/originSchemasWhiteList";
 import { getIntentFallbackUrl } from "../../../../authentication/common/utils/login";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";

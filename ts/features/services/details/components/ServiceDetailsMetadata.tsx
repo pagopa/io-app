@@ -8,9 +8,9 @@ import {
   ListItemInfo,
   ListItemInfoCopy
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServiceMetadata } from "../../../../../definitions/services/ServiceMetadata";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceMetadataByIdSelector } from "../store/reducers";
 import { handleItemOnPress } from "../../../../utils/url";
