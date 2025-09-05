@@ -6,6 +6,7 @@ import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
+import { getInstructionsButtonConfig } from "../../../../components/ui/utils/buttons";
 import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
@@ -34,10 +35,22 @@ const IdPayFailureScreen = () => {
     initiativeId
   );
 
+  const CAC_URL =
+    "https://assistenza.ioapp.it/hc/it/articles/35337442750225-Non-riesco-ad-aggiungere-un-metodo-di-pagamento";
+
   const defaultCloseAction = useMemo(
     () => ({
       label: I18n.t("global.buttons.close"),
       accessibilityLabel: I18n.t("global.buttons.close"),
+      onPress: () => machine.send({ type: "close" })
+    }),
+    [machine]
+  );
+
+  const defaultBackAction = useMemo(
+    () => ({
+      label: I18n.t("global.buttons.back"),
+      accessibilityLabel: I18n.t("global.buttons.back"),
       onPress: () => machine.send({ type: "close" })
     }),
     [machine]
@@ -195,6 +208,31 @@ const IdPayFailureScreen = () => {
           ),
           action: defaultCloseAction
         };
+
+      case OnboardingFailureEnum.FAMILY_UNIT_ALREADY_JOINED:
+        return {
+          pictogram: "accessDenied",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.subtitle"
+          ),
+          action: defaultBackAction,
+          secondaryAction: getInstructionsButtonConfig(CAC_URL)
+        };
+      case OnboardingFailureEnum.ONBOARDING_WAITING_LIST:
+        return {
+          pictogram: "eventClose",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.ONBOARDING_WAITING_LIST.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.ONBOARDING_WAITING_LIST.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+
       default:
         return genericErrorProps;
     }
