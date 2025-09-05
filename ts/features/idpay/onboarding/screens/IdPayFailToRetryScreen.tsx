@@ -1,7 +1,4 @@
 /* eslint-disable functional/immutable-data */
-/**
- * An ingress screen to choose the real first screen the user must navigate to.
- */
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "i18next";
 import { voidType } from "io-ts";
