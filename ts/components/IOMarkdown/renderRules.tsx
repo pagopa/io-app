@@ -496,7 +496,13 @@ export const linkNodeToReactNative = (
   onPress: () => void,
   render: Renderer
 ) => (
-  <Body weight="Semibold" asLink key={getTxtNodeKey(link)} onPress={onPress}>
+  <Body
+    weight="Semibold"
+    asLink
+    avoidPressable
+    key={getTxtNodeKey(link)}
+    onPress={onPress}
+  >
     {link.children.map(render)}
   </Body>
 );
