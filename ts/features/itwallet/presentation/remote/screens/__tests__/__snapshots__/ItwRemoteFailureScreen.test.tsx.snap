@@ -1983,7 +1983,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                 ]
                               }
                             >
-                              key 'features.itWallet.presentation.remote.invalidCredentialsScreen.title (it)' returned an object instead of string.
+                              Non puoi continuare con la richiesta perché Patente di guida non è valida
                             </Text>
                             <View
                               style={
@@ -2014,7 +2014,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                               }
                               textBreakStrategy="simple"
                             >
-                              key 'features.itWallet.presentation.remote.invalidCredentialsScreen.subtitle (it)' returned an object instead of string.
+                              Assicurati di essere in possesso del documento richiesto valido e poi riprova.
                             </Text>
                             <View
                               style={
@@ -3239,7 +3239,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                 ]
                               }
                             >
-                              key 'features.itWallet.presentation.remote.invalidCredentialsScreen.title (it)' returned an object instead of string.
+                              Non puoi continuare con la richiesta perché alcuni documenti non risultano validi
                             </Text>
                             <View
                               style={
@@ -3270,7 +3270,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                               }
                               textBreakStrategy="simple"
                             >
-                              key 'features.itWallet.presentation.remote.invalidCredentialsScreen.subtitle (it)' returned an object instead of string.
+                              Assicurati di essere in possesso dei documenti richiesti validi e poi riprova.
                             </Text>
                             <View
                               style={
@@ -5512,7 +5512,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                 ]
                               }
                             >
-                              key 'features.itWallet.presentation.remote.missingCredentialsScreen.title (it)' returned an object instead of string.
+                              Manca un documento per continuare
                             </Text>
                             <View
                               style={
@@ -5561,7 +5561,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="key 'features.itWallet.presentation.remote.missingCredentialsScreen.primaryAction (it)' returned an object instead of string."
+                                  accessibilityLabel="Aggiungi documento al Portafoglio"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -5677,7 +5677,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           ]
                                         }
                                       >
-                                        key 'features.itWallet.presentation.remote.missingCredentialsScreen.primaryAction (it)' returned an object instead of string.
+                                        Aggiungi documento al Portafoglio
                                       </Text>
                                     </View>
                                   </View>
@@ -6898,7 +6898,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                 ]
                               }
                             >
-                              key 'features.itWallet.presentation.remote.missingCredentialsScreen.title (it)' returned an object instead of string.
+                              Mancano alcuni documenti per continuare
                             </Text>
                             <View
                               style={
@@ -6947,7 +6947,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="key 'features.itWallet.presentation.remote.missingCredentialsScreen.primaryAction (it)' returned an object instead of string."
+                                  accessibilityLabel="Aggiungi documenti al Portafoglio"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -7063,7 +7063,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                           ]
                                         }
                                       >
-                                        key 'features.itWallet.presentation.remote.missingCredentialsScreen.primaryAction (it)' returned an object instead of string.
+                                        Aggiungi documenti al Portafoglio
                                       </Text>
                                     </View>
                                   </View>
