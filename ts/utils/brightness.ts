@@ -245,3 +245,30 @@ export function useMaxBrightness({
     };
   }, [getBrightness, restoreInitialBrightness, setMaxBrightness]);
 }
+
+/**
+ * Convenience component that applies maximum brightness behavior when rendered.
+ *
+ * This component uses the `useMaxBrightness` hook internally to manage screen brightness.
+ * When this component is mounted, it sets the screen brightness to maximum.
+ * When unmounted, it restores the original brightness level.
+ *
+ * It accepts the same configuration options as `useMaxBrightness` via props.
+ *
+ * @example
+ * ```tsx
+ * // Basic usage
+ * <MaxBrightness />
+ * // With smooth transition
+ * <MaxBrightness useSmoothTransition={true} transitionDuration={2000} />
+ * ```
+ *
+ * @param props - Configuration options for brightness management
+ * @returns React.ReactNode that applies max brightness behavior when rendered
+ */
+export const MaxBrightness = (
+  props: UseMaxBrightnessOptions = {}
+): React.ReactNode => {
+  useMaxBrightness(props);
+  return null;
+};
