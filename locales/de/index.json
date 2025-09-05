@@ -3821,11 +3821,6 @@
         "title": "Benötigst du Hilfe?",
         "subtitle": "Wirf einen Blick in die FAQ: Wenn du die gesuchte Antwort nicht findest, erstelle ein Ticket. Wenn du bereits eine Ticket eröffnet hast und dessen Status überprüfen oder Details hinzufügen möchtest, wähle bitte 'Offene Tickets'.",
         "adviceMessage": "Wenn dein Problem den Inhalt einer Nachricht oder den Dienst einer Körperschaft betrifft, wende dich bitte an die Körperschaft: du findest die entsprechenden Kontaktdaten in der Nachricht oder in den Details des Dienstes."
-      },
-      "supportBanner": {
-        "content": "Abbiamo preparato una guida per aiutarti a risolvere velocemente il tuo problema.",
-        "action": "Vai al Centro assistenza",
-        "title": "Serve aiuto?"
       }
     },
     "panicMode": {
