@@ -9,6 +9,7 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
   const expirationClaim = { value: "2100-09-04", name: "exp" };
+  const educationClaim = { value: Array(2).fill({}), name: "education claims" };
   const jwtExpiration = "2100-09-04T00:00:00.000Z";
   const mockedEid: StoredCredential = {
     credential: "",
@@ -56,6 +57,23 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     }
   };
 
+  const mockedEd: StoredCredential = {
+    credential: "",
+    credentialType: CredentialType.EDUCATION_DEGREE,
+    credentialId: "dc_sd_jwt_education_degree",
+    parsedCredential: {
+      expiry_date: expirationClaim,
+      education_degrees: educationClaim
+    },
+    format: "dc+sd-jwt",
+    keyTag: "4",
+    issuerConf: {} as StoredCredential["issuerConf"],
+    jwt: {
+      issuedAt: "2024-09-30T07:32:49.000Z",
+      expiration: jwtExpiration
+    }
+  };
+
   it("should not rehydrate the eID when the wallet is valid", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
@@ -93,7 +111,8 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             credentials: {
               [mockedEid.credentialId]: mockedEid,
               [mockedMdl.credentialId]: mockedMdl,
-              [mockedDc.credentialId]: mockedDc
+              [mockedDc.credentialId]: mockedDc,
+              [mockedEd.credentialId]: mockedEd
             }
           }
         }
@@ -121,6 +140,15 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             credentialStatus: "valid",
             isItwCredential: false,
             isMultiCredential: false
+          },
+          {
+            key: `ITW_${CredentialType.EDUCATION_DEGREE}`,
+            type: "itw",
+            category: "itw",
+            credentialType: CredentialType.EDUCATION_DEGREE,
+            credentialStatus: "valid",
+            isItwCredential: false,
+            isMultiCredential: true
           }
         ])
       )
