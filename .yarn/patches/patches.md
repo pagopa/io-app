@@ -19,18 +19,6 @@ Created on **15/12/2021**
     - `getMacAddressSync`
 
 
-### react-native-i18n-npm-2.0.15-7f3cf7cee6.patch
-Created on **05/08/2020**
-
-#### Reason:
-- Removed minSdkVersion from gradle to allow the compilation on Android. 
-
-Updated on **29/08/2022**
-
-#### Reason:
-
-- This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
-
 ### react-native-push-notification-npm-8.1.1-bcb0d8a65e.patch
 Created on **10/05/2021**
 
