@@ -12,11 +12,7 @@ import {
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
-import {
-  isMultiLevelCredential,
-  ItwCredentialStatus
-} from "../../utils/itwTypesUtils";
-import { itwParsedCredentialSelector } from "../../../credentials/store/selectors";
+import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { itwShouldRenderNewItWalletSelector } from "../../store/selectors";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
@@ -41,6 +37,11 @@ export type ItwCredentialCard = {
    * be displayed with a badge.
    */
   isItwCredential?: boolean;
+  /**
+   * Indicates if the credential is a multi-level credential,
+   * which affects the display of a specific badge on the card.
+   */
+  isMultiCredential?: boolean;
 };
 
 type StyleProps = {
@@ -52,18 +53,12 @@ type StyleProps = {
 export const ItwCredentialCard = ({
   credentialType,
   credentialStatus = "valid",
-  isItwCredential
+  isItwCredential,
+  isMultiCredential
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
   const needsItwUpgrade = isNewItwRenderable && !isItwCredential;
-  const parsedCredential = useIOSelector(
-    itwParsedCredentialSelector(credentialType)
-  );
-  const isMultiCredential = isMultiLevelCredential(
-    credentialType,
-    parsedCredential
-  );
   const borderColorMap = useBorderColorByStatus();
 
   const statusTagProps = useMemo<Tag | undefined>(() => {

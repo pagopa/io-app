@@ -266,23 +266,3 @@ export const itwCredentialsListByTypeSelector = (key: string) =>
       O.getOrElse<ReadonlyArray<StoredCredential>>(() => [])
     )
   );
-
-/**
- * Given a credential type, returns the parsed credential of the given type or undefined.
- * @param credentialType - The credential type.
- * @param format - The credential format (defaults to SD-JWT).
- * @returns the ParsedCredential object or undefined.
- */
-export const itwParsedCredentialSelector = (
-  credentialType: string,
-  format = CredentialFormat.SD_JWT
-) =>
-  createSelector(
-    itwCredentialSelector(credentialType, format),
-    credentialOption =>
-      pipe(
-        credentialOption,
-        O.chainNullableK(c => c.parsedCredential),
-        O.toUndefined
-      )
-  );

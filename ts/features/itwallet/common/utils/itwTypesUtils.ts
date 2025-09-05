@@ -156,14 +156,13 @@ const MULTI_LEVEL_CREDENTIAL_TYPES = [
  * and its parsed data contains at least one claim that is an array
  * with more than one item.
  *
- * @param credentialType The type of the credential.
- * @param parsedCredential The parsed credential data object.
+ * @param credential the stored credential to check.
  * @returns `true` if the credential is multi-level, `false` otherwise.
  */
 export const isMultiLevelCredential = (
-  credentialType: string,
-  parsedCredential: ParsedCredential | undefined
+  credential: StoredCredential
 ): boolean => {
+  const { credentialType, parsedCredential } = credential;
   const isMultiLevel = MULTI_LEVEL_CREDENTIAL_TYPES.includes(
     credentialType as CredentialType
   );

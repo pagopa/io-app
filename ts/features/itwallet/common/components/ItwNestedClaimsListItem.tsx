@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
-import I18n from "react-native-i18n";
+import I18n from "i18next";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
