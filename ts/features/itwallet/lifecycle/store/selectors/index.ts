@@ -6,6 +6,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { isItwCredential } from "../../../common/utils/itwCredentialUtils";
 import { itwCredentialsEidSelector } from "../../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../../issuance/store/selectors";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences";
 
 /**
  * The wallet instance is not active and there is no associated integrity key tag.
@@ -42,8 +43,12 @@ export const itwLifecycleIsOperationalOrValid = (state: GlobalState) =>
  * is a PID L3 credential, that is only issued in the context of IT-Wallet.
  */
 export const itwLifecycleIsITWalletValidSelector = createSelector(
-  [itwIntegrityKeyTagSelector, itwCredentialsEidSelector],
-  (integrityKeyTagOption, eidOption) =>
+  [
+    itwIntegrityKeyTagSelector,
+    itwCredentialsEidSelector,
+    itwIsL3EnabledSelector
+  ],
+  (integrityKeyTagOption, eidOption, isWhitelisted) =>
     pipe(
       sequenceS(O.Monad)({
         eid: eidOption,
@@ -51,5 +56,5 @@ export const itwLifecycleIsITWalletValidSelector = createSelector(
       }),
       O.map(({ eid }) => isItwCredential(eid.credential)),
       O.getOrElse(() => false)
-    )
+    ) && isWhitelisted
 );
