@@ -217,7 +217,8 @@
       "choose": "Scegli",
       "copy": "Copy",
       "selectAll": "Seleziona tutto",
-      "deselectAll": "Deseleziona tutto"
+      "deselectAll": "Deseleziona tutto",
+      "visitWebsite": "Vai al sito"
     },
     "navigator": {
       "messages": "Messages",
@@ -5868,6 +5869,9 @@
         "deny": "Not now",
         "success": "You activated Push notifications",
         "advice": "Consigliato"
+      },
+      "failToRetry": {
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
       },
       "preferences": {
         "enableEmailBanner": {

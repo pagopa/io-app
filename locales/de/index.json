@@ -4115,6 +4115,9 @@
         "success": "Sie aktivierten Push -Benachrichtigungen",
         "advice": "Consigliato"
       },
+      "failToRetry": {
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
+      },
       "loading": {
         "subtitle": "Attendi qualche secondo",
         "title": "Stiamo elaborando la tua richiesta"
