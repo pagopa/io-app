@@ -9,7 +9,7 @@ import { checkCurrentSession } from "../../../authentication/common/store/action
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import {
-  CREDENTIALS_MAP,
+  getMixPanelCredential,
   trackAddCredentialProfileAndSuperProperties,
   trackSaveCredentialSuccess,
   trackStartAddNewCredential,
@@ -33,6 +33,7 @@ import {
   itwRequestedCredentialsSelector
 } from "../../common/store/selectors/preferences";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -160,7 +161,8 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents
   >) => {
     if (context.credentialType) {
-      const credential = CREDENTIALS_MAP[context.credentialType];
+      const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
+      const credential = getMixPanelCredential(context.credentialType, isItwL3);
       trackStartAddNewCredential(credential);
     }
   },
@@ -173,7 +175,8 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents
   >) => {
     if (context.credentialType) {
-      const credential = CREDENTIALS_MAP[context.credentialType];
+      const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
+      const credential = getMixPanelCredential(context.credentialType, isItwL3);
       trackSaveCredentialSuccess(credential);
       trackAddCredentialProfileAndSuperProperties(store.getState(), credential);
     }
@@ -200,7 +203,9 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents
   >) => {
     assert(context.credentialType, "credentialType is undefined");
-    trackStartCredentialUpgrade(CREDENTIALS_MAP[context.credentialType]);
+    trackStartCredentialUpgrade(
+      getMixPanelCredential(context.credentialType, true)
+    );
   }
 });
 
@@ -211,10 +216,11 @@ const trackDataShareEvent = (
 ) => {
   if (context.credentialType) {
     const { credentialType, isAsyncContinuation } = context;
-    const credential = CREDENTIALS_MAP[credentialType];
     const requestedCredentials = itwRequestedCredentialsSelector(
       store.getState()
     );
+    const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
+    const credential = getMixPanelCredential(context.credentialType, isItwL3);
     const isMdlRequested = requestedCredentials.includes(
       CredentialType.DRIVING_LICENSE
     );

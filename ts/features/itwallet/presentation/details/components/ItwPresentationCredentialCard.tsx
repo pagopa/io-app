@@ -8,7 +8,7 @@ import { PropsWithChildren, useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
-import { CREDENTIALS_MAP, trackWalletShowBack } from "../../../analytics";
+import { getMixPanelCredential, trackWalletShowBack } from "../../../analytics";
 import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
@@ -31,18 +31,20 @@ type Props = {
 const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const navigation = useIONavigation();
   const [isFlipped, setIsFlipped] = useState(false);
+  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
 
   const handleFlipButtonPress = useCallback(() => {
-    trackWalletShowBack(CREDENTIALS_MAP[credential.credentialType]);
+    trackWalletShowBack(
+      getMixPanelCredential(credential.credentialType, withL3Design)
+    );
     setIsFlipped(_ => !_);
-  }, [credential.credentialType]);
+  }, [credential.credentialType, withL3Design]);
 
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
-  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const handleCardPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {

@@ -22,11 +22,11 @@ import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import {
-  CREDENTIALS_MAP,
   mapPIDStatusToMixpanel,
   trackCredentialDetail,
   trackWalletStartDeactivation
 } from "../../analytics";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "./ItwEidLifecycleAlert";
 
@@ -58,6 +58,7 @@ const ItwEidInfoBottomSheetContent = ({
 }: ItwEidInfoBottomSheetContentProps) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const Content = ({ credential }: { credential: StoredCredential }) => {
     const claims = parseClaims(credential.parsedCredential, {
@@ -74,7 +75,7 @@ const ItwEidInfoBottomSheetContent = ({
     useEffect(() => {
       if (eidStatus) {
         trackCredentialDetail({
-          credential: CREDENTIALS_MAP[credential.credentialType],
+          credential: isItwL3 ? "ITW_PID" : "ITW_ID_V2",
           credential_status: mapPIDStatusToMixpanel(eidStatus)
         });
       }

@@ -29,7 +29,9 @@ import {
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
-import { CREDENTIALS_MAP, trackCopyListItem } from "../../analytics";
+import { getMixPanelCredential, trackCopyListItem } from "../../analytics";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
 /**
  * Component which renders a place of birth type claim.
@@ -86,12 +88,13 @@ const PlainTextClaimItem = ({
   credentialType?: string;
 }) => {
   const safeValue = getSafeText(claim);
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const handleLongPress = () => {
     clipboardSetStringWithFeedback(safeValue);
     if (credentialType) {
       trackCopyListItem({
-        credential: CREDENTIALS_MAP[credentialType],
+        credential: getMixPanelCredential(credentialType, isItwL3),
         item_copied: label
       });
     }

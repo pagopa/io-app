@@ -11,7 +11,6 @@ import { IssuanceFailure } from "../machine/eid/failure";
 import {
   ItwCredentialStatus,
   ItwJwtCredentialStatus,
-  StoredCredential,
   WalletInstanceRevocationReason
 } from "../common/utils/itwTypesUtils";
 import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
@@ -22,8 +21,12 @@ import {
   setOfflineAccessReason
 } from "../../ingress/store/actions";
 import { getCredentialStatus } from "../common/utils/itwCredentialStatusUtils";
-import { itwCredentialsEidStatusSelector } from "../credentials/store/selectors";
+import {
+  itwCredentialsEidStatusSelector,
+  itwCredentialsSelector
+} from "../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../lifecycle/store/selectors";
+import { CredentialType } from "../common/utils/itwMocksUtils";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -39,23 +42,31 @@ export type KoState = {
   cta_id: string;
 };
 
+type MixPanelCredentialVersion = "V2" | "V3";
+
 /**
  * This is the list of credentials that are tracked in MixPanel
  * ITW_ID_V2: PersonIdentificationData (obtained with Documenti su IO)
  * ITW_PG_V2: mDL
- * ITW_CED_V2: EuropeanDisabilityCard
  * ITW_TS_V2: EuropeanHealthInsuranceCard
+ * ITW_CED_V2: EuropeanDisabilityCard
  * ITW_PID: PID (obtained with IT Wallet)
+ * ITW_PG_V3: mDL (obtained with IT Wallet)
+ * ITW_TS_V3: EuropeanHealthInsuranceCard (obtained with IT Wallet)
+ * ITW_CED_V3: EuropeanDisabilityCard (obtained with IT Wallet)
  */
-const mixPanelCredentials = [
+export const mixPanelCredentials = [
   "ITW_ID_V2",
   "ITW_PG_V2",
-  "ITW_CED_V2",
   "ITW_TS_V2",
-  "ITW_PID"
+  "ITW_CED_V2",
+  "ITW_PID",
+  "ITW_PG_V3",
+  "ITW_TS_V3",
+  "ITW_CED_V3"
 ] as const;
 
-type MixPanelCredential = (typeof mixPanelCredentials)[number];
+export type MixPanelCredential = (typeof mixPanelCredentials)[number];
 
 type TrackCredentialDetail = {
   credential: MixPanelCredential; // MixPanelCredential
@@ -69,18 +80,19 @@ type ItwFailureCause = "CredentialIssuer" | "WalletProvider";
 
 /**
  * This map is used to map the credential type to the MixPanel credential
- * ITW_ID_V2: PersonIdentificationData (obtained with Documenti su IO)
- * ITW_PG_V2: mDL
- * ITW_CED_V2: EuropeanDisabilityCard
- * ITW_TS_V2: EuropeanHealthInsuranceCard,
- * ITW_PID: PID (obtained with IT Wallet)
+ * Currently, all tracked credentials have both V2 and V3
+ * In the future, if we add credentials that exist in only one version,
+ * the type of this map should become:
+ * Record<string, Record<CredentialVersion, MixPanelCredential> | MixPanelCredential>
  */
-export const CREDENTIALS_MAP: Record<string, MixPanelCredential> = {
-  PersonIdentificationData: "ITW_ID_V2",
-  mDL: "ITW_PG_V2",
-  EuropeanDisabilityCard: "ITW_CED_V2",
-  EuropeanHealthInsuranceCard: "ITW_TS_V2",
-  PID: "ITW_PID"
+export const CREDENTIALS_MAP: Record<
+  string,
+  Record<MixPanelCredentialVersion, MixPanelCredential>
+> = {
+  PersonIdentificationData: { V2: "ITW_ID_V2", V3: "ITW_PID" },
+  mDL: { V2: "ITW_PG_V2", V3: "ITW_PG_V3" },
+  EuropeanHealthInsuranceCard: { V2: "ITW_TS_V2", V3: "ITW_TS_V3" },
+  EuropeanDisabilityCard: { V2: "ITW_CED_V2", V3: "ITW_CED_V3" }
 };
 
 type BackToWallet = {
@@ -340,10 +352,12 @@ export function trackItWalletDeferredIssuing(credential: MixPanelCredential) {
   );
 }
 
-export function trackWalletCredentialFAC_SIMILE() {
+export function trackWalletCredentialFAC_SIMILE(
+  credential: MixPanelCredential
+) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS["ITW_CREDENTIAL_FAC-SIMILE"],
-    buildEventProperties("UX", "screen_view", { credential: "ITW_TS_V2" })
+    buildEventProperties("UX", "screen_view", { credential })
   );
 }
 
@@ -1253,19 +1267,24 @@ export const getPIDMixpanelStatus = (
   );
 
 /**
- * Maps a given StoredCredential or undefined to the corresponding Mixpanel tracking status.
- * Returns "not_available" if the credential is missing or its status cannot be determined.
+ * Returns the Mixpanel status for a credential type, considering IT Wallet.
+ *
+ * - If `isItwL3` is explicitly false, returns `"not_available"`.
+ * - Otherwise, retrieves the credential from the store and maps it to Mixpanel status.
+ * - Returns `"not_available"` if the credential is missing.
  */
-export const getCredentialMixpanelStatus = (
-  credential: StoredCredential | undefined
+export const getMixpanelCredentialStatus = (
+  type: CredentialType,
+  state: GlobalState,
+  isItwL3?: boolean
 ): ItwCredentialMixpanelStatus =>
-  pipe(
-    O.fromNullable(credential),
-    O.fold(
-      () => "not_available" as const,
-      cred => CREDENTIAL_STATUS_MAP[getCredentialStatus(cred)]
-    )
-  );
+  isItwL3 === false
+    ? "not_available"
+    : pipe(
+        O.fromNullable(itwCredentialsSelector(state)[type]),
+        O.map(cred => CREDENTIAL_STATUS_MAP[getCredentialStatus(cred)]),
+        O.getOrElse(() => "not_available" as ItwCredentialMixpanelStatus)
+      );
 
 /**
  * Maps an PID status to its corresponding Mixpanel tracking status.
@@ -1309,6 +1328,22 @@ export const trackOfflineAccessReason = (
       });
   }
 };
+
+// Returns the appropriate MixPanel credential key based on the credential type.
+// If the IT Wallet is active, returns the V3 key; otherwise, returns the V2 key.
+export function getMixPanelCredential(
+  credentialType: string,
+  isItwL3: boolean
+): MixPanelCredential {
+  const credential = CREDENTIALS_MAP[credentialType];
+
+  // Handle case when there is only one version of the credential
+  // if (typeof credential === "string") {
+  //  return credential;
+  // }
+
+  return isItwL3 ? credential.V3 : credential.V2;
+}
 
 export const trackStartCredentialUpgrade = (credential: MixPanelCredential) => {
   void mixpanelTrack(
