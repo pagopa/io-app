@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0-rc.2](https://github.com/pagopa/io-app/compare/3.13.0-rc.1...3.13.0-rc.2) (2025-09-05)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2851](https://pagopa.atlassian.net/browse/SIW-2851)] Add trust federation step when reiussing inside eid machine ([#7312](https://github.com/pagopa/io-app/issues/7312)) ([cf1ea96](https://github.com/pagopa/io-app/commit/cf1ea967e543d880d1a3b44f04aa27a8d0ae9459))
+* [[IOCOM-2546](https://pagopa.atlassian.net/browse/IOCOM-2546)] AAR Flow State reducer ([#7314](https://github.com/pagopa/io-app/issues/7314)) ([868f141](https://github.com/pagopa/io-app/commit/868f1410d8b81b9e9b0967211ec3d8d432fe747b))
+* **ci:** [[IOAPPX-505](https://pagopa.atlassian.net/browse/IOAPPX-505)] Implement change detection to trigger nightly builds ([#7267](https://github.com/pagopa/io-app/issues/7267)) ([cf852e5](https://github.com/pagopa/io-app/commit/cf852e5140cad850abf1c4bb15cc6c917f2dff5f))
+* **IT Wallet:** [[SIW-2924](https://pagopa.atlassian.net/browse/SIW-2924)] Increases screen brightness when displaying presentation QRCode ([#7313](https://github.com/pagopa/io-app/issues/7313)) ([c389354](https://github.com/pagopa/io-app/commit/c38935423aa8236f6129d62ef0f171376e27e572))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2926](https://pagopa.atlassian.net/browse/SIW-2926)] Credentials upgrade badge not showing when offline ([#7317](https://github.com/pagopa/io-app/issues/7317)) ([9e58662](https://github.com/pagopa/io-app/commit/9e586624836bd1458f323a99a0f7c022368ec6e5))
+* [[IOBP-1948](https://pagopa.atlassian.net/browse/IOBP-1948)] Intent navigation on android webview ([#7321](https://github.com/pagopa/io-app/issues/7321)) ([383f39f](https://github.com/pagopa/io-app/commit/383f39f058aa8fc76e46cb8ad0397933ee95b4d4))
+* [[IOPLT-1323](https://pagopa.atlassian.net/browse/IOPLT-1323)] Update pluralization format ([#7320](https://github.com/pagopa/io-app/issues/7320)) ([3bb3888](https://github.com/pagopa/io-app/commit/3bb3888fb2147c8ea376b7d6a108e9e7f846145a))
+
+
+### Chores
+
+* [[IOPID-3288](https://pagopa.atlassian.net/browse/IOPID-3288)] bump `rn-keychain` to `10.0.0` ([#7303](https://github.com/pagopa/io-app/issues/7303)) ([44d70f4](https://github.com/pagopa/io-app/commit/44d70f4e804ed0f33bea8fe7f0b06c3f2489698e))
+* **IT Wallet:** [[SIW-2902](https://pagopa.atlassian.net/browse/SIW-2902)] Disable credential upgrade flow when device is offline ([#7308](https://github.com/pagopa/io-app/issues/7308)) ([d3c53a1](https://github.com/pagopa/io-app/commit/d3c53a1ed96a026a42485414e7301b7dd791646e))
+* [[IOBP-1892](https://pagopa.atlassian.net/browse/IOBP-1892)] Update biz events spec ([#7318](https://github.com/pagopa/io-app/issues/7318)) ([4b383c6](https://github.com/pagopa/io-app/commit/4b383c67ba52c755921d61b63b71471d9fdf08e4))
+
 ## [3.13.0-rc.1](https://github.com/pagopa/io-app/compare/3.13.0-rc.0...3.13.0-rc.1) (2025-09-04)
 
 
