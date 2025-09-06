@@ -1,7 +1,7 @@
-diff --git a/node_modules/react-native-calendar-events/android/src/main/java/com/calendarevents/RNCalendarEvents.java b/node_modules/react-native-calendar-events/android/src/main/java/com/calendarevents/RNCalendarEvents.java
-index 782a0da..df20396 100644
---- a/node_modules/react-native-calendar-events/android/src/main/java/com/calendarevents/RNCalendarEvents.java
-+++ b/node_modules/react-native-calendar-events/android/src/main/java/com/calendarevents/RNCalendarEvents.java
+diff --git a/android/src/main/java/com/calendarevents/RNCalendarEvents.java b/android/src/main/java/com/calendarevents/RNCalendarEvents.java
+index 782a0da22ef5a07030f74b839bbbf6ce950d6f50..df20396fa86f2d94446d393b00c111bd2a317093 100644
+--- a/android/src/main/java/com/calendarevents/RNCalendarEvents.java
++++ b/android/src/main/java/com/calendarevents/RNCalendarEvents.java
 @@ -162,7 +162,7 @@ public class RNCalendarEvents extends ReactContextBaseJavaModule implements Perm
          WritableNativeMap result;
          Cursor cursor;
