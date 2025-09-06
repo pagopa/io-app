@@ -689,3 +689,26 @@ export const isAARRemoteEnabled = (state: GlobalState) => {
     O.some({ min_app_version: aarMinAppVersion })
   );
 };
+
+export const isCaCBannerEnabledSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.map(config =>
+      isVersionSupported(
+        Platform.OS === "ios"
+          ? config.zendeskCacBanner?.min_app_version?.ios
+          : config.zendeskCacBanner?.min_app_version?.android,
+        getAppVersion()
+      )
+    ),
+    O.getOrElse(() => false)
+  );
+
+export const caCBannerConfigSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.map(config => config.zendeskCacBanner),
+    O.toUndefined
+  );
