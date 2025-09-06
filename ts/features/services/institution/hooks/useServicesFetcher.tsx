@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paginatedServicesGet } from "../store/actions";
 import {
   isErrorPaginatedServicesSelector,
@@ -24,6 +25,8 @@ export const useServicesFetcher = (institutionId: string) => {
 
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
 
+  useOnFirstRender(() => fetchPage(0));
+
   useEffect(() => {
     if (isRefreshing && !isUpdating) {
       setIsRefreshing(false);
@@ -45,16 +48,13 @@ export const useServicesFetcher = (institutionId: string) => {
     [dispatch, institutionId, isLoading, isUpdating]
   );
 
-  const fetchNextPage = useCallback(
-    (page: number) => {
-      if (isLastPage) {
-        return;
-      }
+  const fetchNextPage = useCallback(() => {
+    if (isLastPage) {
+      return;
+    }
 
-      fetchPage(page);
-    },
-    [isLastPage, fetchPage]
-  );
+    fetchPage(currentPage + 1);
+  }, [currentPage, isLastPage, fetchPage]);
 
   const refresh = useCallback(() => {
     setIsRefreshing(true);
@@ -64,7 +64,6 @@ export const useServicesFetcher = (institutionId: string) => {
   return {
     currentPage,
     data: paginatedServices,
-    fetchPage,
     fetchNextPage,
     isError,
     isLoading,
