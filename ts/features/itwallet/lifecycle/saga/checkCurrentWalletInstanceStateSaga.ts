@@ -7,22 +7,15 @@ import { selectItwEnv } from "../../common/store/selectors/environment.ts";
 import { getEnv } from "../../common/utils/environment.ts";
 import { getCurrentWalletInstanceStatus } from "../../common/utils/itwAttestationUtils.ts";
 import { itwLifecycleIsValidSelector } from "../store/selectors";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
 
 export function* getCurrentStatusWalletInstance() {
   const sessionToken = yield* select(sessionTokenSelector);
-  const isWhiteListed = yield* select(itwIsL3EnabledSelector); // TODO: [SIW-2530] remove after full migration to API 1.0
   assert(sessionToken, "Missing session token");
 
   const env = getEnv(yield* select(selectItwEnv));
 
   try {
-    return yield* call(
-      getCurrentWalletInstanceStatus,
-      env,
-      sessionToken,
-      isWhiteListed
-    );
+    return yield* call(getCurrentWalletInstanceStatus, env, sessionToken);
   } catch (e) {
     return undefined;
   }

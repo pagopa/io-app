@@ -8,9 +8,9 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { FlatList, ListRenderItemInfo } from "react-native";
+import I18n from "i18next";
 import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getFullLocale } from "../../../utils/locale";

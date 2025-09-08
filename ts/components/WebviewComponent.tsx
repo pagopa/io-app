@@ -5,8 +5,7 @@ import {
   WebViewHttpErrorEvent,
   WebViewSourceUri
 } from "react-native-webview/lib/WebViewTypes";
-import { Platform } from "react-native";
-import I18n from "../i18n";
+import I18n from "i18next";
 import { mixpanelTrack } from "../mixpanel";
 import { resetDebugData, setDebugData } from "../store/actions/debug";
 import { useIODispatch } from "../store/hooks";
@@ -88,29 +87,13 @@ const WebviewComponent = ({ source, playgroundEnabled }: Props) => {
             ref={ref}
             onLoadEnd={() => setLoading(false)}
             onHttpError={handleError}
-            userAgent={getDefaultUserAgent()}
             onError={handleError}
-            source={{
-              ...source,
-              headers: {
-                ...(source.headers ?? {}),
-                "User-Agent": getDefaultUserAgent()
-              }
-            }}
+            source={source}
           />
         </LoadingSpinnerOverlay>
       )}
     </>
   );
-};
-
-const getDefaultUserAgent = () => {
-  if (Platform.OS === "ios") {
-    return "AppIO IOS";
-  } else if (Platform.OS === "android") {
-    return "AppIO Android";
-  }
-  return "AppIO";
 };
 
 export default WebviewComponent;

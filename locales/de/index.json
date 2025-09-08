@@ -2942,11 +2942,9 @@
           "categories": "Kategorien",
           "cta": {
             "cancel": "Entfernen",
-            "confirm": {
-              "zero": "Filter anwenden",
-              "one": "({{count}}) Filter anwenden",
-              "other": "({{count}}) Filter anwenden"
-            }
+            "confirm_zero": "Filter anwenden",
+            "confirm_one": "({{count}}) Filter anwenden",
+            "confirm_other": "({{count}}) Filter anwenden"
           },
           "order": {
             "byDistance": "Nach der Nähe zu deinem Standort",
@@ -3106,14 +3104,10 @@
         "code": {
           "title": "Dein Rabattcode",
           "validUntil": "Noch gültig für",
-          "minutes": {
-            "one": "1 Minute",
-            "other": "{{minutes}} Minuten"
-          },
-          "seconds": {
-            "one": "1 Sekunde",
-            "other": "{{seconds}} Sekunden"
-          }
+          "minutes_one": "1 Minute",
+          "minutes_other": "{{minutes}} Minuten",
+          "seconds_one": "1 Sekunde",
+          "seconds_other": "{{seconds}} Sekunden"
         }
       }
     },
@@ -3262,7 +3256,7 @@
           "cgn": "Nationale Jugendkarte",
           "itw": "Dokumente",
           "payment": "Zahlungsmethoden",
-          "other": "Mehr"
+          "other": "Bonus und mehr"
         }
       },
       "onboarding": {
@@ -3963,7 +3957,8 @@
     "expiring": "Verfällt am {{endDate}}",
     "expired": "Abgelaufen am {{endDate}}",
     "paused": "In Pause",
-    "removed": "Entfernt"
+    "removed": "Entfernt",
+    "used": "Utilizzato"
   },
   "transaction": {
     "details": {

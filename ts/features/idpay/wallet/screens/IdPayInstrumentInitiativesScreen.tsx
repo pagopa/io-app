@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 
 import {
   H2,
@@ -14,7 +15,6 @@ import { useEffect } from "react";
 import { ScrollView, View } from "react-native";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import TypedI18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { IdPayInstrumentInitiativesList } from "../components/IdPayInstrumentInitiativesList";
 import {
@@ -59,7 +59,7 @@ export const IdPayInstrumentInitiativesScreen = () => {
   ) ?? [undefined, undefined, []];
 
   useHeaderSecondLevel({
-    title: TypedI18n.t("idpay.wallet.initiativePairing.navigation"),
+    title: I18n.t("idpay.wallet.initiativePairing.navigation"),
     canGoBack: true
   });
 
@@ -70,7 +70,7 @@ export const IdPayInstrumentInitiativesScreen = () => {
         flexGrow: 1
       }}
     >
-      <H2>{TypedI18n.t("idpay.wallet.initiativePairing.header")}</H2>
+      <H2>{I18n.t("idpay.wallet.initiativePairing.header")}</H2>
       <VSpacer size={16} />
       {maskedPan && (
         <View style={{ flexDirection: "row", paddingVertical: 8 }}>

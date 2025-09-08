@@ -2,8 +2,8 @@
 
 exports[`FimsPrivacyInfo component render LoadingSkeleton when privacyUrl is undefined 1`] = `
 <View
-  accessibilityHint="Wait for the content load"
-  accessibilityLabel="Loading"
+  accessibilityHint="Attendi il caricamento del contenuto"
+  accessibilityLabel="Caricamento in corso"
   accessible={true}
   testID="skeleton"
 >

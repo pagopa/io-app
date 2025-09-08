@@ -1,30 +1,35 @@
-import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
-import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
-import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { itwShouldRenderNewItWalletSelector } from "../../common/store/selectors";
 import { useIOSelector } from "../../../../store/hooks";
+import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
+import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
+import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
+import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 
 export type ItwCredentialWalletCardProps = ItwCredentialCard & {
   isPreview?: false; // Cards in wallet cannot be in preview mode
 };
 
 const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
-  const { isLegacyFormat, credentialType } = props;
+  const { isItwCredential, credentialType } = props;
   const navigation = useIONavigation();
-  const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
-  const needsItwUpgrade = isNewItwRenderable && isLegacyFormat;
+  const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const needsItwUpgrade = isItwPid && !isItwCredential;
+
+  const handleCredentialUpgrade = useOfflineToastGuard(() =>
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+      params: {
+        credentialType,
+        isUpgrade: true
+      }
+    })
+  );
 
   const handleOnPress = () => {
     if (needsItwUpgrade) {
-      navigation.navigate(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
-        params: {
-          credentialType,
-          isUpgrade: true
-        }
-      });
+      handleCredentialUpgrade();
     } else {
       navigation.navigate(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
@@ -36,7 +41,10 @@ const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
   };
 
   return (
-    <WalletCardPressableBase onPress={handleOnPress}>
+    <WalletCardPressableBase
+      onPress={handleOnPress}
+      testID="ItwCredentialWalletCardTestID"
+    >
       <ItwCredentialCard {...props} />
     </WalletCardPressableBase>
   );

@@ -12,12 +12,12 @@ import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
 import { useState } from "react";
 import { View } from "react-native";
+import I18n from "i18next";
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
 import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../definitions/idpay/TransactionDetailDTO";
 import { ChannelEnum } from "../../../../../definitions/idpay/TransactionOperationDTO";
-import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   IOBottomSheetModal,

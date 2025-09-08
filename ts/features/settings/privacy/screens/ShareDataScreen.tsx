@@ -1,7 +1,7 @@
 import { ContentWrapper, useIOToast } from "@pagopa/io-app-design-system";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { AccessibilityInfo, SafeAreaView, View } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { setMixpanelEnabled } from "../../../../store/actions/mixpanel";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { getFlowType } from "../../../../utils/analytics";
